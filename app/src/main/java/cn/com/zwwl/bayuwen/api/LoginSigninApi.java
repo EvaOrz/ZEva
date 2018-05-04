@@ -85,8 +85,9 @@ public class LoginSigninApi extends BaseApi {
     protected void handler(JSONObject jsonObject, ErrorMsg errorMsg) {
         if (errorMsg == null) {
             ErrorMsg e = new ErrorMsg();
-            JSONObject data = jsonObject.optJSONObject("data");
+
             if (jsonObject.optBoolean("success", false)) {
+                JSONObject data = jsonObject.optJSONObject("data");
                 if (!isNull(data)) {
                     String token = data.optString("token");
                     if (!TextUtils.isEmpty(token)) {
@@ -95,7 +96,7 @@ public class LoginSigninApi extends BaseApi {
                     }
                 }
             } else {
-                e.setDesc(data.optString("message"));
+                e.setDesc(jsonObject.optString("data"));
             }
             listener.setData(e);
 
