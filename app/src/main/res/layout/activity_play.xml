@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/fm_back"
+            android:layout_width="@dimen/back_size"
+            android:layout_height="@dimen/back_size"
+            android:src="@mipmap/player_close" />
+
+        <ImageView
+            android:id="@+id/fm_share"
+            android:layout_width="@dimen/back_size"
+            android:layout_height="@dimen/back_size"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/player_share" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/album_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_16" />
+
+    <TextView
+        android:id="@+id/fm_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textColor="@color/gray_dark"
+        android:textSize="@dimen/text_size_14" />
+
+
+    <ImageView
+        android:id="@+id/fm_img"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:scaleType="centerInside" />
+
+
+    <SeekBar
+        android:id="@+id/fm_seekbar"
+        style="@style/Play_SeekBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:progress="0" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="2dp">
+
+        <TextView
+            android:id="@+id/fm_time1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/oringe"
+            android:textSize="@dimen/text_size_12" />
+
+        <TextView
+            android:id="@+id/fm_time2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/oringe"
+            android:textSize="@dimen/text_size_12" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="20dp">
+
+
+        <ImageView
+            android:id="@+id/fm_play"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerHorizontal="true"
+            android:background="@mipmap/player_pause" />
+
+        <ImageView
+            android:id="@+id/fm_previous"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="25dp"
+            android:layout_toLeftOf="@id/fm_play"
+            android:src="@mipmap/player_previous_dis" />
+
+
+        <ImageView
+            android:id="@+id/fm_next"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:layout_toRightOf="@id/fm_play"
+            android:src="@mipmap/player_next" />
+
+        <TextView
+            android:id="@+id/fm_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/fm_play"
+            android:layout_marginLeft="20dp"
+            android:drawablePadding="5dp"
+            android:drawableTop="@mipmap/player_list"
+            android:text="@string/play_list"
+            android:textColor="@color/gray_light"
+            android:textSize="@dimen/text_size_12" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

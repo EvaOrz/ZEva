@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/body_bg">
+
+    <RelativeLayout
+        android:id="@+id/album_detail_head"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bar_height"
+        android:background="@color/body_bg"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/album_detail_back"
+            android:layout_width="@dimen/back_size"
+            android:layout_height="@dimen/back_size"
+            android:src="@drawable/back_gray" />
+
+        <TextView
+            android:id="@+id/album_detail_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/album_detail"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+
+    </RelativeLayout>
+
+    <!--输入框-->
+    <LinearLayout
+        android:id="@+id/album_detail_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/body_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:background="@drawable/gray_xiankuang"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/note" />
+
+            <EditText
+                android:id="@+id/album_detail_inputedit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/ping_hint"
+                android:lines="1"
+
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray_light"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/album_detail_inputsend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="@string/send"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/text_size_14" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/album_detail_input"
+        android:layout_below="@id/album_detail_head">
+
+        <cn.com.zwwl.bayuwen.view.CallScrollView
+            android:id="@+id/album_detail_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/album_detail_img"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:background="@color/gray_line"
+                                    android:scaleType="centerCrop" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="100dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/album_detail_t"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical"
+                                        android:lines="1"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/text_size_14" />
+
+                                    <TextView
+                                        android:id="@+id/album_detail_name"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:drawableLeft="@mipmap/album_ren"
+                                        android:drawablePadding="5dp"
+                                        android:gravity="center_vertical"
+                                        android:lines="1"
+                                        android:textColor="@color/gray_dark"
+                                        android:textSize="@dimen/text_size_12" />
+
+                                    <TextView
+                                        android:id="@+id/album_detail_time"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:drawableLeft="@mipmap/album_time"
+                                        android:drawablePadding="5dp"
+                                        android:gravity="center_vertical"
+                                        android:lines="1"
+                                        android:textColor="@color/gray_dark"
+                                        android:textSize="@dimen/text_size_12" />
+
+                                    <TextView
+                                        android:id="@+id/album_detail_tag"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical"
+                                        android:lines="1"
+                                        android:text="专项班"
+                                        android:textColor="@color/gray_dark"
+                                        android:textSize="@dimen/text_size_12" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+
+                                android:paddingTop="10dp">
+
+                                <TextView
+                                    android:id="@+id/album_detail_like"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawablePadding="7dp"
+                                    android:drawableTop="@mipmap/like_b"
+                                    android:gravity="center_horizontal"
+
+                                    android:text="@string/like"
+                                    android:textColor="@color/gray_dark"
+                                    android:textSize="@dimen/text_size_12" />
+
+                                <TextView
+                                    android:id="@+id/album_detail_shoucang"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawablePadding="5dp"
+                                    android:drawableTop="@mipmap/shoucang_b"
+                                    android:gravity="center_horizontal"
+
+                                    android:text="@string/collect"
+                                    android:textColor="@color/gray_dark"
+                                    android:textSize="@dimen/text_size_12" />
+
+                                <TextView
+                                    android:id="@+id/album_detail_share"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawablePadding="5dp"
+                                    android:drawableTop="@mipmap/share_a"
+                                    android:gravity="center_horizontal"
+
+                                    android:text="@string/share"
+                                    android:textColor="@color/gray_dark"
+                                    android:textSize="@dimen/text_size_12" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/white"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/ablum_detail_part1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:autoLink="all"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="@string/album_list"
+                                android:textColor="@color/oringe"
+                                android:textSize="@dimen/text_size_14" />
+
+                            <TextView
+                                android:id="@+id/ablum_detail_part2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="@string/album_detail"
+                                android:textColor="@color/gray_dark"
+                                android:textSize="@dimen/text_size_14" />
+
+                            <TextView
+                                android:id="@+id/ablum_detail_part3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="@string/album_teacher"
+                                android:textColor="@color/gray_dark"
+                                android:textSize="@dimen/text_size_14" />
+
+                            <TextView
+                                android:id="@+id/ablum_detail_part4"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="@string/album_pinglun"
+                                android:textColor="@color/gray_dark"
+                                android:textSize="@dimen/text_size_14" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5dp"
+                            android:background="@color/gray_line"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:id="@+id/ablum_detail_line1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_weight="1"
+                                android:background="@color/oringe" />
+
+                            <View
+                                android:id="@+id/ablum_detail_line2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_weight="1"
+                                android:background="@color/oringe"
+                                android:visibility="invisible" />
+
+                            <View
+                                android:id="@+id/ablum_detail_line3"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_weight="1"
+                                android:background="@color/oringe"
+                                android:visibility="invisible" />
+
+                            <View
+                                android:id="@+id/ablum_detail_line4"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_weight="1"
+                                android:background="@color/oringe"
+                                android:visibility="invisible" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ablum_detail_contain"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/white"
+                            android:orientation="vertical" />
+                    </LinearLayout>
+
+                    <include
+                        layout="@layout/view_no_wifi"
+                        android:visibility="gone" />
+
+
+                </RelativeLayout>
+            </LinearLayout>
+
+        </cn.com.zwwl.bayuwen.view.CallScrollView>
+
+        <cn.com.zwwl.bayuwen.view.PlayController
+            android:id="@+id/ablum_detail_playcontroller"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="5dp" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

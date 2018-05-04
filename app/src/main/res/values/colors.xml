@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <!--<color name="colorAccent">#FF4081</color>-->
+
+
+
+    <color name="white">#ffffffff</color>
+    <color name="translucent_white">#7fffffff</color>
+    <color name="black">#ff000000</color>
+    <color name="gray_line">#dbdbdb</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="translucent_black">#80000000</color>
+    <color name="translucent_orange">#80fff5f2</color>
+    <color name="body_bg">#f6f6f6</color>
+
+    <color name="gray_light">#FFC0C0C0</color>
+    <color name="gray_dark">#ff4b4b4b</color>
+    <color name="title_bar">#FFFAFAFA</color>
+
+    <color name="dot_active_color">#ffffffff</color>
+    <color name="dot_color">#7fffffff</color>
+    <color name="blue">#2c97e8</color>
+    <color name="green">#008000</color>
+
+    <color name="wheel_1">#eeffffff</color>
+    <color name="wheel_2">#eaffffff</color>
+    <color name="wheel_3">#33ffffff</color>
+    <color name="red">#EE001E</color>
+    <color name="oringe">#E86C4D</color>
+
+
+    <!-- seekbar -->
+    <color name="seek_bar_before_thumb">#cd3333</color>
+    <color name="seek_bar_after_thumb">#cdcdcd</color>
+    <color name="seek_bar_thumb_center">#dd3333</color>
+</resources>

@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+    defaultConfig {
+        applicationId "cn.com.zwwl.bayuwen"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            // qq平台配置
+            manifestPlaceholders = [qqappid: "你的qq appid"]
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            // qq平台配置
+            manifestPlaceholders = [qqappid: "你的qq appid"]
+        }
+
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    // glide和http3
+    compile 'com.github.bumptech.glide:glide:4.6.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+    compile 'com.github.bumptech.glide:okhttp3-integration:4.6.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+
+    // LeanCloud 基础包
+    implementation 'cn.leancloud.android:avoscloud-sdk:v4.6.4'
+
+    // umeng
+    implementation 'com.umeng.sdk:common:1.5.0'
+    implementation 'com.umeng.sdk:utdid:1.1.5.3'
+    //注意：在App上线前请务必删除集成调试库，避免无关信息的打印。
+    implementation 'com.umeng.sdk:debug:1.0.0'
+    //umeng share
+    implementation 'com.umeng.sdk:share-sina:6.9.0'
+    implementation 'com.umeng.sdk:share-wechat:6.9.0'
+    implementation 'com.umeng.sdk:share-qq:6.9.0'
+    implementation 'com.umeng.sdk:share-core:6.9.0'
+    // 极光
+    implementation files('libs/jcore-android-1.2.0.jar')
+    implementation files('libs/jpush-android-3.1.2.jar')
+
+    subprojects {
+        project.configurations.all {
+            resolutionStrategy.eachDependency { details ->
+                if (details.requested.group == 'com.android.support'
+                        && !details.requested.name.contains('multidex')) {
+                    details.useVersion "27.0.3"
+                }
+            }
+        }
+    }
+}
+
+
+

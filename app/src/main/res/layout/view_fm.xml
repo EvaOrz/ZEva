@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/body_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bar_height"
+        android:background="@color/red"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+
+        <TextView
+            android:id="@+id/fm_search"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/white_btn_bg"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textSize="@dimen/text_size_14" />
+
+
+    </LinearLayout>
+
+    <cn.com.zwwl.bayuwen.view.CallScrollView
+        android:id="@+id/main_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <cn.com.zwwl.bayuwen.view.BannerView
+                android:id="@+id/fm_head"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="15dp">
+
+                <TextView
+                    android:id="@+id/fm_bt_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="4dp"
+                    android:drawableTop="@mipmap/home_1"
+                    android:gravity="center_horizontal"
+                    android:text="了就读书"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_10" />
+
+                <TextView
+                    android:id="@+id/fm_bt_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="4dp"
+                    android:drawableTop="@mipmap/home_2"
+                    android:gravity="center_horizontal"
+                    android:text="干货讲座"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_10" />
+
+                <TextView
+                    android:id="@+id/fm_bt_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="4dp"
+                    android:drawableTop="@mipmap/home_3"
+                    android:gravity="center_horizontal"
+                    android:text="统编教材"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_10" />
+
+                <TextView
+                    android:id="@+id/fm_bt_4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="4dp"
+                    android:drawableTop="@mipmap/home_4"
+                    android:gravity="center_horizontal"
+                    android:text="每日窦摘"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_10" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="15dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/fm_bt_5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="4dp"
+                    android:drawableTop="@mipmap/home_5"
+                    android:gravity="center_horizontal"
+                    android:text="名师精粹"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_10" />
+
+                <TextView
+                    android:id="@+id/fm_bt_6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="4dp"
+                    android:drawableTop="@mipmap/home_6"
+                    android:gravity="center_horizontal"
+                    android:text="精品课程"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_10" />
+
+                <TextView
+                    android:id="@+id/fm_bt_7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="4dp"
+                    android:drawableTop="@mipmap/home_7"
+                    android:gravity="center_horizontal"
+                    android:text="有声读物"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_10" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="4dp"
+                    android:drawableTop="@mipmap/home_7"
+                    android:gravity="center_horizontal"
+                    android:text="窦神归来"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_10"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/fm_album_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white">
+
+
+                <TextView
+                    android:id="@+id/fm_album_list_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/hot_recommond"
+                    android:textColor="@color/blue" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@id/fm_album_list_title"
+                    android:src="@mipmap/home_head_hot" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="10dp"
+                    android:src="@mipmap/home_header_more" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_height"
+                    android:layout_alignBottom="@id/fm_album_list_title"
+                    android:background="@color/gray_line" />
+            </RelativeLayout>
+
+            <cn.com.zwwl.bayuwen.view.NoScrollListView
+                android:id="@+id/fm_hot_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </cn.com.zwwl.bayuwen.view.CallScrollView>
+</LinearLayout>
