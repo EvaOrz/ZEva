@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.AlbumListActivity;
 import cn.com.zwwl.bayuwen.activity.ChangeUserInfoActivity;
+import cn.com.zwwl.bayuwen.activity.CoreActivity;
 import cn.com.zwwl.bayuwen.activity.HistoryActivity;
 import cn.com.zwwl.bayuwen.activity.LoginActivity;
 import cn.com.zwwl.bayuwen.activity.WebActivity;
@@ -44,6 +45,7 @@ public class UserCenterView implements View.OnClickListener {
         name = view.findViewById(R.id.user_title);
         avatar.setOnClickListener(this);
 
+        view.findViewById(R.id.test).setOnClickListener(this);
         view.findViewById(R.id.user_info_layout).setOnClickListener(this);
         view.findViewById(R.id.user_history_layout).setOnClickListener(this);
         view.findViewById(R.id.user_collect_layout).setOnClickListener(this);
@@ -101,6 +103,9 @@ public class UserCenterView implements View.OnClickListener {
             case R.id.logout:
                 DataHelper.clearLoginInfo(context);
                 loadData();
+                break;
+            case R.id.test:
+                context.startActivity(new Intent(context, CoreActivity.class));
                 break;
 
         }

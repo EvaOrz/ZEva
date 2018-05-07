@@ -23,7 +23,7 @@ import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.AlbumDetailActivity;
 import cn.com.zwwl.bayuwen.activity.AlbumListActivity;
-import cn.com.zwwl.bayuwen.activity.MainActivity;
+import cn.com.zwwl.bayuwen.activity.FmMainActivity;
 import cn.com.zwwl.bayuwen.activity.SearchActivity;
 import cn.com.zwwl.bayuwen.adapter.AlbumAdapter;
 import cn.com.zwwl.bayuwen.api.fm.RecommentApi;
@@ -104,11 +104,11 @@ public class FmView implements View.OnClickListener {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    ((MainActivity) context).unshowPlayController();
+                    ((FmMainActivity) context).unshowPlayController();
                     break;
 
                 case 1:
-                    ((MainActivity) context).showPlayController();
+                    ((FmMainActivity) context).showPlayController();
                     break;
 
                 case 2:// 初始化页面

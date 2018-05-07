@@ -12,7 +12,7 @@
     <!-- 显示顶层浮窗 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
-    <!--camera-->
+    <!-- camera -->
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature android:name="android.hardware.camera" />
@@ -24,7 +24,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:testOnly="false">
         <activity
             android:name=".activity.SplashActivity"
             android:label="@string/app_name"
@@ -35,72 +36,71 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.FmMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--注册-->
+        <!-- 注册 -->
         <activity
             android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--登录-->
+        <!-- 登录 -->
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <!--忘记密码-->
+        <!-- 忘记密码 -->
         <activity
             android:name=".activity.ForgetPwdActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <!--专辑列表-->
+        <!-- 专辑列表 -->
         <activity
             android:name=".activity.AlbumListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <!--专辑详情-->
+        <!-- 专辑详情 -->
         <activity
             android:name=".activity.AlbumDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-        <!--搜索页面-->
+        <!-- 搜索页面 -->
         <activity
             android:name=".activity.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--修改个人信息页面-->
+        <!-- 修改个人信息页面 -->
         <activity
             android:name=".activity.ChangeUserInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--播放历史-->
+        <!-- 播放历史 -->
         <activity
             android:name=".activity.HistoryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <!--内部浏览器页面-->
+        <!-- 内部浏览器页面 -->
         <activity
             android:name=".activity.WebActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <!--音乐播放-->
+        <!-- 音乐播放 -->
         <activity
             android:name=".activity.NewMusicActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--音乐播放service-->
+        <!-- 音乐播放service -->
         <service android:name=".service.NewMusicService" />
 
-        <!--api24 以上拍照兼容-->
+        <!-- api24 以上拍照兼容 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -111,7 +111,10 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+        <activity
+            android:name=".activity.CoreActivity"
+            android:label="@string/title_activity_core"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
-
 
 </manifest>

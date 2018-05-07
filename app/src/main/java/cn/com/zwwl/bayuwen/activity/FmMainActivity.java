@@ -25,7 +25,7 @@ import cn.com.zwwl.bayuwen.view.FmView;
 import cn.com.zwwl.bayuwen.view.PlayController;
 import cn.com.zwwl.bayuwen.view.UserCenterView;
 
-public class MainActivity extends BaseActivity {
+public class FmMainActivity extends BaseActivity {
     private FmView fmView;
     private UserCenterView userCenterView;
     private LinearLayout container;

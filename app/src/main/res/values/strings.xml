@@ -1,7 +1,14 @@
 <resources>
     <string name="app_name">诸葛学堂</string>
 
+
     <!--main-->
+    <string name="main_tab1">首页</string>
+    <string name="main_tab2">选课</string>
+    <string name="main_tab3">课程跟踪</string>
+    <string name="main_tab4">首页</string>
+
+    <!--FM main-->
     <string name="hot_recommond">热门推荐</string>
     <string name="fm">FM首页</string>
     <string name="user_center">用户中心</string>
@@ -74,6 +81,16 @@
     <string name="search">搜索</string>
     <string name="no_search">无相关搜索内容，请尝试其他关键词</string>
 
+
+    <!-- user left-->
+    <string name="huiyuanziliao">会员资料</string>
+    <string name="qiehuanxuehseng">切换学生</string>
+    <string name="wodedingdan">我的订单</string>
+    <string name="gerenshoucang">个人收藏</string>
+    <string name="tiaoke">调课</string>
+    <string name="zhuanban">转班</string>
+
+
     <!--changeinfo-->
     <string name="touxiang">头像</string>
     <string name="xingming">姓名</string>
@@ -122,4 +139,8 @@
     <string name="loading">正在加载...</string>
     <string name="load_succeed">加载成功</string>
     <string name="load_fail">加载失败</string>
+    <string name="title_activity_core">CoreActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
 </resources>
