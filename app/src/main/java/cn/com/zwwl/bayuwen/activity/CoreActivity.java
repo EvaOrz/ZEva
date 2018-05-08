@@ -3,14 +3,14 @@ package cn.com.zwwl.bayuwen.activity;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+
 
 import cn.com.zwwl.bayuwen.R;
 
@@ -19,7 +19,9 @@ import cn.com.zwwl.bayuwen.R;
  */
 public class CoreActivity extends BaseActivity {
     private RadioButton tabButton1, tabButton2, tabButton3, tabButton4;
+    private CoordinatorLayout mainView;
     private LinearLayout container;
+    private DrawerLayout drawer;// 抽屉
     private View view1, view2, view3, view4;// 首页的四个view
 
     private ImageView avatar;
@@ -36,13 +38,34 @@ public class CoreActivity extends BaseActivity {
     }
 
     private void initView() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        mainView = findViewById(R.id.main_view);
+        drawer = findViewById(R.id.drawer_layout);
+
+        DrawerLayout.DrawerListener listen = new DrawerLayout.DrawerListener() {
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                mainView.setX(slideOffset * drawerView.getMeasuredWidth());
+                mainView.invalidate();
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        };
+        drawer.setDrawerListener(listen);
+
 
         view1 = new View(mContext);
         view2 = new View(mContext);
@@ -56,6 +79,7 @@ public class CoreActivity extends BaseActivity {
         tabButton2 = findViewById(R.id.bottom_nav_2);
         tabButton3 = findViewById(R.id.bottom_nav_3);
         tabButton4 = findViewById(R.id.bottom_nav_4);
+        findViewById(R.id.toolbar_left).setOnClickListener(this);
         tabButton1.setOnClickListener(this);
         tabButton2.setOnClickListener(this);
         tabButton3.setOnClickListener(this);
@@ -86,7 +110,12 @@ public class CoreActivity extends BaseActivity {
                 break;
 
             case R.id.main_avatar:
-                startActivity(new Intent(mContext, LoginActivity.class));
+                mContext.startActivity(new Intent(mContext, LoginActivity.class));
+                break;
+            case R.id.toolbar_left:// 打开抽屉
+                if (!drawer.isDrawerOpen(GravityCompat.START)) {
+                    drawer.openDrawer(GravityCompat.START);
+                }
                 break;
         }
     }
@@ -107,7 +136,7 @@ public class CoreActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
