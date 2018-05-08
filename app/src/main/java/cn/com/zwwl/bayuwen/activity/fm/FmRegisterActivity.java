@@ -1,4 +1,4 @@
-package cn.com.zwwl.bayuwen.activity;
+package cn.com.zwwl.bayuwen.activity.fm;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -13,6 +13,7 @@ import com.avos.avoscloud.RequestMobileCodeCallback;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.api.LoginSigninApi;
 import cn.com.zwwl.bayuwen.util.BayuwenTools;
 import cn.com.zwwl.bayuwen.util.SmsTools;
@@ -23,7 +24,7 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 /**
  * 注册页面
  */
-public class RegisterActivity extends BaseActivity {
+public class FmRegisterActivity extends BaseActivity {
     private TextView getVerify;
     private EditText accountEdit, pwdEdit, verifyEdit;
     private boolean canGetVerify = true;// 是否可获取验证码

@@ -28,6 +28,7 @@
     <string name="forget_pwd">忘记密码？</string>
     <string name="forget_pwd_success">修改成功</string>
     <string name="forget_pwd_faild">修改成功</string>
+    <string name="login_problem">登录遇到问题</string>
 
     <!--register-->
     <string name="register_hint">请输入手机号</string>

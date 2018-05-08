@@ -1,4 +1,4 @@
-package cn.com.zwwl.bayuwen.activity;
+package cn.com.zwwl.bayuwen.activity.fm;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -20,6 +20,7 @@ import java.io.File;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.api.UploadApi;
 import cn.com.zwwl.bayuwen.api.UserApi;
 import cn.com.zwwl.bayuwen.db.DataHelper;
@@ -35,7 +36,7 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 /**
  * 修改用户信息页面
  */
-public class ChangeUserInfoActivity extends BaseActivity {
+public class FmChangeUserInfoActivity extends BaseActivity {
 
     private UserModel userModel;
     private String picturePath;// 头像
@@ -93,7 +94,7 @@ public class ChangeUserInfoActivity extends BaseActivity {
 
                 case 3:
                     isNeedChangePic = true;
-                    Glide.with(ChangeUserInfoActivity.this).load(photoFile).
+                    Glide.with(FmChangeUserInfoActivity.this).load(photoFile).
                             into(aImg);
                     break;
 

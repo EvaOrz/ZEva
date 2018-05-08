@@ -1,7 +1,6 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.GravityCompat;
@@ -13,11 +12,12 @@ import android.widget.RadioButton;
 
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.fm.FmLoginActivity;
 
 /**
  *
  */
-public class CoreActivity extends BaseActivity {
+public class MainActivity extends BaseActivity {
     private RadioButton tabButton1, tabButton2, tabButton3, tabButton4;
     private CoordinatorLayout mainView;
     private LinearLayout container;

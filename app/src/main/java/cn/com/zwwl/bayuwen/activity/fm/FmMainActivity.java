@@ -1,4 +1,4 @@
-package cn.com.zwwl.bayuwen.activity;
+package cn.com.zwwl.bayuwen.activity.fm;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.db.DataHelper;
 import cn.com.zwwl.bayuwen.model.AlbumModel;
 import cn.com.zwwl.bayuwen.model.FmModel;
@@ -67,7 +68,7 @@ public class FmMainActivity extends BaseActivity {
             MyApplication.loginStatusChange = false;
             userCenterView.getUserinfo();
         } else if (DataHelper.getUserLoginInfo(this) == null) {
-            startActivityForResult(new Intent(this, LoginActivity.class), 102);
+            startActivityForResult(new Intent(this, FmLoginActivity.class), 102);
         }
         registerReceiver();//先恢复数据 再注册receiver
         /**
@@ -243,8 +244,8 @@ public class FmMainActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 102) {
-            if (resultCode == LoginActivity.LOGIN_SUCCESS) return;
-            else if (resultCode == LoginActivity.LOGIN_CANCLE) finish();
+            if (resultCode == FmLoginActivity.LOGIN_SUCCESS) return;
+            else if (resultCode == FmLoginActivity.LOGIN_CANCLE) finish();
 
         }
     }

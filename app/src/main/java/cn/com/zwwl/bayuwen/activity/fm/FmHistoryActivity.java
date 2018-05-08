@@ -1,4 +1,4 @@
-package cn.com.zwwl.bayuwen.activity;
+package cn.com.zwwl.bayuwen.activity.fm;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.adapter.HistroyAdapter;
 import cn.com.zwwl.bayuwen.api.fm.AlbumListApi;
 import cn.com.zwwl.bayuwen.model.AlbumModel;
@@ -22,7 +23,7 @@ import cn.com.zwwl.bayuwen.view.NoScrollListView;
 /**
  * 收听历史页面
  */
-public class HistoryActivity extends BaseActivity {
+public class FmHistoryActivity extends BaseActivity {
 
 
     private NoScrollListView listView1, listView2;

@@ -21,10 +21,10 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.activity.AlbumDetailActivity;
-import cn.com.zwwl.bayuwen.activity.AlbumListActivity;
-import cn.com.zwwl.bayuwen.activity.FmMainActivity;
-import cn.com.zwwl.bayuwen.activity.SearchActivity;
+import cn.com.zwwl.bayuwen.activity.fm.AlbumDetailActivity;
+import cn.com.zwwl.bayuwen.activity.fm.AlbumListActivity;
+import cn.com.zwwl.bayuwen.activity.fm.FmMainActivity;
+import cn.com.zwwl.bayuwen.activity.fm.FmSearchActivity;
 import cn.com.zwwl.bayuwen.adapter.AlbumAdapter;
 import cn.com.zwwl.bayuwen.api.fm.RecommentApi;
 import cn.com.zwwl.bayuwen.model.AlbumModel;
@@ -201,7 +201,7 @@ public class FmView implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fm_search:
-                context.startActivity(new Intent(context, SearchActivity.class));
+                context.startActivity(new Intent(context, FmSearchActivity.class));
                 break;
             case R.id.fm_album_list:
                 context.startActivity(new Intent(context, AlbumListActivity.class));

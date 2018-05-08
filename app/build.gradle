@@ -35,9 +35,9 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // glide和http3
-    compile 'com.github.bumptech.glide:glide:4.6.1'
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
-    compile 'com.github.bumptech.glide:okhttp3-integration:4.6.1'
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.6.1'
     // 放在module里
 //    implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'

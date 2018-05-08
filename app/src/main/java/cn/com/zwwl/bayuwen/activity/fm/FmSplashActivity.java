@@ -1,4 +1,4 @@
-package cn.com.zwwl.bayuwen.activity;
+package cn.com.zwwl.bayuwen.activity.fm;
 
 import android.Manifest;
 import android.content.Intent;
@@ -10,11 +10,13 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.BaseActivity;
+import cn.com.zwwl.bayuwen.activity.MainActivity;
 
 /**
  *
  */
-public class SplashActivity extends BaseActivity {
+public class FmSplashActivity extends BaseActivity {
     /**
      * splash停留时间
      **/
@@ -38,7 +40,7 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, CoreActivity.class);
+                Intent intent = new Intent(FmSplashActivity.this, MainActivity.class);
                 startActivity(intent);
 
                 finish();

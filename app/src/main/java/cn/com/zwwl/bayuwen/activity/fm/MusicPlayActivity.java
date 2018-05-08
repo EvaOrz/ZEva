@@ -1,4 +1,4 @@
-package cn.com.zwwl.bayuwen.activity;
+package cn.com.zwwl.bayuwen.activity.fm;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.model.AlbumModel;
 import cn.com.zwwl.bayuwen.model.FmModel;
 import cn.com.zwwl.bayuwen.service.NewMusicService;
@@ -26,10 +27,12 @@ import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.PlayListPopWindow;
 
+/**
+ * 播放器页面
+ */
+public class MusicPlayActivity extends BaseActivity {
 
-public class NewMusicActivity extends BaseActivity {
-
-    private TextView alTitle,fmTitle, playTimebox, wholeTimebox;
+    private TextView alTitle, fmTitle, playTimebox, wholeTimebox;
     private ImageView image, playOrPause, nextBtn, preBtn;
     private SeekBar seekBar;
     private PlayListPopWindow playListPopWindow;

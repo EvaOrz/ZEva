@@ -1,4 +1,4 @@
-package cn.com.zwwl.bayuwen.activity;
+package cn.com.zwwl.bayuwen.activity.fm;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -13,6 +13,7 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.RequestMobileCodeCallback;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.api.ActionApi;
 import cn.com.zwwl.bayuwen.util.BayuwenTools;
 import cn.com.zwwl.bayuwen.util.SmsTools;
@@ -22,7 +23,7 @@ import cn.com.zwwl.bayuwen.model.Entry;
 /**
  * 忘记密码页面
  */
-public class ForgetPwdActivity extends BaseActivity {
+public class FmForgetPwdActivity extends BaseActivity {
     private LinearLayout firstStep, nextStep;
     private EditText accountEdit, verifyEdit, pwdEdit;
     private TextView next, commit, getVerify, phoneTip;

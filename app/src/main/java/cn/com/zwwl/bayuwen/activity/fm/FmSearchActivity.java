@@ -1,4 +1,4 @@
-package cn.com.zwwl.bayuwen.activity;
+package cn.com.zwwl.bayuwen.activity.fm;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.adapter.AlbumAdapter;
 import cn.com.zwwl.bayuwen.api.fm.AlbumListApi;
 import cn.com.zwwl.bayuwen.model.AlbumModel;
@@ -28,7 +29,7 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 /**
  * 搜索页面
  */
-public class SearchActivity extends BaseActivity {
+public class FmSearchActivity extends BaseActivity {
     private EditText sEdit;
     private TextView sButton;
     private ImageView clear;
@@ -136,7 +137,7 @@ public class SearchActivity extends BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(SearchActivity.this, AlbumDetailActivity.class);
+                Intent intent = new Intent(FmSearchActivity.this, AlbumDetailActivity.class);
                 intent.putExtra("AlbumDetailActivity_data", data.get(position).getKid());
                 startActivity(intent);
             }
