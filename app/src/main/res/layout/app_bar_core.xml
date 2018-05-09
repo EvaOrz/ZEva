@@ -123,7 +123,7 @@
 
         <View
             android:id="@+id/botoom_nav_line"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/line_height"
             android:layout_above="@id/botoom_nav"
             android:background="@drawable/line" />

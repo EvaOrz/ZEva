@@ -26,7 +26,7 @@
             android:id="@+id/left_head_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/side_nav_bar"
+            android:background="@color/gray_dark"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:paddingBottom="15dp"
@@ -34,13 +34,26 @@
             android:paddingTop="50dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-            <ImageView
-                android:id="@+id/main_avatar"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
 
-                android:paddingTop="@dimen/nav_header_vertical_spacing"
-                android:src="@drawable/avatar_placeholder" />
+                <ImageView
+                    android:id="@+id/main_avatar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+
+                    android:paddingTop="@dimen/nav_header_vertical_spacing"
+                    android:src="@drawable/avatar_placeholder" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:background="@color/black" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -53,15 +66,29 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/nav_header_vertical_spacing"
                     android:text="王妈妈"
+                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_16" />
+                    android:textSize="@dimen/text_size_18" />
 
                 <TextView
-                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="北京市海淀区"
                     android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="功勋等级"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/gold"
+                    android:textSize="@dimen/text_size_12" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="查看等级规则>>"
+                    android:textColor="@color/gold"
                     android:textSize="@dimen/text_size_12" />
             </LinearLayout>
 
