@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:layout_height="wrap_content">
+
+    <cn.com.zwwl.bayuwen.widget.RoundAngleLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@color/gray_dark"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gold_circle"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="线下"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="庖丁阅读"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="课程进度（9/16）"
+                android:textColor="@color/gray_light"
+
+                android:textSize="@dimen/text_size_10" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBarHorizontal"
+            style="@style/Jindu_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:max="100"
+            android:progress="50"
+            android:secondaryProgress="80" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="课程进行阶段"
+            android:textColor="@color/gray_light"
+            android:textSize="@dimen/text_size_10" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/gold_circle"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="查看评论"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14" />
+
+    </cn.com.zwwl.bayuwen.widget.RoundAngleLayout>
 </LinearLayout>

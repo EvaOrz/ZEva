@@ -6,14 +6,21 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.adapter.MainYixuanKeAdapter;
+import cn.com.zwwl.bayuwen.model.AlbumModel;
 import cn.com.zwwl.bayuwen.widget.BannerView;
+import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 
 /**
  *
@@ -24,6 +31,11 @@ public class MainFrag1 extends Fragment {
     private BannerView bannerView;
     private TextView notificationTv;
     private View root;
+    private NoScrollListView yixuanKeListView;
+    private MainYixuanKeAdapter yixuanKeAdapter;
+private ViewPager pingPager;
+
+    private List<AlbumModel> yixuanDatas = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +63,16 @@ public class MainFrag1 extends Fragment {
         notificationTv.setSelected(true);
         notificationTv.setFocusable(true);
         notificationTv.setFocusableInTouchMode(true);
+
+        yixuanKeListView = root.findViewById(R.id.main_yixuan);
+        yixuanKeAdapter = new MainYixuanKeAdapter(mActivity);
+        yixuanDatas.add(new AlbumModel());
+        yixuanDatas.add(new AlbumModel());
+        yixuanKeListView.setAdapter(yixuanKeAdapter);
+        yixuanKeAdapter.setData(yixuanDatas);
+        yixuanKeAdapter.notifyDataSetChanged();
+
+        pingPager = root.findViewById(R.id.pingtu_pager);
     }
 
     @Override

@@ -123,7 +123,7 @@
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:padding="5dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -154,14 +154,14 @@
                             android:layout_height="wrap_content"
                             android:text="【新东方】概念英语14:00-16:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_14" />
+                            android:textSize="@dimen/text_size_12" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="【新东方】概念英语14:00-16:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_14" />
+                            android:textSize="@dimen/text_size_12" />
 
                     </LinearLayout>
 
@@ -243,7 +243,10 @@
                         android:textSize="@dimen/text_size_14" />
                 </RelativeLayout>
 
-
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/pingtu_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <!--已选课程-->
@@ -267,8 +270,11 @@
                     android:textSize="@dimen/text_size_14" />
 
                 <cn.com.zwwl.bayuwen.widget.NoScrollListView
+                    android:id="@+id/main_yixuan"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:divider="@null"
+                    android:listSelector="@android:color/transparent" />
 
 
             </LinearLayout>

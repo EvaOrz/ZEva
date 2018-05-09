@@ -11,6 +11,14 @@
 
     </style>
 
+    <style name="Jindu_progress" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:maxHeight">5dip</item>
+        <item name="android:minHeight">5dip</item>
+        <item name="android:height">5dip</item>
+        <item name="android:progressDrawable">@drawable/kechengjidu_progress</item>
+
+    </style>
+
     <!--自定义dialog背景全透明无边框theme -->
     <style name="MyDialog" parent="android:style/Theme.Dialog">
         <!--背景颜色及和透明程度-->
