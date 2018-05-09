@@ -43,6 +43,6 @@ public class PingtuAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        gallery.removeView((View) object);
+//        gallery.removeView((View) object);
     }
 }
