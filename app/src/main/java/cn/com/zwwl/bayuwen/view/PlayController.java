@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.activity.NewMusicActivity;
+import cn.com.zwwl.bayuwen.activity.fm.MusicPlayActivity;
 import cn.com.zwwl.bayuwen.model.FmModel;
 import cn.com.zwwl.bayuwen.util.Tools;
 
@@ -51,7 +51,7 @@ public class PlayController extends LinearLayout {
         conentView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(mContext, NewMusicActivity.class);
+                Intent i = new Intent(mContext, MusicPlayActivity.class);
                 mContext.startActivity(i);
                 ((Activity) mContext).overridePendingTransition(R.anim.popup_enter, R.anim.popup_exit);
             }

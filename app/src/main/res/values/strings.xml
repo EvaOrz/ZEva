@@ -7,6 +7,9 @@
     <string name="main_tab2">选课</string>
     <string name="main_tab3">课程跟踪</string>
     <string name="main_tab4">首页</string>
+    <string name="nenglifenxi">能力分析</string>
+    <string name="yixuankecheng">已选课程</string>
+    <string name="suohuoxunzhang">所获勋章</string>
 
     <!--FM main-->
     <string name="hot_recommond">热门推荐</string>
@@ -28,7 +31,10 @@
     <string name="forget_pwd">忘记密码？</string>
     <string name="forget_pwd_success">修改成功</string>
     <string name="forget_pwd_faild">修改成功</string>
-
+    <string name="login_problem">登录遇到问题</string>
+    <string name="login_option1">联系学业顾问</string>
+    <string name="login_option2">查询学生编码</string>
+    <string name="have_account">已有账号？</string>
     <!--register-->
     <string name="register_hint">请输入手机号</string>
     <string name="pwd_hint1">请输入6位以上密码</string>
@@ -139,7 +145,6 @@
     <string name="loading">正在加载...</string>
     <string name="load_succeed">加载成功</string>
     <string name="load_fail">加载失败</string>
-    <string name="title_activity_core">CoreActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>

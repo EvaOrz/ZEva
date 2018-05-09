@@ -27,7 +27,7 @@
             android:textSize="@dimen/text_size_12" />
     </LinearLayout>
 
-    <cn.com.zwwl.bayuwen.view.CommonWebView
+    <cn.com.zwwl.bayuwen.widget.CommonWebView
         android:id="@+id/item_teacher_desc"
         android:layout_width="wrap_content"
         android:layout_marginTop="10dp"

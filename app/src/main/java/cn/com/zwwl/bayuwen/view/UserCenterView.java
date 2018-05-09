@@ -14,11 +14,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.activity.AlbumListActivity;
-import cn.com.zwwl.bayuwen.activity.ChangeUserInfoActivity;
-import cn.com.zwwl.bayuwen.activity.CoreActivity;
-import cn.com.zwwl.bayuwen.activity.HistoryActivity;
-import cn.com.zwwl.bayuwen.activity.LoginActivity;
+import cn.com.zwwl.bayuwen.activity.fm.AlbumListActivity;
+import cn.com.zwwl.bayuwen.activity.fm.FmChangeUserInfoActivity;
+import cn.com.zwwl.bayuwen.activity.MainActivity;
+import cn.com.zwwl.bayuwen.activity.fm.FmHistoryActivity;
+import cn.com.zwwl.bayuwen.activity.fm.FmLoginActivity;
 import cn.com.zwwl.bayuwen.activity.WebActivity;
 import cn.com.zwwl.bayuwen.api.UserApi;
 import cn.com.zwwl.bayuwen.db.DataHelper;
@@ -87,10 +87,10 @@ public class UserCenterView implements View.OnClickListener {
                 if (userModel == null) goLogin();
                 break;
             case R.id.user_info_layout:// 修改资料
-                context.startActivity(new Intent(context, ChangeUserInfoActivity.class));
+                context.startActivity(new Intent(context, FmChangeUserInfoActivity.class));
                 break;
             case R.id.user_history_layout:// 历史
-                context.startActivity(new Intent(context, HistoryActivity.class));
+                context.startActivity(new Intent(context, FmHistoryActivity.class));
                 break;
             case R.id.user_collect_layout:// 我的收藏
                 goListActivity(1);
@@ -105,7 +105,7 @@ public class UserCenterView implements View.OnClickListener {
                 loadData();
                 break;
             case R.id.test:
-                context.startActivity(new Intent(context, CoreActivity.class));
+                context.startActivity(new Intent(context, MainActivity.class));
                 break;
 
         }
@@ -118,7 +118,7 @@ public class UserCenterView implements View.OnClickListener {
     }
 
     private void goLogin() {
-        context.startActivity(new Intent(context, LoginActivity.class));
+        context.startActivity(new Intent(context, FmLoginActivity.class));
     }
 
     @SuppressLint("HandlerLeak")

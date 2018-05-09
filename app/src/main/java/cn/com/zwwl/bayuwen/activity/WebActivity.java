@@ -7,7 +7,7 @@ import android.view.View;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.util.Tools;
-import cn.com.zwwl.bayuwen.view.CommonWebView;
+import cn.com.zwwl.bayuwen.widget.CommonWebView;
 
 /**
  * 内部浏览器

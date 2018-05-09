@@ -21,10 +21,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.view.wheel.OnWheelChangedListener;
-import cn.com.zwwl.bayuwen.view.wheel.OnWheelScrollListener;
-import cn.com.zwwl.bayuwen.view.wheel.WheelView;
-import cn.com.zwwl.bayuwen.view.wheel.adapters.AbstractWheelTextAdapter;
+import cn.com.zwwl.bayuwen.widget.wheel.OnWheelChangedListener;
+import cn.com.zwwl.bayuwen.widget.wheel.OnWheelScrollListener;
+import cn.com.zwwl.bayuwen.widget.wheel.WheelView;
+import cn.com.zwwl.bayuwen.widget.wheel.adapters.AbstractWheelTextAdapter;
 
 public class AddressPopWindow implements View.OnClickListener {
 

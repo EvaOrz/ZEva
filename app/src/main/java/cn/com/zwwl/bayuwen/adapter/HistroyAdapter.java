@@ -15,7 +15,7 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.AlbumModel;
 import cn.com.zwwl.bayuwen.util.Tools;
-import cn.com.zwwl.bayuwen.view.ViewHolder;
+import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
  * 历史记录adapter

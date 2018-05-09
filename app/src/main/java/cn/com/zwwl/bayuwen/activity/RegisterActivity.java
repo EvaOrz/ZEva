@@ -3,9 +3,11 @@ package cn.com.zwwl.bayuwen.activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
@@ -14,30 +16,34 @@ import com.avos.avoscloud.RequestMobileCodeCallback;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.LoginSigninApi;
-import cn.com.zwwl.bayuwen.util.BayuwenTools;
-import cn.com.zwwl.bayuwen.util.SmsTools;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.util.BayuwenTools;
+import cn.com.zwwl.bayuwen.util.SmsTools;
 
 /**
- * 注册页面
+ * 注册
  */
 public class RegisterActivity extends BaseActivity {
+
     private TextView getVerify;
+    private ImageView pwdShow;
     private EditText accountEdit, pwdEdit, verifyEdit;
     private boolean canGetVerify = true;// 是否可获取验证码
+    private boolean isShowPassword = false;// 是否显示密码
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_app_register);
         initView();
     }
 
     @Override
     protected void initData() {
+
     }
 
     private void initView() {
@@ -45,12 +51,14 @@ public class RegisterActivity extends BaseActivity {
         pwdEdit = findViewById(R.id.register_pwd_edit);
         verifyEdit = findViewById(R.id.register_verify_edit);
         getVerify = findViewById(R.id.register_get_verify);
+        pwdShow = findViewById(R.id.register_pwd_show);
 
+        pwdShow.setOnClickListener(this);
         findViewById(R.id.register_back).setOnClickListener(this);
         findViewById(R.id.register_get_verify).setOnClickListener(this);
         findViewById(R.id.register_bt).setOnClickListener(this);
-    }
 
+    }
 
     @Override
     public void onClick(View view) {
@@ -70,7 +78,16 @@ public class RegisterActivity extends BaseActivity {
                     doRegister(phone, pwd, verifycode);
                 }
                 break;
-
+            case R.id.register_pwd_show:
+                if (isShowPassword) {// 隐藏
+                    pwdEdit.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+//                    pwdImg.setImageResource(R.drawable.password_unshow);
+                } else {//选择状态 显示明文--设置为可见的密码
+                    pwdEdit.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+//                    pwdImg.setImageResource(R.drawable.password_show);
+                }
+                isShowPassword = !isShowPassword;
+                break;
 
         }
     }
@@ -127,5 +144,4 @@ public class RegisterActivity extends BaseActivity {
 
         }
     }
-
 }

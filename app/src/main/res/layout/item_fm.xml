@@ -27,7 +27,7 @@
                 android:textColor="@color/gray_dark"
                 android:textSize="@dimen/text_size_16" />
 
-            <cn.com.zwwl.bayuwen.view.GifView
+            <cn.com.zwwl.bayuwen.widget.GifView
                 android:id="@+id/fm_gif"
                 android:layout_width="20dp"
                 android:layout_height="20dp" />
