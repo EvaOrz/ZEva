@@ -36,7 +36,7 @@
         android:layout_height="@dimen/line_height"
         android:background="@color/gray_line" />
 
-    <cn.com.zwwl.bayuwen.view.NoScrollListView
+    <cn.com.zwwl.bayuwen.widget.NoScrollListView
         android:id="@+id/album_detail_listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -53,7 +53,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/bar_height"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -73,6 +73,7 @@
             android:textSize="@dimen/text_size_14" />
 
         <ImageView
+            android:id="@+id/login_pwd_show"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:background="@color/black" />
@@ -116,8 +117,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:gravity="center_horizontal"
-        android:text="@string/login_problem"
         android:padding="10dp"
+        android:text="@string/login_problem"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_12" />
 </LinearLayout>

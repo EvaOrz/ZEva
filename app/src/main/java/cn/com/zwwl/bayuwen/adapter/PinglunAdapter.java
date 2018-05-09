@@ -15,7 +15,7 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.PinglunModel;
 import cn.com.zwwl.bayuwen.util.Tools;
-import cn.com.zwwl.bayuwen.view.ViewHolder;
+import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
  * 评论adapter

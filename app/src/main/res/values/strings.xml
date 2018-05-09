@@ -29,7 +29,9 @@
     <string name="forget_pwd_success">修改成功</string>
     <string name="forget_pwd_faild">修改成功</string>
     <string name="login_problem">登录遇到问题</string>
-
+    <string name="login_option1">联系学业顾问</string>
+    <string name="login_option2">查询学生编码</string>
+    <string name="have_account">已有账号？</string>
     <!--register-->
     <string name="register_hint">请输入手机号</string>
     <string name="pwd_hint1">请输入6位以上密码</string>

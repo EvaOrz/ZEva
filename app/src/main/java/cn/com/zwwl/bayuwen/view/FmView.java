@@ -31,6 +31,9 @@ import cn.com.zwwl.bayuwen.model.AlbumModel;
 import cn.com.zwwl.bayuwen.model.RecommentModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.widget.BannerView;
+import cn.com.zwwl.bayuwen.widget.CallScrollView;
+import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 
 public class FmView implements View.OnClickListener {
     private Context context;

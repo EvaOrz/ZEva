@@ -19,6 +19,8 @@ import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
 import cn.com.zwwl.bayuwen.model.FmModel;
+import cn.com.zwwl.bayuwen.widget.GifView;
+import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 
 /**

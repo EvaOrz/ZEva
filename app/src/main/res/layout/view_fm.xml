@@ -32,7 +32,7 @@
 
     </LinearLayout>
 
-    <cn.com.zwwl.bayuwen.view.CallScrollView
+    <cn.com.zwwl.bayuwen.widget.CallScrollView
         android:id="@+id/main_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -42,7 +42,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <cn.com.zwwl.bayuwen.view.BannerView
+            <cn.com.zwwl.bayuwen.widget.BannerView
                 android:id="@+id/fm_head"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -207,10 +207,10 @@
                     android:background="@color/gray_line" />
             </RelativeLayout>
 
-            <cn.com.zwwl.bayuwen.view.NoScrollListView
+            <cn.com.zwwl.bayuwen.widget.NoScrollListView
                 android:id="@+id/fm_hot_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-    </cn.com.zwwl.bayuwen.view.CallScrollView>
+    </cn.com.zwwl.bayuwen.widget.CallScrollView>
 </LinearLayout>

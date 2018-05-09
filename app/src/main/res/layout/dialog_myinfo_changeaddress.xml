@@ -48,14 +48,14 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <cn.com.zwwl.bayuwen.view.wheel.WheelView
+        <cn.com.zwwl.bayuwen.widget.wheel.WheelView
             android:id="@+id/wv_address_province"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="1" />
 
-        <cn.com.zwwl.bayuwen.view.wheel.WheelView
+        <cn.com.zwwl.bayuwen.widget.wheel.WheelView
             android:id="@+id/wv_address_city"
             android:layout_width="0dp"
             android:layout_height="match_parent"

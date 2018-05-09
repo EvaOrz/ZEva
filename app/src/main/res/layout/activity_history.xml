@@ -43,7 +43,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_14" />
 
-        <cn.com.zwwl.bayuwen.view.NoScrollListView
+        <cn.com.zwwl.bayuwen.widget.NoScrollListView
             android:id="@+id/history_listview1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_14" />
 
-        <cn.com.zwwl.bayuwen.view.NoScrollListView
+        <cn.com.zwwl.bayuwen.widget.NoScrollListView
             android:id="@+id/history_listview2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

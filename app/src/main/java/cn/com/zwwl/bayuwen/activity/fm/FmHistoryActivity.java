@@ -18,7 +18,7 @@ import cn.com.zwwl.bayuwen.api.fm.AlbumListApi;
 import cn.com.zwwl.bayuwen.model.AlbumModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.Tools;
-import cn.com.zwwl.bayuwen.view.NoScrollListView;
+import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 
 /**
  * 收听历史页面

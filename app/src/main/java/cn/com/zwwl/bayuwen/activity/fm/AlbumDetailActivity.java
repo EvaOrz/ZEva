@@ -39,13 +39,13 @@ import cn.com.zwwl.bayuwen.service.NewMusicService;
 import cn.com.zwwl.bayuwen.util.AnimationTools;
 import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
-import cn.com.zwwl.bayuwen.view.CommonWebView;
+import cn.com.zwwl.bayuwen.widget.CommonWebView;
 import cn.com.zwwl.bayuwen.view.PlayController;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.view.CallScrollView;
-import cn.com.zwwl.bayuwen.view.NoScrollListView;
+import cn.com.zwwl.bayuwen.widget.CallScrollView;
+import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 
 /**
  * 专辑详情页面

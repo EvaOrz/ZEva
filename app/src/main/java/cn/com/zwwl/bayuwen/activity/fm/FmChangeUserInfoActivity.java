@@ -27,7 +27,7 @@ import cn.com.zwwl.bayuwen.db.DataHelper;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 import cn.com.zwwl.bayuwen.view.ChangeInfoDialog;
-import cn.com.zwwl.bayuwen.view.FetchPhotoManager;
+import cn.com.zwwl.bayuwen.widget.FetchPhotoManager;
 import cn.com.zwwl.bayuwen.view.GenderPopWindow;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;

@@ -1,14 +1,9 @@
 package cn.com.zwwl.bayuwen.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Movie;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,8 +15,8 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.FmModel;
 import cn.com.zwwl.bayuwen.util.Tools;
-import cn.com.zwwl.bayuwen.view.GifView;
-import cn.com.zwwl.bayuwen.view.ViewHolder;
+import cn.com.zwwl.bayuwen.widget.GifView;
+import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
  * fm列表adapter
