@@ -11,6 +11,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/body_bg"
             android:orientation="vertical">
 
             <!--banner-->
@@ -183,17 +184,144 @@
 
                 <ImageView
                     android:layout_width="15dp"
-                    android:src="@color/white"
-                    android:layout_height="15dp" />
-                
+                    android:layout_height="15dp"
+                    android:src="@color/white" />
+
                 <TextView
+                    android:id="@+id/main_notification"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="重要通知"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:textSize="@dimen/text_size_14"
+
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
+                    android:text="重要通知:今天使用Fragment的时候，出现了这个错误 IllegalStateException: Can not perform this action after onSaveInstanceState"
                     android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_12" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@color/white" />
+
+            </LinearLayout>
+            <!--能力分析-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@mipmap/user_info"
+                        android:gravity="center_vertical"
+                        android:text="@string/nenglifenxi"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerInParent="true"
+                        android:text="语文基础知识"
+                        android:textColor="@color/gold"
+                        android:textSize="@dimen/text_size_14" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <!--已选课程-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/user_info"
+                    android:gravity="center_vertical"
+                    android:text="@string/yixuankecheng"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_14" />
+
+                <cn.com.zwwl.bayuwen.widget.NoScrollListView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+            <!--所获勋章-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/user_info"
+                    android:gravity="center_vertical"
+                    android:text="@string/suohuoxunzhang"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_14" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@mipmap/home_1" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@mipmap/home_2" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@mipmap/home_3" />
+
+
+                </LinearLayout>
+
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
