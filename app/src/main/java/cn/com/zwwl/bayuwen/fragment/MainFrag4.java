@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.view.FmView;
 import cn.com.zwwl.bayuwen.widget.BannerView;
 
 /**
@@ -35,7 +36,7 @@ public class MainFrag4 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_main4, container, false);
+        View root = new FmView(mActivity).getView();
         return root;
     }
 

@@ -68,4 +68,6 @@ dependencies {
         }
     }
     implementation project(':jiaozivideoplayer')
+    //日历控件
+    implementation 'com.haibin:calendarview:3.3.0'
 }

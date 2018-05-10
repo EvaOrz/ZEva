@@ -4,18 +4,21 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.model.RecommentModel;
 
-
-public class FmHeadAdapter extends PagerAdapter {
-    protected List<RecommentModel> list = new ArrayList<>();
+/**
+ * banner 适配
+ */
+public class ImageBannerAdapter extends PagerAdapter {
+    protected List<View> list = new ArrayList<>();
     protected Context mContext;
 
-    public FmHeadAdapter(Context context, List<RecommentModel> list) {
+    public ImageBannerAdapter(Context context, List<View> list) {
         this.mContext = context;
         this.list = list;
     }
@@ -42,9 +45,9 @@ public class FmHeadAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
-            final RecommentModel recommentModel = list.get(position);
-
-            return null;
+//            final RecommentModel recommentModel = list.get(position);
+        container.addView(list.get(position));
+        return list.get(position);
     }
 
     @Override

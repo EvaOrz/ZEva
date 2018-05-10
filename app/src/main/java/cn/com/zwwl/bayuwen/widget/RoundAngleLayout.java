@@ -42,9 +42,10 @@ public class RoundAngleLayout extends LinearLayout {
 
     public RoundAngleLayout(Context context, int round) {
         super(context);
+        this.roundWidth = round;
+        this.roundHeight = round;
         init(context, null);
-        this.roundWidth = 4;
-        this.roundHeight = 4;
+
     }
 
     private void init(Context context, AttributeSet attrs) {
