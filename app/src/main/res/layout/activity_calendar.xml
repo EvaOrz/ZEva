@@ -6,4 +6,66 @@
     android:orientation="vertical"
     tools:context=".activity.CalendarActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bar_height"
+
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/history_back"
+            android:layout_width="@dimen/back_size"
+            android:layout_height="@dimen/back_size"
+            android:src="@drawable/back_gray" />
+
+        <TextView
+            android:id="@+id/album_list_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/my_history"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+
+    </RelativeLayout>
+
+    <com.haibin.calendarview.CalendarLayout
+        app:calendar_content_view_id="@+id/recyclerView"
+        app:calendar_show_mode="only_week_view"
+        app:default_status="shrink"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.haibin.calendarview.CalendarView
+            android:id="@+id/calendarView"
+            app:calendar_height="50dp"
+            app:current_month_lunar_text_color="#CFCFCF"
+            app:current_month_text_color="#333333"
+            app:min_year="2004"
+            app:month_view="com.haibin.calendarviewproject.simple.SimpleCalendarCardView"
+            app:month_view_show_mode="mode_only_current"
+            app:other_month_text_color="#e1e1e1"
+            app:scheme_text="假"
+            app:scheme_text_color="#333"
+            app:scheme_theme_color="#333"
+            app:selected_text_color="#fff"
+            app:selected_theme_color="#333"
+            app:week_background="#fff"
+            app:week_bar_view="com.haibin.calendarviewproject.EnglishWeekBar"
+            app:week_start_with="mon"
+            app:week_text_color="#111"
+            app:week_view="com.haibin.calendarviewproject.simple.SimpleWeekView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#d4d4d4" />
+    </com.haibin.calendarview.CalendarLayout>
+
 </LinearLayout>
