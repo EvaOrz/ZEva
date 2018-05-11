@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
+
+    <cn.com.zwwl.bayuwen.view.IconCenterButton
+        android:id="@+id/praiseTv"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:drawablePadding="5dp"
+        android:drawableRight="@mipmap/ic_launcher"
+        android:gravity="center_vertical"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:text="教师点赞排行榜"
+        android:textColor="@color/orange_txtColor"
+        android:textSize="18sp"/>
+
+    <include layout="@layout/item_praise"/>
+
+    <include layout="@layout/item_praise"/>
+
+</LinearLayout>

@@ -5,7 +5,6 @@
     <!--<color name="colorAccent">#FF4081</color>-->
 
 
-
     <color name="white">#ffffffff</color>
     <color name="translucent_white">#7fffffff</color>
     <color name="black">#ff000000</color>
@@ -37,4 +36,15 @@
     <color name="seek_bar_before_thumb">#cd3333</color>
     <color name="seek_bar_after_thumb">#cdcdcd</color>
     <color name="seek_bar_thumb_center">#dd3333</color>
+
+    <!--lousx-->
+    <color name="mainColor">#dca540</color>
+    //主橙色按钮背景
+    <color name="press_orangeColor">#c69439</color>
+    //橙色按下效果
+    <color name="titlebar_bgColor">#242c3f</color>
+    <color name="app_bgColor">#eeeeee</color>
+    <color name="orange_txtColor">#dcaa40</color>
+    <color name="item_bgColor">#faf9f9</color>
+    <color name="item_grayColor">#999999</color>
 </resources>

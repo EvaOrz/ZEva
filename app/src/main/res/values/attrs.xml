@@ -2,16 +2,19 @@
 <resources>
 
     <declare-styleable name="GifView">
-        <attr name="gif" format="reference" />
-        <attr name="paused" format="boolean" />
+        <attr name="gif" format="reference"/>
+        <attr name="paused" format="boolean"/>
     </declare-styleable>
     <declare-styleable name="CustomTheme">
-        <attr name="gifViewStyle" format="reference" />
+        <attr name="gifViewStyle" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="RoundAngleImageView">
-        <attr name="roundWidth" format="dimension" />
-        <attr name="roundHeight" format="dimension" />
+        <attr name="roundWidth" format="dimension"/>
+        <attr name="roundHeight" format="dimension"/>
     </declare-styleable>
-
+    <!--IconButton-->
+    <declare-styleable name="IconTextView">
+        <attr name="iconPadding" format="dimension"/>
+    </declare-styleable>
 </resources>
