@@ -66,6 +66,7 @@
                         android:textSize="@dimen/text_size_14" />
 
                     <EditText
+                        android:id="@+id/content_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -200,7 +201,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:background="@color/gray_line" />
-
+                <!--上课时间-->
                 <LinearLayout
                     android:id="@+id/add_shangkeshijian"
                     android:layout_width="match_parent"
@@ -215,6 +216,7 @@
                         android:textSize="@dimen/text_size_14" />
 
                     <TextView
+                        android:id="@+id/content_shangkeshijian"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -231,7 +233,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:background="@color/gray_line" />
-
+                <!--下课时间-->
                 <LinearLayout
                     android:id="@+id/add_xiakeshijian"
                     android:layout_width="match_parent"
@@ -246,6 +248,7 @@
                         android:textSize="@dimen/text_size_14" />
 
                     <TextView
+                        android:id="@+id/content_xiakeshijian"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -276,10 +279,12 @@
                         android:textSize="@dimen/text_size_14" />
 
                     <EditText
+                        android:id="@+id/content_cishu"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:inputType="number"
                         android:gravity="right"
                         android:hint="@string/plz_tian"
                         android:lines="1"
@@ -308,6 +313,7 @@
                         android:textSize="@dimen/text_size_14" />
 
                     <EditText
+                        android:id="@+id/content_address"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -322,9 +328,9 @@
 
 
             </LinearLayout>
-            <!--课程机构-->
+
             <LinearLayout
-                android:id="@+id/add_kechengjigou"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -332,8 +338,9 @@
                 android:orientation="vertical"
                 android:padding="15dp">
 
-
+                <!--课程机构-->
                 <LinearLayout
+                    android:id="@+id/add_kechengjigou"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -346,6 +353,7 @@
                         android:textSize="@dimen/text_size_14" />
 
                     <TextView
+                        android:id="@+id/content_jigou"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -375,15 +383,18 @@
                         android:textColor="@color/gray_dark"
                         android:textSize="@dimen/text_size_14" />
 
-                    <TextView
+                    <EditText
+                        android:id="@+id/content_teacher"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@null"
                         android:gravity="right"
+                        android:hint="@string/plz_tian"
                         android:lines="1"
-                        android:text="@string/plz_choose"
                         android:textColor="@color/gray_light"
-                        android:textSize="@dimen/text_size_14" />
+                        android:textColorHint="@color/gray_light"
+                        android:textSize="@dimen/text_size_14"/>
                 </LinearLayout>
 
                 <View
@@ -406,6 +417,7 @@
                         android:textSize="@dimen/text_size_14" />
 
                     <EditText
+                        android:id="@+id/content_code"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

@@ -89,7 +89,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             public void onGlobalLayout() {
                 int width = studentLay.getWidth();
 
-                Log.e("ssssss", width + "___" + studentLay.getHeight());
                 bannerWid = MyApplication.width - width * 2 - JZUtils.dip2px(mActivity, 5) * 4;
                 bannerHei = bannerWid * 9 / 16;
                 // 成功调用一次后，移除 Hook 方法，防止被反复调用

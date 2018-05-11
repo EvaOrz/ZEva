@@ -2,13 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent"
+    android:background="@color/translucent_black"
+    android:gravity="bottom"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
+
         android:layout_marginRight="10dp"
         android:background="@drawable/gray_bodybg_circle_xiankuang"
         android:gravity="center_horizontal"
@@ -65,13 +67,19 @@
             android:id="@+id/pop_calendar_timepicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:timePickerMode="spinner" />
+            android:timePickerMode="spinner"
+            android:visibility="gone" />
 
-        <LinearLayout
-            android:id="@+id/pop_calendar_contain"
+        <GridView
+            android:id="@+id/pop_calendar_grid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:layout_height="wrap_content" />
+
+        <!--<LinearLayout-->
+        <!--android:id="@+id/pop_calendar_contain"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical" />-->
     </LinearLayout>
 
 </LinearLayout>
