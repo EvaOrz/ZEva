@@ -129,6 +129,16 @@
             android:name=".activity.CalendarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--添加课程页面-->
+        <activity
+            android:name=".activity.AddCalendarActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--增减课程页面-->
+        <activity
+            android:name=".activity.SelectCalendarActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

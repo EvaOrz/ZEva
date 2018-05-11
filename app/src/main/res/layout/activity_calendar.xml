@@ -21,30 +21,31 @@
             android:src="@drawable/back_gray" />
 
         <TextView
-            android:id="@+id/album_list_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/ke_calender"
-            android:textColor="@color/gold"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_size_16" />
 
-
+        <TextView
+            android:id="@+id/calendar_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="+"
+            android:textColor="@color/gold"
+            android:textSize="@dimen/text_size_20" />
     </RelativeLayout>
 
-
-    <LinearLayout
+    <!--月份选择器-->
+    <cn.com.zwwl.bayuwen.view.CalendarMonthSelectView
+        android:id="@+id/month_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/gray_light"
-        android:orientation="horizontal">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/month_recyclerview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/body_bg" />
-    </LinearLayout>
+        android:scrollbars="none" />
 
     <com.haibin.calendarview.CalendarLayout
         android:layout_width="match_parent"

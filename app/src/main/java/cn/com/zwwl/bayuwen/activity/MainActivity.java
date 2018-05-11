@@ -45,8 +45,6 @@ public class MainActivity extends BaseActivity {
         mContext = this;
         initView();
         initData();
-
-
     }
 
     private void initView() {

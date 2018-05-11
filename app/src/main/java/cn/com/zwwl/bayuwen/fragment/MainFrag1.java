@@ -14,13 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
@@ -29,14 +27,12 @@ import cn.com.zwwl.bayuwen.activity.CalendarActivity;
 import cn.com.zwwl.bayuwen.adapter.ImageBannerAdapter;
 import cn.com.zwwl.bayuwen.adapter.MainYixuanKeAdapter;
 import cn.com.zwwl.bayuwen.model.AlbumModel;
-import cn.com.zwwl.bayuwen.widget.BannerView;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 import cn.com.zwwl.bayuwen.widget.RoundAngleLayout;
-import cn.com.zwwl.bayuwen.widget.newrefresh.EvaViewPager;
 import cn.com.zwwl.bayuwen.widget.threed.GalleryTransformer;
 import cn.com.zwwl.bayuwen.widget.threed.InfiniteViewPager;
-import cn.com.zwwl.bayuwen.widget.threed.PingtuAdapter;
-import cn.com.zwwl.bayuwen.widget.threed.ZoomOutPageTransformer;
+import cn.com.zwwl.bayuwen.widget.threed.ThreeDAdapter;
+import cn.jzvd.JZUtils;
 
 /**
  *
@@ -50,10 +46,12 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private RoundAngleLayout studentLay, parentLay;// banner位的学生信息栏
     private TextView notificationTv;
     private View root;
-    private NoScrollListView yixuanKeListView;
+    private NoScrollListView yixuanKeListView;// 已选课程列表
     private MainYixuanKeAdapter yixuanKeAdapter;
-    private InfiniteViewPager pingPager;
-    private PingtuAdapter pingAdapter;
+
+    private InfiniteViewPager pingPager;// 拼图列表
+    private ThreeDAdapter pingAdapter;
+    private List<View> pingtuData = new ArrayList<>();
 
     private int bannerWid, bannerHei;
 
@@ -92,7 +90,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                 int width = studentLay.getWidth();
 
                 Log.e("ssssss", width + "___" + studentLay.getHeight());
-                bannerWid = MyApplication.width - width * 2 - 5 * 4 * 2;
+                bannerWid = MyApplication.width - width * 2 - JZUtils.dip2px(mActivity, 5) * 4;
                 bannerHei = bannerWid * 9 / 16;
                 // 成功调用一次后，移除 Hook 方法，防止被反复调用
                 // removeGlobalOnLayoutListener() 方法在 API 16 后不再使用
@@ -119,7 +117,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         initSize();
 
         for (int i = 0; i < 2; i++) {
-            RoundAngleLayout imageView = new RoundAngleLayout(mActivity,10);
+            RoundAngleLayout imageView = new RoundAngleLayout(mActivity, 10);
             imageView.setLayoutParams(new ViewGroup.LayoutParams(bannerWid, bannerHei));
             imageView.setBackgroundResource(R.drawable.test_banner);
             bannerDatas.add(imageView);
@@ -144,15 +142,30 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         yixuanKeAdapter.notifyDataSetChanged();
 
         pingPager = root.findViewById(R.id.pingtu_pager);
-        pingAdapter = new PingtuAdapter(mActivity);
+        pingAdapter = new ThreeDAdapter(mActivity, pingtuData);
+        initPingtudata();// todo??
         pingPager.setAdapter(pingAdapter);
         pingPager.setOffscreenPageLimit(3);
-//        pingPager.setPageTransformer(true, new ZoomOutPageTransformer());
         pingPager.setPageTransformer(true, new GalleryTransformer());
+        pingPager.setCurrentItem(2);
+
 
         root.findViewById(R.id.go_calendar).setOnClickListener(this);
     }
 
+    /**
+     * 获取拼图列表数据
+     */
+    private void initPingtudata() {
+        pingtuData.clear();
+        for (int i = 0; i < 5; i++) {
+            View view = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu, null);
+            ImageView img = view.findViewById(R.id.img_3d);
+            pingtuData.add(view);
+
+        }
+        pingAdapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onClick(View v) {

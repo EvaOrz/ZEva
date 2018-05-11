@@ -151,4 +151,19 @@
 
     <!--calendar-->
     <string name="ke_calender">课程日历</string>
+    <string name="add_calendar">添加日历</string>
+    <string name="save">保存</string>
+    <string name="add_option1">课程名称</string>
+    <string name="add_option2">开课时间</string>
+    <string name="add_option3">结课时间</string>
+    <string name="add_option4">上课时间</string>
+    <string name="add_option5">下课时间</string>
+    <string name="add_option6">课程次数</string>
+    <string name="add_option7">上课地点</string>
+    <string name="add_option8">课程机构</string>
+    <string name="add_option9">授课老师</string>
+    <string name="add_option10">课程编码</string>
+    <string name="add_option11">增减课程</string>
+    <string name="plz_tian">请填写</string>
+
 </resources>

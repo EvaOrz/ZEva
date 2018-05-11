@@ -14,6 +14,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.AlbumModel;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
@@ -51,7 +52,7 @@ public class HistroyAdapter extends CheckScrollAdapter<AlbumModel> {
 
         title.setText(item.getTitle());
         desc.setText(item.getContent());
-        time.setText(Tools.getTime(Long.valueOf(item.getCreated_at())));
+        time.setText(CalendarTools.getTime(Long.valueOf(item.getCreated_at())));
         if (!TextUtils.isEmpty(item.getPic()))
             Glide.with(mContext)
                     .load(item.getPic())
