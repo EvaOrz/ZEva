@@ -85,8 +85,9 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:background="@color/gray_line" />
-
+                <!--课程时间段选择器-->
                 <RelativeLayout
+                    android:id="@+id/add_period"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -111,6 +112,7 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/kaike_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
 
@@ -119,6 +121,7 @@
                                 android:textSize="@dimen/text_size_16" />
 
                             <TextView
+                                android:id="@+id/kaike_week"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
@@ -137,6 +140,7 @@
                         android:orientation="vertical">
 
                         <TextView
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/add_option3"
@@ -144,6 +148,7 @@
                             android:textSize="@dimen/text_size_14" />
 
                         <LinearLayout
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -151,6 +156,7 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/jieke_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="2017.12.01"
@@ -158,6 +164,7 @@
                                 android:textSize="@dimen/text_size_16" />
 
                             <TextView
+                                android:id="@+id/jieke_week"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
@@ -181,6 +188,7 @@
                         android:background="@color/gray_line" />
 
                     <TextView
+                        android:id="@+id/week_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -189,7 +197,7 @@
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:paddingTop="5dp"
-                        android:text="15周"
+                        android:text="0周"
                         android:textColor="@color/gray_dark"
                         android:textSize="@dimen/text_size_14" />
 
@@ -284,9 +292,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:inputType="number"
                         android:gravity="right"
                         android:hint="@string/plz_tian"
+                        android:inputType="number"
                         android:lines="1"
                         android:textColor="@color/gray_light"
                         android:textColorHint="@color/gray_light"
@@ -394,7 +402,7 @@
                         android:lines="1"
                         android:textColor="@color/gray_light"
                         android:textColorHint="@color/gray_light"
-                        android:textSize="@dimen/text_size_14"/>
+                        android:textSize="@dimen/text_size_14" />
                 </LinearLayout>
 
                 <View

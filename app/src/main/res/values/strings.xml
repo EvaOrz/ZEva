@@ -166,4 +166,7 @@
     <string name="add_option11">增减课程</string>
     <string name="plz_tian">请填写</string>
 
+    <!--勋章-->
+    <string name="my_xunzhang">我的勋章</string>
+
 </resources>

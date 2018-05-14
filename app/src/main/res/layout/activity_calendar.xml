@@ -64,7 +64,6 @@
             app:current_month_text_color="@color/gray_dark"
             app:day_text_size="@dimen/text_size_14"
             app:lunar_text_size="@dimen/text_size_10"
-            app:min_year="2018"
             app:month_view_show_mode="mode_only_current"
             app:selected_lunar_text_color="@color/white"
             app:selected_text_color="@color/white"

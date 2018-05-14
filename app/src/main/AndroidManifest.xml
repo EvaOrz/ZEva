@@ -139,6 +139,11 @@
             android:name=".activity.SelectCalendarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--我的勋章页面-->
+        <activity
+            android:name=".activity.AllXunzhangActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

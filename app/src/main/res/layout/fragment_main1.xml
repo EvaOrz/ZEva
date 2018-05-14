@@ -341,7 +341,17 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/go_xunzhang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gold_circle"
+                    android:gravity="center"
 
+                    android:padding="10dp"
+                    android:text="查看全部勋章"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_14" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

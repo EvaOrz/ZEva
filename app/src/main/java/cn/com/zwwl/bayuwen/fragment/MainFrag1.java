@@ -23,6 +23,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.AllXunzhangActivity;
 import cn.com.zwwl.bayuwen.activity.CalendarActivity;
 import cn.com.zwwl.bayuwen.adapter.ImageBannerAdapter;
 import cn.com.zwwl.bayuwen.adapter.MainYixuanKeAdapter;
@@ -150,6 +151,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
 
 
         root.findViewById(R.id.go_calendar).setOnClickListener(this);
+        root.findViewById(R.id.go_xunzhang).setOnClickListener(this);
     }
 
     /**
@@ -171,6 +173,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.go_calendar:
                 startActivity(new Intent(mActivity, CalendarActivity.class));
+                break;
+
+            case R.id.go_xunzhang:
+                startActivity(new Intent(mActivity, AllXunzhangActivity.class));
                 break;
         }
     }

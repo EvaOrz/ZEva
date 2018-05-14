@@ -1,7 +1,10 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -40,21 +43,37 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
 
     private void initView() {
         keRecyclerView = findViewById(R.id.recyclerView);
+        calendarMonthSelectView = findViewById(R.id.month_layout);
+        months.addAll(CalendarTools.initCalendarForMonthView());
+        calendarMonthSelectView.setData(months);
+
         LinearLayoutManager layoutmanager = new LinearLayoutManager(this);
         keRecyclerView.setLayoutManager(layoutmanager);
         calendarView = findViewById(R.id.calendarView);
         calendarView.setOnMonthChangeListener(this);
+        calendarView.setRange(CalendarTools.getMinYear(), 1, CalendarTools.getMaxYear(), 12);
+
         calendarKeAdapter = new CalendarKeAdapter(new ArrayList<AlbumModel>());
         keRecyclerView.setAdapter(calendarKeAdapter);
-
-        calendarMonthSelectView = findViewById(R.id.month_layout);
-        months.addAll(CalendarTools.initCalendarForMonthView());
-        calendarMonthSelectView.setData(months);
+        handler.sendEmptyMessageDelayed(0, 200);
 
         findViewById(R.id.calendar_back).setOnClickListener(this);
         findViewById(R.id.calendar_add).setOnClickListener(this);
     }
 
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    calendarView.scrollToCurrent(true);
+                    break;
+            }
+
+        }
+    };
 
     /**
      * 月份选择器更改状态
