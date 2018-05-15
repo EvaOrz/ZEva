@@ -144,6 +144,11 @@
             android:name=".activity.AllXunzhangActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--去拼团页面-->
+        <activity
+            android:name=".activity.TuanIndexActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

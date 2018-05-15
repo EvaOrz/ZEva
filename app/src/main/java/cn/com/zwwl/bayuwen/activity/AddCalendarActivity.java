@@ -1,17 +1,20 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
 
 import com.maning.calendarlibrary.listeners.OnCalendarRangeChooseListener;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -129,9 +132,12 @@ public class AddCalendarActivity extends BaseActivity {
                 break;
 
             case R.id.add_zengshan:// 增删课程
-                startActivityForResult(new Intent(mContext, SelectCalendarActivity.class), 100);
+                Intent intent = new Intent(mContext, SelectCalendarActivity.class);
+                intent.putExtra("SelectCalendarActivity_data", (Serializable) periods);
+                startActivityForResult(intent, 100);
                 break;
             case R.id.add_xiakeshijian:// 下课时间
+                hideJianpan();
                 new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow.MyTimePickListener() {
                     @Override
                     public void onTimePick(int hour, int minute) {
@@ -141,6 +147,7 @@ public class AddCalendarActivity extends BaseActivity {
                 }, 2);
                 break;
             case R.id.add_shangkeshijian:// 上课时间
+                hideJianpan();
                 new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow.MyTimePickListener() {
                     @Override
                     public void onTimePick(int hour, int minute) {
@@ -151,6 +158,7 @@ public class AddCalendarActivity extends BaseActivity {
                 break;
 
             case R.id.add_kechengjigou:// 课程机构
+                hideJianpan();
                 new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow.MyJigouChooseListener() {
                     @Override
                     public void onJigouChoose(String name) {
@@ -163,6 +171,7 @@ public class AddCalendarActivity extends BaseActivity {
                 break;
 
             case R.id.add_period:// 课程时间段选择器
+                hideJianpan();
                 new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow.MyPeriodPickListener() {
 
                     @Override
@@ -176,6 +185,15 @@ public class AddCalendarActivity extends BaseActivity {
                 }, 4);
                 break;
         }
+    }
+
+    /**
+     * 隐藏软键盘
+     */
+    private void hideJianpan() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
     }
 
     @Override

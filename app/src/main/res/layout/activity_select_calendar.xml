@@ -36,13 +36,23 @@
             android:textSize="@dimen/text_size_20" />
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/calender_list"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:background="@drawable/gray_xiankuang_circle"
-        android:divider="@null"
-        android:listSelector="@android:color/transparent" />
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ListView
+            android:id="@+id/calender_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/listview_seletor"
+            android:dividerHeight="1dp"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none" />
+    </LinearLayout>
+
 
 </LinearLayout>

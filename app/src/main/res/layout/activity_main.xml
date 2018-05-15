@@ -56,7 +56,7 @@
             android:lines="1"
             android:padding="4dp"
             android:text="@string/fm"
-            android:textColor="@drawable/bottom_text_checked"
+            android:textColor="@drawable/oringe_text_checked"
             android:textSize="@dimen/text_size_10" />
 
         <RadioButton
@@ -70,7 +70,7 @@
             android:gravity="center"
             android:padding="4dp"
             android:text="@string/user_center"
-            android:textColor="@drawable/bottom_text_checked"
+            android:textColor="@drawable/oringe_text_checked"
             android:textSize="@dimen/text_size_10" />
 
 

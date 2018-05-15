@@ -169,4 +169,19 @@
     <!--勋章-->
     <string name="my_xunzhang">我的勋章</string>
 
+    <!--团购-->
+    <string name="woyaopingtuan">我要拼团</string>
+    <string name="yiqipingtuan">一起拼团</string>
+    <string name="pingtuan_intro">拼团说明</string>
+    <string name="woxiandianshang">我先垫上</string>
+    <string name="woyaokaituan">我要开团</string>
+    <string name="pingtuan_hint">请输入您收到的拼团码</string>
+    <string name="dian_option1">垫付数量</string>
+    <string name="dian_option2">价格明细</string>
+    <string name="dian_option3">课程总价格</string>
+    <string name="dian_option4">教材价格</string>
+    <string name="dian_option5">团购优惠价</string>
+    <string name="dian_option6">运费</string>
+
+
 </resources>

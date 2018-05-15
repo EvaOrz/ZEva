@@ -6,13 +6,17 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.SimpleFormatter;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
@@ -25,17 +29,30 @@ import cn.com.zwwl.bayuwen.widget.ViewHolder;
  * 增减课程
  */
 public class SelectCalendarActivity extends BaseActivity {
+
+    private ListView listView;
+    private SelectDateAdapter selectDateAdapter;
+    private List<Date> datas = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_calendar);
+        Serializable o = getIntent().getSerializableExtra("SelectCalendarActivity_data");
+        if (o != null) {
+            datas.addAll((ArrayList<Date>) o);
+        }
         initView();
     }
 
     private void initView() {
         findViewById(R.id.select_calendar_back).setOnClickListener(this);
         findViewById(R.id.calendar_add).setOnClickListener(this);
+        listView = findViewById(R.id.calender_list);
+        selectDateAdapter = new SelectDateAdapter(this);
+        selectDateAdapter.setData(datas);
+        listView.setAdapter(selectDateAdapter);
     }
 
     @Override
@@ -85,16 +102,18 @@ public class SelectCalendarActivity extends BaseActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             final Date item = getItem(position);
-            ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_album);
+            ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_calender_select);
 
-            TextView title = viewHolder.getView(R.id.album_title);
-            TextView desc = viewHolder.getView(R.id.album_desc);
-            ImageView img = viewHolder.getView(R.id.album_img);
-            TextView learn = viewHolder.getView(R.id.album_learn_count);
-            TextView per = viewHolder.getView(R.id.album_period);
-
-
-
+            ImageView delete = viewHolder.getView(R.id.calendar_select_delete);
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    remove(item);
+                }
+            });
+            TextView textView = viewHolder.getView(R.id.calendar_select_text);
+            SimpleDateFormat fm = new SimpleDateFormat("yyyy年MM月dd日（EEEE）");
+            textView.setText(fm.format(item));
             return viewHolder.getConvertView();
         }
 

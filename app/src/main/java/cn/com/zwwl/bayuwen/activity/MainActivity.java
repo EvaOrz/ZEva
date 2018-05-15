@@ -90,12 +90,14 @@ public class MainActivity extends BaseActivity {
         tabButton3 = findViewById(R.id.bottom_nav_3);
         tabButton4 = findViewById(R.id.bottom_nav_4);
         findViewById(R.id.toolbar_left).setOnClickListener(this);
+        findViewById(R.id.toolbar_right).setOnClickListener(this);
         tabButton1.setOnClickListener(this);
         tabButton2.setOnClickListener(this);
         tabButton3.setOnClickListener(this);
         tabButton4.setOnClickListener(this);
         avatar.setOnClickListener(this);
     }
+
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
@@ -136,11 +138,15 @@ public class MainActivity extends BaseActivity {
                     drawer.openDrawer(GravityCompat.START);
                 }
                 break;
+            case R.id.toolbar_right:
+                mContext.startActivity(new Intent(mContext, TuanIndexActivity.class));
+                break;
         }
     }
 
     /**
      * 切换四个tab
+     *
      * @param fragment
      */
     private void switchFragment(Fragment fragment) {

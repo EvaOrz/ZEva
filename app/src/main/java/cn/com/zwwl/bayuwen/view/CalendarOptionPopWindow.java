@@ -319,7 +319,7 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_calendar_jigou);
-            TextView textView = viewHolder.getView(R.id.calendar_text);
+            TextView textView = viewHolder.getView(R.id.calendar_option_text);
             if (datas.get(position).isCheckStatus()) {
                 textView.setTextColor(mContext.getResources().getColor(R.color.white));
                 textView.setBackgroundResource(R.drawable.gold_circle);

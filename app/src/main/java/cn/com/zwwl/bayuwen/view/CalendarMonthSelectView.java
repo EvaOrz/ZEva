@@ -3,7 +3,6 @@ package cn.com.zwwl.bayuwen.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -70,7 +69,7 @@ public class CalendarMonthSelectView extends HorizontalScrollView {
             textView.setPadding(10, 10, 10, 10);
             textView.setTag(calendars.get(i));
             textView.setText(CalendarTools.format(calendars.get(i).getTimeInMillis(), "yyyy年MM月"));
-            textView.setLayoutParams(new ViewGroup.LayoutParams(MyApplication.width / 3, ViewPager.LayoutParams.WRAP_CONTENT));
+            textView.setLayoutParams(new ViewGroup.LayoutParams(MyApplication.width / 3, ViewGroup.LayoutParams.WRAP_CONTENT));
             textView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
