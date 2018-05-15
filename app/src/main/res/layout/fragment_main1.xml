@@ -19,13 +19,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/gray_dark"
-                android:orientation="horizontal">
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="5dp">
 
                 <cn.com.zwwl.bayuwen.widget.RoundAngleLayout
+                    android:id="@+id/layout_student"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-
                     android:background="@color/gray_light"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
@@ -62,16 +63,25 @@
 
                 </cn.com.zwwl.bayuwen.widget.RoundAngleLayout>
 
-                <cn.com.zwwl.bayuwen.widget.BannerView
-                    android:id="@+id/fm_head"
+                <!--<cn.com.zwwl.bayuwen.widget.BannerView-->
+                <!--android:id="@+id/frag1_head"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:background="@color/body_bg"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:layout_weight="1" />-->
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/frag1_head"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:layout_weight="1" />
 
                 <cn.com.zwwl.bayuwen.widget.RoundAngleLayout
+                    android:id="@+id/layout_parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
 
                     android:background="@color/gray_light"
                     android:gravity="center_horizontal"
@@ -111,6 +121,7 @@
             </LinearLayout>
             <!--calendar-->
             <LinearLayout
+                android:id="@+id/go_calendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/gold"
@@ -216,6 +227,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
+                android:clipChildren="false"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:padding="10dp">
 
@@ -243,10 +256,11 @@
                         android:textSize="@dimen/text_size_14" />
                 </RelativeLayout>
 
-                <android.support.v4.view.ViewPager
+                <cn.com.zwwl.bayuwen.widget.threed.InfiniteViewPager
                     android:id="@+id/pingtu_pager"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="220dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="5dp" />
             </LinearLayout>
 
             <!--已选课程-->
@@ -327,7 +341,17 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/go_xunzhang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gold_circle"
+                    android:gravity="center"
 
+                    android:padding="10dp"
+                    android:text="查看全部勋章"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_14" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

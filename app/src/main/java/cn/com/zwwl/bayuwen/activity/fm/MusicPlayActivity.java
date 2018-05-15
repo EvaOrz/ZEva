@@ -23,6 +23,7 @@ import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.model.AlbumModel;
 import cn.com.zwwl.bayuwen.model.FmModel;
 import cn.com.zwwl.bayuwen.service.NewMusicService;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.PlayListPopWindow;
@@ -205,7 +206,7 @@ public class MusicPlayActivity extends BaseActivity {
                     Glide.with(mContext).load(albumModel.getPic()).into(image);
                     alTitle.setText(albumModel.getTitle());
                     fmTitle.setText(currentFmModel.getTitle());
-                    wholeTimebox.setText(Tools.getTime(Long.valueOf(currentFmModel.getAudioDuration())));
+                    wholeTimebox.setText(CalendarTools.getTime(Long.valueOf(currentFmModel.getAudioDuration())));
                     seekBar.setMax(Integer.valueOf(currentFmModel.getAudioDuration()));
                     progress = 0;
                     seekBar.setProgress(0);
@@ -224,7 +225,7 @@ public class MusicPlayActivity extends BaseActivity {
                     }
                     seekBar.setProgress(progress);
 
-                    playTimebox.setText(Tools.getTime(seekBar.getProgress()));
+                    playTimebox.setText(CalendarTools.getTime(seekBar.getProgress()));
                     break;
                 case MSG_REFRESH_LIST:
 //                    adapter.setList(fmModels, showCount);

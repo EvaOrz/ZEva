@@ -14,6 +14,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.FmModel;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.GifView;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
@@ -66,7 +67,7 @@ public class FmAdapter extends CheckScrollAdapter<FmModel> {
         title.setText(item.getTitle());
         play.setText(item.getPlay_num() + "");
         pinglun.setText("0");
-        time.setText(Tools.getTime(Long.valueOf(item.getAudioDuration())));
+        time.setText(CalendarTools.getTime(Long.valueOf(item.getAudioDuration())));
         return viewHolder.getConvertView();
     }
 
