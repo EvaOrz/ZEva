@@ -17,6 +17,7 @@ import cn.com.zwwl.bayuwen.adapter.HistroyAdapter;
 import cn.com.zwwl.bayuwen.api.fm.AlbumListApi;
 import cn.com.zwwl.bayuwen.model.AlbumModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 
@@ -73,7 +74,7 @@ public class FmHistoryActivity extends BaseActivity {
                     albumModels1.clear();
                     albumModels2.clear();
                     for (AlbumModel aa : data) {
-                        if (System.currentTimeMillis() - Tools.fromStringTotime(aa.getCreated_at()) > 1000 * 60 * 60 * 24) {
+                        if (System.currentTimeMillis() - CalendarTools.fromStringTotime(aa.getCreated_at()) > 1000 * 60 * 60 * 24) {
                             albumModels2.add(aa);
                         } else {
                             albumModels1.add(aa);

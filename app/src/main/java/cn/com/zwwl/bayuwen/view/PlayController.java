@@ -13,6 +13,7 @@ import android.widget.TextView;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.fm.MusicPlayActivity;
 import cn.com.zwwl.bayuwen.model.FmModel;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 
 public class PlayController extends LinearLayout {
@@ -90,7 +91,7 @@ public class PlayController extends LinearLayout {
         this.fmModel = fmModel;
 
         title.setText(fmModel.getTitle());
-        time.setText("00:00/" + Tools.getTime(Long.valueOf(fmModel.getAudioDuration())));
+        time.setText("00:00/" + CalendarTools.getTime(Long.valueOf(fmModel.getAudioDuration())));
 
     }
 
@@ -100,8 +101,8 @@ public class PlayController extends LinearLayout {
 
     public void setCurrentTime(int progress) {
         if (fmModel == null) return;
-        String pp = Tools.getTime(progress);
-        time.setText(pp + "/" + Tools.getTime(Long.valueOf(fmModel.getAudioDuration())));
+        String pp = CalendarTools.getTime(progress);
+        time.setText(pp + "/" + CalendarTools.getTime(Long.valueOf(fmModel.getAudioDuration())));
     }
 
     public interface PlayControlClickListener {
