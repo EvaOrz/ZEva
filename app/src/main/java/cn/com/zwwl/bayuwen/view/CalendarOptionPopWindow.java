@@ -171,7 +171,7 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
                 @Override
                 public void onRangeDate(Date date, Date date1) {
                     startDate = date;
-                    endDate = endDate;
+                    endDate = date1;
                 }
             });
         }
@@ -183,9 +183,8 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    boolean ss = (boolean) view.getTag();
+                    boolean ss = weekDatas.get(position).isCheckStatus();
                     weekDatas.get(position).setCheckStatus(!ss);
-                    view.setTag(!ss);
                     gridAdapter.notifyDataSetChanged();
 
                 }
@@ -306,11 +305,11 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
         }
 
         public int getCount() {
-            return jigouDatas.size();
+            return datas.size();
         }
 
         public Object getItem(int position) {
-            return jigouDatas.get(position);
+            return datas.get(position);
         }
 
         public long getItemId(int position) {

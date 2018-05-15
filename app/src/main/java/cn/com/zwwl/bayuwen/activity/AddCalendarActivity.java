@@ -97,10 +97,20 @@ public class AddCalendarActivity extends BaseActivity {
                     jieTv1.setText(df.format(endDate));
                     jieTv2.setText(new SimpleDateFormat("EEE").format(endDate));
                     weekCountTv.setText(CalendarTools.countTwoDayWeek(startDate, endDate) + "周");
-                    new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow.MyJigouChooseListener() {
+                    new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow.MyWeekChooseListener() {
                         @Override
-                        public void onJigouChoose(String name) {
-
+                        public void onWeekChoose(List<Integer> weeks) {
+                            List<Date> pickDays = new ArrayList<>();
+                            for (Date date : periods) {
+                                Calendar c = Calendar.getInstance();
+                                c.setTime(date);
+                                for (int i : weeks)
+                                    if (c.get(Calendar.DAY_OF_WEEK) == i) {
+                                        pickDays.add(date);
+                                    }
+                            }
+                            periods.clear();
+                            periods.addAll(pickDays);
                         }
                     }, 5);
                     break;
@@ -163,7 +173,7 @@ public class AddCalendarActivity extends BaseActivity {
                         periods.addAll(CalendarTools.betweenDays(startDate, endDate));
                         handler.sendEmptyMessage(3);
                     }
-                    }, 4);
+                }, 4);
                 break;
         }
     }
