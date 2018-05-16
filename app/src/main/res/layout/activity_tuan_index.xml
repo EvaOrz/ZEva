@@ -31,9 +31,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="+"
+            android:text="@string/pingtuan_intro"
             android:textColor="@color/gold"
-            android:textSize="@dimen/text_size_20" />
+            android:textSize="@dimen/text_size_14" />
     </RelativeLayout>
 
     <RadioGroup
@@ -56,7 +56,7 @@
             android:padding="10dp"
             android:text="@string/yiqipingtuan"
             android:textColor="@drawable/gold_text_checked"
-            android:textSize="@dimen/text_size_12" />
+            android:textSize="@dimen/text_size_14" />
 
         <RadioButton
             android:id="@+id/tuan_index_bt2"
@@ -69,7 +69,7 @@
             android:padding="10dp"
             android:text="@string/woxiandianshang"
             android:textColor="@drawable/gold_text_checked"
-            android:textSize="@dimen/text_size_12" />
+            android:textSize="@dimen/text_size_14" />
 
 
     </RadioGroup>

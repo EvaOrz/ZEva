@@ -149,6 +149,21 @@
             android:name=".activity.TuanIndexActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--我要开团页面-->
+        <activity
+            android:name=".activity.TuanKaiActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--团购付费页面-->
+        <activity
+            android:name=".activity.TuanPayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--团购付费结果页面-->
+        <activity
+            android:name=".activity.TuanPayResultActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

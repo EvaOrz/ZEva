@@ -182,6 +182,13 @@
     <string name="dian_option4">教材价格</string>
     <string name="dian_option5">团购优惠价</string>
     <string name="dian_option6">运费</string>
-
-
+    <string name="dian_option7">需付款：</string>
+    <string name="dian_option8">合计：</string>
+    <string name="dian_option9">确认垫付</string>
+    <string name="kai_tip">请在10分钟内邀请5人以上的好友参团</string>
+    <string name="kai_copy">复制拼团码</string>
+    <string name="kai_share">分享拼团</string>
+    <string name="kai_pay">报名付费</string>
+    <string name="tuan_success">报名成功</string>
+    <string name="chakan_kecheng">查看课程跟踪</string>
 </resources>
