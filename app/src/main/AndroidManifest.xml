@@ -164,6 +164,31 @@
             android:name=".activity.TuanPayResultActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--视频播放页面-->
+        <activity
+            android:name=".activity.VideoPlayActivity"
+            android:configChanges="screenSize|orientation"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <!--会员资料页面-->
+        <activity
+            android:name=".activity.ParentInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--设置页面-->
+        <activity
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <!--管理地址页面-->
+        <activity
+            android:name=".activity.AddressManageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <!--添加地址页面-->
+        <activity
+            android:name=".activity.AddressAddActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 
 </manifest>

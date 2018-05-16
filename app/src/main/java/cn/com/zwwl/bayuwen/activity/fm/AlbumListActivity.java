@@ -50,7 +50,7 @@ public class AlbumListActivity extends BaseActivity {
         if (type == 0) {
             title.setText(R.string.album_list);
         } else if (type == 1) {
-            title.setText(R.string.my_shoucang);
+            title.setText(R.string.gerenshoucang);
         }
         listView = findViewById(R.id.album_list_listview);
         findViewById(R.id.album_list_back).setOnClickListener(this);

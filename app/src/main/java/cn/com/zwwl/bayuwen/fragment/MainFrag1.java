@@ -27,6 +27,7 @@ import cn.com.zwwl.bayuwen.activity.AllXunzhangActivity;
 import cn.com.zwwl.bayuwen.activity.CalendarActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.TuanIndexActivity;
+import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.ImageBannerAdapter;
 import cn.com.zwwl.bayuwen.adapter.MainYixuanKeAdapter;
 import cn.com.zwwl.bayuwen.model.AlbumModel;
@@ -122,6 +123,12 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             RoundAngleLayout imageView = new RoundAngleLayout(mActivity, 10);
             imageView.setLayoutParams(new ViewGroup.LayoutParams(bannerWid, bannerHei));
             imageView.setBackgroundResource(R.drawable.test_banner);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(mActivity, VideoPlayActivity.class));
+                }
+            });
             bannerDatas.add(imageView);
         }
         imageBannerAdapter = new ImageBannerAdapter(mActivity, bannerDatas);
@@ -185,7 +192,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                 ((MainActivity) mActivity).openDrawer();
                 break;
             case R.id.toolbar_right:
-                mActivity.startActivity(new Intent(mActivity, TuanIndexActivity.class));
+
                 break;
         }
     }

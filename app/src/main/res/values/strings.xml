@@ -10,6 +10,7 @@
     <string name="nenglifenxi">能力分析</string>
     <string name="yixuankecheng">已选课程</string>
     <string name="suohuoxunzhang">所获勋章</string>
+    <string name="settings">设置</string>
 
     <!--FM main-->
     <string name="hot_recommond">热门推荐</string>
@@ -79,7 +80,7 @@
     <string name="un_login">未登录</string>
     <string name="my_info">个人资料</string>
     <string name="my_history">收听历史</string>
-    <string name="my_shoucang">我的收藏</string>
+    <string name="tianxie_code">填写团购验证码</string>
     <string name="about">关于诸葛学堂</string>
     <string name="logout">退出登录</string>
 
@@ -92,7 +93,8 @@
     <string name="huiyuanziliao">会员资料</string>
     <string name="qiehuanxuehseng">切换学生</string>
     <string name="wodedingdan">我的订单</string>
-    <string name="gerenshoucang">个人收藏</string>
+    <string name="gerenshoucang">我的收藏</string>
+    <string name="invite">邀请好友加入大语文</string>
     <string name="tiaoke">调课</string>
     <string name="zhuanban">转班</string>
 
@@ -191,4 +193,16 @@
     <string name="kai_pay">报名付费</string>
     <string name="tuan_success">报名成功</string>
     <string name="chakan_kecheng">查看课程跟踪</string>
+
+    <!--会员资料-->
+    <string name="manage_dizhi">地址管理</string>
+    <string name="gift_child">来自孩子的礼物</string>
+    <string name="add_address">+ 新增地址</string>
+    <string name="add_address1">新增地址</string>
+    <string name="save_address">保存地址</string>
+    <string name="set_defualt">设为默认</string>
+    <string name="edit">编辑</string>
+    <string name="delete">删除</string>
+    <string name="choose_people">选联系人</string>
+    <string name="shouhuoren">收货人</string>
 </resources>

@@ -50,7 +50,6 @@ public class MainActivity extends BaseActivity {
     private void initView() {
         mainView = findViewById(R.id.main_view);
         drawer = findViewById(R.id.drawer_layout);
-
         DrawerLayout.DrawerListener listen = new DrawerLayout.DrawerListener() {
 
             @Override
@@ -94,6 +93,13 @@ public class MainActivity extends BaseActivity {
         tabButton3.setOnClickListener(this);
         tabButton4.setOnClickListener(this);
         avatar.setOnClickListener(this);
+        findViewById(R.id.huiyuanziliao).setOnClickListener(this);
+        findViewById(R.id.wodedingdan).setOnClickListener(this);
+        findViewById(R.id.gerenshoucang).setOnClickListener(this);
+        findViewById(R.id.tianxie_code).setOnClickListener(this);
+        findViewById(R.id.invite).setOnClickListener(this);
+        findViewById(R.id.setting).setOnClickListener(this);
+
     }
 
     @SuppressLint("HandlerLeak")
@@ -114,7 +120,7 @@ public class MainActivity extends BaseActivity {
     /**
      * 打开抽屉
      */
-    public void openDrawer(){
+    public void openDrawer() {
         if (!drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.openDrawer(GravityCompat.START);
         }
@@ -140,7 +146,21 @@ public class MainActivity extends BaseActivity {
             case R.id.main_avatar:
                 mContext.startActivity(new Intent(mContext, LoginActivity.class));
                 break;
-
+            case R.id.huiyuanziliao:// 会员资料
+                startActivity(new Intent(mContext, ParentInfoActivity.class));
+                break;
+            case R.id.wodedingdan:// 我的订单
+                break;
+            case R.id.gerenshoucang:// 我的收藏
+                break;
+            case R.id.tianxie_code:// 填写团购课程码
+                startActivity(new Intent(this, TuanIndexActivity.class));
+                break;
+            case R.id.invite:// 邀请好友加入大语文
+                break;
+            case R.id.setting:
+                startActivity(new Intent(mContext, SettingActivity.class));
+                break;
         }
     }
 
