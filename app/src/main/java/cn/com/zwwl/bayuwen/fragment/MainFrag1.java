@@ -25,6 +25,8 @@ import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.AllXunzhangActivity;
 import cn.com.zwwl.bayuwen.activity.CalendarActivity;
+import cn.com.zwwl.bayuwen.activity.MainActivity;
+import cn.com.zwwl.bayuwen.activity.TuanIndexActivity;
 import cn.com.zwwl.bayuwen.adapter.ImageBannerAdapter;
 import cn.com.zwwl.bayuwen.adapter.MainYixuanKeAdapter;
 import cn.com.zwwl.bayuwen.model.AlbumModel;
@@ -149,9 +151,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         pingPager.setPageTransformer(true, new GalleryTransformer());
         pingPager.setCurrentItem(2);
 
-
         root.findViewById(R.id.go_calendar).setOnClickListener(this);
         root.findViewById(R.id.go_xunzhang).setOnClickListener(this);
+        root.findViewById(R.id.toolbar_left).setOnClickListener(this);
+        root.findViewById(R.id.toolbar_right).setOnClickListener(this);
     }
 
     /**
@@ -177,6 +180,12 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
 
             case R.id.go_xunzhang:
                 startActivity(new Intent(mActivity, AllXunzhangActivity.class));
+                break;
+            case R.id.toolbar_left:// 打开抽屉
+                ((MainActivity) mActivity).openDrawer();
+                break;
+            case R.id.toolbar_right:
+                mActivity.startActivity(new Intent(mActivity, TuanIndexActivity.class));
                 break;
         }
     }

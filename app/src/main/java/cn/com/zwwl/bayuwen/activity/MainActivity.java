@@ -89,8 +89,6 @@ public class MainActivity extends BaseActivity {
         tabButton2 = findViewById(R.id.bottom_nav_2);
         tabButton3 = findViewById(R.id.bottom_nav_3);
         tabButton4 = findViewById(R.id.bottom_nav_4);
-        findViewById(R.id.toolbar_left).setOnClickListener(this);
-        findViewById(R.id.toolbar_right).setOnClickListener(this);
         tabButton1.setOnClickListener(this);
         tabButton2.setOnClickListener(this);
         tabButton3.setOnClickListener(this);
@@ -113,6 +111,15 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    /**
+     * 打开抽屉
+     */
+    public void openDrawer(){
+        if (!drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.openDrawer(GravityCompat.START);
+        }
+    }
+
     @Override
     public void onClick(View view) {
         super.onClick(view);
@@ -133,14 +140,7 @@ public class MainActivity extends BaseActivity {
             case R.id.main_avatar:
                 mContext.startActivity(new Intent(mContext, LoginActivity.class));
                 break;
-            case R.id.toolbar_left:// 打开抽屉
-                if (!drawer.isDrawerOpen(GravityCompat.START)) {
-                    drawer.openDrawer(GravityCompat.START);
-                }
-                break;
-            case R.id.toolbar_right:
-                mContext.startActivity(new Intent(mContext, TuanIndexActivity.class));
-                break;
+
         }
     }
 
