@@ -34,7 +34,6 @@ public class AddressPopWindow implements View.OnClickListener {
 
     private WheelView wvProvince;
     private WheelView wvCitys;
-    private View lyChangeAddress;
     private TextView btnSure;
     private TextView btnCancel;
 
@@ -80,14 +79,11 @@ public class AddressPopWindow implements View.OnClickListener {
         window.setBackgroundDrawable(new BitmapDrawable());
         window.showAtLocation(view, Gravity.BOTTOM, 0, 0);
 
-
         wvProvince = (WheelView) view.findViewById(R.id.wv_address_province);
         wvCitys = (WheelView) view.findViewById(R.id.wv_address_city);
-        lyChangeAddress = view.findViewById(R.id.ly_myinfo_changeaddress);
         btnSure = (TextView) view.findViewById(R.id.btn_myinfo_sure);
         btnCancel = (TextView) view.findViewById(R.id.btn_myinfo_cancel);
 
-        lyChangeAddress.setOnClickListener(this);
         btnSure.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
 
@@ -170,10 +166,9 @@ public class AddressPopWindow implements View.OnClickListener {
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.ly_myinfo_changeaddress:
+            case R.id.btn_myinfo_sure:
                 listener.onClick(strProvince, strCity);
                 break;
-
         }
         window.dismiss();
     }

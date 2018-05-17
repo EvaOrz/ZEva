@@ -1,13 +1,21 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,6 +23,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 import cn.com.zwwl.bayuwen.widget.AutoTextGroupView;
 
 /**
@@ -24,15 +33,17 @@ public class AddressAddActivity extends BaseActivity {
 
     private AutoTextGroupView tagView;
     private List<AddressTag> tagDatas = new ArrayList<>();
+    private LinearLayout addTag, addLayout;
+    private EditText nameEv, phoneEv;
+    private String username, usernumber;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_add);
-        initData();
         initView();
-
+        initData();
     }
 
     @Override
@@ -44,22 +55,35 @@ public class AddressAddActivity extends BaseActivity {
                 break;
             case R.id.add_address_save:
                 break;
-        }
+            case R.id.tongxunlu:// 访问通讯录
+                startActivityForResult(new Intent(Intent.ACTION_PICK,
+                        ContactsContract.Contacts.CONTENT_URI), 0);
+                break;
 
+            case R.id.a_a_address:// 选择地址
+                new AddressPopWindow(mContext, new AddressPopWindow.OnAddressCListener() {
+                    @Override
+                    public void onClick(String province, String city) {
+
+                    }
+                });
+                break;
+        }
     }
 
 
     @Override
     protected void initData() {
-        if (tagDatas.size() == 0){
+        if (tagDatas.size() == 0) {
             tagDatas.add(new AddressTag("家", false));
             tagDatas.add(new AddressTag("公司", false));
             tagDatas.add(new AddressTag("学校", false));
         }
+        tagView.removeAllViews();
         ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.setMargins(10, 10, 10, 10);
+        lp.setMargins(0, 0, 40, 20);
         for (AddressTag addressTag : tagDatas) {
-            tagView.addView(getTextView(addressTag), lp);
+            tagView.addView(getTextView(addressTag, false), lp);
         }
     }
 
@@ -72,6 +96,16 @@ public class AddressAddActivity extends BaseActivity {
                 case 0:
                     initData();
                     break;
+
+                case 1:
+                    addTag.setVisibility(View.GONE);
+                    addLayout.setVisibility(View.VISIBLE);
+                    break;
+
+                case 2:
+                    nameEv.setText(username);
+                    phoneEv.setText(usernumber);
+                    break;
             }
         }
     };
@@ -80,9 +114,15 @@ public class AddressAddActivity extends BaseActivity {
     private void initView() {
         findViewById(R.id.add_address_back).setOnClickListener(this);
         findViewById(R.id.add_address_save).setOnClickListener(this);
+        findViewById(R.id.tongxunlu).setOnClickListener(this);
+        findViewById(R.id.a_a_address).setOnClickListener(this);
+
+        nameEv = findViewById(R.id.a_a_name);
+        phoneEv = findViewById(R.id.a_a_phone);
         tagView = findViewById(R.id.tag_view);
-
-
+        addTag = findViewById(R.id.add_tag);
+        addTag.addView(getTextView(null, true), new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        addLayout = findViewById(R.id.add_layout);
     }
 
 
@@ -91,36 +131,49 @@ public class AddressAddActivity extends BaseActivity {
      *
      * @return
      */
-    private TextView getTextView(AddressTag addressTag) {
+    private TextView getTextView(AddressTag addressTag, final boolean isAdd) {
         TextView view = new TextView(this);
-        view.setTag(addressTag);
-        view.setText(addressTag.getTagTxt());
 
-        if (addressTag.isCheck()){
-            view.setTextColor(getResources().getColor(R.color.white));
-            view.setBackgroundResource(R.drawable.gold_circle);
-        }else{
+        if (isAdd) {
+            view.setText("+");
+            view.setTextSize(14);
+            view.setGravity(Gravity.CENTER);
             view.setTextColor(getResources().getColor(R.color.gray_dark));
-            view.setBackgroundResource(R.drawable.gray_xiankuang);
+            view.setBackgroundResource(R.drawable.gray_xiankuang_circle);
+        } else {
+            view.setTag(addressTag);
+            view.setText(addressTag.getTagTxt());
+            view.setTextSize(12);
+            view.setGravity(Gravity.CENTER);
+            if (!addressTag.isCheck()) {
+                view.setTextColor(getResources().getColor(R.color.gray_dark));
+                view.setBackgroundResource(R.drawable.gray_xiankuang_circle);
+            } else {
+                view.setTextColor(getResources().getColor(R.color.white));
+                view.setBackgroundResource(R.drawable.gold_circle);
+            }
         }
-        view.setTextSize(R.dimen.text_size_14);
-        view.setGravity(Gravity.CENTER);
-        view.setPadding(20, 10, 20, 10);
+        view.setPadding(40, 10, 40, 10);
 
         // 点击跳转
         view.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                AddressTag o = (AddressTag) v.getTag();
-                for (int i = 0; i < tagDatas.size(); i++) {
-                    if (tagDatas.get(i).getTagTxt().equals(o.getTagTxt())) {
-                        boolean origin = tagDatas.get(i).isCheck;
-                        tagDatas.get(i).setCheck(!origin);
-                    }else
-                        tagDatas.get(i).setCheck(false);
+                if (isAdd) {
+                    handler.sendEmptyMessage(1);
+                } else {
+                    AddressTag o = (AddressTag) v.getTag();
+                    for (int i = 0; i < tagDatas.size(); i++) {
+                        if (tagDatas.get(i).getTagTxt().equals(o.getTagTxt())) {
+                            boolean origin = tagDatas.get(i).isCheck;
+                            tagDatas.get(i).setCheck(!origin);
+                        } else
+                            tagDatas.get(i).setCheck(false);
+                    }
+                    handler.sendEmptyMessage(0);
                 }
-                handler.sendEmptyMessage(0);
+
             }
         });
         return view;
@@ -152,5 +205,37 @@ public class AddressAddActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            // ContentProvider展示数据类似一个单个数据库表
+            // ContentResolver实例带的方法可实现找到指定的ContentProvider并获取到ContentProvider的数据
+            ContentResolver reContentResolverol = getContentResolver();
+            // URI,每个ContentProvider定义一个唯一的公开的URI,用于指定到它的数据集
+            Uri contactData = data.getData();
+            // 查询就是输入URI等参数,其中URI是必须的,其他是可选的,如果系统能找到URI对应的ContentProvider将返回一个Cursor对象.
+            Cursor cursor = managedQuery(contactData, null, null, null, null);
+            cursor.moveToFirst();
+            // 获得DATA表中的名字
+            username = cursor.getString(cursor
+                    .getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+            // 条件为联系人ID
+            String contactId = cursor.getString(cursor
+                    .getColumnIndex(ContactsContract.Contacts._ID));
+            // 获得DATA表中的电话号码，条件为联系人ID,因为手机号码可能会有多个
+            Cursor phone = reContentResolverol.query(
+                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = "
+                            + contactId, null, null);
+            while (phone.moveToNext()) {
+                usernumber = phone
+                        .getString(phone
+                                .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                handler.sendEmptyMessage(2);
+            }
+
+        }
+    }
 
 }

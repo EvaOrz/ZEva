@@ -92,7 +92,7 @@
                     android:textSize="@dimen/text_size_14" />
 
                 <EditText
-                    android:id="@+id/content_address"
+                    android:id="@+id/a_a_phone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -108,6 +108,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/tongxunlu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
@@ -139,6 +140,7 @@
         android:padding="15dp">
 
         <LinearLayout
+            android:id="@+id/a_a_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="true"
@@ -221,17 +223,66 @@
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_size_14" />
 
-        <cn.com.zwwl.bayuwen.widget.AutoTextGroupView
-            android:id="@+id/tag_view"
+        <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_height="wrap_content"/>
+            android:orientation="vertical">
+
+            <cn.com.zwwl.bayuwen.widget.AutoTextGroupView
+                android:id="@+id/tag_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/add_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:id="@+id/add_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/gray_xiankuang"
+                    android:padding="5dp"
+                    android:hint="@string/tag_hint"
+                    android:inputType="number"
+                    android:lines="1"
+                    android:textColor="@color/gray_dark"
+                    android:textColorHint="@color/gray_light"
+                    android:textSize="@dimen/text_size_14" />
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_12"
+                    android:text="@string/sure"
+                    android:background="@color/gold"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+
     </LinearLayout>
-    
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/add_address_save"

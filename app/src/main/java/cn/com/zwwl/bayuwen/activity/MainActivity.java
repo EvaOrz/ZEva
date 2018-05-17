@@ -8,12 +8,16 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.support.v4.app.FragmentTransaction;
 
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.fragment.MainFrag1;
@@ -28,13 +32,13 @@ public class MainActivity extends BaseActivity {
     private RadioButton tabButton1, tabButton2, tabButton3, tabButton4;
     private LinearLayout mainView;
     private DrawerLayout drawer;// 抽屉
-
+    private LinearLayout childLayout;// 切换学生layout
+    private List<View> childCardViews = new ArrayList<>();// 学生卡片
     private Fragment mTempFragment;
     private MainFrag1 mainFrag1;
     private MainFrag2 mainFrag2;
     private MainFrag3 mainFrag3;
     private MainFrag4 mainFrag4;
-
 
     private ImageView avatar;
 
@@ -83,6 +87,7 @@ public class MainActivity extends BaseActivity {
         switchFragment(mainFrag1);
 
         avatar = findViewById(R.id.main_avatar);
+        childLayout = findViewById(R.id.child_layout);
 
         tabButton1 = findViewById(R.id.bottom_nav_1);
         tabButton2 = findViewById(R.id.bottom_nav_2);
@@ -99,7 +104,7 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.tianxie_code).setOnClickListener(this);
         findViewById(R.id.invite).setOnClickListener(this);
         findViewById(R.id.setting).setOnClickListener(this);
-
+        findViewById(R.id.child_add).setOnClickListener(this);
     }
 
     @SuppressLint("HandlerLeak")
@@ -107,6 +112,16 @@ public class MainActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    childLayout.removeAllViews();
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    params.bottomMargin = 20;
+                    for (View view : childCardViews) {
+                        childLayout.addView(view, params);
+                    }
+                    break;
+            }
 
 
         }
@@ -114,7 +129,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        initChildLayout();
     }
 
     /**
@@ -161,6 +176,9 @@ public class MainActivity extends BaseActivity {
             case R.id.setting:
                 startActivity(new Intent(mContext, SettingActivity.class));
                 break;
+            case R.id.child_add:// 添加孩子
+                startActivity(new Intent(mContext, ChildInfoActivity.class));
+                break;
         }
     }
 
@@ -188,6 +206,30 @@ public class MainActivity extends BaseActivity {
             }
             mTempFragment = fragment;
         }
+    }
+
+    /**
+     * 初始化切换学生栏
+     */
+    private void initChildLayout() {
+        childCardViews.clear();
+        for (int i = 0; i < 2; i++) {
+            View view = LayoutInflater.from(this).inflate(R.layout.item_child, null);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //todo??
+                }
+            });
+            view.findViewById(R.id.item_child_go).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(mContext, ChildInfoActivity.class));
+                }
+            });
+            childCardViews.add(view);
+        }
+        handler.sendEmptyMessage(0);
     }
 
 

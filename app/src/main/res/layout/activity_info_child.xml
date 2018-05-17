@@ -13,7 +13,7 @@
         android:padding="10dp">
 
         <ImageView
-            android:id="@+id/info_p_back"
+            android:id="@+id/info_c_back"
             android:layout_width="@dimen/back_size"
             android:layout_height="@dimen/back_size"
             android:src="@drawable/back_gray" />
@@ -22,18 +22,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/huiyuanziliao"
+            android:text="王大宝"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_16" />
         <TextView
-            android:id="@+id/info_p_save"
+            android:id="@+id/info_c_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="@string/save"
             android:textColor="@color/gold"
             android:textSize="@dimen/text_size_16" />
-
     </RelativeLayout>
 
     <ScrollView
@@ -54,7 +53,7 @@
                 android:padding="15dp">
 
                 <LinearLayout
-                    android:id="@+id/info_p_avatar"
+                    android:id="@+id/info_c_avatar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -69,7 +68,7 @@
                         android:textSize="@dimen/text_size_14" />
 
                     <ImageView
-                        android:id="@+id/info_p_aimg"
+                        android:id="@+id/info_c_aimg"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/avatar_placeholder" />
@@ -88,7 +87,7 @@
                     android:background="@color/gray_line" />
 
                 <LinearLayout
-                    android:id="@+id/info_p_name"
+                    android:id="@+id/info_c_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -105,7 +104,7 @@
                         android:textSize="@dimen/text_size_14" />
 
                     <EditText
-                        android:id="@+id/info_p_nametv"
+                        android:id="@+id/info_c_nametv"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -113,7 +112,7 @@
 
                         android:gravity="right"
                         android:lines="1"
-                        android:text="王妈妈"
+                        android:text="王大宝"
                         android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_14" />
 
@@ -131,7 +130,7 @@
                     android:background="@color/gray_line" />
 
                 <LinearLayout
-                    android:id="@+id/info_p_sex"
+                    android:id="@+id/info_c_sex"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -146,7 +145,7 @@
                         android:textSize="@dimen/text_size_14" />
 
                     <TextView
-                        android:id="@+id/info_p_sextv"
+                        android:id="@+id/info_c_sextv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lines="1"
@@ -177,7 +176,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/phone"
+                        android:text="@string/birthday"
                         android:textColor="@color/gray_dark"
                         android:textSize="@dimen/text_size_14" />
 
@@ -186,36 +185,173 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lines="1"
-                        android:text="15910725520"
+                        android:text="2018年5月17日"
                         android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_14" />
-
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/mn_calendar_icon_arrow_right" />
                 </LinearLayout>
 
             </LinearLayout>
-            <!--地址管理-->
             <LinearLayout
-                android:id="@+id/info_p_manage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@drawable/gray_xiankuang_circle"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="15dp">
 
-                <TextView
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/manage_dizhi"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/text_size_14" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/mn_calendar_icon_arrow_right" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/ruxue_day"
+                        android:textColor="@color/gray_dark"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:text="2018年5月17日"
+                        android:textColor="@color/gray_light"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/mn_calendar_icon_arrow_right" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_height"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/gray_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="@string/nianji"
+                        android:textColor="@color/gray_dark"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+
+                        android:gravity="right"
+                        android:lines="1"
+                        android:text="三年级"
+                        android:textColor="@color/gray_light"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/mn_calendar_icon_arrow_right" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_height"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/gray_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/zaiduxuexiao"
+                        android:textColor="@color/gray_dark"
+                        android:textSize="@dimen/text_size_14" />
+                    <EditText
+                        android:id="@+id/info_c_schoolev"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="right"
+                        android:lines="1"
+                        android:text="中国人民大学附属小学"
+                        android:textColor="@color/gray_light"
+                        android:textSize="@dimen/text_size_14" />
+
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/mn_calendar_icon_arrow_right" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_height"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/gray_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/jinji_lianxi"
+                        android:textColor="@color/gray_dark"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <EditText
+                        android:id="@+id/info_c_phoneev"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="right"
+                        android:lines="1"
+                        android:text="18910162442"
+                        android:textColor="@color/gray_light"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/mn_calendar_icon_arrow_right" />
+                </LinearLayout>
+
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -228,13 +364,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/gift_child"
+                    android:text="@string/woderongyu"
                     android:textColor="@color/gray_dark"
                     android:textSize="@dimen/text_size_14" />
 
                 <GridView
                     android:id="@+id/gift_grid"
                     android:layout_width="match_parent"
+                    android:scrollbars="none"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>

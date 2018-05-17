@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,12 +26,15 @@ import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.AllXunzhangActivity;
 import cn.com.zwwl.bayuwen.activity.CalendarActivity;
+import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
+import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
 import cn.com.zwwl.bayuwen.activity.TuanIndexActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.ImageBannerAdapter;
 import cn.com.zwwl.bayuwen.adapter.MainYixuanKeAdapter;
 import cn.com.zwwl.bayuwen.model.AlbumModel;
+import cn.com.zwwl.bayuwen.view.ChildMenuPopView;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 import cn.com.zwwl.bayuwen.widget.RoundAngleLayout;
 import cn.com.zwwl.bayuwen.widget.threed.GalleryTransformer;
@@ -44,15 +48,14 @@ import cn.jzvd.JZUtils;
 public class MainFrag1 extends Fragment implements View.OnClickListener {
 
     private Activity mActivity;
-    //    private BannerView bannerView;
     private ViewPager bannerViewPager;
     private ImageBannerAdapter imageBannerAdapter;
     private RoundAngleLayout studentLay, parentLay;// banner位的学生信息栏
-    private TextView notificationTv;
+    private TextView notificationTv, childTxt;
     private View root;
     private NoScrollListView yixuanKeListView;// 已选课程列表
     private MainYixuanKeAdapter yixuanKeAdapter;
-
+    private RelativeLayout toolbar;//
     private InfiniteViewPager pingPager;// 拼图列表
     private ThreeDAdapter pingAdapter;
     private List<View> pingtuData = new ArrayList<>();
@@ -114,9 +117,11 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     }
 
     private void initView() {
+        toolbar = root.findViewById(R.id.toolbar);
         studentLay = root.findViewById(R.id.layout_student);
         parentLay = root.findViewById(R.id.layout_parent);
         bannerViewPager = root.findViewById(R.id.frag1_head);
+        childTxt = root.findViewById(R.id.toolbar_title);
         initSize();
 
         for (int i = 0; i < 2; i++) {
@@ -158,6 +163,9 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         pingPager.setPageTransformer(true, new GalleryTransformer());
         pingPager.setCurrentItem(2);
 
+        studentLay.setOnClickListener(this);
+        parentLay.setOnClickListener(this);
+        childTxt.setOnClickListener(this);
         root.findViewById(R.id.go_calendar).setOnClickListener(this);
         root.findViewById(R.id.go_xunzhang).setOnClickListener(this);
         root.findViewById(R.id.toolbar_left).setOnClickListener(this);
@@ -194,7 +202,23 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             case R.id.toolbar_right:
 
                 break;
+            case R.id.layout_student:
+                startActivity(new Intent(mActivity, ChildInfoActivity.class));
+                break;
+            case R.id.layout_parent:
+                startActivity(new Intent(mActivity, ParentInfoActivity.class));
+                break;
+            case R.id.toolbar_title:// 切换学生
+                ChildMenuPopView childMenuPopView = new ChildMenuPopView(mActivity, null, new ChildMenuPopView.OnChildPickListener() {
+                    @Override
+                    public void onChildPick() {
+
+                    }
+                });
+                childMenuPopView.showPopupWindow(toolbar);
+                break;
         }
+
     }
 
     @Override
