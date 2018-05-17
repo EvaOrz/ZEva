@@ -65,7 +65,7 @@
                     android:gravity="right"
                     android:inputType="number"
                     android:lines="1"
-                    android:textColor="@color/gray_light"
+                    android:textColor="@color/gray_dark"
                     android:textColorHint="@color/gray_light"
                     android:textSize="@dimen/text_size_14" />
             </LinearLayout>
@@ -99,11 +99,10 @@
                     android:background="@null"
                     android:gravity="right"
                     android:lines="1"
-                    android:textColor="@color/gray_light"
+                    android:textColor="@color/gray_dark"
                     android:textColorHint="@color/gray_light"
                     android:textSize="@dimen/text_size_14" />
             </LinearLayout>
-
 
 
         </LinearLayout>
@@ -111,23 +110,128 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginLeft="15dp"
+            android:gravity="center"
             android:orientation="vertical">
+
             <ImageView
                 android:layout_width="30dp"
-                android:background="@color/gray_dark"
-                android:layout_height="30dp" />
+                android:layout_height="30dp"
+                android:background="@color/gray_dark" />
+
             <TextView
                 android:layout_width="wrap_content"
-                android:textColor="@color/gray_dark"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:textSize="@dimen/text_size_14"
                 android:text="@string/choose_people"
-                android:layout_height="wrap_content" />
+                android:textColor="@color/gray_light"
+                android:textSize="@dimen/text_size_10" />
         </LinearLayout>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/gray_xiankuang_circle"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/suozaidiqu"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/text_size_14" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:lines="1"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/text_size_14" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:background="@drawable/mn_calendar_icon_arrow_right" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/gray_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/detail_address"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/text_size_14" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/detail_address_hint"
+                android:textColor="@color/gray_dark"
+                android:textColorHint="@color/gray_light"
+                android:textSize="@dimen/text_size_14" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/gray_xiankuang_circle"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tag"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/text_size_14" />
+
+        <cn.com.zwwl.bayuwen.widget.AutoTextGroupView
+            android:id="@+id/tag_view"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <TextView
         android:id="@+id/add_address_save"

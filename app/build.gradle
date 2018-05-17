@@ -38,7 +38,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
     implementation 'com.github.bumptech.glide:okhttp3-integration:4.6.1'
     // 放在module里
-//    implementation 'com.android.support:appcompat-v7:27.1.1'
+    //    implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     // LeanCloud 基础包
@@ -73,4 +73,5 @@ dependencies {
     implementation 'com.haibin:calendarview:3.3.0'
     // 垂直的日历控件
     implementation 'com.github.maning0303:MNCalendar:V1.0.3'
+    implementation files('libs/TencentLocationSdk_v6.2.5.3_r15b3b3cc_20171103_115903.jar')
 }
