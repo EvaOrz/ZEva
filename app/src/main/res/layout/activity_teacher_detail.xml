@@ -55,7 +55,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:text="黄晨"
-                    android:textColor="@color/txt_black"
+                    android:textColor="@color/body_gray"
                     android:textSize="18sp"/>
 
                 <View
@@ -101,7 +101,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="3dp"
                                 android:text="思晨写作"
-                                android:textColor="@color/txt_black"
+                                android:textColor="@color/body_gray"
                                 android:textSize="15sp"/>
                         </LinearLayout>
 
@@ -144,7 +144,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="3dp"
                                 android:text="轻松、活泼、妙音洛神"
-                                android:textColor="@color/txt_black"
+                                android:textColor="@color/body_gray"
                                 android:textSize="15sp"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -169,7 +169,7 @@
                     android:drawablePadding="3dp"
                     android:gravity="center_vertical"
                     android:text="教育背景:"
-                    android:textColor="@color/txt_black"
+                    android:textColor="@color/body_gray"
                     android:textSize="14sp"
                     android:textStyle="bold"/>
 
@@ -181,7 +181,7 @@
                     android:ellipsize="end"
                     android:maxLines="3"
                     android:text="教育背景教育背景教育背景教育背景教育背景教育背景教育背景教育背景教育背景教育背景教育背景"
-                    android:textColor="@color/txt_black"
+                    android:textColor="@color/body_gray"
                     android:textSize="14sp"/>
 
                 <TextView
@@ -191,7 +191,7 @@
                     android:drawablePadding="3dp"
                     android:gravity="center_vertical"
                     android:text="教学理念:"
-                    android:textColor="@color/txt_black"
+                    android:textColor="@color/body_gray"
                     android:textSize="14sp"
                     android:textStyle="bold"/>
 
@@ -203,7 +203,7 @@
                     android:ellipsize="end"
                     android:maxLines="3"
                     android:text="教育背景教育背景教育背景教育背景教育背景教育背景教育背景教育背景教育背景教育背景教育背景"
-                    android:textColor="@color/txt_black"
+                    android:textColor="@color/body_gray"
                     android:textSize="14sp"/>
             </LinearLayout>
 
@@ -217,7 +217,7 @@
                 android:gravity="center_vertical"
                 android:padding="10dp"
                 android:text="相关课程"
-                android:textColor="@color/txt_black"
+                android:textColor="@color/body_gray"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 

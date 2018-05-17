@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:text="思晨写作二介暑"
-        android:textColor="@color/black1"
+        android:textColor="@color/body_gray"
         android:textSize="17sp"
         android:textStyle="bold"/>
 
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="地点："
-            android:textColor="@color/black1"
+            android:textColor="@color/body_gray"
             android:textSize="14sp"/>
 
         <TextView
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="时间："
-            android:textColor="@color/black1"
+            android:textColor="@color/body_gray"
             android:textSize="14sp"/>
 
         <TextView

@@ -14,7 +14,7 @@
         android:paddingBottom="15dp"
         android:paddingTop="15dp"
         android:text="教师点赞排行榜"
-        android:textColor="@color/orange_txtColor"
+        android:textColor="@color/gold"
         android:textSize="18sp"/>
 
     <include layout="@layout/item_praise"/>

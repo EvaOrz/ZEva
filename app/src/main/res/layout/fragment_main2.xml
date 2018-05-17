@@ -95,9 +95,6 @@
 
     </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
 
-    <!--<include-->
-    <!--android:id="@+id/elecourse_bar"-->
-    <!--layout="@layout/layout_titlebar"/>-->
     <RelativeLayout
         android:id="@+id/main2_toolbar"
         android:layout_width="match_parent"

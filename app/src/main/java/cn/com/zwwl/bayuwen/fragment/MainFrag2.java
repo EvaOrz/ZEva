@@ -2,6 +2,7 @@ package cn.com.zwwl.bayuwen.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.CourseDetailActivity;
+import cn.com.zwwl.bayuwen.activity.TeacherDetailActivity;
 import cn.com.zwwl.bayuwen.adapter.EleCourseGridAdapter;
 import cn.com.zwwl.bayuwen.model.EleCourseData;
 import cn.com.zwwl.bayuwen.model.EleCourseModel;
@@ -115,14 +118,17 @@ public class MainFrag2 extends Fragment
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent intent = new Intent();
+                intent.setClass(mActivity, CourseDetailActivity.class);
+                startActivity(intent);
             }
         });
+        view1.findViewById(R.id.praise_re).setOnClickListener(this);
     }
 
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-        int baseColor = getResources().getColor(R.color.titlebar_bgColor);
+        int baseColor = getResources().getColor(R.color.body_gray);
         float alpha = Math.min(1, (float) scrollY / mParallaxImageHeight * 1.4f);
         mToolbarView.setBackgroundColor(ScrollUtils.getColorWithAlpha(alpha, baseColor));
     }
@@ -137,7 +143,13 @@ public class MainFrag2 extends Fragment
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.praise_re:
+                Intent intent = new Intent();
+                intent.setClass(mActivity, TeacherDetailActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 
     private List<EleCourseModel> setData() {
