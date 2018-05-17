@@ -189,6 +189,18 @@
             android:name=".activity.AddressAddActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+        <!--我的勋章页面-->
+        <activity
+            android:name=".activity.TeacherDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!--我的勋章页面-->
+        <activity
+            android:name=".activity.CourseDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>
