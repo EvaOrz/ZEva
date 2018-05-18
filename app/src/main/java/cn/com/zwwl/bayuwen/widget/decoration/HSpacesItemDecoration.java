@@ -1,4 +1,4 @@
-package cn.com.zwwl.bayuwen.widget;
+package cn.com.zwwl.bayuwen.widget.decoration;
 
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;

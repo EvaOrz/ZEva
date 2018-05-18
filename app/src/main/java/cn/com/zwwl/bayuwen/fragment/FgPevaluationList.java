@@ -2,6 +2,8 @@ package cn.com.zwwl.bayuwen.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +16,9 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.PevaluationListAdapter;
+import cn.com.zwwl.bayuwen.model.CommentModel;
 import cn.com.zwwl.bayuwen.model.CourseModel;
+import cn.com.zwwl.bayuwen.widget.CustomViewPager;
 import cn.com.zwwl.bayuwen.widget.newrefresh.PullToRefreshLayout;
 
 import static com.umeng.socialize.utils.DeviceConfig.context;
@@ -24,13 +28,14 @@ import static com.umeng.socialize.utils.DeviceConfig.context;
  */
 public class FgPevaluationList extends Fragment implements View.OnClickListener {
     private String videoId;
-    private List<CourseModel> cvList = new LinkedList<>();
+    private List<CommentModel> cvList = new LinkedList<>();
     private int page = 1;
     private View view;
-    private ListView listView;
+    private RecyclerView listView;
 //    private PullToRefreshLayout refreshLayout;
     private PevaluationListAdapter adapter;
     private LinearLayout footView;
+    private CustomViewPager customViewPager;
 
     public static FgPevaluationList newInstance(String videoId) {
         FgPevaluationList fg = new FgPevaluationList();
@@ -39,6 +44,11 @@ public class FgPevaluationList extends Fragment implements View.OnClickListener 
         fg.setArguments(bundle);
         return fg;
     }
+
+    public void setCustomViewPager(CustomViewPager customViewPager){
+        this.customViewPager = customViewPager;
+    }
+
 
     // 网络请求获取推荐的视频列表
     private void getCourseList() {
@@ -58,6 +68,7 @@ public class FgPevaluationList extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_course_list, container, false);
+        customViewPager.setObjectForPosition(view,2);
         initView();
         return view;
     }
@@ -65,6 +76,7 @@ public class FgPevaluationList extends Fragment implements View.OnClickListener 
     //初始化view
     private void initView() {
         listView = view.findViewById(R.id.listView);
+        listView.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        refreshLayout = view.findViewById(R.id.refreshLayout);
 //        footView = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.layout_footview, null);
 //        listView.addFooterView(view);
@@ -72,8 +84,14 @@ public class FgPevaluationList extends Fragment implements View.OnClickListener 
 
 //        refreshLayout.setOnRefreshListener(this);
 //        refreshLayout.autoRefresh();
+
+        for (int i = 0;i<4;i++){
+            CommentModel commentModel = new CommentModel();
+            cvList.add(commentModel);
+        }
+
         if (cvList != null) {
-            adapter = new PevaluationListAdapter(getActivity());
+            adapter = new PevaluationListAdapter(getActivity(),cvList);
             listView.setAdapter(adapter);
         }
 

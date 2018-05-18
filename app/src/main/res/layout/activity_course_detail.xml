@@ -4,9 +4,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/c_title"
+        layout="@layout/layout_twolevel_title"/>
+
     <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/c_title"
         android:layout_marginBottom="59dp"
         android:background="@color/app_bgColor">
 
@@ -14,8 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <include layout="@layout/layout_twolevel_title"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -134,34 +138,28 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+            <cn.com.zwwl.bayuwen.view.PagerSlidingTabStrip
+                android:id="@+id/vp_title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:fillViewport="false"
+                app:pstsIndicatorColor="@color/gold"
+                app:pstsIndicatorHeight="3dp"
+                app:pstsSelectTextColor="@color/gold"
+                app:pstsTabPaddingLeftRight="20dp"
+                app:pstsTextColor="@color/body_gray"
+                app:pstsTextSize="@dimen/text_size_16"
+                app:pstsUnderlineHeight="1px"
+                app:pstsisMore="false"/>
+
+            <cn.com.zwwl.bayuwen.widget.CustomViewPager
+                android:id="@+id/videoList_vp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <cn.com.zwwl.bayuwen.view.PagerSlidingTabStrip
-                    android:id="@+id/vp_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:fillViewport="false"
-                    app:pstsIndicatorColor="@color/gold"
-                    app:pstsIndicatorHeight="3dp"
-                    app:pstsSelectTextColor="@color/gold"
-                    app:pstsTabPaddingLeftRight="20dp"
-                    app:pstsTextColor="@color/body_gray"
-                    app:pstsTextSize="@dimen/text_size_16"
-                    app:pstsUnderlineHeight="1px"
-                    app:pstsisMore="false"/>
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/videoList_vp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1px"
-                    android:background="@android:color/white"/>
-            </LinearLayout>
+                android:layout_marginTop="1px"
+                android:background="@android:color/white"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -180,10 +178,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="15dp"
                 android:background="@android:color/white"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"/>
+                android:padding="10dp"/>
         </LinearLayout>
     </ScrollView>
 
@@ -202,7 +198,6 @@
             android:layout_height="match_parent"
             android:layout_marginRight="20dp"
             android:layout_weight="0.3"
-            android:drawableTop="@mipmap/home_1"
             android:gravity="center"
             android:text="顾问"
             android:textColor="@color/body_gray"
@@ -213,7 +208,6 @@
             android:layout_height="match_parent"
             android:layout_marginRight="20dp"
             android:layout_weight="0.3"
-            android:drawableTop="@mipmap/home_1"
             android:gravity="center"
             android:text="说明"
             android:textColor="@color/body_gray"

@@ -30,7 +30,7 @@ public class TeacherListAdapter extends BaseRecylcerViewAdapter<TeacherModel> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final TeacherListAdapter.ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.name.setText("邵鑫");
+        viewHolder.name.setText(list.get(position).getName());
 //        if (list.get(position).getPic()!=null)
 //            Glide.with(mContext).load(list.get(position).getPic()).into(viewHolder.avatar);
 //        else

@@ -51,4 +51,5 @@
     <color name="item_grayColor">#999999</color>
     <color name="black2">#575f73</color>
     <color name="money_color">#e99529</color>
+    <color name="search_tv_color">#bcbcbc</color>
 </resources>

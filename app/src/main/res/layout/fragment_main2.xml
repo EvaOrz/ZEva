@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
              android:background="@color/app_bgColor"
              android:orientation="vertical"
              android:scrollbars="none">
@@ -110,19 +111,21 @@
             android:layout_centerVertical="true"
             android:src="@mipmap/ic_launcher"/>
 
-        <android.support.v7.widget.SearchView
+        <cn.com.zwwl.bayuwen.view.IconCenterButton
             android:id="@+id/search_view"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="220dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
+            android:background="@drawable/draw_search_bg"
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@+id/left_more_iv"
-            android:background="@drawable/draw_search_bg"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:iconifiedByDefault="false"
-            android:imeOptions="actionSearch"
-            android:inputType="textFilter"/>
+            android:drawableLeft="@mipmap/search_icon"
+            android:gravity="center"
+            android:text="搜索"
+            android:textColor="@color/search_tv_color"
+            android:textSize="@dimen/sp_14"
+            app:iconPadding="3dp" />
 
         <ImageView
             android:id="@+id/school_iv"

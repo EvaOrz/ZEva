@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/user_header"
+            android:layout_toRightOf="@+id/avatar"
             android:textColor="#838995"
             android:textSize="15sp"/>
 
@@ -47,6 +47,6 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:textColor="@color/body_gray"
-        android:textSize="@dimen/text_size_16"/>
+        android:textSize="@dimen/text_size_14"/>
 
 </LinearLayout>

@@ -1,12 +1,10 @@
 package cn.com.zwwl.bayuwen.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.LinkedList;
@@ -14,69 +12,50 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.CourseModel;
-import cn.com.zwwl.bayuwen.model.EleCourseModel;
-import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
  * Created by lousx
  */
-public class CourseListAdapter extends BaseAdapter {
+public class CourseListAdapter extends BaseRecylcerViewAdapter<CourseModel> {
     private List<CourseModel> mList = new LinkedList<>();
     private Context mContext;
 
-    public CourseListAdapter(Context mContext) {
+    public CourseListAdapter(Context mContext,List<CourseModel> list) {
+        super(mContext, list);
         this.mContext = mContext;
     }
 
+
+    @NonNull
     @Override
-    public int getCount() {
-        return 4;
+    public CourseListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new CourseListAdapter.ViewHolder(inflater.inflate(R.layout.item_c_list, parent, false));
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        final CourseListAdapter.ViewHolder viewHolder = (CourseListAdapter.ViewHolder) holder;
+        viewHolder.video_title.setText(position + 1 + "  中国神话传说及文化寓意");
+        viewHolder.video_time.setText("2018-02-09 19:15-20:15 ( 60分钟 )");
     }
-
 
     @Override
     public long getItemId(int position) {
         return position;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-//        final CourseModel item = getItem(position);
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView video_title;
+        private TextView video_time;
 
-        ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_c_list);
-
-        TextView title = viewHolder.getView(R.id.video_title);
-        TextView time = viewHolder.getView(R.id.video_time);
-        title.setText(position + 1 + "  中国神话传说及文化寓意");
-        time.setText("2018-02-09 19:15-20:15 ( 60分钟 )");
-        return viewHolder.getConvertView();
-    }
-
-    public void setData(List<CourseModel> list) {
-        if (list != null) {
-            mList.addAll(list);
-            notifyDataSetChanged();
+        public ViewHolder(View itemView) {
+            super(itemView);
+            initView();
         }
-    }
 
-    public void addMoreData(List<CourseModel> list) {
-        if (list == null)
-            return;
-        for (CourseModel model : list)
-            ((LinkedList<CourseModel>) mList).addLast(model);
-        notifyDataSetChanged();
-
-    }
-
-    public void clear() {
-        if (mList != null && mList.size() == 0)
-            return;
-        mList.clear();
-        notifyDataSetChanged();
+        private void initView() {
+            video_title =  itemView.findViewById(R.id.video_title);
+            video_time =  itemView.findViewById(R.id.video_time);
+        }
     }
 }

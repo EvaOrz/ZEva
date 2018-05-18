@@ -14,6 +14,7 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CourseListAdapter;
 import cn.com.zwwl.bayuwen.model.CourseModel;
+import cn.com.zwwl.bayuwen.widget.CustomViewPager;
 import cn.com.zwwl.bayuwen.widget.newrefresh.PullToRefreshLayout;
 
 import static com.umeng.socialize.utils.DeviceConfig.context;
@@ -25,6 +26,7 @@ public class FgCourseSyllabus extends Fragment{
     private String videoId;
     private int page = 1;
     private View view;
+    private CustomViewPager customViewPager;
 
     public static FgCourseSyllabus newInstance(String videoId) {
         FgCourseSyllabus fg = new FgCourseSyllabus();
@@ -41,6 +43,11 @@ public class FgCourseSyllabus extends Fragment{
         }
     }
 
+    public void setCustomViewPager(CustomViewPager customViewPager){
+        this.customViewPager = customViewPager;
+    }
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +60,7 @@ public class FgCourseSyllabus extends Fragment{
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_c_syllabus, container, false);
         initView();
+        customViewPager.setObjectForPosition(view,1);
         return view;
     }
 

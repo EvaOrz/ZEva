@@ -26,6 +26,8 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.CourseDetailActivity;
+import cn.com.zwwl.bayuwen.activity.MainActivity;
+import cn.com.zwwl.bayuwen.activity.SearchCourseActivity;
 import cn.com.zwwl.bayuwen.activity.TeacherDetailActivity;
 import cn.com.zwwl.bayuwen.adapter.EleCourseGridAdapter;
 import cn.com.zwwl.bayuwen.model.EleCourseData;
@@ -124,6 +126,8 @@ public class MainFrag2 extends Fragment
             }
         });
         view1.findViewById(R.id.praise_re).setOnClickListener(this);
+        root.findViewById(R.id.left_more_iv).setOnClickListener(this);
+        root.findViewById(R.id.search_view).setOnClickListener(this);
     }
 
     @Override
@@ -148,6 +152,14 @@ public class MainFrag2 extends Fragment
                 Intent intent = new Intent();
                 intent.setClass(mActivity, TeacherDetailActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.search_view:
+                Intent i = new Intent();
+                i.setClass(mActivity, SearchCourseActivity.class);
+                startActivity(i);
+                break;
+            case R.id.left_more_iv:
+                ((MainActivity) getActivity()).openDrawer();
                 break;
         }
     }
