@@ -238,6 +238,7 @@
 
     <!--订单-->
     <string name="my_order">我的订单</string>
+    <string name="commit_order">提交订单</string>
     <string name="order_detail">订单详情</string>
     <string name="wait_pay">待付款</string>
     <string name="had_pay">已付款</string>
@@ -255,5 +256,11 @@
     <string name="order_option4">配送方式：</string>
     <string name="order_option5">商品总额：</string>
     <string name="order_option6">运费：</string>
+    <string name="order_option7">拼团码：</string>
+    <string name="order_option8">支付明细</string>
+    <string name="order_option9">发票</string>
+    <string name="order_option10">支付宝支付：</string>
+    <string name="order_option11">微信支付：</string>
+    <string name="order_option12">退款方式须知</string>
 
 </resources>
