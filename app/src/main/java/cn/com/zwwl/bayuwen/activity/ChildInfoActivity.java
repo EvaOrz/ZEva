@@ -18,11 +18,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
+import java.util.Date;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.db.DataHelper;
 import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.view.DatePopWindow;
 import cn.com.zwwl.bayuwen.view.GenderPopWindow;
+import cn.com.zwwl.bayuwen.view.NianjiPopWindow;
 import cn.com.zwwl.bayuwen.widget.FetchPhotoManager;
 
 /**
@@ -35,9 +38,10 @@ public class ChildInfoActivity extends BaseActivity {
     private static final String AVATAR_PIC = "avatar.jpg";
     private File photoFile;
     private ImageView aImg;
-    private EditText nameEv,phoneEv;
-    private TextView genderTv ;
+    private EditText nameEv, phoneEv;
+    private TextView genderTv, birthTv, ruxueTv, nianjiTv;
     private boolean isNeedChangePic = false;
+    private String birthTxt, ruxueTxt, nianjiTxt;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,11 +59,15 @@ public class ChildInfoActivity extends BaseActivity {
         nameEv = findViewById(R.id.info_c_nametv);
         genderTv = findViewById(R.id.info_c_sextv);
         phoneEv = findViewById(R.id.info_c_phoneev);
+        birthTv = findViewById(R.id.info_p_birthtv);
+        ruxueTv = findViewById(R.id.info_p_ruxuetv);
+        nianjiTv = findViewById(R.id.info_c_nianjitv);
         findViewById(R.id.info_c_back).setOnClickListener(this);
         findViewById(R.id.info_c_avatar).setOnClickListener(this);
-        findViewById(R.id.info_c_name).setOnClickListener(this);
         findViewById(R.id.info_c_sex).setOnClickListener(this);
-
+        findViewById(R.id.info_c_ruxue).setOnClickListener(this);
+        findViewById(R.id.info_c_birth).setOnClickListener(this);
+        findViewById(R.id.info_c_nianji).setOnClickListener(this);
     }
 
     @Override
@@ -72,8 +80,6 @@ public class ChildInfoActivity extends BaseActivity {
             case R.id.info_c_avatar:
                 doFecthPicture();
                 break;
-            case R.id.info_c_name:
-                break;
             case R.id.info_c_sex:
                 new GenderPopWindow(this, new GenderPopWindow.ChooseGenderListener() {
                     @Override
@@ -83,7 +89,34 @@ public class ChildInfoActivity extends BaseActivity {
                     }
                 });
                 break;
+            case R.id.info_c_nianji:// 年级
+                new NianjiPopWindow(mContext, new NianjiPopWindow.MyNianjiPickListener() {
+                    @Override
+                    public void onNianjiPick(int nianji, String string) {
+                        nianjiTxt = string;
+                        handler.sendEmptyMessage(4);
+                    }
+                });
+                break;
+            case R.id.info_c_birth:// 出生年月
+                new DatePopWindow(mContext, new DatePopWindow.MyDatePickListener() {
+                    @Override
+                    public void onDatePick(int year, int month, int day) {
+                        birthTxt = year + "年" + month + "月" + day + "日";
+                        handler.sendEmptyMessage(0);
+                    }
+                });
+                break;
 
+            case R.id.info_c_ruxue:// 入学年月
+                new DatePopWindow(mContext, new DatePopWindow.MyDatePickListener() {
+                    @Override
+                    public void onDatePick(int year, int month, int day) {
+                        ruxueTxt = year + "年" + month + "月" + day + "日";
+                        handler.sendEmptyMessage(2);
+                    }
+                });
+                break;
 
         }
 
@@ -110,16 +143,23 @@ public class ChildInfoActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-
+                case 0:// 出生年月日
+                    birthTv.setText(birthTxt);
+                    break;
+                case 1:// 重新加载用户信息
+                    initData();
+                    break;
+                case 2:// 入学年月日
+                    ruxueTv.setText(ruxueTxt);
+                    break;
                 case 3:
                     isNeedChangePic = true;
                     Glide.with(mContext).load(photoFile).into(aImg);
                     break;
-
-
-                case 1:// 重新加载用户信息
-                    initData();
+                case 4:// 年级选择
+                    nianjiTv.setText(nianjiTxt);
                     break;
+
             }
         }
     };

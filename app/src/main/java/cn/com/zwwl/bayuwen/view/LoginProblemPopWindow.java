@@ -13,7 +13,7 @@ import cn.com.zwwl.bayuwen.R;
 
 
 /**
- * 选择性别
+ * 登录遇到问题的popwindow
  */
 public class LoginProblemPopWindow implements OnClickListener {
 

@@ -165,6 +165,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(mContext, ParentInfoActivity.class));
                 break;
             case R.id.wodedingdan:// 我的订单
+                startActivity(new Intent(mContext, MyOrderActivity.class));
                 break;
             case R.id.gerenshoucang:// 我的收藏
                 break;

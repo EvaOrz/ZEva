@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 
 /**
  * 我要参团页面
@@ -36,7 +37,7 @@ public class TuanIndexActivity extends BaseActivity {
     private int dianCounts = 0;// 垫付数量
     private TextView codeSureTv, dianCountsTv;
     private List<View> views = new ArrayList<>();
-    private TuanViewPagerAdapter adapter;
+    private MyViewPagerAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class TuanIndexActivity extends BaseActivity {
         view2 = LayoutInflater.from(this).inflate(R.layout.view_tuanindex_page2, null);
         views.add(view1);
         views.add(view2);
-        adapter = new TuanViewPagerAdapter(views);
+        adapter = new MyViewPagerAdapter(views);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -189,43 +190,4 @@ public class TuanIndexActivity extends BaseActivity {
 
     }
 
-    public class TuanViewPagerAdapter extends PagerAdapter {
-        private List<View> list;
-
-        public TuanViewPagerAdapter(List<View> list) {
-            this.list = list;
-        }
-
-        @Override
-        public int getCount() {
-
-            if (list != null && list.size() > 0) {
-                return list.size();
-            } else {
-                return 0;
-            }
-        }
-
-        @Override
-        public boolean isViewFromObject(View arg0, Object arg1) {
-            return arg0 == arg1;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            container.addView(list.get(position));
-            return list.get(position);
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            return POSITION_NONE;
-        }
-
-    }
 }

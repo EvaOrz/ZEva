@@ -42,6 +42,8 @@
     <string name="get_account_error">手机号码格式错误</string>
     <string name="password_length_error">密码长度应该不少于6个字符</string>
     <string name="veriy_length_error">验证码长度应该不少于6个字符</string>
+    <string name="pass">跳过</string>
+    <string name="add_hint">确定添加学生，开启大语文之旅</string>
 
     <!--album list-->
     <string name="album_list">专辑列表</string>
@@ -118,6 +120,18 @@
     <string name="plz_choose">请选择</string>
     <string name="upload_faild">上传头像失败</string>
     <string name="change_info_faild">修改信息失败</string>
+    <string name="g_1">一年级</string>
+    <string name="g_2">二年级</string>
+    <string name="g_3">三年级</string>
+    <string name="g_4">四年级</string>
+    <string name="g_5">五年级</string>
+    <string name="g_6">六年级</string>
+    <string name="g_7">初中一年级</string>
+    <string name="g_8">初中二年级</string>
+    <string name="g_9">初中三年级</string>
+    <string name="g_10">高中一年级</string>
+    <string name="g_11">高中二年级</string>
+    <string name="g_12">高中三年级</string>
 
     <!--base-->
     <string name="no_wifi">似乎已断开与互联网的连接</string>
@@ -207,6 +221,7 @@
     <string name="choose_people">选联系人</string>
     <string name="shouhuoren">收货人</string>
     <string name="suozaidiqu">所在地区</string>
+    <string name="suozaichengshi">所在城市</string>
     <string name="detail_address">详细地址</string>
     <string name="detail_address_hint">街道、楼牌号等</string>
     <string name="tag">标签</string>
@@ -220,5 +235,25 @@
     <string name="jiang_hint1">请输入奖状名称</string>
     <string name="jiang_hint2">请选择获奖日期</string>
     <string name="delete_all">全部删除</string>
+
+    <!--订单-->
+    <string name="my_order">我的订单</string>
+    <string name="order_detail">订单详情</string>
+    <string name="wait_pay">待付款</string>
+    <string name="had_pay">已付款</string>
+    <string name="waiting_pay">等待付款</string>
+    <string name="youhuiquan">优惠券</string>
+    <string name="go_pay">去支付</string>
+    <string name="tuifei">申请退费</string>
+    <string name="wait_ping">待评价</string>
+    <string name="copy">复制</string>
+    <string name="order_cancle">取消订单</string>
+
+    <string name="order_option1">订单编号：</string>
+    <string name="order_option2">下单时间：</string>
+    <string name="order_option3">支付方式：</string>
+    <string name="order_option4">配送方式：</string>
+    <string name="order_option5">商品总额：</string>
+    <string name="order_option6">运费：</string>
 
 </resources>

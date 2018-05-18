@@ -26,6 +26,10 @@ import cn.com.zwwl.bayuwen.widget.wheel.OnWheelScrollListener;
 import cn.com.zwwl.bayuwen.widget.wheel.WheelView;
 import cn.com.zwwl.bayuwen.widget.wheel.adapters.AbstractWheelTextAdapter;
 
+/**
+ * 地区选择控件
+ * 支持省市区三级筛选
+ */
 public class AddressPopWindow implements View.OnClickListener {
 
     private Context mContext;
@@ -69,7 +73,7 @@ public class AddressPopWindow implements View.OnClickListener {
 
     public void init() {
         View view = LayoutInflater.from(mContext).inflate(
-                R.layout.dialog_myinfo_changeaddress, null);
+                R.layout.pop_address, null);
         window = new PopupWindow(view, RelativeLayout.LayoutParams.FILL_PARENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
         window.setFocusable(true);
