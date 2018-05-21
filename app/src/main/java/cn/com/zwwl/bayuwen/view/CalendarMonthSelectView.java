@@ -21,7 +21,7 @@ import cn.com.zwwl.bayuwen.activity.CalendarActivity;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 
 /**
- *
+ * 日历页面月份筛选控件
  */
 public class CalendarMonthSelectView extends HorizontalScrollView {
 

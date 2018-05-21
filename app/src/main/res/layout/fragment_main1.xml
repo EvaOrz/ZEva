@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <!--tabbar-->
     <RelativeLayout
         android:id="@+id/toolbar"
@@ -21,7 +21,7 @@
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text="王大宝（三年级）"
@@ -34,7 +34,16 @@
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_menu_slideshow" />
+            android:background="@color/gray_line" />
+
+        <ImageView
+            android:id="@+id/toolbar_city"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/toolbar_right"
+            android:background="@color/gray_line" />
 
     </RelativeLayout>
 

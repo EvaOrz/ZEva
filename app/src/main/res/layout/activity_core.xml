@@ -149,7 +149,6 @@
                         android:background="@color/gold" />
 
                     <TextView
-
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -159,6 +158,33 @@
                         android:textSize="@dimen/text_size_14"
                         android:textStyle="bold" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/child_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp" />
+
+                <LinearLayout
+                    android:id="@+id/child_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/white_10radius_corner_bg"
+                    android:gravity="center_horizontal"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:background="@color/gold"
+                        />
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/wodedingdan"

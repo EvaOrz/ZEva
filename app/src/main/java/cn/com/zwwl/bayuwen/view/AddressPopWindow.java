@@ -26,6 +26,10 @@ import cn.com.zwwl.bayuwen.widget.wheel.OnWheelScrollListener;
 import cn.com.zwwl.bayuwen.widget.wheel.WheelView;
 import cn.com.zwwl.bayuwen.widget.wheel.adapters.AbstractWheelTextAdapter;
 
+/**
+ * 地区选择控件
+ * 支持省市区三级筛选
+ */
 public class AddressPopWindow implements View.OnClickListener {
 
     private Context mContext;
@@ -34,7 +38,6 @@ public class AddressPopWindow implements View.OnClickListener {
 
     private WheelView wvProvince;
     private WheelView wvCitys;
-    private View lyChangeAddress;
     private TextView btnSure;
     private TextView btnCancel;
 
@@ -70,7 +73,7 @@ public class AddressPopWindow implements View.OnClickListener {
 
     public void init() {
         View view = LayoutInflater.from(mContext).inflate(
-                R.layout.dialog_myinfo_changeaddress, null);
+                R.layout.pop_address, null);
         window = new PopupWindow(view, RelativeLayout.LayoutParams.FILL_PARENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
         window.setFocusable(true);
@@ -80,14 +83,11 @@ public class AddressPopWindow implements View.OnClickListener {
         window.setBackgroundDrawable(new BitmapDrawable());
         window.showAtLocation(view, Gravity.BOTTOM, 0, 0);
 
-
         wvProvince = (WheelView) view.findViewById(R.id.wv_address_province);
         wvCitys = (WheelView) view.findViewById(R.id.wv_address_city);
-        lyChangeAddress = view.findViewById(R.id.ly_myinfo_changeaddress);
         btnSure = (TextView) view.findViewById(R.id.btn_myinfo_sure);
         btnCancel = (TextView) view.findViewById(R.id.btn_myinfo_cancel);
 
-        lyChangeAddress.setOnClickListener(this);
         btnSure.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
 
@@ -170,10 +170,9 @@ public class AddressPopWindow implements View.OnClickListener {
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.ly_myinfo_changeaddress:
+            case R.id.btn_myinfo_sure:
                 listener.onClick(strProvince, strCity);
                 break;
-
         }
         window.dismiss();
     }

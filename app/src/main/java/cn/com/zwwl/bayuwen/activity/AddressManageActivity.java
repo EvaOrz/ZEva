@@ -50,10 +50,9 @@ public class AddressManageActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.add_manage_bt:
-                startActivity(new Intent(mContext,AddressAddActivity.class));
+                startActivity(new Intent(mContext, AddressAddActivity.class));
                 break;
         }
-
     }
 
 
@@ -111,7 +110,12 @@ public class AddressManageActivity extends BaseActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             final Entry item = getItem(position);
             ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_address);
-
+            viewHolder.getView(R.id.address_edit).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mContext.startActivity(new Intent(mContext, AddressAddActivity.class));
+                }
+            });
             return viewHolder.getConvertView();
         }
 
