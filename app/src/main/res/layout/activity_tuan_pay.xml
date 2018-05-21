@@ -25,7 +25,6 @@
             android:text="@string/kai_pay"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_16" />
-
     </RelativeLayout>
 
 
