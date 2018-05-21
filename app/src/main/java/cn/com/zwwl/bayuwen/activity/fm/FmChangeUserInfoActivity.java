@@ -23,7 +23,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.api.UploadApi;
 import cn.com.zwwl.bayuwen.api.UserApi;
-import cn.com.zwwl.bayuwen.db.DataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 import cn.com.zwwl.bayuwen.view.ChangeInfoDialog;
@@ -54,7 +54,7 @@ public class FmChangeUserInfoActivity extends BaseActivity {
         setContentView(R.layout.activity_change_userinfo);
         picturePath = Environment.getExternalStorageDirectory().getPath() + "/" + AVATAR_PIC;
         initView();
-        userModel = DataHelper.getUserLoginInfo(this);
+        userModel = UserDataHelper.getUserLoginInfo(this);
         initData();
     }
 

@@ -22,6 +22,7 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
+import cn.com.zwwl.bayuwen.view.YouHuiJuanPopWindow;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
@@ -71,6 +72,7 @@ public class OrderDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.order_d_you:// 优惠券
+              new YouHuiJuanPopWindow(mContext);
                 break;
         }
     }

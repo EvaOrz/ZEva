@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.Map;
 
-import cn.com.zwwl.bayuwen.db.DataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -43,7 +43,7 @@ public class UploadApi extends BaseApi {
 
     @Override
     protected String getHeadValue() {
-        return DataHelper.getUserToken(mContext);
+        return UserDataHelper.getUserToken(mContext);
     }
 
     @Override

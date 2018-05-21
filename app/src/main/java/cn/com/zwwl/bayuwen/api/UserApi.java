@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.com.zwwl.bayuwen.db.DataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -37,7 +37,7 @@ public class UserApi extends BaseApi {
     public UserApi(Context context, String name, String phone, int gendar, int province, int city, String pic, FetchEntryListener listener) {
         mContext = context;
         this.listener = listener;
-        this.url = UrlUtil.changeInfoUrl(DataHelper.getUid(context));
+        this.url = UrlUtil.changeInfoUrl(UserDataHelper.getUid(context));
         pamas.put("name", name);
         pamas.put("tel", phone);
         pamas.put("sex", gendar + "");
@@ -79,7 +79,7 @@ public class UserApi extends BaseApi {
                     listener.setData(e);
                 } else {
                     userModel.parseUserModel(data, userModel);
-                    DataHelper.saveUserLoginInfo(mContext, userModel);
+                    UserDataHelper.saveUserLoginInfo(mContext, userModel);
                     listener.setData(userModel);
                 }
             } else {
@@ -96,7 +96,7 @@ public class UserApi extends BaseApi {
 
     @Override
     protected String getHeadValue() {
-        return DataHelper.getUserToken(mContext);
+        return UserDataHelper.getUserToken(mContext);
     }
 
     @Override

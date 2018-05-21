@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp">
+
+    <ImageView
+        android:id="@+id/youhui_img"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/youhui_layout"
+        android:layout_alignTop="@id/youhui_layout"
+        android:background="@color/gray_dark" />
+
+    <LinearLayout
+        android:id="@+id/youhui_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/youhui_img"
+        android:background="@drawable/white_10radius_corner_bg"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            android:text="超市代金券（指定商品可用）"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/text_size_12" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:text="2017.4.7-2018.9.10"
+            android:textColor="@color/gray_light"
+            android:textSize="@dimen/text_size_10" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/youhui_layout"
+        android:layout_alignTop="@id/youhui_layout"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/youhui_layout"
+        android:background="@drawable/white_10radius_corner_bg"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gold_circle"
+            android:paddingBottom="3dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="3dp"
+            android:text="@string/lingqu"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_10" />
+    </LinearLayout>
+
+
+</RelativeLayout>

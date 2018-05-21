@@ -132,6 +132,7 @@
 
         <activity
             android:name=".activity.LoginActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
@@ -196,6 +197,11 @@
         <!--设置页面-->
         <activity
             android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <!--账号与安全页面-->
+        <activity
+            android:name=".activity.SettingOption1Activity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <!--管理地址页面-->

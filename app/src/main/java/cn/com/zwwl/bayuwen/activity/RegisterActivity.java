@@ -1,7 +1,11 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.InputType;
 import android.util.Log;
@@ -21,6 +25,7 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.BayuwenTools;
 import cn.com.zwwl.bayuwen.util.SmsTools;
+import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 
 /**
  * 注册
@@ -29,9 +34,11 @@ public class RegisterActivity extends BaseActivity {
 
     private TextView getVerify;
     private ImageView pwdShow;
+    private TextView cityTv;
     private EditText accountEdit, pwdEdit, verifyEdit;
     private boolean canGetVerify = true;// 是否可获取验证码
     private boolean isShowPassword = false;// 是否显示密码
+    private String cityTxt = "北京";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,19 +59,38 @@ public class RegisterActivity extends BaseActivity {
         verifyEdit = findViewById(R.id.register_verify_edit);
         getVerify = findViewById(R.id.register_get_verify);
         pwdShow = findViewById(R.id.register_pwd_show);
+        cityTv = findViewById(R.id.register_city_t);
 
         pwdShow.setOnClickListener(this);
         findViewById(R.id.register_back).setOnClickListener(this);
+        findViewById(R.id.register_login).setOnClickListener(this);
         findViewById(R.id.register_get_verify).setOnClickListener(this);
         findViewById(R.id.register_bt).setOnClickListener(this);
-
+        findViewById(R.id.register_city_l).setOnClickListener(this);
     }
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    cityTv.setText(cityTxt);
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onClick(View view) {
         final String phone = accountEdit.getText().toString();
         switch (view.getId()) {
             case R.id.register_back:
+                finish();
+                break;
+            case R.id.register_login:// 已有账号
+                startActivity(new Intent(mContext, LoginActivity.class));
                 finish();
                 break;
             case R.id.register_get_verify:
@@ -88,6 +114,15 @@ public class RegisterActivity extends BaseActivity {
                 }
                 isShowPassword = !isShowPassword;
                 break;
+            case R.id.register_city_l:// 选择城市
+                new AddressPopWindow(mContext, new AddressPopWindow.OnAddressCListener() {
+                    @Override
+                    public void onClick(String province, String city) {
+                        cityTxt = city;
+                        handler.sendEmptyMessage(0);
+                    }
+                });
+                break;
 
         }
     }
@@ -101,7 +136,6 @@ public class RegisterActivity extends BaseActivity {
                 if (entry != null && entry instanceof ErrorMsg) {
                     MyApplication.loginStatusChange = true;
                     if (((ErrorMsg) entry).getNo() == 0) {
-
                         finish();
                     } else {
                         showToast(((ErrorMsg) entry).getDesc());

@@ -8,6 +8,12 @@
     android:paddingRight="10dp"
     android:paddingTop="5dp">
 
+    <CheckBox
+        android:id="@+id/item_order_check"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginRight="10dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -117,6 +123,7 @@
             android:background="@color/gray_line" />
 
         <TextView
+            android:id="@+id/item_order_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -125,61 +132,69 @@
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_size_12" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line_height"
-            android:background="@color/gray_line" />
-
         <LinearLayout
+            android:id="@+id/item_order_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/gray_line" />
 
-            <TextView
-                android:id="@+id/go_pay"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/gold_white_xiangkuang"
-                android:paddingBottom="5dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="5dp"
-                android:text="@string/go_pay"
-                android:textColor="@color/gold"
-                android:textSize="@dimen/text_size_10" />
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-            <TextView
-                android:id="@+id/tuifei"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/gray_xiankuang_circle"
-                android:paddingBottom="5dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="5dp"
-                android:visibility="gone"
-                android:text="@string/tuifei"
-                android:textColor="@color/gray_line"
-                android:textSize="@dimen/text_size_10" />
+                <TextView
+                    android:id="@+id/go_pay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gold_white_xiangkuang"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/go_pay"
+                    android:textColor="@color/gold"
+                    android:textSize="@dimen/text_size_10" />
 
-            <TextView
-                android:id="@+id/wait_ping"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/gold_white_xiangkuang"
-                android:paddingBottom="5dp"
-                android:visibility="gone"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:layout_marginLeft="10dp"
-                android:paddingTop="5dp"
-                android:text="@string/wait_ping"
-                android:textColor="@color/gold"
-                android:textSize="@dimen/text_size_10" />
+                <TextView
+                    android:id="@+id/tuifei"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gray_xiankuang_circle"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/tuifei"
+                    android:textColor="@color/gray_line"
+                    android:textSize="@dimen/text_size_10"
+                    android:visibility="gone" />
 
+                <TextView
+                    android:id="@+id/wait_ping"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/gold_white_xiangkuang"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/wait_ping"
+                    android:textColor="@color/gold"
+                    android:textSize="@dimen/text_size_10"
+                    android:visibility="gone" />
+
+            </LinearLayout>
         </LinearLayout>
+
+
     </LinearLayout>
 
 

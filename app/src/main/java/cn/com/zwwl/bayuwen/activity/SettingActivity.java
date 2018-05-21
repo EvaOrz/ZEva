@@ -1,5 +1,6 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -11,7 +12,6 @@ import cn.com.zwwl.bayuwen.R;
  */
 public class SettingActivity extends BaseActivity {
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
@@ -22,6 +22,12 @@ public class SettingActivity extends BaseActivity {
 
     private void initView() {
         findViewById(R.id.setting_back).setOnClickListener(this);
+        findViewById(R.id.setting_option1).setOnClickListener(this);
+        findViewById(R.id.setting_option2).setOnClickListener(this);
+        findViewById(R.id.setting_option3).setOnClickListener(this);
+        findViewById(R.id.setting_option4).setOnClickListener(this);
+
+
     }
 
     @Override
@@ -31,6 +37,17 @@ public class SettingActivity extends BaseActivity {
             case R.id.setting_back:
                 finish();
                 break;
+            case R.id.setting_option1:
+                startActivity(new Intent(mContext, SettingOption1Activity.class));
+                break;
+            case R.id.setting_option2:
+                break;
+            case R.id.setting_option3:
+                break;
+            case R.id.setting_option4:
+                break;
+
+
         }
     }
 

@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.com.zwwl.bayuwen.db.DataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -92,7 +92,7 @@ public class LoginSigninApi extends BaseApi {
                     String token = data.optString("token");
                     if (!TextUtils.isEmpty(token)) {
                         e.setNo(0);
-                        DataHelper.saveToken(mContext, token);
+                        UserDataHelper.saveToken(mContext, token);
                     }
                 }
             } else {
@@ -108,7 +108,7 @@ public class LoginSigninApi extends BaseApi {
 
     @Override
     protected String getHeadValue() {
-        return DataHelper.getUserToken(mContext);
+        return UserDataHelper.getUserToken(mContext);
     }
 
     @Override

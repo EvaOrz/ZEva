@@ -18,10 +18,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
-import java.util.Date;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.db.DataHelper;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.view.DatePopWindow;
 import cn.com.zwwl.bayuwen.view.GenderPopWindow;
@@ -50,7 +48,7 @@ public class ChildInfoActivity extends BaseActivity {
         setContentView(R.layout.activity_info_child);
         picturePath = Environment.getExternalStorageDirectory().getPath() + "/" + AVATAR_PIC;
         initView();
-//        userModel = DataHelper.getUserLoginInfo(this);
+//        userModel = UserDataHelper.getUserLoginInfo(this);
         initData();
     }
 

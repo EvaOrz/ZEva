@@ -10,7 +10,6 @@
     <string name="nenglifenxi">能力分析</string>
     <string name="yixuankecheng">已选课程</string>
     <string name="suohuoxunzhang">所获勋章</string>
-    <string name="settings">设置</string>
 
     <!--FM main-->
     <string name="hot_recommond">热门推荐</string>
@@ -43,6 +42,7 @@
     <string name="password_length_error">密码长度应该不少于6个字符</string>
     <string name="veriy_length_error">验证码长度应该不少于6个字符</string>
     <string name="pass">跳过</string>
+    <string name="xuesheng_name">学生姓名</string>
     <string name="add_hint">确定添加学生，开启大语文之旅</string>
 
     <!--album list-->
@@ -240,16 +240,18 @@
     <string name="my_order">我的订单</string>
     <string name="commit_order">提交订单</string>
     <string name="order_detail">订单详情</string>
-    <string name="wait_pay">待付款</string>
-    <string name="had_pay">已付款</string>
+    <string name="my_order_tab1">购课单</string>
+    <string name="my_order_tab2">待付款</string>
+    <string name="my_order_tab3">已付款</string>
+    <string name="my_order_tab4">退款/售后</string>
     <string name="waiting_pay">等待付款</string>
     <string name="youhuiquan">优惠券</string>
+    <string name="lingqu">领取</string>
     <string name="go_pay">去支付</string>
     <string name="tuifei">申请退费</string>
     <string name="wait_ping">待评价</string>
     <string name="copy">复制</string>
     <string name="order_cancle">取消订单</string>
-
     <string name="order_option1">订单编号：</string>
     <string name="order_option2">下单时间：</string>
     <string name="order_option3">支付方式：</string>
@@ -262,5 +264,17 @@
     <string name="order_option10">支付宝支付：</string>
     <string name="order_option11">微信支付：</string>
     <string name="order_option12">退款方式须知</string>
+    <string name="lijibaoming">立即报名</string>
+
+
+    <!--setting-->
+    <string name="settings">设置</string>
+    <string name="setting_option1">账号与安全</string>
+    <string name="setting_option2">新消息通知</string>
+    <string name="setting_option3">隐私</string>
+    <string name="setting_option4">关于大语文</string>
+    <string name="setting_option5">会员编码（邀请码）</string>
+    <string name="setting_option6">密码</string>
+    <string name="setting_option7">应急联系人</string>
 
 </resources>

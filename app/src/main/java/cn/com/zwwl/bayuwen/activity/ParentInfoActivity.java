@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide;
 import java.io.File;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.db.DataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.view.GenderPopWindow;
 import cn.com.zwwl.bayuwen.widget.FetchPhotoManager;
@@ -46,7 +46,7 @@ public class ParentInfoActivity extends BaseActivity {
         setContentView(R.layout.activity_info_parent);
         picturePath = Environment.getExternalStorageDirectory().getPath() + "/" + AVATAR_PIC;
         initView();
-        userModel = DataHelper.getUserLoginInfo(this);
+        userModel = UserDataHelper.getUserLoginInfo(this);
         initData();
     }
 

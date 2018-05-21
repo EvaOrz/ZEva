@@ -11,7 +11,7 @@ import cn.com.zwwl.bayuwen.model.UserModel;
 /**
  * 存储用户信息
  */
-public class DataHelper {
+public class UserDataHelper {
     /**
      * 用户字段
      */
@@ -57,6 +57,15 @@ public class DataHelper {
      */
     public static String getUid(Context context) {
         return getPref(context).getString(UID, "");
+    }
+    /**
+     * 获取用户城市
+     *
+     * @param context
+     * @return
+     */
+    public static String getCity(Context context) {
+        return getPref(context).getString(CITY, "");
     }
 
     /**

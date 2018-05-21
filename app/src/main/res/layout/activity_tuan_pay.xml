@@ -30,11 +30,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -449,43 +452,38 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_vertical"
-                android:background="@drawable/gray_xiankuang_circle"
-                android:orientation="horizontal"
-                >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-
-                    android:gravity="right"
-                    android:paddingRight="10dp"
-                    android:text="实付款：￥3800"
-                    android:textColor="@color/gold"
-                    android:textSize="@dimen/text_size_14" />
-
-                <TextView
-                    android:id="@+id/order_d_bt2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:background="@color/gold"
-                    android:text="@string/commit_order"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_10" />
-            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+       android:layout_margin="10dp"
+        android:background="@drawable/gray_xiankuang_circle"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:text="实付款：￥3800"
+            android:textColor="@color/gold"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:id="@+id/order_d_bt2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/pay_gold_circle"
+            android:gravity="center"
+            android:text="@string/commit_order"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14" />
+    </LinearLayout>
 </LinearLayout>

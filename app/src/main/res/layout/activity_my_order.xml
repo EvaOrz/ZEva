@@ -25,15 +25,6 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_16" />
 
-        <TextView
-            android:id="@+id/my_order_you"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="@string/youhuiquan"
-            android:textColor="@color/gold"
-            android:textSize="@dimen/text_size_14" />
     </RelativeLayout>
 
     <RadioGroup
@@ -54,7 +45,7 @@
             android:gravity="center"
             android:lines="1"
             android:padding="10dp"
-            android:text="@string/wait_pay"
+            android:text="@string/my_order_tab1"
             android:textColor="@drawable/gold_text_checked"
             android:textSize="@dimen/text_size_14" />
 
@@ -65,12 +56,41 @@
             android:layout_weight="1"
             android:button="@null"
             android:checked="false"
+            android:ellipsize="end"
             android:gravity="center"
+            android:lines="1"
             android:padding="10dp"
-            android:text="@string/had_pay"
+            android:text="@string/my_order_tab2"
             android:textColor="@drawable/gold_text_checked"
             android:textSize="@dimen/text_size_14" />
 
+        <RadioButton
+            android:id="@+id/my_order_bt3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/my_order_tab3"
+            android:textColor="@drawable/gold_text_checked"
+            android:textSize="@dimen/text_size_14" />
+
+        <RadioButton
+            android:id="@+id/my_order_bt4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:padding="10dp"
+            android:text="@string/my_order_tab4"
+            android:textColor="@drawable/gold_text_checked"
+            android:textSize="@dimen/text_size_14" />
 
     </RadioGroup>
 
@@ -83,8 +103,8 @@
             android:id="@+id/my_order_line1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@color/gold" />
 
@@ -92,8 +112,27 @@
             android:id="@+id/my_order_line2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@color/transparent" />
+
+        <View
+            android:id="@+id/my_order_line3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@color/transparent" />
+
+
+        <View
+            android:id="@+id/my_order_line4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@color/transparent" />
 
@@ -107,6 +146,39 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/my_order_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/my_order_pay_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/gray_xiankuang_circle"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:text="合计：￥7600"
+            android:textColor="@color/gold"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:id="@+id/order_d_bt2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/pay_gold_circle"
+            android:gravity="center"
+            android:text="@string/lijibaoming"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14" />
+    </LinearLayout>
 
 </LinearLayout>

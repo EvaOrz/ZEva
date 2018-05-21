@@ -19,7 +19,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.api.LoginSigninApi;
 
-import cn.com.zwwl.bayuwen.db.DataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.util.BayuwenTools;
 import cn.com.zwwl.bayuwen.util.SmsTools;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -53,7 +53,7 @@ public class FmLoginActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (DataHelper.getUserLoginInfo(this) != null) finish();
+        if (UserDataHelper.getUserLoginInfo(this) != null) finish();
     }
 
     @Override

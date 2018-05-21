@@ -15,7 +15,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.db.DataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.model.UserModel;
 
 /**
@@ -39,7 +39,7 @@ public class ChangeInfoDialog implements View.OnClickListener {
         this.mContext = context;
         this.type = type;
         this.signChangeListener = signChangeListener;
-        userModel = DataHelper.getUserLoginInfo(context);
+        userModel = UserDataHelper.getUserLoginInfo(context);
         init();
     }
 

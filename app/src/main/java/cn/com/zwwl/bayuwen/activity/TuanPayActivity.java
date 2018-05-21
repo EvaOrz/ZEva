@@ -14,7 +14,6 @@ import cn.com.zwwl.bayuwen.R;
  */
 public class TuanPayActivity extends BaseActivity {
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;

@@ -13,7 +13,7 @@
         android:padding="10dp">
 
         <ImageView
-            android:id="@+id/setting_back"
+            android:id="@+id/setting_1_back"
             android:layout_width="@dimen/back_size"
             android:layout_height="@dimen/back_size"
             android:src="@drawable/back_gray" />
@@ -22,35 +22,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/settings"
+            android:text="@string/setting_option1"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_16" />
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/setting_option1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/gray_xiankuang_circle"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/setting_option1"
-            android:textColor="@color/gray_dark"
-            android:textSize="@dimen/text_size_14" />
-
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:src="@drawable/mn_calendar_icon_arrow_right" />
-    </LinearLayout>
 
     <LinearLayout
 
@@ -62,7 +39,7 @@
         android:padding="10dp">
 
         <LinearLayout
-            android:id="@+id/setting_option2"
+            android:id="@+id/setting_1_option5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -71,7 +48,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/setting_option2"
+                android:text="@string/setting_option5"
                 android:textColor="@color/gray_dark"
                 android:textSize="@dimen/text_size_14" />
 
@@ -89,7 +66,7 @@
             android:background="@color/gray_line" />
 
         <LinearLayout
-            android:id="@+id/setting_option3"
+            android:id="@+id/setting_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -98,7 +75,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/setting_option3"
+                android:text="@string/phone"
                 android:textColor="@color/gray_dark"
                 android:textSize="@dimen/text_size_14" />
 
@@ -110,7 +87,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/setting_option4"
+        android:id="@+id/setting_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -123,7 +100,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/setting_option4"
+            android:text="@string/setting_option6"
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_size_14" />
 
@@ -133,23 +110,30 @@
             android:src="@drawable/mn_calendar_icon_arrow_right" />
     </LinearLayout>
 
-    <View
+    <LinearLayout
+        android:id="@+id/setting_option7"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/gray_xiankuang_circle"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-    <TextView
-        android:id="@+id/setting_logout"
-        android:layout_width="match_parent"
-        android:padding="10dp"
-        android:textSize="@dimen/text_size_14"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="30dp"
-        android:gravity="center"
-        android:textColor="@color/gold"
-        android:background="@drawable/gold_white_xiangkuang"
-        android:text="@string/logout"
-        android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/setting_option7"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/text_size_14" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/mn_calendar_icon_arrow_right" />
+    </LinearLayout>
+
+
 
 </LinearLayout>
