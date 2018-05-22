@@ -52,4 +52,6 @@
     <color name="black2">#575f73</color>
     <color name="money_color">#e99529</color>
     <color name="search_tv_color">#bcbcbc</color>
+    <color name="cirle_line_color">#d7d7d7</color>
+    <color name="tab_text_color">#5e6678</color>
 </resources>
