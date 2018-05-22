@@ -29,6 +29,7 @@ public class CollectionApi extends BaseApi {
      * @param listener
      */
     public CollectionApi(Context context, String content, int type, FetchEntryListener listener) {
+        super(context);
         mContext = context;
         pamas.put("content", content);
         pamas.put("type", type + "");
@@ -45,6 +46,7 @@ public class CollectionApi extends BaseApi {
      * @param listener
      */
     public CollectionApi(Context context, String cid, FetchEntryListener listener) {
+        super(context);
         mContext = context;
         this.url = UrlUtil.getCollecturl() + "/" + cid;
         this.listener = listener;
@@ -81,12 +83,6 @@ public class CollectionApi extends BaseApi {
             listener.setData(errorMsg);
         }
 
-    }
-
-
-    @Override
-    protected String getHeadValue() {
-        return UserDataHelper.getUserToken(mContext);
     }
 
     @Override

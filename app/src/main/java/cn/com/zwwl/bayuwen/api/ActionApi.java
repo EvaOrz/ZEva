@@ -50,6 +50,7 @@ public class ActionApi extends BaseApi {
      * @param listener
      */
     public ActionApi(Context context, String kid, int type, FetchEntryListener listener) {
+        super(context);
         actionType = ActionType.ACTION_LIKE;
         mContext = context;
         pamas.put("kid", kid);
@@ -67,6 +68,7 @@ public class ActionApi extends BaseApi {
      * @param listener
      */
     public ActionApi(Context context, String kid, FetchEntryListener listener) {
+        super(context);
         actionType = ActionType.ACTION_PLAY;
         mContext = context;
         pamas.put("kid", kid);
@@ -86,7 +88,7 @@ public class ActionApi extends BaseApi {
      * @param listener
      */
     public ActionApi(Context context, String username, String password, String code, FetchEntryListener listener) {
-
+        super(context);
         actionType = ActionType.ACTION_CHANGE_PWD;
         mContext = context;
         pamas.put("username", username);
@@ -109,6 +111,7 @@ public class ActionApi extends BaseApi {
      * @param listener
      */
     public ActionApi(Context context, String kid, String cid, String commentid, String content, String type, FetchEntryListener listener) {
+        super(context);
         actionType = ActionType.ACTION_ADD_COMMENT;
         mContext = context;
         pamas.put("kid", kid);
@@ -151,12 +154,6 @@ public class ActionApi extends BaseApi {
             listener.setData(errorMsg);
         }
 
-    }
-
-
-    @Override
-    protected String getHeadValue() {
-        return UserDataHelper.getUserToken(mContext);
     }
 
     @Override

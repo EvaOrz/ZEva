@@ -37,6 +37,7 @@ public class AlbumListApi extends BaseApi {
      * @param listener
      */
     public AlbumListApi(Context context, String kid, int page, FetchAlbumListListener listener) {
+        super(context);
         mContext = context;
         this.url = UrlUtil.getAlbumListUrl(kid, page);
         this.listener = listener;
@@ -51,6 +52,7 @@ public class AlbumListApi extends BaseApi {
      * @param listener
      */
     public AlbumListApi(Context context, String search, FetchAlbumListListener listener) {
+        super(context);
         mContext = context;
         this.url = UrlUtil.getSearchUrl(search);
         this.listener = listener;
@@ -64,6 +66,7 @@ public class AlbumListApi extends BaseApi {
      * @param listener
      */
     public AlbumListApi(Context context, FetchAlbumListListener listener) {
+        super(context);
         mContext = context;
         this.url = UrlUtil.getHistoryurl();
         this.listener = listener;
@@ -78,6 +81,7 @@ public class AlbumListApi extends BaseApi {
      * @param listener
      */
     public AlbumListApi(Context context, int type, FetchAlbumListListener listener) {
+        super(context);
         mContext = context;
         isCollect = true;
         this.url = UrlUtil.getCollecturl() + "?type=" + type;
@@ -88,11 +92,6 @@ public class AlbumListApi extends BaseApi {
     @Override
     protected Map<String, String> getPostParams() {
         return null;
-    }
-
-    @Override
-    protected String getHeadValue() {
-        return UserDataHelper.getUserToken(mContext);
     }
 
     @Override

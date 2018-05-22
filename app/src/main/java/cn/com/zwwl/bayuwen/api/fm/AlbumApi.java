@@ -22,7 +22,8 @@ public class AlbumApi extends BaseApi {
     private FetchEntryListener listener;
 
     public AlbumApi(Context context, String fmId, FetchEntryListener listener) {
-        mContext = context;
+        super(context);
+        this.mContext =context;
         this.url = UrlUtil.getAlbumUrl(fmId);
         this.listener = listener;
         albumModel = new AlbumModel();
@@ -48,11 +49,6 @@ public class AlbumApi extends BaseApi {
             listener.setData(null);
         }
 
-    }
-
-    @Override
-    protected String getHeadValue() {
-        return UserDataHelper.getUserToken(mContext);
     }
 
     @Override

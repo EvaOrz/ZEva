@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.activity.fm.FmLoginActivity;
 import cn.com.zwwl.bayuwen.api.LoginSigninApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;

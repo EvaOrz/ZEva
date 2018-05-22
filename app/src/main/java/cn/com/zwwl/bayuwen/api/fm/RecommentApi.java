@@ -24,6 +24,7 @@ public class RecommentApi extends BaseApi {
     private List<RecommentModel> recommentModels = new ArrayList<>();
 
     public RecommentApi(Context context, FetchRecommentListListener listener) {
+        super(context);
         mContext = context;
         this.listener = listener;
         get();
@@ -76,11 +77,6 @@ public class RecommentApi extends BaseApi {
         } else {
             listener.setError(errorMsg);
         }
-    }
-
-    @Override
-    protected String getHeadValue() {
-        return UserDataHelper.getUserToken(mContext);
     }
 
     @Override

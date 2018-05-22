@@ -24,16 +24,12 @@ public class PinglunApi extends BaseApi {
     private List<PinglunModel> pinglunModels = new ArrayList<>();
 
     public PinglunApi(Context context, String kid, String cid, FetchPingListListener listListener) {
+        super(context);
         mContext = context;
         this.listListener = listListener;
         this.kid = kid;
         this.cid = cid;
         get();
-    }
-
-    @Override
-    protected String getHeadValue() {
-        return UserDataHelper.getUserToken(mContext);
     }
 
     @Override

@@ -16,7 +16,11 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
 public abstract class BaseApi {
     protected Context mContext;
-    protected HttpUtil httpUtil = HttpUtil.getInstance();
+    protected HttpUtil httpUtil = null;
+
+    public BaseApi(Context context){
+        httpUtil = HttpUtil.getInstance(context);
+    }
 
     /**
      * 接口地址
@@ -28,14 +32,9 @@ public abstract class BaseApi {
      */
     protected abstract Map<String, String> getPostParams();
 
-    /**
-     * header参数设置
-     */
-    protected abstract String getHeadValue();
-
 
     protected void post() {
-        httpUtil.postDataAsynToNet(getUrl(), getPostParams(), getHeadValue(), new FetchDataListener() {
+        httpUtil.postDataAsynToNet(getUrl(), getPostParams(), new FetchDataListener() {
             @Override
             public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
                 Log.e(getUrl(), data);
@@ -45,7 +44,7 @@ public abstract class BaseApi {
     }
 
     protected void postFile(File file) {
-        httpUtil.postFile(getUrl(), getHeadValue(), file, new FetchDataListener() {
+        httpUtil.postFile(getUrl(), file, new FetchDataListener() {
             @Override
             public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
                 Log.e(getUrl(), data);
@@ -55,7 +54,7 @@ public abstract class BaseApi {
     }
 
     protected void get() {
-        httpUtil.getDataAsynFromNet(getUrl(), getHeadValue(), new FetchDataListener() {
+        httpUtil.getDataAsynFromNet(getUrl(), new FetchDataListener() {
             @Override
             public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
                 Log.e(getUrl(), data);
@@ -65,7 +64,7 @@ public abstract class BaseApi {
     }
 
     protected void delete() {
-        httpUtil.deleteDataAsynToNet(getUrl(), getPostParams(), getHeadValue(), new FetchDataListener() {
+        httpUtil.deleteDataAsynToNet(getUrl(), getPostParams(), new FetchDataListener() {
             @Override
             public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
                 Log.e(getUrl(), data);
@@ -76,7 +75,7 @@ public abstract class BaseApi {
     }
 
     protected void patch() {
-        httpUtil.patchDataAsynToNet(getUrl(), getPostParams(), getHeadValue(), new FetchDataListener() {
+        httpUtil.patchDataAsynToNet(getUrl(), getPostParams(), new FetchDataListener() {
             @Override
             public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
                 Log.e(getUrl(), data);

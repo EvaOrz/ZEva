@@ -34,7 +34,9 @@ public class UserApi extends BaseApi {
      * @param pic
      * @param listener
      */
-    public UserApi(Context context, String name, String phone, int gendar, int province, int city, String pic, FetchEntryListener listener) {
+    public UserApi(Context context, String name, String phone, int gendar, int province, int
+            city, String pic, FetchEntryListener listener) {
+        super(context);
         mContext = context;
         this.listener = listener;
         this.url = UrlUtil.changeInfoUrl(UserDataHelper.getUid(context));
@@ -57,6 +59,7 @@ public class UserApi extends BaseApi {
      * @param listener
      */
     public UserApi(Context context, FetchEntryListener listener) {
+        super(context);
         mContext = context;
         this.listener = listener;
         this.url = UrlUtil.userInfoUrl();
@@ -92,11 +95,6 @@ public class UserApi extends BaseApi {
             listener.setData(errorMsg);
         }
 
-    }
-
-    @Override
-    protected String getHeadValue() {
-        return UserDataHelper.getUserToken(mContext);
     }
 
     @Override

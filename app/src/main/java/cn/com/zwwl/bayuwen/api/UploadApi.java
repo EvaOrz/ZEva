@@ -16,6 +16,7 @@ public class UploadApi extends BaseApi {
     private FetchEntryListener listener;
 
     public UploadApi(Context context, File file, FetchEntryListener listener) {
+        super(context);
         mContext = context;
         this.listener = listener;
         postFile(file);
@@ -39,11 +40,6 @@ public class UploadApi extends BaseApi {
         } else {
             listener.setData(errorMsg);
         }
-    }
-
-    @Override
-    protected String getHeadValue() {
-        return UserDataHelper.getUserToken(mContext);
     }
 
     @Override

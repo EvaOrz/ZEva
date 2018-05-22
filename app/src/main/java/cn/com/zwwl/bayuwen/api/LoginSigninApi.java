@@ -42,6 +42,7 @@ public class LoginSigninApi extends BaseApi {
      * @param listener
      */
     public LoginSigninApi(Context context, String registerPam1, String registerPam2, String registerPam3, FetchEntryListener listener) {
+        super(context);
         mContext = context;
         this.listener = listener;
         this.userType = GetUserType.REGISTER;
@@ -63,6 +64,7 @@ public class LoginSigninApi extends BaseApi {
      * @param listener
      */
     public LoginSigninApi(Context context, GetUserType userType, String loginPam1, String loginPam2, FetchEntryListener listener) {
+        super(context);
         mContext = context;
         this.listener = listener;
         this.userType = userType;
@@ -104,11 +106,6 @@ public class LoginSigninApi extends BaseApi {
             listener.setData(errorMsg);
         }
 
-    }
-
-    @Override
-    protected String getHeadValue() {
-        return UserDataHelper.getUserToken(mContext);
     }
 
     @Override
