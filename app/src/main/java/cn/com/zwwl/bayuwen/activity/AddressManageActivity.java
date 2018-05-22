@@ -65,7 +65,7 @@ public class AddressManageActivity extends BaseActivity {
                 if (Tools.listNotNull(list)) {
                     datas.clear();
                     datas.addAll(list);
-                    addressAdapter.setData(datas);
+                    handler.sendEmptyMessage(0);
                 }
             }
 
@@ -78,8 +78,6 @@ public class AddressManageActivity extends BaseActivity {
         });
 
 
-
-
     }
 
     @SuppressLint("HandlerLeak")
@@ -89,6 +87,7 @@ public class AddressManageActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
+                    addressAdapter.setData(datas);
                     addressAdapter.notifyDataSetChanged();
                     break;
             }

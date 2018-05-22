@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.api.AddressApi;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.AddressModel;
 import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.util.BayuwenTools;
+import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 import cn.com.zwwl.bayuwen.widget.AutoTextGroupView;
 
@@ -34,8 +41,11 @@ public class AddressAddActivity extends BaseActivity {
     private AutoTextGroupView tagView;
     private List<AddressTag> tagDatas = new ArrayList<>();
     private LinearLayout addTag, addLayout;
-    private EditText nameEv, phoneEv;
-    private String username, usernumber;
+    private TextView provinceTv;
+    private EditText nameEv, phoneEv, addressEv;
+    private String username, usernumber, provinceTxt, cityTxt;
+    private AddressModel addressModel;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,7 +53,13 @@ public class AddressAddActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_add);
         initView();
-        initData();
+        if (getIntent().getSerializableExtra("AddressAddActivity_data") != null && getIntent()
+                .getSerializableExtra("AddressAddActivity_data") instanceof AddressModel) {
+            addressModel = (AddressModel) getIntent().getSerializableExtra
+                    ("AddressAddActivity_data");
+            initData();
+        } else addressModel = new AddressModel();
+
     }
 
     @Override
@@ -54,6 +70,32 @@ public class AddressAddActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.add_address_save:
+                String name = nameEv.getText().toString();
+                String phone = phoneEv.getText().toString();
+                String addre = addressEv.getText().toString();
+
+                if (TextUtils.isEmpty(name)) {
+                    showToast("请填写收货人姓名");
+                } else if (TextUtils.isEmpty(phone)) {
+                    showToast("请填写收货人联系方式");
+                } else if (TextUtils.isEmpty(provinceTxt) || TextUtils.isEmpty(cityTxt)) {
+                    showToast("请选择收货地址");
+                } else if (TextUtils.isEmpty(addre)) {
+                    showToast("请填写详细地址");
+                } else {
+                    addressModel.setTo_user(name);
+                    addressModel.setPhone(phone);
+                    addressModel.setProvince(provinceTxt);
+                    addressModel.setCity(cityTxt);
+                    addressModel.setAddress(addre);
+                    for (AddressTag tag : tagDatas) {
+                        if (tag.isCheck) {
+                            addressModel.setAddress_alias(tag.getTagTxt());
+                        }
+                    }
+                    doAdd();
+                }
+
                 break;
             case R.id.tongxunlu:// 访问通讯录
                 startActivityForResult(new Intent(Intent.ACTION_PICK,
@@ -64,23 +106,52 @@ public class AddressAddActivity extends BaseActivity {
                 new AddressPopWindow(mContext, new AddressPopWindow.OnAddressCListener() {
                     @Override
                     public void onClick(String province, String city) {
-
+                        provinceTxt = province;
+                        cityTxt = city;
+                        handler.sendEmptyMessage(3);
                     }
                 });
                 break;
         }
     }
 
+    private void doAdd() {
+        showLoadingDialog(true);
+        new AddressApi(mContext, addressModel, new AddressApi.FetchAddressListListener() {
+            @Override
+            public void setData(List<AddressModel> list) {
+                showLoadingDialog(false);
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+                if (error != null)
+                    showToast(error.getDesc());
+            }
+        });
+    }
 
     @Override
     protected void initData() {
+        nameEv.setText(addressModel.getTo_user());
+        phoneEv.setText(addressModel.getPhone());
+        provinceTv.setText(addressModel.getProvince() + " " + addressModel.getCity() + " " +
+                addressModel.getDistrict());
+        addressEv.setText(addressModel.getAddress());
+
+    }
+
+    private void initTag() {
         if (tagDatas.size() == 0) {
             tagDatas.add(new AddressTag("家", false));
             tagDatas.add(new AddressTag("公司", false));
             tagDatas.add(new AddressTag("学校", false));
         }
         tagView.removeAllViews();
-        ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup
+                .LayoutParams
+                .WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.setMargins(0, 0, 40, 20);
         for (AddressTag addressTag : tagDatas) {
             tagView.addView(getTextView(addressTag, false), lp);
@@ -94,17 +165,20 @@ public class AddressAddActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    initData();
+                    initTag();
                     break;
 
                 case 1:
                     addTag.setVisibility(View.GONE);
                     addLayout.setVisibility(View.VISIBLE);
                     break;
-
-                case 2:
+                case 2:// 通讯录选择
                     nameEv.setText(username);
                     phoneEv.setText(usernumber);
+                    break;
+
+                case 3:
+                    provinceTv.setText(provinceTxt + " " + cityTxt);
                     break;
             }
         }
@@ -117,12 +191,17 @@ public class AddressAddActivity extends BaseActivity {
         findViewById(R.id.tongxunlu).setOnClickListener(this);
         findViewById(R.id.a_a_address).setOnClickListener(this);
 
+        provinceTv = findViewById(R.id.a_a_addresstv);
+        addressEv = findViewById(R.id.a_a_addressev);
         nameEv = findViewById(R.id.a_a_name);
         phoneEv = findViewById(R.id.a_a_phone);
         tagView = findViewById(R.id.tag_view);
         addTag = findViewById(R.id.add_tag);
-        addTag.addView(getTextView(null, true), new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        addTag.addView(getTextView(null, true), new LinearLayout.LayoutParams(LinearLayout
+                .LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         addLayout = findViewById(R.id.add_layout);
+        initTag();
+
     }
 
 

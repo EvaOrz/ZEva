@@ -22,7 +22,6 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
  */
 public class AddressApi extends BaseApi {
     private String url;
-    private FetchEntryListener listener;
     private FetchAddressListListener listListener;
     private Map<String, String> pamas = new HashMap<>();
 
@@ -33,9 +32,10 @@ public class AddressApi extends BaseApi {
      * @param model
      * @param listener
      */
-    public AddressApi(Context context, AddressModel model, FetchEntryListener listener) {
+    public AddressApi(Context context, AddressModel model, FetchAddressListListener listener) {
         super(context);
         mContext = context;
+        isNeedJsonArray = true;
         pamas.put("to_user", model.getTo_user());
         pamas.put("phone", model.getPhone());
         pamas.put("province", model.getProvince());
@@ -47,7 +47,7 @@ public class AddressApi extends BaseApi {
         pamas.put("address", model.getAddress());
         pamas.put("address_alias", model.getAddress_alias());
         this.url = UrlUtil.addressUrl();
-        this.listener = listener;
+        this.listListener = listener;
         post();
     }
 
@@ -59,13 +59,13 @@ public class AddressApi extends BaseApi {
      * @param pama1    要修改的属性
      * @param listener
      */
-    public AddressApi(Context context, String aId, String pama1, FetchEntryListener listener) {
+    public AddressApi(Context context, String aId, String pama1, FetchAddressListListener listener) {
         super(context);
         mContext = context;
+        isNeedJsonArray = true;
         pamas.put("to_user", pama1);
-
         this.url = UrlUtil.addressUrl() + "/" + aId;
-        this.listener = listener;
+        this.listListener = listener;
         patch();
     }
 
@@ -95,6 +95,7 @@ public class AddressApi extends BaseApi {
     public AddressApi(Context context, String aId, int type, FetchAddressListListener listener) {
         super(context);
         mContext = context;
+        isNeedJsonArray = true;
         if (type == 0) {
             this.url = UrlUtil.addressUrl() + "/" + aId;
             delete();
@@ -124,16 +125,15 @@ public class AddressApi extends BaseApi {
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
         try {
             if (errorMsg != null) {
-                if (listener != null)
-                    listener.setError(errorMsg);
                 if (listListener != null)
                     listListener.setError(errorMsg);
             }
-            if (isNeedJsonArray) {// 获取列表
+            if (!isNull(array)) {// 获取列表
                 List<AddressModel> addressModels = new ArrayList<>();
                 for (int i = 0; i < array.length(); i++) {
                     AddressModel a = new AddressModel();
                     a.parseAddressModel(array.getJSONObject(i), a);
+                    addressModels.add(a);
                 }
                 listListener.setData(addressModels);
 
