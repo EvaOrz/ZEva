@@ -13,16 +13,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-
 import java.io.File;
-
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
-import cn.com.zwwl.bayuwen.api.UploadApi;
-import cn.com.zwwl.bayuwen.api.UserApi;
+import cn.com.zwwl.bayuwen.api.UploadPicApi;
+import cn.com.zwwl.bayuwen.api.UserInfoApi;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.view.AddressPopWindow;
@@ -164,7 +161,7 @@ public class FmChangeUserInfoActivity extends BaseActivity {
     }
 
     private void uploadPic(File file) {
-        new UploadApi(this, file, new FetchEntryListener() {
+        new UploadPicApi(this, file, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
                 if (entry != null && entry instanceof UserModel) {
@@ -196,7 +193,7 @@ public class FmChangeUserInfoActivity extends BaseActivity {
      * @param pic
      */
     private void commit(String name, String phone, int gendar, int province, int city, String pic) {
-        new UserApi(this, name, phone, gendar, province, city, pic, new FetchEntryListener() {
+        new UserInfoApi(this, name, phone, gendar, province, city, pic, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
                 showLoadingDialog(false);

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.api.UrlUtil;
+import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.model.fm.RecommentModel;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -43,38 +44,35 @@ public class RecommentApi extends BaseApi {
      * 23        APP-FM回放录播
      * 24        APP-FM名师推荐
      *
-     * @param jsonObject
+     * @param json
      * @param errorMsg
      */
     @Override
-    protected void handler(JSONObject jsonObject, ErrorMsg errorMsg) {
-        if (errorMsg == null) {
-            JSONObject data = jsonObject.optJSONObject("data");
-            if (isNull(data)) listener.setError(new ErrorMsg());
-            else {
-                JSONArray a19 = data.optJSONArray("19");
-                if (!isNull(a19)) {
-                    for (int i = 0; i < a19.length(); i++) {
-                        JSONObject o = a19.optJSONObject(i);
-                        RecommentModel f = new RecommentModel();
-                        f.parseRecommentModel(o, f);
-                        recommentModels.add(f);
-                    }
-                }
-                JSONArray a20 = data.optJSONArray("20");
-                if (!isNull(a20)) {
-                    for (int i = 0; i < a20.length(); i++) {
-                        JSONObject o = a20.optJSONObject(i);
-                        RecommentModel f = new RecommentModel();
-                        f.parseRecommentModel(o, f);
-                        recommentModels.add(f);
-                    }
-                }
-
-                listener.setData(recommentModels);
-            }
-        } else {
+    protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
+        if (errorMsg != null)
             listener.setError(errorMsg);
+
+        if (!isNull(json)) {
+            JSONArray a19 = json.optJSONArray("19");
+            if (!isNull(a19)) {
+                for (int i = 0; i < a19.length(); i++) {
+                    JSONObject o = a19.optJSONObject(i);
+                    RecommentModel f = new RecommentModel();
+                    f.parseRecommentModel(o, f);
+                    recommentModels.add(f);
+                }
+            }
+            JSONArray a20 = json.optJSONArray("20");
+            if (!isNull(a20)) {
+                for (int i = 0; i < a20.length(); i++) {
+                    JSONObject o = a20.optJSONObject(i);
+                    RecommentModel f = new RecommentModel();
+                    f.parseRecommentModel(o, f);
+                    recommentModels.add(f);
+                }
+            }
+
+            listener.setData(recommentModels);
         }
     }
 

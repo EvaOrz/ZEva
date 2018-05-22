@@ -2,6 +2,7 @@ package cn.com.zwwl.bayuwen.api;
 
 import android.content.Context;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 
 /**
  * 添加、删除收藏接口
@@ -59,30 +61,17 @@ public class CollectionApi extends BaseApi {
         return pamas;
     }
 
-    /**
-     * success = true表示操作成功
-     *
-     * @param jsonObject
-     * @param errorMsg
-     */
-    @Override
-    protected void handler(JSONObject jsonObject, ErrorMsg errorMsg) {
-        if (errorMsg == null) {
-            ErrorMsg err = new ErrorMsg();
-            boolean success = jsonObject.optBoolean("success", false);
-            if (success) {
-                JSONObject data = jsonObject.optJSONObject("data");
-                if (!isNull(data)) {
-                    err.setNo(data.optInt("id"));
-                } else {
-                    err.setNo(0);
-                }
-            }
-            listener.setData(err);
-        } else {
-            listener.setData(errorMsg);
-        }
 
+    @Override
+    protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
+        if (errorMsg != null)
+            listener.setError(errorMsg);
+
+        if (!isNull(json)) {
+            ErrorMsg err = new ErrorMsg();
+            err.setNo(json.optInt("id"));
+            listener.setData(err);
+        }
     }
 
     @Override

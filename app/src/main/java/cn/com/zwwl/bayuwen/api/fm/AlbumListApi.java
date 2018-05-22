@@ -38,6 +38,7 @@ public class AlbumListApi extends BaseApi {
     public AlbumListApi(Context context, String kid, int page, FetchAlbumListListener listener) {
         super(context);
         mContext = context;
+        isNeedJsonArray = true;
         this.url = UrlUtil.getAlbumListUrl(kid, page);
         this.listener = listener;
         get();
@@ -53,6 +54,7 @@ public class AlbumListApi extends BaseApi {
     public AlbumListApi(Context context, String search, FetchAlbumListListener listener) {
         super(context);
         mContext = context;
+        isNeedJsonArray = true;
         this.url = UrlUtil.getSearchUrl(search);
         this.listener = listener;
         get();
@@ -67,6 +69,7 @@ public class AlbumListApi extends BaseApi {
     public AlbumListApi(Context context, FetchAlbumListListener listener) {
         super(context);
         mContext = context;
+        isNeedJsonArray = true;
         this.url = UrlUtil.getHistoryurl();
         this.listener = listener;
         get();
@@ -82,6 +85,7 @@ public class AlbumListApi extends BaseApi {
     public AlbumListApi(Context context, int type, FetchAlbumListListener listener) {
         super(context);
         mContext = context;
+        isNeedJsonArray = true;
         isCollect = true;
         this.url = UrlUtil.getCollecturl() + "?type=" + type;
         this.listener = listener;
@@ -94,34 +98,23 @@ public class AlbumListApi extends BaseApi {
     }
 
     @Override
-    protected void handler(JSONObject jsonObject, ErrorMsg errorMsg) {
-        if (errorMsg == null) {
-            JSONObject data = jsonObject.optJSONObject("data");
-            if (isNull(data)) listener.setError(new ErrorMsg());
-            else {
-                JSONArray array = data.optJSONArray("data");
-                if (isNull(array)) {
-                    listener.setError(new ErrorMsg());
-                } else {
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject o = array.optJSONObject(i);
-                        AlbumModel f = new AlbumModel();
-                        if (isCollect) {
-
-                            f.parseAlbumModel(o, f);
-                        } else
-                            f.parseKinfo(o, f);
-                        albumModels.add(f);
-                    }
-                    listener.setData(albumModels);
-                }
-            }
-
-        } else {
+    protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
+        if (errorMsg != null)
             listener.setError(errorMsg);
+
+        if (!isNull(array)) {
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject o = array.optJSONObject(i);
+                AlbumModel f = new AlbumModel();
+                if (isCollect) {
+
+                    f.parseAlbumModel(o, f);
+                } else
+                    f.parseKinfo(o, f);
+                albumModels.add(f);
+            }
+            listener.setData(albumModels);
         }
-
-
     }
 
     @Override

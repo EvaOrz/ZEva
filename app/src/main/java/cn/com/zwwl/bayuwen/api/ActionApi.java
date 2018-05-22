@@ -2,6 +2,7 @@ package cn.com.zwwl.bayuwen.api;
 
 import android.content.Context;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -129,30 +130,17 @@ public class ActionApi extends BaseApi {
         return pamas;
     }
 
-    /**
-     * success = true表示操作成功
-     *
-     * @param jsonObject
-     * @param errorMsg
-     */
-    @Override
-    protected void handler(JSONObject jsonObject, ErrorMsg errorMsg) {
-        if (errorMsg == null) {
-            boolean success = jsonObject.optBoolean("success", false);
-            if (success) {
-                if (actionType == ActionType.ACTION_LIKE) {// 喜欢接口需要一个count 数目
-                    JSONObject data = jsonObject.optJSONObject("data");
-                    AlbumModel e = new AlbumModel();
-                    e.setLikeNum(data.optInt("count"));
-                    listener.setData(e);
-                } else
-                    listener.setData(null);
-            } else
-                listener.setData(new ErrorMsg());
-        } else {
-            listener.setData(errorMsg);
-        }
 
+    @Override
+    protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
+        if (errorMsg != null)
+            listener.setError(errorMsg);
+
+        if (!isNull(json)) {
+            AlbumModel e = new AlbumModel();
+            e.setLikeNum(json.optInt("count"));
+            listener.setData(e);
+        }
     }
 
     @Override

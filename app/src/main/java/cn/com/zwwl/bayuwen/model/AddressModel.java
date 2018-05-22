@@ -1,5 +1,7 @@
 package cn.com.zwwl.bayuwen.model;
 
+import org.json.JSONObject;
+
 /**
  * 收货地址 Model
  */
@@ -94,4 +96,24 @@ public class AddressModel extends Entry {
     public void setAddress_alias(String address_alias) {
         this.address_alias = address_alias;
     }
+
+    /**
+     * @param jsonObject
+     * @param addressModel
+     * @return
+     */
+    public AddressModel parseAddressModel(JSONObject jsonObject, AddressModel addressModel) {
+        addressModel.setTo_user(jsonObject.optString("to_user"));
+        addressModel.setPhone(jsonObject.optString("phone"));
+        addressModel.setProvince(jsonObject.optString("province"));
+        addressModel.setCity(jsonObject.optString("city"));
+        addressModel.setDistrict(jsonObject.optString("district"));
+        addressModel.setProvince_id(jsonObject.optString("province_id"));
+        addressModel.setCity_id(jsonObject.optString("city_id"));
+        addressModel.setDistrict_id(jsonObject.optString("district_id"));
+        addressModel.setAddress(jsonObject.optString("address"));
+        addressModel.setAddress_alias(jsonObject.optString("address_alias"));
+        return addressModel;
+    }
+
 }

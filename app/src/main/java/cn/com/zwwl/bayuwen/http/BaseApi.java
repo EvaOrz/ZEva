@@ -17,10 +17,12 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 public abstract class BaseApi {
     protected Context mContext;
     protected HttpUtil httpUtil = null;
+    protected boolean isNeedJsonArray = false;// 返回的data数据是否是array格式
 
     public BaseApi(Context context) {
         httpUtil = HttpUtil.getInstance(context);
     }
+
 
     /**
      * 接口地址
@@ -87,9 +89,11 @@ public abstract class BaseApi {
     /**
      * 由子类去解析json数据
      *
-     * @param data
+     * @param json
+     * @param array
      */
-    protected abstract void handler(JSONObject data, ErrorMsg errorMsg);
+    protected abstract void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg);
+
 
     /**
      * 解析数据
@@ -105,25 +109,27 @@ public abstract class BaseApi {
             try {
                 JSONObject object = new JSONObject(responseString);
                 if (isNull(object)) {
-                    handler(null, getServerError());
+                    handler(null, null, getServerError());
                 } else {
                     if (object.optBoolean("success")) {// 解析data
-                        JSONObject data = object.optJSONObject("data");
-                        handler(data, null);
+                        if (isNeedJsonArray) {
+                            handler(null, object.optJSONArray("data"), null);
+                        } else
+                            handler(object.optJSONObject("data"), null, null);
                     } else {
                         String err_msg = object.optString("err_msg");
                         ErrorMsg errorMsg = new ErrorMsg();
                         errorMsg.setDesc(err_msg);
-                        handler(null, errorMsg);
+                        handler(null, null, errorMsg);
                     }
 
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                handler(null, getServerError());
+                handler(null, null, getServerError());
             }
         } else {
-            handler(null, getServerError());
+            handler(null, null, getServerError());
         }
     }
 

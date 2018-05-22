@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.api.UrlUtil;
+import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -25,6 +26,7 @@ public class PinglunApi extends BaseApi {
     public PinglunApi(Context context, String kid, String cid, FetchPingListListener listListener) {
         super(context);
         mContext = context;
+        isNeedJsonArray = true;
         this.listListener = listListener;
         this.kid = kid;
         this.cid = cid;
@@ -42,25 +44,20 @@ public class PinglunApi extends BaseApi {
     }
 
     @Override
-    protected void handler(JSONObject jsonObject, ErrorMsg errorMsg) {
-        if (errorMsg == null) {
-            JSONArray array = jsonObject.optJSONArray("data");
-            if (isNull(array)) {
-                listListener.setError(new ErrorMsg());
-            } else {
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject o = array.optJSONObject(i);
-                    PinglunModel pinglunModel = new PinglunModel();
-                    pinglunModel.parsePinglunModel(o, pinglunModel);
-                    pinglunModels.add(pinglunModel);
-                }
-                listListener.setData(pinglunModels);
-            }
-
-        } else {
+    protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
+        if (errorMsg != null)
             listListener.setError(errorMsg);
+        if (!isNull(array)) {
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject o = array.optJSONObject(i);
+                PinglunModel pinglunModel = new PinglunModel();
+                pinglunModel.parsePinglunModel(o, pinglunModel);
+                pinglunModels.add(pinglunModel);
+            }
+            listListener.setData(pinglunModels);
         }
     }
+
 
     public interface FetchPingListListener {
         /**

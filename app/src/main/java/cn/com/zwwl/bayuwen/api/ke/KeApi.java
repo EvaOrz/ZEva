@@ -2,6 +2,7 @@ package cn.com.zwwl.bayuwen.api.ke;
 
 import android.content.Context;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Map;
@@ -26,7 +27,7 @@ public class KeApi extends BaseApi {
 
 
     @Override
-    protected void handler(JSONObject data, ErrorMsg errorMsg) {
+    protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
 
     }
 
