@@ -7,8 +7,7 @@ import org.json.JSONObject;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.api.UrlUtil;
-import cn.com.zwwl.bayuwen.db.UserDataHelper;
-import cn.com.zwwl.bayuwen.model.AlbumModel;
+import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;

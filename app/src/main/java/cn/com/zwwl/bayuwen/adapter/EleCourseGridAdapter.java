@@ -8,16 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.model.AlbumModel;
-import cn.com.zwwl.bayuwen.model.EleCourseData;
 import cn.com.zwwl.bayuwen.model.EleCourseModel;
-import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**

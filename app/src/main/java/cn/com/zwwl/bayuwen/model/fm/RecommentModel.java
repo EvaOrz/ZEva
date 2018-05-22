@@ -1,6 +1,8 @@
-package cn.com.zwwl.bayuwen.model;
+package cn.com.zwwl.bayuwen.model.fm;
 
 import org.json.JSONObject;
+
+import cn.com.zwwl.bayuwen.model.Entry;
 
 /**
  * 首页推荐model

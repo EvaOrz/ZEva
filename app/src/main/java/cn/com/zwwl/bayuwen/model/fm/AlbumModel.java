@@ -1,10 +1,12 @@
-package cn.com.zwwl.bayuwen.model;
+package cn.com.zwwl.bayuwen.model.fm;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.com.zwwl.bayuwen.model.Entry;
 
 /**
  * 专辑model

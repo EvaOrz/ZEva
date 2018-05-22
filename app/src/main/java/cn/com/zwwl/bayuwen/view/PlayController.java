@@ -12,9 +12,8 @@ import android.widget.TextView;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.fm.MusicPlayActivity;
-import cn.com.zwwl.bayuwen.model.FmModel;
+import cn.com.zwwl.bayuwen.model.fm.FmModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
-import cn.com.zwwl.bayuwen.util.Tools;
 
 public class PlayController extends LinearLayout {
     private Context mContext;

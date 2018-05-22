@@ -1,6 +1,9 @@
-package cn.com.zwwl.bayuwen.model;
+package cn.com.zwwl.bayuwen.model.fm;
 
 import org.json.JSONObject;
+
+import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.UserModel;
 
 /**
  * 评论model

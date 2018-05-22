@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.api.UrlUtil;
-import cn.com.zwwl.bayuwen.db.UserDataHelper;
-import cn.com.zwwl.bayuwen.model.PinglunModel;
+import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
