@@ -23,6 +23,7 @@ import cn.com.zwwl.bayuwen.api.LoginSigninApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.BayuwenTools;
 import cn.com.zwwl.bayuwen.util.SmsTools;
 import cn.com.zwwl.bayuwen.view.AddressPopWindow;
@@ -100,13 +101,15 @@ public class RegisterActivity extends BaseActivity {
             case R.id.register_bt:
                 final String pwd = pwdEdit.getText().toString();
                 final String verifycode = verifyEdit.getText().toString();
-                if (BayuwenTools.checkIsPhone(this, phone) && BayuwenTools.checkPwd(this, pwd) && BayuwenTools.checkCode(this, verifycode)) {
+                if (BayuwenTools.checkIsPhone(this, phone) && BayuwenTools.checkPwd(this, pwd) &&
+                        BayuwenTools.checkCode(this, verifycode)) {
                     doRegister(phone, pwd, verifycode);
                 }
                 break;
             case R.id.register_pwd_show:
                 if (isShowPassword) {// 隐藏
-                    pwdEdit.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    pwdEdit.setInputType(InputType.TYPE_CLASS_TEXT | InputType
+                            .TYPE_TEXT_VARIATION_PASSWORD);
 //                    pwdImg.setImageResource(R.drawable.password_unshow);
                 } else {//选择状态 显示明文--设置为可见的密码
                     pwdEdit.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
@@ -127,20 +130,30 @@ public class RegisterActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 注册
+     *
+     * @param phone
+     * @param pwd
+     * @param code
+     */
     private void doRegister(String phone, String pwd, String code) {
         showLoadingDialog(true);
         new LoginSigninApi(this, phone, pwd, code, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
                 showLoadingDialog(false);
-                if (entry != null && entry instanceof ErrorMsg) {
+                if (entry != null && entry instanceof UserModel) {
                     MyApplication.loginStatusChange = true;
-                    if (((ErrorMsg) entry).getNo() == 0) {
-                        finish();
-                    } else {
-                        showToast(((ErrorMsg) entry).getDesc());
-                    }
+                    finish();
                 }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                if (error != null)
+                    showToast(error.getDesc());
+
             }
         });
     }
@@ -155,7 +168,6 @@ public class RegisterActivity extends BaseActivity {
                 public void done(AVException e) {
                     if (null == e) {
                         /* 请求成功 */
-                        Log.e("smsssssss", phone);
                         canGetVerify = false;
                         // 开启倒计时器
                         new CountDownTimer(60000, 1000) {
@@ -170,7 +182,6 @@ public class RegisterActivity extends BaseActivity {
                         }.start();
                     } else {
                         /* 请求失败 */
-                        Log.e("smsssssss", e.getMessage());
                         showToast(e.getMessage());
                     }
                 }

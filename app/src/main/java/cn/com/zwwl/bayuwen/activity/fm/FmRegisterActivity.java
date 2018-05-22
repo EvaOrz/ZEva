@@ -15,6 +15,7 @@ import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.api.LoginSigninApi;
+import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.BayuwenTools;
 import cn.com.zwwl.bayuwen.util.SmsTools;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -67,7 +68,8 @@ public class FmRegisterActivity extends BaseActivity {
             case R.id.register_bt:
                 final String pwd = pwdEdit.getText().toString();
                 final String verifycode = verifyEdit.getText().toString();
-                if (BayuwenTools.checkIsPhone(this, phone) && BayuwenTools.checkPwd(this, pwd) && BayuwenTools.checkCode(this, verifycode)) {
+                if (BayuwenTools.checkIsPhone(this, phone) && BayuwenTools.checkPwd(this, pwd) &&
+                        BayuwenTools.checkCode(this, verifycode)) {
                     doRegister(phone, pwd, verifycode);
                 }
                 break;
@@ -82,15 +84,15 @@ public class FmRegisterActivity extends BaseActivity {
             @Override
             public void setData(Entry entry) {
                 showLoadingDialog(false);
-                if (entry != null && entry instanceof ErrorMsg) {
+                if (entry != null && entry instanceof UserModel) {
                     MyApplication.loginStatusChange = true;
-                    if (((ErrorMsg) entry).getNo() == 0) {
-
-                        finish();
-                    } else {
-                        showToast(((ErrorMsg) entry).getDesc());
-                    }
+                    finish();
                 }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showToast(error.getDesc());
             }
         });
     }

@@ -156,7 +156,8 @@ public class FmChangeUserInfoActivity extends BaseActivity {
                 if (isNeedChangePic) {
                     uploadPic(photoFile);
                 } else
-                    commit(userModel.getName(), userModel.getTel(), userModel.getSex(), userModel.getProvince(), userModel.getCity(), "");
+                    commit(userModel.getName(), userModel.getTel(), userModel.getSex(), userModel
+                            .getProvince(), userModel.getCity(), "");
                 break;
 
         }
@@ -166,13 +167,20 @@ public class FmChangeUserInfoActivity extends BaseActivity {
         new UploadApi(this, file, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
-                if (entry != null && entry instanceof ErrorMsg) {
-                    userModel.setPic(((ErrorMsg) entry).getDesc());
-                    commit(userModel.getName(), userModel.getTel(), userModel.getSex(), userModel.getProvince(), userModel.getCity(), userModel.getPic());
+                if (entry != null && entry instanceof UserModel) {
+                    userModel.setPic(((UserModel) entry).getPic());
+                    commit(userModel.getName(), userModel.getTel(), userModel.getSex(), userModel
+                            .getProvince(), userModel.getCity(), userModel.getPic());
 
-                } else {
-                    showToast(R.string.upload_faild);
                 }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                if (error != null)
+                    showToast(TextUtils.isEmpty(error.getDesc()) ? mContext.getResources()
+                            .getString(R.string.upload_faild) : error
+                            .getDesc());
             }
         });
     }
@@ -195,10 +203,14 @@ public class FmChangeUserInfoActivity extends BaseActivity {
                 if (entry != null && entry instanceof UserModel) {
                     MyApplication.loginStatusChange = true;
                     finish();
-                } else {
-                    showToast(R.string.change_info_faild);
                 }
-
+            }
+            @Override
+            public void setError(ErrorMsg error) {
+                if (error != null)
+                    showToast(TextUtils.isEmpty(error.getDesc()) ? mContext.getResources()
+                            .getString(R.string.upload_faild) : error
+                            .getDesc());
             }
         });
     }

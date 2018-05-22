@@ -38,7 +38,7 @@ public class TempDataHelper {
     }
 
     public static int getCurrentChildGrade(Context context) {
-        return getPref(context).getInt(CURRENT_CHILD_GRADE, 1);
+        return getPref(context).getInt(CURRENT_CHILD_GRADE, 0);
     }
 
     public static void setCurrentChildGrade(Context context, int grade) {
@@ -48,7 +48,7 @@ public class TempDataHelper {
     }
 
     public static int getCurrentChildNo(Context context) {
-        return getPref(context).getInt(CURRENT_CHILD_NO, 1);
+        return getPref(context).getInt(CURRENT_CHILD_NO, 0);
     }
 
     public static void setCurrentChildNo(Context context, int no) {

@@ -18,7 +18,7 @@ public abstract class BaseApi {
     protected Context mContext;
     protected HttpUtil httpUtil = null;
 
-    public BaseApi(Context context){
+    public BaseApi(Context context) {
         httpUtil = HttpUtil.getInstance(context);
     }
 
@@ -93,37 +93,49 @@ public abstract class BaseApi {
 
     /**
      * 解析数据
+     * <p>
+     * {"success":false,"statusCode":500,"data":[],"err_msg":"该账号不存在"}
      *
-     * @param isSuccess
-     * @param data
-     * @param fromHttp
+     * @param isSuccess      true:解析data ; false:解析err_msg
+     * @param responseString
+     * @param fromHttp       后期做接口缓存用，目前不需要
      */
-    private void handlerData(boolean isSuccess, String data, boolean fromHttp) {
-        if (isSuccess) {
-            if (TextUtils.isEmpty(data)) {
-                handler(null, new ErrorMsg());
-                // showToast(R.string.net_error);
-            } else {
-                try {
-                    if (data.equals("[]")) {
-                        data = "{}";
-                    }
-                    JSONObject obj = new JSONObject(data);
-                    if (isNull(obj)) {
-                        handler(null, new ErrorMsg());
+    private void handlerData(boolean isSuccess, String responseString, boolean fromHttp) {
+        if (isSuccess) {//200
+            try {
+                JSONObject object = new JSONObject(responseString);
+                if (isNull(object)) {
+                    handler(null, getServerError());
+                } else {
+                    if (object.optBoolean("success")) {// 解析data
+                        JSONObject data = object.optJSONObject("data");
+                        handler(data, null);
                     } else {
-//                        JSONObject dataJson = obj.optJSONObject("data");
-//                        if (!isNull(dataJson))
-                        handler(obj, null);
+                        String err_msg = object.optString("err_msg");
+                        ErrorMsg errorMsg = new ErrorMsg();
+                        errorMsg.setDesc(err_msg);
+                        handler(null, errorMsg);
                     }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                handler(null, getServerError());
             }
         } else {
-            handler(null, new ErrorMsg());
+            handler(null, getServerError());
         }
+    }
+
+    /**
+     * 报服务器错
+     *
+     * @return
+     */
+    private ErrorMsg getServerError() {
+        ErrorMsg msg = new ErrorMsg();
+        msg.setDesc("Server error");
+        return msg;
     }
 
     /**

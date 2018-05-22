@@ -92,7 +92,8 @@ public class MyApplication extends Application {
 
     private void initLeanCloud() {
         // 初始化参数依次为 this, AppId, AppKey
-        AVOSCloud.initialize(this, "8c05u6ekuwc5dh82jfahkxgdqr6wdxetvwosh6jstq71psfp", "r1f7mfxc8d2d49in3gbpqw88q78xc8om5egdbv0l9a7vykm9");
+        AVOSCloud.initialize(this, "8c05u6ekuwc5dh82jfahkxgdqr6wdxetvwosh6jstq71psfp",
+                "r1f7mfxc8d2d49in3gbpqw88q78xc8om5egdbv0l9a7vykm9");
     }
 
     private void initUmeng() {
@@ -126,7 +127,8 @@ public class MyApplication extends Application {
      * 初始化页面信息
      */
     public void initScreenInfo() {
-        Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
+                .getDefaultDisplay();
         DisplayMetrics dm = new DisplayMetrics();
         display.getMetrics(dm);
         width = dm.widthPixels;

@@ -79,7 +79,8 @@ public class AlbumDetailActivity extends BaseActivity {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album_detail);
-        if (getIntent().getSerializableExtra("AlbumDetailActivity_data") != null && getIntent().getSerializableExtra("AlbumDetailActivity_data") instanceof String)
+        if (getIntent().getSerializableExtra("AlbumDetailActivity_data") != null && getIntent()
+                .getSerializableExtra("AlbumDetailActivity_data") instanceof String)
             aId = getIntent().getStringExtra("AlbumDetailActivity_data");
         initView();
         initErrorLayout();
@@ -104,11 +105,16 @@ public class AlbumDetailActivity extends BaseActivity {
                     handler.sendEmptyMessage(2);
                     getPinglunData(albumModel.getKid(), "");
                 } else {
-                    handler.sendEmptyMessage(4);
+
 
                 }
             }
 
+            @Override
+            public void setError(ErrorMsg error) {
+                if (error != null)
+                    handler.sendEmptyMessage(4);
+            }
         });
     }
 
@@ -322,7 +328,8 @@ public class AlbumDetailActivity extends BaseActivity {
                     viewDetail.loadData(albumModel.getContent(), "text/html", "UTF-8");
                     teacherContain.removeAllViews();
                     for (Teacher tt : teachers) {
-                        View item = LayoutInflater.from(mContext).inflate(R.layout.item_teacher, null);
+                        View item = LayoutInflater.from(mContext).inflate(R.layout.item_teacher,
+                                null);
                         ImageView avatar = item.findViewById(R.id.item_teacher_avatar);
                         TextView name = item.findViewById(R.id.item_teacher_title);
                         CommonWebView desc = item.findViewById(R.id.item_teacher_desc);
@@ -474,7 +481,8 @@ public class AlbumDetailActivity extends BaseActivity {
                 doCollect();
                 break;
             case R.id.album_detail_share:// 分享
-                ShareTools.doShareWeb(this, albumModel.getTitle(), albumModel.getContent(), albumModel.getPic(), "http://baidu.com");
+                ShareTools.doShareWeb(this, albumModel.getTitle(), albumModel.getContent(),
+                        albumModel.getPic(), "http://baidu.com");
                 break;
 
             case R.id.album_detail_inputsend:// 发送评论
@@ -495,7 +503,12 @@ public class AlbumDetailActivity extends BaseActivity {
         new ActionApi(this, kid, "", "", content, "1", new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
-                if (entry == null) {// 发送成功，再次获取评论列表
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                // 发送成功，再次获取评论列表
+                if (error == null) {
                     getPinglunData(kid, "");
                     handler.sendEmptyMessage(8);
                 }
@@ -535,6 +548,10 @@ public class AlbumDetailActivity extends BaseActivity {
                     albumModel.setLikeNum(e.getLikeNum());
                     handler.sendEmptyMessage(7);
                 }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
 
             }
         });
@@ -549,13 +566,16 @@ public class AlbumDetailActivity extends BaseActivity {
             new CollectionApi(this, albumModel.getKid(), 1, new FetchEntryListener() {
                 @Override
                 public void setData(Entry entry) {
-                    if (entry != null && entry instanceof ErrorMsg) {
-                        if (((ErrorMsg) entry).getNo() > 0) {// 返回了收藏id
-                            albumModel.setConllectId(((ErrorMsg) entry).getNo() + "");
-                            handler.sendEmptyMessage(7);
-                        }
+                    if (((ErrorMsg) entry).getNo() > 0) {// 返回了收藏id
+                        albumModel.setConllectId(((ErrorMsg) entry).getNo() + "");
+                        handler.sendEmptyMessage(7);
+                    }
+                }
+
+                @Override
+                public void setError(ErrorMsg error) {
+                    if (error != null)
                         showToast(R.string.collect_faild);
-                    } else showToast(R.string.collect_faild);
                 }
             });
 
@@ -563,10 +583,15 @@ public class AlbumDetailActivity extends BaseActivity {
             new CollectionApi(this, albumModel.getConllectId(), new FetchEntryListener() {
                 @Override
                 public void setData(Entry entry) {
-                    if (entry != null && entry instanceof ErrorMsg && ((ErrorMsg) entry).getNo() == 0) {
+                }
+
+                @Override
+                public void setError(ErrorMsg error) {
+                    if (error == null) {
                         albumModel.setConllectId(null);
                         handler.sendEmptyMessage(7);
                     }
+
                 }
             });
 

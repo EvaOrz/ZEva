@@ -16,7 +16,7 @@ public class UrlUtil {
      */
     public static void setHost() {
         if (MyApplication.DEBUG == 0) {// 线上环境
-            HOST = "https://api.zhugexuetang.com/v1";
+            HOST = "https://api.zhugexuetang.com/v2";
 
         } else if (MyApplication.DEBUG == 1) {// 测试环境
             HOST = "http://api.dev.zhugexuetang.com/v2";
@@ -85,7 +85,7 @@ public class UrlUtil {
 
     //获取收藏列表/ 添加收藏/ 删除收藏
     public static String getCollecturl() {
-        return HOST + "/collection" ;
+        return HOST + "/collection";
     }
 
     //获取评论
@@ -100,8 +100,13 @@ public class UrlUtil {
         return HOST + "/upload";
     }
 
-    // 修改信息
+    // 修改用户信息
     public static String changeInfoUrl(String uid) {
         return HOST + "/user/" + uid;
+    }
+
+    // 管理收货地址
+    public static String addressUrl() {
+        return HOST + "/address";
     }
 }

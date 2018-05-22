@@ -22,6 +22,7 @@ import cn.com.zwwl.bayuwen.activity.fm.FmLoginActivity;
 import cn.com.zwwl.bayuwen.activity.WebActivity;
 import cn.com.zwwl.bayuwen.api.UserApi;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
@@ -76,6 +77,11 @@ public class UserCenterView implements View.OnClickListener {
             public void setData(Entry entry) {
                 // 获取用户信息，不需要监听返回
                 handler.sendEmptyMessage(0);
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                
             }
         });
     }

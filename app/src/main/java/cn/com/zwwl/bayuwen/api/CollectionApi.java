@@ -13,7 +13,7 @@ import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
 /**
- * 收藏接口
+ * 添加、删除收藏接口
  */
 public class CollectionApi extends BaseApi {
     private String url;

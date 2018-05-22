@@ -12,9 +12,11 @@ import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.UserModel;
 
 /**
- * 登录注册接口
+ * 登录、注册接口
+ *
  * 只返回token
  */
 public class LoginSigninApi extends BaseApi {
@@ -41,7 +43,8 @@ public class LoginSigninApi extends BaseApi {
      * @param registerPam3
      * @param listener
      */
-    public LoginSigninApi(Context context, String registerPam1, String registerPam2, String registerPam3, FetchEntryListener listener) {
+    public LoginSigninApi(Context context, String registerPam1, String registerPam2, String
+            registerPam3, FetchEntryListener listener) {
         super(context);
         mContext = context;
         this.listener = listener;
@@ -63,7 +66,8 @@ public class LoginSigninApi extends BaseApi {
      * @param loginPam2
      * @param listener
      */
-    public LoginSigninApi(Context context, GetUserType userType, String loginPam1, String loginPam2, FetchEntryListener listener) {
+    public LoginSigninApi(Context context, GetUserType userType, String loginPam1, String
+            loginPam2, FetchEntryListener listener) {
         super(context);
         mContext = context;
         this.listener = listener;
@@ -85,26 +89,17 @@ public class LoginSigninApi extends BaseApi {
 
     @Override
     protected void handler(JSONObject jsonObject, ErrorMsg errorMsg) {
-        if (errorMsg == null) {
-            ErrorMsg e = new ErrorMsg();
-
-            if (jsonObject.optBoolean("success", false)) {
-                JSONObject data = jsonObject.optJSONObject("data");
-                if (!isNull(data)) {
-                    String token = data.optString("token");
-                    if (!TextUtils.isEmpty(token)) {
-                        e.setNo(0);
-                        UserDataHelper.saveToken(mContext, token);
-                    }
-                }
-            } else {
-                e.setDesc(jsonObject.optString("data"));
-            }
-            listener.setData(e);
-
-        } else {
-            listener.setData(errorMsg);
+        if (!isNull(jsonObject)) {
+            String token = jsonObject.optString("token");
+            UserDataHelper.saveToken(mContext, token);
+            UserModel u = new UserModel();
+            u.setToken(token);
+            listener.setData(u);
         }
+        if (errorMsg != null) {
+            listener.setError(errorMsg);
+        }
+
 
     }
 

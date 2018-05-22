@@ -65,7 +65,7 @@ public class UserDataHelper {
      * @return
      */
     public static String getCity(Context context) {
-        return getPref(context).getString(CITY, "");
+        return getPref(context).getString(CITY, "北京");
     }
 
     /**

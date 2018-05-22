@@ -13,6 +13,7 @@ import cn.com.zwwl.bayuwen.api.LoginSigninApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.BayuwenTools;
 import cn.com.zwwl.bayuwen.view.LoginProblemPopWindow;
 
@@ -23,6 +24,8 @@ public class LoginActivity extends BaseActivity {
     private EditText accountEdit, pwdEdit;
     private ImageView showImg;
     private boolean isShowPassword = false;// 是否显示密码
+    public static int LOGIN_SUCCESS = 0;
+    public static int LOGIN_CANCLE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,14 +104,16 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void setData(Entry entry) {
                 showLoadingDialog(false);
-                if (entry != null && entry instanceof ErrorMsg) {
+                if (entry != null && entry instanceof UserModel) {
                     MyApplication.loginStatusChange = true;
-                    if (((ErrorMsg) entry).getNo() == 0) {
-                        finish();
-                    } else {
-                        showToast(((ErrorMsg) entry).getDesc());
-                    }
+                    setResult(LOGIN_SUCCESS);
+                    finish();
                 }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showToast(error.getDesc());
             }
         });
     }

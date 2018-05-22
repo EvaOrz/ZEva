@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.http;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
@@ -21,6 +22,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.listener.FetchDataListener;
@@ -45,19 +47,31 @@ public class HttpUtil {
 
     private HttpUtil(Context context) {
         this.mContext = context;
-        okhttp3.OkHttpClient.Builder ClientBuilder = new okhttp3.OkHttpClient.Builder();
-        ClientBuilder.readTimeout(20, TimeUnit.SECONDS);//读取超时
-        ClientBuilder.connectTimeout(6, TimeUnit.SECONDS);//连接超时
-        ClientBuilder.writeTimeout(60, TimeUnit.SECONDS);//写入超时
-        //支持HTTPS请求，跳过证书验证
-        ClientBuilder.sslSocketFactory(createSSLSocketFactory());
-        ClientBuilder.hostnameVerifier(new HostnameVerifier() {
-            @Override
-            public boolean verify(String hostname, SSLSession session) {
-                return true;
-            }
-        });
-        mOkHttpClient = ClientBuilder.build();
+        if (MyApplication.DEBUG == 1) {
+            OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+            clientBuilder.readTimeout(20, TimeUnit.SECONDS);//读取超时
+            clientBuilder.connectTimeout(6, TimeUnit.SECONDS);//连接超时
+            clientBuilder.writeTimeout(60, TimeUnit.SECONDS);//写入超时
+
+            //支持HTTPS请求，跳过证书验证
+            clientBuilder.sslSocketFactory(createSSLSocketFactory());
+            clientBuilder.hostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            });
+            mOkHttpClient = clientBuilder.build();
+        } else {
+            mOkHttpClient = new OkHttpClient.Builder()
+                    //设置连接超时时间
+                    .connectTimeout(20, TimeUnit.SECONDS)
+                    //设置读取超时时间
+                    .readTimeout(6, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
+                    .build();
+        }
+
     }
 
     /**
@@ -149,7 +163,7 @@ public class HttpUtil {
                 if (response.code() == 200)
                     listener.fetchData(true, response.body().string(), true);
                 else {
-                    listener.fetchData(false, response.body().string(), false);
+                    listener.fetchData(false, response.body().string(), true);
                 }
 
             }
@@ -183,7 +197,7 @@ public class HttpUtil {
                 if (response.code() == 200)
                     listener.fetchData(true, response.body().string(), true);
                 else {
-                    listener.fetchData(true, response.body().string(), false);
+                    listener.fetchData(false, response.body().string(), true);
                 }
             }
         });
@@ -219,7 +233,7 @@ public class HttpUtil {
                 if (response.code() == 200)
                     listener.fetchData(true, response.body().string(), true);
                 else {
-                    listener.fetchData(true, response.body().string(), false);
+                    listener.fetchData(false, response.body().string(), true);
                 }
             }
         });
@@ -253,12 +267,19 @@ public class HttpUtil {
                 if (response.code() == 200)
                     listener.fetchData(true, response.body().string(), true);
                 else {
-                    listener.fetchData(true, response.body().string(), false);
+                    listener.fetchData(false, response.body().string(), true);
                 }
             }
         });
 
     }
+
+//    /**
+//     * 解析
+//     */
+//    private void parseSuccessData(String response){
+//
+//    }
 
 
     /**
@@ -288,7 +309,7 @@ public class HttpUtil {
                 if (response.code() == 200)
                     listener.fetchData(true, response.body().string(), true);
                 else {
-                    listener.fetchData(true, response.body().string(), false);
+                    listener.fetchData(false, response.body().string(), true);
                 }
             }
         });
@@ -322,14 +343,25 @@ public class HttpUtil {
         Request request = null;
         try {
             String authorization = UserDataHelper.getUserToken(mContext);
-            String city = URLEncoder.encode(UserDataHelper.getCity(mContext), "UTF-8");
+            if (!TextUtils.isEmpty(authorization))
+                requestBuilder.addHeader("Authorization", "Bearer " + authorization);
+            else
+                requestBuilder.addHeader("Authorization", "");
+            String city = "";
+            if (TextUtils.isEmpty(UserDataHelper.getCity(mContext)))
+                city = URLEncoder.encode("北京", "UTF-8");
+            else city = URLEncoder.encode(UserDataHelper.getCity(mContext), "UTF-8");
+            requestBuilder.addHeader("City", city).addHeader
+                    ("Device", "android");
             int grade = TempDataHelper.getCurrentChildGrade(mContext);
+            if (grade != 0)
+                requestBuilder.addHeader("Grade", grade + "");
             int no = TempDataHelper.getCurrentChildNo(mContext);
+            if (no != 0) requestBuilder.addHeader("StudentNo", no + "");
             String accessToken = TempDataHelper.getAccessToken(mContext);
-            request = requestBuilder.addHeader("Authorization",
-                    "Bearer " + authorization).addHeader("City", city).addHeader("Grade", grade +
-                    "").addHeader("StudentNo", no + "").addHeader("Access-Token", accessToken)
-                    .addHeader("Device", "android").build();
+            if (!TextUtils.isEmpty(accessToken))
+                requestBuilder.addHeader("Access-Token", accessToken);
+            request = requestBuilder.build();
         } catch (UnsupportedEncodingException e) {
 
         }
