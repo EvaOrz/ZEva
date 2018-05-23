@@ -109,4 +109,9 @@ public class UrlUtil {
     public static String addressUrl() {
         return HOST + "/address";
     }
+
+    // 选课列表
+    public static String getEleCourseListUrl() {
+        return HOST + "/course/type";
+    }
 }

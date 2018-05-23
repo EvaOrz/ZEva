@@ -4,17 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -24,14 +27,21 @@ import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.CourseDetailActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.SearchCourseActivity;
 import cn.com.zwwl.bayuwen.activity.TeacherDetailActivity;
 import cn.com.zwwl.bayuwen.adapter.EleCourseGridAdapter;
+import cn.com.zwwl.bayuwen.api.EleCourseListApi;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.EleCourseData;
 import cn.com.zwwl.bayuwen.model.EleCourseModel;
+import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.widget.BannerView;
 
 /**
@@ -52,14 +62,20 @@ public class MainFrag2 extends Fragment
 
     private int mParallaxImageHeight;
     private EleCourseGridAdapter gridAdapter;
-
     private List<EleCourseModel> mItemList = new ArrayList<>();
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setData();
-    }
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    gridAdapter.notifyDataSetChanged();
+                    break;
+
+            }
+        }
+    };
 
     @Override
     public void onResume() {
@@ -78,6 +94,12 @@ public class MainFrag2 extends Fragment
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getEleCourseList();
     }
 
     /**
@@ -164,14 +186,20 @@ public class MainFrag2 extends Fragment
         }
     }
 
-    private List<EleCourseModel> setData() {
-        for (int i = 0; i < EleCourseData.names.length; i++) {
-            EleCourseModel courseModel = new EleCourseModel();
-            courseModel.setId(String.valueOf(i + 1));
-            courseModel.setName(EleCourseData.names[i]);
-            courseModel.setUrl(EleCourseData.urls[i]);
-            mItemList.add(courseModel);
-        }
-        return mItemList;
+    private void getEleCourseList() {
+        new EleCourseListApi(getActivity(), new FetchEntryListListener<EleCourseModel>() {
+            @Override
+            public void setData(final List<EleCourseModel> list) {
+                if (list != null && list.size() > 0) {
+                    gridAdapter.addData(list);
+                    handler.sendEmptyMessage(0);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                Toast.makeText(getActivity(), error.getDesc(), Toast.LENGTH_LONG);
+            }
+        });
     }
 }

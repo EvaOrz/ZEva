@@ -7,16 +7,18 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import cn.com.zwwl.bayuwen.fragment.FgEvaluate;
+
 
 /**
  * @author lousx
  */
-public class CoursePageAdapter extends FragmentStatePagerAdapter {
+public class ViewPageAdapter extends FragmentStatePagerAdapter {
 
-    private List<Fragment> listFragment;
+    private List<FgEvaluate> listFragment;
     private List<String> list;
 
-    public CoursePageAdapter(FragmentManager fm, List<Fragment> fragmentList, List<String> list) {
+    public ViewPageAdapter(FragmentManager fm, List<FgEvaluate> fragmentList, List<String> list) {
         super(fm);
         this.listFragment = fragmentList;
         this.list=list;
@@ -31,6 +33,7 @@ public class CoursePageAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return listFragment.size();
     }
+
     @Override
     public CharSequence getPageTitle(int position) {
         return list.get(position);
