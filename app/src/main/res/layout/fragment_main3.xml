@@ -7,8 +7,7 @@
               android:orientation="vertical">
 
     <include
-        android:id="@+id/main3_title"
-        layout="@layout/layout_titlebar"/>
+        layout="@layout/layout_gray_titlebar"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -146,42 +145,31 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/draw_gray_line_bg"
+                    android:padding="2dp"
                     android:orientation="vertical">
 
                     <android.support.design.widget.TabLayout
                         android:id="@+id/tablayout"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="@color/item_bgColor"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/draw_gray_line_bg"
                         app:tabBackground="@color/item_bgColor"
                         app:tabGravity="center"
-                        app:tabIndicatorColor="@null"
-                        app:tabIndicatorHeight="0dp"
-                        app:tabMode="scrollable"
+                        app:tabIndicatorColor="@color/gold"
+                        app:tabIndicatorHeight="2dp"
+                        app:tabMode="fixed"
                         app:tabSelectedTextColor="@color/gold"
                         app:tabTextAppearance="@style/tabTextAppearance"
-                        app:tabTextColor="@color/tab_text_color">
-                        <android.support.design.widget.TabItem
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="顾问对学生的评价" />
-
-                        <android.support.design.widget.TabItem
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="顾问对家长的评价" />
-
-                    </android.support.design.widget.TabLayout>
+                        app:tabTextColor="@color/tab_text_color"/>
 
                     <android.support.v4.view.ViewPager
-                        android:id="@+id/viewPager"
+                        android:id="@+id/mViewPager"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:paddingTop="10dp"/>
+                        android:background="@drawable/draw_gray_line_bg"/>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -320,7 +308,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/draw_gray_line_bg"
                     android:orientation="vertical">
@@ -335,18 +323,21 @@
 
                     <include layout="@layout/layout_line"/>
 
-                    <android.support.v4.view.ViewPager
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
-                        android:paddingTop="10dp"/>
+                        android:padding="5dp"
+                        android:text="顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价"
+                        android:textColor="@color/body_gray"
+                        android:textSize="14sp"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:paddingTop="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp">
 
                     <Button
                         android:layout_width="0dp"
@@ -360,8 +351,8 @@
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.5"
                         android:layout_marginLeft="10dp"
+                        android:layout_weight="0.5"
                         android:background="@drawable/draw_gold_line"
                         android:text="作业上传"
                         android:textColor="@color/gold"
@@ -380,19 +371,21 @@
 
             </cn.com.zwwl.bayuwen.widget.RoundAngleLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="16sp"
-            android:textColor="@color/body_gray"
-            android:text="已完成课程"
-            android:padding="10dp"
-            android:drawableLeft="@mipmap/user_info"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:drawableLeft="@mipmap/user_info"
+                android:padding="10dp"
+                android:text="已完成课程"
+                android:textColor="@color/body_gray"
+                android:textSize="16sp"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/completed_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/completed_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"/>
         </LinearLayout>
 
     </ScrollView>
