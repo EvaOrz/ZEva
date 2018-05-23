@@ -257,6 +257,10 @@
         <meta-data
             android:name="TencentMapSDK"
             android:value="PFQBZ-3TSR4-VGQUN-DN6WF-SWII5-7YBC5" />
+        <!--Glide 配置-->
+        <meta-data
+            android:name="cn.com.zwwl.bayuwen.glide.TGlideModule"
+            android:value="GlideModule" />
     </application>
 
 </manifest>

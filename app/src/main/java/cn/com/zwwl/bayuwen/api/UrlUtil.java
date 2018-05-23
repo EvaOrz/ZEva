@@ -114,4 +114,10 @@ public class UrlUtil {
     public static String getEleCourseListUrl() {
         return HOST + "/course/type";
     }
+
+    // 赞列表
+    public static String getTopListUrl() {
+        return HOST + "/vote/toplist";
+    }
+
 }

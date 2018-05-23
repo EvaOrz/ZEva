@@ -1,4 +1,4 @@
-package cn.com.zwwl.bayuwen.widget.glide;
+package cn.com.zwwl.bayuwen.glide;
 
 import android.content.Context;
 
@@ -22,7 +22,7 @@ public final class TGlideModule extends AppGlideModule {
         int diskCacheSize = 1024 * 1024 * 30;//最多可以缓存多少字节的数据
         int memorySize = (int) (Runtime.getRuntime().maxMemory()) / 8;  // 取1/8最大内存作为最大缓存
         glideBuilder.setDiskCache(
-                new ExternalCacheDiskCacheFactory(context, "kids", diskCacheSize));
+                new ExternalCacheDiskCacheFactory(context, "zwwlapp", diskCacheSize));
         // 自定义内存和图片池大小
         glideBuilder.setMemoryCache(new LruResourceCache(memorySize));
         glideBuilder.setBitmapPool(new LruBitmapPool(memorySize));

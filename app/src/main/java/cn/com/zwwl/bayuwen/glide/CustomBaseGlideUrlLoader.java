@@ -1,4 +1,4 @@
-package cn.com.zwwl.bayuwen.widget.glide;
+package cn.com.zwwl.bayuwen.glide;
 
 
 import com.bumptech.glide.load.Options;

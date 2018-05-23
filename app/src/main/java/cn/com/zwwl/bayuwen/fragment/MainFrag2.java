@@ -9,7 +9,9 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,22 +29,27 @@ import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.CourseDetailActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.SearchCourseActivity;
 import cn.com.zwwl.bayuwen.activity.TeacherDetailActivity;
+import cn.com.zwwl.bayuwen.adapter.AaPraiseListAdapter;
+import cn.com.zwwl.bayuwen.adapter.AcPraiseListAdapter;
 import cn.com.zwwl.bayuwen.adapter.EleCourseGridAdapter;
+import cn.com.zwwl.bayuwen.adapter.TPraiseListAdapter;
 import cn.com.zwwl.bayuwen.api.EleCourseListApi;
+import cn.com.zwwl.bayuwen.api.PraiseListApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
-import cn.com.zwwl.bayuwen.model.EleCourseData;
 import cn.com.zwwl.bayuwen.model.EleCourseModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.model.PraiseModel;
 import cn.com.zwwl.bayuwen.widget.BannerView;
+import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
+import cn.com.zwwl.bayuwen.widget.decoration.HSpacesItemDecoration;
+import cn.com.zwwl.bayuwen.widget.decoration.SpacesItemDecoration;
 
 /**
  * 选课
@@ -60,11 +67,20 @@ public class MainFrag2 extends Fragment
     private TextView academicAdvisoPraiseTv;
     private TextView assistantPraiseTv;
 
+    private RecyclerView praiseRecyclerView;
+    private RecyclerView academicAdvisoRecyclerView;
+    private RecyclerView assistantRecyclerView;
+
+    private TPraiseListAdapter praiseListAdapter;
+    private AcPraiseListAdapter acPraiseListAdapter;
+    private AaPraiseListAdapter aaPraiseListAdapter;
+
     private int mParallaxImageHeight;
     private EleCourseGridAdapter gridAdapter;
     private List<EleCourseModel> mItemList = new ArrayList<>();
+    private PraiseModel praiseModel;
 
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -72,10 +88,21 @@ public class MainFrag2 extends Fragment
                 case 0:
                     gridAdapter.notifyDataSetChanged();
                     break;
-
+                case 1:
+                    setAdapterData();
+                    break;
             }
         }
     };
+
+    private void setAdapterData() {
+        praiseListAdapter = new TPraiseListAdapter(getActivity(), praiseModel.getTeachers());
+        acPraiseListAdapter = new AcPraiseListAdapter(getActivity(), praiseModel.getStu_advisors());
+        aaPraiseListAdapter = new AaPraiseListAdapter(getActivity(), praiseModel.getTutors());
+        praiseRecyclerView.setAdapter(praiseListAdapter);
+        academicAdvisoRecyclerView.setAdapter(acPraiseListAdapter);
+        assistantRecyclerView.setAdapter(aaPraiseListAdapter);
+    }
 
     @Override
     public void onResume() {
@@ -100,6 +127,7 @@ public class MainFrag2 extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getEleCourseList();
+        getPraiseList();
     }
 
     /**
@@ -136,6 +164,13 @@ public class MainFrag2 extends Fragment
         teacherPraiseTv.setText("教师点赞排行榜");
         academicAdvisoPraiseTv.setText("学业顾问点赞排行榜");
         assistantPraiseTv.setText("校区助手点赞排行榜");
+        praiseRecyclerView = view1.findViewById(R.id.praiseRecyclerView);
+        academicAdvisoRecyclerView = view2.findViewById(R.id.praiseRecyclerView);
+        assistantRecyclerView = view3.findViewById(R.id.praiseRecyclerView);
+
+        setRecyclerView(praiseRecyclerView);
+        setRecyclerView(academicAdvisoRecyclerView);
+        setRecyclerView(assistantRecyclerView);
 
         gridAdapter = new EleCourseGridAdapter(getActivity(), mItemList);
         mGridView.setAdapter(gridAdapter);
@@ -143,13 +178,20 @@ public class MainFrag2 extends Fragment
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
+                intent.putExtra("id", mItemList.get(position).getId());
                 intent.setClass(mActivity, CourseDetailActivity.class);
                 startActivity(intent);
             }
         });
-        view1.findViewById(R.id.praise_re).setOnClickListener(this);
+
         root.findViewById(R.id.left_more_iv).setOnClickListener(this);
         root.findViewById(R.id.search_view).setOnClickListener(this);
+    }
+
+    private void setRecyclerView(RecyclerView view) {
+        view.setHasFixedSize(true);
+        view.setLayoutManager(new LinearLayoutManager(getActivity(), OrientationHelper.VERTICAL, false));
+        view.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R.dimen.dp_10, OrientationHelper.VERTICAL));
     }
 
     @Override
@@ -193,6 +235,24 @@ public class MainFrag2 extends Fragment
                 if (list != null && list.size() > 0) {
                     gridAdapter.addData(list);
                     handler.sendEmptyMessage(0);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                Toast.makeText(getActivity(), error.getDesc(), Toast.LENGTH_LONG);
+            }
+        });
+    }
+
+    private void getPraiseList() {
+        new PraiseListApi(getActivity(), new FetchEntryListener() {
+
+            @Override
+            public void setData(Entry entry) {
+                if (entry != null && entry instanceof PraiseModel) {
+                    praiseModel = (PraiseModel) entry;
+                    handler.sendEmptyMessage(1);
                 }
             }
 
