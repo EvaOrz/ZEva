@@ -37,6 +37,7 @@ public class EleCourseListApi extends BaseApi {
     public EleCourseListApi(Context context, FetchEntryListListener<EleCourseModel> listener) {
         super(context);
         mContext = context;
+        isNeedJsonArray=true;
         this.listener = listener;
         this.url = UrlUtil.getEleCourseListUrl();
         get();
@@ -60,7 +61,6 @@ public class EleCourseListApi extends BaseApi {
         if (!isNull(jsonArray)) {
             Gson gson = new Gson();
             eleCourseModels =  gson.fromJson(String.valueOf(jsonArray),new TypeToken<List<EleCourseModel>>(){}.getType());
-            Log.d("EleCourseListApi",eleCourseModels.size()+"========");
             listener.setData(eleCourseModels);
         }
     }

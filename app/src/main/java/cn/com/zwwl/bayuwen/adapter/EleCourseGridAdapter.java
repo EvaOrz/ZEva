@@ -2,6 +2,7 @@ package cn.com.zwwl.bayuwen.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -25,7 +26,7 @@ public class EleCourseGridAdapter extends BaseAdapter {
     protected Context mContext;
     protected List<EleCourseModel> mItemList = new ArrayList<>();
 
-    public EleCourseGridAdapter(Context mContext,List<EleCourseModel> mItemList) {
+    public EleCourseGridAdapter(Context mContext, List<EleCourseModel> mItemList) {
         this.mContext = mContext;
         this.mItemList = mItemList;
     }
@@ -55,8 +56,12 @@ public class EleCourseGridAdapter extends BaseAdapter {
         ImageView img = viewHolder.getView(R.id.item_img);
 
         title.setText(item.getName());
-        if (!TextUtils.isEmpty(String.valueOf(item.getImg())))
-            Glide.with(mContext).load(item.getImg());
+        if (!TextUtils.isEmpty(item.getImg()))
+            Glide.with(mContext).load(item.getImg()).into(img);
         return viewHolder.getConvertView();
+    }
+
+    public void addData(List<EleCourseModel> list) {
+        mItemList.addAll(list);
     }
 }

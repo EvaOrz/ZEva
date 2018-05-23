@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,8 +62,20 @@ public class MainFrag2 extends Fragment
 
     private int mParallaxImageHeight;
     private EleCourseGridAdapter gridAdapter;
-
     private List<EleCourseModel> mItemList = new ArrayList<>();
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    gridAdapter.notifyDataSetChanged();
+                    break;
+
+            }
+        }
+    };
 
     @Override
     public void onResume() {
@@ -174,16 +189,16 @@ public class MainFrag2 extends Fragment
     private void getEleCourseList() {
         new EleCourseListApi(getActivity(), new FetchEntryListListener<EleCourseModel>() {
             @Override
-            public void setData(List<EleCourseModel> list) {
-//                if (list != null && list.size() > 0) {
-//                    mItemList.addAll(list);
-//                    gridAdapter.notifyDataSetChanged();
-//                }
+            public void setData(final List<EleCourseModel> list) {
+                if (list != null && list.size() > 0) {
+                    gridAdapter.addData(list);
+                    handler.sendEmptyMessage(0);
+                }
             }
 
             @Override
             public void setError(ErrorMsg error) {
-                Toast.makeText(getActivity(),error.getDesc(),Toast.LENGTH_LONG);
+                Toast.makeText(getActivity(), error.getDesc(), Toast.LENGTH_LONG);
             }
         });
     }

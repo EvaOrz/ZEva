@@ -16,7 +16,6 @@ public class EleCourseModel extends Entry{
     private int id;
     private String name;
     private String img;
-    private int sort;
 
     public void setId(int id) {
         this.id = id;
@@ -28,10 +27,6 @@ public class EleCourseModel extends Entry{
 
     public void setImg(String img) {
         this.img = img;
-    }
-
-    public void setSort(int sort) {
-        this.sort = sort;
     }
 
     public int getId() {
@@ -48,10 +43,6 @@ public class EleCourseModel extends Entry{
         if (img == null)
             return "";
         return img;
-    }
-
-    public int getSort() {
-        return sort;
     }
 
 }
