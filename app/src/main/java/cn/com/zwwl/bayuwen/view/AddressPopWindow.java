@@ -55,7 +55,7 @@ public class AddressPopWindow implements View.OnClickListener {
     private ArrayList<CityModel> arrCitys = new ArrayList<>();// 当前的市列表
     private ArrayList<DistModel> arrDists = new ArrayList<>();// 当前的区列表
 
-    public AddressPopWindow(Context context,int type, OnAddressCListener listener) {
+    public AddressPopWindow(Context context, int type, OnAddressCListener listener) {
         mContext = context;
         this.listener = listener;
         init();
@@ -158,8 +158,8 @@ public class AddressPopWindow implements View.OnClickListener {
 
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
-                setTextviewSize((String) cityAdapter.getItemText(wheel.getCurrentItem()),
-                        cityAdapter);
+                setTextviewSize((String) distAdapter.getItemText(wheel.getCurrentItem()),
+                        distAdapter);
             }
         });
 
