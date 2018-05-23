@@ -37,7 +37,7 @@
                 android:textColor="@color/body_gray"
                 android:textSize="@dimen/sp_16"/>
 
-            <cn.com.zwwl.bayuwen.widget.RoundAngleLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -145,30 +145,28 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:padding="2dp"
+                    android:layout_height="120dp"
                     android:orientation="vertical">
 
-                    <android.support.design.widget.TabLayout
-                        android:id="@+id/tablayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/draw_gray_line_bg"
-                        app:tabBackground="@color/item_bgColor"
-                        app:tabGravity="center"
-                        app:tabIndicatorColor="@color/gold"
-                        app:tabIndicatorHeight="2dp"
-                        app:tabMode="fixed"
-                        app:tabSelectedTextColor="@color/gold"
-                        app:tabTextAppearance="@style/tabTextAppearance"
-                        app:tabTextColor="@color/tab_text_color"/>
+                <cn.com.zwwl.bayuwen.view.PagerSlidingTabStrip
+                    android:id="@+id/tablayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/draw_gray_top_bg"
+                    app:pstsIndicatorColor="@color/gold"
+                    app:pstsIndicatorHeight="3dp"
+                    app:pstsSelectTextColor="@color/gold"
+                    app:pstsTextColor="@color/body_gray"
+                    app:pstsTextSize="@dimen/text_size_14"
+                    app:pstsUnderlineHeight="0px"
+                    app:pstsisMore="true"/>
 
-                    <android.support.v4.view.ViewPager
-                        android:id="@+id/mViewPager"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/draw_gray_line_bg"/>
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/mViewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/draw_gray_w_bg"/>
 
                 </LinearLayout>
 
@@ -181,6 +179,7 @@
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_weight="1"
                         android:background="@drawable/draw_gold_line"
                         android:text="作业上传"
@@ -190,6 +189,7 @@
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/draw_gold_line"
@@ -198,10 +198,9 @@
                         android:textSize="14sp"/>
                 </LinearLayout>
 
+            </LinearLayout>
 
-            </cn.com.zwwl.bayuwen.widget.RoundAngleLayout>
-
-            <cn.com.zwwl.bayuwen.widget.RoundAngleLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -325,9 +324,9 @@
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
+                        android:layout_height="80dp"
                         android:padding="5dp"
+                        android:background="@drawable/draw_gray_w_bg"
                         android:text="顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价"
                         android:textColor="@color/body_gray"
                         android:textSize="14sp"/>
@@ -343,6 +342,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
+                        style="?android:attr/borderlessButtonStyle"
                         android:background="@drawable/draw_gold_line"
                         android:text="观看直播"
                         android:textColor="@color/gold"
@@ -353,6 +353,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="0.5"
+                        style="?android:attr/borderlessButtonStyle"
                         android:background="@drawable/draw_gold_line"
                         android:text="作业上传"
                         android:textColor="@color/gold"
@@ -363,13 +364,14 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="0.9"
+                        style="?android:attr/borderlessButtonStyle"
                         android:background="@drawable/draw_gold_line"
                         android:text="查看往次课程跟踪"
                         android:textColor="@color/gold"
                         android:textSize="14sp"/>
                 </LinearLayout>
 
-            </cn.com.zwwl.bayuwen.widget.RoundAngleLayout>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"

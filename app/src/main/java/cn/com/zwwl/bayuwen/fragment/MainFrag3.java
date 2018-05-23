@@ -28,7 +28,9 @@ import cn.com.zwwl.bayuwen.model.CompleteCourse;
 import cn.com.zwwl.bayuwen.model.CourseVideoModel;
 import cn.com.zwwl.bayuwen.model.EleCourseData;
 import cn.com.zwwl.bayuwen.model.EleCourseModel;
+import cn.com.zwwl.bayuwen.view.PagerSlidingTabStrip;
 import cn.com.zwwl.bayuwen.widget.BannerView;
+import cn.com.zwwl.bayuwen.widget.CustomViewPager;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
 import static android.support.design.widget.TabLayout.*;
@@ -37,16 +39,16 @@ import static cn.com.zwwl.bayuwen.MyApplication.mContext;
 /**
  *
  */
-public class MainFrag3 extends Fragment{
+public class MainFrag3 extends Fragment {
 
     private Activity mActivity;
     private BannerView bannerView;
-    private TabLayout tabLayout;
+    private PagerSlidingTabStrip tabLayout;
     private ViewPager mViewPager;
     private RecyclerView recyclerView;
     private CompleteCourseAdapter adapter;
-    private ViewPageAdapter mViewPagerAdapter;
-    private List<FgEvaluate> list = new ArrayList<>();
+    private CoursePageAdapter mViewPagerAdapter;
+    private List<Fragment> list = new ArrayList<>();
     private List<CompleteCourse> mItemList = new ArrayList<>();
     private List<String> mItemTitleList = new ArrayList<>();
 
@@ -90,13 +92,15 @@ public class MainFrag3 extends Fragment{
         tabLayout = view.findViewById(R.id.tablayout);
         mItemTitleList.add("顾问对学生的评价");
         mItemTitleList.add("顾问对家长的评价");
-        list.add(FgEvaluate.newInstance("ASJDFOISDJFIJFDODJOIJASF"));
-        list.add(FgEvaluate.newInstance("ASJDFOISDJFIJFDODJOIJASF"));
+        FgEvaluate evaluate1 = FgEvaluate.newInstance("ASJDFOISDJFIJFDODJOIJASF");
+        list.add(evaluate1);
+        FgEvaluate evaluate2 = FgEvaluate.newInstance("ASJDFOISDJFIJFDasdfdsODJOIJASF");
+        list.add(evaluate2);
         mViewPager = view.findViewById(R.id.mViewPager);
-        mViewPagerAdapter = new ViewPageAdapter(getChildFragmentManager(),list,mItemTitleList);
+        mViewPagerAdapter = new CoursePageAdapter(getFragmentManager(), list, mItemTitleList);
         mViewPager.setAdapter(mViewPagerAdapter);
-        tabLayout.setupWithViewPager(mViewPager);
-        for (int i = 0; i< 6;i++){
+        tabLayout.setViewPager(mViewPager);
+        for (int i = 0; i < 6; i++) {
             CompleteCourse model = new CompleteCourse();
             mItemList.add(model);
         }
@@ -104,8 +108,8 @@ public class MainFrag3 extends Fragment{
         recyclerView = view.findViewById(R.id.completed_recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, OrientationHelper.VERTICAL, false));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getResources(),R.color.white,R.dimen.dp_5,OrientationHelper.VERTICAL));
-        adapter = new CompleteCourseAdapter(getActivity(),mItemList);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R.dimen.dp_5, OrientationHelper.VERTICAL));
+        adapter = new CompleteCourseAdapter(getActivity(), mItemList);
         recyclerView.setAdapter(adapter);
 
     }

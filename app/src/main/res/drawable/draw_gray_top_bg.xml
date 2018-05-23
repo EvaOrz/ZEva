@@ -6,5 +6,6 @@
         android:width="1dp"
         android:color="@color/cirle_line_color"/>
     <corners
-        android:radius="@dimen/dp_10"/>
+        android:topLeftRadius="10dp"
+        android:topRightRadius="10dp"/>
 </shape>

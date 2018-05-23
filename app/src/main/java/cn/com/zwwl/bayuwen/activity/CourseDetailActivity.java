@@ -92,7 +92,7 @@ public class CourseDetailActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 mViewPager.resetHeight(position);
-                findViewById(R.id.scroll).scrollTo(0, 0);
+//                findViewById(R.id.scroll).scrollTo(0, 0);
             }
 
             @Override

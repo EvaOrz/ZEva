@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,8 +55,8 @@ public class EleCourseGridAdapter extends BaseAdapter {
         ImageView img = viewHolder.getView(R.id.item_img);
 
         title.setText(item.getName());
-        if (!TextUtils.isEmpty(String.valueOf(item.getUrl())))
-            img.setImageResource(item.getUrl());
+        if (!TextUtils.isEmpty(String.valueOf(item.getImg())))
+            Glide.with(mContext).load(item.getImg());
         return viewHolder.getConvertView();
     }
 }
