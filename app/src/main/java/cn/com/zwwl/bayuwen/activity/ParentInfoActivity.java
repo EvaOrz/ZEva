@@ -19,8 +19,14 @@ import com.bumptech.glide.Glide;
 
 import java.io.File;
 
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.api.UploadPicApi;
+import cn.com.zwwl.bayuwen.api.UserInfoApi;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.view.GenderPopWindow;
 import cn.com.zwwl.bayuwen.widget.FetchPhotoManager;
@@ -57,10 +63,9 @@ public class ParentInfoActivity extends BaseActivity {
         phoneTv = findViewById(R.id.info_p_phoneTv);
         findViewById(R.id.info_p_back).setOnClickListener(this);
         findViewById(R.id.info_p_avatar).setOnClickListener(this);
-        findViewById(R.id.info_p_name).setOnClickListener(this);
         findViewById(R.id.info_p_sex).setOnClickListener(this);
         findViewById(R.id.info_p_manage).setOnClickListener(this);
-
+        findViewById(R.id.info_p_save).setOnClickListener(this);
     }
 
     @Override
@@ -72,8 +77,6 @@ public class ParentInfoActivity extends BaseActivity {
                 break;
             case R.id.info_p_avatar:
                 doFecthPicture();
-                break;
-            case R.id.info_p_name:
                 break;
             case R.id.info_p_sex:
                 new GenderPopWindow(this, new GenderPopWindow.ChooseGenderListener() {
@@ -88,8 +91,68 @@ public class ParentInfoActivity extends BaseActivity {
                 startActivity(new Intent(mContext, AddressManageActivity.class));
                 break;
 
+            case R.id.info_p_save:// 保存
+                String na = nameEv.getText().toString();
+                if (TextUtils.isEmpty(na)) {
+                    showToast("姓名不能为空");
+                } else {
+                    showLoadingDialog(true);
+                    if (isNeedChangePic) {
+                        uploadPic(photoFile);
+                    } else
+                        commit();
+                }
+
+
+                break;
         }
 
+    }
+
+    private void uploadPic(File file) {
+        new UploadPicApi(this, file, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+                if (entry != null && entry instanceof UserModel) {
+                    userModel.setPic(((UserModel) entry).getPic());
+                    commit();
+
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                if (error != null)
+                    showToast(TextUtils.isEmpty(error.getDesc()) ? mContext.getResources()
+                            .getString(R.string.upload_faild) : error
+                            .getDesc());
+            }
+        });
+    }
+
+    /**
+     * 提交
+     */
+    private void commit() {
+        new UserInfoApi(this, userModel, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+                showLoadingDialog(false);
+                if (entry != null && entry instanceof UserModel) {
+                    MyApplication.loginStatusChange = true;
+                    finish();
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+                if (error != null)
+                    showToast(TextUtils.isEmpty(error.getDesc()) ? mContext.getResources()
+                            .getString(R.string.upload_faild) : error
+                            .getDesc());
+            }
+        });
     }
 
     protected void doFecthPicture() {
@@ -105,7 +168,6 @@ public class ParentInfoActivity extends BaseActivity {
         nameEv.setText(userModel.getName());
         genderTv.setText(userModel.getSexTxt(userModel.getSex()));
         phoneTv.setText(userModel.getTel());
-//        addTxt.setText(userModel.getArea() + "");
     }
 
     @SuppressLint("HandlerLeak")
@@ -132,7 +194,6 @@ public class ParentInfoActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == FetchPhotoManager.REQUEST_CAMERA) {
-
 //                avatarBit = data.getParcelableExtra("data");
                 photoFile = new File(picturePath);
             } else if (requestCode == FetchPhotoManager.REQUEST_GALLERY) {

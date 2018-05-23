@@ -6,6 +6,8 @@ import org.json.JSONObject;
  * 收货地址 Model
  */
 public class AddressModel extends Entry {
+    private String id = "";
+    private String is_default = "";// 1：default 0：非default
     private String to_user = "";
     private String phone = "";
     private String province = "";
@@ -97,12 +99,29 @@ public class AddressModel extends Entry {
         this.address_alias = address_alias;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getIs_default() {
+        return is_default;
+    }
+
+    public void setIs_default(String is_default) {
+        this.is_default = is_default;
+    }
+
     /**
      * @param jsonObject
      * @param addressModel
      * @return
      */
     public AddressModel parseAddressModel(JSONObject jsonObject, AddressModel addressModel) {
+        addressModel.setId(jsonObject.optString("id"));
         addressModel.setTo_user(jsonObject.optString("to_user"));
         addressModel.setPhone(jsonObject.optString("phone"));
         addressModel.setProvince(jsonObject.optString("province"));
@@ -113,6 +132,7 @@ public class AddressModel extends Entry {
         addressModel.setDistrict_id(jsonObject.optString("district_id"));
         addressModel.setAddress(jsonObject.optString("address"));
         addressModel.setAddress_alias(jsonObject.optString("address_alias"));
+        addressModel.setIs_default(jsonObject.optString("is_default"));
         return addressModel;
     }
 

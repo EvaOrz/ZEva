@@ -8,27 +8,38 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.TextView;
 
+
+import com.bumptech.glide.Glide;
+import com.tencent.map.geolocation.TencentLocation;
+import com.tencent.map.geolocation.TencentLocationListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.fragment.MainFrag1;
 import cn.com.zwwl.bayuwen.fragment.MainFrag2;
 import cn.com.zwwl.bayuwen.fragment.MainFrag3;
 import cn.com.zwwl.bayuwen.fragment.MainFrag4;
+import cn.com.zwwl.bayuwen.model.UserModel;
 
 /**
  *
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements TencentLocationListener {
     private RadioButton tabButton1, tabButton2, tabButton3, tabButton4;
     private LinearLayout mainView;
     private DrawerLayout drawer;// 抽屉
@@ -41,6 +52,8 @@ public class MainActivity extends BaseActivity {
     private MainFrag4 mainFrag4;
 
     private ImageView avatar;
+    private TextView name, yaoqing, gongxun;
+    private UserModel userModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +62,17 @@ public class MainActivity extends BaseActivity {
         mContext = this;
         initView();
         initData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userModel = UserDataHelper.getUserLoginInfo(mContext);
+        if (userModel == null) {
+            mContext.startActivity(new Intent(mContext, LoginActivity.class));
+        } else {
+            initLeftLayout();
+        }
     }
 
     private void initView() {
@@ -79,7 +103,6 @@ public class MainActivity extends BaseActivity {
         };
         drawer.setDrawerListener(listen);
 
-
         mainFrag1 = MainFrag1.newInstance("hello world");
         mainFrag2 = MainFrag2.newInstance("hello world");
         mainFrag3 = MainFrag3.newInstance("hello world");
@@ -87,6 +110,9 @@ public class MainActivity extends BaseActivity {
         switchFragment(mainFrag1);
 
         avatar = findViewById(R.id.main_avatar);
+        name = findViewById(R.id.main_name);
+        yaoqing = findViewById(R.id.main_yaoqingma);
+        gongxun = findViewById(R.id.main_gongxun);
         childLayout = findViewById(R.id.child_layout);
 
         tabButton1 = findViewById(R.id.bottom_nav_1);
@@ -115,7 +141,8 @@ public class MainActivity extends BaseActivity {
             switch (msg.what) {
                 case 0:
                     childLayout.removeAllViews();
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout
+                            .LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     params.bottomMargin = 20;
                     for (View view : childCardViews) {
                         childLayout.addView(view, params);
@@ -129,7 +156,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        initChildLayout();
+
+
     }
 
     /**
@@ -212,7 +240,13 @@ public class MainActivity extends BaseActivity {
     /**
      * 初始化切换学生栏
      */
-    private void initChildLayout() {
+    private void initLeftLayout() {
+        name.setText(userModel.getName());
+        if (!TextUtils.isEmpty(userModel.getPic()))
+            Glide.with(mContext).load(userModel.getPic()).into(avatar);
+        yaoqing.setText("我的邀请码：" + userModel.getSignCode());
+//        gongxun.setText();
+
         childCardViews.clear();
         for (int i = 0; i < 2; i++) {
             View view = LayoutInflater.from(this).inflate(R.layout.item_child, null);
@@ -244,4 +278,16 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onLocationChanged(TencentLocation tencentLocation, int i, String s) {
+        Log.e("sssssss", s + " __ " + tencentLocation.getCity());
+        if (TextUtils.isEmpty(TempDataHelper.getCurrentCity(this))) {
+            TempDataHelper.setCurrentCity(mContext, tencentLocation.getCity());
+        }
+    }
+
+    @Override
+    public void onStatusUpdate(String s, int i, String s1) {
+
+    }
 }

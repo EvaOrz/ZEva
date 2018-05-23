@@ -12,6 +12,7 @@ import android.os.Message;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +25,10 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.AddressApi;
-import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.AddressModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.util.BayuwenTools;
-import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.util.AddressTools.*;
 import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 import cn.com.zwwl.bayuwen.widget.AutoTextGroupView;
 
@@ -43,7 +42,10 @@ public class AddressAddActivity extends BaseActivity {
     private LinearLayout addTag, addLayout;
     private TextView provinceTv;
     private EditText nameEv, phoneEv, addressEv;
-    private String username, usernumber, provinceTxt, cityTxt;
+    private String username, usernumber;
+    private ProvinceModel provinceModel;
+    private CityModel cityModel;
+    private DistModel distModel;
     private AddressModel addressModel;
 
 
@@ -72,21 +74,26 @@ public class AddressAddActivity extends BaseActivity {
             case R.id.add_address_save:
                 String name = nameEv.getText().toString();
                 String phone = phoneEv.getText().toString();
+                String area = provinceTv.getText().toString();
                 String addre = addressEv.getText().toString();
 
                 if (TextUtils.isEmpty(name)) {
                     showToast("请填写收货人姓名");
                 } else if (TextUtils.isEmpty(phone)) {
                     showToast("请填写收货人联系方式");
-                } else if (TextUtils.isEmpty(provinceTxt) || TextUtils.isEmpty(cityTxt)) {
+                } else if (TextUtils.isEmpty(area)) {
                     showToast("请选择收货地址");
                 } else if (TextUtils.isEmpty(addre)) {
                     showToast("请填写详细地址");
                 } else {
                     addressModel.setTo_user(name);
                     addressModel.setPhone(phone);
-                    addressModel.setProvince(provinceTxt);
-                    addressModel.setCity(cityTxt);
+                    addressModel.setProvince(provinceModel.getPtxt());
+                    addressModel.setProvince_id(provinceModel.getPid());
+                    addressModel.setCity(cityModel.getCtxt());
+                    addressModel.setCity_id(cityModel.getCid());
+                    addressModel.setDistrict(distModel.getDtxt());
+                    addressModel.setDistrict_id(distModel.getDid());
                     addressModel.setAddress(addre);
                     for (AddressTag tag : tagDatas) {
                         if (tag.isCheck) {
@@ -103,13 +110,17 @@ public class AddressAddActivity extends BaseActivity {
                 break;
 
             case R.id.a_a_address:// 选择地址
-                new AddressPopWindow(mContext, new AddressPopWindow.OnAddressCListener() {
+                new AddressPopWindow(mContext, 0,new AddressPopWindow.OnAddressCListener() {
+
                     @Override
-                    public void onClick(String province, String city) {
-                        provinceTxt = province;
-                        cityTxt = city;
+                    public void onClick(ProvinceModel province,
+                                        CityModel city, DistModel dist) {
+                        provinceModel = province;
+                        cityModel = city;
+                        distModel = dist;
                         handler.sendEmptyMessage(3);
                     }
+
                 });
                 break;
         }
@@ -178,7 +189,8 @@ public class AddressAddActivity extends BaseActivity {
                     break;
 
                 case 3:
-                    provinceTv.setText(provinceTxt + " " + cityTxt);
+                    provinceTv.setText(provinceModel.getPtxt() + " " + cityModel.getCtxt() + " "
+                            + distModel.getDtxt());
                     break;
             }
         }

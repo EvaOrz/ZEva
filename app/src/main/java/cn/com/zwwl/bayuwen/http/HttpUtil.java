@@ -217,7 +217,8 @@ public class HttpUtil {
         if (file != null) {
             RequestBody body = RequestBody.create(MediaType.parse("image/*"), file);
             // 参数分别为， 请求key ，文件名称 ， RequestBody
-            requestBody.addFormDataPart("file", file.getName(), body);
+            requestBody.addFormDataPart("file", "sssss", body);
+
         }
         Request.Builder requestBuilder = new Request.Builder();
         Request request = setRequestHeader(requestBuilder.post(requestBody.build()).url(url));
@@ -348,9 +349,9 @@ public class HttpUtil {
             else
                 requestBuilder.addHeader("Authorization", "");
             String city = "";
-            if (TextUtils.isEmpty(UserDataHelper.getCity(mContext)))
+            if (TextUtils.isEmpty(TempDataHelper.getCurrentCity(mContext)))
                 city = URLEncoder.encode("北京", "UTF-8");
-            else city = URLEncoder.encode(UserDataHelper.getCity(mContext), "UTF-8");
+            else city = URLEncoder.encode(TempDataHelper.getCurrentCity(mContext), "UTF-8");
             requestBuilder.addHeader("City", city).addHeader
                     ("Device", "android");
             int grade = TempDataHelper.getCurrentChildGrade(mContext);

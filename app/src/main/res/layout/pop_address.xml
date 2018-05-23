@@ -14,10 +14,10 @@
         android:background="@drawable/gray_bodybg_circle_xiankuang"
         android:gravity="center_horizontal"
         android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-           >
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/btn_myinfo_cancel"
@@ -31,16 +31,15 @@
                 android:textSize="@dimen/text_size_14" />
 
 
-
             <TextView
                 android:id="@+id/btn_myinfo_sure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:paddingBottom="10dp"
                 android:paddingRight="15dp"
                 android:paddingTop="10dp"
                 android:text="@string/sure"
-                android:layout_alignParentRight="true"
                 android:textColor="@color/gold"
                 android:textSize="@dimen/text_size_14" />
 
@@ -68,6 +67,13 @@
 
             <cn.com.zwwl.bayuwen.widget.wheel.WheelView
                 android:id="@+id/wv_address_city"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1" />
+
+            <cn.com.zwwl.bayuwen.widget.wheel.WheelView
+                android:id="@+id/wv_address_dist"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
