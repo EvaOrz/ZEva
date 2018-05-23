@@ -16,8 +16,12 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
+import cn.com.zwwl.bayuwen.api.AddressApi;
+import cn.com.zwwl.bayuwen.model.AddressModel;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
@@ -26,7 +30,7 @@ import cn.com.zwwl.bayuwen.widget.ViewHolder;
 public class AddressManageActivity extends BaseActivity {
     private ListView listView;
     private AddressAdapter addressAdapter;
-    private List<Entry> datas = new ArrayList<>();
+    private List<AddressModel> datas = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,10 +57,27 @@ public class AddressManageActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        for (int i = 0; i < 5; i++) {
-            datas.add(new Entry());
-        }
-        addressAdapter.setData(datas);
+        showLoadingDialog(true);
+        new AddressApi(mContext, new AddressApi.FetchAddressListListener() {
+            @Override
+            public void setData(List<AddressModel> list) {
+                showLoadingDialog(false);
+                if (Tools.listNotNull(list)) {
+                    datas.clear();
+                    datas.addAll(list);
+                    handler.sendEmptyMessage(0);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+                if (error != null) showToast(error.getDesc());
+
+            }
+        });
+
+
     }
 
     @SuppressLint("HandlerLeak")
@@ -66,6 +87,7 @@ public class AddressManageActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
+                    addressAdapter.setData(datas);
                     addressAdapter.notifyDataSetChanged();
                     break;
             }
@@ -90,7 +112,7 @@ public class AddressManageActivity extends BaseActivity {
             mContext = context;
         }
 
-        public void setData(List<Entry> mItemList) {
+        public void setData(List<AddressModel> mItemList) {
             clearData();
             clear();
             isScroll = false;

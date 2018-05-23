@@ -2,6 +2,7 @@ package cn.com.zwwl.bayuwen.api;
 
 import android.content.Context;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -16,7 +17,7 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 /**
  * 获取用户信息接口
  */
-public class UserApi extends BaseApi {
+public class UserInfoApi extends BaseApi {
     private Map<String, String> pamas = new HashMap<>();
     private UserModel userModel;
     private FetchEntryListener listener;
@@ -34,7 +35,7 @@ public class UserApi extends BaseApi {
      * @param pic
      * @param listener
      */
-    public UserApi(Context context, String name, String phone, int gendar, int province, int
+    public UserInfoApi(Context context, String name, String phone, int gendar, int province, int
             city, String pic, FetchEntryListener listener) {
         super(context);
         mContext = context;
@@ -58,7 +59,7 @@ public class UserApi extends BaseApi {
      * @param context
      * @param listener
      */
-    public UserApi(Context context, FetchEntryListener listener) {
+    public UserInfoApi(Context context, FetchEntryListener listener) {
         super(context);
         mContext = context;
         this.listener = listener;
@@ -73,29 +74,17 @@ public class UserApi extends BaseApi {
     }
 
     @Override
-    protected void handler(JSONObject jsonObject, ErrorMsg errorMsg) {
-        if (errorMsg == null) {
-            ErrorMsg e = new ErrorMsg();
-            JSONObject data = jsonObject.optJSONObject("data");
-            if (jsonObject.optBoolean("success", false)) {
-                if (isNull(data)) {
-                    listener.setData(e);
-                } else {
-                    userModel.parseUserModel(data, userModel);
-                    UserDataHelper.saveUserLoginInfo(mContext, userModel);
-                    listener.setData(userModel);
-                }
-            } else {
-                e.setDesc(data.optString("message"));
-                listener.setData(e);
-            }
-
-
-        } else {
-            listener.setData(errorMsg);
+    protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
+        if (errorMsg != null) {
+            listener.setError(errorMsg);
         }
-
+        if (!isNull(json)) {
+            userModel.parseUserModel(json, userModel);
+            UserDataHelper.saveUserLoginInfo(mContext, userModel);
+            listener.setData(userModel);
+        }
     }
+
 
     @Override
     protected String getUrl() {

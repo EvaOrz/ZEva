@@ -2,6 +2,7 @@ package cn.com.zwwl.bayuwen.api.fm;
 
 import android.content.Context;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Map;
@@ -22,7 +23,7 @@ public class AlbumApi extends BaseApi {
 
     public AlbumApi(Context context, String fmId, FetchEntryListener listener) {
         super(context);
-        this.mContext =context;
+        this.mContext = context;
         this.url = UrlUtil.getAlbumUrl(fmId);
         this.listener = listener;
         albumModel = new AlbumModel();
@@ -35,19 +36,14 @@ public class AlbumApi extends BaseApi {
     }
 
     @Override
-    protected void handler(JSONObject jsonObject, ErrorMsg errorMsg) {
-        if (errorMsg == null) {
-            JSONObject data = jsonObject.optJSONObject("data");
-            if (isNull(data)) listener.setData(null);
-            else {
-                albumModel = new AlbumModel();
-                albumModel.parseAlbumModel(data, albumModel);
-                listener.setData(albumModel);
-            }
-        } else {
-            listener.setData(null);
+    protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
+        if (errorMsg != null)
+            listener.setError(errorMsg);
+        if (!isNull(json)) {
+            albumModel = new AlbumModel();
+            albumModel.parseAlbumModel(json, albumModel);
+            listener.setData(albumModel);
         }
-
     }
 
     @Override

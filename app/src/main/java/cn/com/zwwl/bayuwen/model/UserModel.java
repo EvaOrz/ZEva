@@ -24,6 +24,7 @@ public class UserModel extends Entry {
     private String created_at = "";
     private String updated_at = "";
     private int level = 0;
+    private String userAccount = "";
 
     public UserModel() {
     }
@@ -163,10 +164,15 @@ public class UserModel extends Entry {
         return R.string.nomale;
     }
 
+    public String getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(String userAccount) {
+        this.userAccount = userAccount;
+    }
+
     /**
-     * private String created_at = "";
-     * private String updated_at = "";
-     * private int level = 0;
      *
      * @param jsonObject
      * @param userModel
@@ -189,6 +195,7 @@ public class UserModel extends Entry {
         userModel.setCreated_at(jsonObject.optString("created_at"));
         userModel.setUpdated_at(jsonObject.optString("updated_at"));
         userModel.setLevel(jsonObject.optInt("level"));
+        userModel.setUserAccount(jsonObject.optString("userAccount"));
         return userModel;
     }
 

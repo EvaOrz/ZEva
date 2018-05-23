@@ -63,7 +63,6 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right"
-                    android:inputType="number"
                     android:lines="1"
                     android:textColor="@color/gray_dark"
                     android:textColorHint="@color/gray_light"
@@ -156,6 +155,7 @@
                 android:textSize="@dimen/text_size_14" />
 
             <TextView
+                android:id="@+id/a_a_addresstv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -193,12 +193,14 @@
                 android:textSize="@dimen/text_size_14" />
 
             <EditText
+                android:id="@+id/a_a_addressev"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@null"
+                android:gravity="right"
                 android:hint="@string/detail_address_hint"
                 android:textColor="@color/gray_dark"
                 android:textColorHint="@color/gray_light"
@@ -244,35 +246,35 @@
                 android:id="@+id/add_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/gray_xiankuang"
-                    android:padding="5dp"
                     android:hint="@string/tag_hint"
                     android:inputType="number"
                     android:lines="1"
+                    android:padding="5dp"
                     android:textColor="@color/gray_dark"
                     android:textColorHint="@color/gray_light"
                     android:textSize="@dimen/text_size_14" />
-                
+
                 <TextView
                     android:layout_width="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_12"
-                    android:text="@string/sure"
-                    android:background="@color/gold"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:paddingRight="10dp"
+                    android:background="@color/gold"
+                    android:paddingBottom="5dp"
                     android:paddingLeft="10dp"
-                    android:layout_height="wrap_content" />
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/sure"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_12" />
             </LinearLayout>
         </LinearLayout>
 

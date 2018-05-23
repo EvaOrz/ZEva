@@ -20,7 +20,7 @@ import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.fm.FmHistoryActivity;
 import cn.com.zwwl.bayuwen.activity.fm.FmLoginActivity;
 import cn.com.zwwl.bayuwen.activity.WebActivity;
-import cn.com.zwwl.bayuwen.api.UserApi;
+import cn.com.zwwl.bayuwen.api.UserInfoApi;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
@@ -72,7 +72,7 @@ public class UserCenterView implements View.OnClickListener {
     }
 
     public void getUserinfo() {
-        new UserApi(context, new FetchEntryListener() {
+        new UserInfoApi(context, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
                 // 获取用户信息，不需要监听返回

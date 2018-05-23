@@ -206,7 +206,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                Log.e("ssssssss", txt);
                 Toast.makeText(mContext, txt, Toast.LENGTH_SHORT).show();
             }
         });
