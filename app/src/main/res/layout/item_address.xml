@@ -24,6 +24,7 @@
 
 
             <TextView
+                android:id="@+id/item_a_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -33,6 +34,7 @@
                 android:textSize="@dimen/text_size_16" />
 
             <TextView
+                android:id="@+id/item_a_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -41,6 +43,7 @@
                 android:textSize="@dimen/text_size_16" />
 
             <TextView
+                android:id="@+id/item_a_tag"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -52,6 +55,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/item_a_area1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -62,6 +66,7 @@
             android:textSize="@dimen/text_size_12" />
 
         <TextView
+            android:id="@+id/item_a_area2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
@@ -85,6 +90,7 @@
             android:orientation="horizontal">
 
             <CheckBox
+                android:id="@+id/address_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -121,9 +127,9 @@
                 android:background="@color/gray_dark" />
 
             <TextView
+                android:id="@+id/address_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginLeft="5dp"
                 android:text="@string/delete"
                 android:textColor="@color/gray_light"

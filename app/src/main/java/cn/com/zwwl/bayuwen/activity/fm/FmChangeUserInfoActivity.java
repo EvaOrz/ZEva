@@ -13,8 +13,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
+
 import java.io.File;
+
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
@@ -22,6 +25,7 @@ import cn.com.zwwl.bayuwen.api.UploadPicApi;
 import cn.com.zwwl.bayuwen.api.UserInfoApi;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.util.AddressTools;
 import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 import cn.com.zwwl.bayuwen.view.ChangeInfoDialog;
 import cn.com.zwwl.bayuwen.widget.FetchPhotoManager;
@@ -141,9 +145,10 @@ public class FmChangeUserInfoActivity extends BaseActivity {
                 });
                 break;
             case R.id.info_address:
-                new AddressPopWindow(mContext, new AddressPopWindow.OnAddressCListener() {
+                new AddressPopWindow(mContext, 0,new AddressPopWindow.OnAddressCListener() {
                     @Override
-                    public void onClick(String province, String city) {
+                    public void onClick(AddressTools.ProvinceModel province, AddressTools
+                            .CityModel city, AddressTools.DistModel dist) {
 
                     }
                 });
@@ -153,8 +158,7 @@ public class FmChangeUserInfoActivity extends BaseActivity {
                 if (isNeedChangePic) {
                     uploadPic(photoFile);
                 } else
-                    commit(userModel.getName(), userModel.getTel(), userModel.getSex(), userModel
-                            .getProvince(), userModel.getCity(), "");
+                    commit();
                 break;
 
         }
@@ -166,8 +170,7 @@ public class FmChangeUserInfoActivity extends BaseActivity {
             public void setData(Entry entry) {
                 if (entry != null && entry instanceof UserModel) {
                     userModel.setPic(((UserModel) entry).getPic());
-                    commit(userModel.getName(), userModel.getTel(), userModel.getSex(), userModel
-                            .getProvince(), userModel.getCity(), userModel.getPic());
+                    commit();
 
                 }
             }
@@ -184,16 +187,9 @@ public class FmChangeUserInfoActivity extends BaseActivity {
 
     /**
      * 提交
-     *
-     * @param name
-     * @param phone
-     * @param gendar
-     * @param province
-     * @param city
-     * @param pic
      */
-    private void commit(String name, String phone, int gendar, int province, int city, String pic) {
-        new UserInfoApi(this, name, phone, gendar, province, city, pic, new FetchEntryListener() {
+    private void commit() {
+        new UserInfoApi(this, userModel, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
                 showLoadingDialog(false);
@@ -202,6 +198,7 @@ public class FmChangeUserInfoActivity extends BaseActivity {
                     finish();
                 }
             }
+
             @Override
             public void setError(ErrorMsg error) {
                 if (error != null)

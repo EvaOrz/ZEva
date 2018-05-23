@@ -21,6 +21,10 @@ public class TempDataHelper {
      * 游客token
      */
     private static final String ACCESS_TOKEN = "access_token";
+    /**
+     *
+     */
+    public static final String CITY = "city";
 
     /**
      * 当前学员信息
@@ -45,6 +49,29 @@ public class TempDataHelper {
         Editor editor = getPref(context).edit();
         editor.putInt(CURRENT_CHILD_GRADE, grade);
         editor.commit();
+    }
+
+    /**
+     * 存储当前定位城市
+     *
+     * @param context
+     * @param city
+     */
+    public static void setCurrentCity(Context context, String city) {
+        Editor editor = getPref(context).edit();
+        editor.putString(CITY, city);
+        editor.commit();
+    }
+
+
+    /**
+     * 获取用户城市
+     *
+     * @param context
+     * @return
+     */
+    public static String getCurrentCity(Context context) {
+        return getPref(context).getString(CITY, null);
     }
 
     public static int getCurrentChildNo(Context context) {

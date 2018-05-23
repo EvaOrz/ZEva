@@ -20,10 +20,12 @@ import com.avos.avoscloud.RequestMobileCodeCallback;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.LoginSigninApi;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.util.AddressTools;
 import cn.com.zwwl.bayuwen.util.BayuwenTools;
 import cn.com.zwwl.bayuwen.util.SmsTools;
 import cn.com.zwwl.bayuwen.view.AddressPopWindow;
@@ -39,7 +41,7 @@ public class RegisterActivity extends BaseActivity {
     private EditText accountEdit, pwdEdit, verifyEdit;
     private boolean canGetVerify = true;// 是否可获取验证码
     private boolean isShowPassword = false;// 是否显示密码
-    private String cityTxt = "北京";
+    private String curCity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,7 +79,7 @@ public class RegisterActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    cityTv.setText(cityTxt);
+                    cityTv.setText(curCity);
                     break;
             }
         }
@@ -118,12 +120,18 @@ public class RegisterActivity extends BaseActivity {
                 isShowPassword = !isShowPassword;
                 break;
             case R.id.register_city_l:// 选择城市
-                new AddressPopWindow(mContext, new AddressPopWindow.OnAddressCListener() {
+                new AddressPopWindow(mContext, 1, new AddressPopWindow.OnAddressCListener() {
+
                     @Override
-                    public void onClick(String province, String city) {
-                        cityTxt = city;
+                    public void onClick(AddressTools.ProvinceModel province, AddressTools
+                            .CityModel city, AddressTools.DistModel dist) {
+                        if (city.getCtxt().equals("市辖区")) {
+                            curCity = province.getPtxt();
+                        } else
+                            curCity = city.getCtxt();
                         handler.sendEmptyMessage(0);
                     }
+
                 });
                 break;
 
@@ -144,6 +152,7 @@ public class RegisterActivity extends BaseActivity {
             public void setData(Entry entry) {
                 showLoadingDialog(false);
                 if (entry != null && entry instanceof UserModel) {
+                    TempDataHelper.setCurrentCity(mContext, curCity);
                     MyApplication.loginStatusChange = true;
                     finish();
                 }

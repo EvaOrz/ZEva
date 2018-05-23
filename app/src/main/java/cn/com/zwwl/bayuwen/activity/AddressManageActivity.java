@@ -9,7 +9,10 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +41,12 @@ public class AddressManageActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_manage);
         initView();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initData();
     }
 
@@ -76,9 +85,50 @@ public class AddressManageActivity extends BaseActivity {
 
             }
         });
-
-
     }
+
+    /**
+     * 删除
+     *
+     * @param aid
+     */
+    private void doDelete(String aid) {
+        showLoadingDialog(true);
+        new AddressApi(mContext, aid, 0, new AddressApi.FetchAddressListListener() {
+            @Override
+            public void setData(List<AddressModel> list) {
+                initData();
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+                if (error != null) showToast(error.getDesc());
+            }
+        });
+    }
+
+    /**
+     * 设置默认
+     *
+     * @param aid
+     */
+    private void doSetDefualt(String aid) {
+        showLoadingDialog(true);
+        new AddressApi(mContext, aid, 1, new AddressApi.FetchAddressListListener() {
+            @Override
+            public void setData(List<AddressModel> list) {
+                initData();
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+                if (error != null) showToast(error.getDesc());
+            }
+        });
+    }
+
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
@@ -103,9 +153,9 @@ public class AddressManageActivity extends BaseActivity {
         listView.setAdapter(addressAdapter);
     }
 
-    public class AddressAdapter extends CheckScrollAdapter<Entry> {
+    public class AddressAdapter extends CheckScrollAdapter<AddressModel> {
         protected Context mContext;
-        protected List<AlbumModel> mItemList = new ArrayList<>();
+        protected List<AddressModel> mItemList = new ArrayList<>();
 
         public AddressAdapter(Context context) {
             super(context);
@@ -117,7 +167,7 @@ public class AddressManageActivity extends BaseActivity {
             clear();
             isScroll = false;
             synchronized (mItemList) {
-                for (Entry item : mItemList) {
+                for (AddressModel item : mItemList) {
                     add(item);
                 }
             }
@@ -125,12 +175,45 @@ public class AddressManageActivity extends BaseActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            final Entry item = getItem(position);
+            final AddressModel item = getItem(position);
             ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_address);
+            TextView name = viewHolder.getView(R.id.item_a_name);
+            TextView phone = viewHolder.getView(R.id.item_a_phone);
+            TextView tag = viewHolder.getView(R.id.item_a_tag);
+            TextView area1 = viewHolder.getView(R.id.item_a_area1);
+            TextView area2 = viewHolder.getView(R.id.item_a_area2);
+            CheckBox checkBox = viewHolder.getView(R.id.address_checkbox);
+            name.setText(item.getTo_user());
+            phone.setText(item.getPhone());
+            tag.setText(item.getAddress_alias());
+            area1.setText(item.getProvince() + item.getCity() + item.getDistrict());
+            area2.setText(item.getAddress());
+            if (item.getIs_default().equals("1")) {
+                checkBox.setChecked(true);
+            } else
+                checkBox.setChecked(false);
             viewHolder.getView(R.id.address_edit).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mContext.startActivity(new Intent(mContext, AddressAddActivity.class));
+                    Intent i = new Intent(mContext, AddressAddActivity.class);
+                    i.putExtra("AddressAddActivity_data", item);
+                    mContext.startActivity(i);
+                }
+            });
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        doSetDefualt(item.getId());
+                    }
+                }
+            });
+            viewHolder.getView(R.id.address_delete).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    doDelete(item.getId());
                 }
             });
             return viewHolder.getConvertView();

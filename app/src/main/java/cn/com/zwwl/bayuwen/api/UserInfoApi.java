@@ -27,26 +27,17 @@ public class UserInfoApi extends BaseApi {
      * 修改用户信息
      *
      * @param context
-     * @param name
-     * @param phone
-     * @param gendar
-     * @param province
-     * @param city
-     * @param pic
+     * @param userModel
      * @param listener
      */
-    public UserInfoApi(Context context, String name, String phone, int gendar, int province, int
-            city, String pic, FetchEntryListener listener) {
+    public UserInfoApi(Context context, UserModel userModel, FetchEntryListener listener) {
         super(context);
         mContext = context;
         this.listener = listener;
         this.url = UrlUtil.changeInfoUrl(UserDataHelper.getUid(context));
-        pamas.put("name", name);
-        pamas.put("tel", phone);
-        pamas.put("sex", gendar + "");
-        pamas.put("province", province + "");
-        pamas.put("city", city + "");
-        pamas.put("pic", pic);
+        pamas.put("name", userModel.getName());
+        pamas.put("sex", userModel.getSex() + "");
+        pamas.put("pic", userModel.getPic());
         userModel = new UserModel();
         patch();
 
