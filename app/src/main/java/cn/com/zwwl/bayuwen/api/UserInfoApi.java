@@ -19,7 +19,6 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
  */
 public class UserInfoApi extends BaseApi {
     private Map<String, String> pamas = new HashMap<>();
-    private UserModel userModel;
     private FetchEntryListener listener;
     private String url;
 
@@ -38,7 +37,6 @@ public class UserInfoApi extends BaseApi {
         pamas.put("name", userModel.getName());
         pamas.put("sex", userModel.getSex() + "");
         pamas.put("pic", userModel.getPic());
-        userModel = new UserModel();
         patch();
 
     }
@@ -55,7 +53,6 @@ public class UserInfoApi extends BaseApi {
         mContext = context;
         this.listener = listener;
         this.url = UrlUtil.userInfoUrl();
-        userModel = new UserModel();
         get();
     }
 
@@ -70,7 +67,8 @@ public class UserInfoApi extends BaseApi {
             listener.setError(errorMsg);
         }
         if (!isNull(json)) {
-            userModel.parseUserModel(json, userModel);
+            UserModel userModel = new UserModel();
+            userModel = userModel.parseUserModel(json, userModel);
             UserDataHelper.saveUserLoginInfo(mContext, userModel);
             listener.setData(userModel);
         }

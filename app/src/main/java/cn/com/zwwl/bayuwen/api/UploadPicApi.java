@@ -6,12 +6,16 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.AddressModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 
 /**
@@ -36,9 +40,14 @@ public class UploadPicApi extends BaseApi {
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
         if (errorMsg != null)
             listener.setError(errorMsg);
-
-        else
+        if (!isNull(json)) {
+            UserModel m = new UserModel();
+            m.setPic(json.optString("url"));
+            listener.setData(m);
+        } else {
             listener.setData(null);
+        }
+
     }
 
     @Override

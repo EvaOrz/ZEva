@@ -217,7 +217,7 @@ public class HttpUtil {
         if (file != null) {
             RequestBody body = RequestBody.create(MediaType.parse("image/*"), file);
             // 参数分别为， 请求key ，文件名称 ， RequestBody
-            requestBody.addFormDataPart("file", "sssss", body);
+            requestBody.addFormDataPart("file", file.getName(), body);
 
         }
         Request.Builder requestBuilder = new Request.Builder();

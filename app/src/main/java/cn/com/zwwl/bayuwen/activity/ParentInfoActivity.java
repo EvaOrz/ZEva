@@ -96,6 +96,7 @@ public class ParentInfoActivity extends BaseActivity {
                 if (TextUtils.isEmpty(na)) {
                     showToast("姓名不能为空");
                 } else {
+                    userModel.setName(na);
                     showLoadingDialog(true);
                     if (isNeedChangePic) {
                         uploadPic(photoFile);

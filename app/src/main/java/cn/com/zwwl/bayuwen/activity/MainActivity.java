@@ -64,6 +64,13 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         initData();
     }
 
+    /**
+     * 获取当前用户下的所有学员信息
+     */
+    private void initChildDta() {
+
+    }
+
     @Override
     protected void onResume() {
         super.onResume();

@@ -66,6 +66,7 @@ public class ChildInfoActivity extends BaseActivity {
         findViewById(R.id.info_c_ruxue).setOnClickListener(this);
         findViewById(R.id.info_c_birth).setOnClickListener(this);
         findViewById(R.id.info_c_nianji).setOnClickListener(this);
+        findViewById(R.id.info_c_save).setOnClickListener(this);
     }
 
     @Override
@@ -116,6 +117,8 @@ public class ChildInfoActivity extends BaseActivity {
                 });
                 break;
 
+            case R.id.info_c_save:
+                break;
         }
 
     }

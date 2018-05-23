@@ -76,7 +76,7 @@ public class UserDataHelper {
     public static void saveUserLoginInfo(Context context, UserModel user) {
         Editor editor = getPref(context).edit();
         editor.putString(UID, user.getUid());
-        editor.putString(TOKEN, user.getToken());
+//        editor.putString(TOKEN, user.getToken());
         editor.putString(PHONE, user.getTel());
         editor.putString(PIC, user.getPic());
         editor.putString(NAME, user.getName());
