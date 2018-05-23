@@ -12,41 +12,47 @@ import java.util.List;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
-import cn.com.zwwl.bayuwen.model.AddressModel;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
+import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
 /**
  * 添加、修改、删除、查看学员接口
- *
  */
 public class ChildApi extends BaseApi {
     private String url;
     private Map<String, String> pamas = new HashMap<>();
-
-
-    public ChildApi(Context context) {
-        super(context);
-        mContext = context;
-        isNeedJsonArray = true;
-
-        post();
-    }
+    private FetchEntryListListener listListener;
 
     /**
-     * 修改
+     * 添加、修改
      *
      * @param context
-     * @param aId
-     * @param pama1    要修改的属性
-     * @param listener
+     * @param isModify     是否是修改
+     * @param listListener
      */
-    public ChildApi(Context context, String aId, String pama1, AddressApi.FetchAddressListListener listener) {
+    public ChildApi(Context context, ChildModel childModel, boolean isModify,
+                    FetchEntryListListener listListener) {
         super(context);
         mContext = context;
-        isNeedJsonArray = true;
-        pamas.put("to_user", pama1);
-        this.url = UrlUtil.addressUrl() + "/" + aId;
-        patch();
+        pamas.put("name", childModel.getName());
+        pamas.put("tel", childModel.getTel());
+        pamas.put("grade", childModel.getGrade());
+        pamas.put("gender", childModel.getGender() + "");
+        pamas.put("birthday", childModel.getBirthday());
+        pamas.put("isdefault", childModel.getIsdefault());
+        pamas.put("admission_time", childModel.getAdmission_time());
+        pamas.put("pic", childModel.getPic());
+        pamas.put("school", childModel.getSchool());
+        this.listListener = listListener;
+        if (isModify) {
+            this.url = UrlUtil.childUrl() + "/" + childModel.getId();
+            put();
+        } else {
+            this.url = UrlUtil.childUrl() + "/";
+            post();
+        }
+
     }
 
     /**
@@ -55,34 +61,29 @@ public class ChildApi extends BaseApi {
      * @param context
      * @param listener
      */
-    public ChildApi(Context context, AddressApi.FetchAddressListListener listener) {
+    public ChildApi(Context context, FetchEntryListListener listener) {
         super(context);
         mContext = context;
         isNeedJsonArray = true;
-        this.url = UrlUtil.addressUrl();
+        this.listListener = listener;
+        this.url = UrlUtil.childUrl();
         get();
     }
 
     /**
-     * 删除、设为默认地址
+     * 删除
      *
      * @param context
      * @param aId
      * @param listener
-     * @param type     0:删除 1:设为默认
      */
-    public ChildApi(Context context, String aId, int type, AddressApi.FetchAddressListListener listener) {
+    public ChildApi(Context context, String aId, FetchEntryListListener listener
+    ) {
         super(context);
         mContext = context;
-        isNeedJsonArray = true;
-        if (type == 0) {
-            this.url = UrlUtil.addressUrl() + "/" + aId;
-            delete();
-        } else {
-            this.url = UrlUtil.addressUrl() + "/" + aId + "/default";
-            patch();
-        }
-
+        this.url = UrlUtil.childUrl() + "/" + aId;
+        this.listListener = listener;
+        delete();
 
     }
 
@@ -101,22 +102,22 @@ public class ChildApi extends BaseApi {
     @Override
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
 //        try {
-//            if (errorMsg != null) {
-//                if (listListener != null)
-//                    listListener.setError(errorMsg);
-//            }
-//            if (!isNull(array)) {// 获取列表
-//                List<AddressModel> addressModels = new ArrayList<>();
-//                for (int i = 0; i < array.length(); i++) {
-//                    AddressModel a = new AddressModel();
-//                    a.parseAddressModel(array.getJSONObject(i), a);
-//                    addressModels.add(a);
-//                }
-//                listListener.setData(addressModels);
-//
-//            } else {// 增删改
-//                listListener.setData(null);
-//            }
+        if (errorMsg != null) {
+            if (listListener != null)
+                listListener.setError(errorMsg);
+        }
+        if (!isNull(array)) {// 获取列表
+            List<ChildModel> childModels = new ArrayList<>();
+            for (int i = 0; i < array.length(); i++) {
+                ChildModel c = new ChildModel();
+                c.parseChildModel(array.optJSONObject(i), c);
+                childModels.add(c);
+            }
+            listListener.setData(childModels);
+
+        } else {// 增删改
+            listListener.setData(null);
+        }
 //        } catch (JSONException e) {
 //        }
     }

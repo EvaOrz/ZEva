@@ -47,7 +47,7 @@ public class AddressAddActivity extends BaseActivity {
     private CityModel cityModel;
     private DistModel distModel;
     private AddressModel addressModel;
-
+    private boolean isModify = false;// 是否是修改页面
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +59,7 @@ public class AddressAddActivity extends BaseActivity {
                 .getSerializableExtra("AddressAddActivity_data") instanceof AddressModel) {
             addressModel = (AddressModel) getIntent().getSerializableExtra
                     ("AddressAddActivity_data");
+            isModify = true;
             initData();
         } else addressModel = new AddressModel();
 
@@ -110,7 +111,7 @@ public class AddressAddActivity extends BaseActivity {
                 break;
 
             case R.id.a_a_address:// 选择地址
-                new AddressPopWindow(mContext, 0,new AddressPopWindow.OnAddressCListener() {
+                new AddressPopWindow(mContext, 0, new AddressPopWindow.OnAddressCListener() {
 
                     @Override
                     public void onClick(ProvinceModel province,
@@ -128,7 +129,7 @@ public class AddressAddActivity extends BaseActivity {
 
     private void doAdd() {
         showLoadingDialog(true);
-        new AddressApi(mContext, addressModel, new AddressApi.FetchAddressListListener() {
+        new AddressApi(mContext, addressModel, isModify, new AddressApi.FetchAddressListListener() {
             @Override
             public void setData(List<AddressModel> list) {
                 showLoadingDialog(false);

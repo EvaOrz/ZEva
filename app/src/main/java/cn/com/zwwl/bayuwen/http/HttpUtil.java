@@ -204,6 +204,38 @@ public class HttpUtil {
     }
 
     /**
+     * put 异步
+     * @param url
+     * @param bodyParams
+     * @param listener
+     */
+    public void putDataAsynToNet(String url, Map<String, String> bodyParams,
+                                 final FetchDataListener listener) {
+        RequestBody body = setRequestBody(bodyParams);
+        Request.Builder requestBuilder = new Request.Builder();
+        Request request = setRequestHeader(requestBuilder.put(body).url(url));
+        //3 将Request封装为Call
+        Call call = mOkHttpClient.newCall(request);
+        //4 执行Call
+        call.enqueue(new Callback() {
+            // 访问接口失败，已数据来源非http处理
+            @Override
+            public void onFailure(Call call, IOException e) {
+                listener.fetchData(false, null, false);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200)
+                    listener.fetchData(true, response.body().string(), true);
+                else {
+                    listener.fetchData(false, response.body().string(), true);
+                }
+            }
+        });
+    }
+
+    /**
      * 上传文件
      *
      * @param url

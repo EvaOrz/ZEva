@@ -44,6 +44,15 @@ public abstract class BaseApi {
             }
         });
     }
+    protected void put() {
+        httpUtil.putDataAsynToNet(getUrl(), getPostParams(), new FetchDataListener() {
+            @Override
+            public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
+                Log.e(getUrl(), data);
+                handlerData(isSuccess, data, fromHttp);
+            }
+        });
+    }
 
     protected void postFile(File file) {
         httpUtil.postFile(getUrl(), file, new FetchDataListener() {

@@ -28,13 +28,18 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.api.ChildApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.fragment.MainFrag1;
 import cn.com.zwwl.bayuwen.fragment.MainFrag2;
 import cn.com.zwwl.bayuwen.fragment.MainFrag3;
 import cn.com.zwwl.bayuwen.fragment.MainFrag4;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
+import cn.com.zwwl.bayuwen.model.ChildModel;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.util.Tools;
 
 /**
  *
@@ -44,7 +49,6 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     private LinearLayout mainView;
     private DrawerLayout drawer;// 抽屉
     private LinearLayout childLayout;// 切换学生layout
-    private List<View> childCardViews = new ArrayList<>();// 学生卡片
     private Fragment mTempFragment;
     private MainFrag1 mainFrag1;
     private MainFrag2 mainFrag2;
@@ -54,6 +58,8 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     private ImageView avatar;
     private TextView name, yaoqing, gongxun;
     private UserModel userModel;
+
+    private List<ChildModel> childModels = new ArrayList<>();// 学员数据
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +74,21 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
      * 获取当前用户下的所有学员信息
      */
     private void initChildDta() {
+        new ChildApi(mContext, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+                if (Tools.listNotNull(list)) {
+                    childModels.clear();
+                    childModels.addAll(list);
+                    handler.sendEmptyMessage(0);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
 
     }
 
@@ -79,6 +100,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
             mContext.startActivity(new Intent(mContext, LoginActivity.class));
         } else {
             initLeftLayout();
+            initChildDta();
         }
     }
 
@@ -151,7 +173,30 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout
                             .LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     params.bottomMargin = 20;
-                    for (View view : childCardViews) {
+                    for (final ChildModel childModel : childModels) {
+                        View view = LayoutInflater.from(mContext).inflate(R.layout.item_child,
+                                null);
+                        TextView name = view.findViewById(R.id.child_name);
+                        TextView grade = view.findViewById(R.id.child_grade);
+                        ImageView avat = view.findViewById(R.id.child_avatar);
+                        name.setText(childModel.getName());
+                        grade.setText(childModel.getGrade());
+                        if (!TextUtils.isEmpty(childModel.getPic()))
+                            Glide.with(mContext).load(childModel.getPic()).into(avat);
+
+                        view.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                changeChild(childModel);
+                            }
+                        });
+                        view.findViewById(R.id.item_child_go).setOnClickListener(new View
+                                .OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(new Intent(mContext, ChildInfoActivity.class));
+                            }
+                        });
                         childLayout.addView(view, params);
                     }
                     break;
@@ -160,6 +205,13 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
 
         }
     };
+
+    /**
+     * 切换学生
+     */
+    public void changeChild(ChildModel childModel) {
+
+    }
 
     @Override
     protected void initData() {
@@ -254,24 +306,6 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         yaoqing.setText("我的邀请码：" + userModel.getSignCode());
 //        gongxun.setText();
 
-        childCardViews.clear();
-        for (int i = 0; i < 2; i++) {
-            View view = LayoutInflater.from(this).inflate(R.layout.item_child, null);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //todo??
-                }
-            });
-            view.findViewById(R.id.item_child_go).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(mContext, ChildInfoActivity.class));
-                }
-            });
-            childCardViews.add(view);
-        }
-        handler.sendEmptyMessage(0);
     }
 
 

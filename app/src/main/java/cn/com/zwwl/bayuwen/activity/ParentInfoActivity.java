@@ -45,6 +45,7 @@ public class ParentInfoActivity extends BaseActivity {
     private TextView genderTv, phoneTv;
     private boolean isNeedChangePic = false;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;

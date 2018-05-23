@@ -110,6 +110,11 @@ public class UrlUtil {
         return HOST + "/address";
     }
 
+    // 学员信息
+    public static String childUrl() {
+        return HOST + "/students";
+    }
+
     // 选课列表
     public static String getEleCourseListUrl() {
         return HOST + "/course/type";

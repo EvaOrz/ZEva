@@ -2,6 +2,8 @@ package cn.com.zwwl.bayuwen.model;
 
 import org.json.JSONObject;
 
+import cn.com.zwwl.bayuwen.R;
+
 /**
  * 学员model
  */
@@ -10,7 +12,7 @@ public class ChildModel extends Entry {
     private String uid = "";
     private String no = "";
     private String name = "";
-    private String gender = "";
+    private int gender ;//学员性别0女1男2未知
     private String birthday = "";
     private String province = "";
     private String province_id = "";
@@ -28,6 +30,8 @@ public class ChildModel extends Entry {
     private String grade = "";
     private String address = "";
     private String isdefault = "";
+    private String admission_time= "";
+    private String pic = "";
 
     public String getId() {
         return id;
@@ -61,11 +65,11 @@ public class ChildModel extends Entry {
         this.name = name;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
@@ -205,11 +209,33 @@ public class ChildModel extends Entry {
         this.isdefault = isdefault;
     }
 
+    public String getAdmission_time() {
+        return admission_time;
+    }
+
+    public void setAdmission_time(String admission_time) {
+        this.admission_time = admission_time;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
+
+    public int getSexTxt(int i) {
+        if (i == 1) return R.string.male;
+        else if (i == 0) return R.string.female;
+        return R.string.nomale;
+    }
+
     public ChildModel parseChildModel(JSONObject jsonObject, ChildModel childModel) {
         childModel.setId(jsonObject.optString("id"));
         childModel.setUid(jsonObject.optString("uid"));
         childModel.setNo(jsonObject.optString("no"));
-        childModel.setGender(jsonObject.optString("gender"));
+        childModel.setGender(jsonObject.optInt("gender"));
         childModel.setName(jsonObject.optString("name"));
         childModel.setBirthday(jsonObject.optString("birthday"));
         childModel.setProvince(jsonObject.optString("province"));
@@ -227,6 +253,8 @@ public class ChildModel extends Entry {
         childModel.setSchool(jsonObject.optString("school"));
         childModel.setGrade(jsonObject.optString("grade"));
         childModel.setIsdefault(jsonObject.optString("isdefault"));
+        childModel.setAdmission_time(jsonObject.optString("admission_time"));
+        childModel.setPic(jsonObject.optString("pic"));
         return childModel;
     }
 }
