@@ -29,7 +29,7 @@ public class ChildModel extends Entry {
     private String school = "";
     private String grade = "";
     private String address = "";
-    private String isdefault = "";
+    private String isdefault = "0";
     private String admission_time= "";
     private String pic = "";
 

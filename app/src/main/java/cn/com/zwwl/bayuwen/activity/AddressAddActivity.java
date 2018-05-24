@@ -12,7 +12,6 @@ import android.os.Message;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -231,7 +230,7 @@ public class AddressAddActivity extends BaseActivity {
             view.setTextSize(14);
             view.setGravity(Gravity.CENTER);
             view.setTextColor(getResources().getColor(R.color.gray_dark));
-            view.setBackgroundResource(R.drawable.gray_xiankuang_circle);
+            view.setBackgroundResource(R.drawable.gray_white_xiankuang);
         } else {
             view.setTag(addressTag);
             view.setText(addressTag.getTagTxt());
@@ -239,7 +238,7 @@ public class AddressAddActivity extends BaseActivity {
             view.setGravity(Gravity.CENTER);
             if (!addressTag.isCheck()) {
                 view.setTextColor(getResources().getColor(R.color.gray_dark));
-                view.setBackgroundResource(R.drawable.gray_xiankuang_circle);
+                view.setBackgroundResource(R.drawable.gray_white_xiankuang);
             } else {
                 view.setTextColor(getResources().getColor(R.color.white));
                 view.setBackgroundResource(R.drawable.gold_circle);

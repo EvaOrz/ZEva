@@ -52,7 +52,7 @@
     <string name="album_pinglun">学员评论</string>
 
     <!--forget pwd-->
-    <string name="forget_pwd1">忘记密码</string>
+    <string name="forget_pwd1">重置密码</string>
     <string name="forget_pwd_tip">为了安全，我们会向您的手机发送验证码</string>
     <string name="forget_pwd_next">下一步</string>
     <string name="forget_pwd_tip1">需由6-20位数字、字母或符号组成，至少两种</string>

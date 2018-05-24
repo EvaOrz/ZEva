@@ -36,7 +36,9 @@ import cn.com.zwwl.bayuwen.fragment.MainFrag2;
 import cn.com.zwwl.bayuwen.fragment.MainFrag3;
 import cn.com.zwwl.bayuwen.fragment.MainFrag4;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ChildModel;
+import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.Tools;
@@ -60,6 +62,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     private UserModel userModel;
 
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
+    private boolean isCanSetDefaultChild = true;// 是否可以设置默认学员
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +102,39 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         if (userModel == null) {
             mContext.startActivity(new Intent(mContext, LoginActivity.class));
         } else {
-            initLeftLayout();
-            initChildDta();
+            if (MyApplication.loginStatusChange) {
+                initLeftLayout();
+                mainFrag1.initData(userModel);
+                initChildDta();
+                MyApplication.loginStatusChange = false;
+            }
+
         }
+    }
+
+    /**
+     * 设置默认学员
+     */
+    public void setDefaultChild(ChildModel child) {
+        if (!isCanSetDefaultChild) return;
+        isCanSetDefaultChild = false;
+        child.setIsdefault("1");
+        new ChildApi(mContext, child, false, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+                isCanSetDefaultChild = true;
+                if (entry != null && entry instanceof ChildModel) {
+                    initChildDta();
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                isCanSetDefaultChild = true;
+                if (error != null)
+                    showToast(error.getDesc());
+            }
+        });
     }
 
     private void initView() {
@@ -168,7 +201,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case 0:
+                case 0:// 更新侧边栏学员列表
                     childLayout.removeAllViews();
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout
                             .LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -176,6 +209,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
                     for (final ChildModel childModel : childModels) {
                         View view = LayoutInflater.from(mContext).inflate(R.layout.item_child,
                                 null);
+                        View bg = view.findViewById(R.id.item_child_bg);
                         TextView name = view.findViewById(R.id.child_name);
                         TextView grade = view.findViewById(R.id.child_grade);
                         ImageView avat = view.findViewById(R.id.child_avatar);
@@ -183,22 +217,35 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
                         grade.setText(childModel.getGrade());
                         if (!TextUtils.isEmpty(childModel.getPic()))
                             Glide.with(mContext).load(childModel.getPic()).into(avat);
+                        if (childModel.getIsdefault().equals("1")) {
+                            bg.setBackgroundResource(R.drawable.gold_white_xiangkuang);
 
+                        } else {
+                            bg.setBackgroundResource(R.drawable.gray_white_xiankuang);
+                        }
                         view.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                changeChild(childModel);
+                                closeDrawer();
+                                setDefaultChild(childModel);
                             }
                         });
                         view.findViewById(R.id.item_child_go).setOnClickListener(new View
                                 .OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                startActivity(new Intent(mContext, ChildInfoActivity.class));
+                                Intent i = new Intent(mContext, ChildInfoActivity.class);
+                                i.putExtra("ChildInfoActivity_data", childModel);
+                                startActivity(i);
                             }
                         });
                         childLayout.addView(view, params);
+                        // 初始化侧边栏学员列表之后，同步fragment1中学员信息
+                        mainFrag1.loadChild(childModels);
                     }
+                    break;
+                case 1:
+
                     break;
             }
 
@@ -209,10 +256,9 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     /**
      * 切换学生
      */
-    public void changeChild(ChildModel childModel) {
-
-    }
-
+//    public void changeChild(ChildModel childModel) {
+//
+//    }
     @Override
     protected void initData() {
 
@@ -226,6 +272,17 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         if (!drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.openDrawer(GravityCompat.START);
         }
+    }
+
+    /**
+     * 关闭抽屉
+     */
+    public boolean closeDrawer() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -297,7 +354,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     }
 
     /**
-     * 初始化切换学生栏
+     * 初始化用户信息
      */
     private void initLeftLayout() {
         name.setText(userModel.getName());
@@ -308,13 +365,9 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
 
     }
 
-
     @Override
     public void onBackPressed() {
-
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
+        if (!closeDrawer()) {
             super.onBackPressed();
         }
     }

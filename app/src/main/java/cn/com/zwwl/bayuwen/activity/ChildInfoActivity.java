@@ -10,6 +10,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -45,7 +46,7 @@ public class ChildInfoActivity extends BaseActivity {
     private static final String AVATAR_PIC = "avatar.jpg";
     private File photoFile;
     private ImageView aImg;
-    private EditText nameEv, phoneEv;
+    private EditText nameEv, phoneEv, schoolEv;
     private TextView genderTv, birthTv, ruxueTv, nianjiTv;
     private boolean isNeedChangePic = false;
     private boolean isModify = false;// 是否是修改信息
@@ -76,6 +77,7 @@ public class ChildInfoActivity extends BaseActivity {
         birthTv = findViewById(R.id.info_p_birthtv);
         ruxueTv = findViewById(R.id.info_p_ruxuetv);
         nianjiTv = findViewById(R.id.info_c_nianjitv);
+        schoolEv = findViewById(R.id.info_c_schoolev);
 
         findViewById(R.id.info_c_back).setOnClickListener(this);
         findViewById(R.id.info_c_avatar).setOnClickListener(this);
@@ -104,7 +106,8 @@ public class ChildInfoActivity extends BaseActivity {
                             childModel.setGender(2);
                         } else if (gender == 2) {
                             childModel.setGender(0);
-                        }
+                        } else
+                            childModel.setGender(1);
                         handler.sendEmptyMessage(5);
                     }
                 });
@@ -141,7 +144,7 @@ public class ChildInfoActivity extends BaseActivity {
                 String na = nameEv.getText().toString();
                 String phone = phoneEv.getText().toString();
                 String grade = nianjiTv.getText().toString();
-
+                String school = schoolEv.getText().toString();
                 if (TextUtils.isEmpty(na)) {
                     showToast("姓名不能为空");
                 } else if (TextUtils.isEmpty(phone)) {
@@ -150,6 +153,8 @@ public class ChildInfoActivity extends BaseActivity {
                     showToast("年级不能为空");
                 } else {
                     childModel.setName(na);
+                    childModel.setSchool(school);
+                    childModel.setTel(phone);
 
                     showLoadingDialog(true);
                     if (isNeedChangePic) {
@@ -192,23 +197,21 @@ public class ChildInfoActivity extends BaseActivity {
      * 提交
      */
     private void commit() {
-        new ChildApi(this, childModel, isModify, new FetchEntryListListener() {
+        new ChildApi(this, childModel, isModify, new FetchEntryListener() {
             @Override
-            public void setData(List list) {
+            public void setData(Entry entry) {
                 showLoadingDialog(false);
-//                if (entry != null && entry instanceof UserModel) {
-//                    MyApplication.loginStatusChange = true;
-//                    finish();
-//                }
+                if (entry != null && entry instanceof ChildModel) {
+                    MyApplication.loginStatusChange = true;
+                    finish();
+                }
             }
 
             @Override
             public void setError(ErrorMsg error) {
                 showLoadingDialog(false);
                 if (error != null)
-                    showToast(TextUtils.isEmpty(error.getDesc()) ? mContext.getResources()
-                            .getString(R.string.upload_faild) : error
-                            .getDesc());
+                    showToast(error.getDesc());
             }
         });
     }
@@ -264,7 +267,6 @@ public class ChildInfoActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == FetchPhotoManager.REQUEST_CAMERA) {
-
 //                avatarBit = data.getParcelableExtra("data");
                 photoFile = new File(picturePath);
             } else if (requestCode == FetchPhotoManager.REQUEST_GALLERY) {

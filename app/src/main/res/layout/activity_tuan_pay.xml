@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/gray_xiankuang_circle"
+                android:background="@drawable/gray_white_xiankuang"
                 android:padding="10dp">
 
                 <ImageView
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/gray_xiankuang_circle"
+                android:background="@drawable/gray_white_xiankuang"
                 android:orientation="vertical">
 
 
@@ -224,7 +224,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/gray_xiankuang_circle"
+                        android:background="@drawable/gray_white_xiankuang"
                         android:paddingBottom="5dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
@@ -460,7 +460,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
        android:layout_margin="10dp"
-        android:background="@drawable/gray_xiankuang_circle"
+        android:background="@drawable/gray_white_xiankuang"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 

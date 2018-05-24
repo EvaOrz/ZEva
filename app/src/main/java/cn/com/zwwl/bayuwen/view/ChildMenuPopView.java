@@ -4,20 +4,26 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
+import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
 
 /**
@@ -28,13 +34,29 @@ public class ChildMenuPopView extends PopupWindow {
     private OnChildPickListener onChildPickListener;
     private LinearLayout layout;
 
-    public ChildMenuPopView(final Activity context, List<UserModel> list, OnChildPickListener onChildPickListener) {
+    public ChildMenuPopView(final Activity context, List<ChildModel> list, final OnChildPickListener
+            onChildPickListener) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         conentView = inflater.inflate(R.layout.pop_child_menu, null);
         layout = conentView.findViewById(R.id.pop_child_layout);
-        for (int i = 0; i < 2; i++) {
-            layout.addView(inflater.inflate(R.layout.item_menu_child, null));
+        for (final ChildModel childModel : list) {
+            View view = inflater.inflate(R.layout.item_menu_child, null);
+            ImageView avatar = view.findViewById(R.id.item_child_avatar);
+            TextView name = view.findViewById(R.id.item_child_name);
+            TextView grade = view.findViewById(R.id.item_child_grade);
+            if (!TextUtils.isEmpty(childModel.getPic())) {
+                Glide.with(context).load(childModel.getPic()).into(avatar);
+            }
+            name.setText(childModel.getName());
+            grade.setText(childModel.getGrade());
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onChildPickListener.onChildPick(childModel);
+                }
+            });
+            layout.addView(view);
         }
         conentView.findViewById(R.id.pop_child_add).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +86,7 @@ public class ChildMenuPopView extends PopupWindow {
     }
 
     public interface OnChildPickListener {
-        public void onChildPick();
+        public void onChildPick(ChildModel childModel);
     }
 
 
@@ -76,7 +98,8 @@ public class ChildMenuPopView extends PopupWindow {
     public void showPopupWindow(View parent) {
         if (!this.isShowing()) {
 // 以下拉方式显示popupwindow
-            this.showAsDropDown(parent, MyApplication.width / 2 - MyApplication.width / 6, 0, Gravity.CENTER_HORIZONTAL);
+            this.showAsDropDown(parent, MyApplication.width / 2 - MyApplication.width / 6, 0,
+                    Gravity.CENTER_HORIZONTAL);
         } else {
             this.dismiss();
         }

@@ -13,6 +13,7 @@ import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
@@ -23,16 +24,17 @@ public class ChildApi extends BaseApi {
     private String url;
     private Map<String, String> pamas = new HashMap<>();
     private FetchEntryListListener listListener;
+    private FetchEntryListener listener;
 
     /**
      * 添加、修改
      *
      * @param context
-     * @param isModify     是否是修改
-     * @param listListener
+     * @param isModify 是否是修改
+     * @param listener
      */
     public ChildApi(Context context, ChildModel childModel, boolean isModify,
-                    FetchEntryListListener listListener) {
+                    FetchEntryListener listener) {
         super(context);
         mContext = context;
         pamas.put("name", childModel.getName());
@@ -44,12 +46,12 @@ public class ChildApi extends BaseApi {
         pamas.put("admission_time", childModel.getAdmission_time());
         pamas.put("pic", childModel.getPic());
         pamas.put("school", childModel.getSchool());
-        this.listListener = listListener;
+        this.listener = listener;
         if (isModify) {
             this.url = UrlUtil.childUrl() + "/" + childModel.getId();
             put();
         } else {
-            this.url = UrlUtil.childUrl() + "/";
+            this.url = UrlUtil.childUrl();
             post();
         }
 
@@ -101,26 +103,31 @@ public class ChildApi extends BaseApi {
 
     @Override
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
-//        try {
         if (errorMsg != null) {
             if (listListener != null)
                 listListener.setError(errorMsg);
+            if (listener != null)
+                listener.setError(errorMsg);
+        } else {// 添加、删除、设置默认成功
+            if (listener != null)
+                listener.setData(new ChildModel());
         }
-        if (!isNull(array)) {// 获取列表
-            List<ChildModel> childModels = new ArrayList<>();
-            for (int i = 0; i < array.length(); i++) {
-                ChildModel c = new ChildModel();
-                c.parseChildModel(array.optJSONObject(i), c);
-                childModels.add(c);
+
+        if (isNeedJsonArray) {// 获取列表
+            if (!isNull(array)) {
+                List<ChildModel> childModels = new ArrayList<>();
+                for (int i = 0; i < array.length(); i++) {
+                    ChildModel c = new ChildModel();
+                    c.parseChildModel(array.optJSONObject(i), c);
+                    childModels.add(c);
+                }
+                listListener.setData(childModels);
+
+            } else {// 增删改
+                listListener.setData(null);
             }
-            listListener.setData(childModels);
-
-        } else {// 增删改
-            listListener.setData(null);
         }
-//        } catch (JSONException e) {
-//        }
+
+
     }
-
-
 }
