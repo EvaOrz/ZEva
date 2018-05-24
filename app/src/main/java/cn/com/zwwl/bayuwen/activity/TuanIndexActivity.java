@@ -24,6 +24,11 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
+import cn.com.zwwl.bayuwen.api.TuanGouApi;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.TuanInfoModel;
 
 /**
  * 我要参团页面
@@ -34,10 +39,12 @@ public class TuanIndexActivity extends BaseActivity {
     private View view1, view2, line1, line2;
     private RadioButton button1, button2;
     private EditText codeEditText;
-    private int dianCounts = 0;// 垫付数量
-    private TextView codeSureTv, dianCountsTv;
+    private TextView codeSureTv;
     private List<View> views = new ArrayList<>();
     private MyViewPagerAdapter adapter;
+
+    private TuanInfoModel tuanInfoModel;
+    private TextView dianNum, dianJiao, dianKe, dianTotal, payTotal;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +52,7 @@ public class TuanIndexActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tuan_index);
         initView();
+        initData();
     }
 
     private void initView() {
@@ -57,7 +65,8 @@ public class TuanIndexActivity extends BaseActivity {
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int
+                    positionOffsetPixels) {
 
             }
 
@@ -116,13 +125,14 @@ public class TuanIndexActivity extends BaseActivity {
             }
         });
         codeSureTv = view1.findViewById(R.id.tuan_index_code_bt);
-        dianCountsTv = view2.findViewById(R.id.dian_counts);
-
+        dianNum = view2.findViewById(R.id.dian_counts);
+        dianJiao = view2.findViewById(R.id.tuan_jiaocai);
+        dianKe = view2.findViewById(R.id.tuan_ke);
+        dianTotal = view2.findViewById(R.id.tuan_total);
+        payTotal = view2.findViewById(R.id.tuan_total1);
         findViewById(R.id.tuan_index_back).setOnClickListener(this);
         findViewById(R.id.tuan_index_intro).setOnClickListener(this);
         view2.findViewById(R.id.sure_dian).setOnClickListener(this);
-        view2.findViewById(R.id.dian_minus).setOnClickListener(this);
-        view2.findViewById(R.id.dian_plus).setOnClickListener(this);
         view1.findViewById(R.id.tuan_index_kaituan).setOnClickListener(this);
     }
 
@@ -138,8 +148,13 @@ public class TuanIndexActivity extends BaseActivity {
                 case 1:
                     codeSureTv.setBackground(getResources().getDrawable(R.drawable.gray_circle));
                     break;
-                case 2:// 垫付数量变更
-                    dianCountsTv.setText(dianCounts + "");
+                case 2:
+                    dianNum.setText(tuanInfoModel.getLimit_num());
+                    dianJiao.setText(tuanInfoModel.getMaterial_price() + "");
+                    dianKe.setText(tuanInfoModel.getDiscount_pintrice() - tuanInfoModel
+                            .getMaterial_price() + "");
+                    dianTotal.setText(tuanInfoModel.getDiscount_pintrice() + "");
+                    payTotal.setText(tuanInfoModel.getTotal_price()+"");
                     break;
             }
         }
@@ -173,21 +188,30 @@ public class TuanIndexActivity extends BaseActivity {
             case R.id.tuan_index_kaituan:
                 startActivity(new Intent(mContext, TuanKaiActivity.class));
                 break;
-            case R.id.dian_minus:// 垫付-1
-                if (dianCounts > 0) dianCounts--;
-                handler.sendEmptyMessage(2);
-                break;
-            case R.id.dian_plus:// 垫付+1
-                dianCounts++;
-                handler.sendEmptyMessage(2);
-                break;
+
         }
 
     }
 
     @Override
     protected void initData() {
+        new TuanGouApi(mContext, "7018", new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+                if (entry != null && entry instanceof TuanInfoModel) {
+                    tuanInfoModel = (TuanInfoModel) entry;
+                    handler.sendEmptyMessage(2);
+                }
+            }
 
+            @Override
+            public void setError(ErrorMsg error) {
+                if (error != null) {
+                    showToast(error.getDesc());
+                    finish();
+                }
+            }
+        });
     }
 
 }

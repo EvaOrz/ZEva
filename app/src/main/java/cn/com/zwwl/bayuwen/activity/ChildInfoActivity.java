@@ -10,7 +10,6 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,14 +18,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
-import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.api.ChildApi;
+import cn.com.zwwl.bayuwen.api.ChildInfoApi;
 import cn.com.zwwl.bayuwen.api.UploadPicApi;
-import cn.com.zwwl.bayuwen.api.UserInfoApi;
-import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.Entry;
@@ -197,7 +193,7 @@ public class ChildInfoActivity extends BaseActivity {
      * 提交
      */
     private void commit() {
-        new ChildApi(this, childModel, isModify, new FetchEntryListener() {
+        new ChildInfoApi(this, childModel, isModify, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
                 showLoadingDialog(false);

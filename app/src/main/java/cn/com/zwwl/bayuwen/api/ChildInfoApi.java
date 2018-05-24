@@ -20,7 +20,7 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 /**
  * 添加、修改、删除、查看学员接口
  */
-public class ChildApi extends BaseApi {
+public class ChildInfoApi extends BaseApi {
     private String url;
     private Map<String, String> pamas = new HashMap<>();
     private FetchEntryListListener listListener;
@@ -33,8 +33,8 @@ public class ChildApi extends BaseApi {
      * @param isModify 是否是修改
      * @param listener
      */
-    public ChildApi(Context context, ChildModel childModel, boolean isModify,
-                    FetchEntryListener listener) {
+    public ChildInfoApi(Context context, ChildModel childModel, boolean isModify,
+                        FetchEntryListener listener) {
         super(context);
         mContext = context;
         pamas.put("name", childModel.getName());
@@ -63,7 +63,7 @@ public class ChildApi extends BaseApi {
      * @param context
      * @param listener
      */
-    public ChildApi(Context context, FetchEntryListListener listener) {
+    public ChildInfoApi(Context context, FetchEntryListListener listener) {
         super(context);
         mContext = context;
         isNeedJsonArray = true;
@@ -79,7 +79,7 @@ public class ChildApi extends BaseApi {
      * @param aId
      * @param listener
      */
-    public ChildApi(Context context, String aId, FetchEntryListListener listener
+    public ChildInfoApi(Context context, String aId, FetchEntryListListener listener
     ) {
         super(context);
         mContext = context;

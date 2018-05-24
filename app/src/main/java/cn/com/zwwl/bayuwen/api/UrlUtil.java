@@ -119,4 +119,9 @@ public class UrlUtil {
     public static String getEleCourseListUrl() {
         return HOST + "/course/type";
     }
+
+    //团购
+    public static String getTuan() {
+        return HOST + "/groupdiscount";
+    }
 }

@@ -32,6 +32,7 @@ import cn.com.zwwl.bayuwen.activity.AllXunzhangActivity;
 import cn.com.zwwl.bayuwen.activity.CalendarActivity;
 import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
+import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.ImageBannerAdapter;
@@ -228,10 +229,11 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             switch (msg.what) {
                 case 0:
                     for (ChildModel c : childModels) {
-                        if (c.getIsdefault().equals("1"))
+                        if (c.getIsdefault().equals("1")){
                             childTxt.setText(c.getName() + "(" + c.getGrade() + ")");
-                        if (!TextUtils.isEmpty(c.getPic()))
-                            Glide.with(mActivity).load(c.getPic()).into(childImg);
+                            if (!TextUtils.isEmpty(c.getPic()))
+                                Glide.with(mActivity).load(c.getPic()).into(childImg);
+                        }
                     }
 
                     break;
@@ -253,6 +255,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                 ((MainActivity) mActivity).openDrawer();
                 break;
             case R.id.toolbar_right:
+                startActivity(new Intent(mActivity, MessageActivity.class));
                 break;
             case R.id.layout_student:
                 startActivity(new Intent(mActivity, ChildInfoActivity.class));

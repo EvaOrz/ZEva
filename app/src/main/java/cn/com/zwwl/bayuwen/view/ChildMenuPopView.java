@@ -54,6 +54,7 @@ public class ChildMenuPopView extends PopupWindow {
                 @Override
                 public void onClick(View v) {
                     onChildPickListener.onChildPick(childModel);
+                    dismiss();
                 }
             });
             layout.addView(view);

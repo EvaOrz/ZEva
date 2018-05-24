@@ -28,13 +28,14 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.api.ChildApi;
+import cn.com.zwwl.bayuwen.api.ChildInfoApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.fragment.MainFrag1;
 import cn.com.zwwl.bayuwen.fragment.MainFrag2;
 import cn.com.zwwl.bayuwen.fragment.MainFrag3;
 import cn.com.zwwl.bayuwen.fragment.MainFrag4;
+import cn.com.zwwl.bayuwen.fragment.MainFrag5;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ChildModel;
@@ -47,7 +48,7 @@ import cn.com.zwwl.bayuwen.util.Tools;
  *
  */
 public class MainActivity extends BaseActivity implements TencentLocationListener {
-    private RadioButton tabButton1, tabButton2, tabButton3, tabButton4;
+    private RadioButton tabButton1, tabButton2, tabButton3, tabButton4, tabButton5;
     private LinearLayout mainView;
     private DrawerLayout drawer;// 抽屉
     private LinearLayout childLayout;// 切换学生layout
@@ -56,7 +57,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     private MainFrag2 mainFrag2;
     private MainFrag3 mainFrag3;
     private MainFrag4 mainFrag4;
-
+    private MainFrag5 mainFrag5;
     private ImageView avatar;
     private TextView name, yaoqing, gongxun;
     private UserModel userModel;
@@ -77,7 +78,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
      * 获取当前用户下的所有学员信息
      */
     private void initChildDta() {
-        new ChildApi(mContext, new FetchEntryListListener() {
+        new ChildInfoApi(mContext, new FetchEntryListListener() {
             @Override
             public void setData(List list) {
                 if (Tools.listNotNull(list)) {
@@ -119,7 +120,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         if (!isCanSetDefaultChild) return;
         isCanSetDefaultChild = false;
         child.setIsdefault("1");
-        new ChildApi(mContext, child, false, new FetchEntryListener() {
+        new ChildInfoApi(mContext, child, true, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
                 isCanSetDefaultChild = true;
@@ -169,6 +170,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         mainFrag2 = MainFrag2.newInstance("hello world");
         mainFrag3 = MainFrag3.newInstance("hello world");
         mainFrag4 = MainFrag4.newInstance("hello world");
+        mainFrag5 = MainFrag5.newInstance("hello world");
         switchFragment(mainFrag1);
 
         avatar = findViewById(R.id.main_avatar);
@@ -181,10 +183,12 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         tabButton2 = findViewById(R.id.bottom_nav_2);
         tabButton3 = findViewById(R.id.bottom_nav_3);
         tabButton4 = findViewById(R.id.bottom_nav_4);
+        tabButton5 = findViewById(R.id.bottom_nav_5);
         tabButton1.setOnClickListener(this);
         tabButton2.setOnClickListener(this);
         tabButton3.setOnClickListener(this);
         tabButton4.setOnClickListener(this);
+        tabButton5.setOnClickListener(this);
         avatar.setOnClickListener(this);
         findViewById(R.id.huiyuanziliao).setOnClickListener(this);
         findViewById(R.id.wodedingdan).setOnClickListener(this);
@@ -301,7 +305,9 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
             case R.id.bottom_nav_4:
                 switchFragment(mainFrag4);
                 break;
-
+            case R.id.bottom_nav_5:
+                switchFragment(mainFrag5);
+                break;
             case R.id.main_avatar:
                 mContext.startActivity(new Intent(mContext, LoginActivity.class));
                 break;
