@@ -16,7 +16,6 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.CDeatailApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
-import cn.com.zwwl.bayuwen.model.CourseDetailModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
@@ -48,7 +47,6 @@ public class CourseDetailActivity extends BaseActivity {
     private CustomViewPager mViewPager;
 
     private List<TeacherModel> teacherList = new ArrayList<>();
-    private CourseDetailModel courseDetailModel;
 
     private String cid;
 
@@ -69,7 +67,6 @@ public class CourseDetailActivity extends BaseActivity {
     }
 
     private void init() {
-
 
 
         mViewPager.setOffscreenPageLimit(fragments.size());
@@ -97,7 +94,8 @@ public class CourseDetailActivity extends BaseActivity {
         mViewPager.resetHeight(0);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int
+                    positionOffsetPixels) {
             }
 
             @Override
@@ -147,10 +145,7 @@ public class CourseDetailActivity extends BaseActivity {
 
             @Override
             public void setData(Entry entry) {
-                if (entry != null && entry instanceof CourseDetailModel) {
-                    courseDetailModel = (CourseDetailModel) entry;
-                    handler.sendEmptyMessage(0);
-                }
+                handler.sendEmptyMessage(0);
             }
 
             @Override
