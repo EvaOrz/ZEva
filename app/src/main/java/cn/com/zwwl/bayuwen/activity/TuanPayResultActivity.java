@@ -19,13 +19,13 @@ public class TuanPayResultActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tuan_pay);
+        setContentView(R.layout.activity_tuan_pay_result);
         initView();
     }
 
     private void initView() {
 
-        findViewById(R.id.tuan_pay_back).setOnClickListener(this);
+        findViewById(R.id.tuan_result_back).setOnClickListener(this);
     }
 
     @SuppressLint("HandlerLeak")
@@ -46,7 +46,7 @@ public class TuanPayResultActivity extends BaseActivity {
     public void onClick(View view) {
         super.onClick(view);
         switch (view.getId()) {
-            case R.id.tuan_pay_back:
+            case R.id.tuan_result_back:
                 finish();
                 break;
 

@@ -236,6 +236,7 @@
     <string name="delete_all">全部删除</string>
 
     <!--订单-->
+    <string name="pay_add_address">添加收货地址</string>
     <string name="my_order">我的订单</string>
     <string name="commit_order">提交订单</string>
     <string name="order_detail">订单详情</string>

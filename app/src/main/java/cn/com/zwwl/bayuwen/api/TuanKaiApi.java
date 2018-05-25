@@ -5,7 +5,6 @@ import android.content.Context;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,41 +14,53 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.TuanInfoModel;
 
 /**
- * 团购
+ * 发起拼团（获取拼团码）
+ * <p>
+ * 根据课程码开通课程
  */
-public class TuanGouApi extends BaseApi {
+public class TuanKaiApi extends BaseApi {
     private FetchEntryListener listener;
-    private String kid;
     private Map<String, String> pamas = new HashMap<>();
+    private boolean isGetCode = true;// 区分获取开团码和根据团购码开通课程
 
     /**
-     * 获取团购信息，可从课程详情中解析
-     *
      * @param context
-     * @param kid
+     * @param pama     kid|code
      * @param listener
      */
-    public TuanGouApi(Context context, String kid, FetchEntryListener listener) {
+    public TuanKaiApi(Context context, String pama, boolean isGetCode, FetchEntryListener
+            listener) {
         super(context);
         mContext = context;
-        this.kid = kid;
+        this.isGetCode = isGetCode;
         this.listener = listener;
-        get();
+        if (isGetCode) {
+            pamas.put("kid", pama);
+        } else {
+            pamas.put("code", pama);
+        }
+        post();
     }
+
 
     @Override
     protected String getUrl() {
-        return UrlUtil.getTuanInfo() + "/" + kid;
+        if (isGetCode)
+            return UrlUtil.faqiTuan();
+        else return UrlUtil.faqiTuan() + "/open";
     }
 
     @Override
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
         if (errorMsg != null)
             listener.setError(errorMsg);
+        else listener.setError(null);
+
         if (!isNull(json)) {
-            TuanInfoModel tuanInfoModel = new TuanInfoModel();
-            tuanInfoModel.parseTuanInfoModel(json, tuanInfoModel);
-            listener.setData(tuanInfoModel);
+            String purchase_code = json.optString("purchase_code");
+            ErrorMsg error = new ErrorMsg();
+            error.setDesc(purchase_code);
+            listener.setData(error);
         } else {
             listener.setData(null);
         }
@@ -63,4 +74,3 @@ public class TuanGouApi extends BaseApi {
 
 
 }
-

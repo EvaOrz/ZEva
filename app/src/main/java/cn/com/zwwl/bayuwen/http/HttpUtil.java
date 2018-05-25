@@ -205,6 +205,7 @@ public class HttpUtil {
 
     /**
      * put 异步
+     *
      * @param url
      * @param bodyParams
      * @param listener
@@ -389,8 +390,8 @@ public class HttpUtil {
             int grade = TempDataHelper.getCurrentChildGrade(mContext);
             if (grade != 0)
                 requestBuilder.addHeader("Grade", grade + "");
-            int no = TempDataHelper.getCurrentChildNo(mContext);
-            if (no != 0) requestBuilder.addHeader("StudentNo", no + "");
+            String no = TempDataHelper.getCurrentChildNo(mContext);
+            if (!TextUtils.isEmpty(no)) requestBuilder.addHeader("StudentNo", no + "");
             String accessToken = TempDataHelper.getAccessToken(mContext);
             if (!TextUtils.isEmpty(accessToken))
                 requestBuilder.addHeader("Access-Token", accessToken);

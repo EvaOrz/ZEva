@@ -74,13 +74,13 @@ public class TempDataHelper {
         return getPref(context).getString(CITY, null);
     }
 
-    public static int getCurrentChildNo(Context context) {
-        return getPref(context).getInt(CURRENT_CHILD_NO, 0);
+    public static String getCurrentChildNo(Context context) {
+        return getPref(context).getString(CURRENT_CHILD_NO, "");
     }
 
-    public static void setCurrentChildNo(Context context, int no) {
+    public static void setCurrentChildNo(Context context, String no) {
         Editor editor = getPref(context).edit();
-        editor.putInt(CURRENT_CHILD_NO, no);
+        editor.putString(CURRENT_CHILD_NO, no);
         editor.commit();
     }
 

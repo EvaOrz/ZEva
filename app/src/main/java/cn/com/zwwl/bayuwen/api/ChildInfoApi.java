@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -100,7 +101,13 @@ public class ChildInfoApi extends BaseApi {
         return url;
     }
 
-
+    /**
+     * 添加、修改、设置默认之后都会再去获取一次列表信息，所以只需要在获取列表信息的时候存储默认学员信息，用来作为所有请求的header info
+     *
+     * @param json
+     * @param array
+     * @param errorMsg
+     */
     @Override
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
         if (errorMsg != null) {
@@ -119,6 +126,11 @@ public class ChildInfoApi extends BaseApi {
                 for (int i = 0; i < array.length(); i++) {
                     ChildModel c = new ChildModel();
                     c.parseChildModel(array.optJSONObject(i), c);
+                    if (c.getIsdefault().equals("1")) {
+                        TempDataHelper.setCurrentChildNo(mContext, c.getNo());
+                        // todo?? 年级的类型待定
+                        TempDataHelper.setCurrentChildGrade(mContext, 0);
+                    }
                     childModels.add(c);
                 }
                 listListener.setData(childModels);

@@ -39,6 +39,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/go_add_manage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -67,23 +68,43 @@
                         android:src="@drawable/video_link" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:id="@+id/tuan_pay_name"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="田小小"
+                        android:textColor="@color/gray_dark"
+                        android:textSize="@dimen/text_size_14" />
+                    <TextView
+                        android:id="@+id/tuan_pay_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@color/gray_dark"
                         android:textSize="@dimen/text_size_14" />
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tuan_pay_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
                     android:layout_below="@id/go_select_layout"
                     android:layout_marginLeft="25dp"
-                    android:text="北京市海淀区五环以内东北旺西路八号院25号楼"
                     android:textColor="@color/gray_light"
                     android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/tuan_pay_addaddress"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_12"
+                    android:visibility="gone"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/go_select_a"
+                    android:text="@string/pay_add_address"
+                    android:layout_height="wrap_content" />
             </RelativeLayout>
+
 
 
             <LinearLayout

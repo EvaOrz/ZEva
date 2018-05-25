@@ -120,8 +120,13 @@ public class UrlUtil {
         return HOST + "/course/type";
     }
 
-    //团购
-    public static String getTuan() {
+    //获取团购信息
+    public static String getTuanInfo() {
         return HOST + "/groupdiscount";
+    }
+
+    // 发起拼团（获取拼团码）
+    public static String faqiTuan() {
+        return HOST + "/grouppurchase";
     }
 }

@@ -35,10 +35,11 @@
         android:background="@color/gray_dark" />
 
     <TextView
+        android:id="@+id/tuan_kai_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="您的拼团码为：UBGFYB322FRR443DDHKJ"
+
         android:textColor="@color/gray_dark"
         android:textSize="@dimen/text_size_14" />
 
