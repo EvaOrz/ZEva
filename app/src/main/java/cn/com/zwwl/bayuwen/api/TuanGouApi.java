@@ -6,34 +6,40 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
-import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
-import cn.com.zwwl.bayuwen.model.AddressModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.UserModel;
-import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
+import cn.com.zwwl.bayuwen.model.TuanInfoModel;
 
 /**
- * 上传图片api
+ * 团购
  */
-public class UploadPicApi extends BaseApi {
+public class TuanGouApi extends BaseApi {
     private FetchEntryListener listener;
+    private String kid;
+    private Map<String, String> pamas = new HashMap<>();
 
-    public UploadPicApi(Context context, File file, FetchEntryListener listener) {
+    /**
+     * 获取团购信息，可从课程详情中解析
+     *
+     * @param context
+     * @param kid
+     * @param listener
+     */
+    public TuanGouApi(Context context, String kid, FetchEntryListener listener) {
         super(context);
         mContext = context;
+        this.kid = kid;
         this.listener = listener;
-        postFile(file);
+        get();
     }
 
     @Override
     protected String getUrl() {
-        return UrlUtil.uploadUrl();
+        return UrlUtil.getTuanInfo() + "/" + kid;
     }
 
     @Override
@@ -41,9 +47,9 @@ public class UploadPicApi extends BaseApi {
         if (errorMsg != null)
             listener.setError(errorMsg);
         if (!isNull(json)) {
-            UserModel m = new UserModel();
-            m.setPic(json.optString("url"));
-            listener.setData(m);
+            TuanInfoModel tuanInfoModel = new TuanInfoModel();
+            tuanInfoModel.parseTuanInfoModel(json, tuanInfoModel);
+            listener.setData(tuanInfoModel);
         } else {
             listener.setData(null);
         }
@@ -52,7 +58,7 @@ public class UploadPicApi extends BaseApi {
 
     @Override
     protected Map<String, String> getPostParams() {
-        return null;
+        return pamas;
     }
 
 

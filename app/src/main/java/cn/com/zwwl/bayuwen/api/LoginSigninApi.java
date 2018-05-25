@@ -106,10 +106,10 @@ public class LoginSigninApi extends BaseApi {
 
         if (!isNull(json)) {
             String token = json.optString("token");
+            UserDataHelper.saveToken(mContext,token);
             JSONObject userinfo = json.optJSONObject("userinfo");
             UserModel u = new UserModel();
             u.parseUserModel(userinfo, u);
-            u.setToken(token);
             UserDataHelper.saveUserLoginInfo(mContext, u);
             listener.setData(u);
         }

@@ -52,7 +52,7 @@
     <string name="album_pinglun">学员评论</string>
 
     <!--forget pwd-->
-    <string name="forget_pwd1">忘记密码</string>
+    <string name="forget_pwd1">重置密码</string>
     <string name="forget_pwd_tip">为了安全，我们会向您的手机发送验证码</string>
     <string name="forget_pwd_next">下一步</string>
     <string name="forget_pwd_tip1">需由6-20位数字、字母或符号组成，至少两种</string>
@@ -194,7 +194,6 @@
     <string name="woyaokaituan">我要开团</string>
     <string name="pingtuan_hint">请输入您收到的拼团码</string>
     <string name="dian_option1">垫付数量</string>
-    <string name="dian_option2">价格明细</string>
     <string name="dian_option3">课程总价格</string>
     <string name="dian_option4">教材价格</string>
     <string name="dian_option5">团购优惠价</string>
@@ -237,6 +236,7 @@
     <string name="delete_all">全部删除</string>
 
     <!--订单-->
+    <string name="pay_add_address">添加收货地址</string>
     <string name="my_order">我的订单</string>
     <string name="commit_order">提交订单</string>
     <string name="order_detail">订单详情</string>
@@ -266,7 +266,6 @@
     <string name="order_option12">退款方式须知</string>
     <string name="lijibaoming">立即报名</string>
 
-
     <!--setting-->
     <string name="settings">设置</string>
     <string name="setting_option1">账号与安全</string>
@@ -276,5 +275,14 @@
     <string name="setting_option5">会员编码（邀请码）</string>
     <string name="setting_option6">密码</string>
     <string name="setting_option7">应急联系人</string>
+
+    <!--message-->
+    <string name="tongzhi">通知</string>
+    <string name="topic">话题</string>
+    <string name="tongzhi1">系统通知</string>
+    <string name="tongzhi2">互动通知</string>
+    <string name="tongzhi3">课程通知</string>
+    <string name="tongzhi4">其他</string>
+
 
 </resources>

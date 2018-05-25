@@ -57,8 +57,10 @@ public class MyApplication extends Application {
 
     /**
      * 登录状态是否改变
+     * <p>
+     * 初始化main页面时需要加载数据
      */
-    public static boolean loginStatusChange = false;
+    public static boolean loginStatusChange = true;
 
     /**
      * 音乐是否在播放

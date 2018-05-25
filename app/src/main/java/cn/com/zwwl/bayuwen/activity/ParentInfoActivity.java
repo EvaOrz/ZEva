@@ -14,11 +14,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-
 import java.io.File;
-
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.UploadPicApi;
@@ -44,6 +41,7 @@ public class ParentInfoActivity extends BaseActivity {
     private EditText nameEv;
     private TextView genderTv, phoneTv;
     private boolean isNeedChangePic = false;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,6 +94,7 @@ public class ParentInfoActivity extends BaseActivity {
                 if (TextUtils.isEmpty(na)) {
                     showToast("姓名不能为空");
                 } else {
+                    userModel.setName(na);
                     showLoadingDialog(true);
                     if (isNeedChangePic) {
                         uploadPic(photoFile);

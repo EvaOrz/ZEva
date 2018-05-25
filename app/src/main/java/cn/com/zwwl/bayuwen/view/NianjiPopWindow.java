@@ -36,7 +36,6 @@ public class NianjiPopWindow implements View.OnClickListener {
     private int maxTextSize = 24;
     private int minTextSize = 14;
 
-    private int current = 0;
     private String currentText = "";
 
     /**
@@ -80,7 +79,6 @@ public class NianjiPopWindow implements View.OnClickListener {
 
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
-                current = wheel.getCurrentItem();
                 currentText = (String) mYearAdapter.getItemText(wheel.getCurrentItem());
             }
         });
@@ -125,7 +123,7 @@ public class NianjiPopWindow implements View.OnClickListener {
      * 年级选择监听
      */
     public interface MyNianjiPickListener {
-        public void onNianjiPick(int nianji, String nainji);
+        public void onNianjiPick(String nainji);
     }
 
 
@@ -134,7 +132,7 @@ public class NianjiPopWindow implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btn_myinfo_sure:
 
-                listener.onNianjiPick(current, currentText);
+                listener.onNianjiPick(currentText);
                 break;
             case R.id.btn_myinfo_cancel:
 
@@ -146,7 +144,8 @@ public class NianjiPopWindow implements View.OnClickListener {
     private class CalendarTextAdapter extends AbstractWheelTextAdapter {
         ArrayList<String> list;
 
-        protected CalendarTextAdapter(Context context, ArrayList<String> list, int currentItem, int maxsize, int minsize) {
+        protected CalendarTextAdapter(Context context, ArrayList<String> list, int currentItem,
+                                      int maxsize, int minsize) {
             super(context, R.layout.item_birth_year, NO_RESOURCE, currentItem, maxsize, minsize);
             this.list = list;
             setItemTextResource(R.id.tempValue);

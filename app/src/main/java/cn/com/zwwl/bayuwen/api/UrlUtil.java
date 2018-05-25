@@ -110,6 +110,11 @@ public class UrlUtil {
         return HOST + "/address";
     }
 
+    // 学员信息
+    public static String childUrl() {
+        return HOST + "/students";
+    }
+
     // 选课列表
     public static String getEleCourseListUrl() {
         return HOST + "/course/type";
@@ -146,6 +151,16 @@ public class UrlUtil {
         if (TextUtils.isEmpty(cid))
             return HOST + "/course/lectures";
         return HOST + "/course/lectures?id=" + cid + "&page=" + page;
+    }
+
+    //获取团购信息
+    public static String getTuanInfo() {
+        return HOST + "/groupdiscount";
+    }
+
+    // 发起拼团（获取拼团码）
+    public static String faqiTuan() {
+        return HOST + "/grouppurchase";
     }
 
 }

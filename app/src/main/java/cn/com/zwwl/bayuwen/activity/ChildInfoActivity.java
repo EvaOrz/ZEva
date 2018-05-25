@@ -19,7 +19,14 @@ import com.bumptech.glide.Glide;
 
 import java.io.File;
 
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.api.ChildInfoApi;
+import cn.com.zwwl.bayuwen.api.UploadPicApi;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.ChildModel;
+import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.view.DatePopWindow;
 import cn.com.zwwl.bayuwen.view.GenderPopWindow;
@@ -27,19 +34,20 @@ import cn.com.zwwl.bayuwen.view.NianjiPopWindow;
 import cn.com.zwwl.bayuwen.widget.FetchPhotoManager;
 
 /**
- * 编辑家长信息页面
+ * 编辑学员信息页面
  */
 public class ChildInfoActivity extends BaseActivity {
-    private UserModel userModel;
     private String picturePath;// 头像
     private static final String KEY_IMAGE = "data";
     private static final String AVATAR_PIC = "avatar.jpg";
     private File photoFile;
     private ImageView aImg;
-    private EditText nameEv, phoneEv;
+    private EditText nameEv, phoneEv, schoolEv;
     private TextView genderTv, birthTv, ruxueTv, nianjiTv;
     private boolean isNeedChangePic = false;
-    private String birthTxt, ruxueTxt, nianjiTxt;
+    private boolean isModify = false;// 是否是修改信息
+
+    private ChildModel childModel = new ChildModel();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,8 +56,13 @@ public class ChildInfoActivity extends BaseActivity {
         setContentView(R.layout.activity_info_child);
         picturePath = Environment.getExternalStorageDirectory().getPath() + "/" + AVATAR_PIC;
         initView();
-//        userModel = UserDataHelper.getUserLoginInfo(this);
-        initData();
+        if (getIntent().getSerializableExtra("ChildInfoActivity_data") != null && getIntent()
+                .getSerializableExtra("ChildInfoActivity_data") instanceof ChildModel) {
+            childModel = (ChildModel) getIntent().getSerializableExtra("ChildInfoActivity_data");
+            initData();
+            isModify = true;
+        }
+
     }
 
     private void initView() {
@@ -60,12 +73,15 @@ public class ChildInfoActivity extends BaseActivity {
         birthTv = findViewById(R.id.info_p_birthtv);
         ruxueTv = findViewById(R.id.info_p_ruxuetv);
         nianjiTv = findViewById(R.id.info_c_nianjitv);
+        schoolEv = findViewById(R.id.info_c_schoolev);
+
         findViewById(R.id.info_c_back).setOnClickListener(this);
         findViewById(R.id.info_c_avatar).setOnClickListener(this);
         findViewById(R.id.info_c_sex).setOnClickListener(this);
         findViewById(R.id.info_c_ruxue).setOnClickListener(this);
         findViewById(R.id.info_c_birth).setOnClickListener(this);
         findViewById(R.id.info_c_nianji).setOnClickListener(this);
+        findViewById(R.id.info_c_save).setOnClickListener(this);
     }
 
     @Override
@@ -81,17 +97,22 @@ public class ChildInfoActivity extends BaseActivity {
             case R.id.info_c_sex:
                 new GenderPopWindow(this, new GenderPopWindow.ChooseGenderListener() {
                     @Override
-                    public void choose(int gender) {
-                        userModel.setSex(gender);
-                        handler.sendEmptyMessage(1);
+                    public void choose(int gender) {// 1男2女0保密
+                        if (gender == 0) {
+                            childModel.setGender(2);
+                        } else if (gender == 2) {
+                            childModel.setGender(0);
+                        } else
+                            childModel.setGender(1);
+                        handler.sendEmptyMessage(5);
                     }
                 });
                 break;
             case R.id.info_c_nianji:// 年级
                 new NianjiPopWindow(mContext, new NianjiPopWindow.MyNianjiPickListener() {
                     @Override
-                    public void onNianjiPick(int nianji, String string) {
-                        nianjiTxt = string;
+                    public void onNianjiPick(String string) {
+                        childModel.setGrade(string);
                         handler.sendEmptyMessage(4);
                     }
                 });
@@ -100,7 +121,7 @@ public class ChildInfoActivity extends BaseActivity {
                 new DatePopWindow(mContext, new DatePopWindow.MyDatePickListener() {
                     @Override
                     public void onDatePick(int year, int month, int day) {
-                        birthTxt = year + "年" + month + "月" + day + "日";
+                        childModel.setBirthday(year + "-" + month + "-" + day);
                         handler.sendEmptyMessage(0);
                     }
                 });
@@ -110,14 +131,85 @@ public class ChildInfoActivity extends BaseActivity {
                 new DatePopWindow(mContext, new DatePopWindow.MyDatePickListener() {
                     @Override
                     public void onDatePick(int year, int month, int day) {
-                        ruxueTxt = year + "年" + month + "月" + day + "日";
+                        childModel.setAdmission_time(year + "-" + month + "-" + day);
                         handler.sendEmptyMessage(2);
                     }
                 });
                 break;
+            case R.id.info_c_save:
+                String na = nameEv.getText().toString();
+                String phone = phoneEv.getText().toString();
+                String grade = nianjiTv.getText().toString();
+                String school = schoolEv.getText().toString();
+                if (TextUtils.isEmpty(na)) {
+                    showToast("姓名不能为空");
+                } else if (TextUtils.isEmpty(phone)) {
+                    showToast("紧急联系人不能为空");
+                } else if (TextUtils.isEmpty(grade)) {
+                    showToast("年级不能为空");
+                } else {
+                    childModel.setName(na);
+                    childModel.setSchool(school);
+                    childModel.setTel(phone);
 
+                    showLoadingDialog(true);
+                    if (isNeedChangePic) {
+                        uploadPic(photoFile);
+                    } else
+                        commit();
+                }
+                break;
         }
 
+    }
+
+    /**
+     * 上传头像
+     *
+     * @param file
+     */
+    private void uploadPic(File file) {
+        new UploadPicApi(this, file, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+                if (entry != null && entry instanceof UserModel) {
+                    childModel.setPic(((UserModel) entry).getPic());
+                    commit();
+
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                if (error != null)
+                    showToast(TextUtils.isEmpty(error.getDesc()) ? mContext.getResources()
+                            .getString(R.string.upload_faild) : error
+                            .getDesc());
+            }
+        });
+    }
+
+    /**
+     * 提交
+     */
+    private void commit() {
+        new ChildInfoApi(this, childModel, isModify, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+                showLoadingDialog(false);
+                if (entry != null && entry instanceof ChildModel) {
+                    MyApplication.loginStatusChange = true;
+                    finish();
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+                if (error != null)
+                    showToast(error.getDesc());
+            }
+        });
     }
 
     protected void doFecthPicture() {
@@ -127,12 +219,14 @@ public class ChildInfoActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        if (userModel == null) return;
-        if (!TextUtils.isEmpty(userModel.getPic()))
-            Glide.with(this).load(userModel.getPic()).into(aImg);
-        nameEv.setText(userModel.getName());
-        genderTv.setText(userModel.getSexTxt(userModel.getSex()));
-        phoneEv.setText(userModel.getTel());
+        if (!TextUtils.isEmpty(childModel.getPic()))
+            Glide.with(this).load(childModel.getPic()).into(aImg);
+        nameEv.setText(childModel.getName());
+        genderTv.setText(childModel.getSexTxt(childModel.getGender()));
+        phoneEv.setText(childModel.getTel());
+        birthTv.setText(childModel.getBirthday());
+        ruxueTv.setText(childModel.getAdmission_time());
+        nianjiTv.setText(childModel.getGrade());
     }
 
     @SuppressLint("HandlerLeak")
@@ -142,20 +236,23 @@ public class ChildInfoActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:// 出生年月日
-                    birthTv.setText(birthTxt);
+                    birthTv.setText(childModel.getBirthday());
                     break;
                 case 1:// 重新加载用户信息
                     initData();
                     break;
                 case 2:// 入学年月日
-                    ruxueTv.setText(ruxueTxt);
+                    ruxueTv.setText(childModel.getAdmission_time());
                     break;
                 case 3:
                     isNeedChangePic = true;
                     Glide.with(mContext).load(photoFile).into(aImg);
                     break;
                 case 4:// 年级选择
-                    nianjiTv.setText(nianjiTxt);
+                    nianjiTv.setText(childModel.getGrade());
+                    break;
+                case 5:// 性别选择
+                    genderTv.setText(childModel.getSexTxt(childModel.getGender()));
                     break;
 
             }
@@ -166,7 +263,6 @@ public class ChildInfoActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == FetchPhotoManager.REQUEST_CAMERA) {
-
 //                avatarBit = data.getParcelableExtra("data");
                 photoFile = new File(picturePath);
             } else if (requestCode == FetchPhotoManager.REQUEST_GALLERY) {

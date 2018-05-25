@@ -48,7 +48,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/gray_xiankuang_circle"
+        android:background="@drawable/gray_white_xiankuang"
         android:gravity="center">
 
         <ImageView

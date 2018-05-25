@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gray_xiankuang_circle"
+        android:background="@drawable/gray_white_xiankuang"
         android:gravity="center_vertical"
         android:orientation="horizontal"
        >

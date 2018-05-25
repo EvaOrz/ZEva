@@ -24,9 +24,8 @@
             android:layout_height="30dp"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="王大宝（三年级）"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_12" />
+            android:textSize="@dimen/text_size_14" />
 
         <ImageView
             android:id="@+id/toolbar_right"
@@ -77,6 +76,7 @@
                     android:padding="10dp">
 
                     <ImageView
+                        android:id="@+id/frag1_child_avatar"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
 
@@ -133,9 +133,9 @@
                     android:padding="10dp">
 
                     <ImageView
+                        android:id="@+id/frag1_parent_avater"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-
                         android:src="@drawable/avatar_placeholder" />
 
                     <ImageView
@@ -148,6 +148,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/frag1_parent_gongxun"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="子爵"

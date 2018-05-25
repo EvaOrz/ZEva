@@ -80,6 +80,20 @@
                 android:text="@string/main_tab4"
                 android:textColor="@drawable/oringe_text_checked"
                 android:textSize="@dimen/text_size_10" />
+
+            <RadioButton
+                android:id="@+id/bottom_nav_5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="false"
+                android:drawableTop="@drawable/home_img2_selector"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@string/wode"
+                android:textColor="@drawable/oringe_text_checked"
+                android:textSize="@dimen/text_size_10" />
         </RadioGroup>
 
         <View

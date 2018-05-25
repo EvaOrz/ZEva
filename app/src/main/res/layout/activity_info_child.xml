@@ -25,6 +25,7 @@
             android:text="王大宝"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_16" />
+
         <TextView
             android:id="@+id/info_c_save"
             android:layout_width="wrap_content"
@@ -48,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/gray_xiankuang_circle"
+                android:background="@drawable/gray_white_xiankuang"
                 android:orientation="vertical"
                 android:padding="15dp">
 
@@ -89,9 +90,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
@@ -111,7 +112,6 @@
 
                         android:gravity="right"
                         android:lines="1"
-                        android:text="王大宝"
                         android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_14" />
 
@@ -148,7 +148,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lines="1"
-                        android:text="女"
                         android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_14" />
 
@@ -185,9 +184,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lines="1"
-                        android:text="2018年5月17日"
                         android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_14" />
+
                     <ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
@@ -195,11 +194,12 @@
                 </LinearLayout>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/gray_xiankuang_circle"
+                android:background="@drawable/gray_white_xiankuang"
                 android:orientation="vertical"
                 android:padding="15dp">
 
@@ -223,7 +223,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lines="1"
-                        android:text="2018年5月17日"
                         android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_14" />
 
@@ -244,9 +243,9 @@
                     android:id="@+id/info_c_nianji"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
@@ -263,7 +262,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:text="三年级"
                         android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_14" />
 
@@ -293,6 +291,7 @@
                         android:text="@string/zaiduxuexiao"
                         android:textColor="@color/gray_dark"
                         android:textSize="@dimen/text_size_14" />
+
                     <EditText
                         android:id="@+id/info_c_schoolev"
                         android:layout_width="0dp"
@@ -301,7 +300,6 @@
                         android:background="@null"
                         android:gravity="right"
                         android:lines="1"
-                        android:text="中国人民大学附属小学"
                         android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_14" />
 
@@ -358,7 +356,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/gray_xiankuang_circle"
+                android:background="@drawable/gray_white_xiankuang"
                 android:orientation="vertical"
                 android:padding="15dp">
 
@@ -372,8 +370,8 @@
                 <GridView
                     android:id="@+id/gift_grid"
                     android:layout_width="match_parent"
-                    android:scrollbars="none"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none" />
 
             </LinearLayout>
 

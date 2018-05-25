@@ -26,13 +26,15 @@ public class AddressApi extends BaseApi {
     private Map<String, String> pamas = new HashMap<>();
 
     /**
-     * 添加
+     * 添加、修改
      *
      * @param context
      * @param model
+     * @param isModify 是否是修改
      * @param listener
      */
-    public AddressApi(Context context, AddressModel model, FetchAddressListListener listener) {
+    public AddressApi(Context context, AddressModel model, boolean isModify,
+                      FetchAddressListListener listener) {
         super(context);
         mContext = context;
         isNeedJsonArray = true;
@@ -46,28 +48,17 @@ public class AddressApi extends BaseApi {
         pamas.put("district_id", model.getDistrict_id());
         pamas.put("address", model.getAddress());
         pamas.put("address_alias", model.getAddress_alias());
-        this.url = UrlUtil.addressUrl();
         this.listListener = listener;
-        post();
+        if (isModify) {
+            this.url = UrlUtil.addressUrl() + "/" + model.getId();
+            patch();
+        } else {
+            this.url = UrlUtil.addressUrl();
+
+            post();
+        }
     }
 
-    /**
-     * 修改
-     *
-     * @param context
-     * @param aId
-     * @param pama1    要修改的属性
-     * @param listener
-     */
-    public AddressApi(Context context, String aId, String pama1, FetchAddressListListener listener) {
-        super(context);
-        mContext = context;
-        isNeedJsonArray = true;
-        pamas.put("to_user", pama1);
-        this.url = UrlUtil.addressUrl() + "/" + aId;
-        this.listListener = listener;
-        patch();
-    }
 
     /**
      * get列表

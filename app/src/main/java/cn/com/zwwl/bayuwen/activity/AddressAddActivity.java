@@ -12,7 +12,6 @@ import android.os.Message;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +46,7 @@ public class AddressAddActivity extends BaseActivity {
     private CityModel cityModel;
     private DistModel distModel;
     private AddressModel addressModel;
-
+    private boolean isModify = false;// 是否是修改页面
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +58,7 @@ public class AddressAddActivity extends BaseActivity {
                 .getSerializableExtra("AddressAddActivity_data") instanceof AddressModel) {
             addressModel = (AddressModel) getIntent().getSerializableExtra
                     ("AddressAddActivity_data");
+            isModify = true;
             initData();
         } else addressModel = new AddressModel();
 
@@ -110,7 +110,7 @@ public class AddressAddActivity extends BaseActivity {
                 break;
 
             case R.id.a_a_address:// 选择地址
-                new AddressPopWindow(mContext, 0,new AddressPopWindow.OnAddressCListener() {
+                new AddressPopWindow(mContext, 0, new AddressPopWindow.OnAddressCListener() {
 
                     @Override
                     public void onClick(ProvinceModel province,
@@ -128,7 +128,7 @@ public class AddressAddActivity extends BaseActivity {
 
     private void doAdd() {
         showLoadingDialog(true);
-        new AddressApi(mContext, addressModel, new AddressApi.FetchAddressListListener() {
+        new AddressApi(mContext, addressModel, isModify, new AddressApi.FetchAddressListListener() {
             @Override
             public void setData(List<AddressModel> list) {
                 showLoadingDialog(false);
@@ -230,7 +230,7 @@ public class AddressAddActivity extends BaseActivity {
             view.setTextSize(14);
             view.setGravity(Gravity.CENTER);
             view.setTextColor(getResources().getColor(R.color.gray_dark));
-            view.setBackgroundResource(R.drawable.gray_xiankuang_circle);
+            view.setBackgroundResource(R.drawable.gray_white_xiankuang);
         } else {
             view.setTag(addressTag);
             view.setText(addressTag.getTagTxt());
@@ -238,7 +238,7 @@ public class AddressAddActivity extends BaseActivity {
             view.setGravity(Gravity.CENTER);
             if (!addressTag.isCheck()) {
                 view.setTextColor(getResources().getColor(R.color.gray_dark));
-                view.setBackgroundResource(R.drawable.gray_xiankuang_circle);
+                view.setBackgroundResource(R.drawable.gray_white_xiankuang);
             } else {
                 view.setTextColor(getResources().getColor(R.color.white));
                 view.setBackgroundResource(R.drawable.gold_circle);

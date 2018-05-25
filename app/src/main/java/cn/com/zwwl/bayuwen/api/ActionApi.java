@@ -40,12 +40,11 @@ public class ActionApi extends BaseApi {
      * @param context
      * @param kid      操作的fm
      * @param type     0：取消喜欢 1：喜欢
-     *
-     *
-     * 收藏接口
-     *
+     *                 <p>
+     *                 <p>
+     *                 收藏接口
      * @param context
-     * @param kid - content
+     * @param kid      - content
      * @param type     1-课程  2-文本  3-图片  4-链接
      * @param listener
      */
@@ -87,7 +86,8 @@ public class ActionApi extends BaseApi {
      * @param code
      * @param listener
      */
-    public ActionApi(Context context, String username, String password, String code, FetchEntryListener listener) {
+    public ActionApi(Context context, String username, String password, String code,
+                     FetchEntryListener listener) {
         super(context);
         actionType = ActionType.ACTION_CHANGE_PWD;
         mContext = context;
@@ -110,7 +110,8 @@ public class ActionApi extends BaseApi {
      * @param type
      * @param listener
      */
-    public ActionApi(Context context, String kid, String cid, String commentid, String content, String type, FetchEntryListener listener) {
+    public ActionApi(Context context, String kid, String cid, String commentid, String content,
+                     String type, FetchEntryListener listener) {
         super(context);
         actionType = ActionType.ACTION_ADD_COMMENT;
         mContext = context;
@@ -135,7 +136,8 @@ public class ActionApi extends BaseApi {
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
         if (errorMsg != null)
             listener.setError(errorMsg);
-
+        else listener.setError(null);
+        
         if (!isNull(json)) {
             AlbumModel e = new AlbumModel();
             e.setLikeNum(json.optInt("count"));

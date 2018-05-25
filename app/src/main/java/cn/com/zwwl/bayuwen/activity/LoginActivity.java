@@ -66,9 +66,11 @@ public class LoginActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.login_forget:// 忘记密码
+                startActivity(new Intent(mContext, ForgetPwdActivity.class));
                 break;
             case R.id.login_problem:// 遇到问题
-                new LoginProblemPopWindow(mContext, new LoginProblemPopWindow.ChooseGenderListener() {
+                new LoginProblemPopWindow(mContext, new LoginProblemPopWindow
+                        .ChooseGenderListener() {
                     @Override
                     public void choose(int gender) {
 
@@ -79,14 +81,16 @@ public class LoginActivity extends BaseActivity {
                 final String username = accountEdit.getText().toString();
                 String pwd = pwdEdit.getText().toString();
                 // 密码登录
-                if (BayuwenTools.checkIsPhone(LoginActivity.this, username) && BayuwenTools.checkPwd(LoginActivity.this, pwd)) {
+                if (BayuwenTools.checkIsPhone(LoginActivity.this, username) && BayuwenTools
+                        .checkPwd(LoginActivity.this, pwd)) {
                     doLogin(LoginSigninApi.GetUserType.LOGIN, username, pwd);
                 }
                 break;
 
             case R.id.login_pwd_show:
                 if (isShowPassword) {// 隐藏
-                    pwdEdit.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    pwdEdit.setInputType(InputType.TYPE_CLASS_TEXT | InputType
+                            .TYPE_TEXT_VARIATION_PASSWORD);
 //                    pwdImg.setImageResource(R.drawable.password_unshow);
                 } else {//选择状态 显示明文--设置为可见的密码
                     pwdEdit.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
