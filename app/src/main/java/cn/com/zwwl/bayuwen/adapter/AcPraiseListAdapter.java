@@ -47,7 +47,7 @@ public class AcPraiseListAdapter extends BaseRecylcerViewAdapter<PraiseModel.Stu
                     .error(R.drawable.avatar_placeholder)
                     .transform(new CircleTransform(mContext))
                     .into(viewHolder.course_cover);
-
+        setItemClickView(viewHolder.itemView, position);
     }
 
     @Override

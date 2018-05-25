@@ -5,18 +5,13 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.CommentModel;
-import cn.com.zwwl.bayuwen.model.CourseModel;
-import cn.com.zwwl.bayuwen.model.Pevaluation;
-import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
  * Created by lousx

@@ -10,13 +10,17 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.glide.BorderCircleTransform;
+import cn.com.zwwl.bayuwen.glide.CircleTransform;
+import cn.com.zwwl.bayuwen.glide.GlideApp;
+import cn.com.zwwl.bayuwen.model.CourseDetailModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
 
 /**
  * Created by lousx on 2016/8/9.
  */
-public class TeacherListAdapter extends BaseRecylcerViewAdapter<TeacherModel> {
-    public TeacherListAdapter(Context mContext, List<TeacherModel> list) {
+public class TeacherListAdapter extends BaseRecylcerViewAdapter<CourseDetailModel.TeacherEntity> {
+    public TeacherListAdapter(Context mContext, List<CourseDetailModel.TeacherEntity> list) {
         super(mContext, list);
     }
 
@@ -29,14 +33,18 @@ public class TeacherListAdapter extends BaseRecylcerViewAdapter<TeacherModel> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final TeacherListAdapter.ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.name.setText(list.get(position).getName());
-//        if (list.get(position).getPic()!=null)
-//            Glide.with(mContext).load(list.get(position).getPic()).into(viewHolder.avatar);
-//        else
-        viewHolder.avatar.setImageResource(R.drawable.avatar_placeholder);
+        if (list.get(position).getPic()!=null) {
+            GlideApp.with(mContext).load(list.get(position).getPic())
+                    .placeholder(R.drawable.avatar_placeholder)
+                    .error(R.drawable.avatar_placeholder)
+                    .transform(new CircleTransform(mContext))
+                    .into(viewHolder.avatar);
+        }else
+            viewHolder.avatar.setImageResource(R.drawable.avatar_placeholder);
         setItemClickView(holder.itemView, position);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
         private ImageView avatar;
 

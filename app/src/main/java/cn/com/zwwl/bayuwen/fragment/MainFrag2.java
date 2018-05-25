@@ -42,11 +42,13 @@ import cn.com.zwwl.bayuwen.api.EleCourseListApi;
 import cn.com.zwwl.bayuwen.api.PraiseListApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.listener.OnItemClickListener;
 import cn.com.zwwl.bayuwen.model.EleCourseModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.PraiseModel;
 import cn.com.zwwl.bayuwen.widget.BannerView;
+import cn.com.zwwl.bayuwen.widget.StopLinearLayoutManager;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 import cn.com.zwwl.bayuwen.widget.decoration.HSpacesItemDecoration;
 import cn.com.zwwl.bayuwen.widget.decoration.SpacesItemDecoration;
@@ -102,6 +104,44 @@ public class MainFrag2 extends Fragment
         praiseRecyclerView.setAdapter(praiseListAdapter);
         academicAdvisoRecyclerView.setAdapter(acPraiseListAdapter);
         assistantRecyclerView.setAdapter(aaPraiseListAdapter);
+        praiseListAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void setOnItemClickListener(View view, int position) {
+                Intent intent = new Intent();
+                intent.putExtra("tid",praiseListAdapter.getList().get(position).getTo_uid());
+                intent.setClass(mActivity, TeacherDetailActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void setOnLongItemClickListener(View view, int position) {}
+        });
+
+        acPraiseListAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void setOnItemClickListener(View view, int position) {
+                Intent intent = new Intent();
+                intent.putExtra("id",acPraiseListAdapter.getList().get(position).getTo_uid());
+                intent.setClass(mActivity, TeacherDetailActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void setOnLongItemClickListener(View view, int position) {}
+        });
+
+        aaPraiseListAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void setOnItemClickListener(View view, int position) {
+                Intent intent = new Intent();
+                intent.putExtra("id",acPraiseListAdapter.getList().get(position).getTo_uid());
+                intent.setClass(mActivity, TeacherDetailActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void setOnLongItemClickListener(View view, int position) {}
+        });
     }
 
     @Override
@@ -179,7 +219,7 @@ public class MainFrag2 extends Fragment
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
                 intent.putExtra("id", mItemList.get(position).getId());
-                intent.setClass(mActivity, CourseDetailActivity.class);
+                intent.setClass(mActivity, SearchCourseActivity.class);
                 startActivity(intent);
             }
         });
@@ -190,7 +230,9 @@ public class MainFrag2 extends Fragment
 
     private void setRecyclerView(RecyclerView view) {
         view.setHasFixedSize(true);
-        view.setLayoutManager(new LinearLayoutManager(getActivity(), OrientationHelper.VERTICAL, false));
+        StopLinearLayoutManager linearLayoutManager = new StopLinearLayoutManager(getActivity());
+        linearLayoutManager.setScrollEnabled(false);
+        view.setLayoutManager(linearLayoutManager);
         view.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R.dimen.dp_10, OrientationHelper.VERTICAL));
     }
 
@@ -212,11 +254,6 @@ public class MainFrag2 extends Fragment
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.praise_re:
-                Intent intent = new Intent();
-                intent.setClass(mActivity, TeacherDetailActivity.class);
-                startActivity(intent);
-                break;
             case R.id.search_view:
                 Intent i = new Intent();
                 i.setClass(mActivity, SearchCourseActivity.class);

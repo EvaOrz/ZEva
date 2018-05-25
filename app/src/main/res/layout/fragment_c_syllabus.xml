@@ -42,7 +42,7 @@
             android:textSize="@dimen/text_size_14"/>
 
         <TextView
-            android:id="@+id/time_tv"
+            android:id="@+id/grade_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="5dp"
@@ -88,7 +88,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="教学目标："
+            android:text="课程特色："
             android:textColor="@color/body_gray"
             android:textSize="@dimen/text_size_14"/>
 

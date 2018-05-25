@@ -49,7 +49,7 @@ public class TPraiseListAdapter extends BaseRecylcerViewAdapter<PraiseModel.Teac
                     .error(R.drawable.avatar_placeholder)
                     .transform(new CircleTransform(mContext))
                     .into(viewHolder.course_cover);
-
+        setItemClickView(viewHolder.itemView,position);
     }
 
     @Override

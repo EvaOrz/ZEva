@@ -1,6 +1,10 @@
 package cn.com.zwwl.bayuwen.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,18 +15,26 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CourseListAdapter;
+import cn.com.zwwl.bayuwen.api.CourseListlApi;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.CommentModel;
+import cn.com.zwwl.bayuwen.model.CourseDetailModel;
 import cn.com.zwwl.bayuwen.model.CourseModel;
+import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.widget.CustomViewPager;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
+import cn.com.zwwl.bayuwen.widget.StopLinearLayoutManager;
 import cn.com.zwwl.bayuwen.widget.newrefresh.PullToRefreshLayout;
 
+import static cn.com.zwwl.bayuwen.MyApplication.mContext;
 import static com.umeng.socialize.utils.DeviceConfig.context;
 
 /**
@@ -30,7 +42,7 @@ import static com.umeng.socialize.utils.DeviceConfig.context;
  */
 public class FgCourseList extends Fragment implements View.OnClickListener {
     private String videoId;
-    private List<CourseModel> cvList = new LinkedList<>();
+    private List<CourseModel.LecturesEntity> cvList = new LinkedList<>();
     private int page = 1;
     private View view;
     private RecyclerView listView;
@@ -38,11 +50,28 @@ public class FgCourseList extends Fragment implements View.OnClickListener {
     private CourseListAdapter adapter;
     private LinearLayout footView;
     private CustomViewPager customViewPager;
+    private CourseModel courseModel;
 
-    public static FgCourseList newInstance(String videoId) {
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    setData();
+                    break;
+                case 500:
+                    ErrorMsg errorMsg = (ErrorMsg) msg.getData().getSerializable("error");
+                    Toast.makeText(getActivity(), errorMsg.getDesc(), Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
+
+    public static FgCourseList newInstance(String cid) {
         FgCourseList fg = new FgCourseList();
         Bundle bundle = new Bundle();
-        bundle.putString("id", videoId);
+        bundle.putString("id", cid);
         fg.setArguments(bundle);
         return fg;
     }
@@ -52,6 +81,28 @@ public class FgCourseList extends Fragment implements View.OnClickListener {
         if (videoId.equals("")) {
             return;
         }
+        new CourseListlApi(mContext, videoId, page, new FetchEntryListener() {
+
+            @Override
+            public void setData(Entry entry) {
+                if (entry != null && entry instanceof CourseModel) {
+                    courseModel = (CourseModel) entry;
+                    handler.sendEmptyMessage(0);
+                }
+            }
+
+            @Override
+            public void setError(final ErrorMsg error) {
+                if (error != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("error", error);
+                    Message message = new Message();
+                    message.setData(bundle);
+                    message.what = 500;
+                    handler.sendMessage(message);
+                }
+            }
+        });
     }
 
     public void setCustomViewPager(CustomViewPager customViewPager) {
@@ -74,16 +125,18 @@ public class FgCourseList extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getCourseList();
+    }
+
     //初始化view
     private void initView() {
-//        refreshLayout = view.findViewById(R.id.refreshLayout);
         listView = view.findViewById(R.id.listView);
-        listView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        for (int i = 0; i < 4; i++) {
-            CourseModel courseModel = new CourseModel();
-            cvList.add(courseModel);
-        }
+        StopLinearLayoutManager linearLayoutManager = new StopLinearLayoutManager(getActivity());
+        linearLayoutManager.setScrollEnabled(false);
+        listView.setLayoutManager(linearLayoutManager);
 
         adapter = new CourseListAdapter(getActivity(), cvList);
         listView.setAdapter(adapter);
@@ -93,6 +146,10 @@ public class FgCourseList extends Fragment implements View.OnClickListener {
 //        footView = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.layout_footview, null);
 //        listView.addFooterView(view);
 //        footView.setOnClickListener(this);
+    }
+
+    private void setData() {
+        adapter.appendData(courseModel.getLectures());
     }
 
     @Override

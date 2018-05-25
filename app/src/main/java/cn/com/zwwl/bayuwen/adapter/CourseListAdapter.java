@@ -16,11 +16,9 @@ import cn.com.zwwl.bayuwen.model.CourseModel;
 /**
  * Created by lousx
  */
-public class CourseListAdapter extends BaseRecylcerViewAdapter<CourseModel> {
-    private List<CourseModel> mList = new LinkedList<>();
-    private Context mContext;
+public class CourseListAdapter extends BaseRecylcerViewAdapter<CourseModel.LecturesEntity> {
 
-    public CourseListAdapter(Context mContext,List<CourseModel> list) {
+    public CourseListAdapter(Context mContext,List<CourseModel.LecturesEntity> list) {
         super(mContext, list);
         this.mContext = mContext;
     }
@@ -35,8 +33,11 @@ public class CourseListAdapter extends BaseRecylcerViewAdapter<CourseModel> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         final CourseListAdapter.ViewHolder viewHolder = (CourseListAdapter.ViewHolder) holder;
-        viewHolder.video_title.setText(position + 1 + "  中国神话传说及文化寓意");
-        viewHolder.video_time.setText("2018-02-09 19:15-20:15 ( 60分钟 )");
+        viewHolder.video_title.setText(position + 1 + "  "+list.get(position).getTitle());
+        viewHolder.video_time.setText(list.get(position).getStart_at()
+                +"  "+list.get(position).getClass_start_at()
+                +"-"+list.get(position).getClass_end_at()
+                +"("+list.get(position).getHours()+"小时)");
     }
 
     @Override
