@@ -1,5 +1,6 @@
 package cn.com.zwwl.bayuwen.widget.threed;
 
+import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
@@ -12,6 +13,7 @@ public class GalleryTransformer implements ViewPager.PageTransformer {
         view.setScaleY(scaleValue);
         view.setAlpha(scaleValue);
         view.setPivotX(view.getWidth() * (1 - position - (position > 0 ? 1 : -1) * 0.75f) * scale);
+        if (Build.VERSION.SDK_INT>=21)
         view.setElevation(position > -0.25 && position < 0.25 ? 1 : 0);
     }
 }
