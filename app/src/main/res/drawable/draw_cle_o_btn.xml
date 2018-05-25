@@ -7,10 +7,8 @@
             <stroke android:color="@color/press_orangeColor"/>
             <corners android:radius="80dp"/>
             <padding
-                android:bottom="@dimen/dp_10"
                 android:left="@dimen/dp_10"
-                android:right="@dimen/dp_10"
-                android:top="@dimen/dp_10"/>
+                android:right="@dimen/dp_10"/>
         </shape>
     </item>
     <item>
@@ -19,10 +17,8 @@
             <stroke android:color="@color/mainColor"/>
             <corners android:radius="80dp"/>
             <padding
-                android:bottom="@dimen/dp_10"
                 android:left="@dimen/dp_10"
-                android:right="@dimen/dp_10"
-                android:top="@dimen/dp_10"/>
+                android:right="@dimen/dp_10"/>
         </shape>
     </item>
 </selector>

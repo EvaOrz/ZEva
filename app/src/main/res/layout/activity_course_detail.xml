@@ -14,7 +14,8 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/c_title"
         android:layout_marginBottom="59dp"
-        android:background="@color/app_bgColor">
+        android:background="@color/app_bgColor"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,7 +44,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:text="思晨写作二介暑"
                             android:textColor="@color/body_gray"
                             android:textSize="17sp"
                             android:textStyle="bold"/>
@@ -55,7 +55,6 @@
                             android:layout_marginTop="5dp"
                             android:ellipsize="end"
                             android:maxLines="3"
-                            android:text="班级编码：6789"
                             android:textColor="@color/black2"
                             android:textSize="12sp"/>
 
@@ -64,7 +63,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="¥ 1500"
                             android:textColor="@color/gold"
                             android:textSize="@dimen/text_size_16"/>
                     </LinearLayout>
@@ -108,7 +106,6 @@
                         android:id="@+id/place_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="海淀黄庄小区306室"
                         android:textColor="@color/black2"
                         android:textSize="@dimen/text_size_14"/>
                 </LinearLayout>
@@ -127,15 +124,23 @@
                         android:textSize="@dimen/text_size_14"/>
 
                     <TextView
-                        android:id="@+id/time_tv"
+                        android:id="@+id/date_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:lineSpacingExtra="5dp"
-                        android:lines="2"
-                        android:text="2017/8/31至2018年/9/01 \\n每天16:00 - 18:00"
+                        android:lines="1"
                         android:textColor="@color/black2"
                         android:textSize="@dimen/text_size_14"/>
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/time_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="5dp"
+                    android:lines="1"
+                    android:textColor="@color/black2"
+                    android:textSize="@dimen/text_size_14"/>
             </LinearLayout>
 
             <cn.com.zwwl.bayuwen.view.PagerSlidingTabStrip
@@ -194,6 +199,7 @@
         android:padding="10dp">
 
         <TextView
+            android:id="@+id/adviserTv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginRight="20dp"
@@ -204,6 +210,7 @@
             android:textSize="13sp"/>
 
         <TextView
+            android:id="@+id/explainTv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginRight="20dp"
@@ -214,23 +221,23 @@
             android:textSize="13sp"/>
 
         <TextView
+            android:id="@+id/group_purchase_tv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_weight="0.8"
             android:background="@drawable/draw_cle_w_btn"
-            android:gravity="center"
-            android:text="¥5000 \n 团购报名"
             android:textColor="@color/body_gray"
             android:textSize="13sp"/>
 
+
         <TextView
+            android:id="@+id/sign_up_tv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.8"
+            android:gravity="center_horizontal"
             android:background="@drawable/draw_cle_o_btn"
-            android:gravity="center"
-            android:text="¥5555 \n 单独报名"
             android:textColor="@android:color/white"
             android:textSize="13sp"/>
     </LinearLayout>

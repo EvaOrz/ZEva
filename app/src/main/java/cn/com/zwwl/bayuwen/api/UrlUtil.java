@@ -120,6 +120,39 @@ public class UrlUtil {
         return HOST + "/course/type";
     }
 
+    // 赞列表
+    public static String getTopListUrl() {
+        return HOST + "/vote/toplist";
+    }
+
+    // 教师详情
+    public static String getTDetailUrl(String tid) {
+        if (TextUtils.isEmpty(tid))
+            return HOST + "/teachers/detail";
+        return HOST + "/teachers/detail?tid=" + tid;
+    }
+
+    // 课程详情
+    public static String getCDetailUrl(String cid) {
+        if (TextUtils.isEmpty(cid))
+            return HOST + "/course/";
+        return HOST + "/course/" + cid;
+    }
+
+    // 获取列表
+    public static String getLecturesUrl(String cid, String page) {
+        if (TextUtils.isEmpty(cid))
+            return HOST + "/course/lectures";
+        return HOST + "/course/lectures?id=" + cid + "&page=" + page;
+    }
+
+    // 家长评价
+    public static String getEvaluateUrl(String cid, String page) {
+        if (TextUtils.isEmpty(cid))
+            return HOST + "/course/lectures";
+        return HOST + "/course/lectures?id=" + cid + "&page=" + page;
+    }
+
     //获取团购信息
     public static String getTuanInfo() {
         return HOST + "/groupdiscount";
@@ -129,4 +162,5 @@ public class UrlUtil {
     public static String faqiTuan() {
         return HOST + "/grouppurchase";
     }
+
 }

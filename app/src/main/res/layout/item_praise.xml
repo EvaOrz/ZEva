@@ -3,15 +3,14 @@
                 android:id="@+id/praise_re"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                android:layout_marginTop="10dp"
                 android:background="@drawable/draw_item_gray_bg"
                 android:orientation="vertical"
                 android:padding="10dp">
 
     <ImageView
         android:id="@+id/course_cover"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_centerVertical="true"
         android:scaleType="fitXY"
         android:src="@drawable/avatar_placeholder"/>
@@ -31,7 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="梵高自画像"
-            android:textSize="17sp"
+            android:textColor="@color/body_gray"
+            android:textSize="14sp"
             android:textStyle="bold"/>
 
         <TextView
@@ -40,10 +40,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:ellipsize="end"
+            android:textColor="@color/body_gray"
             android:lineSpacingExtra="2dp"
             android:lines="2"
             android:text="融入了他们的画风和色彩，创造了他们独特的画风"
-            android:textSize="15sp"/>
+            android:textSize="12sp"/>
     </LinearLayout>
 
     <ImageView

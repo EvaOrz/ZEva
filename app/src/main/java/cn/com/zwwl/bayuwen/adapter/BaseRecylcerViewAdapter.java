@@ -36,6 +36,7 @@ public abstract class BaseRecylcerViewAdapter<T> extends RecyclerView.Adapter<Re
     public void appendData(List<T> mList) {
         if (mList != null) {
             this.list.addAll(mList);
+            notifyDataSetChanged();
         }
     }
 
