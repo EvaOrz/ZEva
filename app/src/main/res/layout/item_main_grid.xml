@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_gravity="center"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical">
 
 
     <ImageView
@@ -11,7 +11,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/avatar_placeholder"/>
+        android:src="@drawable/avatar_placeholder" />
 
     <TextView
         android:id="@+id/item_tv"
@@ -19,6 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="3dp"
-        android:textColor="@color/item_grayColor"
-        android:textSize="16sp"/>
+        android:textColor="@color/gray_dark"
+        android:textSize="@dimen/text_size_14" />
 </LinearLayout>

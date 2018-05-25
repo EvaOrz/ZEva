@@ -6,41 +6,27 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.adapter.CoursePageAdapter;
-import cn.com.zwwl.bayuwen.adapter.TeacherListAdapter;
 import cn.com.zwwl.bayuwen.api.CDeatailApi;
-import cn.com.zwwl.bayuwen.api.TDeatailApi;
-import cn.com.zwwl.bayuwen.fragment.FgCourseList;
-import cn.com.zwwl.bayuwen.fragment.FgCourseSyllabus;
-import cn.com.zwwl.bayuwen.fragment.FgPevaluationList;
-import cn.com.zwwl.bayuwen.glide.BorderCircleTransform;
-import cn.com.zwwl.bayuwen.glide.GlideApp;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.CourseDetailModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.TeacherDetailModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
 import cn.com.zwwl.bayuwen.view.PagerSlidingTabStrip;
 import cn.com.zwwl.bayuwen.widget.CustomViewPager;
-import cn.com.zwwl.bayuwen.widget.decoration.HSpacesItemDecoration;
 
 /**
+ * 课程详情页面
  * Created by lousx on 2018/5/16.
  */
-
 public class CourseDetailActivity extends BaseActivity {
     private TextView course_tv;
     private TextView classno_tv;
@@ -57,14 +43,11 @@ public class CourseDetailActivity extends BaseActivity {
 
     private List<Fragment> fragments;
     private List<String> list;
-    private CoursePageAdapter mAdapter;
-    private RecyclerView teacher_recycler;
     private TextView title_tv;
     private PagerSlidingTabStrip psts;
     private CustomViewPager mViewPager;
 
-    private TeacherListAdapter teacherListAdapter;
-    private List<CourseDetailModel.TeacherEntity> teacherList = new ArrayList<>();
+    private List<TeacherModel> teacherList = new ArrayList<>();
     private CourseDetailModel courseDetailModel;
 
     private String cid;
@@ -86,27 +69,9 @@ public class CourseDetailActivity extends BaseActivity {
     }
 
     private void init() {
-        fragments = new ArrayList<>();
-        list = new ArrayList<>();
-
-        list.add("课程表");
-        FgCourseList vrl = FgCourseList.newInstance(cid);
-        vrl.setCustomViewPager(mViewPager);
-        fragments.add(vrl);
-
-        list.add("课程大纲");
-        FgCourseSyllabus cs = FgCourseSyllabus.newInstance();
-        cs.setCustomViewPager(mViewPager);
-        fragments.add(cs);
-
-        list.add("家长评价");
-        FgPevaluationList vcf = FgPevaluationList.newInstance("");
-        vcf.setCustomViewPager(mViewPager);
-        fragments.add(vcf);
 
 
-        mAdapter = new CoursePageAdapter(getSupportFragmentManager(), fragments, list);
-        mViewPager.setAdapter(mAdapter);
+
         mViewPager.setOffscreenPageLimit(fragments.size());
         psts.setViewPager(mViewPager);
     }
@@ -147,14 +112,6 @@ public class CourseDetailActivity extends BaseActivity {
             }
         });
 
-        teacher_recycler = findViewById(R.id.teacher_recycler);
-        teacher_recycler.setHasFixedSize(true);
-        teacher_recycler.setLayoutManager(new LinearLayoutManager(mContext, OrientationHelper.HORIZONTAL, false));
-        teacher_recycler.addItemDecoration(new HSpacesItemDecoration(getResources().getDimensionPixelSize(R.dimen.dp_10)));
-
-        teacherListAdapter = new TeacherListAdapter(mContext, teacherList);
-        teacher_recycler.setAdapter(teacherListAdapter);
-
         title_tv.setText("课程详情");
 
         findViewById(R.id.back_btn).setOnClickListener(this);
@@ -165,24 +122,7 @@ public class CourseDetailActivity extends BaseActivity {
     }
 
     private void setData() {
-        CourseDetailModel.CourseEntity entity = courseDetailModel.getCourse();
-        course_tv.setText(entity.getTitle());
-        classno_tv.setText("班级编码：" + entity.getModel());
-        price_tv.setText("¥ " + entity.getBuyPrice());
-        place_tv.setText(entity.getSchool());
-        date_tv.setText(entity.getStart_at() + "至" + entity.getEnd_at());
-        time_tv.setText(entity.getClass_start_at() + "-" + entity.getClass_end_at());
-        sign_up_tv.setText("¥" + entity.getBuyPrice() + "\n单独报名");
-        if (entity.getIs_groupbuy().equals("1")) {
-            group_purchase_tv.setVisibility(View.VISIBLE);
-            group_purchase_tv.setText("¥" + entity.getGroupBuy().getDiscount_price() + "\n团购报名");
-        } else
-            group_purchase_tv.setVisibility(View.INVISIBLE);
-        GlideApp.with(mContext).load(courseDetailModel.getCourse().getPic())
-                .into(course_iv);
-        teacherListAdapter.appendData(courseDetailModel.getTeacher());
-        FgCourseSyllabus courseSyllabus = (FgCourseSyllabus) mAdapter.getItem(1);
-        courseSyllabus.setEntity(courseDetailModel.getCourse_program());
+
     }
 
 

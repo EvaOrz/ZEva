@@ -8,16 +8,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.api.EleCourseListApi.*;
 import cn.com.zwwl.bayuwen.glide.CircleTransform;
 import cn.com.zwwl.bayuwen.glide.GlideApp;
-import cn.com.zwwl.bayuwen.model.EleCourseModel;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
@@ -26,9 +24,9 @@ import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 public class EleCourseGridAdapter extends BaseAdapter {
     protected Context mContext;
-    protected List<EleCourseModel> mItemList = new ArrayList<>();
+    protected List<TagCourseModel> mItemList = new ArrayList<>();
 
-    public EleCourseGridAdapter(Context mContext, List<EleCourseModel> mItemList) {
+    public EleCourseGridAdapter(Context mContext, List<TagCourseModel> mItemList) {
         this.mContext = mContext;
         this.mItemList = mItemList;
     }
@@ -39,7 +37,7 @@ public class EleCourseGridAdapter extends BaseAdapter {
     }
 
     @Override
-    public EleCourseModel getItem(int position) {
+    public TagCourseModel getItem(int position) {
         return mItemList.get(position);
     }
 
@@ -50,7 +48,7 @@ public class EleCourseGridAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final EleCourseModel item = getItem(position);
+        final TagCourseModel item = getItem(position);
 
         ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_main_grid);
 
@@ -68,7 +66,7 @@ public class EleCourseGridAdapter extends BaseAdapter {
         return viewHolder.getConvertView();
     }
 
-    public void addData(List<EleCourseModel> list) {
+    public void addData(List<TagCourseModel> list) {
         mItemList.addAll(list);
     }
 }

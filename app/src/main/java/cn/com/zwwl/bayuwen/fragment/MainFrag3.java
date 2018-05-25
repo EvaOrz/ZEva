@@ -20,6 +20,7 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CompleteCourseAdapter;
 import cn.com.zwwl.bayuwen.adapter.CoursePageAdapter;
+import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.view.PagerSlidingTabStrip;
 import cn.com.zwwl.bayuwen.widget.BannerView;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
@@ -39,7 +40,7 @@ public class MainFrag3 extends Fragment {
     private CompleteCourseAdapter adapter;
     private CoursePageAdapter mViewPagerAdapter;
     private List<Fragment> list = new ArrayList<>();
-    private List<CompleteCourse> mItemList = new ArrayList<>();
+    private List<KeModel> mItemList = new ArrayList<>();
     private List<String> mItemTitleList = new ArrayList<>();
 
     @Override
@@ -91,7 +92,7 @@ public class MainFrag3 extends Fragment {
         mViewPager.setAdapter(mViewPagerAdapter);
         tabLayout.setViewPager(mViewPager);
         for (int i = 0; i < 6; i++) {
-            CompleteCourse model = new CompleteCourse();
+            KeModel model = new KeModel();
             mItemList.add(model);
         }
 

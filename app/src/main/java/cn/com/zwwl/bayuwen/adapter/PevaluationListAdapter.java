@@ -11,12 +11,13 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
 
 /**
  * Created by lousx
  */
-public class PevaluationListAdapter extends BaseRecylcerViewAdapter<CommentModel>{
-    public PevaluationListAdapter(Context mContext, List<CommentModel> list) {
+public class PevaluationListAdapter extends BaseRecylcerViewAdapter<PinglunModel>{
+    public PevaluationListAdapter(Context mContext, List<PinglunModel> list) {
         super(mContext, list);
     }
 

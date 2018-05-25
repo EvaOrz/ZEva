@@ -21,23 +21,22 @@
             android:layout_centerVertical="true"
             android:src="@drawable/back_gray"/>
 
-        <cn.com.zwwl.bayuwen.view.IconCenterEditText
+        <EditText
             android:id="@+id/search_view"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="35dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@id/school_iv"
             android:layout_toRightOf="@+id/left_more_iv"
-            android:background="@drawable/draw_search_bg"
-            android:drawablePadding="5dp"
-            android:textSize="@dimen/sp_14"
-            android:textColor="@color/search_tv_color"
-            android:drawableStart="@mipmap/search_icon"
+            android:background="@drawable/white_btn_bg"
             android:gravity="center_vertical"
-            android:hint="搜索"
-            android:imeOptions="actionSearch"
-            android:lines="1"
-            android:padding="5dp"/>
+            android:hint="@string/search"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColorHint="@color/gray_light"
+            android:textSize="@dimen/text_size_12" />
 
     </RelativeLayout>
 

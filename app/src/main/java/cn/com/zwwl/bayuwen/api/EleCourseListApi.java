@@ -2,9 +2,6 @@ package cn.com.zwwl.bayuwen.api;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -18,15 +15,14 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
 /**
- * Created by lousx on 2018/5/23.
+ * 获取选课首页tag标签列表
  */
-
 public class EleCourseListApi extends BaseApi {
-    private List<EleCourseModel> eleCourseModels = new ArrayList<>();
-    private FetchEntryListListener<EleCourseModel> listener;
+    private List<TagCourseModel> eleCourseModels = new ArrayList<>();
+    private FetchEntryListListener listener;
     private String url;
 
-    public EleCourseListApi(Context context, FetchEntryListListener<EleCourseModel> listener) {
+    public EleCourseListApi(Context context, FetchEntryListListener listener) {
         super(context);
         mContext = context;
         isNeedJsonArray = true;
@@ -51,10 +47,11 @@ public class EleCourseListApi extends BaseApi {
             listener.setError(errorMsg);
         }
         if (!isNull(jsonArray)) {
-            Gson gson = new Gson();
-            eleCourseModels = gson.fromJson(String.valueOf(jsonArray), new
-                    TypeToken<List<EleCourseModel>>() {
-                    }.getType());
+            for (int i = 0; i < jsonArray.length(); i++) {
+                TagCourseModel a = new TagCourseModel();
+                a.parseTagCourseModel(jsonArray.optJSONObject(i), a);
+                eleCourseModels.add(a);
+            }
             listener.setData(eleCourseModels);
         }
     }
@@ -62,10 +59,7 @@ public class EleCourseListApi extends BaseApi {
     /**
      * 选课首页类别model
      */
-    public class EleCourseModel extends Entry {
-
-        /**
-         */
+    public class TagCourseModel extends Entry {
 
         private int id;
         private String name;
@@ -97,6 +91,14 @@ public class EleCourseListApi extends BaseApi {
             if (img == null)
                 return "";
             return img;
+        }
+
+        public TagCourseModel parseTagCourseModel(JSONObject jsonObject, TagCourseModel
+                tagCourseModel) {
+            tagCourseModel.setId(jsonObject.optInt(""));
+            tagCourseModel.setImg(jsonObject.optString(""));
+            tagCourseModel.setName(jsonObject.optString(""));
+            return tagCourseModel;
         }
 
     }

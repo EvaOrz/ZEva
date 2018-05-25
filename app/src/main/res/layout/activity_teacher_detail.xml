@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/app_bgColor"
+              android:background="@color/body_bg"
               android:orientation="vertical">
 
     <include
@@ -92,7 +92,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="主授课程"
-                                android:textColor="@color/black2"
+                                android:textColor="@color/gray_dark"
                                 android:textSize="13sp"/>
 
                             <TextView
@@ -135,7 +135,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="教学标签"
-                                android:textColor="@color/black2"
+                                android:textColor="@color/gray_dark"
                                 android:textSize="13sp"/>
 
                             <TextView

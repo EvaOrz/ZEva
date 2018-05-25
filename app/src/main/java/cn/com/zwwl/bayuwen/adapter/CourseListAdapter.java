@@ -7,18 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.model.CourseModel;
+import cn.com.zwwl.bayuwen.model.KeModel;
 
 /**
- * Created by lousx
+ * 课程详情页课表item
  */
-public class CourseListAdapter extends BaseRecylcerViewAdapter<CourseModel.LecturesEntity> {
+public class CourseListAdapter extends BaseRecylcerViewAdapter<KeModel> {
 
-    public CourseListAdapter(Context mContext,List<CourseModel.LecturesEntity> list) {
+    public CourseListAdapter(Context mContext, List<KeModel> list) {
         super(mContext, list);
         this.mContext = mContext;
     }
@@ -26,18 +25,20 @@ public class CourseListAdapter extends BaseRecylcerViewAdapter<CourseModel.Lectu
 
     @NonNull
     @Override
-    public CourseListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CourseListAdapter.ViewHolder(inflater.inflate(R.layout.item_c_list, parent, false));
+    public CourseListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int
+            viewType) {
+        return new CourseListAdapter.ViewHolder(inflater.inflate(R.layout.item_c_list, parent,
+                false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         final CourseListAdapter.ViewHolder viewHolder = (CourseListAdapter.ViewHolder) holder;
-        viewHolder.video_title.setText(position + 1 + "  "+list.get(position).getTitle());
+        viewHolder.video_title.setText(position + 1 + "  " + list.get(position).getTitle());
         viewHolder.video_time.setText(list.get(position).getStart_at()
-                +"  "+list.get(position).getClass_start_at()
-                +"-"+list.get(position).getClass_end_at()
-                +"("+list.get(position).getHours()+"小时)");
+                + "  " + list.get(position).getClass_start_at()
+                + "-" + list.get(position).getClass_end_at()
+                + "(" + list.get(position).getHours() + "小时)");
     }
 
     @Override
@@ -55,8 +56,8 @@ public class CourseListAdapter extends BaseRecylcerViewAdapter<CourseModel.Lectu
         }
 
         private void initView() {
-            video_title =  itemView.findViewById(R.id.video_title);
-            video_time =  itemView.findViewById(R.id.video_time);
+            video_title = itemView.findViewById(R.id.video_title);
+            video_time = itemView.findViewById(R.id.video_time);
         }
     }
 }

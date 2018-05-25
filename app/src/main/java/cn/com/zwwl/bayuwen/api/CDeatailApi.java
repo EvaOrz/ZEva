@@ -14,7 +14,6 @@ import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.CourseDetailModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.TeacherDetailModel;
 
 /**
  * Created by lousx on 2018/5/23.
