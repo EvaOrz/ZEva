@@ -9,7 +9,6 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.activity.CourseDetailActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.SearchCourseActivity;
 import cn.com.zwwl.bayuwen.activity.TeacherDetailActivity;
@@ -50,8 +48,6 @@ import cn.com.zwwl.bayuwen.model.PraiseModel;
 import cn.com.zwwl.bayuwen.widget.BannerView;
 import cn.com.zwwl.bayuwen.widget.StopLinearLayoutManager;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
-import cn.com.zwwl.bayuwen.widget.decoration.HSpacesItemDecoration;
-import cn.com.zwwl.bayuwen.widget.decoration.SpacesItemDecoration;
 
 /**
  * 选课
@@ -266,7 +262,7 @@ public class MainFrag2 extends Fragment
     }
 
     private void getEleCourseList() {
-        new EleCourseListApi(getActivity(), new FetchEntryListListener<EleCourseModel>() {
+        new EleCourseListApi(getActivity(), new FetchEntryListListener<EleCourseData>() {
             @Override
             public void setData(final List<EleCourseModel> list) {
                 if (list != null && list.size() > 0) {

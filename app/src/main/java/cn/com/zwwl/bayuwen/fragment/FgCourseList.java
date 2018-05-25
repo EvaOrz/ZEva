@@ -6,15 +6,11 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.LinkedList;
@@ -24,18 +20,14 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CourseListAdapter;
 import cn.com.zwwl.bayuwen.api.CourseListlApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
-import cn.com.zwwl.bayuwen.model.CommentModel;
-import cn.com.zwwl.bayuwen.model.CourseDetailModel;
 import cn.com.zwwl.bayuwen.model.CourseModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.widget.CustomViewPager;
-import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 import cn.com.zwwl.bayuwen.widget.StopLinearLayoutManager;
 import cn.com.zwwl.bayuwen.widget.newrefresh.PullToRefreshLayout;
 
 import static cn.com.zwwl.bayuwen.MyApplication.mContext;
-import static com.umeng.socialize.utils.DeviceConfig.context;
 
 /**
  * Created by lousx

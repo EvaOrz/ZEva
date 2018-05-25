@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,18 +20,10 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CompleteCourseAdapter;
 import cn.com.zwwl.bayuwen.adapter.CoursePageAdapter;
-import cn.com.zwwl.bayuwen.adapter.SeachCourseListAdapter;
-import cn.com.zwwl.bayuwen.adapter.ViewPageAdapter;
-import cn.com.zwwl.bayuwen.model.CompleteCourse;
-import cn.com.zwwl.bayuwen.model.CourseVideoModel;
-import cn.com.zwwl.bayuwen.model.EleCourseData;
-import cn.com.zwwl.bayuwen.model.EleCourseModel;
 import cn.com.zwwl.bayuwen.view.PagerSlidingTabStrip;
 import cn.com.zwwl.bayuwen.widget.BannerView;
-import cn.com.zwwl.bayuwen.widget.CustomViewPager;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
-import static android.support.design.widget.TabLayout.*;
 import static cn.com.zwwl.bayuwen.MyApplication.mContext;
 
 /**

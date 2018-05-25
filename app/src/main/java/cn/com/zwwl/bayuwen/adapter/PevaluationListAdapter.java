@@ -11,7 +11,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.model.CommentModel;
 
 /**
  * Created by lousx

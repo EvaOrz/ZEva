@@ -1,24 +1,19 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.SeachCourseListAdapter;
-import cn.com.zwwl.bayuwen.model.CourseVideoModel;
 import cn.com.zwwl.bayuwen.view.IconCenterEditText;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
-import cn.com.zwwl.bayuwen.widget.decoration.SpacesItemDecoration;
 
 /**
  * Created by lousx on 2018/5/17.

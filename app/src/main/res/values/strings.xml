@@ -264,6 +264,7 @@
     <string name="order_option10">支付宝支付：</string>
     <string name="order_option11">微信支付：</string>
     <string name="order_option12">退款方式须知</string>
+    <string name="order_option13">垫付人数</string>
     <string name="lijibaoming">立即报名</string>
 
     <!--setting-->

@@ -11,8 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.model.CourseModel;
-import cn.com.zwwl.bayuwen.model.CourseVideoModel;
 
 /**
  * Created by lousx

@@ -26,8 +26,11 @@ import cn.com.zwwl.bayuwen.util.Tools;
 public class TuanPayActivity extends BaseActivity {
 
     private List<AddressModel> addressDatas = new ArrayList<>();
-    private LinearLayout adresslayout;
+    private LinearLayout adresslayout, dianLayout, pinLayout;
+    private int type; // 0：拼团 1：垫付
+
     private TextView nameTv, phoneTv, addressTv, addTv;
+    private TextView dianNumTv;
     private KeModel keModel;
 
     @Override
@@ -39,8 +42,9 @@ public class TuanPayActivity extends BaseActivity {
                 .getSerializableExtra("TuanPayActivity_data") instanceof KeModel) {
             keModel = (KeModel) getIntent().getSerializableExtra("TuanPayActivity_data");
         } else finish();
-        initView();
+        type = getIntent().getIntExtra("TuanPayActivity_type", 0);
 
+        initView();
     }
 
     @Override
@@ -55,8 +59,19 @@ public class TuanPayActivity extends BaseActivity {
         addressTv = findViewById(R.id.tuan_pay_address);
         addTv = findViewById(R.id.tuan_pay_addaddress);
         adresslayout = findViewById(R.id.go_select_layout);
+        dianNumTv = findViewById(R.id.dian_num);
+        dianLayout = findViewById(R.id.dianfu_layout);
+        pinLayout = findViewById(R.id.pintuan_layout);
+
         findViewById(R.id.go_add_manage).setOnClickListener(this);
         findViewById(R.id.tuan_pay_back).setOnClickListener(this);
+        if (type == 0) {
+            pinLayout.setVisibility(View.VISIBLE);
+            dianLayout.setVisibility(View.GONE);
+        } else {
+            pinLayout.setVisibility(View.GONE);
+            dianLayout.setVisibility(View.VISIBLE);
+        }
 
     }
 

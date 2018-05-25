@@ -8,20 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.PevaluationListAdapter;
-import cn.com.zwwl.bayuwen.model.CommentModel;
-import cn.com.zwwl.bayuwen.model.CourseModel;
 import cn.com.zwwl.bayuwen.widget.CustomViewPager;
-import cn.com.zwwl.bayuwen.widget.newrefresh.PullToRefreshLayout;
-
-import static com.umeng.socialize.utils.DeviceConfig.context;
 
 /**
  * Created by lousx

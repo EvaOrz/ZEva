@@ -6,17 +6,15 @@ import java.util.List;
  * Created by lousx on 2018/5/24.
  */
 
-public class CourseDetailModel extends Entry{
+public class CourseDetailModel extends Entry {
 
     /**
-     * teacher : [{"tid":"35","pic":"http://resource.zhugexuetang.com/upload/2015/12/18/5674173eee75d.jpg","name":"王邓红","t_desc":"毕业于四川师范大学新闻系。大语文5年教龄金牌教师、一对一及游学负责人。从小酷爱语文，小升初、中考、高考语文成绩都名列全市前三。毕业后从报社编辑到走上讲台，我的启蒙老师教导我，老师只是引导，孩子才是课堂主体，所以从教以来，一直非常注重孩子自我思考能力和表达力的培养。孩子的答案，从不直接给予否定，让孩子敢于思考，敢于表达，再进行原则上的引导。每一节课都是孩子和我一起思考和探讨结束的。","t_style":"热情、细心、花仙子","t_harvest":null,"t_words":"热情、细心、花仙子"},{"tid":"1024","pic":"http://img.zhugexuetang.com/FtmTL3-yDSn7dCjY9vwk8Ovv1nKJ","name":"马睿启","t_desc":"<p>复旦大学生物科学本科，北京大学中文系硕士，功底扎实，文理兼备；兼有歌词篡改师、段子创作者、真人表情包、打油诗人等多种隐藏职业。<\/p>","t_style":"段子创作者","t_harvest":null,"t_words":null}]
-     * course : {"kid":"7018","title":"四年级大语文","roomId":"0","desc":"四年级大语文","content":"四年级大语文","pic":"http://img.zhugexuetang.com/çº¿ä¸\u008bè¯¾é\u0085\u008då\u009b¾-800x450-04.jpg","listpic":"http://img.zhugexuetang.com/çº¿ä¸\u008bè¯¾é\u0085\u008då\u009b¾-800x450-04.jpg","tname":"王邓红、马睿启","tid":"35,1024","buyPrice":"2050","sellPrice":"3250","backPlayPrice":"3250","addtime":"0","updateTime":"0","start_at":"2018-03-02 00:00:00","end_at":"2018-06-29 00:00:00","class_start_at":"15:00:00","class_end_at":"17:00:00","class_start_at_bak":null,"startPtime":"1519974000","endPtime":"1530262800","startBtime":"0","endBtime":"0","buyNum":"6","playNum":"601","hit":"0","adminId":"0","adminName":"","users":"四年级","state":"0","sort":"2","delete":"0","tags":null,"type":"2","subject_name":null,"type_count":"2","term":"1","window_isopen":"0","remark":null,"source":"2","level":"1","service":null,"model":"C18452","single_price":"100","material_price":"50","weekday":"周五","school":"大钟寺校区","city":"010","num":"10","online":"0","hours":"2","discount_amount":"0","discount_start_time":"0000-00-00 00:00:00","discount_end_time":"0000-00-00 00:00:00","stock":"24","origin_stock":"30","client_channel":null,"onsale_time":"1980-01-01 00:00:00","nianbu":"小学部","year":"2018","is_close":"0","is_upmodel":"0","upmodel":"Q480","upmodelend":"2018-06-29 00:00:00","video":"","appear_time":"1980-01-01 00:00:00","disappear_time":"2030-01-01 08:00:00","can_refund":"0","region":"2001","typeName":" ","tagName":" ","templet":"tpl_payment_notice","templet_id":"0","trule_id":"0","c_target":null,"c_trait":null,"is_discount":0,"is_promotion":0,"groupBuy":{"id":"1","title":"sfsf","item_id":"7018","discount_price":200,"start_time":"2018-05-15 15:46:17","end_time":"2018-05-24 15:49:00","limit_num":10,"state":1,"created_at":"2018-05-21 15:46:17","updated_at":"2018-05-21 15:49:03","operator":"0"}}
-     * course_program : {"kid":"7018","desc":"四年级大语文","users":"四年级","c_target":"","c_trait":""}
+
      */
 
     private CourseEntity course;
     private CourseProgramEntity course_program;
-    private List<TeacherEntity> teacher;
+    private List<TeacherModel> teacher;
 
     public void setCourse(CourseEntity course) {
         this.course = course;
@@ -26,7 +24,7 @@ public class CourseDetailModel extends Entry{
         this.course_program = course_program;
     }
 
-    public void setTeacher(List<TeacherEntity> teacher) {
+    public void setTeacher(List<TeacherModel> teacher) {
         this.teacher = teacher;
     }
 
@@ -38,91 +36,12 @@ public class CourseDetailModel extends Entry{
         return course_program;
     }
 
-    public List<TeacherEntity> getTeacher() {
+    public List<TeacherModel> getTeacher() {
         return teacher;
     }
 
     public static class CourseEntity {
         /**
-         * kid : 7018
-         * title : 四年级大语文
-         * roomId : 0
-         * desc : 四年级大语文
-         * content : 四年级大语文
-         * pic : http://img.zhugexuetang.com/çº¿ä¸è¯¾éå¾-800x450-04.jpg
-         * listpic : http://img.zhugexuetang.com/çº¿ä¸è¯¾éå¾-800x450-04.jpg
-         * tname : 王邓红、马睿启
-         * tid : 35,1024
-         * buyPrice : 2050
-         * sellPrice : 3250
-         * backPlayPrice : 3250
-         * addtime : 0
-         * updateTime : 0
-         * start_at : 2018-03-02 00:00:00
-         * end_at : 2018-06-29 00:00:00
-         * class_start_at : 15:00:00
-         * class_end_at : 17:00:00
-         * class_start_at_bak : null
-         * startPtime : 1519974000
-         * endPtime : 1530262800
-         * startBtime : 0
-         * endBtime : 0
-         * buyNum : 6
-         * playNum : 601
-         * hit : 0
-         * adminId : 0
-         * adminName :
-         * users : 四年级
-         * state : 0
-         * sort : 2
-         * delete : 0
-         * tags : null
-         * type : 2
-         * subject_name : null
-         * type_count : 2
-         * term : 1
-         * window_isopen : 0
-         * remark : null
-         * source : 2
-         * level : 1
-         * service : null
-         * model : C18452
-         * single_price : 100
-         * material_price : 50
-         * weekday : 周五
-         * school : 大钟寺校区
-         * city : 010
-         * num : 10
-         * online : 0
-         * hours : 2
-         * discount_amount : 0
-         * discount_start_time : 0000-00-00 00:00:00
-         * discount_end_time : 0000-00-00 00:00:00
-         * stock : 24
-         * origin_stock : 30
-         * client_channel : null
-         * onsale_time : 1980-01-01 00:00:00
-         * nianbu : 小学部
-         * year : 2018
-         * is_close : 0
-         * is_upmodel : 0
-         * upmodel : Q480
-         * upmodelend : 2018-06-29 00:00:00
-         * video :
-         * appear_time : 1980-01-01 00:00:00
-         * disappear_time : 2030-01-01 08:00:00
-         * can_refund : 0
-         * region : 2001
-         * typeName :
-         * tagName :
-         * templet : tpl_payment_notice
-         * templet_id : 0
-         * trule_id : 0
-         * c_target : null
-         * c_trait : null
-         * is_discount : 0
-         * is_promotion : 0
-         * groupBuy : {"id":"1","title":"sfsf","item_id":"7018","discount_price":200,"start_time":"2018-05-15 15:46:17","end_time":"2018-05-24 15:49:00","limit_num":10,"state":1,"created_at":"2018-05-21 15:46:17","updated_at":"2018-05-21 15:49:03","operator":"0"}
          */
 
         private String kid;
@@ -204,6 +123,34 @@ public class CourseDetailModel extends Entry{
         private int is_discount;
         private int is_promotion;
         private String is_groupbuy;
+        private String id = "";
+        private String kid = "";
+        private String title = "";
+        private String mime_type = "";
+        private String duration = "";
+        private String hd720 = "";
+        private String size = "";
+        private String width = "";
+        private String height = "";
+        private String display_aspect_ratio = "";
+        private String status = "";
+        private String tid = "";
+        private String sort = "";
+        private String grade = "";
+        private String model = "";
+        private String start_at = "";
+        private String class_start_at_bak = "";
+        private String tname = "";
+        private String students = "";
+        private String term = "";
+        private String school_id = "";
+        private String hours = "";
+        private String class_end_at = "";
+        private String class_start_at = "";
+        private String substitute_tid = "";
+        private String substitute_tname = "";
+        private String class_id = "";
+        private String summarize = "";
         private GroupBuyEntity groupBuy;
 
         public void setKid(String kid) {
@@ -1019,79 +966,5 @@ public class CourseDetailModel extends Entry{
         }
     }
 
-    public static class TeacherEntity {
-        /**
-         * tid : 35
-         * pic : http://resource.zhugexuetang.com/upload/2015/12/18/5674173eee75d.jpg
-         * name : 王邓红
-         * t_desc : 毕业于四川师范大学新闻系。大语文5年教龄金牌教师、一对一及游学负责人。从小酷爱语文，小升初、中考、高考语文成绩都名列全市前三。毕业后从报社编辑到走上讲台，我的启蒙老师教导我，老师只是引导，孩子才是课堂主体，所以从教以来，一直非常注重孩子自我思考能力和表达力的培养。孩子的答案，从不直接给予否定，让孩子敢于思考，敢于表达，再进行原则上的引导。每一节课都是孩子和我一起思考和探讨结束的。
-         * t_style : 热情、细心、花仙子
-         * t_harvest : null
-         * t_words : 热情、细心、花仙子
-         */
 
-        private String tid;
-        private String pic;
-        private String name;
-        private String t_desc;
-        private String t_style;
-        private Object t_harvest;
-        private String t_words;
-
-        public void setTid(String tid) {
-            this.tid = tid;
-        }
-
-        public void setPic(String pic) {
-            this.pic = pic;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public void setT_desc(String t_desc) {
-            this.t_desc = t_desc;
-        }
-
-        public void setT_style(String t_style) {
-            this.t_style = t_style;
-        }
-
-        public void setT_harvest(Object t_harvest) {
-            this.t_harvest = t_harvest;
-        }
-
-        public void setT_words(String t_words) {
-            this.t_words = t_words;
-        }
-
-        public String getTid() {
-            return tid;
-        }
-
-        public String getPic() {
-            return pic;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getT_desc() {
-            return t_desc;
-        }
-
-        public String getT_style() {
-            return t_style;
-        }
-
-        public Object getT_harvest() {
-            return t_harvest;
-        }
-
-        public String getT_words() {
-            return t_words;
-        }
-    }
 }
