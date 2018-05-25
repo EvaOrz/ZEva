@@ -17,6 +17,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.AddressApi;
 import cn.com.zwwl.bayuwen.model.AddressModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.Tools;
 
 /**
@@ -27,13 +28,17 @@ public class TuanPayActivity extends BaseActivity {
     private List<AddressModel> addressDatas = new ArrayList<>();
     private LinearLayout adresslayout;
     private TextView nameTv, phoneTv, addressTv, addTv;
-
+    private KeModel keModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tuan_pay);
+        if (getIntent().getSerializableExtra("TuanPayActivity_data") != null && getIntent()
+                .getSerializableExtra("TuanPayActivity_data") instanceof KeModel) {
+            keModel = (KeModel) getIntent().getSerializableExtra("TuanPayActivity_data");
+        } else finish();
         initView();
 
     }
