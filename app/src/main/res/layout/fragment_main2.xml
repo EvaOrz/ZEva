@@ -48,17 +48,63 @@
                 android:stretchMode="columnWidth"
                 android:verticalSpacing="10dp" />
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/white"
+                android:background="@color/white"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@string/top_txt1"
+                    android:textColor="@color/gold"
+                    android:textSize="@dimen/text_size_14" />
+
+                <cn.com.zwwl.bayuwen.widget.NoScrollListView
+                    android:id="@+id/jiaoshi_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@null"
+                    android:listSelector="@android:color/transparent"
+                    android:scrollbars="none" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@string/top_txt2"
+                    android:textColor="@color/gold"
+                    android:textSize="@dimen/text_size_14" />
+
+                <cn.com.zwwl.bayuwen.widget.NoScrollListView
+                    android:id="@+id/guwen_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@null"
+                    android:listSelector="@android:color/transparent"
+                    android:scrollbars="none" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@string/top_txt3"
+                    android:textColor="@color/gold"
+                    android:textSize="@dimen/text_size_14" />
+
+                <cn.com.zwwl.bayuwen.widget.NoScrollListView
+                    android:id="@+id/zhujiao_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@null"
+                    android:listSelector="@android:color/transparent"
+                    android:scrollbars="none" />
 
             </LinearLayout>
 
-            <Button
+            <TextView
                 android:id="@+id/register_btn"
                 android:layout_width="180dp"
                 android:layout_height="40dp"

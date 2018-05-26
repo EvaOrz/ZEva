@@ -44,6 +44,7 @@ import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.widget.BannerView;
+import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 import cn.com.zwwl.bayuwen.widget.StopLinearLayoutManager;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
@@ -60,7 +61,7 @@ public class MainFrag2 extends Fragment
     private ObservableScrollView mScrollView;
     private GridView mGridView;
 
-    private ListView tListView,gListView,zListView;
+    private NoScrollListView tListView,gListView,zListView;
     private DianzanAdapter tAdapter, gAdapter, zAdapter;
 
     private int mParallaxImageHeight;
@@ -138,8 +139,8 @@ public class MainFrag2 extends Fragment
         mScrollView.setScrollViewCallbacks(this);
         mScrollView.setZoomView(mImageView);
 
-//        tListView = root.findViewById(R.id.)
-
+        tListView = root.findViewById(R.id.jiaoshi_layout);
+zListView = root.findViewById(R.id.zhujiao_layout);
 
         gridAdapter = new EleCourseGridAdapter(getActivity(), tagList);
         mGridView.setAdapter(gridAdapter);

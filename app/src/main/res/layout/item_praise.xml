@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/praise_re"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/draw_item_gray_bg"
     android:orientation="vertical"
     android:paddingBottom="5dp"
@@ -20,7 +20,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="20dp"
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="梵高自画像"
-            android:textColor="@color/body_gray"
+            android:textColor="@color/gray_dark"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -44,9 +44,9 @@
             android:layout_marginTop="3dp"
             android:ellipsize="end"
             android:lineSpacingExtra="2dp"
-            android:lines="2"
+            android:maxLines="2"
             android:text="融入了他们的画风和色彩，创造了他们独特的画风"
-            android:textColor="@color/body_gray"
+            android:textColor="@color/gray_light"
             android:textSize="12sp" />
     </LinearLayout>
 
