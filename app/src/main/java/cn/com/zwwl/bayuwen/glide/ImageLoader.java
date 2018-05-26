@@ -1,26 +1,18 @@
-package com.woxue.app.util.glide;
+package cn.com.zwwl.bayuwen.glide;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
-import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
-import com.woxue.app.R;
 
-import java.io.File;
+import cn.com.zwwl.bayuwen.R;
+
 
 /**
- * 图片加载工具类 使用glide框架封装
- *
- * @author Monty
- *         created at 2017/6/19 15:41
- */
+* I图片加载工具类 使用glide框架封装
+* Create by zhumangmang at 2018/5/26 10:44
+*/
 public class ImageLoader {
     /**
      * 加载图片
@@ -75,37 +67,15 @@ public class ImageLoader {
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
-        final ObjectAnimator anim = ObjectAnimator.ofInt(imageView, "ImageLevel", 0, 10000);
-        anim.setDuration(500);
-        anim.setRepeatCount(ObjectAnimator.INFINITE);
-        anim.start();
         GlideApp.with(context)
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
-                .placeholder(R.mipmap.pic_default_no_data)
-                .error(R.mipmap.pic_default_no_data)
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
                 .into(imageView);
     }
 
-
-    /**
-     * 显示图片
-     *
-     * @param context   上下文
-     * @param imageView 容器控件
-     * @param url       图片文件
-     */
-    public static void display(Context context, ImageView imageView, File url) {
-        if (imageView == null) {
-            throw new IllegalArgumentException("argument error");
-        }
-        GlideApp.with(context)
-                .load(url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .into(imageView);
-    }
 
     /**
      * 缩小图片
@@ -122,8 +92,8 @@ public class ImageLoader {
         GlideApp.with(context)
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.pic_default_no_data)
-                .error(R.mipmap.pic_default_no_data)
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
                 .centerCrop()
                 .thumbnail(sizeMultiplier)
                 .into(imageView);
@@ -145,4 +115,25 @@ public class ImageLoader {
                 .centerCrop().into(imageView);
 
     }
+    /**
+     * 显示图片
+     *
+     * @param context   上下文
+     * @param imageView 容器控件
+     * @param url       图片地址
+     */
+    public static void displayBorderCircle(Context context, ImageView imageView, String url) {
+        if (imageView == null) {
+            throw new IllegalArgumentException("argument error");
+        }
+        GlideApp.with(context)
+                .load(url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerCrop()
+                .transform(new CornersTransform(4))
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .into(imageView);
+    }
+
 }

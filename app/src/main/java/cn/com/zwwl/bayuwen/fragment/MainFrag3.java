@@ -2,10 +2,10 @@ package cn.com.zwwl.bayuwen.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,26 +14,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.LookPPTActivity;
+import cn.com.zwwl.bayuwen.activity.StudyingCourseActivity;
 import cn.com.zwwl.bayuwen.adapter.CompleteCourseAdapter;
 import cn.com.zwwl.bayuwen.adapter.CoursePageAdapter;
-import cn.com.zwwl.bayuwen.adapter.SeachCourseListAdapter;
-import cn.com.zwwl.bayuwen.adapter.ViewPageAdapter;
+import cn.com.zwwl.bayuwen.listener.OnItemClickListener;
 import cn.com.zwwl.bayuwen.model.CompleteCourse;
-import cn.com.zwwl.bayuwen.model.CourseVideoModel;
-import cn.com.zwwl.bayuwen.model.EleCourseData;
-import cn.com.zwwl.bayuwen.model.EleCourseModel;
 import cn.com.zwwl.bayuwen.view.PagerSlidingTabStrip;
 import cn.com.zwwl.bayuwen.widget.BannerView;
-import cn.com.zwwl.bayuwen.widget.CustomViewPager;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
-import static android.support.design.widget.TabLayout.*;
 import static cn.com.zwwl.bayuwen.MyApplication.mContext;
 
 /**
@@ -111,7 +106,24 @@ public class MainFrag3 extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R.dimen.dp_5, OrientationHelper.VERTICAL));
         adapter = new CompleteCourseAdapter(getActivity(), mItemList);
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void setOnItemClickListener(View view, int position) {
+                startActivity(new Intent(getActivity(), LookPPTActivity.class));
+            }
 
+            @Override
+            public void setOnLongItemClickListener(View view, int position) {
+
+            }
+        });
+        view.findViewById(R.id.online).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mActivity, StudyingCourseActivity.class));
+
+            }
+        });
     }
 
 }

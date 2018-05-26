@@ -10,8 +10,8 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.CourseModel;
 
-public class StudyingCourseAdapter extends BaseQuickAdapter<CourseModel,BaseViewHolder> {
-    public StudyingCourseAdapter(@Nullable List<CourseModel> data) {
+public class CourseChangeAdapter extends BaseQuickAdapter<CourseModel,BaseViewHolder> {
+    public CourseChangeAdapter(@Nullable List<CourseModel> data) {
         super(R.layout.item_studying_course,data);
     }
 

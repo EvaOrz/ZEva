@@ -77,4 +77,8 @@ dependencies {
     // 垂直的日历控件
     implementation 'com.github.maning0303:MNCalendar:V1.0.3'
     implementation files('libs/TencentLocationSdk_v6.2.5.3_r15b3b3cc_20171103_115903.jar')
+    implementation 'com.romandanylyk:pageindicatorview:0.2.0'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
 }

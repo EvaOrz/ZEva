@@ -38,5 +38,9 @@
     <dimen name="parallax_image_height">210dp</dimen>
     <dimen name="dp_10">10dp</dimen>
     <dimen name="dp_5">5dp</dimen>
+    <dimen name="dp_20">20dip</dimen>
+    <dimen name="dp_16">16dip</dimen>
+    <dimen name="dp_180">180dip</dimen>
+    <dimen name="dp_8">8dip</dimen>
 
 </resources>
