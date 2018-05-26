@@ -5,7 +5,7 @@ import org.json.JSONObject;
 /**
  * 助教、顾问model
  */
-public class GuwenModel extends Entry {
+public class ZanTeacherModel extends Entry {
     private String to_uid;
     private String vote_num;
     private String theme;
@@ -65,16 +65,16 @@ public class GuwenModel extends Entry {
 
     /**
      * @param jsonObject
-     * @param guwenModel
+     * @param zanTeacherModel
      * @return
      */
-    public GuwenModel parseGuwenModel(JSONObject jsonObject, GuwenModel guwenModel) {
-        guwenModel.setTo_name(jsonObject.optString("to_name"));
-        guwenModel.setTo_uid(jsonObject.optString("to_uid"));
-        guwenModel.setVote_num(jsonObject.optString("vote_num"));
-        guwenModel.setTheme(jsonObject.optString("theme"));
-        guwenModel.setT_desc(jsonObject.optString("t_desc"));
-        guwenModel.setPic(jsonObject.optString("pic"));
-        return guwenModel;
+    public ZanTeacherModel parseGuwenModel(JSONObject jsonObject, ZanTeacherModel zanTeacherModel) {
+        zanTeacherModel.setTo_name(jsonObject.optString("to_name"));
+        zanTeacherModel.setTo_uid(jsonObject.optString("to_uid"));
+        zanTeacherModel.setVote_num(jsonObject.optString("vote_num"));
+        zanTeacherModel.setTheme(jsonObject.optString("theme"));
+        zanTeacherModel.setT_desc(jsonObject.optString("t_desc"));
+        zanTeacherModel.setPic(jsonObject.optString("pic"));
+        return zanTeacherModel;
     }
 }

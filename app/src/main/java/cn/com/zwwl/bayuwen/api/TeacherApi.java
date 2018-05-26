@@ -2,6 +2,8 @@ package cn.com.zwwl.bayuwen.api;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,6 +16,7 @@ import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
 
 /**
@@ -51,7 +54,7 @@ public class TeacherApi extends BaseApi {
         super(context);
         mContext = context;
         this.listener = listener;
-        this.url = UrlUtil.getCDetailUrl(id);
+        this.url = UrlUtil.getTeacherUrl(id);
         get();
     }
 
@@ -88,8 +91,22 @@ public class TeacherApi extends BaseApi {
             }
         }
         if (!isNull(json)) {
+            JSONObject tjson = json.optJSONObject("teacher");
+            JSONArray carray = json.optJSONArray("courses");
             TeacherModel t = new TeacherModel();
-            t.parseTeacherModel(json, t);
+            t.parseTeacherModel(tjson, t);
+
+            List<KeModel> keModelList = new ArrayList<>();
+            if (!isNull(carray)) {
+                for (int i = 0; i < carray.length(); i++) {
+                    KeModel k = new KeModel();
+                    Gson gs = new Gson();
+                    k = gs.fromJson(carray.optString(i), KeModel.class);
+                    keModelList.add(k);
+                }
+                t.setKeModels(keModelList);
+            }
+
             listener.setData(t);
         } else listener.setData(null);
     }

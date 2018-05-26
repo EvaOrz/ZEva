@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:focusableInTouchMode="true"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/body_bg"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/bar_height"
         android:background="@color/body_gray"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -18,37 +21,32 @@
             android:id="@+id/back_btn"
             android:layout_width="@dimen/back_size"
             android:layout_height="@dimen/back_size"
-            android:layout_centerVertical="true"
-            android:src="@drawable/back_gray"/>
+            android:src="@drawable/back_gray" />
 
         <EditText
             android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_toLeftOf="@id/school_iv"
-            android:layout_toRightOf="@+id/left_more_iv"
             android:background="@drawable/white_btn_bg"
             android:gravity="center_vertical"
             android:hint="@string/search"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:lines="1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:textColorHint="@color/gray_light"
             android:textSize="@dimen/text_size_12" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <com.vonchenchen.menudemo.complexmenu.SelectMenuView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"/>
+        android:layout_height="wrap_content" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/course_recyclerVie"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

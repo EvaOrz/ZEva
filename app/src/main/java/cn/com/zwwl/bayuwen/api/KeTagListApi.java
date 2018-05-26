@@ -17,12 +17,12 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 /**
  * 获取选课首页tag标签列表
  */
-public class EleCourseListApi extends BaseApi {
+public class KeTagListApi extends BaseApi {
     private List<TagCourseModel> eleCourseModels = new ArrayList<>();
     private FetchEntryListListener listener;
     private String url;
 
-    public EleCourseListApi(Context context, FetchEntryListListener listener) {
+    public KeTagListApi(Context context, FetchEntryListListener listener) {
         super(context);
         mContext = context;
         isNeedJsonArray = true;
@@ -95,9 +95,9 @@ public class EleCourseListApi extends BaseApi {
 
         public TagCourseModel parseTagCourseModel(JSONObject jsonObject, TagCourseModel
                 tagCourseModel) {
-            tagCourseModel.setId(jsonObject.optInt(""));
-            tagCourseModel.setImg(jsonObject.optString(""));
-            tagCourseModel.setName(jsonObject.optString(""));
+            tagCourseModel.setId(jsonObject.optInt("id"));
+            tagCourseModel.setImg(jsonObject.optString("img"));
+            tagCourseModel.setName(jsonObject.optString("name"));
             return tagCourseModel;
         }
 

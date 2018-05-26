@@ -14,10 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:text="思晨写作二介暑"
         android:textColor="@color/gray_dark"
-        android:textSize="@dimen/text_size_16"
-        android:textStyle="bold" />
+        android:textSize="@dimen/text_size_16" />
 
     <TextView
         android:id="@+id/classno_tv"
@@ -26,14 +24,13 @@
         android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:lines="1"
-        android:text="班级编码：6789"
         android:textColor="@color/gray_light"
         android:textSize="@dimen/text_size_12" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -48,7 +45,6 @@
             android:id="@+id/place_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="海淀黄庄小区306室"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/text_size_12" />
     </LinearLayout>
@@ -71,7 +67,6 @@
             android:id="@+id/time_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2017/8/31至2018年/9/01"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/text_size_12" />
     </LinearLayout>
@@ -80,7 +75,6 @@
         android:id="@+id/price_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¥ 1500"
         android:textColor="@color/gold"
         android:textSize="@dimen/text_size_14" />
 

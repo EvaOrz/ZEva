@@ -15,15 +15,22 @@ import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
 /**
- * Created by lousx on 2018/5/23.
+ *
+ * 课程相关接口
  */
 
-public class CDeatailApi extends BaseApi {
+public class CourseApi extends BaseApi {
     private Map<String, String> pamas = new HashMap<>();
     private FetchEntryListener listener;
     private String url;
 
-    public CDeatailApi(Context context, String id, FetchEntryListener listener) {
+    /**
+     *
+     * @param context
+     * @param id
+     * @param listener
+     */
+    public CourseApi(Context context, String id, FetchEntryListener listener) {
         super(context);
         mContext = context;
         this.listener = listener;

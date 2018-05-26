@@ -15,9 +15,9 @@ import cn.com.zwwl.bayuwen.model.KeModel;
 /**
  * 课程详情页课表item
  */
-public class CourseListAdapter extends BaseRecylcerViewAdapter<KeModel> {
+public class KeDetailListAdapter extends BaseRecylcerViewAdapter<KeModel> {
 
-    public CourseListAdapter(Context mContext, List<KeModel> list) {
+    public KeDetailListAdapter(Context mContext, List<KeModel> list) {
         super(mContext, list);
         this.mContext = mContext;
     }
@@ -25,15 +25,15 @@ public class CourseListAdapter extends BaseRecylcerViewAdapter<KeModel> {
 
     @NonNull
     @Override
-    public CourseListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int
+    public KeDetailListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int
             viewType) {
-        return new CourseListAdapter.ViewHolder(inflater.inflate(R.layout.item_c_list, parent,
+        return new KeDetailListAdapter.ViewHolder(inflater.inflate(R.layout.item_c_list, parent,
                 false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        final CourseListAdapter.ViewHolder viewHolder = (CourseListAdapter.ViewHolder) holder;
+        final KeDetailListAdapter.ViewHolder viewHolder = (KeDetailListAdapter.ViewHolder) holder;
         viewHolder.video_title.setText(position + 1 + "  " + list.get(position).getTitle());
         viewHolder.video_time.setText(list.get(position).getStart_at()
                 + "  " + list.get(position).getClass_start_at()

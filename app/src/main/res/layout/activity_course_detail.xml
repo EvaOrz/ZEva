@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
 
-    <include
-        android:id="@+id/c_title"
-        layout="@layout/layout_twolevel_title"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bar_height"
+        android:background="@color/body_gray"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/ke_back"
+            android:layout_width="@dimen/back_size"
+            android:layout_height="@dimen/back_size"
+            android:src="@drawable/back_gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/ke_detail"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16" />
+
+    </RelativeLayout>
 
     <ScrollView
-        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/c_title"
-        android:layout_marginBottom="59dp"
-        android:background="@color/body_bg"
         android:scrollbars="none">
 
         <LinearLayout
@@ -22,72 +38,75 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="10dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/course_tv"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:gravity="center_vertical"
+                        android:textColor="@color/gray_dark"
+                        android:textSize="@dimen/text_size_16"
+                         />
 
-                        <TextView
-                            android:id="@+id/course_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:textColor="@color/body_gray"
-                            android:textSize="17sp"
-                            android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/classno_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/gray_light"
+                        android:textSize="@dimen/text_size_12" />
 
-                        <TextView
-                            android:id="@+id/classno_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:ellipsize="end"
-                            android:maxLines="3"
-                            android:textColor="@color/gray_dark"
-                            android:textSize="12sp"/>
+                    <TextView
+                        android:id="@+id/price_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/gold"
+                        android:textSize="@dimen/text_size_16" />
+                </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/price_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:textColor="@color/gold"
-                            android:textSize="@dimen/text_size_16"/>
-                    </LinearLayout>
+                <FrameLayout
+                    android:layout_width="70dp"
+                    android:layout_height="70dp">
 
-                    <FrameLayout
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true">
+                    <ImageView
+                        android:id="@+id/course_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray_dark" />
 
-                        <ImageView
-                            android:id="@+id/course_iv"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@mipmap/ic_launcher"/>
+                    <ImageView
+                        android:id="@+id/play_iv"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/play_cpntrol_play" />
+                </FrameLayout>
+            </LinearLayout>
+            <include layout="@layout/layout_line"
+                ma/>
 
-                        <ImageView
-                            android:id="@+id/play_iv"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@mipmap/play_cpntrol_play"/>
-                    </FrameLayout>
-                </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
-                <include layout="@layout/layout_line"/>
+                android:orientation="vertical">
+
+
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -100,14 +119,14 @@
                         android:layout_height="wrap_content"
                         android:text="地点："
                         android:textColor="@color/body_gray"
-                        android:textSize="@dimen/text_size_14"/>
+                        android:textSize="@dimen/text_size_14" />
 
                     <TextView
                         android:id="@+id/place_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/gray_dark"
-                        android:textSize="@dimen/text_size_14"/>
+                        android:textSize="@dimen/text_size_14" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -121,7 +140,7 @@
                         android:layout_height="wrap_content"
                         android:text="时间："
                         android:textColor="@color/body_gray"
-                        android:textSize="@dimen/text_size_14"/>
+                        android:textSize="@dimen/text_size_14" />
 
                     <TextView
                         android:id="@+id/date_tv"
@@ -129,7 +148,7 @@
                         android:layout_height="wrap_content"
                         android:lines="1"
                         android:textColor="@color/gray_dark"
-                        android:textSize="@dimen/text_size_14"/>
+                        android:textSize="@dimen/text_size_14" />
                 </LinearLayout>
 
                 <TextView
@@ -140,7 +159,7 @@
                     android:layout_marginTop="5dp"
                     android:lines="1"
                     android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/text_size_14"/>
+                    android:textSize="@dimen/text_size_14" />
             </LinearLayout>
 
             <cn.com.zwwl.bayuwen.view.PagerSlidingTabStrip
@@ -157,14 +176,14 @@
                 app:pstsTextColor="@color/body_gray"
                 app:pstsTextSize="@dimen/text_size_16"
                 app:pstsUnderlineHeight="1px"
-                app:pstsisMore="false"/>
+                app:pstsisMore="false" />
 
             <cn.com.zwwl.bayuwen.widget.CustomViewPager
                 android:id="@+id/videoList_vp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="1px"
-                android:background="@android:color/white"/>
+                android:background="@android:color/white" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -174,9 +193,9 @@
                 android:padding="10dp"
                 android:text="授课教师"
                 android:textColor="@color/body_gray"
-                android:textSize="@dimen/text_size_16"/>
+                android:textSize="@dimen/text_size_16" />
 
-            <include layout="@layout/layout_line"/>
+            <include layout="@layout/layout_line" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/teacher_recycler"
@@ -184,15 +203,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:background="@android:color/white"
-                android:padding="10dp"/>
+                android:padding="10dp" />
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="1px"
+        android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -207,7 +224,7 @@
             android:gravity="center"
             android:text="顾问"
             android:textColor="@color/body_gray"
-            android:textSize="13sp"/>
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/explainTv"
@@ -218,7 +235,7 @@
             android:gravity="center"
             android:text="说明"
             android:textColor="@color/body_gray"
-            android:textSize="13sp"/>
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/group_purchase_tv"
@@ -228,7 +245,7 @@
             android:layout_weight="0.8"
             android:background="@drawable/draw_cle_w_btn"
             android:textColor="@color/body_gray"
-            android:textSize="13sp"/>
+            android:textSize="13sp" />
 
 
         <TextView
@@ -236,9 +253,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.8"
-            android:gravity="center_horizontal"
             android:background="@drawable/gold_circle"
+            android:gravity="center_horizontal"
             android:textColor="@android:color/white"
-            android:textSize="13sp"/>
+            android:textSize="13sp" />
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

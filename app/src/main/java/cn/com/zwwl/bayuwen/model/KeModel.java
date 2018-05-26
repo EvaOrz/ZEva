@@ -5,13 +5,13 @@ import java.util.List;
 
 /**
  * 课程model
+ * online=0 线下（面授）课
+ * online=1 线上课
  * <p>
- * "substitute_tid":"0",
- * "substitute_tname":null,
- * "class_id":null,
- * "summarize":null
+ * source=1 直播（回放）
+ * source=2 点播课
  */
-public class KeModel {
+public class KeModel extends Entry {
     private List<TeacherModel> teacherModels = new ArrayList<>();
 
     private String kid;
@@ -33,8 +33,8 @@ public class KeModel {
     private String class_start_at;
     private String class_end_at;
     private Object class_start_at_bak;
-    private String startPtime;
-    private String endPtime;
+    private String startPtime = "0";
+    private String endPtime = "0";
     private String startBtime;
     private String endBtime;
     private String buyNum;

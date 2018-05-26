@@ -14,7 +14,7 @@ import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.GuwenModel;
+import cn.com.zwwl.bayuwen.model.ZanTeacherModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
 
 /**
@@ -52,27 +52,27 @@ public class PraiseListApi extends BaseApi {
             JSONArray tarray = json.optJSONArray("teachers");
             JSONArray garray = json.optJSONArray("stu_advisors");
             JSONArray zarray = json.optJSONArray("tutors");
-            List<TeacherModel> ts = new ArrayList<>();
-            List<GuwenModel> gs = new ArrayList<>();
-            List<GuwenModel> zs = new ArrayList<>();
+            List<ZanTeacherModel> ts = new ArrayList<>();
+            List<ZanTeacherModel> gs = new ArrayList<>();
+            List<ZanTeacherModel> zs = new ArrayList<>();
             if (!isNull(tarray)) {
                 for (int i = 0; i < tarray.length(); i++) {
-                    TeacherModel t = new TeacherModel();
-                    ts.add(t.parseTeacherModel(tarray.optJSONObject(i), t));
+                    ZanTeacherModel t = new ZanTeacherModel();
+                    ts.add(t.parseGuwenModel(tarray.optJSONObject(i), t));
                 }
                 praiseModel.setTeacherModels(ts);
 
             }
             if (!isNull(garray)) {
                 for (int i = 0; i < garray.length(); i++) {
-                    GuwenModel g = new GuwenModel();
+                    ZanTeacherModel g = new ZanTeacherModel();
                     gs.add(g.parseGuwenModel(garray.optJSONObject(i), g));
                 }
                 praiseModel.setGuwenModels(gs);
             }
             if (!isNull(zarray)) {
                 for (int i = 0; i < zarray.length(); i++) {
-                    GuwenModel z = new GuwenModel();
+                    ZanTeacherModel z = new ZanTeacherModel();
                     zs.add(z.parseGuwenModel(zarray.optJSONObject(i), z));
                 }
                 praiseModel.setZhujiaoModels(zs);
@@ -85,35 +85,35 @@ public class PraiseListApi extends BaseApi {
      * 教师排行临时model
      */
     public class PraiseModel extends Entry {
-        private List<TeacherModel> teacherModels = new ArrayList<>();
-        private List<GuwenModel> guwenModels = new ArrayList<>();
-        private List<GuwenModel> zhujiaoModels = new ArrayList<>();
+        private List<ZanTeacherModel> teacherModels = new ArrayList<>();
+        private List<ZanTeacherModel> guwenModels = new ArrayList<>();
+        private List<ZanTeacherModel> zhujiaoModels = new ArrayList<>();
 
         public PraiseModel() {
 
         }
 
-        public List<TeacherModel> getTeacherModels() {
+        public List<ZanTeacherModel> getTeacherModels() {
             return teacherModels;
         }
 
-        public void setTeacherModels(List<TeacherModel> teacherModels) {
+        public void setTeacherModels(List<ZanTeacherModel> teacherModels) {
             this.teacherModels = teacherModels;
         }
 
-        public List<GuwenModel> getGuwenModels() {
+        public List<ZanTeacherModel> getGuwenModels() {
             return guwenModels;
         }
 
-        public void setGuwenModels(List<GuwenModel> guwenModels) {
+        public void setGuwenModels(List<ZanTeacherModel> guwenModels) {
             this.guwenModels = guwenModels;
         }
 
-        public List<GuwenModel> getZhujiaoModels() {
+        public List<ZanTeacherModel> getZhujiaoModels() {
             return zhujiaoModels;
         }
 
-        public void setZhujiaoModels(List<GuwenModel> zhujiaoModels) {
+        public void setZhujiaoModels(List<ZanTeacherModel> zhujiaoModels) {
             this.zhujiaoModels = zhujiaoModels;
         }
     }

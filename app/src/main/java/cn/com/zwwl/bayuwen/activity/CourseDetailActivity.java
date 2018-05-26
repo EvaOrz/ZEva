@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.api.CDeatailApi;
+import cn.com.zwwl.bayuwen.api.CourseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -56,21 +56,14 @@ public class CourseDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(R.layout.activity_course_detail);
-        cid = getIntent().getStringExtra("cid");
+        cid = getIntent().getStringExtra("CourseDetailActivity_id");
         initView();
-        init();
+        initData();
     }
 
     @Override
     protected void initData() {
 
-    }
-
-    private void init() {
-
-
-        mViewPager.setOffscreenPageLimit(fragments.size());
-        psts.setViewPager(mViewPager);
     }
 
     private void initView() {
@@ -110,6 +103,8 @@ public class CourseDetailActivity extends BaseActivity {
             }
         });
 
+        mViewPager.setOffscreenPageLimit(fragments.size());
+        psts.setViewPager(mViewPager);
         title_tv.setText("课程详情");
 
         findViewById(R.id.back_btn).setOnClickListener(this);
@@ -141,7 +136,7 @@ public class CourseDetailActivity extends BaseActivity {
     }
 
     private void getTeacherDetailList(String cid) {
-        new CDeatailApi(mContext, cid, new FetchEntryListener() {
+        new CourseApi(mContext, cid, new FetchEntryListener() {
 
             @Override
             public void setData(Entry entry) {

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.api.EleCourseListApi.*;
+import cn.com.zwwl.bayuwen.api.KeTagListApi.*;
 import cn.com.zwwl.bayuwen.glide.CircleTransform;
 import cn.com.zwwl.bayuwen.glide.GlideApp;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
@@ -22,11 +22,11 @@ import cn.com.zwwl.bayuwen.widget.ViewHolder;
  * Created by lousx on 2018/5/11.
  */
 
-public class EleCourseGridAdapter extends BaseAdapter {
+public class KeTagGridAdapter extends BaseAdapter {
     protected Context mContext;
     protected List<TagCourseModel> mItemList = new ArrayList<>();
 
-    public EleCourseGridAdapter(Context mContext, List<TagCourseModel> mItemList) {
+    public KeTagGridAdapter(Context mContext, List<TagCourseModel> mItemList) {
         this.mContext = mContext;
         this.mItemList = mItemList;
     }
@@ -66,7 +66,4 @@ public class EleCourseGridAdapter extends BaseAdapter {
         return viewHolder.getConvertView();
     }
 
-    public void addData(List<TagCourseModel> list) {
-        mItemList.addAll(list);
-    }
 }
