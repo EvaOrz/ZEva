@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toolbar="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/actionBarSize"
+    android:theme="@style/ToolBarTheme"
+    toolbar:contentInsetLeft="0dp"
+    toolbar:contentInsetStart="0dp"
+    toolbar:elevation="4dp"
+    toolbar:popupTheme="@style/ToolbarPopupTheme">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/selector_back"
+        android:drawablePadding="@dimen/dp_5"
+        android:drawableStart="@mipmap/back"
+        android:gravity="center_vertical"
+        android:paddingEnd="0dp"
+        android:paddingStart="@dimen/dp_10"
+        android:text="@string/back"
+        android:textAppearance="@style/ToolbarMenuTextSize"
+        android:textColor="@color/white" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textAppearance="@style/Toolbar.TitleText" />
+
+</android.support.v7.widget.Toolbar>
