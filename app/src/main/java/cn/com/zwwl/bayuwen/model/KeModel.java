@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.model;
 
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 课程model
@@ -11,43 +12,90 @@ import org.json.JSONObject;
  * "summarize":null
  */
 public class KeModel {
+    private List<TeacherModel> teacherModels = new ArrayList<>();
 
-    private String id = "";
-    private String kid = "";
-    private String title = "";
-    private String mime_type = "";
-    private String duration = "";
-    private String hd720 = "";
-    private String size = "";
-    private String width = "";
-    private String height = "";
-    private String display_aspect_ratio = "";
-    private String status = "";
-    private String tid = "";
-    private String sort = "";
-    private String grade = "";
-    private String model = "";
-    private String start_at = "";
-    private String class_start_at_bak = "";
-    private String tname = "";
-    private String students = "";
-    private String term = "";
-    private String school_id = "";
-    private String hours = "";
-    private String class_end_at = "";
-    private String class_start_at = "";
-    private String substitute_tid = "";
-    private String substitute_tname = "";
-    private String class_id = "";
-    private String summarize = "";
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    private String kid;
+    private String title;
+    private String roomId;
+    private String desc;
+    private String content;
+    private String pic;
+    private String listpic;
+    private String tname;
+    private String tid;
+    private String buyPrice;
+    private String sellPrice;
+    private String backPlayPrice;
+    private String addtime;
+    private String updateTime;
+    private String start_at;
+    private String end_at;
+    private String class_start_at;
+    private String class_end_at;
+    private Object class_start_at_bak;
+    private String startPtime;
+    private String endPtime;
+    private String startBtime;
+    private String endBtime;
+    private String buyNum;
+    private String playNum;
+    private String hit;
+    private String adminId;
+    private String adminName;
+    private String users;
+    private String state;
+    private String sort;
+    private String delete;
+    private String tags;
+    private String type;
+    private Object subject_name;
+    private Object type_count;
+    private String term;
+    private String window_isopen;
+    private Object remark;
+    private String source;
+    private String level;
+    private Object service;
+    private String model;
+    private String single_price;
+    private String material_price;
+    private String weekday;
+    private String school;
+    private String city;
+    private String num;
+    private String online;
+    private String hours;
+    private String discount_amount;
+    private String discount_start_time;
+    private String discount_end_time;
+    private String stock;
+    private String origin_stock;
+    private Object client_channel;
+    private String onsale_time;
+    private String nianbu;
+    private String year;
+    private String is_close;
+    private String is_upmodel;
+    private String upmodel;
+    private String upmodelend;
+    private String video;
+    private String appear_time;
+    private String disappear_time;
+    private String can_refund;
+    private String region;
+    private String typeName;
+    private String tagName;
+    private String templet;
+    private String templet_id;
+    private String trule_id;
+    private Object c_target;
+    private String c_trait;
+    private int is_discount;
+    private int is_promotion;
+    private int is_groupbuy;
+    private List<?> discount;
+    private List<?> promotion;
+    private List<?> groupbuy;
 
     public String getKid() {
         return kid;
@@ -65,116 +113,44 @@ public class KeModel {
         this.title = title;
     }
 
-    public String getMime_type() {
-        return mime_type;
+    public String getRoomId() {
+        return roomId;
     }
 
-    public void setMime_type(String mime_type) {
-        this.mime_type = mime_type;
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
     }
 
-    public String getDuration() {
-        return duration;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
-    public String getHd720() {
-        return hd720;
+    public String getContent() {
+        return content;
     }
 
-    public void setHd720(String hd720) {
-        this.hd720 = hd720;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getSize() {
-        return size;
+    public String getPic() {
+        return pic;
     }
 
-    public void setSize(String size) {
-        this.size = size;
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 
-    public String getWidth() {
-        return width;
+    public String getListpic() {
+        return listpic;
     }
 
-    public void setWidth(String width) {
-        this.width = width;
-    }
-
-    public String getHeight() {
-        return height;
-    }
-
-    public void setHeight(String height) {
-        this.height = height;
-    }
-
-    public String getDisplay_aspect_ratio() {
-        return display_aspect_ratio;
-    }
-
-    public void setDisplay_aspect_ratio(String display_aspect_ratio) {
-        this.display_aspect_ratio = display_aspect_ratio;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getTid() {
-        return tid;
-    }
-
-    public void setTid(String tid) {
-        this.tid = tid;
-    }
-
-    public String getSort() {
-        return sort;
-    }
-
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
-
-    public String getGrade() {
-        return grade;
-    }
-
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getStart_at() {
-        return start_at;
-    }
-
-    public void setStart_at(String start_at) {
-        this.start_at = start_at;
-    }
-
-    public String getClass_start_at_bak() {
-        return class_start_at_bak;
-    }
-
-    public void setClass_start_at_bak(String class_start_at_bak) {
-        this.class_start_at_bak = class_start_at_bak;
+    public void setListpic(String listpic) {
+        this.listpic = listpic;
     }
 
     public String getTname() {
@@ -185,44 +161,68 @@ public class KeModel {
         this.tname = tname;
     }
 
-    public String getStudents() {
-        return students;
+    public String getTid() {
+        return tid;
     }
 
-    public void setStudents(String students) {
-        this.students = students;
+    public void setTid(String tid) {
+        this.tid = tid;
     }
 
-    public String getTerm() {
-        return term;
+    public String getBuyPrice() {
+        return buyPrice;
     }
 
-    public void setTerm(String term) {
-        this.term = term;
+    public void setBuyPrice(String buyPrice) {
+        this.buyPrice = buyPrice;
     }
 
-    public String getSchool_id() {
-        return school_id;
+    public String getSellPrice() {
+        return sellPrice;
     }
 
-    public void setSchool_id(String school_id) {
-        this.school_id = school_id;
+    public void setSellPrice(String sellPrice) {
+        this.sellPrice = sellPrice;
     }
 
-    public String getHours() {
-        return hours;
+    public String getBackPlayPrice() {
+        return backPlayPrice;
     }
 
-    public void setHours(String hours) {
-        this.hours = hours;
+    public void setBackPlayPrice(String backPlayPrice) {
+        this.backPlayPrice = backPlayPrice;
     }
 
-    public String getClass_end_at() {
-        return class_end_at;
+    public String getAddtime() {
+        return addtime;
     }
 
-    public void setClass_end_at(String class_end_at) {
-        this.class_end_at = class_end_at;
+    public void setAddtime(String addtime) {
+        this.addtime = addtime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getStart_at() {
+        return start_at;
+    }
+
+    public void setStart_at(String start_at) {
+        this.start_at = start_at;
+    }
+
+    public String getEnd_at() {
+        return end_at;
+    }
+
+    public void setEnd_at(String end_at) {
+        this.end_at = end_at;
     }
 
     public String getClass_start_at() {
@@ -233,43 +233,531 @@ public class KeModel {
         this.class_start_at = class_start_at;
     }
 
-    public String getSubstitute_tid() {
-        return substitute_tid;
+    public String getClass_end_at() {
+        return class_end_at;
     }
 
-    public void setSubstitute_tid(String substitute_tid) {
-        this.substitute_tid = substitute_tid;
+    public void setClass_end_at(String class_end_at) {
+        this.class_end_at = class_end_at;
     }
 
-    public String getSubstitute_tname() {
-        return substitute_tname;
+    public Object getClass_start_at_bak() {
+        return class_start_at_bak;
     }
 
-    public void setSubstitute_tname(String substitute_tname) {
-        this.substitute_tname = substitute_tname;
+    public void setClass_start_at_bak(Object class_start_at_bak) {
+        this.class_start_at_bak = class_start_at_bak;
     }
 
-    public String getClass_id() {
-        return class_id;
+    public String getStartPtime() {
+        return startPtime;
     }
 
-    public void setClass_id(String class_id) {
-        this.class_id = class_id;
+    public void setStartPtime(String startPtime) {
+        this.startPtime = startPtime;
     }
 
-    public String getSummarize() {
-        return summarize;
+    public String getEndPtime() {
+        return endPtime;
     }
 
-    public void setSummarize(String summarize) {
-        this.summarize = summarize;
+    public void setEndPtime(String endPtime) {
+        this.endPtime = endPtime;
     }
 
-    public KeModel(){
+    public String getStartBtime() {
+        return startBtime;
     }
 
-    public KeModel parseKeModel(JSONObject jsonObject, KeModel keModel) {
+    public void setStartBtime(String startBtime) {
+        this.startBtime = startBtime;
+    }
 
-        return keModel;
+    public String getEndBtime() {
+        return endBtime;
+    }
+
+    public void setEndBtime(String endBtime) {
+        this.endBtime = endBtime;
+    }
+
+    public String getBuyNum() {
+        return buyNum;
+    }
+
+    public void setBuyNum(String buyNum) {
+        this.buyNum = buyNum;
+    }
+
+    public String getPlayNum() {
+        return playNum;
+    }
+
+    public void setPlayNum(String playNum) {
+        this.playNum = playNum;
+    }
+
+    public String getHit() {
+        return hit;
+    }
+
+    public void setHit(String hit) {
+        this.hit = hit;
+    }
+
+    public String getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(String adminId) {
+        this.adminId = adminId;
+    }
+
+    public String getAdminName() {
+        return adminName;
+    }
+
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
+    }
+
+    public String getUsers() {
+        return users;
+    }
+
+    public void setUsers(String users) {
+        this.users = users;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
+
+    public String getDelete() {
+        return delete;
+    }
+
+    public void setDelete(String delete) {
+        this.delete = delete;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Object getSubject_name() {
+        return subject_name;
+    }
+
+    public void setSubject_name(Object subject_name) {
+        this.subject_name = subject_name;
+    }
+
+    public Object getType_count() {
+        return type_count;
+    }
+
+    public void setType_count(Object type_count) {
+        this.type_count = type_count;
+    }
+
+    public String getTerm() {
+        return term;
+    }
+
+    public void setTerm(String term) {
+        this.term = term;
+    }
+
+    public String getWindow_isopen() {
+        return window_isopen;
+    }
+
+    public void setWindow_isopen(String window_isopen) {
+        this.window_isopen = window_isopen;
+    }
+
+    public Object getRemark() {
+        return remark;
+    }
+
+    public void setRemark(Object remark) {
+        this.remark = remark;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public Object getService() {
+        return service;
+    }
+
+    public void setService(Object service) {
+        this.service = service;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getSingle_price() {
+        return single_price;
+    }
+
+    public void setSingle_price(String single_price) {
+        this.single_price = single_price;
+    }
+
+    public String getMaterial_price() {
+        return material_price;
+    }
+
+    public void setMaterial_price(String material_price) {
+        this.material_price = material_price;
+    }
+
+    public String getWeekday() {
+        return weekday;
+    }
+
+    public void setWeekday(String weekday) {
+        this.weekday = weekday;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
+    }
+
+    public String getOnline() {
+        return online;
+    }
+
+    public void setOnline(String online) {
+        this.online = online;
+    }
+
+    public String getHours() {
+        return hours;
+    }
+
+    public void setHours(String hours) {
+        this.hours = hours;
+    }
+
+    public String getDiscount_amount() {
+        return discount_amount;
+    }
+
+    public void setDiscount_amount(String discount_amount) {
+        this.discount_amount = discount_amount;
+    }
+
+    public String getDiscount_start_time() {
+        return discount_start_time;
+    }
+
+    public void setDiscount_start_time(String discount_start_time) {
+        this.discount_start_time = discount_start_time;
+    }
+
+    public String getDiscount_end_time() {
+        return discount_end_time;
+    }
+
+    public void setDiscount_end_time(String discount_end_time) {
+        this.discount_end_time = discount_end_time;
+    }
+
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
+    }
+
+    public String getOrigin_stock() {
+        return origin_stock;
+    }
+
+    public void setOrigin_stock(String origin_stock) {
+        this.origin_stock = origin_stock;
+    }
+
+    public Object getClient_channel() {
+        return client_channel;
+    }
+
+    public void setClient_channel(Object client_channel) {
+        this.client_channel = client_channel;
+    }
+
+    public String getOnsale_time() {
+        return onsale_time;
+    }
+
+    public void setOnsale_time(String onsale_time) {
+        this.onsale_time = onsale_time;
+    }
+
+    public String getNianbu() {
+        return nianbu;
+    }
+
+    public void setNianbu(String nianbu) {
+        this.nianbu = nianbu;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getIs_close() {
+        return is_close;
+    }
+
+    public void setIs_close(String is_close) {
+        this.is_close = is_close;
+    }
+
+    public String getIs_upmodel() {
+        return is_upmodel;
+    }
+
+    public void setIs_upmodel(String is_upmodel) {
+        this.is_upmodel = is_upmodel;
+    }
+
+    public String getUpmodel() {
+        return upmodel;
+    }
+
+    public void setUpmodel(String upmodel) {
+        this.upmodel = upmodel;
+    }
+
+    public String getUpmodelend() {
+        return upmodelend;
+    }
+
+    public void setUpmodelend(String upmodelend) {
+        this.upmodelend = upmodelend;
+    }
+
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
+    }
+
+    public String getAppear_time() {
+        return appear_time;
+    }
+
+    public void setAppear_time(String appear_time) {
+        this.appear_time = appear_time;
+    }
+
+    public String getDisappear_time() {
+        return disappear_time;
+    }
+
+    public void setDisappear_time(String disappear_time) {
+        this.disappear_time = disappear_time;
+    }
+
+    public String getCan_refund() {
+        return can_refund;
+    }
+
+    public void setCan_refund(String can_refund) {
+        this.can_refund = can_refund;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
+
+    public String getTemplet() {
+        return templet;
+    }
+
+    public void setTemplet(String templet) {
+        this.templet = templet;
+    }
+
+    public String getTemplet_id() {
+        return templet_id;
+    }
+
+    public void setTemplet_id(String templet_id) {
+        this.templet_id = templet_id;
+    }
+
+    public String getTrule_id() {
+        return trule_id;
+    }
+
+    public void setTrule_id(String trule_id) {
+        this.trule_id = trule_id;
+    }
+
+    public Object getC_target() {
+        return c_target;
+    }
+
+    public void setC_target(Object c_target) {
+        this.c_target = c_target;
+    }
+
+    public String getC_trait() {
+        return c_trait;
+    }
+
+    public void setC_trait(String c_trait) {
+        this.c_trait = c_trait;
+    }
+
+    public int getIs_discount() {
+        return is_discount;
+    }
+
+    public void setIs_discount(int is_discount) {
+        this.is_discount = is_discount;
+    }
+
+    public int getIs_promotion() {
+        return is_promotion;
+    }
+
+    public void setIs_promotion(int is_promotion) {
+        this.is_promotion = is_promotion;
+    }
+
+    public int getIs_groupbuy() {
+        return is_groupbuy;
+    }
+
+    public void setIs_groupbuy(int is_groupbuy) {
+        this.is_groupbuy = is_groupbuy;
+    }
+
+    public List<?> getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(List<?> discount) {
+        this.discount = discount;
+    }
+
+    public List<?> getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(List<?> promotion) {
+        this.promotion = promotion;
+    }
+
+    public List<?> getGroupbuy() {
+        return groupbuy;
+    }
+
+    public void setGroupbuy(List<?> groupbuy) {
+        this.groupbuy = groupbuy;
+    }
+
+    public List<TeacherModel> getTeacherModels() {
+        return teacherModels;
+    }
+
+    public void setTeacherModels(List<TeacherModel> teacherModels) {
+        this.teacherModels = teacherModels;
     }
 }

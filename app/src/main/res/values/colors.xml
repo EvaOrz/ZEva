@@ -46,10 +46,8 @@
     <color name="body_gray">#242c3f</color>
 
     <!--lousx-->
-    <color name="app_bgColor">#eeeeee</color>
     <color name="item_bgColor">#faf9f9</color>
     <color name="item_grayColor">#999999</color>
-    <color name="black2">#575f73</color>
     <color name="money_color">#e99529</color>
     <color name="search_tv_color">#bcbcbc</color>
     <color name="cirle_line_color">#d7d7d7</color>

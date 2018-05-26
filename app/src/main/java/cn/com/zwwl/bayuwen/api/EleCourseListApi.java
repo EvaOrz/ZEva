@@ -1,43 +1,31 @@
 package cn.com.zwwl.bayuwen.api;
 
 import android.content.Context;
-import android.util.Log;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.reflect.TypeToken;
-import com.umeng.debug.log.E;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
-import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
-import cn.com.zwwl.bayuwen.model.EleCourseModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 
 /**
- * Created by lousx on 2018/5/23.
+ * 获取选课首页tag标签列表
  */
-
 public class EleCourseListApi extends BaseApi {
-    private List<EleCourseModel> eleCourseModels = new ArrayList<>();
-    private Map<String, String> pamas = new HashMap<>();
-    private FetchEntryListListener<EleCourseModel> listener;
+    private List<TagCourseModel> eleCourseModels = new ArrayList<>();
+    private FetchEntryListListener listener;
     private String url;
 
-    public EleCourseListApi(Context context, FetchEntryListListener<EleCourseModel> listener) {
+    public EleCourseListApi(Context context, FetchEntryListListener listener) {
         super(context);
         mContext = context;
-        isNeedJsonArray=true;
+        isNeedJsonArray = true;
         this.listener = listener;
         this.url = UrlUtil.getEleCourseListUrl();
         get();
@@ -50,7 +38,7 @@ public class EleCourseListApi extends BaseApi {
 
     @Override
     protected Map<String, String> getPostParams() {
-        return pamas;
+        return null;
     }
 
     @Override
@@ -59,10 +47,61 @@ public class EleCourseListApi extends BaseApi {
             listener.setError(errorMsg);
         }
         if (!isNull(jsonArray)) {
-            Gson gson = new Gson();
-            eleCourseModels =  gson.fromJson(String.valueOf(jsonArray),new TypeToken<List<EleCourseModel>>(){}.getType());
+            for (int i = 0; i < jsonArray.length(); i++) {
+                TagCourseModel a = new TagCourseModel();
+                a.parseTagCourseModel(jsonArray.optJSONObject(i), a);
+                eleCourseModels.add(a);
+            }
             listener.setData(eleCourseModels);
         }
     }
+
+    /**
+     * 选课首页类别model
+     */
+    public class TagCourseModel extends Entry {
+
+        private int id;
+        private String name;
+        private String img;
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            if (name == null)
+                return "";
+            return name;
+        }
+
+        public String getImg() {
+            if (img == null)
+                return "";
+            return img;
+        }
+
+        public TagCourseModel parseTagCourseModel(JSONObject jsonObject, TagCourseModel
+                tagCourseModel) {
+            tagCourseModel.setId(jsonObject.optInt(""));
+            tagCourseModel.setImg(jsonObject.optString(""));
+            tagCourseModel.setName(jsonObject.optString(""));
+            return tagCourseModel;
+        }
+
+    }
+
 
 }

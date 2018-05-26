@@ -126,7 +126,7 @@ public class UrlUtil {
     }
 
     // 教师详情
-    public static String getTDetailUrl(String tid) {
+    public static String getTeacherUrl(String tid) {
         if (TextUtils.isEmpty(tid))
             return HOST + "/teachers/detail";
         return HOST + "/teachers/detail?tid=" + tid;
@@ -139,7 +139,7 @@ public class UrlUtil {
         return HOST + "/course/" + cid;
     }
 
-    // 获取列表
+    // 获取课程列表
     public static String getLecturesUrl(String cid, String page) {
         if (TextUtils.isEmpty(cid))
             return HOST + "/course/lectures";

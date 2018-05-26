@@ -12,16 +12,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.model.CompleteCourse;
+
+import cn.com.zwwl.bayuwen.model.KeModel;
+
 
 /**
  * Created by lousx
  */
-public class CompleteCourseAdapter extends BaseRecylcerViewAdapter<CompleteCourse> {
-    private List<CompleteCourse> mList = new LinkedList<>();
+public class CompleteCourseAdapter extends BaseRecylcerViewAdapter<KeModel> {
+    private List<KeModel> mList = new LinkedList<>();
     private Context mContext;
 
-    public CompleteCourseAdapter(Context mContext, List<CompleteCourse> list) {
+    public CompleteCourseAdapter(Context mContext, List<KeModel> list) {
         super(mContext, list);
         this.mContext = mContext;
     }

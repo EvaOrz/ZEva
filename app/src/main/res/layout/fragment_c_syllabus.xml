@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="暂无"
-            android:textColor="@color/black2"
+            android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_size_14"/>
     </LinearLayout>
 
@@ -48,7 +48,7 @@
             android:lineSpacingExtra="5dp"
             android:maxLines="2"
             android:text="一年级、二年级、三年级、四年级"
-            android:textColor="@color/black2"
+            android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_size_14"/>
     </LinearLayout>
 
@@ -73,7 +73,7 @@
             android:lineSpacingExtra="5dp"
             android:maxLines="2"
             android:text="提升学员语言能力、朗诵水平；通过朗读提升学员语文素养，人文情怀，掌握语文朗读的基本技巧"
-            android:textColor="@color/black2"
+            android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_size_14"/>
     </LinearLayout>
 
@@ -100,7 +100,7 @@
             android:maxLines="2"
             android:text="1、提升学员语言能力、朗诵水平；
 2、通过朗读提升学员语文素养，人文情怀，掌握语文朗读的基本技巧"
-            android:textColor="@color/black2"
+            android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_size_14"/>
     </LinearLayout>
 

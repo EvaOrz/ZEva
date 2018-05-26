@@ -2,15 +2,12 @@ package cn.com.zwwl.bayuwen.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.adapter.CourseListAdapter;
-import cn.com.zwwl.bayuwen.model.CourseModel;
 
 /**
  * Created by lousx on 2018/5/22.

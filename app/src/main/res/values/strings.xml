@@ -11,6 +11,11 @@
     <string name="yixuankecheng">已选课程</string>
     <string name="suohuoxunzhang">所获勋章</string>
 
+    <!--选课-->
+    <string name="top_txt1">教师点赞排行榜</string>
+    <string name="top_txt2">学业顾问点赞排行榜</string>
+    <string name="top_txt3">校区助手点赞排行榜</string>
+
     <!--FM main-->
     <string name="hot_recommond">热门推荐</string>
     <string name="fm">FM首页</string>
@@ -264,6 +269,7 @@
     <string name="order_option10">支付宝支付：</string>
     <string name="order_option11">微信支付：</string>
     <string name="order_option12">退款方式须知</string>
+    <string name="order_option13">垫付人数</string>
     <string name="lijibaoming">立即报名</string>
 
     <!--setting-->

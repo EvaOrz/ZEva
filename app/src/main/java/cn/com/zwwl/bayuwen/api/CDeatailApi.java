@@ -12,9 +12,7 @@ import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
-import cn.com.zwwl.bayuwen.model.CourseDetailModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.TeacherDetailModel;
 
 /**
  * Created by lousx on 2018/5/23.
@@ -22,7 +20,6 @@ import cn.com.zwwl.bayuwen.model.TeacherDetailModel;
 
 public class CDeatailApi extends BaseApi {
     private Map<String, String> pamas = new HashMap<>();
-    private CourseDetailModel courseDetailModel;
     private FetchEntryListener listener;
     private String url;
 
@@ -50,9 +47,6 @@ public class CDeatailApi extends BaseApi {
             listener.setError(errorMsg);
         }
         if (!isNull(json)) {
-            Gson gson = new Gson();
-            courseDetailModel = gson.fromJson(String.valueOf(json), CourseDetailModel.class);
-            listener.setData(courseDetailModel);
         }
     }
 
