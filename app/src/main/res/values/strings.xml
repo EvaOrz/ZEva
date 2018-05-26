@@ -296,6 +296,7 @@
     <string name="course_eval">课程评价</string>
     <string name="live_play">直播</string>
     <string name="hint_input_eval">期待您的评价</string>
+    <string name="niming">匿名</string>
 
 
 </resources>
