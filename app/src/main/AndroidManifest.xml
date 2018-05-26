@@ -227,19 +227,19 @@
         <activity
             android:name=".activity.TeacherDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <!--课程详情页面-->
         <activity
             android:name=".activity.CourseDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <!--搜索页面-->
         <activity
             android:name=".activity.SearchCourseActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <!--选择城市页面-->
         <activity
             android:name=".activity.CityPickActivity"

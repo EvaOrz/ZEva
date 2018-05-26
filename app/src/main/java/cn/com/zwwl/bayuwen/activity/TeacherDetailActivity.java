@@ -140,7 +140,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
     @Override
     public void setOnItemClickListener(View view, int position) {
         Intent intent = new Intent();
-        intent.putExtra("CourseDetailActivity_id", keModels.get(position));
+        intent.putExtra("CourseDetailActivity_id", keModels.get(position).getKid());
         intent.setClass(mContext, CourseDetailActivity.class);
         startActivity(intent);
     }

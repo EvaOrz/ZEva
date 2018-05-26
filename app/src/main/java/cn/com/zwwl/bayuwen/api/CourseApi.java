@@ -7,15 +7,18 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.model.TeacherModel;
 
 /**
- *
  * 课程相关接口
  */
 
@@ -25,6 +28,7 @@ public class CourseApi extends BaseApi {
     private String url;
 
     /**
+     * 获取课程详情
      *
      * @param context
      * @param id
@@ -54,6 +58,22 @@ public class CourseApi extends BaseApi {
             listener.setError(errorMsg);
         }
         if (!isNull(json)) {
+            JSONObject course = json.optJSONObject("course");
+            Gson gson = new Gson();
+            KeModel keModel = gson.fromJson(course.toString(), KeModel.class);
+
+            JSONArray tarray = json.optJSONArray("teacher");
+            if (!isNull(tarray)) {
+                List<TeacherModel> ts = new ArrayList<>();
+                for (int i = 0; i < tarray.length(); i++) {
+                    TeacherModel t = new TeacherModel();
+                    t.parseTeacherModel(tarray.optJSONObject(i), t);
+                    ts.add(t);
+                }
+                keModel.setTeacherModels(ts);
+            }
+
+            listener.setData(keModel);
         }
     }
 
