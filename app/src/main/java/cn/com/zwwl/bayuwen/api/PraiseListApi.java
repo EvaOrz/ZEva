@@ -47,7 +47,7 @@ public class PraiseListApi extends BaseApi {
         if (errorMsg != null) {
             listener.setError(errorMsg);
         }
-        PraiseModel praiseModel = null;
+        PraiseModel praiseModel = new PraiseModel();
         if (!isNull(json)) {
             JSONArray tarray = json.optJSONArray("teachers");
             JSONArray garray = json.optJSONArray("stu_advisors");
