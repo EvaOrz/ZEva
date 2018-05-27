@@ -1,29 +1,15 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
-import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.view.YouHuiJuanPopWindow;
-import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
  * 订单详情页面
@@ -72,7 +58,7 @@ public class OrderDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.order_d_you:// 优惠券
-              new YouHuiJuanPopWindow(mContext);
+                new YouHuiJuanPopWindow(mContext);
                 break;
         }
     }

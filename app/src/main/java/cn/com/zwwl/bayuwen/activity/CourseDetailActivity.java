@@ -9,8 +9,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -18,7 +20,6 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CoursePageAdapter;
-import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.api.CourseApi;
 import cn.com.zwwl.bayuwen.fragment.CDetailTabFrag1;
 import cn.com.zwwl.bayuwen.fragment.CDetailTabFrag2;
@@ -30,7 +31,6 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
-import cn.com.zwwl.bayuwen.view.PagerSlidingTabStrip;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 
 /**
@@ -50,6 +50,8 @@ public class CourseDetailActivity extends BaseActivity {
     private TextView explainTv;
     private TextView sign_up_tv;
     private TextView group_purchase_tv;
+    private RadioButton button1, button2, button3;
+    private View line1, line2, line3;
 
     private LinearLayout teacherLayout;
 
@@ -138,12 +140,59 @@ public class CourseDetailActivity extends BaseActivity {
 
             }
         });
+        button1 = findViewById(R.id.course_d_bt1);
+        button2 = findViewById(R.id.course_d_bt2);
+        button3 = findViewById(R.id.course_d_bt3);
+        line1 = findViewById(R.id.course_d_line1);
+        line2 = findViewById(R.id.course_d_line2);
+        line3 = findViewById(R.id.course_d_line3);
+
+        button1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    changeRadio(0);
+
+            }
+        });
+        button2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    changeRadio(1);
+            }
+        });
+        button3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    changeRadio(2);
+            }
+        });
 
 
         findViewById(R.id.ke_back).setOnClickListener(this);
         sign_up_tv.setOnClickListener(this);
         group_purchase_tv.setOnClickListener(this);
 
+    }
+    private void changeRadio(int position) {
+        mViewPager.setCurrentItem(position);
+        if (position == 0) {
+            line1.setBackgroundColor(getResources().getColor(R.color.gold));
+        } else {
+            line1.setBackgroundColor(getResources().getColor(R.color.transparent));
+        }
+        if (position == 1) {
+            line2.setBackgroundColor(getResources().getColor(R.color.gold));
+        } else {
+            line2.setBackgroundColor(getResources().getColor(R.color.transparent));
+        }
+        if (position == 2) {
+            line3.setBackgroundColor(getResources().getColor(R.color.gold));
+        } else {
+            line3.setBackgroundColor(getResources().getColor(R.color.transparent));
+        }
     }
 
     @Override

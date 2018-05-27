@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import cn.com.zwwl.bayuwen.R;
 
+/**
+ *
+ */
 public class CDetailTabFrag1 extends Fragment {
 
     private Activity mActivity;
