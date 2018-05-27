@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bar_height"
+        android:background="@color/body_gray"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/tuan_result_back"
+            android:layout_width="@dimen/back_size"
+            android:layout_height="@dimen/back_size"
+            android:src="@drawable/back_gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/tuan_success"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/gray_dark" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="报名缴费成功!"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_size_20" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tuan_kai_pay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gold"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/chakan_kecheng"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_16" />
+
+</LinearLayout>

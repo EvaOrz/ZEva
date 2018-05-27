@@ -529,7 +529,6 @@ public class WheelView extends View {
         }
 
         itemsLayout.measure(MeasureSpec.makeMeasureSpec(width - 2 * PADDING, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-
         return width;
     }
 

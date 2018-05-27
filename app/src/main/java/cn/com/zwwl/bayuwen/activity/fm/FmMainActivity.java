@@ -16,9 +16,9 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
-import cn.com.zwwl.bayuwen.db.DataHelper;
-import cn.com.zwwl.bayuwen.model.AlbumModel;
-import cn.com.zwwl.bayuwen.model.FmModel;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
+import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
+import cn.com.zwwl.bayuwen.model.fm.FmModel;
 import cn.com.zwwl.bayuwen.service.NewMusicService;
 import cn.com.zwwl.bayuwen.util.AnimationTools;
 import cn.com.zwwl.bayuwen.util.Tools;
@@ -67,7 +67,7 @@ public class FmMainActivity extends BaseActivity {
         if (MyApplication.loginStatusChange) {
             MyApplication.loginStatusChange = false;
             userCenterView.getUserinfo();
-        } else if (DataHelper.getUserLoginInfo(this) == null) {
+        } else if (UserDataHelper.getUserLoginInfo(this) == null) {
             startActivityForResult(new Intent(this, FmLoginActivity.class), 102);
         }
         registerReceiver();//先恢复数据 再注册receiver

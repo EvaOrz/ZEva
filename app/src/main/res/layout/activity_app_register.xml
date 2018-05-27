@@ -6,7 +6,7 @@
     android:background="@color/gray_dark"
     android:orientation="vertical"
     android:padding="15dp"
-    tools:context=".activity.LoginActivity">
+    tools:context=".activity.RegisterActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -29,12 +29,50 @@
             android:textSize="@dimen/text_size_14" />
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/register_city_l"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bar_height"
+        android:layout_marginTop="100dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/register_city_t"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="@string/suozaichengshi"
+            android:textColor="@color/gray_light"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right|center_vertical"
+            android:text="@string/plz_choose"
+            android:paddingRight="10dp"
+            android:textColor="@color/gray_light"
+            android:textSize="@dimen/text_size_14" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@color/gray_light" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:background="@color/gray_line" />
 
     <EditText
         android:id="@+id/register_account_edit"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bar_height"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="15dp"
         android:background="@null"
         android:gravity="center_vertical"
         android:hint="@string/login_hint"
@@ -50,7 +88,6 @@
         android:layout_height="@dimen/line_height"
         android:background="@color/gray_line" />
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/bar_height"
@@ -62,8 +99,8 @@
             android:id="@+id/register_verify_edit"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@null"
             android:layout_weight="3"
+            android:background="@null"
             android:gravity="center_vertical"
             android:hint="@string/input_verifycode"
             android:inputType="number"
@@ -76,13 +113,14 @@
         <TextView
             android:id="@+id/register_get_verify"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="@string/get_verifycode"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/text_size_14" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/line_height"
@@ -106,7 +144,7 @@
             android:inputType="textPassword"
             android:paddingLeft="20dp"
             android:singleLine="true"
-            android:textColor="@color/black"
+            android:textColor="@color/gray_light"
             android:textColorHint="@color/gray_light"
             android:textSize="@dimen/text_size_14" />
 
@@ -133,6 +171,5 @@
         android:text="@string/register"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_14" />
-
 
 </LinearLayout>

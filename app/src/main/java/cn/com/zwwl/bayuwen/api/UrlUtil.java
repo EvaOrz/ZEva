@@ -16,7 +16,7 @@ public class UrlUtil {
      */
     public static void setHost() {
         if (MyApplication.DEBUG == 0) {// 线上环境
-            HOST = "https://api.zhugexuetang.com/v1";
+            HOST = "https://api.zhugexuetang.com/v2";
 
         } else if (MyApplication.DEBUG == 1) {// 测试环境
             HOST = "http://api.dev.zhugexuetang.com/v2";
@@ -85,7 +85,7 @@ public class UrlUtil {
 
     //获取收藏列表/ 添加收藏/ 删除收藏
     public static String getCollecturl() {
-        return HOST + "/collection" ;
+        return HOST + "/collection";
     }
 
     //获取评论
@@ -100,8 +100,72 @@ public class UrlUtil {
         return HOST + "/upload";
     }
 
-    // 修改信息
+    // 修改用户信息
     public static String changeInfoUrl(String uid) {
         return HOST + "/user/" + uid;
     }
+
+    // 管理收货地址
+    public static String addressUrl() {
+        return HOST + "/address";
+    }
+
+    // 学员信息
+    public static String childUrl() {
+        return HOST + "/students";
+    }
+
+    // 选课列表
+    public static String getEleCourseListUrl() {
+        return HOST + "/course/type";
+    }
+
+    // 赞列表
+    public static String getTopListUrl() {
+        return HOST + "/vote/toplist";
+    }
+
+    // 教师详情
+    public static String getTeacherUrl(String tid) {
+        if (TextUtils.isEmpty(tid))
+            return HOST + "/teachers/detail";
+        return HOST + "/teachers/detail?tid=" + tid;
+    }
+
+    // 课程详情
+    public static String getCDetailUrl(String cid) {
+        if (TextUtils.isEmpty(cid))
+            return HOST + "/course/";
+        return HOST + "/course/" + cid;
+    }
+
+    // 获取课程列表
+    public static String getLecturesUrl(String cid, String page) {
+        if (TextUtils.isEmpty(cid))
+            return HOST + "/course/lectures";
+        return HOST + "/course/lectures?id=" + cid + "&page=" + page;
+    }
+
+    // 家长评价
+    public static String getEvaluateUrl(String cid, String page) {
+        if (TextUtils.isEmpty(cid))
+            return HOST + "/course/lectures";
+        return HOST + "/course/lectures?id=" + cid + "&page=" + page;
+    }
+
+    //获取团购信息
+    public static String getTuanInfo() {
+        return HOST + "/groupdiscount";
+    }
+
+    // 发起拼团（获取拼团码）
+    public static String faqiTuan() {
+        return HOST + "/grouppurchase";
+    }
+
+    // 按字段搜索课程列表
+    public static String searchCourse() {
+        return HOST + "/course/search";
+    }
+
 }

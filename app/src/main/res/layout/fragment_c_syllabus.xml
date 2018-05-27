@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@android:color/white"
+              android:orientation="vertical"
+              android:padding="@dimen/dp_10">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="课程简介："
+            android:textColor="@color/body_gray"
+            android:textSize="@dimen/text_size_14"/>
+
+        <TextView
+            android:id="@+id/introduction_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/text_size_14"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="适用学员："
+            android:textColor="@color/body_gray"
+            android:textSize="@dimen/text_size_14"/>
+
+        <TextView
+            android:id="@+id/grade_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="5dp"
+            android:maxLines="2"
+            android:text="一年级、二年级、三年级、四年级"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/text_size_14"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="教学目标："
+            android:textColor="@color/body_gray"
+            android:textSize="@dimen/text_size_14"/>
+
+        <TextView
+            android:id="@+id/teaching_goal_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="5dp"
+            android:maxLines="2"
+            android:text="提升学员语言能力、朗诵水平；通过朗读提升学员语文素养，人文情怀，掌握语文朗读的基本技巧"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/text_size_14"/>
+    </LinearLayout>
+
+    <include layout="@layout/layout_line"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="课程特色："
+            android:textColor="@color/body_gray"
+            android:textSize="@dimen/text_size_14"/>
+
+        <TextView
+            android:id="@+id/teatures_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="5dp"
+            android:maxLines="2"
+            android:text="1、提升学员语言能力、朗诵水平；
+2、通过朗读提升学员语文素养，人文情怀，掌握语文朗读的基本技巧"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/text_size_14"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -9,10 +9,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -325,7 +323,7 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
                 textView.setBackgroundResource(R.drawable.gold_circle);
             } else {
                 textView.setTextColor(mContext.getResources().getColor(R.color.gray_dark));
-                textView.setBackgroundResource(R.drawable.gray_xiankuang_circle);
+                textView.setBackgroundResource(R.drawable.gray_white_xiankuang);
             }
             textView.setText(datas.get(position).getName());
             return viewHolder.getConvertView();

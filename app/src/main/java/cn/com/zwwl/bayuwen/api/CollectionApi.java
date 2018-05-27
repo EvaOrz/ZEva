@@ -2,18 +2,20 @@ package cn.com.zwwl.bayuwen.api;
 
 import android.content.Context;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.com.zwwl.bayuwen.db.DataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 
 /**
- * 收藏接口
+ * 添加、删除收藏接口
  */
 public class CollectionApi extends BaseApi {
     private String url;
@@ -29,6 +31,7 @@ public class CollectionApi extends BaseApi {
      * @param listener
      */
     public CollectionApi(Context context, String content, int type, FetchEntryListener listener) {
+        super(context);
         mContext = context;
         pamas.put("content", content);
         pamas.put("type", type + "");
@@ -45,6 +48,7 @@ public class CollectionApi extends BaseApi {
      * @param listener
      */
     public CollectionApi(Context context, String cid, FetchEntryListener listener) {
+        super(context);
         mContext = context;
         this.url = UrlUtil.getCollecturl() + "/" + cid;
         this.listener = listener;
@@ -57,36 +61,17 @@ public class CollectionApi extends BaseApi {
         return pamas;
     }
 
-    /**
-     * success = true表示操作成功
-     *
-     * @param jsonObject
-     * @param errorMsg
-     */
+
     @Override
-    protected void handler(JSONObject jsonObject, ErrorMsg errorMsg) {
-        if (errorMsg == null) {
+    protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
+        if (errorMsg != null)
+            listener.setError(errorMsg);
+
+        if (!isNull(json)) {
             ErrorMsg err = new ErrorMsg();
-            boolean success = jsonObject.optBoolean("success", false);
-            if (success) {
-                JSONObject data = jsonObject.optJSONObject("data");
-                if (!isNull(data)) {
-                    err.setNo(data.optInt("id"));
-                } else {
-                    err.setNo(0);
-                }
-            }
+            err.setNo(json.optInt("id"));
             listener.setData(err);
-        } else {
-            listener.setData(errorMsg);
         }
-
-    }
-
-
-    @Override
-    protected String getHeadValue() {
-        return DataHelper.getUserToken(mContext);
     }
 
     @Override

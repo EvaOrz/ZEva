@@ -1,9 +1,13 @@
 package cn.com.zwwl.bayuwen.http;
 
+import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -18,6 +22,9 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import cn.com.zwwl.bayuwen.MyApplication;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.listener.FetchDataListener;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -35,22 +42,36 @@ import okhttp3.Response;
 public class HttpUtil {
     private static final byte[] LOCKER = new byte[0];
     private static HttpUtil mInstance;
+    private Context mContext;
     private OkHttpClient mOkHttpClient;
 
-    private HttpUtil() {
-        okhttp3.OkHttpClient.Builder ClientBuilder = new okhttp3.OkHttpClient.Builder();
-        ClientBuilder.readTimeout(20, TimeUnit.SECONDS);//读取超时
-        ClientBuilder.connectTimeout(6, TimeUnit.SECONDS);//连接超时
-        ClientBuilder.writeTimeout(60, TimeUnit.SECONDS);//写入超时
-        //支持HTTPS请求，跳过证书验证
-        ClientBuilder.sslSocketFactory(createSSLSocketFactory());
-        ClientBuilder.hostnameVerifier(new HostnameVerifier() {
-            @Override
-            public boolean verify(String hostname, SSLSession session) {
-                return true;
-            }
-        });
-        mOkHttpClient = ClientBuilder.build();
+    private HttpUtil(Context context) {
+        this.mContext = context;
+        if (MyApplication.DEBUG == 1) {
+            OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+            clientBuilder.readTimeout(20, TimeUnit.SECONDS);//读取超时
+            clientBuilder.connectTimeout(6, TimeUnit.SECONDS);//连接超时
+            clientBuilder.writeTimeout(60, TimeUnit.SECONDS);//写入超时
+
+            //支持HTTPS请求，跳过证书验证
+            clientBuilder.sslSocketFactory(createSSLSocketFactory());
+            clientBuilder.hostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            });
+            mOkHttpClient = clientBuilder.build();
+        } else {
+            mOkHttpClient = new OkHttpClient.Builder()
+                    //设置连接超时时间
+                    .connectTimeout(20, TimeUnit.SECONDS)
+                    //设置读取超时时间
+                    .readTimeout(6, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
+                    .build();
+        }
+
     }
 
     /**
@@ -58,11 +79,11 @@ public class HttpUtil {
      *
      * @return
      */
-    public static HttpUtil getInstance() {
+    public static HttpUtil getInstance(Context context) {
         if (mInstance == null) {
             synchronized (LOCKER) {
                 if (mInstance == null) {
-                    mInstance = new HttpUtil();
+                    mInstance = new HttpUtil(context);
                 }
             }
         }
@@ -75,10 +96,10 @@ public class HttpUtil {
      * @param url
      * @return
      */
-    public Response getDataSynFromNet(String url, String headValue) {
+    public Response getDataSynFromNet(String url) {
         //1 构造Request
         Request.Builder builder = new Request.Builder();
-        Request request = builder.get().url(url).addHeader("Authorization", "Bearer " + headValue).addHeader("Device", "android").build();
+        Request request = setRequestHeader(builder.get().url(url));
         //2 将Request封装为Call
         Call call = mOkHttpClient.newCall(request);
         //3 执行Call，得到response
@@ -98,12 +119,12 @@ public class HttpUtil {
      * @param bodyParams
      * @return
      */
-    public Response postDataSynToNet(String url, Map<String, String> bodyParams, String headValue) {
+    public Response postDataSynToNet(String url, Map<String, String> bodyParams) {
         //1构造RequestBody
         RequestBody body = setRequestBody(bodyParams);
         //2 构造Request
         Request.Builder requestBuilder = new Request.Builder();
-        Request request = requestBuilder.post(body).url(url).addHeader("Authorization", "Bearer " + headValue).addHeader("Device", "android").build();
+        Request request = setRequestHeader(requestBuilder.post(body).url(url));
         //3 将Request封装为Call
         Call call = mOkHttpClient.newCall(request);
         //4 执行Call，得到response
@@ -124,10 +145,10 @@ public class HttpUtil {
      * @param listener
      * @return
      */
-    public void getDataAsynFromNet(String url, String headValue, final FetchDataListener listener) {
+    public void getDataAsynFromNet(String url, final FetchDataListener listener) {
         //1 构造Request
         Request.Builder builder = new Request.Builder();
-        Request request = builder.get().url(url).addHeader("Authorization", "Bearer " + headValue).addHeader("Device", "android").build();
+        Request request = setRequestHeader(builder.get().url(url));
         //2 将Request封装为Call
         Call call = mOkHttpClient.newCall(request);
         //3 执行Call
@@ -142,7 +163,7 @@ public class HttpUtil {
                 if (response.code() == 200)
                     listener.fetchData(true, response.body().string(), true);
                 else {
-                    listener.fetchData(false, response.body().string(), false);
+                    listener.fetchData(false, response.body().string(), true);
                 }
 
             }
@@ -156,12 +177,11 @@ public class HttpUtil {
      * @param bodyParams
      * @param listener
      */
-    public void postDataAsynToNet(String url, Map<String, String> bodyParams, String headValue, final FetchDataListener listener) {
-        //1构造RequestBody
+    public void postDataAsynToNet(String url, Map<String, String> bodyParams,
+                                  final FetchDataListener listener) {
         RequestBody body = setRequestBody(bodyParams);
-        //2 构造Request
         Request.Builder requestBuilder = new Request.Builder();
-        Request request = requestBuilder.post(body).url(url).addHeader("Authorization", "Bearer " + headValue).addHeader("Device", "android").build();
+        Request request = setRequestHeader(requestBuilder.post(body).url(url));
         //3 将Request封装为Call
         Call call = mOkHttpClient.newCall(request);
         //4 执行Call
@@ -177,7 +197,40 @@ public class HttpUtil {
                 if (response.code() == 200)
                     listener.fetchData(true, response.body().string(), true);
                 else {
-                    listener.fetchData(true, response.body().string(), false);
+                    listener.fetchData(false, response.body().string(), true);
+                }
+            }
+        });
+    }
+
+    /**
+     * put 异步
+     *
+     * @param url
+     * @param bodyParams
+     * @param listener
+     */
+    public void putDataAsynToNet(String url, Map<String, String> bodyParams,
+                                 final FetchDataListener listener) {
+        RequestBody body = setRequestBody(bodyParams);
+        Request.Builder requestBuilder = new Request.Builder();
+        Request request = setRequestHeader(requestBuilder.put(body).url(url));
+        //3 将Request封装为Call
+        Call call = mOkHttpClient.newCall(request);
+        //4 执行Call
+        call.enqueue(new Callback() {
+            // 访问接口失败，已数据来源非http处理
+            @Override
+            public void onFailure(Call call, IOException e) {
+                listener.fetchData(false, null, false);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200)
+                    listener.fetchData(true, response.body().string(), true);
+                else {
+                    listener.fetchData(false, response.body().string(), true);
                 }
             }
         });
@@ -187,21 +240,21 @@ public class HttpUtil {
      * 上传文件
      *
      * @param url
-     * @param headValue
      * @param file
      * @param listener
      */
-    public void postFile(String url, String headValue, File file, final FetchDataListener listener) {
+    public void postFile(String url, File file, final FetchDataListener
+            listener) {
         // form 表单形式上传
         MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        if(file != null){
+        if (file != null) {
             RequestBody body = RequestBody.create(MediaType.parse("image/*"), file);
             // 参数分别为， 请求key ，文件名称 ， RequestBody
             requestBody.addFormDataPart("file", file.getName(), body);
-        }
 
+        }
         Request.Builder requestBuilder = new Request.Builder();
-        Request request = requestBuilder.post(requestBody.build()).url(url).addHeader("Authorization", "Bearer " + headValue).addHeader("Device", "android").build();
+        Request request = setRequestHeader(requestBuilder.post(requestBody.build()).url(url));
         Call call = mOkHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
@@ -214,7 +267,7 @@ public class HttpUtil {
                 if (response.code() == 200)
                     listener.fetchData(true, response.body().string(), true);
                 else {
-                    listener.fetchData(true, response.body().string(), false);
+                    listener.fetchData(false, response.body().string(), true);
                 }
             }
         });
@@ -226,13 +279,13 @@ public class HttpUtil {
      *
      * @param url
      * @param bodyParams
-     * @param headValue
      * @param listener
      */
-    public void patchDataAsynToNet(String url, Map<String, String> bodyParams, String headValue, final FetchDataListener listener) {
+    public void patchDataAsynToNet(String url, Map<String, String> bodyParams,
+                                   final FetchDataListener listener) {
         RequestBody body = setRequestBody(bodyParams);
         Request.Builder requestBuilder = new Request.Builder();
-        Request request = requestBuilder.patch(body).url(url).addHeader("Authorization", "Bearer " + headValue).addHeader("Device", "android").build();
+        Request request = setRequestHeader(requestBuilder.patch(body).url(url));
         //3 将Request封装为Call
         Call call = mOkHttpClient.newCall(request);
         //4 执行Call
@@ -248,12 +301,19 @@ public class HttpUtil {
                 if (response.code() == 200)
                     listener.fetchData(true, response.body().string(), true);
                 else {
-                    listener.fetchData(true, response.body().string(), false);
+                    listener.fetchData(false, response.body().string(), true);
                 }
             }
         });
 
     }
+
+//    /**
+//     * 解析
+//     */
+//    private void parseSuccessData(String response){
+//
+//    }
 
 
     /**
@@ -261,13 +321,13 @@ public class HttpUtil {
      *
      * @param url
      * @param bodyParams
-     * @param headValue
      * @param listener
      */
-    public void deleteDataAsynToNet(String url, Map<String, String> bodyParams, String headValue, final FetchDataListener listener) {
+    public void deleteDataAsynToNet(String url, Map<String, String> bodyParams,
+                                    final FetchDataListener listener) {
         RequestBody body = setRequestBody(bodyParams);
         Request.Builder requestBuilder = new Request.Builder();
-        Request request = requestBuilder.delete(body).url(url).addHeader("Authorization", "Bearer " + headValue).addHeader("Device", "android").build();
+        Request request = setRequestHeader(requestBuilder.delete(body).url(url));
         //3 将Request封装为Call
         Call call = mOkHttpClient.newCall(request);
         //4 执行Call
@@ -283,7 +343,7 @@ public class HttpUtil {
                 if (response.code() == 200)
                     listener.fetchData(true, response.body().string(), true);
                 else {
-                    listener.fetchData(true, response.body().string(), false);
+                    listener.fetchData(false, response.body().string(), true);
                 }
             }
         });
@@ -313,6 +373,35 @@ public class HttpUtil {
 
     }
 
+    private Request setRequestHeader(Request.Builder requestBuilder) {
+        Request request = null;
+        try {
+            String authorization = UserDataHelper.getUserToken(mContext);
+            if (!TextUtils.isEmpty(authorization))
+                requestBuilder.addHeader("Authorization", "Bearer " + authorization);
+            else
+                requestBuilder.addHeader("Authorization", "");
+            String city = "";
+            if (TextUtils.isEmpty(TempDataHelper.getCurrentCity(mContext)))
+                city = URLEncoder.encode("北京", "UTF-8");
+            else city = URLEncoder.encode(TempDataHelper.getCurrentCity(mContext), "UTF-8");
+            requestBuilder.addHeader("City", city).addHeader
+                    ("Device", "android");
+            int grade = TempDataHelper.getCurrentChildGrade(mContext);
+            if (grade != 0)
+                requestBuilder.addHeader("Grade", grade + "");
+            String no = TempDataHelper.getCurrentChildNo(mContext);
+            if (!TextUtils.isEmpty(no)) requestBuilder.addHeader("StudentNo", no + "");
+            String accessToken = TempDataHelper.getAccessToken(mContext);
+            if (!TextUtils.isEmpty(accessToken))
+                requestBuilder.addHeader("Access-Token", accessToken);
+            request = requestBuilder.build();
+        } catch (UnsupportedEncodingException e) {
+
+        }
+        return request;
+    }
+
     /**
      * 生成安全套接字工厂，用于https请求的证书跳过
      *
@@ -334,11 +423,13 @@ public class HttpUtil {
      */
     class TrustAllCerts implements X509TrustManager {
         @Override
-        public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+        public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws
+                CertificateException {
         }
 
         @Override
-        public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+        public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws
+                CertificateException {
 
         }
 

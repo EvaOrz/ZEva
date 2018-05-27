@@ -9,11 +9,11 @@ import android.widget.ImageView;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.activity.fm.FmLoginActivity;
 import cn.com.zwwl.bayuwen.api.LoginSigninApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.BayuwenTools;
 import cn.com.zwwl.bayuwen.view.LoginProblemPopWindow;
 
@@ -24,6 +24,8 @@ public class LoginActivity extends BaseActivity {
     private EditText accountEdit, pwdEdit;
     private ImageView showImg;
     private boolean isShowPassword = false;// 是否显示密码
+    public static int LOGIN_SUCCESS = 0;
+    public static int LOGIN_CANCLE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +66,11 @@ public class LoginActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.login_forget:// 忘记密码
+                startActivity(new Intent(mContext, ForgetPwdActivity.class));
                 break;
             case R.id.login_problem:// 遇到问题
-                new LoginProblemPopWindow(mContext, new LoginProblemPopWindow.ChooseGenderListener() {
+                new LoginProblemPopWindow(mContext, new LoginProblemPopWindow
+                        .ChooseGenderListener() {
                     @Override
                     public void choose(int gender) {
 
@@ -77,14 +81,16 @@ public class LoginActivity extends BaseActivity {
                 final String username = accountEdit.getText().toString();
                 String pwd = pwdEdit.getText().toString();
                 // 密码登录
-                if (BayuwenTools.checkIsPhone(LoginActivity.this, username) && BayuwenTools.checkPwd(LoginActivity.this, pwd)) {
+                if (BayuwenTools.checkIsPhone(LoginActivity.this, username) && BayuwenTools
+                        .checkPwd(LoginActivity.this, pwd)) {
                     doLogin(LoginSigninApi.GetUserType.LOGIN, username, pwd);
                 }
                 break;
 
             case R.id.login_pwd_show:
                 if (isShowPassword) {// 隐藏
-                    pwdEdit.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    pwdEdit.setInputType(InputType.TYPE_CLASS_TEXT | InputType
+                            .TYPE_TEXT_VARIATION_PASSWORD);
 //                    pwdImg.setImageResource(R.drawable.password_unshow);
                 } else {//选择状态 显示明文--设置为可见的密码
                     pwdEdit.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
@@ -102,14 +108,16 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void setData(Entry entry) {
                 showLoadingDialog(false);
-                if (entry != null && entry instanceof ErrorMsg) {
+                if (entry != null && entry instanceof UserModel) {
                     MyApplication.loginStatusChange = true;
-                    if (((ErrorMsg) entry).getNo() == 0) {
-                        finish();
-                    } else {
-                        showToast(((ErrorMsg) entry).getDesc());
-                    }
+                    setResult(LOGIN_SUCCESS);
+                    finish();
                 }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showToast(error.getDesc());
             }
         });
     }

@@ -187,14 +187,7 @@ public class AddCalendarActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 隐藏软键盘
-     */
-    private void hideJianpan() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

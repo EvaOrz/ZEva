@@ -13,7 +13,7 @@
         android:id="@+id/calendar_option_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gray_xiankuang_circle"
+        android:background="@drawable/gray_white_xiankuang"
         android:gravity="center"
         android:padding="5dp"
         android:text="高思教育"

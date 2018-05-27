@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -95,7 +96,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mContext = this;
     }
 
 
@@ -205,7 +206,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                Log.e("ssssssss", txt);
                 Toast.makeText(mContext, txt, Toast.LENGTH_SHORT).show();
             }
         });
@@ -289,6 +289,15 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                 break;
         }
 
+    }
+
+    /**
+     * 隐藏软键盘
+     */
+    public void hideJianpan() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
     }
 
     public void askPermission(String[] permissions, int requestCode) {

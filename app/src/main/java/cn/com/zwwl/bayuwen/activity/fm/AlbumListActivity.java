@@ -18,7 +18,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.adapter.AlbumAdapter;
 import cn.com.zwwl.bayuwen.api.fm.AlbumListApi;
-import cn.com.zwwl.bayuwen.model.AlbumModel;
+import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
 /**
@@ -50,7 +50,7 @@ public class AlbumListActivity extends BaseActivity {
         if (type == 0) {
             title.setText(R.string.album_list);
         } else if (type == 1) {
-            title.setText(R.string.my_shoucang);
+            title.setText(R.string.gerenshoucang);
         }
         listView = findViewById(R.id.album_list_listview);
         findViewById(R.id.album_list_back).setOnClickListener(this);

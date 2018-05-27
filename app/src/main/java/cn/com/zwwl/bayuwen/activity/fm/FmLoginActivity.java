@@ -19,7 +19,8 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.api.LoginSigninApi;
 
-import cn.com.zwwl.bayuwen.db.DataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
+import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.BayuwenTools;
 import cn.com.zwwl.bayuwen.util.SmsTools;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -53,7 +54,7 @@ public class FmLoginActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (DataHelper.getUserLoginInfo(this) != null) finish();
+        if (UserDataHelper.getUserLoginInfo(this) != null) finish();
     }
 
     @Override
@@ -103,11 +104,13 @@ public class FmLoginActivity extends BaseActivity {
                 final String code = verifyEdit.getText().toString();
                 if (accountLayout.isShown()) {
                     // 密码登录
-                    if (BayuwenTools.checkIsPhone(FmLoginActivity.this, username) && BayuwenTools.checkPwd(FmLoginActivity.this, pwd)) {
+                    if (BayuwenTools.checkIsPhone(FmLoginActivity.this, username) && BayuwenTools
+                            .checkPwd(FmLoginActivity.this, pwd)) {
                         doLogin(LoginSigninApi.GetUserType.LOGIN, username, pwd);
                     }
                 } else if (fastLayout.isShown()) {// 快捷登录，需要验证验证码
-                    if (BayuwenTools.checkIsPhone(FmLoginActivity.this, username) && BayuwenTools.checkCode(FmLoginActivity.this, code)) {
+                    if (BayuwenTools.checkIsPhone(FmLoginActivity.this, username) && BayuwenTools
+                            .checkCode(FmLoginActivity.this, code)) {
 
                         doLogin(LoginSigninApi.GetUserType.FAST_LOGIN, username, code);
 
@@ -134,15 +137,16 @@ public class FmLoginActivity extends BaseActivity {
             @Override
             public void setData(Entry entry) {
                 showLoadingDialog(false);
-                if (entry != null && entry instanceof ErrorMsg) {
+                if (entry != null && entry instanceof UserModel) {
                     MyApplication.loginStatusChange = true;
-                    if (((ErrorMsg) entry).getNo() == 0) {
-                        setResult(LOGIN_SUCCESS);
-                        finish();
-                    } else {
-                        showToast(((ErrorMsg) entry).getDesc());
-                    }
+                    setResult(LOGIN_SUCCESS);
+                    finish();
                 }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showToast(error.getDesc());
             }
         });
     }

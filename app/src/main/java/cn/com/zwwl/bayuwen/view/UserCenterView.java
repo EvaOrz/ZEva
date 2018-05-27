@@ -20,8 +20,9 @@ import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.fm.FmHistoryActivity;
 import cn.com.zwwl.bayuwen.activity.fm.FmLoginActivity;
 import cn.com.zwwl.bayuwen.activity.WebActivity;
-import cn.com.zwwl.bayuwen.api.UserApi;
-import cn.com.zwwl.bayuwen.db.DataHelper;
+import cn.com.zwwl.bayuwen.api.UserInfoApi;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
@@ -56,7 +57,7 @@ public class UserCenterView implements View.OnClickListener {
     }
 
     public void loadData() {
-        userModel = DataHelper.getUserLoginInfo(context);
+        userModel = UserDataHelper.getUserLoginInfo(context);
         if (userModel == null) {
             avatar.setImageResource(R.drawable.avatar_placeholder);
             name.setText(R.string.un_login);
@@ -71,11 +72,16 @@ public class UserCenterView implements View.OnClickListener {
     }
 
     public void getUserinfo() {
-        new UserApi(context, new FetchEntryListener() {
+        new UserInfoApi(context, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
                 // 获取用户信息，不需要监听返回
                 handler.sendEmptyMessage(0);
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                
             }
         });
     }
@@ -101,7 +107,7 @@ public class UserCenterView implements View.OnClickListener {
                 context.startActivity(i);
                 break;
             case R.id.logout:
-                DataHelper.clearLoginInfo(context);
+                UserDataHelper.clearLoginInfo(context);
                 loadData();
                 break;
             case R.id.test:

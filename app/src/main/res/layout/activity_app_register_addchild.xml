@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_dark"
+    android:orientation="vertical"
+    android:padding="15dp"
+    tools:context=".activity.LoginActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/register_a_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@color/black" />
+
+        <TextView
+            android:id="@+id/register_add_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="@string/pass"
+            android:textColor="@color/gold"
+            android:textSize="@dimen/text_size_14" />
+    </RelativeLayout>
+
+
+    <EditText
+        android:id="@+id/register_add_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bar_height"
+        android:layout_marginTop="100dp"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="@string/xuesheng_name"
+        android:inputType="number"
+        android:singleLine="true"
+        android:textColor="@color/gray_light"
+        android:textColorHint="@color/gray_light"
+        android:textSize="@dimen/text_size_14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:background="@color/gray_line" />
+
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bar_height"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/register_add_male"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="@string/male"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14" />
+
+        <RadioButton
+            android:id="@+id/register_add_female"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="@string/female"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14" />
+    </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:background="@color/gray_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bar_height"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="2018年9月，您的孩子将"
+            android:textColor="@color/gray_light"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:id="@+id/register_add_nianji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="15dp"
+            android:background="@drawable/gray_xiankuang"
+            android:text="一年级"
+            android:textColor="@color/gray_light"
+            android:textSize="@dimen/text_size_14" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:background="@color/gray_line" />
+
+    <TextView
+        android:id="@+id/register_add_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/gold_circle"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/add_hint"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_14" />
+
+</LinearLayout>

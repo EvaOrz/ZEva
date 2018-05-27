@@ -16,8 +16,9 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.api.ActionApi;
-import cn.com.zwwl.bayuwen.model.AlbumModel;
-import cn.com.zwwl.bayuwen.model.FmModel;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
+import cn.com.zwwl.bayuwen.model.fm.FmModel;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.util.Tools;
@@ -81,7 +82,8 @@ public class NewMusicService extends Service {
         albumModel = (AlbumModel) intent.getSerializableExtra("play_model");
         int posi = intent.getIntExtra("play_model_position", 0);
 
-        if (albumModel != null && Tools.listNotNull(albumModel.getFmModels()) && albumModel.getFmModels().size() > posi) {
+        if (albumModel != null && Tools.listNotNull(albumModel.getFmModels()) && albumModel
+                .getFmModels().size() > posi) {
             List<FmModel> datas = new ArrayList<>();
             datas.addAll(albumModel.getFmModels());
             currentFmModel = datas.get(posi);
@@ -256,6 +258,11 @@ public class NewMusicService extends Service {
             @Override
             public void setData(Entry entry) {
                 // 播放量结果不需要监听
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
             }
         });
     }

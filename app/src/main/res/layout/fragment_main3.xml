@@ -1,23 +1,395 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <include
+        layout="@layout/layout_gray_titlebar"/>
 
     <ScrollView
-        android:id="@+id/main_scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/item_bgColor"/>
+
+            <TextView
+                android:id="@+id/praiseTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:drawableLeft="@mipmap/user_about"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical|left"
+                android:padding="10dp"
+                android:text="正在进行的课程"
+                android:textColor="@color/body_gray"
+                android:textSize="@dimen/sp_16"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/item_bgColor"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/gold_circle"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:text="线下"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_size_10"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="庖丁阅读"
+                                android:textColor="@color/body_gray"
+                                android:textSize="@dimen/text_size_14"/>
+                        </LinearLayout>
 
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="课程进度（9/16）"
+                            android:textColor="@color/body_gray"
+                            android:textSize="@dimen/text_size_12"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:orientation="horizontal">
+
+                            <ProgressBar
+                                android:id="@+id/progressBarHorizontal"
+                                style="@style/Jindu_progress"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="0.9"
+                                android:max="100"
+                                android:progress="50"
+                                android:secondaryProgress="80"/>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="0.1"
+                                android:gravity="center"
+                                android:text="56%"
+                                android:textColor="@color/body_gray"
+                                android:textSize="@dimen/text_size_12"/>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="课程进行阶段"
+                            android:textColor="@color/body_gray"
+                            android:textSize="@dimen/text_size_12"/>
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:src="@mipmap/home_header_more"/>
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:orientation="vertical">
+
+                <cn.com.zwwl.bayuwen.view.PagerSlidingTabStrip
+                    android:id="@+id/tablayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/draw_gray_top_bg"
+                    app:pstsIndicatorColor="@color/gold"
+                    app:pstsIndicatorHeight="3dp"
+                    app:pstsSelectTextColor="@color/gold"
+                    app:pstsTextColor="@color/body_gray"
+                    app:pstsTextSize="@dimen/text_size_14"
+                    app:pstsUnderlineHeight="0px"
+                    app:pstsisMore="true"/>
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/mViewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/draw_gray_w_bg"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp">
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_weight="1"
+                        android:background="@drawable/draw_gold_line"
+                        android:text="作业上传"
+                        android:textColor="@color/gold"
+                        android:textSize="14sp"/>
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/draw_gold_line"
+                        android:text="查看往次课程跟踪"
+                        android:textColor="@color/gold"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/item_bgColor"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/gold_circle"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:text="线下"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_size_10"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="庖丁阅读"
+                                android:textColor="@color/body_gray"
+                                android:textSize="@dimen/text_size_14"/>
+                        </LinearLayout>
 
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="课程进度（9/16）"
+                            android:textColor="@color/body_gray"
+                            android:textSize="@dimen/text_size_12"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:orientation="horizontal">
+
+                            <ProgressBar
+                                android:id="@+id/progressBarHorizonta2"
+                                style="@style/Jindu_progress"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="0.9"
+                                android:max="100"
+                                android:progress="50"
+                                android:secondaryProgress="80"/>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="0.1"
+                                android:gravity="center"
+                                android:text="56%"
+                                android:textColor="@color/body_gray"
+                                android:textSize="@dimen/text_size_12"/>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="课程进行阶段"
+                            android:textColor="@color/body_gray"
+                            android:textSize="@dimen/text_size_12"/>
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:src="@mipmap/home_header_more"/>
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/draw_gray_line_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:text="作业反馈"
+                        android:textColor="@color/gold"
+                        android:textSize="14sp"/>
+
+                    <include layout="@layout/layout_line"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:padding="5dp"
+                        android:background="@drawable/draw_gray_w_bg"
+                        android:text="顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价"
+                        android:textColor="@color/body_gray"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp">
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:background="@drawable/draw_gold_line"
+                        android:text="观看直播"
+                        android:textColor="@color/gold"
+                        android:textSize="14sp"/>
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="0.5"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:background="@drawable/draw_gold_line"
+                        android:text="作业上传"
+                        android:textColor="@color/gold"
+                        android:textSize="14sp"/>
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="0.9"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:background="@drawable/draw_gold_line"
+                        android:text="查看往次课程跟踪"
+                        android:textColor="@color/gold"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:drawableLeft="@mipmap/user_info"
+                android:padding="10dp"
+                android:text="已完成课程"
+                android:textColor="@color/body_gray"
+                android:textSize="16sp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/completed_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"/>
         </LinearLayout>
+
     </ScrollView>
 
 

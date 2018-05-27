@@ -2,13 +2,13 @@ package cn.com.zwwl.bayuwen.api;
 
 import android.content.Context;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.com.zwwl.bayuwen.db.DataHelper;
-import cn.com.zwwl.bayuwen.model.AlbumModel;
+import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -40,16 +40,16 @@ public class ActionApi extends BaseApi {
      * @param context
      * @param kid      操作的fm
      * @param type     0：取消喜欢 1：喜欢
-     *
-     *
-     * 收藏接口
-     *
+     *                 <p>
+     *                 <p>
+     *                 收藏接口
      * @param context
-     * @param kid - content
+     * @param kid      - content
      * @param type     1-课程  2-文本  3-图片  4-链接
      * @param listener
      */
     public ActionApi(Context context, String kid, int type, FetchEntryListener listener) {
+        super(context);
         actionType = ActionType.ACTION_LIKE;
         mContext = context;
         pamas.put("kid", kid);
@@ -67,6 +67,7 @@ public class ActionApi extends BaseApi {
      * @param listener
      */
     public ActionApi(Context context, String kid, FetchEntryListener listener) {
+        super(context);
         actionType = ActionType.ACTION_PLAY;
         mContext = context;
         pamas.put("kid", kid);
@@ -85,8 +86,9 @@ public class ActionApi extends BaseApi {
      * @param code
      * @param listener
      */
-    public ActionApi(Context context, String username, String password, String code, FetchEntryListener listener) {
-
+    public ActionApi(Context context, String username, String password, String code,
+                     FetchEntryListener listener) {
+        super(context);
         actionType = ActionType.ACTION_CHANGE_PWD;
         mContext = context;
         pamas.put("username", username);
@@ -108,7 +110,9 @@ public class ActionApi extends BaseApi {
      * @param type
      * @param listener
      */
-    public ActionApi(Context context, String kid, String cid, String commentid, String content, String type, FetchEntryListener listener) {
+    public ActionApi(Context context, String kid, String cid, String commentid, String content,
+                     String type, FetchEntryListener listener) {
+        super(context);
         actionType = ActionType.ACTION_ADD_COMMENT;
         mContext = context;
         pamas.put("kid", kid);
@@ -127,36 +131,18 @@ public class ActionApi extends BaseApi {
         return pamas;
     }
 
-    /**
-     * success = true表示操作成功
-     *
-     * @param jsonObject
-     * @param errorMsg
-     */
+
     @Override
-    protected void handler(JSONObject jsonObject, ErrorMsg errorMsg) {
-        if (errorMsg == null) {
-            boolean success = jsonObject.optBoolean("success", false);
-            if (success) {
-                if (actionType == ActionType.ACTION_LIKE) {// 喜欢接口需要一个count 数目
-                    JSONObject data = jsonObject.optJSONObject("data");
-                    AlbumModel e = new AlbumModel();
-                    e.setLikeNum(data.optInt("count"));
-                    listener.setData(e);
-                } else
-                    listener.setData(null);
-            } else
-                listener.setData(new ErrorMsg());
-        } else {
-            listener.setData(errorMsg);
+    protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
+        if (errorMsg != null)
+            listener.setError(errorMsg);
+        else listener.setError(null);
+        
+        if (!isNull(json)) {
+            AlbumModel e = new AlbumModel();
+            e.setLikeNum(json.optInt("count"));
+            listener.setData(e);
         }
-
-    }
-
-
-    @Override
-    protected String getHeadValue() {
-        return DataHelper.getUserToken(mContext);
     }
 
     @Override

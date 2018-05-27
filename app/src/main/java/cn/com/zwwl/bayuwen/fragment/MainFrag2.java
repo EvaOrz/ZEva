@@ -1,8 +1,12 @@
 package cn.com.zwwl.bayuwen.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,9 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -23,11 +25,22 @@ import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.adapter.EleCourseGridAdapter;
-import cn.com.zwwl.bayuwen.model.EleCourseData;
-import cn.com.zwwl.bayuwen.model.EleCourseModel;
+import cn.com.zwwl.bayuwen.activity.MainActivity;
+import cn.com.zwwl.bayuwen.activity.SearchCourseActivity;
+import cn.com.zwwl.bayuwen.adapter.DianzanAdapter;
+import cn.com.zwwl.bayuwen.adapter.KeTagGridAdapter;
+import cn.com.zwwl.bayuwen.api.KeTagListApi;
+import cn.com.zwwl.bayuwen.api.KeTagListApi.*;
+import cn.com.zwwl.bayuwen.api.PraiseListApi;
+import cn.com.zwwl.bayuwen.api.PraiseListApi.*;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.widget.BannerView;
+import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 
 /**
  * 选课
@@ -41,20 +54,33 @@ public class MainFrag2 extends Fragment
     private RelativeLayout mToolbarView;
     private ObservableScrollView mScrollView;
     private GridView mGridView;
-    private TextView teacherPraiseTv;
-    private TextView academicAdvisoPraiseTv;
-    private TextView assistantPraiseTv;
+
+    private NoScrollListView tListView, gListView, zListView;
+    private DianzanAdapter tAdapter, gAdapter, zAdapter;
 
     private int mParallaxImageHeight;
-    private EleCourseGridAdapter gridAdapter;
+    private KeTagGridAdapter gridAdapter;
+    private List<TagCourseModel> tagList = new ArrayList<>();
+    private PraiseModel praiseModel;
 
-    private List<EleCourseModel> mItemList = new ArrayList<>();
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    gridAdapter = new KeTagGridAdapter(getActivity(), tagList);
+                    mGridView.setAdapter(gridAdapter);
+                    gridAdapter.notifyDataSetChanged();
+                    break;
+                case 1:
+                    setAdapterData();
+                    break;
+            }
+        }
+    };
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setData();
-    }
 
     @Override
     public void onResume() {
@@ -63,7 +89,8 @@ public class MainFrag2 extends Fragment
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_main2, container, false);
         initView();
         return root;
@@ -73,6 +100,13 @@ public class MainFrag2 extends Fragment
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getEleCourseList();
+        getPraiseList();
     }
 
     /**
@@ -89,10 +123,11 @@ public class MainFrag2 extends Fragment
     }
 
     private void initView() {
-        mParallaxImageHeight = getResources().getDimensionPixelSize(R.dimen.parallax_image_height);
+        mParallaxImageHeight = MyApplication.width * 9 / 16;
         mImageView = root.findViewById(R.id.image);
         mToolbarView = root.findViewById(R.id.main2_toolbar);
-        mToolbarView.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, getResources().getColor(R.color.transparent)));
+        mToolbarView.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, getResources().getColor
+                (R.color.transparent)));
 
         mGridView = root.findViewById(R.id.gridView);
 
@@ -100,29 +135,40 @@ public class MainFrag2 extends Fragment
         mScrollView.setScrollViewCallbacks(this);
         mScrollView.setZoomView(mImageView);
 
-        View view1 = root.findViewById(R.id.teacher_layout);
-        View view2 = root.findViewById(R.id.academicAdviso_layout);
-        View view3 = root.findViewById(R.id.assistant_layout);
-        teacherPraiseTv = view1.findViewById(R.id.praiseTv);
-        academicAdvisoPraiseTv = view2.findViewById(R.id.praiseTv);
-        assistantPraiseTv = view3.findViewById(R.id.praiseTv);
-        teacherPraiseTv.setText("教师点赞排行榜");
-        academicAdvisoPraiseTv.setText("学业顾问点赞排行榜");
-        assistantPraiseTv.setText("校区助手点赞排行榜");
+        tListView = root.findViewById(R.id.jiaoshi_layout);
+        gListView = root.findViewById(R.id.guwen_layout);
+        zListView = root.findViewById(R.id.zhujiao_layout);
 
-        gridAdapter = new EleCourseGridAdapter(getActivity(), mItemList);
-        mGridView.setAdapter(gridAdapter);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent intent = new Intent();
+                intent.putExtra("SearchCourseActivity_id", tagList.get(position).getId());
+                intent.setClass(mActivity, SearchCourseActivity.class);
+                startActivity(intent);
             }
         });
+
+        mToolbarView.findViewById(R.id.left_more_iv).setOnClickListener(this);
+        mToolbarView.findViewById(R.id.frame_msg).setOnClickListener(this);
+        mToolbarView.findViewById(R.id.school_iv).setOnClickListener(this);
+    }
+
+    private void setAdapterData() {
+        tAdapter = new DianzanAdapter(mActivity);
+        tAdapter.setData(praiseModel.getTeacherModels());
+        tListView.setAdapter(tAdapter);
+        gAdapter = new DianzanAdapter(mActivity);
+        gAdapter.setData(praiseModel.getGuwenModels());
+        gListView.setAdapter(gAdapter);
+        zAdapter = new DianzanAdapter(mActivity);
+        zAdapter.setData(praiseModel.getTeacherModels());
+        zListView.setAdapter(zAdapter);
     }
 
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-        int baseColor = getResources().getColor(R.color.titlebar_bgColor);
+        int baseColor = getResources().getColor(R.color.body_gray);
         float alpha = Math.min(1, (float) scrollY / mParallaxImageHeight * 1.4f);
         mToolbarView.setBackgroundColor(ScrollUtils.getColorWithAlpha(alpha, baseColor));
     }
@@ -137,17 +183,56 @@ public class MainFrag2 extends Fragment
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.frame_msg:
+                Intent i = new Intent();
+                i.setClass(mActivity, SearchCourseActivity.class);
+                startActivity(i);
+                break;
+            case R.id.left_more_iv:
+                ((MainActivity) getActivity()).openDrawer();
+                break;
+        }
     }
 
-    private List<EleCourseModel> setData() {
-        for (int i = 0; i < EleCourseData.names.length; i++) {
-            EleCourseModel courseModel = new EleCourseModel();
-            courseModel.setId(String.valueOf(i + 1));
-            courseModel.setName(EleCourseData.names[i]);
-            courseModel.setUrl(EleCourseData.urls[i]);
-            mItemList.add(courseModel);
-        }
-        return mItemList;
+    /**
+     * 获取课程标签数据
+     */
+    private void getEleCourseList() {
+        new KeTagListApi(getActivity(), new FetchEntryListListener() {
+
+            @Override
+            public void setData(List list) {
+                if (list != null && list.size() > 0) {
+                    tagList.clear();
+                    tagList.addAll(list);
+                    handler.sendEmptyMessage(0);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+            }
+        });
+    }
+
+    /**
+     * 获取点赞排行数据
+     */
+    private void getPraiseList() {
+        new PraiseListApi(getActivity(), new FetchEntryListener() {
+
+            @Override
+            public void setData(Entry entry) {
+                if (entry != null && entry instanceof PraiseModel) {
+                    praiseModel = (PraiseModel) entry;
+                    handler.sendEmptyMessage(1);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+            }
+        });
     }
 }

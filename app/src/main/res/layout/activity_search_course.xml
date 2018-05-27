@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/body_bg"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bar_height"
+        android:background="@color/body_gray"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp">
+
+        <ImageView
+            android:id="@+id/back_btn"
+            android:layout_width="@dimen/back_size"
+            android:layout_height="@dimen/back_size"
+            android:src="@drawable/back_gray" />
+
+        <EditText
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/white_btn_bg"
+            android:gravity="center_vertical"
+            android:hint="@string/search"
+            android:lines="1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColorHint="@color/gray_light"
+            android:textSize="@dimen/text_size_12" />
+
+    </LinearLayout>
+
+    <com.vonchenchen.menudemo.complexmenu.SelectMenuView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/course_recyclerVie"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

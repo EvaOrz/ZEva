@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/body_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bar_height"
+        android:background="@color/body_gray"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/jiangzhuang_back"
+            android:layout_width="@dimen/back_size"
+            android:layout_height="@dimen/back_size"
+            android:src="@drawable/back_gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="全部奖状"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/delete_all"
+            android:textColor="@color/gold"
+            android:textSize="@dimen/text_size_16" />
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/jiangzhuang_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/body_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/gray_white_xiankuang"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@color/gray_dark" />
+    </LinearLayout>
+</LinearLayout>

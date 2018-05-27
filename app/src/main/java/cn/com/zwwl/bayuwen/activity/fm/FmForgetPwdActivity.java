@@ -3,6 +3,7 @@ package cn.com.zwwl.bayuwen.activity.fm;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import com.avos.avoscloud.RequestMobileCodeCallback;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.api.ActionApi;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.BayuwenTools;
 import cn.com.zwwl.bayuwen.util.SmsTools;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -70,7 +72,8 @@ public class FmForgetPwdActivity extends BaseActivity {
                 if (BayuwenTools.checkIsPhone(this, phone)) doGetVerifyCode(phone);
                 break;
             case R.id.forget_next:// 下一步
-                phoneTip.setText(String.format(mContext.getResources().getString(R.string.forget_pwd_tip2), phone));
+                phoneTip.setText(String.format(mContext.getResources().getString(R.string
+                        .forget_pwd_tip2), phone));
                 firstStep.setVisibility(View.GONE);
                 nextStep.setVisibility(View.VISIBLE);
                 break;
@@ -83,11 +86,21 @@ public class FmForgetPwdActivity extends BaseActivity {
                         @Override
                         public void setData(Entry entry) {
                             showLoadingDialog(false);
-                            if (entry == null) {
+
+                        }
+
+                        @Override
+                        public void setError(ErrorMsg error) {
+                            showLoadingDialog(false);
+                            if (error != null)
+                                showToast(TextUtils.isEmpty(error.getDesc()) ? mContext
+                                        .getResources()
+                                        .getString(R.string.forget_pwd_faild) : error
+                                        .getDesc());
+                            else {
                                 showToast(R.string.forget_pwd_success);
                                 finish();
-                            } else
-                                showToast(R.string.forget_pwd_faild);
+                            }
                         }
                     });
                 }

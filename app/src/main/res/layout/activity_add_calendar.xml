@@ -49,13 +49,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/gray_xiankuang_circle"
+                android:background="@drawable/gray_white_xiankuang"
                 android:orientation="vertical"
                 android:padding="15dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:orientation="horizontal">
 
                     <TextView
@@ -277,6 +279,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:orientation="horizontal">
 
                     <TextView
@@ -311,6 +315,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:orientation="horizontal">
 
                     <TextView
@@ -342,7 +348,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/gray_xiankuang_circle"
+                android:background="@drawable/gray_white_xiankuang"
                 android:orientation="vertical"
                 android:padding="15dp">
 
@@ -382,6 +388,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:orientation="horizontal">
 
                     <TextView
@@ -415,6 +423,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:orientation="horizontal">
 
                     <TextView
@@ -445,7 +455,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/gray_xiankuang_circle"
+                android:background="@drawable/gray_white_xiankuang"
                 android:orientation="vertical"
                 android:padding="15dp">
 

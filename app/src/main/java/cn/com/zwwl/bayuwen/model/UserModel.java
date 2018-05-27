@@ -24,6 +24,8 @@ public class UserModel extends Entry {
     private String created_at = "";
     private String updated_at = "";
     private int level = 0;
+    private String userAccount = "";
+    private String signCode = "";// 邀请码
 
     public UserModel() {
     }
@@ -157,17 +159,30 @@ public class UserModel extends Entry {
         this.token = token;
     }
 
+
+    public String getSignCode() {
+        return signCode;
+    }
+
+    public void setSignCode(String signCode) {
+        this.signCode = signCode;
+    }
+
     public int getSexTxt(int i) {
         if (i == 1) return R.string.male;
         else if (i == 2) return R.string.female;
         return R.string.nomale;
     }
 
+    public String getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(String userAccount) {
+        this.userAccount = userAccount;
+    }
+
     /**
-     * private String created_at = "";
-     * private String updated_at = "";
-     * private int level = 0;
-     *
      * @param jsonObject
      * @param userModel
      * @return
@@ -189,6 +204,8 @@ public class UserModel extends Entry {
         userModel.setCreated_at(jsonObject.optString("created_at"));
         userModel.setUpdated_at(jsonObject.optString("updated_at"));
         userModel.setLevel(jsonObject.optInt("level"));
+        userModel.setUserAccount(jsonObject.optString("userAccount"));
+        userModel.setSignCode(jsonObject.optString("sign_code"));
         return userModel;
     }
 

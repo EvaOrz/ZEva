@@ -21,10 +21,11 @@ import java.io.File;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
-import cn.com.zwwl.bayuwen.api.UploadApi;
-import cn.com.zwwl.bayuwen.api.UserApi;
-import cn.com.zwwl.bayuwen.db.DataHelper;
+import cn.com.zwwl.bayuwen.api.UploadPicApi;
+import cn.com.zwwl.bayuwen.api.UserInfoApi;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.util.AddressTools;
 import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 import cn.com.zwwl.bayuwen.view.ChangeInfoDialog;
 import cn.com.zwwl.bayuwen.widget.FetchPhotoManager;
@@ -54,7 +55,7 @@ public class FmChangeUserInfoActivity extends BaseActivity {
         setContentView(R.layout.activity_change_userinfo);
         picturePath = Environment.getExternalStorageDirectory().getPath() + "/" + AVATAR_PIC;
         initView();
-        userModel = DataHelper.getUserLoginInfo(this);
+        userModel = UserDataHelper.getUserLoginInfo(this);
         initData();
     }
 
@@ -144,9 +145,10 @@ public class FmChangeUserInfoActivity extends BaseActivity {
                 });
                 break;
             case R.id.info_address:
-                new AddressPopWindow(mContext, new AddressPopWindow.OnAddressCListener() {
+                new AddressPopWindow(mContext, 0,new AddressPopWindow.OnAddressCListener() {
                     @Override
-                    public void onClick(String province, String city) {
+                    public void onClick(AddressTools.ProvinceModel province, AddressTools
+                            .CityModel city, AddressTools.DistModel dist) {
 
                     }
                 });
@@ -156,49 +158,53 @@ public class FmChangeUserInfoActivity extends BaseActivity {
                 if (isNeedChangePic) {
                     uploadPic(photoFile);
                 } else
-                    commit(userModel.getName(), userModel.getTel(), userModel.getSex(), userModel.getProvince(), userModel.getCity(), "");
+                    commit();
                 break;
 
         }
     }
 
     private void uploadPic(File file) {
-        new UploadApi(this, file, new FetchEntryListener() {
+        new UploadPicApi(this, file, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
-                if (entry != null && entry instanceof ErrorMsg) {
-                    userModel.setPic(((ErrorMsg) entry).getDesc());
-                    commit(userModel.getName(), userModel.getTel(), userModel.getSex(), userModel.getProvince(), userModel.getCity(), userModel.getPic());
+                if (entry != null && entry instanceof UserModel) {
+                    userModel.setPic(((UserModel) entry).getPic());
+                    commit();
 
-                } else {
-                    showToast(R.string.upload_faild);
                 }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                if (error != null)
+                    showToast(TextUtils.isEmpty(error.getDesc()) ? mContext.getResources()
+                            .getString(R.string.upload_faild) : error
+                            .getDesc());
             }
         });
     }
 
     /**
      * 提交
-     *
-     * @param name
-     * @param phone
-     * @param gendar
-     * @param province
-     * @param city
-     * @param pic
      */
-    private void commit(String name, String phone, int gendar, int province, int city, String pic) {
-        new UserApi(this, name, phone, gendar, province, city, pic, new FetchEntryListener() {
+    private void commit() {
+        new UserInfoApi(this, userModel, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
                 showLoadingDialog(false);
                 if (entry != null && entry instanceof UserModel) {
                     MyApplication.loginStatusChange = true;
                     finish();
-                } else {
-                    showToast(R.string.change_info_faild);
                 }
+            }
 
+            @Override
+            public void setError(ErrorMsg error) {
+                if (error != null)
+                    showToast(TextUtils.isEmpty(error.getDesc()) ? mContext.getResources()
+                            .getString(R.string.upload_faild) : error
+                            .getDesc());
             }
         });
     }

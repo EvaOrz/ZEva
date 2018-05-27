@@ -16,7 +16,13 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
 public abstract class BaseApi {
     protected Context mContext;
-    protected HttpUtil httpUtil = HttpUtil.getInstance();
+    protected HttpUtil httpUtil = null;
+    protected boolean isNeedJsonArray = false;// 返回的data数据是否是array格式
+
+    public BaseApi(Context context) {
+        httpUtil = HttpUtil.getInstance(context);
+    }
+
 
     /**
      * 接口地址
@@ -28,14 +34,18 @@ public abstract class BaseApi {
      */
     protected abstract Map<String, String> getPostParams();
 
-    /**
-     * header参数设置
-     */
-    protected abstract String getHeadValue();
-
 
     protected void post() {
-        httpUtil.postDataAsynToNet(getUrl(), getPostParams(), getHeadValue(), new FetchDataListener() {
+        httpUtil.postDataAsynToNet(getUrl(), getPostParams(), new FetchDataListener() {
+            @Override
+            public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
+                Log.e(getUrl(), data);
+                handlerData(isSuccess, data, fromHttp);
+            }
+        });
+    }
+    protected void put() {
+        httpUtil.putDataAsynToNet(getUrl(), getPostParams(), new FetchDataListener() {
             @Override
             public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
                 Log.e(getUrl(), data);
@@ -45,7 +55,7 @@ public abstract class BaseApi {
     }
 
     protected void postFile(File file) {
-        httpUtil.postFile(getUrl(), getHeadValue(), file, new FetchDataListener() {
+        httpUtil.postFile(getUrl(), file, new FetchDataListener() {
             @Override
             public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
                 Log.e(getUrl(), data);
@@ -55,7 +65,7 @@ public abstract class BaseApi {
     }
 
     protected void get() {
-        httpUtil.getDataAsynFromNet(getUrl(), getHeadValue(), new FetchDataListener() {
+        httpUtil.getDataAsynFromNet(getUrl(), new FetchDataListener() {
             @Override
             public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
                 Log.e(getUrl(), data);
@@ -65,7 +75,7 @@ public abstract class BaseApi {
     }
 
     protected void delete() {
-        httpUtil.deleteDataAsynToNet(getUrl(), getPostParams(), getHeadValue(), new FetchDataListener() {
+        httpUtil.deleteDataAsynToNet(getUrl(), getPostParams(), new FetchDataListener() {
             @Override
             public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
                 Log.e(getUrl(), data);
@@ -76,7 +86,7 @@ public abstract class BaseApi {
     }
 
     protected void patch() {
-        httpUtil.patchDataAsynToNet(getUrl(), getPostParams(), getHeadValue(), new FetchDataListener() {
+        httpUtil.patchDataAsynToNet(getUrl(), getPostParams(), new FetchDataListener() {
             @Override
             public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
                 Log.e(getUrl(), data);
@@ -88,43 +98,59 @@ public abstract class BaseApi {
     /**
      * 由子类去解析json数据
      *
-     * @param data
+     * @param json
+     * @param array
      */
-    protected abstract void handler(JSONObject data, ErrorMsg errorMsg);
+    protected abstract void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg);
+
 
     /**
      * 解析数据
+     * <p>
+     * {"success":false,"statusCode":500,"data":[],"err_msg":"该账号不存在"}
      *
-     * @param isSuccess
-     * @param data
-     * @param fromHttp
+     * @param isSuccess      true:解析data ; false:解析err_msg
+     * @param responseString
+     * @param fromHttp       后期做接口缓存用，目前不需要
      */
-    private void handlerData(boolean isSuccess, String data, boolean fromHttp) {
-        if (isSuccess) {
-            if (TextUtils.isEmpty(data)) {
-                handler(null, new ErrorMsg());
-                // showToast(R.string.net_error);
-            } else {
-                try {
-                    if (data.equals("[]")) {
-                        data = "{}";
-                    }
-                    JSONObject obj = new JSONObject(data);
-                    if (isNull(obj)) {
-                        handler(null, new ErrorMsg());
+    private void handlerData(boolean isSuccess, String responseString, boolean fromHttp) {
+        if (isSuccess) {//200
+            try {
+                JSONObject object = new JSONObject(responseString);
+                if (isNull(object)) {
+                    handler(null, null, getServerError());
+                } else {
+                    if (object.optBoolean("success")) {// 解析data
+                        if (isNeedJsonArray) {
+                            handler(null, object.optJSONArray("data"), null);
+                        } else
+                            handler(object.optJSONObject("data"), null, null);
                     } else {
-//                        JSONObject dataJson = obj.optJSONObject("data");
-//                        if (!isNull(dataJson))
-                        handler(obj, null);
+                        String err_msg = object.optString("err_msg");
+                        ErrorMsg errorMsg = new ErrorMsg();
+                        errorMsg.setDesc(err_msg);
+                        handler(null, null, errorMsg);
                     }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                handler(null, null, getServerError());
             }
         } else {
-            handler(null, new ErrorMsg());
+            handler(null, null, getServerError());
         }
+    }
+
+    /**
+     * 报服务器错
+     *
+     * @return
+     */
+    private ErrorMsg getServerError() {
+        ErrorMsg msg = new ErrorMsg();
+        msg.setDesc("Server error");
+        return msg;
     }
 
     /**
