@@ -297,6 +297,12 @@
     <string name="live_play">直播</string>
     <string name="hint_input_eval">期待您的评价</string>
     <string name="niming">匿名</string>
+    <string name="chose_course_by_need">选择需要调课的课程</string>
+    <string name="change_course">调课</string>
+    <string name="covert_class_course">转班课程</string>
+    <string name="chose_covert_class_course_by_need">选择需要转班的课程</string>
+    <string name="no_study_unit">课表 (当前未进行的课次)</string>
+    <string name="chose_change_course_unit_by_need">选择需要调课的课次</string>
 
 
 </resources>

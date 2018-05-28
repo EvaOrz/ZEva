@@ -1,5 +1,6 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -75,14 +76,21 @@ public class StudyingCourseActivity extends BasicActivity {
     @OnClick({R.id.course_eval, R.id.course_change, R.id.class_covert})
     @Override
     public void onClick(View view) {
+        Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.course_eval:
+                intent.setClass(this, CourseEvalActivity.class);
                 break;
             case R.id.course_change:
+                intent.putExtra("type", 0);
+                intent.setClass(this, CourseTableActivity.class);
                 break;
             case R.id.class_covert:
+                intent.putExtra("type", 1);
+                intent.setClass(this, CourseTableActivity.class);
                 break;
         }
+        startActivity(intent);
     }
 
 }

@@ -269,7 +269,9 @@
         <activity android:name=".activity.StudyingCourseActivity" />
         <!--课程评价-->
         <activity android:name=".activity.CourseEvalActivity" />
-        <activity android:name=".activity.CourseChangeActivity" />
+        <!--课程列表-->
+        <activity android:name=".activity.CourseTableActivity" />
+        <activity android:name=".activity.UnitTableActivity" />
 
 
         <!--腾讯定位SDK key-->

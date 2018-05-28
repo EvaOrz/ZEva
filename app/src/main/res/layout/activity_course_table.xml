@@ -18,7 +18,6 @@
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:text="@string/course_progress"
         android:textColor="@color/gray"
         android:id="@+id/type"
         app:layout_constraintTop_toBottomOf="@+id/top" />
