@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">诸葛学堂</string>
+    <string name="app_name">大语文</string>
 
 
     <!--main-->
@@ -12,9 +12,11 @@
     <string name="suohuoxunzhang">所获勋章</string>
 
     <!--选课-->
+    <string name="top_txt">点赞排行</string>
     <string name="top_txt1">教师点赞排行榜</string>
     <string name="top_txt2">学业顾问点赞排行榜</string>
     <string name="top_txt3">校区助手点赞排行榜</string>
+    <string name="jiaoshi_detail">教师详情</string>
 
     <!--FM main-->
     <string name="hot_recommond">热门推荐</string>
@@ -304,5 +306,14 @@
     <string name="no_study_unit">课表 (当前未进行的课次)</string>
     <string name="chose_change_course_unit_by_need">选择需要调课的课次</string>
 
-
+    <!--课程详情-->
+    <string name="ke_detail">课程详情</string>
+    <string name="tab1">课程表</string>
+    <string name="tab2">课程大纲</string>
+    <string name="tab3">家长评价</string>
+    <string name="look_all">查看全部</string>
+    <string name="guwen">顾问</string>
+    <string name="shuoming">说明</string>
+    <string name="tuangou_baoming">团购报名</string>
+    <string name="dandu_baoming">单独报名</string>
 </resources>

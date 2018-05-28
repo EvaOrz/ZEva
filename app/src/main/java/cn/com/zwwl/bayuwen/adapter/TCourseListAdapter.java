@@ -11,6 +11,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
 
 /**
  * 教师详情页面课程adapter
@@ -26,7 +27,7 @@ public class TCourseListAdapter extends BaseRecylcerViewAdapter<KeModel> {
     @Override
     public TCourseListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int
             viewType) {
-        return new TCourseListAdapter.ViewHolder(inflater.inflate(R.layout.item_course_list,
+        return new TCourseListAdapter.ViewHolder(inflater.inflate(R.layout.item_teacher_c_list,
                 parent, false));
 
     }
@@ -34,12 +35,14 @@ public class TCourseListAdapter extends BaseRecylcerViewAdapter<KeModel> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         final TCourseListAdapter.ViewHolder viewHolder = (TCourseListAdapter.ViewHolder) holder;
-//        viewHolder.fcNameTv.setText(list.get(position).getTitle());
-//        viewHolder.fcnoTv.setText("班级编码：" + list.get(position).getModel());
-//        viewHolder.fcplaceTv.setText(list.get(position).gets());
-//        viewHolder.fctimeTv.setText(list.get(position).getStart_at() + "至" + list.get(position)
-// .getEnd_at());
-//        viewHolder.fcpriceTv.setText("¥ " + list.get(position).getBuyPrice());
+        KeModel keModel = list.get(position);
+        viewHolder.fcNameTv.setText(keModel.getTitle());
+        viewHolder.fcnoTv.setText("班级编码：" + keModel.getModel());
+        viewHolder.fcplaceTv.setText(keModel.getSchool());
+        viewHolder.fctimeTv.setText(CalendarTools.format(Long.valueOf(keModel.getStartPtime()),
+                "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(keModel.getEndPtime()),
+                "yyyy-MM-dd"));
+        viewHolder.fcpriceTv.setText("¥ " + list.get(position).getBuyPrice());
         setItemClickView(viewHolder.itemView, position);
     }
 

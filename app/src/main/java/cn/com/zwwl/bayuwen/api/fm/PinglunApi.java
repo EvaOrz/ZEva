@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.api.UrlUtil;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
 import cn.com.zwwl.bayuwen.http.BaseApi;
@@ -19,11 +20,11 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
  * 获取课程评论接口
  */
 public class PinglunApi extends BaseApi {
-    private FetchPingListListener listListener;
+    private FetchEntryListListener listListener;
     private String kid, cid;
     private List<PinglunModel> pinglunModels = new ArrayList<>();
 
-    public PinglunApi(Context context, String kid, String cid, FetchPingListListener listListener) {
+    public PinglunApi(Context context, String kid, String cid, FetchEntryListListener listListener) {
         super(context);
         mContext = context;
         isNeedJsonArray = true;
@@ -58,16 +59,4 @@ public class PinglunApi extends BaseApi {
         }
     }
 
-
-    public interface FetchPingListListener {
-        /**
-         * 给View传递数据
-         *
-         * @param list
-         */
-        public void setData(List<PinglunModel> list);
-
-
-        public void setError(ErrorMsg error);
-    }
 }

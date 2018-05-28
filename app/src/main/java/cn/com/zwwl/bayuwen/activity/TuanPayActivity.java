@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,9 +16,11 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.AddressApi;
+import cn.com.zwwl.bayuwen.glide.GlideApp;
 import cn.com.zwwl.bayuwen.model.AddressModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 
 /**
@@ -30,6 +33,8 @@ public class TuanPayActivity extends BaseActivity {
     private int type; // 0：拼团 1：垫付
 
     private TextView nameTv, phoneTv, addressTv, addTv;
+    private TextView tagTv, titleTv, teacherTv, xiaoquTv, dateTv, timeTv;
+    private ImageView imgView;
     private TextView dianNumTv;
     private KeModel keModel;
 
@@ -45,12 +50,36 @@ public class TuanPayActivity extends BaseActivity {
         type = getIntent().getIntExtra("TuanPayActivity_type", 0);
 
         initView();
+        setGoodsInfo();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         initData();
+    }
+
+    private void setGoodsInfo() {
+        tagTv = findViewById(R.id.ke_tag);
+        titleTv = findViewById(R.id.ke_title);
+        teacherTv = findViewById(R.id.ke_teacher);
+        xiaoquTv = findViewById(R.id.ke_xiaoqu);
+        dateTv = findViewById(R.id.ke_date);
+        timeTv = findViewById(R.id.ke_time);
+        imgView = findViewById(R.id.ke_avatar);
+
+        tagTv.setText(keModel.getTagTxt());
+        titleTv.setText(keModel.getTitle());
+        teacherTv.setText(keModel.getTname());
+        xiaoquTv.setText(keModel.getSchool());
+        dateTv.setText(CalendarTools.format(Long.valueOf(keModel.getStartPtime()),
+                "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(keModel.getEndPtime()),
+                "yyyy-MM-dd"));
+        timeTv.setText(keModel.getClass_start_at() + " - " + keModel.getClass_end_at());
+        GlideApp.with(mContext).load(keModel.getPic())
+                .placeholder(R.drawable.avatar_placeholder)
+                .error(R.drawable.avatar_placeholder)
+                .into(imgView);
     }
 
     private void initView() {
@@ -60,6 +89,7 @@ public class TuanPayActivity extends BaseActivity {
         addTv = findViewById(R.id.tuan_pay_addaddress);
         adresslayout = findViewById(R.id.go_select_layout);
         dianNumTv = findViewById(R.id.dian_num);
+
         dianLayout = findViewById(R.id.dianfu_layout);
         pinLayout = findViewById(R.id.pintuan_layout);
 

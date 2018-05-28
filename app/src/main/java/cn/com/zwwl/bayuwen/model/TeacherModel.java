@@ -2,17 +2,17 @@ package cn.com.zwwl.bayuwen.model;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 教师model
  */
 public class TeacherModel extends Entry {
-    private String to_uid = "";
-    private String vote_num = "";
-    private String theme = "";
-    private String to_name = "";
     private String tid;
     private String pic;
     private String name;
+    private String tel;
     private String t_desc;
     private String t_style;
     private Object t_harvest;
@@ -21,36 +21,14 @@ public class TeacherModel extends Entry {
     private String t_idea = "";
     private String ke_main = "";
 
-    public String getTo_uid() {
-        return to_uid;
+    private List<KeModel> keModels = new ArrayList<>();
+
+    public String getTel() {
+        return tel;
     }
 
-    public void setTo_uid(String to_uid) {
-        this.to_uid = to_uid;
-    }
-
-    public String getVote_num() {
-        return vote_num;
-    }
-
-    public void setVote_num(String vote_num) {
-        this.vote_num = vote_num;
-    }
-
-    public String getTheme() {
-        return theme;
-    }
-
-    public void setTheme(String theme) {
-        this.theme = theme;
-    }
-
-    public String getTo_name() {
-        return to_name;
-    }
-
-    public void setTo_name(String to_name) {
-        this.to_name = to_name;
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 
     public String getTid() {
@@ -133,18 +111,29 @@ public class TeacherModel extends Entry {
         this.ke_main = ke_main;
     }
 
+    public List<KeModel> getKeModels() {
+        return keModels;
+    }
+
+    public void setKeModels(List<KeModel> keModels) {
+        this.keModels = keModels;
+    }
+
     /**
      * @param jsonObject
      * @param teacherModel
      * @return
      */
     public TeacherModel parseTeacherModel(JSONObject jsonObject, TeacherModel teacherModel) {
-        teacherModel.setTo_uid(jsonObject.optString("to_uid"));
-        teacherModel.setVote_num(jsonObject.optString("vote_num"));
-        teacherModel.setTheme(jsonObject.optString("theme"));
-        teacherModel.setTo_name(jsonObject.optString("to_name"));
+        teacherModel.setTid(jsonObject.optString("tid"));
+        teacherModel.setName(jsonObject.optString("name"));
+        teacherModel.setTel(jsonObject.optString("tel"));
+        teacherModel.setT_shortdesc(jsonObject.optString("t_shortdesc"));
         teacherModel.setPic(jsonObject.optString("pic"));
         teacherModel.setT_desc(jsonObject.optString("t_desc"));
+        teacherModel.setT_style(jsonObject.optString("t_style"));
+        teacherModel.setT_idea(jsonObject.optString("t_idea"));
+        teacherModel.setKe_main(jsonObject.optString("ke_main"));
         return teacherModel;
     }
 

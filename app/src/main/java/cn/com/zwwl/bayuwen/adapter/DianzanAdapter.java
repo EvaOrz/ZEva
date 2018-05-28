@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,32 +14,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.TeacherDetailActivity;
+import cn.com.zwwl.bayuwen.glide.GlideApp;
 import cn.com.zwwl.bayuwen.model.Entry;
-import cn.com.zwwl.bayuwen.model.GuwenModel;
-import cn.com.zwwl.bayuwen.model.TeacherModel;
-import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
-import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.model.ZanTeacherModel;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
  * 历史记录adapter
  */
-public class DianzanAdapter extends CheckScrollAdapter<Entry> {
+public class DianzanAdapter extends CheckScrollAdapter<ZanTeacherModel> {
     protected Context mContext;
     protected List<Entry> mItemList = new ArrayList<>();
-    private int type;// 0：教师 1：助教、顾问
 
-    public DianzanAdapter(Context context, int type) {
+    public DianzanAdapter(Context context) {
         super(context);
         mContext = context;
-        this.type = type;
     }
 
-    public void setData(List<Entry> mItemList) {
+    public void setData(List<ZanTeacherModel> mItemList) {
         clearData();
         isScroll = false;
         synchronized (mItemList) {
-            for (Entry item : mItemList) {
+            for (ZanTeacherModel item : mItemList) {
                 add(item);
             }
         }
@@ -53,23 +51,23 @@ public class DianzanAdapter extends CheckScrollAdapter<Entry> {
         TextView desc = viewHolder.getView(R.id.tcherDesTv);
         ImageView img = viewHolder.getView(R.id.course_cover);
 
-        if (type == 0) {
-            final TeacherModel item = (TeacherModel) getItem(position);
-            name.setText(item.getTo_name());
-            desc.setText(item.getT_desc());
-            if (!TextUtils.isEmpty(item.getPic()))
-                Glide.with(mContext)
-                        .load(item.getPic())
-                        .into(img);
-        } else {
-            final GuwenModel item = (GuwenModel) getItem(position);
-            name.setText(item.getTo_name());
-            desc.setText(item.getT_desc());
-            if (!TextUtils.isEmpty(item.getPic()))
-                Glide.with(mContext)
-                        .load(item.getPic())
-                        .into(img);
-        }
+        final ZanTeacherModel item = getItem(position);
+        viewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, TeacherDetailActivity.class);
+                i.putExtra("tid", item.getTo_uid());
+                mContext.startActivity(i);
+            }
+        });
+        name.setText(item.getTo_name());
+        desc.setText(item.getT_desc());
+        if (!TextUtils.isEmpty(item.getPic()))
+            GlideApp.with(mContext)
+                    .load(item.getPic())
+                    .error(R.drawable.avatar_placeholder)
+                    .placeholder(R.drawable.avatar_placeholder)
+                    .into(img);
         return viewHolder.getConvertView();
     }
 

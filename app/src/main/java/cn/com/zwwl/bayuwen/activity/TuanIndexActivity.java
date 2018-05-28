@@ -28,7 +28,8 @@ import cn.com.zwwl.bayuwen.api.TuanGouApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.TuanInfoModel;
+import cn.com.zwwl.bayuwen.model.GroupBuyModel;
+import cn.com.zwwl.bayuwen.model.KeModel;
 
 /**
  * 我要参团页面
@@ -43,7 +44,7 @@ public class TuanIndexActivity extends BaseActivity {
     private List<View> views = new ArrayList<>();
     private MyViewPagerAdapter adapter;
 
-    private TuanInfoModel tuanInfoModel;
+    private KeModel keModel;
 
     private TextView dianNum, dianJiao, dianKe, dianTotal, payTotal;
 
@@ -53,7 +54,13 @@ public class TuanIndexActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tuan_index);
         initView();
-        initData();
+        if (getIntent().getSerializableExtra("TuanIndexActivity_data") != null && getIntent()
+                .getSerializableExtra("TuanIndexActivity_data")
+                instanceof KeModel) {
+            keModel = (KeModel) getIntent().getSerializableExtra("TuanIndexActivity_data");
+            initData();
+        }
+
     }
 
     private void initView() {
@@ -151,12 +158,7 @@ public class TuanIndexActivity extends BaseActivity {
                     codeSureTv.setBackground(getResources().getDrawable(R.drawable.gray_circle));
                     break;
                 case 2:
-                    dianNum.setText(tuanInfoModel.getLimit_num());
-                    dianJiao.setText(tuanInfoModel.getMaterial_price() + "");
-                    dianKe.setText(tuanInfoModel.getDiscount_pintrice() - tuanInfoModel
-                            .getMaterial_price() + "");
-                    dianTotal.setText(tuanInfoModel.getDiscount_pintrice() + "");
-                    payTotal.setText(tuanInfoModel.getTotal_price() + "");
+
                     break;
             }
         }
@@ -185,7 +187,9 @@ public class TuanIndexActivity extends BaseActivity {
             case R.id.tuan_index_intro:// 团购说明
                 break;
             case R.id.sure_dian:// 确认垫付
-                startActivity(new Intent(mContext, TuanPayActivity.class));
+                Intent i = new Intent(mContext, TuanPayActivity.class);
+                i.putExtra("TuanPayActivity_data", keModel);
+                startActivity(i);
                 break;
             case R.id.tuan_index_kaituan:// 我要开团
                 getKaiTuanCode();
@@ -204,7 +208,8 @@ public class TuanIndexActivity extends BaseActivity {
      */
     private void getKaiTuanCode() {
         showLoadingDialog(true);
-        new TuanKaiApi(mContext, tuanInfoModel.getItem_id(), true, new FetchEntryListener() {
+        new TuanKaiApi(mContext, keModel.getGroupbuy().getItem_id(), true, new FetchEntryListener
+                () {
             @Override
             public void setError(ErrorMsg error) {
                 showLoadingDialog(false);
@@ -259,23 +264,12 @@ public class TuanIndexActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        new TuanGouApi(mContext, "7018", new FetchEntryListener() {
-            @Override
-            public void setData(Entry entry) {
-                if (entry != null && entry instanceof TuanInfoModel) {
-                    tuanInfoModel = (TuanInfoModel) entry;
-                    handler.sendEmptyMessage(2);
-                }
-            }
-
-            @Override
-            public void setError(ErrorMsg error) {
-                if (error != null) {
-                    showToast(error.getDesc());
-                    finish();
-                }
-            }
-        });
+        dianNum.setText(keModel.getGroupbuy().getLimit_num());
+        dianJiao.setText(keModel.getGroupbuy().getMaterial_price() + "");
+        dianKe.setText(keModel.getGroupbuy().getDiscount_pintrice() - keModel.getGroupbuy()
+                .getMaterial_price() + "");
+        dianTotal.setText(keModel.getGroupbuy().getDiscount_pintrice() + "");
+        payTotal.setText(keModel.getGroupbuy().getTotal_price() + "");
     }
 
 }

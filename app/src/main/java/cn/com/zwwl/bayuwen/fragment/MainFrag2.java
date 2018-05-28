@@ -10,33 +10,25 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.SearchCourseActivity;
 import cn.com.zwwl.bayuwen.adapter.DianzanAdapter;
-import cn.com.zwwl.bayuwen.adapter.EleCourseGridAdapter;
-import cn.com.zwwl.bayuwen.api.EleCourseListApi;
-import cn.com.zwwl.bayuwen.api.EleCourseListApi.*;
+import cn.com.zwwl.bayuwen.adapter.KeTagGridAdapter;
+import cn.com.zwwl.bayuwen.api.KeTagListApi;
+import cn.com.zwwl.bayuwen.api.KeTagListApi.*;
 import cn.com.zwwl.bayuwen.api.PraiseListApi;
 import cn.com.zwwl.bayuwen.api.PraiseListApi.*;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
@@ -45,8 +37,10 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.widget.BannerView;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
-import cn.com.zwwl.bayuwen.widget.StopLinearLayoutManager;
-import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
+import cn.com.zwwl.bayuwen.widget.observable.ObservableScrollView;
+import cn.com.zwwl.bayuwen.widget.observable.ObservableScrollViewCallbacks;
+import cn.com.zwwl.bayuwen.widget.observable.ScrollState;
+import cn.com.zwwl.bayuwen.widget.observable.ScrollUtils;
 
 /**
  * 选课
@@ -61,11 +55,11 @@ public class MainFrag2 extends Fragment
     private ObservableScrollView mScrollView;
     private GridView mGridView;
 
-    private NoScrollListView tListView,gListView,zListView;
+    private NoScrollListView tListView, gListView, zListView;
     private DianzanAdapter tAdapter, gAdapter, zAdapter;
 
     private int mParallaxImageHeight;
-    private EleCourseGridAdapter gridAdapter;
+    private KeTagGridAdapter gridAdapter;
     private List<TagCourseModel> tagList = new ArrayList<>();
     private PraiseModel praiseModel;
 
@@ -76,10 +70,12 @@ public class MainFrag2 extends Fragment
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
+                    gridAdapter = new KeTagGridAdapter(getActivity(), tagList);
+                    mGridView.setAdapter(gridAdapter);
                     gridAdapter.notifyDataSetChanged();
                     break;
                 case 1:
-//                    setAdapterData();
+                    setAdapterData();
                     break;
             }
         }
@@ -127,7 +123,7 @@ public class MainFrag2 extends Fragment
     }
 
     private void initView() {
-        mParallaxImageHeight = getResources().getDimensionPixelSize(R.dimen.parallax_image_height);
+        mParallaxImageHeight = MyApplication.width * 9 / 16;
         mImageView = root.findViewById(R.id.image);
         mToolbarView = root.findViewById(R.id.main2_toolbar);
         mToolbarView.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, getResources().getColor
@@ -140,15 +136,14 @@ public class MainFrag2 extends Fragment
         mScrollView.setZoomView(mImageView);
 
         tListView = root.findViewById(R.id.jiaoshi_layout);
-zListView = root.findViewById(R.id.zhujiao_layout);
+        gListView = root.findViewById(R.id.guwen_layout);
+        zListView = root.findViewById(R.id.zhujiao_layout);
 
-        gridAdapter = new EleCourseGridAdapter(getActivity(), tagList);
-        mGridView.setAdapter(gridAdapter);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
-                intent.putExtra("id", tagList.get(position).getId());
+                intent.putExtra("SearchCourseActivity_id", tagList.get(position).getId());
                 intent.setClass(mActivity, SearchCourseActivity.class);
                 startActivity(intent);
             }
@@ -159,13 +154,16 @@ zListView = root.findViewById(R.id.zhujiao_layout);
         mToolbarView.findViewById(R.id.school_iv).setOnClickListener(this);
     }
 
-    private void setRecyclerView(RecyclerView view) {
-        view.setHasFixedSize(true);
-        StopLinearLayoutManager linearLayoutManager = new StopLinearLayoutManager(getActivity());
-        linearLayoutManager.setScrollEnabled(false);
-        view.setLayoutManager(linearLayoutManager);
-        view.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R.dimen
-                .dp_10, OrientationHelper.VERTICAL));
+    private void setAdapterData() {
+        tAdapter = new DianzanAdapter(mActivity);
+        tAdapter.setData(praiseModel.getTeacherModels());
+        tListView.setAdapter(tAdapter);
+        gAdapter = new DianzanAdapter(mActivity);
+        gAdapter.setData(praiseModel.getGuwenModels());
+        gListView.setAdapter(gAdapter);
+        zAdapter = new DianzanAdapter(mActivity);
+        zAdapter.setData(praiseModel.getTeacherModels());
+        zListView.setAdapter(zAdapter);
     }
 
     @Override
@@ -197,24 +195,30 @@ zListView = root.findViewById(R.id.zhujiao_layout);
         }
     }
 
+    /**
+     * 获取课程标签数据
+     */
     private void getEleCourseList() {
-        new EleCourseListApi(getActivity(), new FetchEntryListListener() {
+        new KeTagListApi(getActivity(), new FetchEntryListListener() {
 
             @Override
             public void setData(List list) {
                 if (list != null && list.size() > 0) {
-                    gridAdapter.addData(list);
+                    tagList.clear();
+                    tagList.addAll(list);
                     handler.sendEmptyMessage(0);
                 }
             }
 
             @Override
             public void setError(ErrorMsg error) {
-                Toast.makeText(getActivity(), error.getDesc(), Toast.LENGTH_LONG);
             }
         });
     }
 
+    /**
+     * 获取点赞排行数据
+     */
     private void getPraiseList() {
         new PraiseListApi(getActivity(), new FetchEntryListener() {
 
@@ -228,7 +232,6 @@ zListView = root.findViewById(R.id.zhujiao_layout);
 
             @Override
             public void setError(ErrorMsg error) {
-                Toast.makeText(getActivity(), error.getDesc(), Toast.LENGTH_LONG);
             }
         });
     }

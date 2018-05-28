@@ -11,7 +11,6 @@ import java.util.Map;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.TuanInfoModel;
 
 /**
  * 发起拼团（获取拼团码）

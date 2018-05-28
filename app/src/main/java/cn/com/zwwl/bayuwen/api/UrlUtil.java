@@ -163,4 +163,9 @@ public class UrlUtil {
         return HOST + "/grouppurchase";
     }
 
+    // 按字段搜索课程列表
+    public static String searchCourse() {
+        return HOST + "/course/search";
+    }
+
 }

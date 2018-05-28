@@ -5,14 +5,14 @@ import android.content.Context;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.TuanInfoModel;
+import cn.com.zwwl.bayuwen.model.GroupBuyModel;
+import cn.com.zwwl.bayuwen.model.KeModel;
 
 /**
  * 团购
@@ -47,9 +47,9 @@ public class TuanGouApi extends BaseApi {
         if (errorMsg != null)
             listener.setError(errorMsg);
         if (!isNull(json)) {
-            TuanInfoModel tuanInfoModel = new TuanInfoModel();
-            tuanInfoModel.parseTuanInfoModel(json, tuanInfoModel);
-            listener.setData(tuanInfoModel);
+           GroupBuyModel groupBuy = new GroupBuyModel();
+            groupBuy.parseGroupBuyModel(json, groupBuy);
+            listener.setData(groupBuy);
         } else {
             listener.setData(null);
         }

@@ -16,7 +16,7 @@ public abstract class BaseRecylcerViewAdapter<T> extends RecyclerView.Adapter<Re
     protected Context mContext;
     protected List<T> list;
     protected LayoutInflater inflater;
-    private OnItemClickListener onItemClickListener;
+    public OnItemClickListener onItemClickListener;
 
     public List<T> getList() {
         return list;
