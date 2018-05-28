@@ -108,7 +108,7 @@ public class CourseDetailActivity extends BaseActivity {
             @Override
             public void setData(List list) {
                 if (Tools.listNotNull(list)) {
-                    keModel = (KeModel) entry;
+//                    keModel = (KeModel) entry;
                     handler.sendEmptyMessage(0);
                 }
             }

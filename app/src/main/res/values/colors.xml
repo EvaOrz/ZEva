@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<color name="colorPrimary">#3F51B5</color>-->
-    <!--<color name="colorPrimaryDark">#303F9F</color>-->
-    <!--<color name="colorAccent">#FF4081</color>-->
+    <color name="colorPrimary">#404873</color>
+    <color name="colorPrimaryDark">#1d2445</color>
+    <color name="colorAccent">#FF4081</color>
 
 
     <color name="white">#ffffffff</color>
@@ -52,4 +52,5 @@
     <color name="search_tv_color">#bcbcbc</color>
     <color name="cirle_line_color">#d7d7d7</color>
     <color name="tab_text_color">#5e6678</color>
+    <color name="text_color_default">#333333</color>
 </resources>

@@ -12,7 +12,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+
 import cn.com.zwwl.bayuwen.model.KeModel;
+
 
 /**
  * Created by lousx
@@ -40,6 +42,7 @@ public class CompleteCourseAdapter extends BaseRecylcerViewAdapter<KeModel> {
         viewHolder.tcherDesTv.setTextColor(mContext.getResources().getColor(R.color.body_gray));
         viewHolder.tcherNameTv.setText("大语文");
         viewHolder.tcherDesTv.setText("语文介绍语文介绍语文介绍语文介绍语文介绍语文介绍语文介绍语文介绍语文介绍");
+        setItemClickView(viewHolder.itemView, position);
     }
 
     @Override
@@ -58,9 +61,9 @@ public class CompleteCourseAdapter extends BaseRecylcerViewAdapter<KeModel> {
         }
 
         private void initView() {
-            course_cover =  itemView.findViewById(R.id.course_cover);
-            tcherNameTv =  itemView.findViewById(R.id.tcherNameTv);
-            tcherDesTv =  itemView.findViewById(R.id.tcherDesTv);
+            course_cover = itemView.findViewById(R.id.course_cover);
+            tcherNameTv = itemView.findViewById(R.id.tcherNameTv);
+            tcherDesTv = itemView.findViewById(R.id.tcherDesTv);
         }
     }
 }

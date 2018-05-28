@@ -34,6 +34,10 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
 
     <dimen name="dp_5">5dp</dimen>
+    <dimen name="dp_20">20dip</dimen>
+    <dimen name="dp_16">16dip</dimen>
+    <dimen name="dp_180">180dip</dimen>
+    <dimen name="dp_8">8dip</dimen>
 
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
