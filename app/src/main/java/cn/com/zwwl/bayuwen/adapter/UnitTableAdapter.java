@@ -12,7 +12,7 @@ import cn.com.zwwl.bayuwen.model.CourseModel;
 
 public class UnitTableAdapter extends BaseQuickAdapter<CourseModel,BaseViewHolder> {
     public UnitTableAdapter(@Nullable List<CourseModel> data) {
-        super(R.layout.item_course_table,data);
+        super(R.layout.item_unit_table,data);
     }
 
     @Override

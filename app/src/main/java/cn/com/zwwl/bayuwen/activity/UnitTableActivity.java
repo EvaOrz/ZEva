@@ -1,11 +1,14 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +61,12 @@ public class UnitTableActivity extends BasicActivity {
 
     @Override
     protected void setListener() {
-
+adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        startActivity(new Intent(mActivity,ConvertClassActivity.class));
+    }
+});
     }
 
     @Override
