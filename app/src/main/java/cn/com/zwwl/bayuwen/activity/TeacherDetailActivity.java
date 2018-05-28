@@ -115,7 +115,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
         StopLinearLayoutManager linearLayoutManager = new StopLinearLayoutManager(mContext);
         linearLayoutManager.setScrollEnabled(false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color.line, R
+        recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color.gray_line, R
                 .dimen.dp_1, OrientationHelper.VERTICAL));
 
         tCourseListAdapter = new TCourseListAdapter(mContext, keModels);

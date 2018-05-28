@@ -65,10 +65,11 @@ public class CourseApi extends BaseApi {
             KeModel keModel = gson.fromJson(course.toString(), KeModel.class);
             if (!isNull(course)) {
                 JSONObject gjson = course.optJSONObject("groupbuy");
-                if (isNull(gjson)) return;
-                GroupBuyModel groupBuyModel = new GroupBuyModel();
-                groupBuyModel.parseGroupBuyModel(gjson, groupBuyModel);
-                keModel.setGroupbuy(groupBuyModel);
+                if (!isNull(gjson)) {
+                    GroupBuyModel groupBuyModel = new GroupBuyModel();
+                    groupBuyModel.parseGroupBuyModel(gjson, groupBuyModel);
+                    keModel.setGroupbuy(groupBuyModel);
+                }
             }
             JSONArray larray = json.optJSONArray("lessons");
             if (!isNull(larray)) {

@@ -40,7 +40,8 @@
 
     </LinearLayout>
 
-    <com.vonchenchen.menudemo.complexmenu.SelectMenuView
+    <cn.com.zwwl.bayuwen.widget.selectmenu.SelectMenuView
+        android:id="@+id/select_ke_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

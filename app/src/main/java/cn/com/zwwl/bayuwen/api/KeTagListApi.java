@@ -27,7 +27,7 @@ public class KeTagListApi extends BaseApi {
         mContext = context;
         isNeedJsonArray = true;
         this.listener = listener;
-        this.url = UrlUtil.getEleCourseListUrl();
+        this.url = UrlUtil.getKeTagListUrl();
         get();
     }
 

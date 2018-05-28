@@ -18,7 +18,7 @@
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:textColor="@color/gray"
+        android:textColor="@color/gray_dark"
         android:id="@+id/type"
         app:layout_constraintTop_toBottomOf="@+id/top" />
 

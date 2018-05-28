@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,22 +14,16 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.adapter.CoursePageAdapter;
+import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.api.CourseApi;
 import cn.com.zwwl.bayuwen.api.fm.PinglunApi;
-import cn.com.zwwl.bayuwen.fragment.CDetailTabFrag1;
-import cn.com.zwwl.bayuwen.fragment.CDetailTabFrag2;
-import cn.com.zwwl.bayuwen.fragment.CDetailTabFrag3;
 import cn.com.zwwl.bayuwen.glide.GlideApp;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
-import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
@@ -38,7 +31,11 @@ import cn.com.zwwl.bayuwen.model.TeacherModel;
 import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.view.KeDetailView1;
+import cn.com.zwwl.bayuwen.view.KeDetailView2;
+import cn.com.zwwl.bayuwen.view.KeDetailView3;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
+import cn.com.zwwl.bayuwen.widget.CustomViewPager;
 
 /**
  * 课程详情页面
@@ -60,15 +57,15 @@ public class CourseDetailActivity extends BaseActivity {
 
     private LinearLayout teacherLayout;
 
-    private List<Fragment> fragments = new ArrayList<>();
-    private ViewPager mViewPager;
-    private CoursePageAdapter myViewPagerAdapter;
+    private List<View> keDetailViews = new ArrayList<>();
+    private CustomViewPager mViewPager;
+    private MyViewPagerAdapter myViewPagerAdapter;
 
     private KeModel keModel;
     private String cid;
-    private CDetailTabFrag1 cDetailTabFrag1;
-    private CDetailTabFrag2 cDetailTabFrag2;
-    private CDetailTabFrag3 cDetailTabFrag3;
+    private KeDetailView1 cDetailTabFrag1;
+    private KeDetailView2 cDetailTabFrag2;
+    private KeDetailView3 cDetailTabFrag3;
     private List<PinglunModel> pinglunModels = new ArrayList<>();
 
 
@@ -111,8 +108,9 @@ public class CourseDetailActivity extends BaseActivity {
             @Override
             public void setData(List list) {
                 if (Tools.listNotNull(list)) {
-//                    keModel = (KeModel) entry;
-                    handler.sendEmptyMessage(0);
+                    pinglunModels.clear();
+                    pinglunModels.addAll(list);
+                    handler.sendEmptyMessage(1);
                 }
             }
 
@@ -137,16 +135,15 @@ public class CourseDetailActivity extends BaseActivity {
         teacherLayout = findViewById(R.id.teacher_layout);
         mViewPager = findViewById(R.id.videoList_vp);
 
-        cDetailTabFrag1 = CDetailTabFrag1.newInstance();
-        cDetailTabFrag2 = CDetailTabFrag2.newInstance();
-        cDetailTabFrag3 = CDetailTabFrag3.newInstance("ss");
-        fragments.add(cDetailTabFrag1);
-        fragments.add(cDetailTabFrag2);
-        fragments.add(cDetailTabFrag3);
-        myViewPagerAdapter = new CoursePageAdapter(getSupportFragmentManager(),
-                fragments, null);
+        cDetailTabFrag1 = new KeDetailView1(mContext);
+        cDetailTabFrag2 = new KeDetailView2(mContext);
+        cDetailTabFrag3 = new KeDetailView3(mContext);
+        keDetailViews.add(cDetailTabFrag1);
+        keDetailViews.add(cDetailTabFrag2);
+        keDetailViews.add(cDetailTabFrag3);
+        myViewPagerAdapter = new MyViewPagerAdapter(keDetailViews);
         mViewPager.setAdapter(myViewPagerAdapter);
-        mViewPager.setOffscreenPageLimit(fragments.size());
+        mViewPager.setOffscreenPageLimit(keDetailViews.size());
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int
@@ -155,8 +152,8 @@ public class CourseDetailActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-//                mViewPager.resetHeight(position);
-//                findViewById(R.id.scroll).scrollTo(0, 0);
+                changeRadio(position);
+                mViewPager.resetHeight(position);
             }
 
             @Override
@@ -232,9 +229,11 @@ public class CourseDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.group_purchase_bt1: //团购报名
-                Intent i = new Intent(mContext, TuanIndexActivity.class);
-                i.putExtra("TuanIndexActivity_data", keModel);
-                startActivity(i);
+                if (keModel.getGroupbuy() !=null){
+                    Intent i = new Intent(mContext, TuanIndexActivity.class);
+                    i.putExtra("TuanIndexActivity_data", keModel);
+                    startActivity(i);
+                }
                 break;
             case R.id.group_purchase_bt2: //单独报名
                 Intent j = new Intent(mContext, TuanPayActivity.class);
@@ -252,35 +251,54 @@ public class CourseDetailActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    course_tv.setText(keModel.getTitle());
-                    classno_tv.setText("班级编码：" + keModel.getModel());
-                    price_tv.setText("￥ " + keModel.getBuyPrice());
-                    GlideApp.with(mContext)
-                            .load(keModel.getPic())
-                            .placeholder(R.drawable.avatar_placeholder)
-                            .error(R.drawable.avatar_placeholder)
-                            .into(course_iv);
-                    place_tv.setText(keModel.getSchool());
-                    teacher_tv.setText(keModel.getTname());
-                    date_tv.setText(CalendarTools.format(Long.valueOf(keModel.getStartPtime()),
-                            "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(keModel
-                                    .getEndPtime()),
-                            "yyyy-MM-dd"));
-                    time_tv.setText(keModel.getClass_start_at() + " - " + keModel.getClass_end_at
-                            ());
-                    teacherLayout.removeAllViews();
-                    for (TeacherModel t : keModel.getTeacherModels())
-                        teacherLayout.addView(getTeacherView(t));
-                    priceTv1.setText("￥" + keModel.getGroupbuy().getDiscount_pintrice());
-                    priceTv2.setText("￥" + keModel.getGroupbuy().getDiscount_pintrice());
-
-                    cDetailTabFrag1.setData(keModel.getLessonModels());
-                    cDetailTabFrag2.setData(keModel);
+                    setkeData();
+                    break;
+                case 1:
+                    setPinglunData();
                     break;
 
             }
         }
     };
+
+    /**
+     * 设置评论信息
+     */
+    private void setPinglunData() {
+        cDetailTabFrag3.setData(pinglunModels);
+    }
+
+    /**
+     * 设置课程信息
+     */
+    private void setkeData() {
+        course_tv.setText(keModel.getTitle());
+        classno_tv.setText("班级编码：" + keModel.getModel());
+        price_tv.setText("￥ " + keModel.getBuyPrice());
+        GlideApp.with(mContext)
+                .load(keModel.getPic())
+                .placeholder(R.drawable.avatar_placeholder)
+                .error(R.drawable.avatar_placeholder)
+                .into(course_iv);
+        place_tv.setText(keModel.getSchool());
+        teacher_tv.setText(keModel.getTname());
+        date_tv.setText(CalendarTools.format(Long.valueOf(keModel.getStartPtime()),
+                "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(keModel
+                        .getEndPtime()),
+                "yyyy-MM-dd"));
+        time_tv.setText(keModel.getClass_start_at() + " - " + keModel.getClass_end_at
+                ());
+        teacherLayout.removeAllViews();
+        for (TeacherModel t : keModel.getTeacherModels())
+            teacherLayout.addView(getTeacherView(t));
+        if (keModel.getGroupbuy() !=null){
+            priceTv1.setText("￥" + keModel.getGroupbuy().getDiscount_pintrice());
+            priceTv2.setText("￥" + keModel.getGroupbuy().getDiscount_pintrice());
+        }
+
+        cDetailTabFrag1.setData(keModel.getLessonModels());
+        cDetailTabFrag2.setData(keModel);
+    }
 
     private View getTeacherView(TeacherModel teacherModel) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_cdetail_teacher, null);

@@ -115,8 +115,8 @@ public class UrlUtil {
         return HOST + "/students";
     }
 
-    // 选课列表
-    public static String getEleCourseListUrl() {
+    // 选课首页标签列表
+    public static String getKeTagListUrl() {
         return HOST + "/course/type";
     }
 
@@ -135,19 +135,12 @@ public class UrlUtil {
     // 课程详情
     public static String getCDetailUrl(String cid) {
         if (TextUtils.isEmpty(cid))
-            return HOST + "/course/";
+            return HOST + "/course";
         return HOST + "/course/" + cid;
     }
 
     // 获取课程列表
     public static String getLecturesUrl(String cid, String page) {
-        if (TextUtils.isEmpty(cid))
-            return HOST + "/course/lectures";
-        return HOST + "/course/lectures?id=" + cid + "&page=" + page;
-    }
-
-    // 家长评价
-    public static String getEvaluateUrl(String cid, String page) {
         if (TextUtils.isEmpty(cid))
             return HOST + "/course/lectures";
         return HOST + "/course/lectures?id=" + cid + "&page=" + page;
@@ -163,9 +156,5 @@ public class UrlUtil {
         return HOST + "/grouppurchase";
     }
 
-    // 按字段搜索课程列表
-    public static String searchCourse() {
-        return HOST + "/course/search";
-    }
 
 }

@@ -56,7 +56,7 @@ public class CourseListApi extends BaseApi {
         super(context);
         mContext = context;
         this.listListener = listListener;
-        this.url = UrlUtil.searchCourse();
+        this.url = UrlUtil.getCDetailUrl(null) + "/search";
         get();
     }
 
