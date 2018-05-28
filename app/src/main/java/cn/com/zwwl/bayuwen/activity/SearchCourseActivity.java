@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,6 +21,7 @@ import cn.com.zwwl.bayuwen.adapter.KeSelectAdapter;
 import cn.com.zwwl.bayuwen.api.CourseListApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.listener.OnItemClickListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
@@ -100,15 +102,28 @@ public class SearchCourseActivity extends BaseActivity {
     }
 
     private void initView() {
-
-
         search_view = findViewById(R.id.search_view);
         recyclerView = findViewById(R.id.course_recyclerVie);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, OrientationHelper
                 .VERTICAL, false));
-        keSelectAdapter = new KeSelectAdapter(mContext,keModels );
+        keSelectAdapter = new KeSelectAdapter(mContext, keModels);
         recyclerView.setAdapter(keSelectAdapter);
+        keSelectAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void setOnItemClickListener(View view, int position) {
+
+                Intent intent = new Intent();
+                intent.putExtra("CourseDetailActivity_id", keModels.get(position).getKid());
+                intent.setClass(mContext, CourseDetailActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void setOnLongItemClickListener(View view, int position) {
+
+            }
+        });
         findViewById(R.id.back_btn).setOnClickListener(this);
     }
 

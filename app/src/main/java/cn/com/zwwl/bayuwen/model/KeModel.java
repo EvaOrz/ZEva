@@ -1,5 +1,7 @@
 package cn.com.zwwl.bayuwen.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import java.util.List;
  */
 public class KeModel extends Entry {
     private List<TeacherModel> teacherModels = new ArrayList<>();
+    private List<LessonModel> lessonModels = new ArrayList<>();
 
     private String kid;
     private String title;
@@ -88,14 +91,12 @@ public class KeModel extends Entry {
     private String templet;
     private String templet_id;
     private String trule_id;
-    private Object c_target;
+    private String c_target;
     private String c_trait;
     private int is_discount;
     private int is_promotion;
     private int is_groupbuy;
-    private List<?> discount;
-    private List<?> promotion;
-    private List<?> groupbuy;
+    private GroupBuyModel groupbuy = new GroupBuyModel();
 
     public String getKid() {
         return kid;
@@ -413,6 +414,23 @@ public class KeModel extends Entry {
         return source;
     }
 
+    /**
+     * 返回tag
+     * @return
+     */
+    public String getTagTxt() {
+        if (online.equals("0")) {
+           return  "面授";
+        } else {
+            if (source.equals("1")) {
+               return "回放";
+            } else if (source.equals("2")) {
+                return  "点播";
+            }
+        }
+        return "";
+    }
+
     public void setSource(String source) {
         this.source = source;
     }
@@ -689,11 +707,11 @@ public class KeModel extends Entry {
         this.trule_id = trule_id;
     }
 
-    public Object getC_target() {
+    public String getC_target() {
         return c_target;
     }
 
-    public void setC_target(Object c_target) {
+    public void setC_target(String c_target) {
         this.c_target = c_target;
     }
 
@@ -704,6 +722,7 @@ public class KeModel extends Entry {
     public void setC_trait(String c_trait) {
         this.c_trait = c_trait;
     }
+
 
     public int getIs_discount() {
         return is_discount;
@@ -729,27 +748,11 @@ public class KeModel extends Entry {
         this.is_groupbuy = is_groupbuy;
     }
 
-    public List<?> getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(List<?> discount) {
-        this.discount = discount;
-    }
-
-    public List<?> getPromotion() {
-        return promotion;
-    }
-
-    public void setPromotion(List<?> promotion) {
-        this.promotion = promotion;
-    }
-
-    public List<?> getGroupbuy() {
+    public GroupBuyModel getGroupbuy() {
         return groupbuy;
     }
 
-    public void setGroupbuy(List<?> groupbuy) {
+    public void setGroupbuy(GroupBuyModel groupbuy) {
         this.groupbuy = groupbuy;
     }
 
@@ -760,4 +763,16 @@ public class KeModel extends Entry {
     public void setTeacherModels(List<TeacherModel> teacherModels) {
         this.teacherModels = teacherModels;
     }
+
+    public List<LessonModel> getLessonModels() {
+        return lessonModels;
+    }
+
+    public void setLessonModels(List<LessonModel> lessonModels) {
+        this.lessonModels = lessonModels;
+    }
+
+
+
+
 }

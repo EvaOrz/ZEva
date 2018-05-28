@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/listView"
+        android:id="@+id/frag_kedetail1_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:cacheColorHint="#000000"
-        android:fadingEdge="none" />
+        android:fadingEdge="none"
+        android:scrollbars="none" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:background="@color/gray_line" />
+
+    <TextView
+        android:id="@+id/frag_kedetail1_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/look_all"
+        android:textColor="@color/gold"
+        android:textSize="@dimen/text_size_14" />
 </LinearLayout>

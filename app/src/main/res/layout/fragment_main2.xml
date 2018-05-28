@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:scrollbars="none">
 
-    <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
+    <cn.com.zwwl.bayuwen.widget.observable.ObservableScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -141,7 +141,7 @@
 
         </LinearLayout>
 
-    </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
+    </cn.com.zwwl.bayuwen.widget.observable.ObservableScrollView>
 
     <include layout="@layout/layout_gray_titlebar" />
 

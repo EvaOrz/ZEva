@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
@@ -328,52 +327,113 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp">
 
-        <TextView
+        <LinearLayout
             android:id="@+id/adviserTv"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="20dp"
-            android:layout_weight="0.3"
-            android:gravity="center"
-            android:text="顾问"
-            android:textColor="@color/body_gray"
-            android:textSize="13sp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-        <TextView
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:background="@color/gray_dark" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:text="@string/guwen"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+
+
+        <LinearLayout
             android:id="@+id/explainTv"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="20dp"
-            android:layout_weight="0.3"
-            android:gravity="center"
-            android:text="说明"
-            android:textColor="@color/body_gray"
-            android:textSize="13sp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="30dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/group_purchase_tv"
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:background="@color/gray_dark" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:text="@string/shuoming"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/group_purchase_bt1"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:layout_weight="0.8"
-            android:background="@drawable/draw_cle_w_btn"
-            android:textColor="@color/body_gray"
-            android:textSize="13sp" />
+            android:layout_weight="1"
+            android:background="@drawable/gold_white_circle"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp">
+
+            <TextView
+                android:id="@+id/group_purchase_price1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/gold"
+                android:textSize="@dimen/text_size_12" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/tuangou_baoming"
+                android:textColor="@color/gold"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/sign_up_tv"
+        <LinearLayout
+            android:id="@+id/group_purchase_bt2"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.8"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:background="@drawable/gold_circle"
             android:gravity="center_horizontal"
-            android:textColor="@android:color/white"
-            android:textSize="13sp" />
+            android:orientation="vertical"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp">
+
+            <TextView
+                android:id="@+id/group_purchase_price2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/dandu_baoming"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

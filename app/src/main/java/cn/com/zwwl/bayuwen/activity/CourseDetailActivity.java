@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,16 +22,20 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CoursePageAdapter;
 import cn.com.zwwl.bayuwen.api.CourseApi;
+import cn.com.zwwl.bayuwen.api.fm.PinglunApi;
 import cn.com.zwwl.bayuwen.fragment.CDetailTabFrag1;
 import cn.com.zwwl.bayuwen.fragment.CDetailTabFrag2;
 import cn.com.zwwl.bayuwen.fragment.CDetailTabFrag3;
 import cn.com.zwwl.bayuwen.glide.GlideApp;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
+import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 
 /**
@@ -46,10 +51,8 @@ public class CourseDetailActivity extends BaseActivity {
     private TextView teacher_tv;
     private TextView time_tv;
     private TextView date_tv;
-    private TextView adviserTv;
-    private TextView explainTv;
-    private TextView sign_up_tv;
-    private TextView group_purchase_tv;
+    private TextView priceTv1;
+    private TextView priceTv2;
     private RadioButton button1, button2, button3;
     private View line1, line2, line3;
 
@@ -64,6 +67,7 @@ public class CourseDetailActivity extends BaseActivity {
     private CDetailTabFrag1 cDetailTabFrag1;
     private CDetailTabFrag2 cDetailTabFrag2;
     private CDetailTabFrag3 cDetailTabFrag3;
+    private List<PinglunModel>
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,6 +104,20 @@ public class CourseDetailActivity extends BaseActivity {
                     showToast(error.getDesc());
             }
         });
+        new PinglunApi(mContext, cid, null, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+                if (Tools.listNotNull(list)) {
+                    keModel = (KeModel) entry;
+                    handler.sendEmptyMessage(0);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
     }
 
     private void initView() {
@@ -111,18 +129,21 @@ public class CourseDetailActivity extends BaseActivity {
         teacher_tv = findViewById(R.id.teacher_tv);
         time_tv = findViewById(R.id.time_tv);
         date_tv = findViewById(R.id.date_tv);
-        adviserTv = findViewById(R.id.adviserTv);
-        explainTv = findViewById(R.id.explainTv);
-        sign_up_tv = findViewById(R.id.sign_up_tv);
-        group_purchase_tv = findViewById(R.id.group_purchase_tv);
+        priceTv1 = findViewById(R.id.group_purchase_price1);
+        priceTv2 = findViewById(R.id.group_purchase_price2);
         teacherLayout = findViewById(R.id.teacher_layout);
-
-        cDetailTabFrag1 = CDetailTabFrag1.newInstance("ss");
-        cDetailTabFrag2 = CDetailTabFrag2.newInstance("ss");
-        cDetailTabFrag3 = CDetailTabFrag3.newInstance("ss");
-
-
         mViewPager = findViewById(R.id.videoList_vp);
+
+        cDetailTabFrag1 = CDetailTabFrag1.newInstance();
+        cDetailTabFrag2 = CDetailTabFrag2.newInstance();
+        cDetailTabFrag3 = CDetailTabFrag3.newInstance("ss");
+        fragments.add(cDetailTabFrag1);
+        fragments.add(cDetailTabFrag2);
+        fragments.add(cDetailTabFrag3);
+        myViewPagerAdapter = new CoursePageAdapter(getSupportFragmentManager(),
+                fragments, null);
+        mViewPager.setAdapter(myViewPagerAdapter);
+        mViewPager.setOffscreenPageLimit(fragments.size());
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int
@@ -170,12 +191,17 @@ public class CourseDetailActivity extends BaseActivity {
             }
         });
 
-
         findViewById(R.id.ke_back).setOnClickListener(this);
-        sign_up_tv.setOnClickListener(this);
-        group_purchase_tv.setOnClickListener(this);
+        findViewById(R.id.group_purchase_bt1).setOnClickListener(this);
+        findViewById(R.id.group_purchase_bt2).setOnClickListener(this);
 
     }
+
+    /**
+     * 切换fragment
+     *
+     * @param position
+     */
     private void changeRadio(int position) {
         mViewPager.setCurrentItem(position);
         if (position == 0) {
@@ -202,11 +228,15 @@ public class CourseDetailActivity extends BaseActivity {
             case R.id.ke_back:
                 finish();
                 break;
-            case R.id.sign_up_tv:
-                //单独报名
+            case R.id.group_purchase_bt1: //团购报名
+                Intent i = new Intent(mContext, TuanIndexActivity.class);
+                i.putExtra("TuanIndexActivity_data", keModel);
+                startActivity(i);
                 break;
-            case R.id.group_purchase_tv:
-                //团购报名
+            case R.id.group_purchase_bt2: //单独报名
+                Intent j = new Intent(mContext, TuanPayActivity.class);
+                j.putExtra("TuanPayActivity_data", keModel);
+                startActivity(j);
                 break;
         }
     }
@@ -238,15 +268,13 @@ public class CourseDetailActivity extends BaseActivity {
                     teacherLayout.removeAllViews();
                     for (TeacherModel t : keModel.getTeacherModels())
                         teacherLayout.addView(getTeacherView(t));
+                    priceTv1.setText("￥" + keModel.getGroupbuy().getDiscount_pintrice());
+                    priceTv2.setText("￥" + keModel.getGroupbuy().getDiscount_pintrice());
 
-                    fragments.add(cDetailTabFrag1);
-                    fragments.add(cDetailTabFrag2);
-                    fragments.add(cDetailTabFrag3);
-                    myViewPagerAdapter = new CoursePageAdapter(getSupportFragmentManager(),
-                            fragments, null);
-                    mViewPager.setAdapter(myViewPagerAdapter);
-                    mViewPager.setOffscreenPageLimit(fragments.size());
+                    cDetailTabFrag1.setData(keModel.getLessonModels());
+                    cDetailTabFrag2.setData(keModel);
                     break;
+
             }
         }
     };

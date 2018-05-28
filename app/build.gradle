@@ -39,21 +39,10 @@ dependencies {
     implementation 'com.github.bumptech.glide:okhttp3-integration:4.6.1'
     implementation 'com.google.code.gson:gson:2.8.1'
     // 放在module里
-    //    implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     // LeanCloud 基础包
     implementation 'cn.leancloud.android:avoscloud-sdk:v4.6.4'
-    // umeng
-    implementation 'com.umeng.sdk:common:1.5.0'
-    implementation 'com.umeng.sdk:utdid:1.1.5.3'
-    //注意：在App上线前请务必删除集成调试库，避免无关信息的打印。
-    implementation 'com.umeng.sdk:debug:1.0.0'
-    //umeng share
-    implementation 'com.umeng.sdk:share-sina:6.9.0'
-    implementation 'com.umeng.sdk:share-wechat:6.9.0'
-    implementation 'com.umeng.sdk:share-qq:6.9.0'
-    implementation 'com.umeng.sdk:share-core:6.9.0'
     // 极光
     implementation files('libs/jcore-android-1.2.0.jar')
     implementation files('libs/jpush-android-3.1.2.jar')
@@ -68,8 +57,6 @@ dependencies {
         }
     }
     implementation project(':jiaozivideoplayer')
-    // 选课控件
-    implementation project(':observable')
     // 联动菜单
     implementation project(':menu')
     //日历控件
@@ -77,9 +64,20 @@ dependencies {
     // 垂直的日历控件
     implementation 'com.github.maning0303:MNCalendar:V1.0.3'
     implementation files('libs/TencentLocationSdk_v6.2.5.3_r15b3b3cc_20171103_115903.jar')
-
+    //butterknife 解析插件
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
-
+    //微信支付
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    // umeng
+    implementation files('libs/SecurityEnvSDK-release-1.1.0.jar')
+    implementation files('libs/umeng-common-1.5.3.jar')
+    implementation files('libs/umeng-share-core-6.9.2.jar')
+    implementation files('libs/umeng-share-QQ-simplify-6.9.2.jar')
+    implementation files('libs/umeng-share-wechat-full-6.9.2.jar')
+    implementation files('libs/umeng-shareboard-widget-6.9.2.jar')
+    implementation files('libs/umeng-sharetool-6.9.2.jar')
+    implementation files('libs/utdid4all-1.1.5.3_proguard.jar')
+    implementation files('libs/umeng-share-sina-simplify-6.9.2.jar')
 }

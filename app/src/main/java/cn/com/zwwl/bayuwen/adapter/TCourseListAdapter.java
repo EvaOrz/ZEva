@@ -11,7 +11,6 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.KeModel;
-import cn.com.zwwl.bayuwen.model.TeacherModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 
 /**
@@ -28,7 +27,7 @@ public class TCourseListAdapter extends BaseRecylcerViewAdapter<KeModel> {
     @Override
     public TCourseListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int
             viewType) {
-        return new TCourseListAdapter.ViewHolder(inflater.inflate(R.layout.item_course_list,
+        return new TCourseListAdapter.ViewHolder(inflater.inflate(R.layout.item_teacher_c_list,
                 parent, false));
 
     }

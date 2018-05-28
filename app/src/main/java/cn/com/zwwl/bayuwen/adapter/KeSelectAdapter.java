@@ -14,6 +14,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.glide.GlideApp;
+import cn.com.zwwl.bayuwen.listener.OnItemClickListener;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 
@@ -27,7 +28,6 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
         this.mContext = mContext;
     }
 
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int
@@ -35,6 +35,7 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
         return new ViewHolder(inflater.inflate(R.layout.item_course_select, parent,
                 false));
     }
+
 
     @Override
     public int getItemCount() {
@@ -50,15 +51,7 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
                 .placeholder(R.drawable.avatar_placeholder)
                 .error(R.drawable.avatar_placeholder)
                 .into(viewHolder.img);
-        if (keModel.getOnline().equals("0")) {
-            viewHolder.tag.setText("面授");
-        } else {
-            if (keModel.getSource().equals("1")) {
-                viewHolder.tag.setText("回放");
-            } else if (keModel.getSource().equals("2")) {
-                viewHolder.tag.setText("点播");
-            }
-        }
+        viewHolder.tag.setText(keModel.getTagTxt());
         viewHolder.title.setText(keModel.getTitle());
         viewHolder.teacher.setText(keModel.getTname());
         viewHolder.xiaoqu.setText(keModel.getSchool());
@@ -68,6 +61,7 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
         viewHolder.time.setText(keModel.getClass_start_at() + " - " + keModel.getClass_end_at());
         viewHolder.left.setText("剩余名额：" + keModel.getNum());
         viewHolder.price.setText("￥" + keModel.getBuyPrice());
+        setItemClickView(holder.itemView, position);
     }
 
     @Override
@@ -89,6 +83,7 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
         public ViewHolder(View itemView) {
             super(itemView);
             initView();
+
         }
 
         private void initView() {

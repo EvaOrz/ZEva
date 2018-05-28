@@ -17,10 +17,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +37,10 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.widget.BannerView;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
+import cn.com.zwwl.bayuwen.widget.observable.ObservableScrollView;
+import cn.com.zwwl.bayuwen.widget.observable.ObservableScrollViewCallbacks;
+import cn.com.zwwl.bayuwen.widget.observable.ScrollState;
+import cn.com.zwwl.bayuwen.widget.observable.ScrollUtils;
 
 /**
  * 选课

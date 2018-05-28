@@ -15,7 +15,9 @@ import java.util.Map;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.GroupBuyModel;
 import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
 
 /**
@@ -61,6 +63,23 @@ public class CourseApi extends BaseApi {
             JSONObject course = json.optJSONObject("course");
             Gson gson = new Gson();
             KeModel keModel = gson.fromJson(course.toString(), KeModel.class);
+            if (!isNull(course)) {
+                JSONObject gjson = course.optJSONObject("groupbuy");
+                if (isNull(gjson)) return;
+                GroupBuyModel groupBuyModel = new GroupBuyModel();
+                groupBuyModel.parseGroupBuyModel(gjson, groupBuyModel);
+                keModel.setGroupbuy(groupBuyModel);
+            }
+            JSONArray larray = json.optJSONArray("lessons");
+            if (!isNull(larray)) {
+                List<LessonModel> ls = new ArrayList<>();
+                for (int i = 0; i < larray.length(); i++) {
+                    LessonModel l = gson.fromJson(larray.optJSONObject(i).toString(), LessonModel
+                            .class);
+                    ls.add(l);
+                }
+                keModel.setLessonModels(ls);
+            }
 
             JSONArray tarray = json.optJSONArray("teacher");
             if (!isNull(tarray)) {
@@ -72,7 +91,6 @@ public class CourseApi extends BaseApi {
                 }
                 keModel.setTeacherModels(ts);
             }
-
             listener.setData(keModel);
         }
     }
