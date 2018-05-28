@@ -31,6 +31,7 @@ import cn.com.zwwl.bayuwen.api.ActionApi;
 import cn.com.zwwl.bayuwen.api.fm.AlbumApi;
 import cn.com.zwwl.bayuwen.api.CollectionApi;
 import cn.com.zwwl.bayuwen.api.fm.PinglunApi;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel.*;
 import cn.com.zwwl.bayuwen.model.fm.FmModel;
@@ -122,9 +123,9 @@ public class AlbumDetailActivity extends BaseActivity {
      * 获取评论数据
      */
     private void getPinglunData(String kid, String cid) {
-        new PinglunApi(this, kid, cid, new PinglunApi.FetchPingListListener() {
+        new PinglunApi(this, kid, cid, new FetchEntryListListener() {
             @Override
-            public void setData(List<PinglunModel> list) {
+            public void setData(List list) {
                 if (Tools.listNotNull(list)) {
                     pinglunModels.clear();
                     pinglunModels.addAll(list);

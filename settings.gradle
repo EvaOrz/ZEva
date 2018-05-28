@@ -1,1 +1,1 @@
-include ':app', ':jiaozivideoplayer',":observable",":menu"
+include ':app', ':jiaozivideoplayer',":menu"
