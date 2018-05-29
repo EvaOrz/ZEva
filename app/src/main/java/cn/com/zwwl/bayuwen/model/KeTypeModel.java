@@ -2,6 +2,8 @@ package cn.com.zwwl.bayuwen.model;
 
 import java.util.List;
 
+import cn.com.zwwl.bayuwen.view.selectmenu.SelectTempModel;
+
 /**
  * 选课类型model
  */
@@ -98,6 +100,13 @@ public class KeTypeModel extends Entry {
             this.type = type;
         }
 
+        public SelectTempModel transToS() {
+            SelectTempModel selectTempModel = new SelectTempModel();
+            selectTempModel.setId(id);
+            selectTempModel.setText(name);
+            return selectTempModel;
+        }
+
         public static class TypeBean {
             /**
              * id :
@@ -182,6 +191,13 @@ public class KeTypeModel extends Entry {
             public void setImg(Object img) {
                 this.img = img;
             }
+
+            public SelectTempModel transToS() {
+                SelectTempModel selectTempModel = new SelectTempModel();
+                selectTempModel.setId(id);
+                selectTempModel.setText(name);
+                return selectTempModel;
+            }
         }
     }
 
@@ -208,6 +224,13 @@ public class KeTypeModel extends Entry {
 
         public void setValue(String value) {
             this.value = value;
+        }
+
+        public SelectTempModel transToS() {
+            SelectTempModel selectTempModel = new SelectTempModel();
+            selectTempModel.setId(value);
+            selectTempModel.setText(name);
+            return selectTempModel;
         }
     }
 
@@ -236,6 +259,7 @@ public class KeTypeModel extends Entry {
         public void setList(List<ListBean> list) {
             this.list = list;
         }
+
 
         public static class DistrictBean {
             /**
@@ -271,6 +295,14 @@ public class KeTypeModel extends Entry {
             public void setArea(String area) {
                 this.area = area;
             }
+
+            public SelectTempModel transToS() {
+                SelectTempModel selectTempModel = new SelectTempModel();
+                selectTempModel.setId("");
+                selectTempModel.setText(area);
+                return selectTempModel;
+            }
+
         }
 
         public static class ListBean {
@@ -357,6 +389,13 @@ public class KeTypeModel extends Entry {
             public void setShortName(String shortName) {
                 this.shortName = shortName;
             }
+
+            public SelectTempModel transToS() {
+                SelectTempModel selectTempModel = new SelectTempModel();
+                selectTempModel.setId(id);
+                selectTempModel.setText(name);
+                return selectTempModel;
+            }
         }
     }
 
@@ -394,6 +433,13 @@ public class KeTypeModel extends Entry {
         public void setType(String type) {
             this.type = type;
         }
+
+        public SelectTempModel transToS() {
+            SelectTempModel selectTempModel = new SelectTempModel();
+            selectTempModel.setId(id);
+            selectTempModel.setText(grade);
+            return selectTempModel;
+        }
     }
 
     public static class SchooltimesBean {
@@ -421,6 +467,7 @@ public class KeTypeModel extends Entry {
             this.time = time;
         }
 
+
         public static class WeekdayBean {
             /**
              * name : 全部
@@ -444,6 +491,13 @@ public class KeTypeModel extends Entry {
 
             public void setValue(String value) {
                 this.value = value;
+            }
+
+            public SelectTempModel transToS() {
+                SelectTempModel selectTempModel = new SelectTempModel();
+                selectTempModel.setId(value);
+                selectTempModel.setText(name);
+                return selectTempModel;
             }
         }
 
@@ -470,6 +524,13 @@ public class KeTypeModel extends Entry {
 
             public void setContent(String content) {
                 this.content = content;
+            }
+
+            public SelectTempModel transToS() {
+                SelectTempModel selectTempModel = new SelectTempModel();
+                selectTempModel.setId("");
+                selectTempModel.setText(date);
+                return selectTempModel;
             }
         }
     }

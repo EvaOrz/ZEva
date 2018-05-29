@@ -1,4 +1,4 @@
-package cn.com.zwwl.bayuwen.widget.selectmenu;
+package cn.com.zwwl.bayuwen.view.selectmenu;
 
 import android.content.Context;
 import android.view.View;
@@ -14,16 +14,15 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 
 /**
- *
  * 综合排序
  * Created by vonchenchen on 2016/4/5 0005.
  */
-public class SortHolder extends BaseWidgetHolder<List<String>> {
+public class SortHolder extends BaseWidgetHolder<List<SelectTempModel>> {
 
     private OnSortInfoSelectedListener mOnSortInfoSelectedListener;
 
     private ListView listView;
-    private List<String> mDataList;
+    private List<SelectTempModel> mDataList;
 
     private RightAdapter mRightAdapter;
 
@@ -41,9 +40,8 @@ public class SortHolder extends BaseWidgetHolder<List<String>> {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mRightSelectedIndex = position;
-                if(mOnSortInfoSelectedListener != null){
-                    String text = mDataList.get(mRightSelectedIndex);
-                    mOnSortInfoSelectedListener.onSortInfoSelected(text);
+                if (mOnSortInfoSelectedListener != null) {
+                    mOnSortInfoSelectedListener.onSortInfoSelected(mDataList.get(mRightSelectedIndex));
                 }
             }
         });
@@ -51,10 +49,10 @@ public class SortHolder extends BaseWidgetHolder<List<String>> {
     }
 
     @Override
-    public void refreshView(List<String> data) {
+    public void refreshView(List<SelectTempModel> data) {
     }
 
-    public void refreshData(List<String> data, int rightSelectedIndex){
+    public void refreshData(List<SelectTempModel> data, int rightSelectedIndex) {
 
         this.mDataList = data;
 
@@ -63,24 +61,25 @@ public class SortHolder extends BaseWidgetHolder<List<String>> {
         listView.setAdapter(mRightAdapter);
     }
 
-    public void setOnSortInfoSelectedListener(OnSortInfoSelectedListener onSortInfoSelectedListener){
+    public void setOnSortInfoSelectedListener(OnSortInfoSelectedListener
+                                                      onSortInfoSelectedListener) {
         this.mOnSortInfoSelectedListener = onSortInfoSelectedListener;
     }
 
-    public interface OnSortInfoSelectedListener{
-        void onSortInfoSelected(String info);
+    public interface OnSortInfoSelectedListener {
+        void onSortInfoSelected(SelectTempModel info);
     }
 
     private class RightAdapter extends BaseAdapter {
 
-        private List<String> mRightDataList;
+        private List<SelectTempModel> mRightDataList;
 
-        public RightAdapter(List<String> list, int rightSelectedIndex){
+        public RightAdapter(List<SelectTempModel> list, int rightSelectedIndex) {
             this.mRightDataList = list;
             mRightSelectedIndex = rightSelectedIndex;
         }
 
-        public void setDataList(List<String> list, int rightSelectedIndex){
+        public void setDataList(List<SelectTempModel> list, int rightSelectedIndex) {
             this.mRightDataList = list;
             mRightSelectedIndex = rightSelectedIndex;
         }
@@ -104,21 +103,21 @@ public class SortHolder extends BaseWidgetHolder<List<String>> {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             SortHolder.RightViewHolder holder;
-            if(convertView == null){
+            if (convertView == null) {
                 holder = new SortHolder.RightViewHolder();
                 convertView = View.inflate(mContext, R.layout.layout_child_menu_item, null);
                 holder.rightText = convertView.findViewById(R.id.child_textView);
                 convertView.setTag(holder);
-            }else{
+            } else {
                 holder = (SortHolder.RightViewHolder) convertView.getTag();
             }
 
-            holder.rightText.setText(mRightDataList.get(position));
+            holder.rightText.setText(mRightDataList.get(position).getText());
             return convertView;
         }
     }
 
-    private static class RightViewHolder{
+    private static class RightViewHolder {
         TextView rightText;
     }
 }

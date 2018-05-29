@@ -1,4 +1,4 @@
-package cn.com.zwwl.bayuwen.widget.selectmenu;
+package cn.com.zwwl.bayuwen.view.selectmenu;
 
 import android.content.Context;
 import android.view.View;
@@ -17,9 +17,9 @@ import cn.com.zwwl.bayuwen.R;
  * 科目
  * Created by vonchenchen on 2016/4/5 0005.
  */
-public class SubjectHolder extends BaseWidgetHolder<List<List<String>>> {
+public class SubjectHolder extends BaseWidgetHolder<List<List<SelectTempModel>>> {
 
-    private List<List<String>> mDataList;
+    private List<List<SelectTempModel>> mDataList;
 
     private ListView mLeftListView;
     private ListView mRightListView;
@@ -77,11 +77,10 @@ public class SubjectHolder extends BaseWidgetHolder<List<List<String>>> {
 
                 if (mOnRightListViewItemSelectedListener != null) {
 
-                    List<String> dataList = mDataList.get(mLeftSelectedIndex + 1);
-                    String text = dataList.get(mRightSelectedIndex);
+                    List<SelectTempModel> dataList = mDataList.get(mLeftSelectedIndex + 1);
 
                     mOnRightListViewItemSelectedListener.OnRightListViewItemSelected
-                            (mLeftSelectedIndex, mRightSelectedIndex, text);
+                            (dataList.get(mRightSelectedIndex));
                 }
             }
         });
@@ -90,11 +89,11 @@ public class SubjectHolder extends BaseWidgetHolder<List<List<String>>> {
     }
 
     @Override
-    public void refreshView(List<List<String>> data) {
+    public void refreshView(List<List<SelectTempModel>> data) {
 
     }
 
-    public void refreshData(List<List<String>> data, int leftSelectedIndex, int
+    public void refreshData(List<List<SelectTempModel>> data, int leftSelectedIndex, int
             rightSelectedIndex) {
 
         this.mDataList = data;
@@ -114,9 +113,9 @@ public class SubjectHolder extends BaseWidgetHolder<List<List<String>>> {
 
     private class LeftAdapter extends BaseAdapter {
 
-        private List<String> mLeftDataList;
+        private List<SelectTempModel> mLeftDataList;
 
-        public LeftAdapter(List<String> list, int leftIndex) {
+        public LeftAdapter(List<SelectTempModel> list, int leftIndex) {
             this.mLeftDataList = list;
             mLeftSelectedIndex = leftIndex;
         }
@@ -143,14 +142,14 @@ public class SubjectHolder extends BaseWidgetHolder<List<List<String>>> {
             if (convertView == null) {
                 holder = new LeftViewHolder();
                 convertView = View.inflate(mContext, R.layout.layout_normal_menu_item, null);
-                holder.leftText = (TextView) convertView.findViewById(R.id.group_textView);
+                holder.leftText = convertView.findViewById(R.id.group_textView);
                 holder.backgroundView = convertView.findViewById(R.id.ll_main);
                 convertView.setTag(holder);
             } else {
                 holder = (LeftViewHolder) convertView.getTag();
             }
 
-            holder.leftText.setText(mLeftDataList.get(position));
+            holder.leftText.setText(mLeftDataList.get(position).getText());
             if (mLeftSelectedIndex == position) {
                 holder.backgroundView.setBackgroundResource(R.color.white);  //选中项背景
                 if (position == 0 && mIsFirstMeasureLeft) {
@@ -171,14 +170,14 @@ public class SubjectHolder extends BaseWidgetHolder<List<List<String>>> {
 
     private class RightAdapter extends BaseAdapter {
 
-        private List<String> mRightDataList;
+        private List<SelectTempModel> mRightDataList;
 
-        public RightAdapter(List<String> list, int rightSelectedIndex) {
+        public RightAdapter(List<SelectTempModel> list, int rightSelectedIndex) {
             this.mRightDataList = list;
             mRightSelectedIndex = rightSelectedIndex;
         }
 
-        public void setDataList(List<String> list, int rightSelectedIndex) {
+        public void setDataList(List<SelectTempModel> list, int rightSelectedIndex) {
             this.mRightDataList = list;
             mRightSelectedIndex = rightSelectedIndex;
         }
@@ -211,7 +210,7 @@ public class SubjectHolder extends BaseWidgetHolder<List<List<String>>> {
                 holder = (RightViewHolder) convertView.getTag();
             }
 
-            holder.rightText.setText(mRightDataList.get(position));
+            holder.rightText.setText(mRightDataList.get(position).getText());
             if (mRightSelectedIndex == position && mLeftSelectedIndex == mLeftSelectedIndexRecord) {
 //                holder.selectedImage.setVisibility(View.VISIBLE);
             } else {
@@ -237,6 +236,6 @@ public class SubjectHolder extends BaseWidgetHolder<List<List<String>>> {
     }
 
     public interface OnRightListViewItemSelectedListener {
-        void OnRightListViewItemSelected(int leftIndex, int rightIndex, String text);
+        void OnRightListViewItemSelected(SelectTempModel selectTempModel);
     }
 }

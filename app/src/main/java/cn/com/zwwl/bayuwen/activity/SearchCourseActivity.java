@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.KeSelectAdapter;
 import cn.com.zwwl.bayuwen.api.CourseListApi;
 import cn.com.zwwl.bayuwen.api.KeSelectTypeApi;
+import cn.com.zwwl.bayuwen.api.UrlUtil;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.listener.OnItemClickListener;
@@ -29,7 +31,8 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.KeTypeModel;
 import cn.com.zwwl.bayuwen.util.Tools;
-import cn.com.zwwl.bayuwen.widget.selectmenu.SelectMenuView;
+import cn.com.zwwl.bayuwen.view.selectmenu.SelectMenuView;
+import cn.com.zwwl.bayuwen.view.selectmenu.SelectTempModel;
 
 /**
  * 筛选课程页面
@@ -44,6 +47,9 @@ public class SearchCourseActivity extends BaseActivity {
     private KeTypeModel keTypeModel;// 选课类型
     private SelectMenuView selectMenuView;
 
+    private String baseUrl = UrlUtil.getCDetailUrl(null) + "/search";
+    // 筛选参数
+    private String pama1 = "", pama2 = "", pama3 = "", pama4 = "", pama5 = "";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,12 +59,68 @@ public class SearchCourseActivity extends BaseActivity {
         tagId = getIntent().getStringExtra("SearchCourseActivity_id");
         initView();
         initData();
+        if (TextUtils.isEmpty(tagId)) {
+            initListData(baseUrl);
+        } else {
+            initTagData();
+        }
     }
 
     private void initView() {
         selectMenuView = findViewById(R.id.select_ke_menu);
+        selectMenuView.setOnMenuSelectDataChangedListener(new SelectMenuView
+                .OnMenuSelectDataChangedListener() {
+
+            @Override
+            public void onSortChanged(SelectTempModel sortType, int type) {
+                if (type == 1) {
+                    pama1 = sortType.getId();
+                } else if (type == 2) {
+                    pama2 = sortType.getId();
+                } else if (type == 3) {
+                    pama3 = sortType.getId();
+                } else if (type == 4) {
+                    pama4 = sortType.getId();
+                } else if (type == 5) {
+                    pama5 = sortType.getText();
+                }
+                baseUrl += "?";
+                if (!TextUtils.isEmpty(pama1)) {
+                    String and = baseUrl.endsWith("?") ? "" : "&";
+                    baseUrl += and + "users=" + pama1;
+                }
+                if (!TextUtils.isEmpty(pama2)) {
+                    String and = baseUrl.endsWith("?") ? "" : "&";
+                    baseUrl += and + "type=" + pama2;
+                }
+                if (!TextUtils.isEmpty(pama3)) {
+                    String and = baseUrl.endsWith("?") ? "" : "&";
+                    baseUrl += and + "online=" + pama3;
+                }
+                if (!TextUtils.isEmpty(pama4)) {
+                    String and = baseUrl.endsWith("?") ? "" : "&";
+                    baseUrl += and + "school=" + pama4;
+                }
+                if (!TextUtils.isEmpty(pama5)) {
+                    String and = baseUrl.endsWith("?") ? "" : "&";
+                    baseUrl += and + "time=" + pama5;
+                }
+                initListData(baseUrl);
+            }
+
+            @Override
+            public void onViewClicked(View view) {
+
+            }
+        });
         search_view = findViewById(R.id.search_view);
         recyclerView = findViewById(R.id.course_recyclerVie);
+        int height = getViewHeight(selectMenuView);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout
+                .LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0, height, 0, 0);
+        layoutParams.addRule(RelativeLayout.BELOW, R.id.search_head_layout);
+        recyclerView.setLayoutParams(layoutParams);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, OrientationHelper
                 .VERTICAL, false));
@@ -91,8 +153,59 @@ public class SearchCourseActivity extends BaseActivity {
                 break;
         }
     }
+
+    /**
+     * 获取筛选之后的数据
+     */
+    private void initListData(String url) {
+        showLoadingDialog(true);
+        new CourseListApi(mContext, url, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+                showLoadingDialog(false);
+                if (Tools.listNotNull(list)) {
+                    keModels.clear();
+                    keModels.addAll(list);
+                    handler.sendEmptyMessage(0);
+                }
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+            }
+        });
+    }
+
+    /**
+     * 获取某子课的数据
+     */
+    private void initTagData() {
+        showLoadingDialog(true);
+        new CourseListApi(mContext, tagId, 1, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+                showLoadingDialog(false);
+                if (Tools.listNotNull(list)) {
+                    keModels.clear();
+                    keModels.addAll(list);
+                    handler.sendEmptyMessage(0);
+                }
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+            }
+        });
+    }
+
+
     @Override
     protected void initData() {
+        // 获取筛选类型数据
         new KeSelectTypeApi(mContext, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
@@ -107,40 +220,6 @@ public class SearchCourseActivity extends BaseActivity {
 
             }
         });
-        if (TextUtils.isEmpty(tagId)) {
-            new CourseListApi(mContext, new FetchEntryListListener() {
-                @Override
-                public void setData(List list) {
-                    if (Tools.listNotNull(list)) {
-                        keModels.clear();
-                        keModels.addAll(list);
-                        handler.sendEmptyMessage(0);
-                    }
-
-                }
-
-                @Override
-                public void setError(ErrorMsg error) {
-
-                }
-            });
-        } else {
-            new CourseListApi(mContext, tagId, 1, new FetchEntryListListener() {
-                @Override
-                public void setData(List list) {
-                    if (Tools.listNotNull(list)) {
-                        keModels.clear();
-                        keModels.addAll(list);
-                        handler.sendEmptyMessage(0);
-                    }
-                }
-
-                @Override
-                public void setError(ErrorMsg error) {
-
-                }
-            });
-        }
 
 
     }
@@ -152,10 +231,10 @@ public class SearchCourseActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    keSelectAdapter.notifyDataSetChanged();
+                    keSelectAdapter.appendData(keModels);
                     break;
                 case 1:
-                    selectMenuView.setData();
+                    selectMenuView.setData(keTypeModel);
                     break;
             }
 

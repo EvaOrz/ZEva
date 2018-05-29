@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/body_bg"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical">
+    android:focusableInTouchMode="true">
 
     <LinearLayout
+        android:id="@+id/search_head_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bar_height"
         android:background="@color/body_gray"
@@ -40,14 +40,17 @@
 
     </LinearLayout>
 
-    <cn.com.zwwl.bayuwen.widget.selectmenu.SelectMenuView
-        android:id="@+id/select_ke_menu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/course_recyclerVie"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/search_head_layout" />
 
-</LinearLayout>
+    <cn.com.zwwl.bayuwen.view.selectmenu.SelectMenuView
+        android:id="@+id/select_ke_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_head_layout" />
+
+</RelativeLayout>
