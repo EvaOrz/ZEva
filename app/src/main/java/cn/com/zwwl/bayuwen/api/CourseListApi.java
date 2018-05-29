@@ -29,7 +29,7 @@ public class CourseListApi extends BaseApi {
     private String url;
 
     /**
-     * 按分类获取列表
+     * 选课首页按分类获取列表
      *
      * @param context
      * @param cid
@@ -47,16 +47,17 @@ public class CourseListApi extends BaseApi {
     }
 
     /**
-     * 按关键字获取列表
+     * 选课中心获取数据列表
      *
      * @param context
+     * @param url
      * @param listListener
      */
-    public CourseListApi(Context context, FetchEntryListListener listListener) {
+    public CourseListApi(Context context, String url, FetchEntryListListener listListener) {
         super(context);
         mContext = context;
         this.listListener = listListener;
-        this.url = UrlUtil.searchCourse();
+        this.url = url;
         get();
     }
 

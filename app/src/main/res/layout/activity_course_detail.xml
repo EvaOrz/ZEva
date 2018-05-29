@@ -224,7 +224,7 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:lines="1"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:text="@string/tab1"
                     android:textColor="@drawable/gold_text_checked"
                     android:textSize="@dimen/text_size_14" />
@@ -237,7 +237,7 @@
                     android:button="@null"
                     android:checked="false"
                     android:gravity="center"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:text="@string/tab2"
                     android:textColor="@drawable/gold_text_checked"
                     android:textSize="@dimen/text_size_14" />
@@ -250,7 +250,7 @@
                     android:button="@null"
                     android:checked="false"
                     android:gravity="center"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:text="@string/tab3"
                     android:textColor="@drawable/gold_text_checked"
                     android:textSize="@dimen/text_size_14" />
@@ -289,12 +289,12 @@
                     android:background="@color/transparent" />
 
             </LinearLayout>
+            <include layout="@layout/layout_line" />
 
-
-            <android.support.v4.view.ViewPager
+            <cn.com.zwwl.bayuwen.widget.CustomViewPager
                 android:id="@+id/videoList_vp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="1px"
                 android:background="@android:color/white" />
 

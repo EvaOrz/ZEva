@@ -28,6 +28,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.view.PlayController;
+
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -35,7 +36,8 @@ import android.support.v7.app.AppCompatActivity;
  * Created by Eva. on 17/3/17.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
+public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener,
+        ActivityCompat.OnRequestPermissionsResultCallback {
     /**
      * 网页跳转uri
      */
@@ -255,7 +257,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         @Override
         public void onReceive(Context context, Intent intent) {
             // 开始播放、播放完成、更新时间
-            if (intent.getAction().equals(ACTION_START_PLAY) || intent.getAction().equals(ACTION_MSG_COMPLETE) || intent.getAction().equals(ACTION_CHANGE_TIME)) {
+            if (intent.getAction().equals(ACTION_START_PLAY) || intent.getAction().equals
+                    (ACTION_MSG_COMPLETE) || intent.getAction().equals(ACTION_CHANGE_TIME)) {
                 getMusicMsg((Message) intent.getParcelableExtra("music_service_message"));
 
             }
@@ -295,7 +298,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      * 隐藏软键盘
      */
     public void hideJianpan() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context
+                .INPUT_METHOD_SERVICE);
 
         imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
     }
@@ -310,11 +314,30 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             }
         }
         if (ll.size() > 0)
-            ActivityCompat.requestPermissions(this, (String[]) ll.toArray(new String[ll.size()]), requestCode);
+            ActivityCompat.requestPermissions(this, (String[]) ll.toArray(new String[ll.size()]),
+                    requestCode);
+    }
+
+    /**
+     * 获取控件高度
+     *
+     * @param view
+     * @return
+     */
+    public int getViewHeight(View view) {
+        int width = View.MeasureSpec.makeMeasureSpec(0,
+                View.MeasureSpec.UNSPECIFIED);
+        int height = View.MeasureSpec.makeMeasureSpec(0,
+                View.MeasureSpec.UNSPECIFIED);
+        view.measure(width, height);
+        view.getMeasuredWidth(); // 获取宽度
+        view.getMeasuredHeight(); // 获取高度
+        return view.getMeasuredHeight();
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[]
+            grantResults) {
 
     }
 

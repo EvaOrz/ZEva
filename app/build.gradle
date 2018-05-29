@@ -60,7 +60,6 @@ dependencies {
     // 选课控件
 //    implementation project(':observable')
     // 联动菜单
-    implementation project(':menu')
     //日历控件
     implementation 'com.haibin:calendarview:3.3.0'
     // 垂直的日历控件

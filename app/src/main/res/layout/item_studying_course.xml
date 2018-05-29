@@ -48,7 +48,7 @@
         android:paddingStart="@dimen/dp_10"
         android:paddingTop="@dimen/dp_5"
         android:text="这个人很懒，啥也咩有，这个人很懒，啥也咩有，这个人很懒，啥也咩有，这个人很懒，啥也咩有，这个人很懒，啥也咩有，"
-        android:textColor="@color/gray"
+        android:textColor="@color/gray_dark"
         android:textSize="@dimen/sp_14"
         app:layout_constraintTop_toBottomOf="@+id/name_layout" />
 </android.support.constraint.ConstraintLayout>
