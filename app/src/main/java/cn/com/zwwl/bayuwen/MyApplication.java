@@ -70,6 +70,10 @@ public class MyApplication extends Application {
      * 渠道
      */
     public static String CHANNEL = "";
+    /**
+     * 课程跟踪
+     */
+    public int operate_type;
 
     @Override
     public void onCreate() {

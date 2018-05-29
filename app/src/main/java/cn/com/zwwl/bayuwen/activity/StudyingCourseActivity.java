@@ -82,11 +82,11 @@ public class StudyingCourseActivity extends BasicActivity {
                 intent.setClass(this, CourseEvalActivity.class);
                 break;
             case R.id.course_change:
-                intent.putExtra("type", 0);
+                mApplication.operate_type=0;
                 intent.setClass(this, CourseTableActivity.class);
                 break;
             case R.id.class_covert:
-                intent.putExtra("type", 1);
+                mApplication.operate_type=1;
                 intent.setClass(this, CourseTableActivity.class);
                 break;
         }

@@ -15,42 +15,28 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.adapter.CourseTableAdapter;
+import cn.com.zwwl.bayuwen.adapter.UnitTableAdapter;
 import cn.com.zwwl.bayuwen.base.BasicActivity;
 import cn.com.zwwl.bayuwen.model.CourseModel;
 
-/**
- * 可操作课程列表
- * Create by zhumangmang at 2018/5/28 10:03
- */
-public class CourseTableActivity extends BasicActivity {
+public class TraceRecordActivity extends BasicActivity {
     @BindView(R.id.title)
     AppCompatTextView title;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.type)
-    AppCompatTextView type;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    int flag;
-    CourseTableAdapter adapter;
+    UnitTableAdapter adapter;
 
     @Override
     protected int setContentView() {
-        return R.layout.activity_course_table;
+        return R.layout.activity_trace_record;
     }
 
     @Override
     protected void initView() {
         setSupportActionBar(toolbar);
-        flag = getIntent().getIntExtra("type", 0);
-        if (flag == 0) {
-            title.setText(res.getString(R.string.change_course));
-            type.setText(res.getString(R.string.chose_course_by_need));
-        } else {
-            title.setText(res.getString(R.string.covert_class_course));
-            type.setText(res.getString(R.string.chose_covert_class_course_by_need));
-        }
+        title.setText("大语文");
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
@@ -63,7 +49,7 @@ public class CourseTableActivity extends BasicActivity {
             model.setPage("XXX");
             courseModels.add(model);
         }
-        adapter = new CourseTableAdapter(courseModels);
+        adapter = new UnitTableAdapter(courseModels);
         recyclerView.setAdapter(adapter);
     }
 
@@ -72,10 +58,7 @@ public class CourseTableActivity extends BasicActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (mApplication.operate_type == 0)
-                    startActivity(new Intent(mActivity, UnitTableActivity.class));
-                else
-                    startActivity(new Intent(mActivity, ConvertClassActivity.class));
+                startActivity(new Intent(mActivity, FCourseIndexActivity.class));
             }
         });
     }

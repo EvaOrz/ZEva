@@ -33,6 +33,7 @@ public class UnitTableActivity extends BasicActivity {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     UnitTableAdapter adapter;
+
     @Override
     protected int setContentView() {
         return R.layout.activity_course_table;
@@ -61,12 +62,12 @@ public class UnitTableActivity extends BasicActivity {
 
     @Override
     protected void setListener() {
-adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-    @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        startActivity(new Intent(mActivity,ConvertClassActivity.class));
-    }
-});
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivity(new Intent(mActivity, ConvertClassActivity.class));
+            }
+        });
     }
 
     @Override
