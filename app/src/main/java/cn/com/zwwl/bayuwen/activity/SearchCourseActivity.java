@@ -10,9 +10,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 
 import java.util.ArrayList;
@@ -114,6 +117,17 @@ public class SearchCourseActivity extends BaseActivity {
             }
         });
         search_view = findViewById(R.id.search_view);
+        search_view.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    hideJianpan();
+                    initListData(baseUrl + "?keyword=" + v.getText().toString());
+                    return true;
+                }
+                return false;
+            }
+        });
         recyclerView = findViewById(R.id.course_recyclerVie);
         int height = getViewHeight(selectMenuView);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout
@@ -124,6 +138,11 @@ public class SearchCourseActivity extends BaseActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, OrientationHelper
                 .VERTICAL, false));
+
+        findViewById(R.id.back_btn).setOnClickListener(this);
+    }
+
+    private void resetData() {
         keSelectAdapter = new KeSelectAdapter(mContext, keModels);
         recyclerView.setAdapter(keSelectAdapter);
         keSelectAdapter.setOnItemClickListener(new OnItemClickListener() {
@@ -141,7 +160,6 @@ public class SearchCourseActivity extends BaseActivity {
 
             }
         });
-        findViewById(R.id.back_btn).setOnClickListener(this);
     }
 
     @Override
@@ -163,12 +181,10 @@ public class SearchCourseActivity extends BaseActivity {
             @Override
             public void setData(List list) {
                 showLoadingDialog(false);
-                if (Tools.listNotNull(list)) {
-                    keModels.clear();
+                keModels.clear();
+                if (Tools.listNotNull(list))
                     keModels.addAll(list);
-                    handler.sendEmptyMessage(0);
-                }
-
+                handler.sendEmptyMessage(0);
             }
 
             @Override
@@ -187,11 +203,10 @@ public class SearchCourseActivity extends BaseActivity {
             @Override
             public void setData(List list) {
                 showLoadingDialog(false);
-                if (Tools.listNotNull(list)) {
-                    keModels.clear();
+                keModels.clear();
+                if (Tools.listNotNull(list))
                     keModels.addAll(list);
-                    handler.sendEmptyMessage(0);
-                }
+                handler.sendEmptyMessage(0);
 
             }
 
@@ -231,8 +246,7 @@ public class SearchCourseActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    keSelectAdapter.clear();
-                    keSelectAdapter.appendData(keModels);
+                    resetData();
                     break;
                 case 1:
                     selectMenuView.setData(keTypeModel);

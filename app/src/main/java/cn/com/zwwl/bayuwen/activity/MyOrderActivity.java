@@ -26,6 +26,11 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
+import cn.com.zwwl.bayuwen.api.order.MyOrderApi;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
@@ -115,7 +120,8 @@ public class MyOrderActivity extends BaseActivity {
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int
+                    positionOffsetPixels) {
 
             }
 
@@ -221,6 +227,53 @@ public class MyOrderActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+
+        new MyOrderApi(mContext, 1, new FetchEntryListListener() {
+            @Override
+            public void setData(List entry) {
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
+        new MyOrderApi(mContext, 2, new FetchEntryListListener() {
+            @Override
+            public void setData(List entry) {
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
+        new MyOrderApi(mContext, 3, new FetchEntryListListener() {
+            @Override
+            public void setData(List entry) {
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
+        new MyOrderApi(mContext, 4, new FetchEntryListListener() {
+            @Override
+            public void setData(List entry) {
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
+
+
         List<String> data = new ArrayList<>();
         data.add("11");
         adapter1.setData(data);

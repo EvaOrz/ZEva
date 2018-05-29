@@ -92,7 +92,8 @@
     <string name="tianxie_code">填写团购验证码</string>
     <string name="about">关于诸葛学堂</string>
     <string name="logout">退出登录</string>
-
+    <string name="my_follow">我关注的班级</string>
+    <string name="feedback">意见反馈</string>
     <!--search-->
     <string name="search">搜索</string>
     <string name="no_search">无相关搜索内容，请尝试其他关键词</string>
@@ -106,8 +107,9 @@
     <string name="invite">邀请好友加入大语文</string>
     <string name="tiaoke">调课</string>
     <string name="zhuanban">转班</string>
-
-
+    <string name="gongxundengji">功勋等级：</string>
+    <string name="wodecode">我的邀请码：</string>
+    <string name="look_gongxun_guize">查看等级规则>></string>
     <!--changeinfo-->
     <string name="touxiang">头像</string>
     <string name="xingming">姓名</string>
@@ -316,4 +318,5 @@
     <string name="shuoming">说明</string>
     <string name="tuangou_baoming">团购报名</string>
     <string name="dandu_baoming">单独报名</string>
+    <string name="add_gouwuche">加入购物车</string>
 </resources>

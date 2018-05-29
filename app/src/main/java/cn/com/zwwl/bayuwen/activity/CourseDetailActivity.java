@@ -21,6 +21,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.api.CourseApi;
 import cn.com.zwwl.bayuwen.api.fm.PinglunApi;
+import cn.com.zwwl.bayuwen.api.order.CartAddApi;
 import cn.com.zwwl.bayuwen.glide.GlideApp;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -196,7 +197,7 @@ public class CourseDetailActivity extends BaseActivity {
         findViewById(R.id.ke_back).setOnClickListener(this);
         findViewById(R.id.group_purchase_bt1).setOnClickListener(this);
         findViewById(R.id.group_purchase_bt2).setOnClickListener(this);
-
+        findViewById(R.id.ke_add).setOnClickListener(this);
     }
 
     /**
@@ -241,6 +242,22 @@ public class CourseDetailActivity extends BaseActivity {
                 Intent j = new Intent(mContext, TuanPayActivity.class);
                 j.putExtra("TuanPayActivity_data", keModel);
                 startActivity(j);
+                break;
+            case R.id.ke_add:// 加入购物车
+                showLoadingDialog(true);
+                new CartAddApi(mContext, keModel.getKid(), new FetchEntryListener() {
+                    @Override
+                    public void setData(Entry entry) {
+
+                    }
+
+                    @Override
+                    public void setError(ErrorMsg error) {
+                        showLoadingDialog(false);
+                        if (error != null) showToast(error.getDesc());
+                        else showToast("加入购课单成功");
+                    }
+                });
                 break;
         }
     }

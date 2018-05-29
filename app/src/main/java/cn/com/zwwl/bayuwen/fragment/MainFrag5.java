@@ -16,6 +16,9 @@ import android.view.ViewGroup;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.UserModel;
 
+/**
+ * 我的 tab
+ */
 public class MainFrag5 extends Fragment implements View.OnClickListener {
 
     private Activity mActivity;

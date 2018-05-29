@@ -157,7 +157,18 @@ public class UrlUtil {
     }
 
     // 生成订单
-//    public
+    public static String setOrder() {
+        return HOST + "/order/get";
+    }
+
+    //我的订单
+    public static String getMyOrder() {
+        return HOST + "/order/myorder";
+    }
 
 
+    // 加入、获取、删除购课单
+    public static String getCarturl() {
+        return HOST + "/cart";
+    }
 }
