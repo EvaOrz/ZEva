@@ -15,7 +15,7 @@ import cn.com.zwwl.bayuwen.model.GroupBuyModel;
 import cn.com.zwwl.bayuwen.model.KeModel;
 
 /**
- * 团购
+ * 团购详情api
  */
 public class TuanDetailApi extends BaseApi {
     private FetchEntryListener listener;

@@ -75,6 +75,8 @@ public class CourseDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
         cid = getIntent().getStringExtra("CourseDetailActivity_id");
+        // 测试
+        cid = "7018";
         initView();
         initData();
     }
@@ -229,7 +231,7 @@ public class CourseDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.group_purchase_bt1: //团购报名
-                if (keModel.getGroupbuy() !=null){
+                if (keModel.getGroupbuy() != null) {
                     Intent i = new Intent(mContext, TuanIndexActivity.class);
                     i.putExtra("TuanIndexActivity_data", keModel);
                     startActivity(i);
@@ -291,7 +293,7 @@ public class CourseDetailActivity extends BaseActivity {
         teacherLayout.removeAllViews();
         for (TeacherModel t : keModel.getTeacherModels())
             teacherLayout.addView(getTeacherView(t));
-        if (keModel.getGroupbuy() !=null){
+        if (keModel.getGroupbuy() != null) {
             priceTv1.setText("￥" + keModel.getGroupbuy().getDiscount_pintrice());
             priceTv2.setText("￥" + keModel.getGroupbuy().getDiscount_pintrice());
         }

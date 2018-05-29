@@ -231,6 +231,7 @@ public class SearchCourseActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
+                    keSelectAdapter.clear();
                     keSelectAdapter.appendData(keModels);
                     break;
                 case 1:

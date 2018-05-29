@@ -156,5 +156,8 @@ public class UrlUtil {
         return HOST + "/grouppurchase";
     }
 
+    // 生成订单
+//    public
+
 
 }
