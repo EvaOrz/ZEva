@@ -46,11 +46,11 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.fm.FmMainActivity"
@@ -291,13 +291,7 @@
         <!--期末考试详情-->
         <activity android:name=".activity.ExamDetailsActivity" />
         <!--具体课次首页-->
-        <activity android:name=".activity.UnitIndexActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".activity.UnitIndexActivity"/>
         <!--上传照片-->
         <activity android:name=".activity.UploadPicActivity" />
 
