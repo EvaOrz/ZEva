@@ -106,6 +106,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
             if (MyApplication.loginStatusChange) {
                 initLeftLayout();
                 mainFrag1.initData(userModel);
+                mainFrag5.initData(userModel);
                 initChildDta();
                 MyApplication.loginStatusChange = false;
             }
@@ -211,51 +212,56 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
                             .LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     params.bottomMargin = 20;
                     for (final ChildModel childModel : childModels) {
-                        View view = LayoutInflater.from(mContext).inflate(R.layout.item_child,
-                                null);
-                        View bg = view.findViewById(R.id.item_child_bg);
-                        TextView name = view.findViewById(R.id.child_name);
-                        TextView grade = view.findViewById(R.id.child_grade);
-                        ImageView avat = view.findViewById(R.id.child_avatar);
-                        name.setText(childModel.getName());
-                        grade.setText(childModel.getGrade());
-                        if (!TextUtils.isEmpty(childModel.getPic()))
-                            Glide.with(mContext).load(childModel.getPic()).into(avat);
-                        if (childModel.getIsdefault().equals("1")) {
-                            bg.setBackgroundResource(R.drawable.gold_white_xiangkuang);
-
-                        } else {
-                            bg.setBackgroundResource(R.drawable.gray_white_xiankuang);
-                        }
-                        view.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                closeDrawer();
-                                setDefaultChild(childModel);
-                            }
-                        });
-                        view.findViewById(R.id.item_child_go).setOnClickListener(new View
-                                .OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent i = new Intent(mContext, ChildInfoActivity.class);
-                                i.putExtra("ChildInfoActivity_data", childModel);
-                                startActivity(i);
-                            }
-                        });
-                        childLayout.addView(view, params);
-                        // 初始化侧边栏学员列表之后，同步fragment1中学员信息
-                        mainFrag1.loadChild(childModels);
+                        childLayout.addView(getChildView(childModel), params);
                     }
+                    // 初始化侧边栏学员列表之后，同步fragment1\同步fragment5中学员信息
+                    mainFrag1.loadChild(childModels);
+                    mainFrag5.loadChild(childModels);
                     break;
                 case 1:
 
                     break;
             }
-
-
         }
     };
+
+
+    private View getChildView(final ChildModel childModel) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_child,
+                null);
+        View bg = view.findViewById(R.id.item_child_bg);
+        TextView name = view.findViewById(R.id.child_name);
+        TextView grade = view.findViewById(R.id.child_grade);
+        ImageView avat = view.findViewById(R.id.child_avatar);
+        name.setText(childModel.getName());
+        grade.setText(childModel.getGrade());
+        if (!TextUtils.isEmpty(childModel.getPic()))
+            Glide.with(mContext).load(childModel.getPic()).into(avat);
+        if (childModel.getIsdefault().equals("1")) {
+            bg.setBackgroundResource(R.drawable.gold_white_xiangkuang);
+
+        } else {
+            bg.setBackgroundResource(R.drawable.gray_white_xiankuang);
+        }
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeDrawer();
+                setDefaultChild(childModel);
+            }
+        });
+        view.findViewById(R.id.item_child_go).setOnClickListener(new View
+                .OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, ChildInfoActivity.class);
+                i.putExtra("ChildInfoActivity_data", childModel);
+                startActivity(i);
+            }
+        });
+        return view;
+    }
+
 
     /**
      * 切换学生

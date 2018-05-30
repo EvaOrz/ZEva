@@ -19,6 +19,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/frag5_setting"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:background="@color/gray_line" />
@@ -58,6 +59,7 @@
                     android:id="@+id/frag5_child_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal" />
 
                 <LinearLayout
@@ -160,6 +162,7 @@
                 android:paddingTop="20dp">
 
                 <LinearLayout
+                    android:id="@+id/frag5_order1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -181,6 +184,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/frag5_order2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -202,6 +206,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/frag5_order3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -223,6 +228,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/frag5_order4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -247,6 +253,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/frag5_banji"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -273,6 +280,7 @@
             <include layout="@layout/layout_line" />
 
             <LinearLayout
+                android:id="@+id/frag5_tuan_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -298,6 +306,7 @@
             <include layout="@layout/layout_line" />
 
             <LinearLayout
+                android:id="@+id/frag5_invite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -323,6 +332,7 @@
             <include layout="@layout/layout_line" />
 
             <LinearLayout
+                android:id="@+id/frag5_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"

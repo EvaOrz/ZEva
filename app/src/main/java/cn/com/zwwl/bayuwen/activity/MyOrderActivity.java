@@ -46,11 +46,14 @@ public class MyOrderActivity extends BaseActivity {
     private MyOrderAdapter adapter1, adapter2, adapter3, adapter4;
     private LinearLayout payLayout;
 
+    private int initTabNum = 0; // 初始tab选中
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_order);
+        initTabNum = getIntent().getIntExtra("MyOrderActivity_data", 0);
         initView();
         initData();
     }
@@ -178,7 +181,7 @@ public class MyOrderActivity extends BaseActivity {
                     changeRadio(3);
             }
         });
-
+        changeRadio(initTabNum);
         findViewById(R.id.my_order_back).setOnClickListener(this);
     }
 

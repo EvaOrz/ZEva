@@ -9,10 +9,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -24,7 +22,6 @@ import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
 import cn.com.zwwl.bayuwen.model.ChildModel;
-import cn.com.zwwl.bayuwen.model.UserModel;
 
 /**
  * 首页选择学生下拉菜单
@@ -41,7 +38,7 @@ public class ChildMenuPopView extends PopupWindow {
         conentView = inflater.inflate(R.layout.pop_child_menu, null);
         layout = conentView.findViewById(R.id.pop_child_layout);
         for (final ChildModel childModel : list) {
-            View view = inflater.inflate(R.layout.item_menu_child, null);
+            View view = inflater.inflate(R.layout.item_child_menu, null);
             ImageView avatar = view.findViewById(R.id.item_child_avatar);
             TextView name = view.findViewById(R.id.item_child_name);
             TextView grade = view.findViewById(R.id.item_child_grade);

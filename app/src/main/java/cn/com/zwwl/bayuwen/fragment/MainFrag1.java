@@ -37,6 +37,7 @@ import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.ImageBannerAdapter;
 import cn.com.zwwl.bayuwen.adapter.MainYixuanKeAdapter;
+import cn.com.zwwl.bayuwen.glide.GlideApp;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
@@ -132,7 +133,9 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     public void initData(UserModel userModel) {
         this.userModel = userModel;
         if (!TextUtils.isEmpty(userModel.getPic())) {
-            Glide.with(mActivity).load(userModel.getPic()).into(parentImg);
+            GlideApp.with(mActivity).load(userModel.getPic()).placeholder(R.drawable
+                    .avatar_placeholder).error(R.drawable
+                    .avatar_placeholder).into(parentImg);
         }
 
     }
@@ -229,7 +232,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             switch (msg.what) {
                 case 0:
                     for (ChildModel c : childModels) {
-                        if (c.getIsdefault().equals("1")){
+                        if (c.getIsdefault().equals("1")) {
                             childTxt.setText(c.getName() + "(" + c.getGrade() + ")");
                             if (!TextUtils.isEmpty(c.getPic()))
                                 Glide.with(mActivity).load(c.getPic()).into(childImg);
