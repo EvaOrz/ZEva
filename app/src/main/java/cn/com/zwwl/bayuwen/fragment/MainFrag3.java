@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +26,13 @@ import cn.com.zwwl.bayuwen.activity.StudyingCourseActivity;
 import cn.com.zwwl.bayuwen.activity.TraceRecordActivity;
 import cn.com.zwwl.bayuwen.adapter.CompleteCourseAdapter;
 import cn.com.zwwl.bayuwen.adapter.CoursePageAdapter;
+import cn.com.zwwl.bayuwen.api.MyCourseApi;
 import cn.com.zwwl.bayuwen.base.BasicFragment;
-import cn.com.zwwl.bayuwen.listener.OnItemClickListener;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.model.StudyCourseModel;
 import cn.com.zwwl.bayuwen.view.PagerSlidingTabStrip;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
@@ -71,8 +77,9 @@ public class MainFrag3 extends BasicFragment {
     private CompleteCourseAdapter adapter;
     private CoursePageAdapter mViewPagerAdapter;
     private List<Fragment> list = new ArrayList<>();
-    private List<KeModel> mItemList = new ArrayList<>();
+    private List<KeModel> finishCourse = new ArrayList<>();
     private List<String> mItemTitleList = new ArrayList<>();
+    StudyCourseModel courseModel;
 
     @Override
     protected View setContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,35 +97,50 @@ public class MainFrag3 extends BasicFragment {
         mViewPagerAdapter = new CoursePageAdapter(getFragmentManager(), list, mItemTitleList);
         mViewPager.setAdapter(mViewPagerAdapter);
         tab.setViewPager(mViewPager);
-        for (int i = 0; i < 6; i++) {
-            KeModel model = new KeModel();
-            mItemList.add(model);
-        }
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, OrientationHelper.VERTICAL, false));
         recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R.dimen.dp_5, OrientationHelper.VERTICAL));
-        adapter = new CompleteCourseAdapter(getActivity(), mItemList);
+        adapter = new CompleteCourseAdapter( finishCourse);
         recyclerView.setAdapter(adapter);
-
     }
 
     @Override
     protected void initData() {
 
+        new MyCourseApi(activity, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+                if (entry != null) {
+                    courseModel = (StudyCourseModel) entry;
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            bindView();
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
+    }
+
+    private void bindView() {
+        finishCourse=courseModel.getCompleted();
+      adapter.setNewData(finishCourse);
     }
 
     @Override
     protected void setListener() {
-        adapter.setOnItemClickListener(new OnItemClickListener() {
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void setOnItemClickListener(View view, int position) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 startActivity(new Intent(getActivity(), TraceRecordActivity.class));
-            }
-
-            @Override
-            public void setOnLongItemClickListener(View view, int position) {
-
             }
         });
     }
@@ -134,7 +156,6 @@ public class MainFrag3 extends BasicFragment {
     @Override
     public void onClick(View view) {
         startActivity(new Intent(activity, StudyingCourseActivity.class));
-
     }
 }
   

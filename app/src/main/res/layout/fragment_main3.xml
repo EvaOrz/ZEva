@@ -147,6 +147,7 @@
                             app:pstsSelectTextColor="@color/gold"
                             app:pstsTextColor="@color/body_gray"
                             app:pstsTextSize="@dimen/text_size_14"
+                            android:padding="@dimen/dp_10"
                             app:pstsUnderlineHeight="0px"
                             app:pstsisMore="true" />
 
@@ -373,7 +374,7 @@
                         android:paddingEnd="@dimen/dp_10"
                         android:paddingStart="@dimen/dp_10"
                         android:paddingTop="@dimen/dp_5"
-                        android:text="@string/past_course_trace"
+                        android:text="@string/look_video"
                         android:textColor="@color/gold"
                         android:textSize="@dimen/sp_14"
                         app:layout_constraintEnd_toEndOf="parent"

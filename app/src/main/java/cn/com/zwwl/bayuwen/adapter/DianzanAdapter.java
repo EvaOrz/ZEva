@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,8 +45,8 @@ public class DianzanAdapter extends CheckScrollAdapter<ZanTeacherModel> {
 
         ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_praise);
 
-        TextView name = viewHolder.getView(R.id.tcherNameTv);
-        TextView desc = viewHolder.getView(R.id.tcherDesTv);
+        TextView name = viewHolder.getView(R.id.course_name);
+        TextView desc = viewHolder.getView(R.id.description);
         ImageView img = viewHolder.getView(R.id.course_cover);
 
         final ZanTeacherModel item = getItem(position);

@@ -158,6 +158,8 @@ public class UrlUtil {
 
     // 生成订单
 //    public
-
+public static String getMyCourse(){
+        return HOST+"/course/my";
+}
 
 }
