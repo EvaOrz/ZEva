@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -75,6 +76,7 @@ public class AddCalendarActivity extends BaseActivity {
     @Override
     protected void initData() {
 
+
     }
 
     @SuppressLint("HandlerLeak")
@@ -100,7 +102,8 @@ public class AddCalendarActivity extends BaseActivity {
                     jieTv1.setText(df.format(endDate));
                     jieTv2.setText(new SimpleDateFormat("EEE").format(endDate));
                     weekCountTv.setText(CalendarTools.countTwoDayWeek(startDate, endDate) + "周");
-                    new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow.MyWeekChooseListener() {
+                    new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow
+                            .MyWeekChooseListener() {
                         @Override
                         public void onWeekChoose(List<Integer> weeks) {
                             List<Date> pickDays = new ArrayList<>();
@@ -121,11 +124,21 @@ public class AddCalendarActivity extends BaseActivity {
         }
     };
 
+    private void doSave() {
+        String name = nameEv.getText().toString();
+        if (startDate == null || endDate == null) {
+            showToast("请选择课程开始和结束日期");
+        } else if (TextUtils.isEmpty(name)){
+            showToast("请填写课程名称");
+        }
+    }
+
     @Override
     public void onClick(View view) {
         super.onClick(view);
         switch (view.getId()) {
             case R.id.add_calendar_save:// 保存
+                doSave();
                 break;
             case R.id.add_calendar_back:
                 finish();
@@ -138,7 +151,8 @@ public class AddCalendarActivity extends BaseActivity {
                 break;
             case R.id.add_xiakeshijian:// 下课时间
                 hideJianpan();
-                new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow.MyTimePickListener() {
+                new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow
+                        .MyTimePickListener() {
                     @Override
                     public void onTimePick(int hour, int minute) {
                         xiaTime = hour + ":" + minute;
@@ -148,7 +162,8 @@ public class AddCalendarActivity extends BaseActivity {
                 break;
             case R.id.add_shangkeshijian:// 上课时间
                 hideJianpan();
-                new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow.MyTimePickListener() {
+                new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow
+                        .MyTimePickListener() {
                     @Override
                     public void onTimePick(int hour, int minute) {
                         shangTime = hour + ":" + minute;
@@ -159,7 +174,8 @@ public class AddCalendarActivity extends BaseActivity {
 
             case R.id.add_kechengjigou:// 课程机构
                 hideJianpan();
-                new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow.MyJigouChooseListener() {
+                new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow
+                        .MyJigouChooseListener() {
                     @Override
                     public void onJigouChoose(String name) {
                         Message ms = new Message();
@@ -172,7 +188,8 @@ public class AddCalendarActivity extends BaseActivity {
 
             case R.id.add_period:// 课程时间段选择器
                 hideJianpan();
-                new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow.MyPeriodPickListener() {
+                new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow
+                        .MyPeriodPickListener() {
 
                     @Override
                     public void onPeriodPick(Date start, Date end) {
@@ -186,7 +203,6 @@ public class AddCalendarActivity extends BaseActivity {
                 break;
         }
     }
-
 
 
     @Override

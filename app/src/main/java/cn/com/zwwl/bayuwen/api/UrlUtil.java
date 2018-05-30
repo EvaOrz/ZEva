@@ -166,9 +166,18 @@ public class UrlUtil {
         return HOST + "/order/myorder";
     }
 
-
     // 加入、获取、删除购课单
     public static String getCarturl() {
         return HOST + "/cart";
+    }
+
+    // 获取日历页面事件列表
+    public static String getCalendarEvents() {
+        return HOST + "/course/calendar";
+    }
+
+    // 添加日历事件
+    public static String addCalendarEvent() {
+        return HOST + "/courseRecords";
     }
 }

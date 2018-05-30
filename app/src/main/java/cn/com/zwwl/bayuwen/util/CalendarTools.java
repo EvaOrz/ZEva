@@ -20,7 +20,7 @@ public class CalendarTools {
      * @param date_start
      * @param date_end
      */
-    public static List<Date> betweenDays(Date date_start, Date date_end ) {
+    public static List<Date> betweenDays(Date date_start, Date date_end) {
         List<Date> dates = new ArrayList<>();
 
         //计算日期从开始时间于结束时间的0时计算
@@ -38,7 +38,8 @@ public class CalendarTools {
         toCalendar.set(Calendar.SECOND, 0);
         toCalendar.set(Calendar.MILLISECOND, 0);
 
-        int s = (int) ((toCalendar.getTimeInMillis() - fromCalendar.getTimeInMillis()) / (ONE_DAY_MS));
+        int s = (int) ((toCalendar.getTimeInMillis() - fromCalendar.getTimeInMillis()) /
+                (ONE_DAY_MS));
         for (int i = 0; i <= s; i++) {
             long todayDate = fromCalendar.getTimeInMillis() + i * ONE_DAY_MS;
             Date dd = new Date(todayDate);
@@ -149,6 +150,30 @@ public class CalendarTools {
     }
 
     /**
+     * 根据提供的年月获取该月份的第一天
+     *
+     * @param calendar
+     * @return
+     */
+    public static Date getBeginDayofMonth(Calendar calendar) {
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        Date firstDate = calendar.getTime();
+        return firstDate;
+    }
+
+    /**
+     * 根据提供的年月获取该月份的最后一天
+     *
+     * @param calendar
+     * @return
+     */
+    public static Date getEndDayofMonth(Calendar calendar) {
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        Date lastDate = calendar.getTime();
+        return lastDate;
+    }
+
+    /**
      * 获取月份选择器的最大年份
      *
      * @return
@@ -157,6 +182,26 @@ public class CalendarTools {
         Calendar current = Calendar.getInstance();
         current.setTime(new Date());
         return current.get(Calendar.YEAR) + 1;
+    }
+
+    /**
+     * 获取当前年份
+     * @return
+     */
+    public static int getCurrentYear() {
+        Calendar current = Calendar.getInstance();
+        current.setTime(new Date());
+        return current.get(Calendar.YEAR);
+    }
+
+    /**
+     * 获取当前月份
+     * @return
+     */
+    public static int getCurrentMonth() {
+        Calendar current = Calendar.getInstance();
+        current.setTime(new Date());
+        return current.get(Calendar.MONTH);
     }
 
     /**

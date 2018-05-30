@@ -34,6 +34,7 @@ import cn.com.zwwl.bayuwen.activity.SettingActivity;
 import cn.com.zwwl.bayuwen.glide.GlideApp;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.util.Tools;
 
 /**
  * 我的 tab
@@ -109,14 +110,20 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                                 .avatar_placeholder).into(frag5Avatar);
                         frag5Name.setText(userModel.getName());
                     }
-                    frag5ChildLayout.removeAllViews();
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout
-                            .LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    params.weight = 1;
-                    params.bottomMargin = 10;
-                    for (int i = 0; i < 3; i++) {
-                        frag5ChildLayout.addView(getChildView(childModels.get(i)), params);
+                    if (Tools.listNotNull(childModels)) {
+                        frag5ChildLayout.removeAllViews();
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams
+                                (LinearLayout
+                                        .LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams
+                                        .WRAP_CONTENT);
+                        params.weight = 1;
+                        params.bottomMargin = 10;
+                        for (int i = 0; i < childModels.size(); i++) {
+                            if (i < 3)
+                                frag5ChildLayout.addView(getChildView(childModels.get(i)), params);
+                        }
                     }
+
                     break;
             }
         }
