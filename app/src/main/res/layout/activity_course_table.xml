@@ -5,12 +5,9 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <include
-        android:id="@+id/top"
-        layout="@layout/layout_toolbar"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/gray_light"
@@ -18,15 +15,12 @@
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:textColor="@color/gray_dark"
-        android:id="@+id/type"
-        app:layout_constraintTop_toBottomOf="@+id/top" />
+        android:textColor="@color/gray_dark" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/type"
-     />
+        app:layout_constraintTop_toBottomOf="@+id/type" />
 </android.support.constraint.ConstraintLayout>

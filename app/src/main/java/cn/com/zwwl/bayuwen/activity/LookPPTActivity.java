@@ -1,8 +1,6 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.rd.PageIndicatorView;
@@ -13,18 +11,14 @@ import java.util.List;
 import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.PPTAdapter;
-import cn.com.zwwl.bayuwen.base.BasicActivity;
+import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 
 /**
  * PPT 浏览
  * Create by zhumangmang at 2018/5/25 17:42
  */
-public class LookPPTActivity extends BasicActivity {
+public class LookPPTActivity extends BasicActivityWithTitle {
 
-    @BindView(R.id.title)
-    AppCompatTextView title;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     @BindView(R.id.pager_indicator)
@@ -38,9 +32,7 @@ public class LookPPTActivity extends BasicActivity {
 
     @Override
     protected void initView() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        title.setText("第X课 PPT");
+        setCustomTitle("第X课 PPT");
     }
 
     @Override
@@ -61,5 +53,10 @@ public class LookPPTActivity extends BasicActivity {
     @Override
     public void onClick(View view) {
 
+    }
+
+    @Override
+    public void close() {
+        finish();
     }
 }

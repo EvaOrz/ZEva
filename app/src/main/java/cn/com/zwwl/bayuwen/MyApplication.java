@@ -9,14 +9,21 @@ import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.umeng.commonsdk.UMConfigure;
+import com.yanzhenjie.album.Album;
+import com.yanzhenjie.album.AlbumConfig;
+import com.yanzhenjie.album.AlbumFile;
+import com.yanzhenjie.album.AlbumLoader;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.api.UrlUtil;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.service.NewMusicService;
 
 /**
@@ -93,7 +100,25 @@ public class MyApplication extends Application {
         initLeanCloud();
         initUmeng();
         UrlUtil.setHost();
+        initAlbum();
+    }
 
+    private void initAlbum() {
+        Album.initialize(AlbumConfig.newBuilder(this)
+                .setAlbumLoader(new AlbumLoader() {
+                    @Override
+                    public void load(ImageView imageView, AlbumFile albumFile) {
+                        load(imageView, albumFile.getPath());
+                    }
+
+                    @Override
+                    public void load(ImageView imageView, String url) {
+                        ImageLoader.display(getApplicationContext(), imageView, url);
+                    }
+                })
+                .setLocale(Locale.getDefault())
+                .build()
+        );
     }
 
     private void initLeanCloud() {

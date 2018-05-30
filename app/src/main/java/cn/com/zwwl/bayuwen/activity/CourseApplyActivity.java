@@ -3,23 +3,18 @@ package cn.com.zwwl.bayuwen.activity;
 import android.content.Intent;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.base.BasicActivity;
+import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 
 /**
  * 调课申请提交
  * Created by zhumangmang at 2018/5/28 17:30
  */
-public class CourseApplyActivity extends BasicActivity {
-    @BindView(R.id.title)
-    AppCompatTextView title;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+public class CourseApplyActivity extends BasicActivityWithTitle {
     @BindView(R.id.unit_name)
     AppCompatTextView unitName;
     @BindView(R.id.description)
@@ -44,7 +39,7 @@ public class CourseApplyActivity extends BasicActivity {
 
     @Override
     protected void initView() {
-
+        setDisplayShowTitleEnabled(false);
     }
 
     @Override
@@ -63,4 +58,8 @@ public class CourseApplyActivity extends BasicActivity {
         startActivity(new Intent(this, ChangeResultActivity.class));
     }
 
+    @Override
+    public void close() {
+        finish();
+    }
 }

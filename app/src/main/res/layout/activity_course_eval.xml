@@ -4,11 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
-
-    <include
-        android:id="@+id/top"
-        layout="@layout/layout_toolbar" />
-
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/content"
         android:layout_width="match_parent"
@@ -21,8 +16,7 @@
         android:hint="@string/hint_input_eval"
         android:minHeight="@dimen/dp_180"
         android:padding="@dimen/dp_10"
-        android:textColorHint="@color/gray_light"
-        app:layout_constraintTop_toBottomOf="@+id/top" />
+        android:textColorHint="@color/gray_light" />
 
     <Switch
         android:id="@+id/hide_name"

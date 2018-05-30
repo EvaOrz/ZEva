@@ -83,4 +83,6 @@ dependencies {
     implementation files('libs/umeng-share-sina-simplify-6.9.2.jar')
     // ViewPager圆点指示器
     implementation 'com.romandanylyk:pageindicatorview:0.2.0'
+    // 图片选择（单选，多选）
+    implementation 'com.yanzhenjie:album:2.1.1'
 }

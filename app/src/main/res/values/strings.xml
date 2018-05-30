@@ -324,4 +324,17 @@
     <string name="past_course_trace">往次课程追踪</string>
     <string name="finish_course">已完成课程</string>
     <string name="work_feedback">作业反馈</string>
+    <string name="paper_pic">试卷照片</string>
+    <string name="teacher_eval">教师评语</string>
+    <string name="tutor_eval">助教评语</string>
+    <string name="adviser_eval">学术顾问评语</string>
+    <string name="hide_full_class">隐藏满班</string>
+    <string name="submit">提交</string>
+    <string name="back">返回</string>
+    <string name="month_report">月度报告</string>
+    <string name="learning_summary">学情总结</string>
+    <string name="course_ppt">课程PPT</string>
+    <string name="book_class_status">板书及课堂情况</string>
+    <string name="seat_table">座位表</string>
+    <string name="like_for">为TA点赞</string>
 </resources>

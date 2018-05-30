@@ -5,9 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <include
-        android:id="@+id/top"
-        layout="@layout/layout_toolbar" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/old"
@@ -15,16 +12,15 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginStart="@dimen/dp_16"
-        android:text="原在班级"
-        app:layout_constraintTop_toBottomOf="@id/top" />
+        android:text="原在班级" />
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/old_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_10"
-        android:id="@+id/old_layout"
         android:background="@drawable/draw_gray_line_bg"
         app:layout_constraintTop_toBottomOf="@id/old">
 
@@ -227,7 +223,7 @@
         android:id="@+id/submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/text_color_yellow"
+        android:background="@color/mainColor"
         android:gravity="center"
         android:padding="@dimen/dp_10"
         android:text="确认提交"

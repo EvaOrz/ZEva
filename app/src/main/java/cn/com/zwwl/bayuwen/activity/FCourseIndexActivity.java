@@ -5,7 +5,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -18,18 +17,14 @@ import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.TestListAdapter;
 import cn.com.zwwl.bayuwen.adapter.UnitTableAdapter;
-import cn.com.zwwl.bayuwen.base.BasicActivity;
+import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.model.CourseModel;
 
 /**
  * 课程跟踪列表点击后进入该处
  * Created by zhumangmang at 2018/5/29 15:55
  */
-public class FCourseIndexActivity extends BasicActivity {
-    @BindView(R.id.title)
-    AppCompatTextView title;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+public class FCourseIndexActivity extends BasicActivityWithTitle {
     @BindView(R.id.progress)
     ProgressBar progress;
     @BindView(R.id.percent)
@@ -48,8 +43,7 @@ public class FCourseIndexActivity extends BasicActivity {
 
     @Override
     protected void initView() {
-        setSupportActionBar(toolbar);
-        title.setText("大语文");
+        setCustomTitle("大语文");
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         test.setLayoutManager(new LinearLayoutManager(this));
@@ -74,6 +68,12 @@ public class FCourseIndexActivity extends BasicActivity {
 
     @Override
     protected void setListener() {
+        testListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivity(new Intent(mActivity, ExamDetailsActivity.class));
+            }
+        });
         unitTableAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -87,4 +87,13 @@ public class FCourseIndexActivity extends BasicActivity {
 
     }
 
+    @Override
+    public void close() {
+        finish();
+    }
+
+    @Override
+    public boolean setParentScrollable() {
+        return true;
+    }
 }

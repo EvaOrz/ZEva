@@ -5,7 +5,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -16,18 +15,14 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.StudyingCourseAdapter;
-import cn.com.zwwl.bayuwen.base.BasicActivity;
+import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.model.CourseModel;
 
 /**
  * 在学课程
  * Create by zhumangmang at 2018/5/26 13:22
  */
-public class StudyingCourseActivity extends BasicActivity {
-    @BindView(R.id.title)
-    AppCompatTextView title;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+public class StudyingCourseActivity extends BasicActivityWithTitle {
     @BindView(R.id.course_progress)
     ProgressBar courseProgress;
     @BindView(R.id.total_course)
@@ -49,11 +44,9 @@ public class StudyingCourseActivity extends BasicActivity {
 
     @Override
     protected void initView() {
-        setSupportActionBar(toolbar);
-        title.setText("四成写作三年级");
+        setCustomTitle("四成写作三年级");
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setNestedScrollingEnabled(true);
     }
 
     @Override
@@ -93,4 +86,13 @@ public class StudyingCourseActivity extends BasicActivity {
         startActivity(intent);
     }
 
+    @Override
+    public boolean setParentScrollable() {
+        return true;
+    }
+
+    @Override
+    public void close() {
+        finish();
+    }
 }

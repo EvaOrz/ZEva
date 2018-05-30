@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:id="@+id/current_stu"
             android:text="12"
-            android:textColor="@color/text_color_yellow"
+            android:textColor="@color/mainColor"
             android:layout_height="wrap_content" />
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:id="@+id/total_stu"
             android:text="30"
-            android:textColor="@color/text_color_yellow"
+            android:textColor="@color/mainColor"
             android:layout_height="wrap_content" />
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
             android:layout_marginStart="@dimen/dp_5"
             android:gravity="center"
             android:text="@string/brace_left"
-            android:textColor="@color/gray"/>
+            android:textColor="@color/gray_light"/>
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
             android:layout_marginStart="@dimen/dp_5"
             android:gravity="center"
             android:text="9"
-            android:textColor="@color/text_color_yellow"/>
+            android:textColor="@color/mainColor"/>
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
             android:layout_marginStart="@dimen/dp_5"
             android:gravity="center"
             android:text="@string/sig_xie"
-            android:textColor="@color/gray"/>
+            android:textColor="@color/gray_light"/>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/total_course"
@@ -113,7 +113,7 @@
             android:layout_marginStart="@dimen/dp_5"
             android:gravity="center"
             android:text="20"
-            android:textColor="@color/gray"/>
+            android:textColor="@color/gray_light"/>
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -123,7 +123,7 @@
             android:layout_marginStart="@dimen/dp_5"
             android:gravity="center"
             android:text="@string/brace_right"
-            android:textColor="@color/gray" />
+            android:textColor="@color/gray_light" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -190,7 +190,7 @@
         android:id="@+id/submit"
         app:layout_constraintBottom_toBottomOf="parent"
         android:textColor="@color/white"
-        android:background="@color/text_color_yellow"
+        android:background="@color/mainColor"
         android:padding="@dimen/dp_10"
         android:gravity="center"
         android:layout_height="wrap_content" />

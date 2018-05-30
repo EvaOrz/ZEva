@@ -5,13 +5,13 @@ import android.view.View;
 
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.base.BasicActivity;
+import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 
 /**
  * 转班申请提交
  * Created by zhumangmang at 2018/5/28 17:30
  */
-public class ClassApplyActivity extends BasicActivity {
+public class ClassApplyActivity extends BasicActivityWithTitle {
 
 
     @Override
@@ -21,7 +21,7 @@ public class ClassApplyActivity extends BasicActivity {
 
     @Override
     protected void initView() {
-
+setDisplayShowTitleEnabled(false);
     }
 
     @Override
@@ -40,4 +40,8 @@ public class ClassApplyActivity extends BasicActivity {
         startActivity(new Intent(this, ChangeResultActivity.class));
     }
 
+    @Override
+    public void close() {
+        finish();
+    }
 }

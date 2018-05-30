@@ -2,20 +2,15 @@ package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.base.BasicActivity;
+import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 
-public class ClassDetailActivity extends BasicActivity {
-    @BindView(R.id.title)
-    AppCompatTextView title;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+public class ClassDetailActivity extends BasicActivityWithTitle {
     @BindView(R.id.class_name)
     AppCompatTextView className;
     @BindView(R.id.current_stu)
@@ -40,6 +35,7 @@ public class ClassDetailActivity extends BasicActivity {
 
     @Override
     protected void initView() {
+        setCustomTitle("课程详情");
         if (mApplication.operate_type == 0) {
             submit.setText("选择调课");
         } else {
@@ -67,4 +63,8 @@ public class ClassDetailActivity extends BasicActivity {
         }
     }
 
+    @Override
+    public void close() {
+        finish();
+    }
 }

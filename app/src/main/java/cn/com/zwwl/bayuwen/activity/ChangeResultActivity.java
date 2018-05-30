@@ -5,13 +5,13 @@ import android.view.View;
 
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.base.BasicActivity;
+import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 
 /**
  * 调课（换班）结果
  * Created by zhumangmang at 2018/5/28 17:54
  */
-public class ChangeResultActivity extends BasicActivity {
+public class ChangeResultActivity extends BasicActivityWithTitle {
     @Override
     protected int setContentView() {
         return R.layout.activity_change_result;
@@ -19,7 +19,7 @@ public class ChangeResultActivity extends BasicActivity {
 
     @Override
     protected void initView() {
-
+setDisplayShowTitleEnabled(false);
     }
 
     @Override
@@ -36,5 +36,10 @@ public class ChangeResultActivity extends BasicActivity {
     @Override
     public void onClick(View view) {
         startActivity(new Intent(this, StudyingCourseActivity.class));
+    }
+
+    @Override
+    public void close() {
+        finish();
     }
 }
