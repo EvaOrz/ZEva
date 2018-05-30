@@ -171,6 +171,11 @@ public class UrlUtil {
         return HOST + "/cart";
     }
 
+    //    public
+    public static String getMyCourse() {
+        return HOST + "/course/my";
+    }
+
     // 获取日历页面事件列表
     public static String getCalendarEvents() {
         return HOST + "/course/calendar";

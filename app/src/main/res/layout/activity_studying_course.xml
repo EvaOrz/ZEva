@@ -1,176 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <include
-        android:id="@+id/top"
-        app:layout_constraintTop_toTopOf="parent"
-        layout="@layout/layout_toolbar" />
-
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top">
+        android:layout_height="wrap_content"
+        android:background="@color/gray_light"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:text="@string/course_progress"
+        android:textColor="@color/gray_dark" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_light"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/dp_5">
+
+        <ProgressBar
+            android:id="@+id/course_progress"
+            style="@style/Jindu_progress"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.9"
+            android:max="100"
+            android:progress="50"
+            android:secondaryProgress="80" />
 
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/gray_light"
-                android:paddingEnd="@dimen/activity_horizontal_margin"
-                android:paddingStart="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:text="@string/course_progress"
-                android:textColor="@color/gray_dark" />
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            android:gravity="center"
+            android:text="@string/brace_left"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/sp_16" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/gray_light"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/dp_5"
-                android:paddingEnd="@dimen/activity_horizontal_margin"
-                android:paddingStart="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/dp_5">
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            android:gravity="center"
+            android:text="9"
+            android:textColor="@color/gold"
+            android:textSize="@dimen/sp_16" />
 
-                <ProgressBar
-                    android:id="@+id/course_progress"
-                    style="@style/Jindu_progress"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="0.9"
-                    android:max="100"
-                    android:progress="50"
-                    android:secondaryProgress="80" />
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp_5"
-                    android:layout_marginStart="@dimen/dp_5"
-                    android:gravity="center"
-                    android:text="@string/brace_left"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/sp_16" />
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp_5"
-                    android:layout_marginStart="@dimen/dp_5"
-                    android:gravity="center"
-                    android:text="9"
-                    android:textColor="@color/gold"
-                    android:textSize="@dimen/sp_16" />
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            android:gravity="center"
+            android:text="@string/sig_xie"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/sp_16" />
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp_5"
-                    android:layout_marginStart="@dimen/dp_5"
-                    android:gravity="center"
-                    android:text="@string/sig_xie"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/sp_16" />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/total_course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            android:gravity="center"
+            android:text="20"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/sp_16" />
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/total_course"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp_5"
-                    android:layout_marginStart="@dimen/dp_5"
-                    android:gravity="center"
-                    android:text="20"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/sp_16" />
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            android:gravity="center"
+            android:text="@string/brace_right"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/sp_16" />
+    </LinearLayout>
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp_5"
-                    android:layout_marginStart="@dimen/dp_5"
-                    android:gravity="center"
-                    android:text="@string/brace_right"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/sp_16" />
-            </LinearLayout>
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/course_eval"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/draw_gray_line_bg"
+        android:drawableEnd="@mipmap/home_header_more"
+        android:drawableLeft="@mipmap/home_head_hot"
+        android:drawablePadding="@dimen/dp_10"
+        android:drawableRight="@mipmap/home_header_more"
+        android:drawableStart="@mipmap/home_head_hot"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_5"
+        android:text="@string/course_eval" />
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/course_eval"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="@drawable/draw_gray_line_bg"
-                android:drawableEnd="@mipmap/home_header_more"
-                android:drawableLeft="@mipmap/home_head_hot"
-                android:drawablePadding="@dimen/dp_10"
-                android:drawableRight="@mipmap/home_header_more"
-                android:drawableStart="@mipmap/home_head_hot"
-                android:paddingBottom="@dimen/dp_5"
-                android:paddingEnd="@dimen/dp_10"
-                android:paddingStart="@dimen/dp_10"
-                android:paddingTop="@dimen/dp_5"
-                android:text="@string/course_eval" />
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/course_change"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/draw_gray_line_bg"
+        android:drawableEnd="@mipmap/home_header_more"
+        android:drawableLeft="@mipmap/home_head_hot"
+        android:drawablePadding="@dimen/dp_10"
+        android:drawableRight="@mipmap/home_header_more"
+        android:drawableStart="@mipmap/home_head_hot"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_5"
+        android:text="@string/tiaoke" />
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/course_change"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="@drawable/draw_gray_line_bg"
-                android:drawableEnd="@mipmap/home_header_more"
-                android:drawableLeft="@mipmap/home_head_hot"
-                android:drawablePadding="@dimen/dp_10"
-                android:drawableRight="@mipmap/home_header_more"
-                android:drawableStart="@mipmap/home_head_hot"
-                android:paddingBottom="@dimen/dp_5"
-                android:paddingEnd="@dimen/dp_10"
-                android:paddingStart="@dimen/dp_10"
-                android:paddingTop="@dimen/dp_5"
-                android:text="@string/tiaoke" />
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/class_covert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/draw_gray_line_bg"
+        android:drawableEnd="@mipmap/home_header_more"
+        android:drawableLeft="@mipmap/home_head_hot"
+        android:drawablePadding="@dimen/dp_10"
+        android:drawableRight="@mipmap/home_header_more"
+        android:drawableStart="@mipmap/home_head_hot"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_5"
+        android:text="@string/zhuanban" />
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/class_covert"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="@drawable/draw_gray_line_bg"
-                android:drawableEnd="@mipmap/home_header_more"
-                android:drawableLeft="@mipmap/home_head_hot"
-                android:drawablePadding="@dimen/dp_10"
-                android:drawableRight="@mipmap/home_header_more"
-                android:drawableStart="@mipmap/home_head_hot"
-                android:paddingBottom="@dimen/dp_5"
-                android:paddingEnd="@dimen/dp_10"
-                android:paddingStart="@dimen/dp_10"
-                android:paddingTop="@dimen/dp_5"
-                android:text="@string/zhuanban" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/dp_10" />
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/dp_10" />
+</LinearLayout>

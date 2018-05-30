@@ -1,7 +1,5 @@
 package cn.com.zwwl.bayuwen.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,7 +94,25 @@ public class KeModel extends Entry {
     private int is_discount;
     private int is_promotion;
     private int is_groupbuy;
+    private String name;
+    private String img;
     private GroupBuyModel groupbuy = new GroupBuyModel();
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getKid() {
         return kid;

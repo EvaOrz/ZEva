@@ -33,32 +33,29 @@
             android:orientation="vertical"
             android:paddingTop="5dp">
 
-            <TextView
-                android:id="@+id/tcherNameTv"
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/course_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="梵高自画像"
                 android:textColor="@color/gray_dark"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/tcherDesTv"
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:ellipsize="end"
                 android:lineSpacingExtra="2dp"
                 android:maxLines="2"
-                android:text="融入了他们的画风和色彩，创造了他们独特的画风"
                 android:textColor="@color/gray_light"
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+
             android:scaleType="fitXY"
             android:src="@mipmap/home_header_more" />
     </LinearLayout>

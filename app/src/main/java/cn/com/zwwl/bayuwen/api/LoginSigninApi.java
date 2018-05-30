@@ -1,7 +1,6 @@
 package cn.com.zwwl.bayuwen.api;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,7 +13,6 @@ import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
-import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 
 /**
  * 登录、注册接口

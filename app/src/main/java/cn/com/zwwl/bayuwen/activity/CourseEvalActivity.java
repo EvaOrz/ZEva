@@ -1,24 +1,18 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Switch;
 
 import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.base.BasicActivity;
+import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 
 /**
  * 课程评价
  * Create by zhumangmang at 2018/5/26 16:22
  */
-public class CourseEvalActivity extends BasicActivity {
-    @BindView(R.id.title)
-    AppCompatTextView title;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+public class CourseEvalActivity extends BasicActivityWithTitle {
     @BindView(R.id.content)
     AppCompatEditText content;
     @BindView(R.id.hide_name)
@@ -31,8 +25,7 @@ public class CourseEvalActivity extends BasicActivity {
 
     @Override
     protected void initView() {
-        setSupportActionBar(toolbar);
-        title.setText("课程评价");
+        setCustomTitle("课程评价");
     }
 
     @Override
@@ -50,4 +43,8 @@ public class CourseEvalActivity extends BasicActivity {
 
     }
 
+    @Override
+    public void close() {
+        finish();
+    }
 }

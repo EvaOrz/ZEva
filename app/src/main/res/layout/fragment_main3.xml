@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white"
-              android:orientation="vertical">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <include
-        layout="@layout/layout_gray_titlebar"/>
+        android:id="@+id/top"
+        layout="@layout/layout_gray_titlebar" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,20 +24,20 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="@color/item_bgColor"/>
+                android:background="@color/item_bgColor" />
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/praiseTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 android:drawableLeft="@mipmap/user_about"
                 android:drawablePadding="5dp"
-                android:gravity="center_vertical|left"
+                android:drawableStart="@mipmap/user_about"
+                android:gravity="center_vertical|start"
                 android:padding="10dp"
-                android:text="正在进行的课程"
+                android:text="@string/studying_course"
                 android:textColor="@color/body_gray"
-                android:textSize="@dimen/sp_16"/>
+                android:textSize="@dimen/sp_16" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,354 +48,361 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <LinearLayout
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content">
 
-                    <LinearLayout
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/on_course_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.8"
-                        android:orientation="vertical">
+                        android:drawableLeft="@mipmap/user_about"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:drawableStart="@mipmap/user_about"
+                        android:text="庖丁阅读"
+                        android:textColor="@color/body_gray"
+                        android:textSize="@dimen/sp_16"
+                        app:layout_constraintEnd_toStartOf="@id/on_arrow"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/gold_circle"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="5dp"
-                                android:text="线下"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/text_size_10"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:text="庖丁阅读"
-                                android:textColor="@color/body_gray"
-                                android:textSize="@dimen/text_size_14"/>
-                        </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="课程进度（9/16）"
-                            android:textColor="@color/body_gray"
-                            android:textSize="@dimen/text_size_12"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:orientation="horizontal">
-
-                            <ProgressBar
-                                android:id="@+id/progressBarHorizontal"
-                                style="@style/Jindu_progress"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="0.9"
-                                android:max="100"
-                                android:progress="50"
-                                android:secondaryProgress="80"/>
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="0.1"
-                                android:gravity="center"
-                                android:text="56%"
-                                android:textColor="@color/body_gray"
-                                android:textSize="@dimen/text_size_12"/>
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:text="课程进行阶段"
-                            android:textColor="@color/body_gray"
-                            android:textSize="@dimen/text_size_12"/>
-                    </LinearLayout>
-
-                    <RelativeLayout
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/on_progress_value"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1"
-                        android:gravity="center_vertical">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:text="课程进度（9/16）"
+                        android:textColor="@color/body_gray"
+                        android:textSize="@dimen/text_size_12"
+                        app:layout_constraintEnd_toStartOf="@id/on_arrow"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/on_course_name" />
 
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:id="@+id/online"
-                            android:layout_centerInParent="true"
-                            android:scaleType="fitXY"
-                            android:src="@mipmap/home_header_more"/>
-                    </RelativeLayout>
+                    <ProgressBar
+                        android:id="@+id/on_progress"
+                        style="@style/Jindu_progress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:max="100"
+                        android:progress="50"
+                        android:secondaryProgress="80"
+                        app:layout_constraintEnd_toStartOf="@id/on_per"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/on_progress_value" />
 
-                </LinearLayout>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/on_per"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:gravity="center"
+                        android:text="56%"
+                        android:textColor="@color/body_gray"
+                        android:textSize="@dimen/text_size_12"
+                        app:layout_constraintEnd_toStartOf="@id/on_arrow"
+                        app:layout_constraintTop_toBottomOf="@id/on_progress_value" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:orientation="vertical">
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/on_arrow"
+                        android:layout_width="30dp"
+                        android:layout_height="0dp"
+                        android:scaleType="center"
+                        android:src="@mipmap/home_header_more"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </android.support.constraint.ConstraintLayout>
 
-                <cn.com.zwwl.bayuwen.view.PagerSlidingTabStrip
-                    android:id="@+id/tablayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/draw_gray_top_bg"
-                    app:pstsIndicatorColor="@color/gold"
-                    app:pstsIndicatorHeight="3dp"
-                    app:pstsSelectTextColor="@color/gold"
-                    app:pstsTextColor="@color/body_gray"
-                    app:pstsTextSize="@dimen/text_size_14"
-                    app:pstsUnderlineHeight="0px"
-                    app:pstsisMore="true"/>
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/mViewPager"
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/draw_gray_w_bg"/>
+                    android:layout_marginTop="@dimen/dp_5">
 
-                </LinearLayout>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/on_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/current_course_stage"
+                        android:textColor="@color/body_gray"
+                        android:textSize="@dimen/text_size_12" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal"
-                    android:paddingTop="5dp">
+                    <LinearLayout
+                        android:id="@+id/layout_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/draw_gray_line_bg"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@id/on_status">
 
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        <cn.com.zwwl.bayuwen.view.PagerSlidingTabStrip
+                            android:id="@+id/tab"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="10dp"
+                            app:pstsIndicatorColor="@color/gold"
+                            app:pstsIndicatorHeight="3dp"
+                            app:pstsSelectTextColor="@color/gold"
+                            app:pstsTextColor="@color/body_gray"
+                            app:pstsTextSize="@dimen/text_size_14"
+                            android:padding="@dimen/dp_10"
+                            app:pstsUnderlineHeight="0px"
+                            app:pstsisMore="true" />
+
+                        <android.support.v4.view.ViewPager
+                            android:id="@+id/mViewPager"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="@drawable/draw_gray_w_bg" />
+                    </LinearLayout>
+
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/on_work"
                         style="?android:attr/borderlessButtonStyle"
-                        android:layout_weight="1"
-                        android:background="@drawable/draw_gold_line"
-                        android:text="作业上传"
-                        android:textColor="@color/gold"
-                        android:textSize="14sp"/>
-
-                    <Button
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        style="?android:attr/borderlessButtonStyle"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:background="@drawable/draw_gold_line"
-                        android:text="查看往次课程跟踪"
+                        android:paddingBottom="@dimen/dp_5"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_5"
+                        android:text="@string/submit_homework"
                         android:textColor="@color/gold"
-                        android:textSize="14sp"/>
-                </LinearLayout>
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintEnd_toStartOf="@id/on_trace"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/layout_1" />
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/on_trace"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:background="@drawable/draw_gold_line"
+                        android:paddingBottom="@dimen/dp_5"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_5"
+                        android:text="@string/past_course_trace"
+                        android:textColor="@color/gold"
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@id/on_work"
+                        app:layout_constraintTop_toBottomOf="@id/layout_1" />
+                </android.support.constraint.ConstraintLayout>
+
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:background="@color/item_bgColor"
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <LinearLayout
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content">
 
-                    <LinearLayout
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/off_course_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.8"
-                        android:orientation="vertical">
+                        android:drawableLeft="@mipmap/user_about"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:drawableStart="@mipmap/user_about"
+                        android:text="庖丁阅读"
+                        android:textColor="@color/body_gray"
+                        android:textSize="@dimen/sp_16"
+                        app:layout_constraintEnd_toStartOf="@id/off_arrow"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/gold_circle"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="5dp"
-                                android:text="线下"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/text_size_10"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:text="庖丁阅读"
-                                android:textColor="@color/body_gray"
-                                android:textSize="@dimen/text_size_14"/>
-                        </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="课程进度（9/16）"
-                            android:textColor="@color/body_gray"
-                            android:textSize="@dimen/text_size_12"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:orientation="horizontal">
-
-                            <ProgressBar
-                                android:id="@+id/progressBarHorizonta2"
-                                style="@style/Jindu_progress"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="0.9"
-                                android:max="100"
-                                android:progress="50"
-                                android:secondaryProgress="80"/>
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="0.1"
-                                android:gravity="center"
-                                android:text="56%"
-                                android:textColor="@color/body_gray"
-                                android:textSize="@dimen/text_size_12"/>
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:text="课程进行阶段"
-                            android:textColor="@color/body_gray"
-                            android:textSize="@dimen/text_size_12"/>
-                    </LinearLayout>
-
-                    <RelativeLayout
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/off_progress_value"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1"
-                        android:gravity="center_vertical">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:text="课程进度（9/16）"
+                        android:textColor="@color/body_gray"
+                        android:textSize="@dimen/text_size_12"
+                        app:layout_constraintEnd_toStartOf="@id/off_arrow"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/off_course_name" />
 
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_centerInParent="true"
-                            android:scaleType="fitXY"
-                            android:src="@mipmap/home_header_more"/>
-                    </RelativeLayout>
+                    <ProgressBar
+                        android:id="@+id/off_progress"
+                        style="@style/Jindu_progress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:max="100"
+                        android:progress="50"
+                        android:secondaryProgress="80"
+                        app:layout_constraintEnd_toStartOf="@id/off_per"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/off_progress_value" />
 
-                </LinearLayout>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/off_per"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:gravity="center"
+                        android:text="56%"
+                        android:textColor="@color/body_gray"
+                        android:textSize="@dimen/text_size_12"
+                        app:layout_constraintEnd_toStartOf="@id/off_arrow"
+                        app:layout_constraintTop_toBottomOf="@id/off_progress_value" />
 
-                <LinearLayout
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/off_arrow"
+                        android:layout_width="30dp"
+                        android:layout_height="0dp"
+                        android:scaleType="center"
+                        android:src="@mipmap/home_header_more"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/draw_gray_line_bg"
-                    android:orientation="vertical">
+                    android:layout_marginTop="@dimen/dp_5">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center"
-                        android:text="作业反馈"
-                        android:textColor="@color/gold"
-                        android:textSize="14sp"/>
-
-                    <include layout="@layout/layout_line"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:padding="5dp"
-                        android:background="@drawable/draw_gray_w_bg"
-                        android:text="顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价"
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/off_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="下次上课时间为XX.XX.XX"
                         android:textColor="@color/body_gray"
-                        android:textSize="14sp"/>
-                </LinearLayout>
+                        android:textSize="@dimen/text_size_12" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal"
-                    android:paddingTop="10dp">
+                    <LinearLayout
+                        android:id="@+id/layout_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/draw_gray_line_bg"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@id/off_status">
 
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.5"
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:text="@string/work_feedback"
+                            android:textColor="@color/gold"
+                            android:textSize="@dimen/sp_14" />
+
+                        <include layout="@layout/layout_line" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/feedback"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:background="@drawable/draw_gray_w_bg"
+                            android:padding="5dp"
+                            android:text="顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价"
+                            android:textColor="@color/body_gray"
+                            android:textSize="@dimen/sp_14" />
+                    </LinearLayout>
+
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/submit_work"
                         style="?android:attr/borderlessButtonStyle"
-                        android:background="@drawable/draw_gold_line"
-                        android:text="观看直播"
-                        android:textColor="@color/gold"
-                        android:textSize="14sp"/>
-
-                    <Button
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="0.5"
-                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:background="@drawable/draw_gold_line"
-                        android:text="作业上传"
+                        android:paddingBottom="@dimen/dp_5"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_5"
+                        android:text="@string/submit_homework"
                         android:textColor="@color/gold"
-                        android:textSize="14sp"/>
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintEnd_toStartOf="@id/offline_trace"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/layout_2" />
 
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="0.9"
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/offline_trace"
                         style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:background="@drawable/draw_gold_line"
-                        android:text="查看往次课程跟踪"
+                        android:paddingBottom="@dimen/dp_5"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_5"
+                        android:text="@string/past_course_trace"
                         android:textColor="@color/gold"
-                        android:textSize="14sp"/>
-                </LinearLayout>
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@id/submit_work"
+                        app:layout_constraintTop_toBottomOf="@id/layout_2" />
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/look_video"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:background="@drawable/draw_gold_line"
+                        android:paddingBottom="@dimen/dp_5"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_5"
+                        android:text="@string/look_video"
+                        android:textColor="@color/gold"
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/offline_trace" />
+                </android.support.constraint.ConstraintLayout>
+
 
             </LinearLayout>
-
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:drawableLeft="@mipmap/user_info"
+                android:drawableStart="@mipmap/user_info"
                 android:padding="10dp"
-                android:text="已完成课程"
+                android:text="@string/finish_course"
                 android:textColor="@color/body_gray"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/sp_16" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/completed_recyclerView"
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-                android:paddingRight="5dp"/>
+                android:paddingRight="5dp" />
         </LinearLayout>
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

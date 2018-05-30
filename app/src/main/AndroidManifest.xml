@@ -266,12 +266,34 @@
         <!--上传上课照片-->
         <activity android:name=".activity.InClassStatusActivity" />
         <!--正在进行课程-->
-        <activity android:name=".activity.StudyingCourseActivity" />
+        <activity android:name=".activity.StudyingCourseActivity"
+            android:launchMode="singleTask"/>
         <!--课程评价-->
         <activity android:name=".activity.CourseEvalActivity" />
         <!--课程列表-->
         <activity android:name=".activity.CourseTableActivity" />
+        <!--课程单元列表-->
         <activity android:name=".activity.UnitTableActivity" />
+        <!--选择可调课班级-->
+        <activity android:name=".activity.ConvertClassActivity" />
+        <!--班级详情-->
+        <activity android:name=".activity.ClassDetailActivity" />
+        <!--提交调课申请-->
+        <activity android:name=".activity.CourseApplyActivity" />
+        <!--调课（换班）结果-->
+        <activity android:name=".activity.ChangeResultActivity" />
+        <!--提交转班申请-->
+        <activity android:name=".activity.ClassApplyActivity" />
+        <!--课程跟踪记录-->
+        <activity android:name=".activity.TraceRecordActivity" />
+        <!--点击“记录”进入-->
+        <activity android:name=".activity.FCourseIndexActivity" />
+        <!--期末考试详情-->
+        <activity android:name=".activity.ExamDetailsActivity" />
+        <!--具体课次首页-->
+        <activity android:name=".activity.UnitIndexActivity"/>
+        <!--上传照片-->
+        <activity android:name=".activity.UploadPicActivity" />
 
 
         <!--腾讯定位SDK key-->

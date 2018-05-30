@@ -57,6 +57,8 @@ dependencies {
         }
     }
     implementation project(':jiaozivideoplayer')
+    // 选课控件
+//    implementation project(':observable')
     // 联动菜单
     //日历控件
     implementation 'com.haibin:calendarview:3.3.0'
@@ -79,6 +81,8 @@ dependencies {
     implementation files('libs/umeng-sharetool-6.9.2.jar')
     implementation files('libs/utdid4all-1.1.5.3_proguard.jar')
     implementation files('libs/umeng-share-sina-simplify-6.9.2.jar')
-    // 轮播位进度控件
+    // ViewPager圆点指示器
     implementation 'com.romandanylyk:pageindicatorview:0.2.0'
+    // 图片选择（单选，多选）
+    implementation 'com.yanzhenjie:album:2.1.1'
 }

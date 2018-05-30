@@ -1,0 +1,47 @@
+package cn.com.zwwl.bayuwen.activity;
+
+import android.content.Intent;
+import android.view.View;
+
+import butterknife.OnClick;
+import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
+
+/**
+ * 转班申请提交
+ * Created by zhumangmang at 2018/5/28 17:30
+ */
+public class ClassApplyActivity extends BasicActivityWithTitle {
+
+
+    @Override
+    protected int setContentView() {
+        return R.layout.activity_class_apply;
+    }
+
+    @Override
+    protected void initView() {
+setDisplayShowTitleEnabled(false);
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void setListener() {
+
+    }
+
+    @OnClick(R.id.submit)
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(this, ChangeResultActivity.class));
+    }
+
+    @Override
+    public void close() {
+        finish();
+    }
+}

@@ -5,7 +5,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -16,18 +15,14 @@ import java.util.List;
 import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CourseTableAdapter;
-import cn.com.zwwl.bayuwen.base.BasicActivity;
+import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.model.CourseModel;
 
 /**
  * 可操作课程列表
  * Create by zhumangmang at 2018/5/28 10:03
  */
-public class CourseTableActivity extends BasicActivity {
-    @BindView(R.id.title)
-    AppCompatTextView title;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+public class CourseTableActivity extends BasicActivityWithTitle {
     @BindView(R.id.type)
     AppCompatTextView type;
     @BindView(R.id.recyclerView)
@@ -42,13 +37,12 @@ public class CourseTableActivity extends BasicActivity {
 
     @Override
     protected void initView() {
-        setSupportActionBar(toolbar);
         flag = getIntent().getIntExtra("type", 0);
         if (flag == 0) {
-            title.setText(res.getString(R.string.change_course));
+            setCustomTitle(res.getString(R.string.change_course));
             type.setText(res.getString(R.string.chose_course_by_need));
         } else {
-            title.setText(res.getString(R.string.covert_class_course));
+            setCustomTitle(res.getString(R.string.covert_class_course));
             type.setText(res.getString(R.string.chose_covert_class_course_by_need));
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -72,7 +66,10 @@ public class CourseTableActivity extends BasicActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(mActivity, UnitTableActivity.class));
+                if (mApplication.operate_type == 0)
+                    startActivity(new Intent(mActivity, UnitTableActivity.class));
+                else
+                    startActivity(new Intent(mActivity, ConvertClassActivity.class));
             }
         });
     }
@@ -82,4 +79,8 @@ public class CourseTableActivity extends BasicActivity {
 
     }
 
+    @Override
+    public void close() {
+        finish();
+    }
 }
