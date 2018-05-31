@@ -7,6 +7,7 @@ import android.widget.Switch;
 import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
+import cn.com.zwwl.bayuwen.base.MenuCode;
 
 /**
  * 课程评价
@@ -25,6 +26,7 @@ public class CourseEvalActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initView() {
+        showMenu(MenuCode.SUBMIT);
         setCustomTitle("课程评价");
     }
 
@@ -40,6 +42,11 @@ public class CourseEvalActivity extends BasicActivityWithTitle {
 
     @Override
     public void onClick(View view) {
+
+    }
+
+    @Override
+    public void onMenuClick(int menuCode) {
 
     }
 

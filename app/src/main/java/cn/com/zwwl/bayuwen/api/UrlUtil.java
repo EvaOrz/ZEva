@@ -189,10 +189,21 @@ public class UrlUtil {
     /**
      * 正在进行课程
      */
-    public static String getStudyingCourse(){
-        return HOST+"/course/second_course";
+    public static String getStudyingCourse() {
+        return HOST + "/course/second_course";
     }
-    public static String getUnitDetail(){
-        return HOST+"/course/third_course";
+
+    /**
+     * 课程课次详情首页
+     */
+    public static String getUnitDetail() {
+        return HOST + "/course/third_course";
+    }
+
+    /**
+     * 评论
+     */
+    public static String addEval() {
+        return HOST + "/comment";
     }
 }

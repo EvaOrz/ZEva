@@ -46,7 +46,7 @@ public class UploadPicApi extends BaseApi {
     }
 
     @Override
-    protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
+    protected void handler(JSONObject json, final JSONArray array, final ErrorMsg errorMsg) {
         if (listener != null) {
             if (errorMsg != null)
                 listener.setError(errorMsg);
@@ -59,8 +59,14 @@ public class UploadPicApi extends BaseApi {
             }
         }
         if (callBack != null) {
-            callBack.error(errorMsg);
-            callBack.success(GsonUtil.parseJsonArray(CommonModel.class, array.toString()));
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    callBack.error(errorMsg);
+                    callBack.success(GsonUtil.parseJsonArray(CommonModel.class, array.toString()));
+                }
+            });
+
         }
     }
 
