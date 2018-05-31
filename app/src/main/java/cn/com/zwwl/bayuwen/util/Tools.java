@@ -24,7 +24,8 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 
 import java.io.File;
-import java.text.ParseException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -348,6 +349,13 @@ public class Tools {
         }
         return 0;
     }
-
+    /**
+     * 将小数转换成百分数
+     */
+    public static String parseDecimal(double data) {
+        DecimalFormat nt = new DecimalFormat("0%");
+        nt.setRoundingMode(RoundingMode.DOWN);
+        return nt.format(data);
+    }
 
 }

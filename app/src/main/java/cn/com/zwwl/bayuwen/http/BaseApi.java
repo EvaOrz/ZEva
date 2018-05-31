@@ -1,14 +1,18 @@
 package cn.com.zwwl.bayuwen.http;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.listener.FetchDataListener;
@@ -63,7 +67,15 @@ public abstract class BaseApi {
             }
         });
     }
-
+    protected void postMultiFile(List<File> file) {
+        httpUtil.postMultiFile(getUrl(), file, new FetchDataListener() {
+            @Override
+            public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
+                Log.e(getUrl(), data);
+                handlerData(isSuccess, data, fromHttp);
+            }
+        });
+    }
     protected void get() {
         httpUtil.getDataAsynFromNet(getUrl(), new FetchDataListener() {
             @Override
@@ -121,7 +133,10 @@ public abstract class BaseApi {
                     handler(null, null, getServerError());
                 } else {
                     if (object.optBoolean("success")) {// 解析data
-                        if (isNeedJsonArray) {
+                        JsonParser parser=new JsonParser();
+                        JsonElement element = parser.parse(responseString);
+                        JsonObject root = element.getAsJsonObject();
+                        if (root.get("data").isJsonArray()) {
                             handler(null, object.optJSONArray("data"), null);
                         } else
                             handler(object.optJSONObject("data"), null, null);

@@ -6,6 +6,7 @@ import android.support.annotation.LayoutRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,6 +134,14 @@ public class IActivityImpl implements IActivity, Toolbar.OnMenuItemClickListener
 
     @Override
     public void showMenu(int menuCode) {
+        Menu menu = mToolbar.getMenu();
+        switch (menuCode) {
+
+            case MenuCode.SUBMIT:
+                MenuItem submit = menu.findItem(R.id.action_submit);
+                submit.setVisible(true);
+                break;
+        }
     }
 
     @Override

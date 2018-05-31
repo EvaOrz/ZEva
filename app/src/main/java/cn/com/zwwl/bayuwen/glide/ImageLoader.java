@@ -130,7 +130,6 @@ public class ImageLoader {
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
-                .transform(new CornersTransform(4))
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(imageView);

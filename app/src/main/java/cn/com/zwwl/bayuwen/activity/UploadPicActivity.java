@@ -13,12 +13,19 @@ import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumFile;
 import com.yanzhenjie.album.api.widget.Widget;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.UploadPicAdapter;
+import cn.com.zwwl.bayuwen.api.UploadPicApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
+import cn.com.zwwl.bayuwen.base.MenuCode;
+import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
+import cn.com.zwwl.bayuwen.model.CommonModel;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
 /**
  * 上传照片
@@ -51,6 +58,7 @@ public class UploadPicActivity extends BasicActivityWithTitle {
         albumFiles.add(file);
         uploadPicAdapter = new UploadPicAdapter(albumFiles);
         recyclerView.setAdapter(uploadPicAdapter);
+        showMenu(MenuCode.SUBMIT);
     }
 
     @Override
@@ -106,6 +114,26 @@ public class UploadPicActivity extends BasicActivityWithTitle {
     @Override
     public void onClick(View view) {
 
+    }
+
+    @Override
+    public void onMenuClick(int menuCode) {
+        List<File> files = new ArrayList<>();
+        for (AlbumFile albumFile : albumFiles) {
+            File f = new File(albumFile.getPath());
+                files.add(f);
+        }
+        new UploadPicApi(this, files, new ResponseCallBack<List<CommonModel>>() {
+            @Override
+            public void success(List<CommonModel> o) {
+
+            }
+
+            @Override
+            public void error(ErrorMsg error) {
+
+            }
+        });
     }
 
     @Override

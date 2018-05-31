@@ -5,43 +5,44 @@ import android.app.Activity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.MyCourseModel;
+import cn.com.zwwl.bayuwen.model.StudyingModel;
 import cn.com.zwwl.bayuwen.util.GsonUtil;
 
-public class MyCourseApi extends BaseApi {
+public class StudyingCourseApi extends BaseApi {
+    private String kid;
     ResponseCallBack listener;
-    Activity context;
+    private Activity activity;
 
-    public MyCourseApi(Activity context, ResponseCallBack listener) {
+    public StudyingCourseApi(Activity context, String kid, ResponseCallBack listener) {
         super(context);
-        this.context = context;
+        this.activity = context;
         this.listener = listener;
+        this.kid = kid;
         get();
     }
 
     @Override
     protected String getUrl() {
-        return UrlUtil.getMyCourse();
+        return UrlUtil.getStudyingCourse()+"?kid="+kid;
     }
 
     @Override
     protected Map<String, String> getPostParams() {
-        return new HashMap<>();
+        return null;
     }
 
     @Override
     protected void handler(final JSONObject json, JSONArray array, final ErrorMsg errorMsg) {
-        context.runOnUiThread(new Runnable() {
+        activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 listener.error(errorMsg);
-                listener.success(GsonUtil.parseJson(MyCourseModel.class, json.toString()));
+                listener.success(GsonUtil.parseJson(StudyingModel.class, json.toString()));
             }
         });
 

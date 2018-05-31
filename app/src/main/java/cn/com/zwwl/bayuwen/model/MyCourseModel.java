@@ -5,11 +5,13 @@ import java.util.List;
  *  我的课程
  *  Created by zhumangmang at 2018/5/30 17:23
  */
-public class StudyCourseModel extends Entry{
+public class MyCourseModel extends Entry{
         private List<KeModel> completed;
         private List<UnfinishedBean> unfinished;
 
-        public List<KeModel> getCompleted() {
+
+
+    public List<KeModel> getCompleted() {
             return completed;
         }
 
@@ -40,7 +42,14 @@ public class StudyCourseModel extends Entry{
             private String student_no;
             private KeModel products;
             private PlanModel plan;
+            private CommentModel comments;
+            public CommentModel getComments() {
+                return comments;
+            }
 
+            public void setComments(CommentModel comments) {
+                this.comments = comments;
+            }
             public String getId() {
                 return id;
             }

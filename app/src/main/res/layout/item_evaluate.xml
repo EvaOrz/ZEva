@@ -4,6 +4,5 @@
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:padding="5dp"
-          android:text="顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价"
           android:textColor="@color/body_gray"
           android:textSize="14sp"/>

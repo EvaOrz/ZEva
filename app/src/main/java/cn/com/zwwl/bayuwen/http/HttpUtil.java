@@ -12,6 +12,7 @@ import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -252,6 +253,43 @@ public class HttpUtil {
             // 参数分别为， 请求key ，文件名称 ， RequestBody
             requestBody.addFormDataPart("file", file.getName(), body);
 
+        }
+        Request.Builder requestBuilder = new Request.Builder();
+        Request request = setRequestHeader(requestBuilder.post(requestBody.build()).url(url));
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                listener.fetchData(false, null, false);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200)
+                    listener.fetchData(true, response.body().string(), true);
+                else {
+                    listener.fetchData(false, response.body().string(), true);
+                }
+            }
+        });
+    }
+
+    /**
+     * 上传文件
+     *
+     * @param url
+     * @param file
+     * @param listener
+     */
+    public void postMultiFile(String url, List<File> file, final FetchDataListener
+            listener) {
+        // form 表单形式上传
+        MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        if (file != null) {
+            for (File f : file) {
+                if (f.exists())
+                    requestBody.addFormDataPart("file", f.getName(), RequestBody.create(MediaType.parse("image/*"), f));
+            }
         }
         Request.Builder requestBuilder = new Request.Builder();
         Request request = setRequestHeader(requestBuilder.post(requestBody.build()).url(url));

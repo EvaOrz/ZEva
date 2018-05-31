@@ -2,7 +2,9 @@ package cn.com.zwwl.bayuwen.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
@@ -24,16 +26,17 @@ import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.StudyingCourseActivity;
 import cn.com.zwwl.bayuwen.activity.TraceRecordActivity;
+import cn.com.zwwl.bayuwen.activity.UploadPicActivity;
+import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.CompleteCourseAdapter;
 import cn.com.zwwl.bayuwen.adapter.CoursePageAdapter;
 import cn.com.zwwl.bayuwen.api.MyCourseApi;
 import cn.com.zwwl.bayuwen.base.BasicFragment;
-import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
-import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
-import cn.com.zwwl.bayuwen.model.StudyCourseModel;
-import cn.com.zwwl.bayuwen.view.PagerSlidingTabStrip;
+import cn.com.zwwl.bayuwen.model.MyCourseModel;
+import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
 import static cn.com.zwwl.bayuwen.MyApplication.mContext;
@@ -55,7 +58,7 @@ public class MainFrag3 extends BasicFragment {
     @BindView(R.id.on_per)
     AppCompatTextView onPer;
     @BindView(R.id.tab)
-    PagerSlidingTabStrip tab;
+    TabLayout tab;
     @BindView(R.id.mViewPager)
     ViewPager mViewPager;
     @BindView(R.id.on_work)
@@ -74,12 +77,15 @@ public class MainFrag3 extends BasicFragment {
     AppCompatTextView feedback;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.off_status)
+    AppCompatTextView offStatus;
+
     private CompleteCourseAdapter adapter;
     private CoursePageAdapter mViewPagerAdapter;
     private List<Fragment> list = new ArrayList<>();
     private List<KeModel> finishCourse = new ArrayList<>();
     private List<String> mItemTitleList = new ArrayList<>();
-    StudyCourseModel courseModel;
+    MyCourseModel courseModel;
 
     @Override
     protected View setContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,51 +94,65 @@ public class MainFrag3 extends BasicFragment {
 
     @Override
     protected void initView() {
-        mItemTitleList.add("顾问对学生的评价");
-        mItemTitleList.add("顾问对家长的评价");
-        FgEvaluate evaluate1 = FgEvaluate.newInstance("ASJDFOISDJFIJFDODJOIJASF");
-        list.add(evaluate1);
-        FgEvaluate evaluate2 = FgEvaluate.newInstance("ASJDFOISDJFIJFDasdfdsODJOIJASF");
-        list.add(evaluate2);
-        mViewPagerAdapter = new CoursePageAdapter(getFragmentManager(), list, mItemTitleList);
-        mViewPager.setAdapter(mViewPagerAdapter);
-        tab.setViewPager(mViewPager);
+        tab.setTabMode(TabLayout.MODE_FIXED);
+        tab.setTabTextColors(ContextCompat.getColor(activity, R.color.text_color_default), ContextCompat.getColor(activity, R.color.gold));
+        tab.setSelectedTabIndicatorColor(ContextCompat.getColor(activity, R.color.gold));
+        tab.setupWithViewPager(mViewPager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, OrientationHelper.VERTICAL, false));
         recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R.dimen.dp_5, OrientationHelper.VERTICAL));
-        adapter = new CompleteCourseAdapter( finishCourse);
+        adapter = new CompleteCourseAdapter(finishCourse);
         recyclerView.setAdapter(adapter);
     }
 
     @Override
     protected void initData() {
 
-        new MyCourseApi(activity, new FetchEntryListener() {
-            @Override
-            public void setData(Entry entry) {
-                if (entry != null) {
-                    courseModel = (StudyCourseModel) entry;
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            bindView();
-                        }
-                    });
+        new MyCourseApi(activity, new ResponseCallBack<MyCourseModel>() {
 
+            @Override
+            public void success(MyCourseModel myCourseModel) {
+                if (myCourseModel != null) {
+                    courseModel = myCourseModel;
+                    bindView();
                 }
             }
 
             @Override
-            public void setError(ErrorMsg error) {
+            public void error(ErrorMsg error) {
 
             }
         });
     }
 
+    MyCourseModel.UnfinishedBean bean;
+
     private void bindView() {
-        finishCourse=courseModel.getCompleted();
-      adapter.setNewData(finishCourse);
+        finishCourse = courseModel.getCompleted();
+        adapter.setNewData(finishCourse);
+        bean = courseModel.getUnfinished().get(0);
+        onCourseName.setText(bean.getProducts().getTitle());
+        onProgressValue.setText(String.format("课程进度（%s/%s）", bean.getPlan().getCurrent(), bean.getPlan().getCount()));
+        onProgress.setMax(bean.getPlan().getCount());
+        onProgress.setProgress(bean.getPlan().getCurrent());
+        onPer.setText(Tools.parseDecimal((double) bean.getPlan().getCurrent() / bean.getPlan().getCount()));
+        mItemTitleList.add("顾问对学生的评价");
+        mItemTitleList.add("顾问对家长的评价");
+        FgEvaluate evaluate1 = FgEvaluate.newInstance(bean.getComments().getStudent());
+        list.add(evaluate1);
+        FgEvaluate evaluate2 = FgEvaluate.newInstance(bean.getComments().getParent());
+        list.add(evaluate2);
+        mViewPagerAdapter = new CoursePageAdapter(getFragmentManager(), list, mItemTitleList);
+        mViewPager.setAdapter(mViewPagerAdapter);
+        bean = courseModel.getUnfinished().get(1);
+        offCourseName.setText(bean.getProducts().getTitle());
+        offProgressValue.setText(String.format("课程进度（%s/%s）", bean.getPlan().getCurrent(), bean.getPlan().getCount()));
+        offProgress.setMax(bean.getPlan().getCount());
+        offProgress.setProgress(bean.getPlan().getCurrent());
+        offPer.setText(Tools.parseDecimal((double) bean.getPlan().getCurrent() / bean.getPlan().getCount()));
+        feedback.setText(bean.getComments().getJob());
+        offStatus.setText(String.format("下次上课时间:%s", bean.getPlan().getNextTime()));
     }
 
     @Override
@@ -152,10 +172,40 @@ public class MainFrag3 extends BasicFragment {
         return new MainFrag3();
     }
 
-    @OnClick({R.id.on_arrow, R.id.off_arrow})
+    @OnClick({R.id.on_arrow, R.id.off_arrow, R.id.on_work, R.id.off_work, R.id.on_trace, R.id.off_trace, R.id.look_video})
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(activity, StudyingCourseActivity.class));
+        Intent intent = new Intent();
+        switch (view.getId()) {
+            case R.id.on_arrow:
+                intent.putExtra("kid", courseModel.getUnfinished().get(0).getKid());
+                intent.putExtra("title", courseModel.getUnfinished().get(0).getProducts().getTitle());
+                intent.setClass(activity, StudyingCourseActivity.class);
+                break;
+            case R.id.off_arrow:
+                intent.putExtra("kid", courseModel.getUnfinished().get(1).getKid());
+                intent.putExtra("title", courseModel.getUnfinished().get(1).getProducts().getTitle());
+                intent.setClass(activity, StudyingCourseActivity.class);
+                break;
+            case R.id.on_work:
+                intent.putExtra("kid", courseModel.getUnfinished().get(0).getKid());
+                intent.setClass(activity, UploadPicActivity.class);
+                break;
+            case R.id.off_work:
+                intent.putExtra("kid", courseModel.getUnfinished().get(1).getKid());
+                intent.setClass(activity, UploadPicActivity.class);
+                break;
+            case R.id.look_video:
+                intent.setClass(activity, VideoPlayActivity.class);
+                break;
+            case R.id.on_trace:
+            case R.id.off_trace:
+                intent.setClass(activity, TraceRecordActivity.class);
+                break;
+        }
+        startActivity(intent);
+
     }
+
 }
   

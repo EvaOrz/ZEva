@@ -11,15 +11,18 @@ import java.util.ArrayList;
  */
 public class GsonUtil {
     /**
-     *解析 Json对象
+     * 解析 Json对象
      */
-    public static <T> T parseJson(Class<T> type,String jsonStr){
-        return new Gson().fromJson(jsonStr,type);
+    public static <T> T parseJson(Class<T> type, String jsonStr) {
+        if (jsonStr == null)
+            return null;
+        return new Gson().fromJson(jsonStr, type);
     }
+
     /**
-     *将Json数组解析成相应的映射对象列表
+     * 将Json数组解析成相应的映射对象列表
      */
-    public static <T> ArrayList<T> parseJsonArray(Class<T> myClass,String jsonStr){
+    public static <T> ArrayList<T> parseJsonArray(Class<T> myClass, String jsonStr) {
         Type type = new ListParameterizedType(myClass);
         return new Gson().fromJson(jsonStr, type);
     }

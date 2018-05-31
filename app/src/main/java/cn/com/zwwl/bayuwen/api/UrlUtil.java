@@ -185,4 +185,14 @@ public class UrlUtil {
     public static String addCalendarEvent() {
         return HOST + "/courseRecords";
     }
+
+    /**
+     * 正在进行课程
+     */
+    public static String getStudyingCourse(){
+        return HOST+"/course/second_course";
+    }
+    public static String getUnitDetail(){
+        return HOST+"/course/third_course";
+    }
 }

@@ -59,7 +59,6 @@
                         android:drawableLeft="@mipmap/user_about"
                         android:drawablePadding="@dimen/dp_10"
                         android:drawableStart="@mipmap/user_about"
-                        android:text="庖丁阅读"
                         android:textColor="@color/body_gray"
                         android:textSize="@dimen/sp_16"
                         app:layout_constraintEnd_toStartOf="@id/on_arrow"
@@ -70,7 +69,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_5"
-                        android:text="课程进度（9/16）"
                         android:textColor="@color/body_gray"
                         android:textSize="@dimen/text_size_12"
                         app:layout_constraintEnd_toStartOf="@id/on_arrow"
@@ -99,7 +97,6 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginStart="@dimen/dp_10"
                         android:gravity="center"
-                        android:text="56%"
                         android:textColor="@color/body_gray"
                         android:textSize="@dimen/text_size_12"
                         app:layout_constraintEnd_toStartOf="@id/on_arrow"
@@ -135,22 +132,15 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/draw_gray_line_bg"
                         android:orientation="vertical"
+                        android:layout_marginTop="@dimen/dp_5"
                         app:layout_constraintTop_toBottomOf="@id/on_status">
-
-                        <cn.com.zwwl.bayuwen.view.PagerSlidingTabStrip
+                        <android.support.design.widget.TabLayout
                             android:id="@+id/tab"
+                            android:background="@color/transparent"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
-                            android:layout_marginTop="10dp"
-                            app:pstsIndicatorColor="@color/gold"
-                            app:pstsIndicatorHeight="3dp"
-                            app:pstsSelectTextColor="@color/gold"
-                            app:pstsTextColor="@color/body_gray"
-                            app:pstsTextSize="@dimen/text_size_14"
-                            android:padding="@dimen/dp_10"
-                            app:pstsUnderlineHeight="0px"
-                            app:pstsisMore="true" />
-
+                            android:gravity="top"
+                            android:orientation="horizontal" />
                         <android.support.v4.view.ViewPager
                             android:id="@+id/mViewPager"
                             android:layout_width="match_parent"
@@ -163,13 +153,11 @@
                         android:id="@+id/on_work"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/dp_40"
                         android:layout_marginTop="@dimen/dp_10"
                         android:background="@drawable/draw_gold_line"
-                        android:paddingBottom="@dimen/dp_5"
                         android:paddingEnd="@dimen/dp_10"
                         android:paddingStart="@dimen/dp_10"
-                        android:paddingTop="@dimen/dp_5"
                         android:text="@string/submit_homework"
                         android:textColor="@color/gold"
                         android:textSize="@dimen/sp_14"
@@ -182,7 +170,7 @@
                         android:id="@+id/on_trace"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/dp_40"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginStart="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_10"
@@ -223,7 +211,6 @@
                         android:drawableLeft="@mipmap/user_about"
                         android:drawablePadding="@dimen/dp_10"
                         android:drawableStart="@mipmap/user_about"
-                        android:text="庖丁阅读"
                         android:textColor="@color/body_gray"
                         android:textSize="@dimen/sp_16"
                         app:layout_constraintEnd_toStartOf="@id/off_arrow"
@@ -234,7 +221,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_5"
-                        android:text="课程进度（9/16）"
                         android:textColor="@color/body_gray"
                         android:textSize="@dimen/text_size_12"
                         app:layout_constraintEnd_toStartOf="@id/off_arrow"
@@ -263,7 +249,6 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginStart="@dimen/dp_10"
                         android:gravity="center"
-                        android:text="56%"
                         android:textColor="@color/body_gray"
                         android:textSize="@dimen/text_size_12"
                         app:layout_constraintEnd_toStartOf="@id/off_arrow"
@@ -289,7 +274,6 @@
                         android:id="@+id/off_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="下次上课时间为XX.XX.XX"
                         android:textColor="@color/body_gray"
                         android:textSize="@dimen/text_size_12" />
 
@@ -317,17 +301,16 @@
                             android:layout_height="80dp"
                             android:background="@drawable/draw_gray_w_bg"
                             android:padding="5dp"
-                            android:text="顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价顾问对学生的评价"
                             android:textColor="@color/body_gray"
                             android:textSize="@dimen/sp_14" />
                     </LinearLayout>
 
 
                     <android.support.v7.widget.AppCompatButton
-                        android:id="@+id/submit_work"
+                        android:id="@+id/off_work"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/dp_40"
                         android:layout_marginTop="@dimen/dp_10"
                         android:background="@drawable/draw_gold_line"
                         android:paddingBottom="@dimen/dp_5"
@@ -337,16 +320,16 @@
                         android:text="@string/submit_homework"
                         android:textColor="@color/gold"
                         android:textSize="@dimen/sp_14"
-                        app:layout_constraintEnd_toStartOf="@id/offline_trace"
+                        app:layout_constraintEnd_toStartOf="@id/off_trace"
                         app:layout_constraintHorizontal_weight="1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/layout_2" />
 
                     <android.support.v7.widget.AppCompatButton
-                        android:id="@+id/offline_trace"
+                        android:id="@+id/off_trace"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/dp_40"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginStart="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_10"
@@ -360,14 +343,14 @@
                         android:textSize="@dimen/sp_14"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_weight="1"
-                        app:layout_constraintStart_toEndOf="@id/submit_work"
+                        app:layout_constraintStart_toEndOf="@id/off_work"
                         app:layout_constraintTop_toBottomOf="@id/layout_2" />
 
                     <android.support.v7.widget.AppCompatButton
                         android:id="@+id/look_video"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/dp_40"
                         android:layout_marginTop="@dimen/dp_10"
                         android:background="@drawable/draw_gold_line"
                         android:paddingBottom="@dimen/dp_5"
@@ -379,11 +362,12 @@
                         android:textSize="@dimen/sp_14"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/offline_trace" />
+                        app:layout_constraintTop_toBottomOf="@id/off_trace" />
                 </android.support.constraint.ConstraintLayout>
 
 
             </LinearLayout>
+
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"

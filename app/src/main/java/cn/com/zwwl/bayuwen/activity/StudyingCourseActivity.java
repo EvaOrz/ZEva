@@ -8,15 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.StudyingCourseAdapter;
+import cn.com.zwwl.bayuwen.api.StudyingCourseApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
-import cn.com.zwwl.bayuwen.model.CourseModel;
+import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.StudyingModel;
 
 /**
  * 在学课程
@@ -27,15 +29,13 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
     ProgressBar courseProgress;
     @BindView(R.id.total_course)
     AppCompatTextView totalCourse;
-    @BindView(R.id.course_eval)
-    AppCompatTextView courseEval;
-    @BindView(R.id.course_change)
-    AppCompatTextView courseChange;
-    @BindView(R.id.class_covert)
-    AppCompatTextView classCovert;
+    @BindView(R.id.current)
+    AppCompatTextView current;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     StudyingCourseAdapter adapter;
+    String kid;
+    StudyingModel model;
 
     @Override
     protected int setContentView() {
@@ -44,26 +44,59 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initView() {
-        setCustomTitle("四成写作三年级");
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        adapter = new StudyingCourseAdapter(null);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void getData() {
+        new StudyingCourseApi(this, kid, new ResponseCallBack<StudyingModel>() {
+            @Override
+            public void success(StudyingModel studyingModel) {
+                if (studyingModel != null) {
+                    model = studyingModel;
+                    current.setText(String.valueOf(model.getCurrent()));
+                    totalCourse.setText(String.valueOf(model.getCount()));
+                    courseProgress.setMax(model.getCount());
+                    courseProgress.setProgress(model.getCurrent());
+                    adapter.setNewData(model.getCompleteClass());
+                }
+            }
+
+            @Override
+            public void error(ErrorMsg error) {
+
+            }
+
+        }
+        );
     }
 
     @Override
     protected void initData() {
-        List<CourseModel> models = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            CourseModel model = new CourseModel();
-            model.setPage("");
-            models.add(model);
-        }
-        adapter = new StudyingCourseAdapter(models);
-        recyclerView.setAdapter(adapter);
+        kid = getIntent().getStringExtra("kid");
+        setCustomTitle(getIntent().getStringExtra("title"));
+        getData();
     }
 
     @Override
     protected void setListener() {
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(mActivity, UnitIndexActivity.class);
+                intent.putExtra("kId", model.getCompleteClass().get(position).getKid());
+                intent.putExtra("cId", model.getCompleteClass().get(position).getId());
+                intent.putExtra("title",model.getCompleteClass().get(position).getTitle());
+                startActivity(intent);
+            }
+        });
+    }
 
+    @Override
+    public boolean setParentScrollable() {
+        return false;
     }
 
     @OnClick({R.id.course_eval, R.id.course_change, R.id.class_covert})
@@ -75,20 +108,15 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
                 intent.setClass(this, CourseEvalActivity.class);
                 break;
             case R.id.course_change:
-                mApplication.operate_type=0;
+                mApplication.operate_type = 0;
                 intent.setClass(this, CourseTableActivity.class);
                 break;
             case R.id.class_covert:
-                mApplication.operate_type=1;
+                mApplication.operate_type = 1;
                 intent.setClass(this, CourseTableActivity.class);
                 break;
         }
         startActivity(intent);
-    }
-
-    @Override
-    public boolean setParentScrollable() {
-        return true;
     }
 
     @Override
