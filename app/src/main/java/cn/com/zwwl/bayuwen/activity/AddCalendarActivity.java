@@ -24,6 +24,11 @@ import java.util.Date;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.api.CalendarEventAddApi;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.CalendarEventModel;
+import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
 
@@ -35,10 +40,11 @@ public class AddCalendarActivity extends BaseActivity {
 
     private EditText nameEv, cishuEv, addressEv, teacherEv, codeEv;
 
-    private String shangTime, xiaTime;
+    private String shangTime, xiaTime, orgName;
 
     private Date startDate, endDate;// 课程开始日期和结束日期
     private List<Date> periods = new ArrayList<>();// 课程日期集合
+    private CalendarEventModel calendarEventModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +98,7 @@ public class AddCalendarActivity extends BaseActivity {
                     xiangkeTv.setText(xiaTime);
                     break;
                 case 2:// 更新课程机构
-                    jigouTv.setText((String) msg.obj);
+                    jigouTv.setText(orgName);
                     break;
 
                 case 3:// 更新课程日期
@@ -126,11 +132,53 @@ public class AddCalendarActivity extends BaseActivity {
 
     private void doSave() {
         String name = nameEv.getText().toString();
+        String totalNumber = cishuEv.getText().toString();
+        String teacher = teacherEv.getText().toString();
         if (startDate == null || endDate == null) {
             showToast("请选择课程开始和结束日期");
-        } else if (TextUtils.isEmpty(name)){
+        } else if (TextUtils.isEmpty(name)) {
             showToast("请填写课程名称");
+        } else if (TextUtils.isEmpty(totalNumber)) {
+            showToast("请填写课程次数");
+        } else if (TextUtils.isEmpty(teacher)) {
+            showToast("请填写授课老师");
+        } else if (TextUtils.isEmpty(orgName)) {
+            showToast("请填写机构名称");
+        } else if (TextUtils.isEmpty(shangTime)) {
+            showToast("请填写上课时间");
+        } else if (TextUtils.isEmpty(xiaTime)) {
+            showToast("请填写下课时间");
+        } else {
+            CalendarEventModel calendarEventModel = new CalendarEventModel();
+            calendarEventModel.setName(name);
+            calendarEventModel.setOrgName(orgName);
+            calendarEventModel.setStartTime(shangTime);
+            calendarEventModel.setEndTime(xiaTime);
+            new CalendarEventAddApi(mContext, calendarEventModel, CalendarTools.countTwoDayWeek
+                    (startDate, endDate), totalNumber,
+                    transPeriod(), teacher, new FetchEntryListener() {
+
+
+                @Override
+                public void setData(Entry entry) {
+
+                }
+
+                @Override
+                public void setError(ErrorMsg error) {
+
+                }
+            });
         }
+    }
+
+    private String[] transPeriod() {
+        String[] strs = new String[periods.size()];
+        SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+        for (int i = 0; i < periods.size(); i++) {
+            strs[i] = fm.format(periods.get(i));
+        }
+        return strs;
     }
 
     @Override
@@ -178,10 +226,8 @@ public class AddCalendarActivity extends BaseActivity {
                         .MyJigouChooseListener() {
                     @Override
                     public void onJigouChoose(String name) {
-                        Message ms = new Message();
-                        ms.what = 2;
-                        ms.obj = name;
-                        handler.sendMessage(ms);
+                        orgName = name;
+                        handler.sendEmptyMessage(2);
                     }
                 }, 3);
                 break;

@@ -18,14 +18,14 @@ import cn.com.zwwl.bayuwen.model.CalendarEventModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
 /**
- * 获取日历页面事件列表api
+ * 添加课程api
  */
 public class CalendarEventAddApi extends BaseApi {
     private FetchEntryListener listener;
     private Map<String, String> pamas = new HashMap<>();
 
     public CalendarEventAddApi(Context context, CalendarEventModel calendarEventModel, int
-            totalWeeks, int totalNumber, String[] courseDate, String teacher,
+            totalWeeks, String totalNumber, String[] courseDate, String teacher,
                                FetchEntryListener listener) {
         super(context);
         mContext = context;
@@ -37,7 +37,7 @@ public class CalendarEventAddApi extends BaseApi {
         pamas.put("endTime", calendarEventModel.getEndTime());
         pamas.put("totalWeeks", totalWeeks + "");
         pamas.put("teacher", teacher);
-        pamas.put("totalNumber", totalNumber + "");
+        pamas.put("totalNumber", totalNumber);
         pamas.put("courseDate", courseDate.toString());
         pamas.put("jPushAlias", "jPushAlias");
         post();
