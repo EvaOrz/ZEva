@@ -367,10 +367,11 @@
                     android:textColor="@color/gray_dark"
                     android:textSize="@dimen/text_size_14" />
 
-                <GridView
+                <cn.com.zwwl.bayuwen.widget.MostGridView
                     android:id="@+id/gift_grid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:numColumns="5"
                     android:scrollbars="none" />
 
             </LinearLayout>

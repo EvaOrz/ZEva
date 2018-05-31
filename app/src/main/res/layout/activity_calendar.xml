@@ -64,14 +64,19 @@
             app:current_month_text_color="@color/gray_dark"
             app:day_text_size="@dimen/text_size_14"
             app:lunar_text_size="@dimen/text_size_10"
+            app:month_view="cn.com.zwwl.bayuwen.widget.calendar.CustomMonthView"
             app:month_view_show_mode="mode_only_current"
+            app:scheme_lunar_text_color="@color/gray_dark"
+            app:scheme_text_color="@color/gray_dark"
+            app:scheme_theme_color="@color/gray_dark"
             app:selected_lunar_text_color="@color/white"
             app:selected_text_color="@color/white"
             app:selected_theme_color="@color/gold"
             app:week_background="@color/body_bg"
             app:week_line_background="@color/gray_line"
             app:week_start_with="sun"
-            app:week_text_color="@color/gray_dark" />
+            app:week_text_color="@color/gray_dark"
+            app:week_view="cn.com.zwwl.bayuwen.widget.calendar.CustomWeekView" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"

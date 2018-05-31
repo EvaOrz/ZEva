@@ -9,7 +9,6 @@ buildscript {
             url "http://mvn.leancloud.cn/nexus/content/repositories/public"
         }
         maven { url "https://jitpack.io" }
-//        maven { url " https://bintray.com/wechat-sdk-team/maven" }
     }
 
     dependencies {
@@ -30,7 +29,6 @@ allprojects {
             url "http://mvn.leancloud.cn/nexus/content/repositories/public"
         }
         maven { url "https://jitpack.io" }
-//        maven { url " https://bintray.com/wechat-sdk-team/maven" }
     }
 }
 

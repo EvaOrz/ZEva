@@ -1,4 +1,5 @@
 <resources>
+
     <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowAnimationStyle">@android:style/Animation.Activity</item>
         <item name="contentInsetStart">0.0dip</item>
@@ -11,6 +12,7 @@
         <item name="android:textColor">@color/text_color_default</item>
         <item name="android:textSize">@dimen/sp_16</item>
     </style>
+
     <style name="Play_SeekBar" parent="@android:style/Widget.SeekBar">
         <item name="android:maxHeight">1.0dip</item>
         <item name="android:minHeight">1.0dip</item>
@@ -20,6 +22,16 @@
         <item name="android:thumbOffset">0dp</item>
         <item name="android:indeterminateOnly">false</item>
 
+    </style>
+
+    <!--日历事件添加页面  时间选择器-->
+    <style name="Theme.picker" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:editTextStyle">@style/Widget.EditText.White</item>
+    </style>
+
+    <style name="Widget.EditText.White" parent="@android:style/Widget.EditText">
+        <item name="android:textColor">@color/gray_dark</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
     </style>
 
     <style name="Jindu_progress" parent="@android:style/Widget.ProgressBar.Horizontal">

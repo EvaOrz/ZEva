@@ -157,7 +157,8 @@
         <activity
             android:name=".activity.AddCalendarActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+            android:theme="@style/Theme.picker" />
         <!--增减课程页面-->
         <activity
             android:name=".activity.SelectCalendarActivity"
