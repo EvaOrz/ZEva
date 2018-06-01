@@ -5,10 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <include
-        android:id="@+id/top"
-        layout="@layout/layout_toolbar" />
-
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/class_name"
         android:layout_width="match_parent"
@@ -17,64 +13,73 @@
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_16"
         android:drawableLeft="@mipmap/home_head_hot"
+        android:drawablePadding="@dimen/dp_10"
         android:drawableStart="@mipmap/home_head_hot"
         android:text="大语文"
         android:textSize="@dimen/sp_16"
-        android:drawablePadding="@dimen/dp_10"
-        app:layout_constraintTop_toBottomOf="@id/top" />
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
-        android:layout_width="match_parent"
         android:id="@+id/count_layout"
-        android:orientation="horizontal"
-        android:layout_marginStart="@dimen/dp_16"
-        app:layout_constraintTop_toBottomOf="@id/class_name"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_height="wrap_content">
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:id="@+id/current_stu"
-            android:text="12"
-            android:textColor="@color/mainColor"
-            android:layout_height="wrap_content" />
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:text="@string/sig_xie"
-            android:layout_height="wrap_content" />
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:id="@+id/total_stu"
-            android:text="30"
-            android:textColor="@color/mainColor"
-            android:layout_height="wrap_content" />
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:text="(现有人数/满班人数)"
-            android:textColor="@color/gray_light"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <LinearLayout
         android:layout_width="match_parent"
-        android:id="@+id/progress_layout"
-        app:layout_constraintTop_toBottomOf="@id/count_layout"
-        android:layout_marginStart="@dimen/dp_16"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_16"
-        android:layout_height="wrap_content">
+        android:layout_marginStart="@dimen/dp_16"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/class_name">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/current_stu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12"
+            android:textColor="@color/mainColor" />
+
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
-            android:text="@string/course_progress"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/sig_xie" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/total_stu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30"
+            android:textColor="@color/mainColor" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(现有人数/满班人数)"
+            android:textColor="@color/gray_light" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_16"
+        app:layout_constraintTop_toBottomOf="@id/count_layout">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/course_progress" />
+
         <ProgressBar
             android:id="@+id/course_progress"
             style="@style/Jindu_progress"
             android:layout_width="0dp"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_marginLeft="@dimen/dp_10"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
             android:layout_weight="1"
             android:max="100"
             android:progress="50"
             android:secondaryProgress="80" />
+
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,7 +88,8 @@
             android:layout_marginStart="@dimen/dp_5"
             android:gravity="center"
             android:text="@string/brace_left"
-            android:textColor="@color/gray_light"/>
+            android:textColor="@color/gray_light" />
+
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,7 +98,7 @@
             android:layout_marginStart="@dimen/dp_5"
             android:gravity="center"
             android:text="9"
-            android:textColor="@color/mainColor"/>
+            android:textColor="@color/mainColor" />
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -102,7 +108,7 @@
             android:layout_marginStart="@dimen/dp_5"
             android:gravity="center"
             android:text="@string/sig_xie"
-            android:textColor="@color/gray_light"/>
+            android:textColor="@color/gray_light" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/total_course"
@@ -113,7 +119,7 @@
             android:layout_marginStart="@dimen/dp_5"
             android:gravity="center"
             android:text="20"
-            android:textColor="@color/gray_light"/>
+            android:textColor="@color/gray_light" />
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -125,73 +131,82 @@
             android:text="@string/brace_right"
             android:textColor="@color/gray_light" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_width="match_parent"
         android:id="@+id/class_introduce_layout"
-        app:layout_constraintTop_toBottomOf="@id/progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/draw_gray_line_bg"
         android:orientation="vertical"
         android:padding="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:background="@drawable/draw_gray_line_bg"
         app:layout_constraintBottom_toTopOf="@id/teacher_introduce_layout"
-        android:layout_height="0dp">
+        app:layout_constraintTop_toBottomOf="@id/progress_layout">
+
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="班级介绍"
-            android:textSize="@dimen/sp_16"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/sp_16" />
+
         <View
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/dp_5"
+            android:layout_height="@dimen/dp_1"
             android:layout_marginBottom="@dimen/dp_5"
-            android:background="@color/gray_line"
-            android:layout_height="@dimen/dp_1"/>
+            android:layout_marginTop="@dimen/dp_5"
+            android:background="@color/gray_line" />
+
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/class_introduce"
             android:layout_width="match_parent"
-            android:minHeight="@dimen/dp_100"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/dp_100" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_width="match_parent"
         android:id="@+id/teacher_introduce_layout"
-        app:layout_constraintTop_toBottomOf="@id/class_introduce_layout"
-        android:orientation="vertical"
-        android:padding="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginStart="@dimen/dp_16"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginBottom="@dimen/dp_40"
         android:layout_marginEnd="@dimen/dp_16"
-        app:layout_constraintBottom_toTopOf="@id/submit"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
         android:background="@drawable/draw_gray_line_bg"
-        android:layout_height="0dp">
+        android:orientation="vertical"
+        android:padding="@dimen/dp_10"
+        app:layout_constraintBottom_toTopOf="@id/submit"
+        app:layout_constraintTop_toBottomOf="@id/class_introduce_layout">
+
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="教师介绍"
-            android:textSize="@dimen/sp_16"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/sp_16" />
+
         <View
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/dp_5"
+            android:layout_height="@dimen/dp_1"
             android:layout_marginBottom="@dimen/dp_5"
-            android:background="@color/gray_line"
-            android:layout_height="@dimen/dp_1"/>
+            android:layout_marginTop="@dimen/dp_5"
+            android:background="@color/gray_line" />
+
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/teacher_introduce"
             android:layout_width="match_parent"
-            android:minHeight="@dimen/dp_100"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/dp_100" />
     </LinearLayout>
+
     <android.support.v7.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:text="选择调课"
         android:id="@+id/submit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/mainColor"
-        android:padding="@dimen/dp_10"
         android:gravity="center"
-        android:layout_height="wrap_content" />
+        android:padding="@dimen/dp_10"
+        android:text="选择调课"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </android.support.constraint.ConstraintLayout>

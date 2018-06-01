@@ -18,7 +18,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.TestListAdapter;
 import cn.com.zwwl.bayuwen.adapter.UnitTableAdapter;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
-import cn.com.zwwl.bayuwen.model.CourseModel;
+import cn.com.zwwl.bayuwen.model.LessonModel;
 
 /**
  * 课程跟踪列表点击后进入该处
@@ -52,10 +52,10 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initData() {
-        List<CourseModel> courseModels = new ArrayList<>();
+        List<LessonModel> courseModels = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            CourseModel model = new CourseModel();
-            model.setPage("XXX");
+            LessonModel model = new LessonModel();
+            model.setTitle("XXX");
             courseModels.add(model);
         }
         unitTableAdapter = new UnitTableAdapter(courseModels);

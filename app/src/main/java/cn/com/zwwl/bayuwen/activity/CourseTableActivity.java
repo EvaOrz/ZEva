@@ -37,8 +37,7 @@ public class CourseTableActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initView() {
-        flag = getIntent().getIntExtra("type", 0);
-        if (flag == 0) {
+        if (mApplication.operate_type == 0) {
             setCustomTitle(res.getString(R.string.change_course));
             type.setText(res.getString(R.string.chose_course_by_need));
         } else {

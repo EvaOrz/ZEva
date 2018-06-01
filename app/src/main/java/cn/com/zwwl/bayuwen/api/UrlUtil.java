@@ -206,4 +206,8 @@ public class UrlUtil {
     public static String addEval() {
         return HOST + "/comment";
     }
+
+    public static String addVote() {
+        return HOST + "/vote";
+    }
 }
