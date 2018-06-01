@@ -125,12 +125,7 @@ public class UploadPicActivity extends BasicActivityWithTitle {
         }
         new UploadPicApi(this, files, new ResponseCallBack<List<CommonModel>>() {
             @Override
-            public void success(List<CommonModel> o) {
-
-            }
-
-            @Override
-            public void error(ErrorMsg error) {
+            public void result(List<CommonModel> commonModels, ErrorMsg errorMsg) {
 
             }
         });

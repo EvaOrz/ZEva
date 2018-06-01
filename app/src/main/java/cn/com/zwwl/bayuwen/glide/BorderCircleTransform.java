@@ -24,7 +24,7 @@ public class BorderCircleTransform extends BitmapTransformation {
     private float mBorderWidth;
 
     public BorderCircleTransform(Context context) {
-        super(context);
+        this(context,10);
     }
 
     public BorderCircleTransform(Context context, int borderWidth) {
@@ -52,9 +52,6 @@ public class BorderCircleTransform extends BitmapTransformation {
         int y = (source.getHeight() - size) / 2;
         Bitmap squared = Bitmap.createBitmap(source, x, y, size, size);
         Bitmap result = pool.get(size, size, Bitmap.Config.ARGB_8888);
-        if (result == null) {
-            result = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        }
         Canvas canvas = new Canvas(result);
         Paint paint = new Paint();
         paint.setShader(new BitmapShader(squared, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));

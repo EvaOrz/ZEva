@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.base.BasicFragment;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
@@ -16,7 +15,6 @@ import cn.com.zwwl.bayuwen.glide.ImageLoader;
 public class FgLookPPT extends BasicFragment {
     @BindView(R.id.ppt)
     AppCompatImageView ppt;
-    Unbinder unbinder;
 
     public static Fragment newInstance(String url) {
         FgLookPPT fragment = new FgLookPPT();

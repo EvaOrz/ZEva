@@ -62,8 +62,7 @@ public class UploadPicApi extends BaseApi {
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    callBack.error(errorMsg);
-                    callBack.success(GsonUtil.parseJsonArray(CommonModel.class, array.toString()));
+                    callBack.result(GsonUtil.parseJsonArray(CommonModel.class, array.toString()),errorMsg);
                 }
             });
 

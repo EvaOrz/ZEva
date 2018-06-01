@@ -40,8 +40,7 @@ public class MyCourseApi extends BaseApi {
         context.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                listener.error(errorMsg);
-                listener.success(GsonUtil.parseJson(MyCourseModel.class, json.toString()));
+                listener.result(GsonUtil.parseJson(MyCourseModel.class, json.toString()),errorMsg);
             }
         });
 

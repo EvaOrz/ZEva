@@ -10,9 +10,7 @@ import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
-import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.util.GsonUtil;
 
 /**
  * 评价
@@ -28,6 +26,7 @@ public class EvalApi extends BaseApi {
         this.activity = context;
         this.para = para;
         this.callBack = callBack;
+        post();
     }
 
     @Override
@@ -41,12 +40,11 @@ public class EvalApi extends BaseApi {
     }
 
     @Override
-    protected void handler(JSONObject json, final JSONArray array, final ErrorMsg errorMsg) {
+    protected void handler(final JSONObject json, final JSONArray array, final ErrorMsg errorMsg) {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                callBack.error(errorMsg);
-                callBack.success(GsonUtil.parseJsonArray(CommonModel.class, array.toString()));
+                callBack.result(null,errorMsg);
             }
         });
     }

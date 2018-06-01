@@ -53,8 +53,8 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
     private void getData() {
         new StudyingCourseApi(this, kid, new ResponseCallBack<StudyingModel>() {
             @Override
-            public void success(StudyingModel studyingModel) {
-                if (studyingModel != null) {
+            public void result(StudyingModel studyingModel, ErrorMsg errorMsg) {
+                if (studyingModel!=null){
                     model = studyingModel;
                     current.setText(String.valueOf(model.getCurrent()));
                     totalCourse.setText(String.valueOf(model.getCount()));
@@ -63,12 +63,6 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
                     adapter.setNewData(model.getCompleteClass());
                 }
             }
-
-            @Override
-            public void error(ErrorMsg error) {
-
-            }
-
         }
         );
     }
@@ -105,6 +99,7 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.course_eval:
+                intent.putExtra("kid",kid);
                 intent.setClass(this, CourseEvalActivity.class);
                 break;
             case R.id.course_change:

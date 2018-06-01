@@ -64,23 +64,18 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
     }
 
     private void getData(String kId, String cId) {
-        new UnitDetailApi(this, kId,cId, new ResponseCallBack<UnitDetailModel>() {
+        new UnitDetailApi(this, kId, cId, new ResponseCallBack<UnitDetailModel>() {
             @Override
-            public void success(UnitDetailModel o) {
-                if (o != null) {
-                    model = o;
-                    tutorEval.setText(o.getTaSummary().getContent());
-                    pptAdapter.setNewData(o.getAccessory().getData());
-                    jobAdapter.setNewData(o.getJob().getData());
-                    teacher.setText("授课老师：" + o.getTeachers().getTeacher().getName());
-                    tutor.setText("助教老师：" + o.getTeachers().getAssistant().getName());
-                    adviser.setText("学业顾问：" + o.getTeachers().getCounselor().getName());
+            public void result(UnitDetailModel unitDetailModel, ErrorMsg errorMsg) {
+                if (unitDetailModel != null) {
+                    model = unitDetailModel;
+                    tutorEval.setText(unitDetailModel.getTaSummary().getContent());
+                    pptAdapter.setNewData(unitDetailModel.getAccessory().getData());
+                    jobAdapter.setNewData(unitDetailModel.getJob().getData());
+                    teacher.setText("授课老师：" + unitDetailModel.getTeachers().getTeacher().getName());
+                    tutor.setText("助教老师：" + unitDetailModel.getTeachers().getAssistant().getName());
+                    adviser.setText("学业顾问：" + unitDetailModel.getTeachers().getCounselor().getName());
                 }
-            }
-
-            @Override
-            public void error(ErrorMsg error) {
-
             }
         });
     }
@@ -90,10 +85,28 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
 
     }
 
-    @OnClick({R.id.submit_work})
+    @OnClick({R.id.submit_work, R.id.ppt})
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(this, UploadPicActivity.class));
+        Intent intent = new Intent();
+        switch (view.getId()) {
+            case R.id.submit_work:
+                intent.setClass(this, UploadPicActivity.class);
+                intent.putExtra("cId", "");
+                startActivity(intent);
+                break;
+            case R.id.ppt:
+                if (model.getAccessory().getState() != 0) {
+                    String[] urls = new String[model.getAccessory().getData().size()];
+                    for (int i = 0; i < model.getAccessory().getData().size(); i++)
+                        urls[i] = model.getAccessory().getData().get(i).getUrl();
+                    intent.setClass(this, LookPPTActivity.class);
+                    intent.putExtra("urls", urls);
+                    startActivity(intent);
+                }
+                break;
+        }
+
     }
 
     @Override

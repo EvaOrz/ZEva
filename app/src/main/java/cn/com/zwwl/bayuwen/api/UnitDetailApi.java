@@ -45,8 +45,7 @@ public class UnitDetailApi extends BaseApi {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                callBack.error(errorMsg);
-                callBack.success(GsonUtil.parseJson(UnitDetailModel.class, json.toString()));
+                callBack.result(GsonUtil.parseJson(UnitDetailModel.class, json.toString()),errorMsg);
             }
         });
     }

@@ -41,8 +41,7 @@ public class StudyingCourseApi extends BaseApi {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                listener.error(errorMsg);
-                listener.success(GsonUtil.parseJson(StudyingModel.class, json.toString()));
+                listener.result(GsonUtil.parseJson(StudyingModel.class, json.toString()),errorMsg);
             }
         });
 
