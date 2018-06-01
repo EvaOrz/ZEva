@@ -198,7 +198,17 @@ public class UrlUtil {
         return HOST + "/course/second_course";
     }
 
+    /**
+     * 课程课次详情首页
+     */
     public static String getUnitDetail() {
         return HOST + "/course/third_course";
+    }
+
+    /**
+     * 评论
+     */
+    public static String addEval() {
+        return HOST + "/comment";
     }
 }

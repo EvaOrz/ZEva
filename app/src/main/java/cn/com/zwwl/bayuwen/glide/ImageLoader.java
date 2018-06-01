@@ -137,10 +137,10 @@ public class ImageLoader {
                 ())) {
             return;
         }
-        GlideApp.with(context)
+        GlideApp.with(context).asBitmap()
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
+                .transform(new GlideRoundTransform(context))
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(imageView);

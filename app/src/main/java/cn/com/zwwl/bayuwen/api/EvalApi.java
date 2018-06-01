@@ -5,45 +5,47 @@ import android.app.Activity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.StudyingModel;
-import cn.com.zwwl.bayuwen.util.GsonUtil;
 
-public class StudyingCourseApi extends BaseApi {
-    private String kid;
-    ResponseCallBack listener;
+/**
+ * 评价
+ * Created by zhumangmang at 2018/5/31 18:24
+ */
+public class EvalApi extends BaseApi {
     private Activity activity;
+    private ResponseCallBack callBack;
+    private HashMap<String, String> para;
 
-    public StudyingCourseApi(Activity context, String kid, ResponseCallBack listener) {
+    public EvalApi(Activity context, HashMap<String, String> para, ResponseCallBack callBack) {
         super(context);
         this.activity = context;
-        this.listener = listener;
-        this.kid = kid;
-        get();
+        this.para = para;
+        this.callBack = callBack;
+        post();
     }
 
     @Override
     protected String getUrl() {
-        return UrlUtil.getStudyingCourse()+"?kid="+kid;
+        return UrlUtil.addEval();
     }
 
     @Override
     protected Map<String, String> getPostParams() {
-        return null;
+        return para;
     }
 
     @Override
-    protected void handler(final JSONObject json, JSONArray array, final ErrorMsg errorMsg) {
+    protected void handler(final JSONObject json, final JSONArray array, final ErrorMsg errorMsg) {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                listener.result(GsonUtil.parseJson(StudyingModel.class, json.toString()),errorMsg);
+                callBack.result(null,errorMsg);
             }
         });
-
     }
 }

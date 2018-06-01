@@ -23,11 +23,6 @@ public class CircleTransform extends BitmapTransformation {
     }
     /**
      *  重写 生成圆角图片
-     * @param pool
-     * @param toTransform
-     * @param outWidth
-     * @param outHeight
-     * @return
      */
     @Override
     protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
@@ -44,9 +39,6 @@ public class CircleTransform extends BitmapTransformation {
         Bitmap squared = Bitmap.createBitmap(source, x, y, size, size);
 
         Bitmap result = pool.get(size, size, Bitmap.Config.ARGB_8888);
-        if (result == null) {
-            result = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        }
 
         Canvas canvas = new Canvas(result);
         Paint paint = new Paint();

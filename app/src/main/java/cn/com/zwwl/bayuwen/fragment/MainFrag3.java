@@ -110,18 +110,12 @@ public class MainFrag3 extends BasicFragment {
     protected void initData() {
 
         new MyCourseApi(activity, new ResponseCallBack<MyCourseModel>() {
-
             @Override
-            public void success(MyCourseModel myCourseModel) {
-                if (myCourseModel != null) {
+            public void result(MyCourseModel myCourseModel, ErrorMsg errorMsg) {
+                if (myCourseModel!=null){
                     courseModel = myCourseModel;
                     bindView();
                 }
-            }
-
-            @Override
-            public void error(ErrorMsg error) {
-
             }
         });
     }

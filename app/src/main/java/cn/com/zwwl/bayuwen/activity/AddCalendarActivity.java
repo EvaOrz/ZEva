@@ -152,8 +152,8 @@ public class AddCalendarActivity extends BaseActivity {
     };
 
     private void doSave() {
-        Log.e("sssssss", (CalendarTools.countTwoDayWeek
-                (startDate, endDate));
+//        Log.e("sssssss", (CalendarTools.countTwoDayWeek
+//                (startDate, endDate));
         String name = nameEv.getText().toString();
         String totalNumber = cishuEv.getText().toString();
         String teacher = teacherEv.getText().toString();

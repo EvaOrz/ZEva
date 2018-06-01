@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.math.RoundingMode;
@@ -358,4 +359,7 @@ public class Tools {
         return nt.format(data);
     }
 
+    public static String getText(TextView t) {
+        return t.getText().toString().trim();
+    }
 }
