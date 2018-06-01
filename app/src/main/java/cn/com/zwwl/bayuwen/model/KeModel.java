@@ -14,7 +14,7 @@ import java.util.List;
 public class KeModel extends Entry {
     private List<TeacherModel> teacherModels = new ArrayList<>();
     private List<LessonModel> lessonModels = new ArrayList<>();
-
+private String id;
     private String kid;
     private String title;
     private String roomId;
@@ -97,6 +97,14 @@ public class KeModel extends Entry {
     private String name;
     private String img;
     private GroupBuyModel groupbuy = new GroupBuyModel();
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getImg() {
         return img;

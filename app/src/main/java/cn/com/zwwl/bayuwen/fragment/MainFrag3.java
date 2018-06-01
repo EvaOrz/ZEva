@@ -154,7 +154,10 @@ public class MainFrag3 extends BasicFragment {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(getActivity(), TraceRecordActivity.class));
+                Intent intent=new Intent(activity,TraceRecordActivity.class);
+                intent.putExtra("kid",courseModel.getCompleted().get(position).getId());
+                intent.putExtra("title",courseModel.getCompleted().get(position).getTitle());
+                startActivity(intent);
             }
         });
     }
