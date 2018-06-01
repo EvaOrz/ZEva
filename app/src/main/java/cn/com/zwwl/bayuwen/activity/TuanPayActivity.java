@@ -98,6 +98,7 @@ public class TuanPayActivity extends BaseActivity {
         pinLayout = findViewById(R.id.pintuan_layout);
         youhuiLayout = findViewById(R.id.youhui_layout);
 
+        findViewById(R.id.order_d_commit).setOnClickListener(this);
         findViewById(R.id.go_add_manage).setOnClickListener(this);
         findViewById(R.id.tuan_pay_back).setOnClickListener(this);
         findViewById(R.id.tuikuan_info).setOnClickListener(this);
@@ -168,6 +169,9 @@ public class TuanPayActivity extends BaseActivity {
                 break;
             case R.id.youhui_layout:// 优惠券
                 new YouHuiJuanPopWindow(mContext);
+                break;
+            case R.id.order_d_commit:// 提交订单
+                
                 break;
         }
 

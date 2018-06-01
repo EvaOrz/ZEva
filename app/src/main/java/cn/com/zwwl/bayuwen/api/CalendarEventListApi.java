@@ -2,11 +2,14 @@ package cn.com.zwwl.bayuwen.api;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +22,7 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
  */
 public class CalendarEventListApi extends BaseApi {
     private Map<String, List<CalendarEventModel>> eventMaps = new HashMap<>();
-    private List<CalendarEventModel> eventModels = new ArrayList<>();
+
     private FetchCalendarEventMapListener listener;
     private String url = "";
 
@@ -48,8 +51,20 @@ public class CalendarEventListApi extends BaseApi {
             listener.setError(errorMsg);
         }
         if (!isNull(json)) {
-            for (int i = 0; i < jsonArray.length(); i++) {
-
+            Iterator keys = json.keys();
+            while (keys.hasNext()) {
+                String key = String.valueOf(keys.next());
+                List<CalendarEventModel> eventModels = new ArrayList<>();
+                Gson gson = new Gson();
+                JSONArray array = json.optJSONArray(key);
+                if (!isNull(array)) {
+                    for (int i = 0; i < array.length(); i++) {
+                        String ss = array.optJSONObject(i).toString();
+                        CalendarEventModel c = gson.fromJson(ss, CalendarEventModel.class);
+                        eventModels.add(c);
+                    }
+                }
+                eventMaps.put(key, eventModels);
             }
             listener.setData(eventMaps);
         } else listener.setData(null);

@@ -605,7 +605,7 @@
             android:textSize="@dimen/text_size_14" />
 
         <TextView
-            android:id="@+id/order_d_bt2"
+            android:id="@+id/order_d_commit"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

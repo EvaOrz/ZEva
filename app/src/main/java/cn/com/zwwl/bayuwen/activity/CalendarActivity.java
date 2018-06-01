@@ -45,6 +45,8 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
     // key:date value:日历事件列表
     private Map<String, List<CalendarEventModel>> mapDatas = new HashMap<>();
 
+    // 当前选中日期下事件列表
+    private List<CalendarEventModel> currentEvents = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,7 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
         calendarView = findViewById(R.id.calendarView);
         calendarView.setOnMonthChangeListener(this);
         calendarView.setRange(CalendarTools.getMinYear(), 1, CalendarTools.getMaxYear(), 12);
-
+        setKeData("");
         setScheme(CalendarTools.getCurrentYear(), CalendarTools.getCurrentMonth());
         handler.sendEmptyMessageDelayed(0, 200);
         findViewById(R.id.calendar_back).setOnClickListener(this);
@@ -110,6 +112,12 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
                 case 0:// 定位到当前日期
                     calendarView.scrollToCurrent(true);
                     break;
+                case 1:// 获取当前日期的日历事件
+                    Date date = new Date();
+                    String dataString = date.getYear() + "-" + date.getMonth() + "-" + date
+                            .getDay();
+                    setKeData(dataString);
+                    break;
             }
 
         }
@@ -137,6 +145,7 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
             public void setData(Map<String, List<CalendarEventModel>> maps) {
                 if (maps != null && !maps.isEmpty()) {
                     mapDatas = maps;
+                    handler.sendEmptyMessage(1);
                 }
             }
 
@@ -172,11 +181,17 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
         String dataString = calendar.getYear() + "-" + calendar.getMonth() + "-" + calendar
                 .getDay();
         Log.e("sssssss", dataString);
-        List<CalendarEventModel> calendarEventModels = new ArrayList<>();
-        if (mapDatas.containsKey(dataString)) {
-            calendarEventModels.addAll(mapDatas.get(dataString));
+        setKeData(dataString);
+
+    }
+
+    private void setKeData(String dateKey) {
+        currentEvents.clear();
+        if (mapDatas.containsKey(dateKey)) {
+            currentEvents.addAll(mapDatas.get(dateKey));
         }
-        calendarKeAdapter = new CalendarKeAdapter(mContext, calendarEventModels);
+        calendarKeAdapter = new CalendarKeAdapter(mContext, currentEvents);
         keRecyclerView.setAdapter(calendarKeAdapter);
+
     }
 }
