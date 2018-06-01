@@ -37,8 +37,9 @@ public class CalendarEventAddApi extends BaseApi {
         pamas.put("endTime", calendarEventModel.getEndTime());
         pamas.put("totalWeeks", totalWeeks + "");
         pamas.put("teacher", teacher);
+        pamas.put("orgId", calendarEventModel.getOutOrgId());
         pamas.put("totalNumber", totalNumber);
-        pamas.put("courseDate", courseDate.toString());
+        pamas.put("courseDates", courseDate.toString());
         pamas.put("jPushAlias", "jPushAlias");
         post();
     }

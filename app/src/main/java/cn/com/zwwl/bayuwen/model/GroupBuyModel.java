@@ -10,12 +10,12 @@ public class GroupBuyModel extends Entry {
     private String id = "";
     private String title = "";
     private String item_id = "";
-    private int discount_pintrice ;
+    private float discount_pintrice;
     private String limit_num = "";
     private String start_time = "";
     private String end_time = "";
-    private int material_price ;
-    private int total_price;
+    private float material_price;
+    private float total_price;
 
     public GroupBuyModel() {
     }
@@ -44,11 +44,11 @@ public class GroupBuyModel extends Entry {
         this.item_id = item_id;
     }
 
-    public int getDiscount_pintrice() {
+    public float getDiscount_pintrice() {
         return discount_pintrice;
     }
 
-    public void setDiscount_pintrice(int discount_pintrice) {
+    public void setDiscount_pintrice(float discount_pintrice) {
         this.discount_pintrice = discount_pintrice;
     }
 
@@ -76,19 +76,19 @@ public class GroupBuyModel extends Entry {
         this.end_time = end_time;
     }
 
-    public int getMaterial_price() {
+    public float getMaterial_price() {
         return material_price;
     }
 
-    public void setMaterial_price(int material_price) {
+    public void setMaterial_price(float material_price) {
         this.material_price = material_price;
     }
 
-    public int getTotal_price() {
+    public float getTotal_price() {
         return total_price;
     }
 
-    public void setTotal_price(int total_price) {
+    public void setTotal_price(float total_price) {
         this.total_price = total_price;
     }
 
@@ -97,12 +97,12 @@ public class GroupBuyModel extends Entry {
         groupBuyModel.setId(jsonObject.optString("id"));
         groupBuyModel.setItem_id(jsonObject.optString("item_id"));
         groupBuyModel.setTitle(jsonObject.optString("title"));
-        groupBuyModel.setDiscount_pintrice(Integer.valueOf(jsonObject.optString("discount_price")));
+        groupBuyModel.setDiscount_pintrice(Float.valueOf(jsonObject.optString("discount_price")));
         groupBuyModel.setStart_time(jsonObject.optString("start_time"));
         groupBuyModel.setEnd_time(jsonObject.optString("end_time"));
         groupBuyModel.setLimit_num(jsonObject.optString("limit_num"));
-        groupBuyModel.setMaterial_price(Integer.valueOf(jsonObject.optString("material_price")));
-        groupBuyModel.setTotal_price(jsonObject.optInt("total_price"));
+        groupBuyModel.setMaterial_price(Float.valueOf(jsonObject.optString("material_price")));
+        groupBuyModel.setTotal_price(Float.valueOf(jsonObject.optString("total_price")));
         return groupBuyModel;
     }
 

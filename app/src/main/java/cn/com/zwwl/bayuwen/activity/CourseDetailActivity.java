@@ -20,9 +20,10 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.api.CourseApi;
+import cn.com.zwwl.bayuwen.api.FollowApi;
 import cn.com.zwwl.bayuwen.api.fm.PinglunApi;
 import cn.com.zwwl.bayuwen.api.order.CartAddApi;
-import cn.com.zwwl.bayuwen.glide.GlideApp;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
@@ -55,6 +56,7 @@ public class CourseDetailActivity extends BaseActivity {
     private TextView priceTv2;
     private RadioButton button1, button2, button3;
     private View line1, line2, line3;
+    private ImageView follow_status;
 
     private LinearLayout teacherLayout;
 
@@ -137,6 +139,7 @@ public class CourseDetailActivity extends BaseActivity {
         priceTv2 = findViewById(R.id.group_purchase_price2);
         teacherLayout = findViewById(R.id.teacher_layout);
         mViewPager = findViewById(R.id.videoList_vp);
+        follow_status = findViewById(R.id.follow_status);
 
         cDetailTabFrag1 = new KeDetailView1(mContext);
         cDetailTabFrag2 = new KeDetailView2(mContext);
@@ -198,6 +201,7 @@ public class CourseDetailActivity extends BaseActivity {
         findViewById(R.id.group_purchase_bt1).setOnClickListener(this);
         findViewById(R.id.group_purchase_bt2).setOnClickListener(this);
         findViewById(R.id.ke_add).setOnClickListener(this);
+        findViewById(R.id.followtv).setOnClickListener(this);
     }
 
     /**
@@ -259,7 +263,34 @@ public class CourseDetailActivity extends BaseActivity {
                     }
                 });
                 break;
+            case R.id.followtv:// 关注
+                doFollow();
+                break;
         }
+    }
+
+    /**
+     * 添加、取消关注
+     */
+    private void doFollow() {
+        showLoadingDialog(true);
+        new FollowApi(mContext, keModel.getKid(), 1, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+                showLoadingDialog(false);
+                if (entry != null && entry instanceof ErrorMsg) {
+                    ErrorMsg errorMsg = (ErrorMsg) entry;
+                    if (errorMsg.getNo() == 1)
+                        handler.sendEmptyMessage(2);
+                    else handler.sendEmptyMessage(3);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+            }
+        });
     }
 
 
@@ -274,6 +305,12 @@ public class CourseDetailActivity extends BaseActivity {
                     break;
                 case 1:
                     setPinglunData();
+                    break;
+                case 2:// 关注状态
+                    follow_status.setBackgroundColor(getResources().getColor(R.color.gold));
+                    break;
+                case 3:// 未关注状态
+                    follow_status.setBackgroundColor(getResources().getColor(R.color.gray_dark));
                     break;
 
             }
@@ -294,11 +331,9 @@ public class CourseDetailActivity extends BaseActivity {
         course_tv.setText(keModel.getTitle());
         classno_tv.setText("班级编码：" + keModel.getModel());
         price_tv.setText("￥ " + keModel.getBuyPrice());
-        GlideApp.with(mContext)
-                .load(keModel.getPic())
-                .placeholder(R.drawable.avatar_placeholder)
-                .error(R.drawable.avatar_placeholder)
-                .into(course_iv);
+
+        ImageLoader.display(mContext, course_iv, keModel.getPic(), R
+                .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
         place_tv.setText(keModel.getSchool());
         teacher_tv.setText(keModel.getTname());
         date_tv.setText(CalendarTools.format(Long.valueOf(keModel.getStartPtime()),
@@ -323,11 +358,9 @@ public class CourseDetailActivity extends BaseActivity {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_cdetail_teacher, null);
         CircleImageView avatar = view.findViewById(R.id.cdetail_t_avatar);
         TextView name = view.findViewById(R.id.cdetail_t_name);
-        GlideApp.with(mContext)
-                .load(teacherModel.getPic())
-                .placeholder(R.drawable.avatar_placeholder)
-                .error(R.drawable.avatar_placeholder)
-                .into(avatar);
+        ImageLoader.display(mContext, avatar, teacherModel.getPic(), R
+                .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
+
         name.setText(teacherModel.getName());
         return view;
     }

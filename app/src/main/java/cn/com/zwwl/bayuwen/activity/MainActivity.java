@@ -288,7 +288,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
      * 查看功勋等级规则
      */
     public void goWeb() {
-        Intent i = new Intent(mContext, MyOrderActivity.class);
+        Intent i = new Intent(mContext, WebActivity.class);
         i.putExtra("WebActivity_title", "等级规则");
         i.putExtra("WebActivity_data", "");
         startActivity(i);

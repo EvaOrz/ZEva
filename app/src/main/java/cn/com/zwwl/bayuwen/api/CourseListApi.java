@@ -79,10 +79,10 @@ public class CourseListApi extends BaseApi {
         if (!isNull(json)) {
             JSONArray array = json.optJSONArray("data");
             if (!isNull(array)) {
+                Gson gson = new Gson();
                 List<KeModel> ks = new ArrayList<>();
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject j = array.optJSONObject(i);
-                    Gson gson = new Gson();
                     KeModel keModel = gson.fromJson(j.toString(), KeModel.class);
                     ks.add(keModel);
                 }

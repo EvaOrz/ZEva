@@ -9,12 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.glide.GlideApp;
-import cn.com.zwwl.bayuwen.listener.OnItemClickListener;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 
@@ -47,10 +45,8 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
         final ViewHolder viewHolder = (ViewHolder) holder;
         KeModel keModel = list.get(position);
 
-        GlideApp.with(mContext).load(keModel.getPic())
-                .placeholder(R.drawable.avatar_placeholder)
-                .error(R.drawable.avatar_placeholder)
-                .into(viewHolder.img);
+        ImageLoader.display(mContext,viewHolder.img, keModel.getPic(), R
+                .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
         viewHolder.tag.setText(keModel.getTagTxt());
         viewHolder.title.setText(keModel.getTitle());
         viewHolder.teacher.setText(keModel.getTname());

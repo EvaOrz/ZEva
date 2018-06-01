@@ -29,7 +29,7 @@ import cn.com.zwwl.bayuwen.adapter.FmAdapter;
 import cn.com.zwwl.bayuwen.adapter.PinglunAdapter;
 import cn.com.zwwl.bayuwen.api.ActionApi;
 import cn.com.zwwl.bayuwen.api.fm.AlbumApi;
-import cn.com.zwwl.bayuwen.api.CollectionApi;
+import cn.com.zwwl.bayuwen.api.fm.CollectionApi;
 import cn.com.zwwl.bayuwen.api.fm.PinglunApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;

@@ -11,6 +11,7 @@ public class CalendarEventModel extends Entry {
     private String id = "";
     private String kid = "";
     private String orgName = "";
+    private String outOrgId = "";
     private String courseDate = "";
     private String startTime = "";
     private String endTime = "";
@@ -98,6 +99,14 @@ public class CalendarEventModel extends Entry {
 
     public void setOnline(int online) {
         this.online = online;
+    }
+
+    public String getOutOrgId() {
+        return outOrgId;
+    }
+
+    public void setOutOrgId(String outOrgId) {
+        this.outOrgId = outOrgId;
     }
 
     public List<TeacherBean> getTeacher() {

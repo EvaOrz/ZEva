@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
 
-    <ImageView
+    <cn.com.zwwl.bayuwen.widget.CircleImageView
         android:id="@+id/item_img"
         android:layout_width="60dp"
         android:layout_height="60dp"

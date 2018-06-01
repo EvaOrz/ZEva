@@ -1,4 +1,4 @@
-package cn.com.zwwl.bayuwen.api;
+package cn.com.zwwl.bayuwen.api.fm;
 
 import android.content.Context;
 
@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.com.zwwl.bayuwen.api.UrlUtil;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -68,9 +69,9 @@ public class CollectionApi extends BaseApi {
             listener.setError(errorMsg);
 
         if (!isNull(json)) {
-            ErrorMsg err = new ErrorMsg();
-            err.setNo(json.optInt("id"));
-            listener.setData(err);
+//            ErrorMsg err = new ErrorMsg();
+//            err.setNo(json.optInt("id"));
+//            listener.setData(err);
         }
     }
 

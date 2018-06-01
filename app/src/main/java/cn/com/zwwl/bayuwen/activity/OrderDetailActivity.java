@@ -16,6 +16,7 @@ import cn.com.zwwl.bayuwen.view.YouHuiJuanPopWindow;
  */
 public class OrderDetailActivity extends BaseActivity {
     private TextView bt1, bt2;
+    private int type;// 1：未完成、2：已完成
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

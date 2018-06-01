@@ -10,6 +10,7 @@
     <string name="nenglifenxi">能力分析</string>
     <string name="yixuankecheng">已选课程</string>
     <string name="suohuoxunzhang">所获勋章</string>
+    <string name="tuijian_code">推荐码</string>
 
     <!--选课-->
     <string name="top_txt">点赞排行</string>
@@ -275,6 +276,8 @@
     <string name="order_option11">微信支付：</string>
     <string name="order_option12">退款方式须知</string>
     <string name="order_option13">垫付人数</string>
+    <string name="order_option14">账户余额</string>
+    <string name="order_option15">请输入推荐码（选填）</string>
     <string name="lijibaoming">立即报名</string>
 
     <!--setting-->
@@ -343,4 +346,5 @@
     <string name="like_for">为TA点赞</string>
     <string name="look_video">查看直播</string>
     <string name="study_report">学业报告</string>
+    <string name="follow">关注</string>
 </resources>

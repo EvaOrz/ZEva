@@ -13,7 +13,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.TeacherDetailActivity;
-import cn.com.zwwl.bayuwen.glide.GlideApp;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ZanTeacherModel;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
@@ -61,11 +61,9 @@ public class DianzanAdapter extends CheckScrollAdapter<ZanTeacherModel> {
         name.setText(item.getTo_name());
         desc.setText(item.getT_desc());
         if (!TextUtils.isEmpty(item.getPic()))
-            GlideApp.with(mContext)
-                    .load(item.getPic())
-                    .error(R.drawable.avatar_placeholder)
-                    .placeholder(R.drawable.avatar_placeholder)
-                    .into(img);
+            ImageLoader.display(mContext, img, item.getPic(), R
+                    .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
+
         return viewHolder.getConvertView();
     }
 

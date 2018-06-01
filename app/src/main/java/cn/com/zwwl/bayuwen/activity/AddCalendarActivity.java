@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -33,6 +34,7 @@ import cn.com.zwwl.bayuwen.model.CalendarJigouModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
 
 /**
@@ -43,7 +45,8 @@ public class AddCalendarActivity extends BaseActivity {
 
     private EditText nameEv, cishuEv, addressEv, teacherEv, codeEv;
 
-    private String shangTime, xiaTime, orgName;
+    private String shangTime, xiaTime;
+    private CalendarJigouModel calendarJigouModel;// 当前课程机构
 
     private Date startDate, endDate;// 课程开始日期和结束日期
     private List<Date> periods = new ArrayList<>();// 课程日期集合
@@ -88,7 +91,10 @@ public class AddCalendarActivity extends BaseActivity {
         new CalendarJigouListApi(mContext, new FetchEntryListListener() {
             @Override
             public void setData(List list) {
-
+                if (Tools.listNotNull(list)) {
+                    jigouModels.clear();
+                    jigouModels.addAll(list);
+                }
             }
 
             @Override
@@ -112,7 +118,8 @@ public class AddCalendarActivity extends BaseActivity {
                     xiangkeTv.setText(xiaTime);
                     break;
                 case 2:// 更新课程机构
-                    jigouTv.setText(orgName);
+                    if (calendarJigouModel != null)
+                        jigouTv.setText(calendarJigouModel.getName());
                     break;
 
                 case 3:// 更新课程日期
@@ -145,6 +152,8 @@ public class AddCalendarActivity extends BaseActivity {
     };
 
     private void doSave() {
+        Log.e("sssssss", (CalendarTools.countTwoDayWeek
+                (startDate, endDate));
         String name = nameEv.getText().toString();
         String totalNumber = cishuEv.getText().toString();
         String teacher = teacherEv.getText().toString();
@@ -156,7 +165,7 @@ public class AddCalendarActivity extends BaseActivity {
             showToast("请填写课程次数");
         } else if (TextUtils.isEmpty(teacher)) {
             showToast("请填写授课老师");
-        } else if (TextUtils.isEmpty(orgName)) {
+        } else if (calendarJigouModel == null) {
             showToast("请填写机构名称");
         } else if (TextUtils.isEmpty(shangTime)) {
             showToast("请填写上课时间");
@@ -165,7 +174,8 @@ public class AddCalendarActivity extends BaseActivity {
         } else {
             CalendarEventModel calendarEventModel = new CalendarEventModel();
             calendarEventModel.setName(name);
-            calendarEventModel.setOrgName(orgName);
+            calendarEventModel.setOrgName(calendarJigouModel.getName());
+            calendarEventModel.setOutOrgId(calendarJigouModel.getId());
             calendarEventModel.setStartTime(shangTime);
             calendarEventModel.setEndTime(xiaTime);
             new CalendarEventAddApi(mContext, calendarEventModel, CalendarTools.countTwoDayWeek
@@ -236,11 +246,11 @@ public class AddCalendarActivity extends BaseActivity {
 
             case R.id.add_kechengjigou:// 课程机构
                 hideJianpan();
-                new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow
+                new CalendarOptionPopWindow(mContext, jigouModels, new CalendarOptionPopWindow
                         .MyJigouChooseListener() {
                     @Override
-                    public void onJigouChoose(String name) {
-                        orgName = name;
+                    public void onJigouChoose(CalendarJigouModel model) {
+                        calendarJigouModel = model;
                         handler.sendEmptyMessage(2);
                     }
                 }, 3);

@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/body_bg"
     android:orientation="vertical">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,35 +13,26 @@
         android:padding="10dp">
 
         <ImageView
-            android:id="@+id/web_back"
+            android:id="@+id/back_btn"
             android:layout_width="@dimen/back_size"
             android:layout_height="@dimen/back_size"
             android:src="@drawable/back_gray" />
 
         <TextView
-            android:id="@+id/web_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:text="@string/my_follow"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_16" />
 
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/course_recyclerVie"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <cn.com.zwwl.bayuwen.widget.CommonWebView
-            android:id="@+id/web_webview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <include
-            layout="@layout/view_no_wifi"
-            android:visibility="gone" />
-    </RelativeLayout>
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>

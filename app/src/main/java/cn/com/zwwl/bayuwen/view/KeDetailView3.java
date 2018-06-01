@@ -16,6 +16,7 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.BaseRecylcerViewAdapter;
 import cn.com.zwwl.bayuwen.glide.GlideApp;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 
@@ -93,11 +94,8 @@ public class KeDetailView3 extends LinearLayout {
             viewHolder.content.setText(pinglunModel.getContent());
             if (pinglunModel.getUserModel() != null){
                 viewHolder.name.setText(pinglunModel.getUserModel().getName());
-                GlideApp.with(mContext)
-                        .load(pinglunModel.getUserModel().getPic())
-                        .placeholder(R.drawable.avatar_placeholder)
-                        .error(R.drawable.avatar_placeholder)
-                        .into(viewHolder.image);
+                ImageLoader.display(mContext, viewHolder.image, pinglunModel.getUserModel().getPic(), R
+                        .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
             }
             viewHolder.time.setText(CalendarTools.format(Long.valueOf(pinglunModel.getCtime()) * 1000, "yyyy-MM-dd HH:mm:ss"));
         }

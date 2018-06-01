@@ -1,6 +1,8 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.annotation.SuppressLint;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,26 +18,28 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.AddressApi;
-import cn.com.zwwl.bayuwen.glide.GlideApp;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.AddressModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.view.YouHuiJuanPopWindow;
 
 /**
- * 团购报名付费页面
+ * 报名付费页面
  */
 public class TuanPayActivity extends BaseActivity {
 
     private List<AddressModel> addressDatas = new ArrayList<>();
-    private LinearLayout adresslayout, dianLayout, pinLayout;
-    private int type; // 0：拼团 1：垫付
+    private LinearLayout adresslayout;
+    private int type; // 0：单独参团 1：垫付参团 2：单独购买
+    private LinearLayout pinLayout, dianLayout, youhuiLayout;
 
     private TextView nameTv, phoneTv, addressTv, addTv;
     private TextView tagTv, titleTv, teacherTv, xiaoquTv, dateTv, timeTv;
     private ImageView imgView;
-    private TextView dianNumTv;
+    private TextView dianNumTv, codeTv;
     private KeModel keModel;
 
     @Override
@@ -76,10 +80,9 @@ public class TuanPayActivity extends BaseActivity {
                 "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(keModel.getEndPtime()),
                 "yyyy-MM-dd"));
         timeTv.setText(keModel.getClass_start_at() + " - " + keModel.getClass_end_at());
-        GlideApp.with(mContext).load(keModel.getPic())
-                .placeholder(R.drawable.avatar_placeholder)
-                .error(R.drawable.avatar_placeholder)
-                .into(imgView);
+
+        ImageLoader.display(mContext, imgView, keModel.getPic(), R
+                .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
     }
 
     private void initView() {
@@ -89,18 +92,29 @@ public class TuanPayActivity extends BaseActivity {
         addTv = findViewById(R.id.tuan_pay_addaddress);
         adresslayout = findViewById(R.id.go_select_layout);
         dianNumTv = findViewById(R.id.dian_num);
+        codeTv = findViewById(R.id.tuan_code_tv);
 
         dianLayout = findViewById(R.id.dianfu_layout);
         pinLayout = findViewById(R.id.pintuan_layout);
+        youhuiLayout = findViewById(R.id.youhui_layout);
 
         findViewById(R.id.go_add_manage).setOnClickListener(this);
         findViewById(R.id.tuan_pay_back).setOnClickListener(this);
+        findViewById(R.id.tuikuan_info).setOnClickListener(this);
+        findViewById(R.id.tuan_code_copy).setOnClickListener(this);
+        youhuiLayout.setOnClickListener(this);
         if (type == 0) {
             pinLayout.setVisibility(View.VISIBLE);
             dianLayout.setVisibility(View.GONE);
-        } else {
+            youhuiLayout.setVisibility(View.GONE);
+        } else if (type == 1) {
             pinLayout.setVisibility(View.GONE);
             dianLayout.setVisibility(View.VISIBLE);
+            youhuiLayout.setVisibility(View.GONE);
+        } else if (type == 2) {
+            pinLayout.setVisibility(View.GONE);
+            dianLayout.setVisibility(View.GONE);
+            youhuiLayout.setVisibility(View.VISIBLE);
         }
 
     }
@@ -143,8 +157,27 @@ public class TuanPayActivity extends BaseActivity {
             case R.id.go_add_manage:
                 startActivity(new Intent(mContext, AddressManageActivity.class));
                 break;
+            case R.id.tuikuan_info:// 退款须知
+                goWeb();
+                break;
+            case R.id.tuan_code_copy:// 复制拼团码
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context
+                        .CLIPBOARD_SERVICE);
+                cm.setText("");
+                showToast("已复制到剪切板");
+                break;
+            case R.id.youhui_layout:// 优惠券
+                new YouHuiJuanPopWindow(mContext);
+                break;
         }
 
+    }
+
+    public void goWeb() {
+        Intent i = new Intent(mContext, WebActivity.class);
+        i.putExtra("WebActivity_title", "退款须知");
+        i.putExtra("WebActivity_data", "");
+        startActivity(i);
     }
 
     @Override

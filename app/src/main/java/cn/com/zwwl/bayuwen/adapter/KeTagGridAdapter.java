@@ -14,8 +14,8 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.KeTagListApi.*;
-import cn.com.zwwl.bayuwen.glide.CircleTransform;
-import cn.com.zwwl.bayuwen.glide.GlideApp;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
+import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
@@ -53,16 +53,12 @@ public class KeTagGridAdapter extends BaseAdapter {
         ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_main_grid);
 
         TextView title = viewHolder.getView(R.id.item_tv);
-        ImageView img = viewHolder.getView(R.id.item_img);
+        CircleImageView img = viewHolder.getView(R.id.item_img);
 
         title.setText(item.getName());
         if (!TextUtils.isEmpty(item.getImg()))
-            GlideApp.with(mContext)
-                    .load(item.getImg())
-                    .placeholder(R.drawable.avatar_placeholder)
-                    .error(R.drawable.avatar_placeholder)
-                    .transform(new CircleTransform(mContext))
-                    .into(img);
+            ImageLoader.display(mContext, img, item.getImg(), R
+                    .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
         return viewHolder.getConvertView();
     }
 

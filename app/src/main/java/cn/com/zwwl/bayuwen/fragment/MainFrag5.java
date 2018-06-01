@@ -23,16 +23,13 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
+import cn.com.zwwl.bayuwen.activity.MyCollectionActivity;
 import cn.com.zwwl.bayuwen.activity.MyOrderActivity;
 import cn.com.zwwl.bayuwen.activity.SettingActivity;
-import cn.com.zwwl.bayuwen.glide.GlideApp;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.Tools;
@@ -106,9 +103,9 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
             switch (msg.what) {
                 case 0:
                     if (userModel != null) {
-                        GlideApp.with(mActivity).load(userModel.getPic()).placeholder(R.drawable
-                                .avatar_placeholder).error(R.drawable
-                                .avatar_placeholder).into(frag5Avatar);
+                        ImageLoader.display(mActivity, frag5Avatar, userModel.getPic(), R
+                                .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
+
                         frag5Name.setText(userModel.getName());
                     }
                     if (Tools.listNotNull(childModels)) {
@@ -169,7 +166,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(mActivity, SettingActivity.class));
                 break;
             case R.id.frag5_level_info:// 功勋等级规则
-                ((MainActivity)mActivity).goWeb();
+                ((MainActivity) mActivity).goWeb();
                 break;
             case R.id.frag5_order1:
                 goMyOrder(0);
@@ -184,6 +181,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 goMyOrder(3);
                 break;
             case R.id.frag5_banji://我关注的班级
+                startActivity(new Intent(mActivity, MyCollectionActivity.class));
                 break;
             case R.id.frag5_code:// 填写团购验证码
                 break;

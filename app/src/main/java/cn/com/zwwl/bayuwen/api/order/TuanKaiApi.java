@@ -1,4 +1,4 @@
-package cn.com.zwwl.bayuwen.api;
+package cn.com.zwwl.bayuwen.api.order;
 
 import android.content.Context;
 
@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.com.zwwl.bayuwen.api.UrlUtil;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;

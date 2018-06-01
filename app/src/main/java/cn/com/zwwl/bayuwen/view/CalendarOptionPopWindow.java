@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.model.CalendarJigouModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
@@ -54,21 +55,25 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
      * @param context
      * @param wtype   1:上课时间 2:下课时间 3:课程机构 4:日期选择 5:周次选择
      */
-    public CalendarOptionPopWindow(Context context, MyJigouChooseListener myJigouChooseListener, int wtype) {
+    public CalendarOptionPopWindow(Context context, List<CalendarJigouModel> calendarJigouModels,
+                                   MyJigouChooseListener myJigouChooseListener, int wtype) {
         mContext = context;
         this.myJigouChooseListener = myJigouChooseListener;
+        initJigou(calendarJigouModels);
         this.type = wtype;
         init();
     }
 
-    public CalendarOptionPopWindow(Context context, MyTimePickListener myTimePickListener, int wtype) {
+    public CalendarOptionPopWindow(Context context, MyTimePickListener myTimePickListener, int
+            wtype) {
         mContext = context;
         this.type = wtype;
         this.myTimePickListener = myTimePickListener;
         init();
     }
 
-    public CalendarOptionPopWindow(Context context, MyWeekChooseListener myWeekChooseListener, int wtype) {
+    public CalendarOptionPopWindow(Context context, MyWeekChooseListener myWeekChooseListener,
+                                   int wtype) {
         mContext = context;
         this.type = wtype;
         this.myWeekChooseListener = myWeekChooseListener;
@@ -82,24 +87,14 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
      * @param myPeriodPickListener
      * @param wtype
      */
-    public CalendarOptionPopWindow(Context context, MyPeriodPickListener myPeriodPickListener, int wtype) {
+    public CalendarOptionPopWindow(Context context, MyPeriodPickListener myPeriodPickListener,
+                                   int wtype) {
         mContext = context;
         this.type = wtype;
         this.myPeriodPickListener = myPeriodPickListener;
         init();
     }
 
-    private void initJigou() {
-        jigouDatas.add(new CheckStatusModel("高思教育"));
-        jigouDatas.add(new CheckStatusModel("巨人教育"));
-        jigouDatas.add(new CheckStatusModel("新东方"));
-        jigouDatas.add(new CheckStatusModel("中公教育"));
-        jigouDatas.add(new CheckStatusModel("一起作业"));
-        jigouDatas.add(new CheckStatusModel("作业盒子"));
-        jigouDatas.add(new CheckStatusModel("好未来"));
-        jigouDatas.add(new CheckStatusModel("作业帮"));
-        jigouDatas.add(new CheckStatusModel("洋葱数学"));
-    }
 
     private void initWeek() {
         weekDatas.add(new CheckStatusModel("周一", 2));
@@ -109,6 +104,13 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
         weekDatas.add(new CheckStatusModel("周五", 6));
         weekDatas.add(new CheckStatusModel("周六", 7));
         weekDatas.add(new CheckStatusModel("周日", 1));
+    }
+
+
+    private void initJigou(List<CalendarJigouModel> calendarJigouModels) {
+        for (CalendarJigouModel c : calendarJigouModels) {
+            jigouDatas.add(new CheckStatusModel(c));
+        }
     }
 
     public void init() {
@@ -136,7 +138,6 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
         }
         if (type == 3) {
             title.setText("选择课程机构");
-            initJigou();
             gridAdapter = new CalendarGridAdapter(mContext, jigouDatas);
             gridView.setAdapter(gridAdapter);
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -165,7 +166,8 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
             /**
              * 区间选取完成监听
              */
-            mnCalendarVertical.setOnCalendarRangeChooseListener(new OnCalendarRangeChooseListener() {
+            mnCalendarVertical.setOnCalendarRangeChooseListener(new OnCalendarRangeChooseListener
+                    () {
                 @Override
                 public void onRangeDate(Date date, Date date1) {
                     startDate = date;
@@ -201,8 +203,10 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
     }
 
     private void initMNCalendarVertical() {
-        String graydark = "#" + Integer.toHexString(mContext.getResources().getColor(R.color.gray_dark));
-        String graylight = "#" + Integer.toHexString(mContext.getResources().getColor(R.color.gray_light));
+        String graydark = "#" + Integer.toHexString(mContext.getResources().getColor(R.color
+                .gray_dark));
+        String graylight = "#" + Integer.toHexString(mContext.getResources().getColor(R.color
+                .gray_light));
         String gold = "#" + Integer.toHexString(mContext.getResources().getColor(R.color.gold));
         String white = "#" + Integer.toHexString(mContext.getResources().getColor(R.color.white));
         /**
@@ -237,7 +241,7 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
      * 机构选择监听
      */
     public interface MyJigouChooseListener {
-        public void onJigouChoose(String name);
+        public void onJigouChoose(CalendarJigouModel calendarJigouModel);
     }
 
     /**
@@ -265,20 +269,20 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
                 } else if (type == 2) {
                     myTimePickListener.onTimePick(timePicker.getHour(), timePicker.getMinute());
                 } else if (type == 3) {
-                    String ss = "";
                     for (CheckStatusModel checkStatusModel : jigouDatas) {
                         if (checkStatusModel.isCheckStatus()) {
-                            ss = checkStatusModel.getName();
+                            myJigouChooseListener.onJigouChoose(checkStatusModel
+                                    .getCalendarJigouModel());
                         }
                     }
-                    myJigouChooseListener.onJigouChoose(ss);
+
 
                 } else if (type == 4) {
                     myPeriodPickListener.onPeriodPick(startDate, endDate);
                 } else if (type == 5) {
                     List<Integer> ds = new ArrayList<>();
-                    for (CheckStatusModel cc :weekDatas){
-                        if (cc.isCheckStatus()){
+                    for (CheckStatusModel cc : weekDatas) {
+                        if (cc.isCheckStatus()) {
                             ds.add(cc.getWeekId());
                         }
                     }
@@ -316,7 +320,8 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_calendar_jigou);
+            ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout
+                    .item_calendar_jigou);
             TextView textView = viewHolder.getView(R.id.calendar_option_text);
             if (datas.get(position).isCheckStatus()) {
                 textView.setTextColor(mContext.getResources().getColor(R.color.white));
@@ -337,6 +342,7 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
     public class CheckStatusModel extends Entry {
         private String name;
         private boolean checkStatus = false;
+        private CalendarJigouModel calendarJigouModel;
         private int weekId;
 
         public int getWeekId() {
@@ -347,13 +353,22 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
             this.weekId = weekId;
         }
 
-        public CheckStatusModel(String name) {
-            this.name = name;
+        public CheckStatusModel(CalendarJigouModel model) {
+            this.calendarJigouModel = model;
+            this.name = model.getName();
         }
 
         public CheckStatusModel(String name, int weekId) {
             this.name = name;
             this.weekId = weekId;
+        }
+
+        public CalendarJigouModel getCalendarJigouModel() {
+            return calendarJigouModel;
+        }
+
+        public void setCalendarJigouModel(CalendarJigouModel calendarJigouModel) {
+            this.calendarJigouModel = calendarJigouModel;
         }
 
         public String getName() {

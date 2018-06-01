@@ -58,8 +58,6 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
                     label_tv.setText(teacherDetailModel.getT_style());
                     educal_background_tv.setText(teacherDetailModel.getT_desc());
                     teaching_idea_tv.setText(teacherDetailModel.getT_idea());
-
-
                     ImageLoader.display(mContext, iv_avatar, teacherDetailModel.getPic(), R
                             .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
 

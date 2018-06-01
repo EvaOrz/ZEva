@@ -183,7 +183,7 @@ public class UrlUtil {
 
     // 添加日历事件
     public static String addCalendarEvent() {
-        return HOST + "/courseRecords";
+        return HOST + "/courserecord";
     }
 
     // 获取第三方机构列表
