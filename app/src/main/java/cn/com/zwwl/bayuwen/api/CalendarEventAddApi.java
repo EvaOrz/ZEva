@@ -45,7 +45,7 @@ public class CalendarEventAddApi extends BaseApi {
 
     @Override
     protected String getUrl() {
-        return "http://t.lanxum.com/api/course-record/courseRecords";
+        return UrlUtil.addCalendarEvent();
     }
 
     @Override

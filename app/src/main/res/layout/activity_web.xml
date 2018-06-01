@@ -17,6 +17,14 @@
             android:layout_height="@dimen/back_size"
             android:src="@drawable/back_gray" />
 
+        <TextView
+            android:id="@+id/web_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16" />
+
 
     </RelativeLayout>
 
@@ -31,7 +39,7 @@
 
         <include
             layout="@layout/view_no_wifi"
-            android:visibility="gone" />s
+            android:visibility="gone" />
     </RelativeLayout>
 
 

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.util.Tools;
@@ -16,12 +17,16 @@ public class WebActivity extends BaseActivity {
     private CommonWebView commonWebView;
     private String url;
 
+    private TextView title;
+    private String titleString;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
         url = getIntent().getStringExtra("WebActivity_data");
         setContentView(R.layout.activity_web);
+        titleString = getIntent().getStringExtra("WebActivity_title");
         initView();
         initErrorLayout();
         initData();
@@ -35,6 +40,9 @@ public class WebActivity extends BaseActivity {
     }
 
     private void initView() {
+        title = findViewById(R.id.web_title);
+        if (!TextUtils.isEmpty(titleString))
+            title.setText(titleString);
         findViewById(R.id.web_back).setOnClickListener(this);
         commonWebView = findViewById(R.id.web_webview);
         if (!TextUtils.isEmpty(url)) {

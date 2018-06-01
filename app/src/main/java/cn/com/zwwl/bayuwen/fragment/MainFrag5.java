@@ -29,6 +29,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
+import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MyOrderActivity;
 import cn.com.zwwl.bayuwen.activity.SettingActivity;
 import cn.com.zwwl.bayuwen.glide.GlideApp;
@@ -116,8 +117,8 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                                 (LinearLayout
                                         .LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams
                                         .WRAP_CONTENT);
-                        params.weight = 1;
                         params.bottomMargin = 10;
+                        params.rightMargin = 10;
                         for (int i = 0; i < childModels.size(); i++) {
                             if (i < 3)
                                 frag5ChildLayout.addView(getChildView(childModels.get(i)), params);
@@ -168,6 +169,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(mActivity, SettingActivity.class));
                 break;
             case R.id.frag5_level_info:// 功勋等级规则
+                ((MainActivity)mActivity).goWeb();
                 break;
             case R.id.frag5_order1:
                 goMyOrder(0);
@@ -192,11 +194,11 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
         }
     }
 
+
     private void goMyOrder(int type) {
         Intent i = new Intent(mActivity, MyOrderActivity.class);
         i.putExtra("MyOrderActivity_data", type);
         startActivity(i);
-
     }
 
     @Override

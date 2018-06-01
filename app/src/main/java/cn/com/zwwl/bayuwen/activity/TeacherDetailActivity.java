@@ -18,8 +18,7 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.TCourseListAdapter;
 import cn.com.zwwl.bayuwen.api.TeacherApi;
-import cn.com.zwwl.bayuwen.glide.BorderCircleTransform;
-import cn.com.zwwl.bayuwen.glide.GlideApp;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.listener.OnItemClickListener;
 import cn.com.zwwl.bayuwen.model.Entry;
@@ -59,11 +58,11 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
                     label_tv.setText(teacherDetailModel.getT_style());
                     educal_background_tv.setText(teacherDetailModel.getT_desc());
                     teaching_idea_tv.setText(teacherDetailModel.getT_idea());
-                    GlideApp.with(mContext).load(teacherDetailModel.getPic())
-                            .placeholder(R.drawable.avatar_placeholder)
-                            .error(R.drawable.avatar_placeholder)
-                            .transform(new BorderCircleTransform(mContext, 3))
-                            .into(iv_avatar);
+
+
+                    ImageLoader.display(mContext, iv_avatar, teacherDetailModel.getPic(), R
+                            .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
+
                     keModels.clear();
                     keModels.addAll(teacherDetailModel.getKeModels());
                     tCourseListAdapter.notifyDataSetChanged();
@@ -84,10 +83,12 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
 
     @Override
     protected void initData() {
+        showLoadingDialog(true);
         new TeacherApi(mContext, tid, new FetchEntryListener() {
 
             @Override
             public void setData(Entry entry) {
+                showLoadingDialog(false);
                 if (entry != null && entry instanceof TeacherModel) {
                     teacherDetailModel = (TeacherModel) entry;
                     handler.sendEmptyMessage(0);
@@ -96,6 +97,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
 
             @Override
             public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
                 if (error != null) showToast(error.getDesc());
             }
         });
@@ -114,7 +116,8 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
         StopLinearLayoutManager linearLayoutManager = new StopLinearLayoutManager(mContext);
         linearLayoutManager.setScrollEnabled(false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color.gray_line, R
+        recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color
+                .gray_line, R
                 .dimen.dp_1, OrientationHelper.VERTICAL));
 
         tCourseListAdapter = new TCourseListAdapter(mContext, keModels);

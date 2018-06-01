@@ -36,11 +36,11 @@
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:theme="@style/BaseTheme"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:testOnly="false">
+        android:testOnly="false"
+        android:theme="@style/BaseTheme">
         <activity
             android:name=".activity.fm.FmSplashActivity"
             android:label="@string/app_name"
@@ -262,13 +262,19 @@
             android:name=".activity.OrderDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <!--我关注的班级页面-->
+        <activity
+            android:name=".activity.MyCollectionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <!--PPT-->
         <activity android:name=".activity.LookPPTActivity" />
         <!--上传上课照片-->
         <activity android:name=".activity.InClassStatusActivity" />
         <!--正在进行课程-->
-        <activity android:name=".activity.StudyingCourseActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".activity.StudyingCourseActivity"
+            android:launchMode="singleTask" />
         <!--课程评价-->
         <activity android:name=".activity.CourseEvalActivity" />
         <!--课程列表-->
@@ -292,7 +298,7 @@
         <!--期末考试详情-->
         <activity android:name=".activity.ExamDetailsActivity" />
         <!--具体课次首页-->
-        <activity android:name=".activity.UnitIndexActivity"/>
+        <activity android:name=".activity.UnitIndexActivity" />
         <!--上传照片-->
         <activity android:name=".activity.UploadPicActivity" />
 

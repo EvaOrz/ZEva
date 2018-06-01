@@ -205,6 +205,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         findViewById(R.id.tianxie_code).setOnClickListener(this);
         findViewById(R.id.invite).setOnClickListener(this);
         findViewById(R.id.setting).setOnClickListener(this);
+        findViewById(R.id.main_gongxun_rule).setOnClickListener(this);
         findViewById(R.id.child_add).setOnClickListener(this);
     }
 
@@ -284,6 +285,17 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     }
 
     /**
+     * 查看功勋等级规则
+     */
+    public void goWeb() {
+        Intent i = new Intent(mContext, MyOrderActivity.class);
+        i.putExtra("WebActivity_title", "等级规则");
+        i.putExtra("WebActivity_data", "");
+        startActivity(i);
+    }
+
+
+    /**
      * 打开抽屉
      */
     public void openDrawer() {
@@ -335,6 +347,9 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
                 break;
             case R.id.child_add:// 添加孩子
                 startActivity(new Intent(mContext, ChildInfoActivity.class));
+                break;
+            case R.id.main_gongxun_rule:
+                goWeb();
                 break;
         }
     }

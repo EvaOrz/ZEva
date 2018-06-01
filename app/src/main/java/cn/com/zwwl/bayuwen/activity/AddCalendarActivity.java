@@ -25,8 +25,11 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.CalendarEventAddApi;
+import cn.com.zwwl.bayuwen.api.CalendarJigouListApi;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.CalendarEventModel;
+import cn.com.zwwl.bayuwen.model.CalendarJigouModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
@@ -44,7 +47,7 @@ public class AddCalendarActivity extends BaseActivity {
 
     private Date startDate, endDate;// 课程开始日期和结束日期
     private List<Date> periods = new ArrayList<>();// 课程日期集合
-    private CalendarEventModel calendarEventModel;
+    private List<CalendarJigouModel> jigouModels = new ArrayList<>();// 第三方机构列表
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,7 @@ public class AddCalendarActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_calendar);
         initView();
+        initData();
     }
 
     private void initView() {
@@ -81,7 +85,17 @@ public class AddCalendarActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        new CalendarJigouListApi(mContext, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
 
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
 
     }
 

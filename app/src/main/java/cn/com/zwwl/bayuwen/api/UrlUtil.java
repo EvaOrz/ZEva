@@ -186,13 +186,19 @@ public class UrlUtil {
         return HOST + "/courseRecords";
     }
 
+    // 获取第三方机构列表
+    public static String getJiGouList() {
+        return HOST + "/organization";
+    }
+
     /**
      * 正在进行课程
      */
-    public static String getStudyingCourse(){
-        return HOST+"/course/second_course";
+    public static String getStudyingCourse() {
+        return HOST + "/course/second_course";
     }
-    public static String getUnitDetail(){
-        return HOST+"/course/third_course";
+
+    public static String getUnitDetail() {
+        return HOST + "/course/third_course";
     }
 }

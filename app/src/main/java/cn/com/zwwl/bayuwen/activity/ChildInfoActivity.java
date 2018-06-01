@@ -173,6 +173,7 @@ public class ChildInfoActivity extends BaseActivity {
                         commit();
                 }
                 break;
+
         }
 
     }
