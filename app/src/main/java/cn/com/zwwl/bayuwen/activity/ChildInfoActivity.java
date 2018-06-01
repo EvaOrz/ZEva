@@ -18,9 +18,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.adapter.GiftAdapter;
 import cn.com.zwwl.bayuwen.api.ChildInfoApi;
 import cn.com.zwwl.bayuwen.api.UploadPicApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -28,10 +30,12 @@ import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
 import cn.com.zwwl.bayuwen.view.DatePopWindow;
 import cn.com.zwwl.bayuwen.view.GenderPopWindow;
 import cn.com.zwwl.bayuwen.view.NianjiPopWindow;
 import cn.com.zwwl.bayuwen.widget.FetchPhotoManager;
+import cn.com.zwwl.bayuwen.widget.MostGridView;
 
 /**
  * 编辑学员信息页面
@@ -46,6 +50,10 @@ public class ChildInfoActivity extends BaseActivity {
     private TextView genderTv, birthTv, ruxueTv, nianjiTv;
     private boolean isNeedChangePic = false;
     private boolean isModify = false;// 是否是修改信息
+
+    private MostGridView giftGridView;
+    private GiftAdapter giftAdapter;
+
 
     private ChildModel childModel = new ChildModel();
 
@@ -74,6 +82,12 @@ public class ChildInfoActivity extends BaseActivity {
         ruxueTv = findViewById(R.id.info_p_ruxuetv);
         nianjiTv = findViewById(R.id.info_c_nianjitv);
         schoolEv = findViewById(R.id.info_c_schoolev);
+
+
+        giftGridView = findViewById(R.id.gift_grid);
+        giftAdapter = new GiftAdapter(mContext, new ArrayList<CalendarOptionPopWindow
+                .CheckStatusModel>());
+        giftGridView.setAdapter(giftAdapter);
 
         findViewById(R.id.info_c_back).setOnClickListener(this);
         findViewById(R.id.info_c_avatar).setOnClickListener(this);

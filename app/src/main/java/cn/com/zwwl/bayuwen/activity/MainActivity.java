@@ -28,6 +28,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.adapter.GiftAdapter;
 import cn.com.zwwl.bayuwen.api.ChildInfoApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
@@ -43,6 +44,8 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
+import cn.com.zwwl.bayuwen.widget.MostGridView;
 
 /**
  *
@@ -61,6 +64,10 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     private ImageView avatar;
     private TextView name, yaoqing, gongxun;
     private UserModel userModel;
+
+
+    private MostGridView giftGridView;
+    private GiftAdapter giftAdapter;
 
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
     private boolean isCanSetDefaultChild = true;// 是否可以设置默认学员
@@ -179,6 +186,10 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         yaoqing = findViewById(R.id.main_yaoqingma);
         gongxun = findViewById(R.id.main_gongxun);
         childLayout = findViewById(R.id.child_layout);
+        giftGridView = findViewById(R.id.my_gifts);
+        giftAdapter = new GiftAdapter(mContext, new ArrayList<CalendarOptionPopWindow
+                .CheckStatusModel>());
+        giftGridView.setAdapter(giftAdapter);
 
         tabButton1 = findViewById(R.id.bottom_nav_1);
         tabButton2 = findViewById(R.id.bottom_nav_2);
@@ -191,9 +202,6 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         tabButton4.setOnClickListener(this);
         tabButton5.setOnClickListener(this);
         avatar.setOnClickListener(this);
-        findViewById(R.id.huiyuanziliao).setOnClickListener(this);
-        findViewById(R.id.wodedingdan).setOnClickListener(this);
-        findViewById(R.id.gerenshoucang).setOnClickListener(this);
         findViewById(R.id.tianxie_code).setOnClickListener(this);
         findViewById(R.id.invite).setOnClickListener(this);
         findViewById(R.id.setting).setOnClickListener(this);
@@ -315,15 +323,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
                 switchFragment(mainFrag5);
                 break;
             case R.id.main_avatar:
-                mContext.startActivity(new Intent(mContext, LoginActivity.class));
-                break;
-            case R.id.huiyuanziliao:// 会员资料
-                startActivity(new Intent(mContext, ParentInfoActivity.class));
-                break;
-            case R.id.wodedingdan:// 我的订单
-                startActivity(new Intent(mContext, MyOrderActivity.class));
-                break;
-            case R.id.gerenshoucang:// 我的收藏
+                mContext.startActivity(new Intent(mContext, ParentInfoActivity.class));
                 break;
             case R.id.tianxie_code:// 填写团购课程码
                 startActivity(new Intent(this, TuanIndexActivity.class));

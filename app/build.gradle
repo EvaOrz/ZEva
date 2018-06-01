@@ -70,7 +70,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
     //微信支付
-    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.4'
     // umeng
     implementation files('libs/SecurityEnvSDK-release-1.1.0.jar')
     implementation files('libs/umeng-common-1.5.3.jar')

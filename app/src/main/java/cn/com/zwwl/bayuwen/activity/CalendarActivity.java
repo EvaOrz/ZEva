@@ -79,14 +79,14 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
     private void setScheme(int year, int month) {
         List<com.haibin.calendarview.Calendar> schemes = new ArrayList<>();
 
-        schemes.add(getSchemeCalendar(year, month, 3, 0xFF40db25, "假"));
-        schemes.add(getSchemeCalendar(year, month, 6, 0xFFe69138, "事"));
-        schemes.add(getSchemeCalendar(year, month, 9, 0xFFdf1356, "议"));
-        schemes.add(getSchemeCalendar(year, month, 13, 0xFFedc56d, "记"));
-        schemes.add(getSchemeCalendar(year, month, 14, 0xFFedc56d, "记"));
-        schemes.add(getSchemeCalendar(year, month, 15, 0xFFaacc44, "假"));
-        schemes.add(getSchemeCalendar(year, month, 18, 0xFFbc13f0, "记"));
-        schemes.add(getSchemeCalendar(year, month, 25, 0xFF13acf0, "假"));
+        schemes.add(getSchemeCalendar(year, month, 3, 0xFFdcaa40, "1"));
+        schemes.add(getSchemeCalendar(year, month, 6, 0xFFdcaa40, "2"));
+        schemes.add(getSchemeCalendar(year, month, 9, 0xFFdcaa40, "4"));
+        schemes.add(getSchemeCalendar(year, month, 13, 0xFFdcaa40, "22"));
+        schemes.add(getSchemeCalendar(year, month, 14, 0xFFdcaa40, "5"));
+        schemes.add(getSchemeCalendar(year, month, 15, 0xFFdcaa40, "8"));
+        schemes.add(getSchemeCalendar(year, month, 18, 0xFFdcaa40, "20"));
+        schemes.add(getSchemeCalendar(year, month, 25, 0xFFdcaa40, "1"));
         calendarView.setSchemeDate(schemes);
     }
 
