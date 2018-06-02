@@ -12,22 +12,29 @@ import android.view.View;
 import android.widget.TextView;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.ShareTools;
 
 /**
- * 开团页面
+ * 我要开团页面
  */
 public class TuanKaiActivity extends BaseActivity {
 
     private String tuanCode = "";
     private TextView codeTv;
+    private KeModel keModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tuan_kai);
-        tuanCode = getIntent().getStringExtra("TuanKaiActivity_data");
+        if (getIntent().getSerializableExtra("TuanKaiActivity_data") != null && getIntent()
+                .getSerializableExtra("TuanKaiActivity_data")
+                instanceof KeModel) {
+            keModel = (KeModel) getIntent().getSerializableExtra("TuanKaiActivity_data");
+        }
+        tuanCode = getIntent().getStringExtra("TuanKaiActivity_code");
         initView();
     }
 
@@ -71,8 +78,13 @@ public class TuanKaiActivity extends BaseActivity {
             case R.id.tuan_kai_share:// 分享拼团
                 ShareTools.doShareWeb(this, "", "", "", "http://baidu.com");
                 break;
-            case R.id.tuan_kai_pay:
-                startActivity(new Intent(mContext, TuanPayActivity.class));
+            case R.id.tuan_kai_pay:// 我要开团
+                Intent i = new Intent();
+                i.setClass(mContext, TuanPayActivity.class);
+                i.putExtra("TuanPayActivity_data", keModel);
+                i.putExtra("TuanPayActivity_code", tuanCode);
+                i.putExtra("TuanPayActivity_type", 0);// 单独参团
+                startActivity(i);
                 break;
         }
 

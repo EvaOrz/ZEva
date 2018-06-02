@@ -22,7 +22,8 @@ import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.api.CourseApi;
 import cn.com.zwwl.bayuwen.api.FollowApi;
 import cn.com.zwwl.bayuwen.api.fm.PinglunApi;
-import cn.com.zwwl.bayuwen.api.order.CartAddApi;
+import cn.com.zwwl.bayuwen.api.order.MakeOrderApi;
+import cn.com.zwwl.bayuwen.api.order.OrderAddApi;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -244,12 +245,14 @@ public class CourseDetailActivity extends BaseActivity {
                 break;
             case R.id.group_purchase_bt2: //单独报名
                 Intent j = new Intent(mContext, TuanPayActivity.class);
+                j.putExtra("TuanPayActivity_type",2);
                 j.putExtra("TuanPayActivity_data", keModel);
+                j.putExtra("TuanPayActivity_code","");
                 startActivity(j);
                 break;
             case R.id.ke_add:// 加入购物车
                 showLoadingDialog(true);
-                new CartAddApi(mContext, keModel.getKid(), new FetchEntryListener() {
+                new OrderAddApi(mContext, keModel.getKid(), new FetchEntryListener() {
                     @Override
                     public void setData(Entry entry) {
 

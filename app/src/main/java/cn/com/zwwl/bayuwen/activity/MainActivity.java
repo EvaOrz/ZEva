@@ -338,7 +338,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
                 mContext.startActivity(new Intent(mContext, ParentInfoActivity.class));
                 break;
             case R.id.tianxie_code:// 填写团购课程码
-                startActivity(new Intent(this, TuanIndexActivity.class));
+                startActivity(new Intent(this, TuanCodeUseActivity.class));
                 break;
             case R.id.invite:// 邀请好友加入大语文
                 break;

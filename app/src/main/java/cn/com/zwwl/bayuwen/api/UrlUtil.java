@@ -151,15 +151,36 @@ public class UrlUtil {
         return HOST + "/groupdiscount";
     }
 
-    // 发起拼团（获取拼团码）
+    // 发起拼团||我要垫付（获取拼团码）
     public static String faqiTuan() {
         return HOST + "/grouppurchase";
+    }
+
+    // 兑换拼团码
+    public static String useTuanCode() {
+        return HOST + "/grouppurchase/open";
+    }
+
+    //查看是否可以参与拼团
+    public static String checkCanTuan() {
+        return HOST + "/grouppurchase/join";
     }
 
     // 生成订单
     public static String setOrder() {
         return HOST + "/order/get";
     }
+
+    //实时计算订单金额
+    public static String countPrice() {
+        return HOST + "/order/calculator";
+    }
+
+    //获取账户余额
+    public static String getMyYue() {
+        return HOST + "/user/assets";
+    }
+
 
     //我的订单
     public static String getMyOrder() {

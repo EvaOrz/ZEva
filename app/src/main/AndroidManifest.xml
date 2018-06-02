@@ -257,6 +257,11 @@
             android:name=".activity.MyOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <!--兑换课程码-->
+        <activity
+            android:name=".activity.TuanCodeUseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <!--订单详情页面-->
         <activity
             android:name=".activity.OrderDetailActivity"

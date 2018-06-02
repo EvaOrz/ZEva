@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,12 +20,18 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.AddressApi;
+import cn.com.zwwl.bayuwen.api.order.CountPriceApi;
+import cn.com.zwwl.bayuwen.api.order.GetYueApi;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.AddressModel;
+import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.view.PayDetailDialog;
 import cn.com.zwwl.bayuwen.view.YouHuiJuanPopWindow;
 
 /**
@@ -35,12 +43,16 @@ public class TuanPayActivity extends BaseActivity {
     private LinearLayout adresslayout;
     private int type; // 0：单独参团 1：垫付参团 2：单独购买
     private LinearLayout pinLayout, dianLayout, youhuiLayout;
-
     private TextView nameTv, phoneTv, addressTv, addTv;
-    private TextView tagTv, titleTv, teacherTv, xiaoquTv, dateTv, timeTv;
+    private TextView tagTv, titleTv, teacherTv, xiaoquTv, dateTv, timeTv, yueTv;
     private ImageView imgView;
     private TextView dianNumTv, codeTv;
+
+
     private KeModel keModel;
+    private String tuanCode;// 拼团码
+    private String itemCode;// id组合码
+    private String yueTxt = "0.00";// 账户余额
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,8 +64,10 @@ public class TuanPayActivity extends BaseActivity {
             keModel = (KeModel) getIntent().getSerializableExtra("TuanPayActivity_data");
         } else finish();
         type = getIntent().getIntExtra("TuanPayActivity_type", 0);
+        tuanCode = getIntent().getStringExtra("TuanPayActivity_code");
 
         initView();
+        initItemString();
         setGoodsInfo();
     }
 
@@ -63,14 +77,23 @@ public class TuanPayActivity extends BaseActivity {
         initData();
     }
 
+    /**
+     * 生成订单item串
+     */
+    private void initItemString() {
+        if (type == 1) {// 垫付需要循环
+            itemCode = keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
+            for (int i = 0; i < keModel.getGroupbuy().getLimit_num() - 1; i++) {
+                itemCode += keModel.getKid() + "_1_" + "0";
+            }
+        } else {
+            itemCode = keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
+        }
+        Log.e("ssssssssss",itemCode);
+    }
+
     private void setGoodsInfo() {
-        tagTv = findViewById(R.id.ke_tag);
-        titleTv = findViewById(R.id.ke_title);
-        teacherTv = findViewById(R.id.ke_teacher);
-        xiaoquTv = findViewById(R.id.ke_xiaoqu);
-        dateTv = findViewById(R.id.ke_date);
-        timeTv = findViewById(R.id.ke_time);
-        imgView = findViewById(R.id.ke_avatar);
+
 
         tagTv.setText(keModel.getTagTxt());
         titleTv.setText(keModel.getTitle());
@@ -94,6 +117,15 @@ public class TuanPayActivity extends BaseActivity {
         dianNumTv = findViewById(R.id.dian_num);
         codeTv = findViewById(R.id.tuan_code_tv);
 
+        tagTv = findViewById(R.id.ke_tag);
+        titleTv = findViewById(R.id.ke_title);
+        teacherTv = findViewById(R.id.ke_teacher);
+        xiaoquTv = findViewById(R.id.ke_xiaoqu);
+        dateTv = findViewById(R.id.ke_date);
+        timeTv = findViewById(R.id.ke_time);
+        imgView = findViewById(R.id.ke_avatar);
+        yueTv = findViewById(R.id.yue_tv);
+
         dianLayout = findViewById(R.id.dianfu_layout);
         pinLayout = findViewById(R.id.pintuan_layout);
         youhuiLayout = findViewById(R.id.youhui_layout);
@@ -103,6 +135,7 @@ public class TuanPayActivity extends BaseActivity {
         findViewById(R.id.tuan_pay_back).setOnClickListener(this);
         findViewById(R.id.tuikuan_info).setOnClickListener(this);
         findViewById(R.id.tuan_code_copy).setOnClickListener(this);
+        findViewById(R.id.pay_detail).setOnClickListener(this);
         youhuiLayout.setOnClickListener(this);
         if (type == 0) {
             pinLayout.setVisibility(View.VISIBLE);
@@ -117,6 +150,7 @@ public class TuanPayActivity extends BaseActivity {
             dianLayout.setVisibility(View.GONE);
             youhuiLayout.setVisibility(View.VISIBLE);
         }
+        if (!TextUtils.isEmpty(tuanCode)) codeTv.setText(tuanCode);
 
     }
 
@@ -143,6 +177,9 @@ public class TuanPayActivity extends BaseActivity {
                     adresslayout.setVisibility(View.GONE);
                     addressTv.setVisibility(View.GONE);
                     addTv.setVisibility(View.VISIBLE);
+                    break;
+                case 2:// 更新账户余额
+                    yueTv.setText(yueTxt);
                     break;
             }
         }
@@ -171,10 +208,17 @@ public class TuanPayActivity extends BaseActivity {
                 new YouHuiJuanPopWindow(mContext);
                 break;
             case R.id.order_d_commit:// 提交订单
-                
+                commit();
+                break;
+            case R.id.pay_detail:// 支付明细
+                new PayDetailDialog(mContext);
                 break;
         }
 
+    }
+
+    private void commit() {
+//        new MakeOrderApi(mContext,)
     }
 
     public void goWeb() {
@@ -186,6 +230,7 @@ public class TuanPayActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        // 获取地址列表
         new AddressApi(mContext, new AddressApi.FetchAddressListListener() {
             @Override
             public void setData(List<AddressModel> list) {
@@ -208,7 +253,40 @@ public class TuanPayActivity extends BaseActivity {
 
             }
         });
+        // 获取账户余额
+        new GetYueApi(mContext, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+                if (entry != null && entry instanceof ErrorMsg) {
+                    yueTxt = ((ErrorMsg) entry).getDesc();
+                    countPrice();
+                    handler.sendEmptyMessage(2);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
     }
 
+
+    /**
+     * 实时计算金额
+     */
+    private void countPrice() {
+        new CountPriceApi(mContext, itemCode, "", "", yueTxt,tuanCode, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
+    }
 
 }
