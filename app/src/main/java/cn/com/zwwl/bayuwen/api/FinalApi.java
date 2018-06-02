@@ -9,24 +9,20 @@ import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
-import cn.com.zwwl.bayuwen.model.BaseResponse;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.FinalModel;
 import cn.com.zwwl.bayuwen.util.GsonUtil;
 
-/**
- * 子课程列表
- * Created by zhumangmang at 2018/6/1 14:27
- */
-public class ChildCourseApi extends BaseApi {
-    private Activity activity;
-    private ResponseCallBack callBack;
+public class FinalApi extends BaseApi {
     private String url;
+    private Activity activity;
+    private ResponseCallBack<FinalModel> callBack;
 
-    public ChildCourseApi(Activity context, String id, String page, ResponseCallBack callBack) {
+    public FinalApi(Activity context, String kid, ResponseCallBack<FinalModel> callBack) {
         super(context);
         this.activity = context;
         this.callBack = callBack;
-        url = UrlUtil.getLecturesUrl(id, page);
+        url = UrlUtil.getFinal() + "?kid=" + kid;
         get();
     }
 
@@ -45,8 +41,11 @@ public class ChildCourseApi extends BaseApi {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (json != null)
-                    callBack.result(GsonUtil.parseJson(BaseResponse.class, json.toString()), errorMsg);
+                FinalModel model = null;
+                if (json != null) {
+                    model = GsonUtil.parseJson(FinalModel.class, json.toString());
+                }
+                callBack.result(model, errorMsg);
             }
         });
     }

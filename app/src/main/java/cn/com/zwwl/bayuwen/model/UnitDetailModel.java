@@ -17,7 +17,7 @@ public class UnitDetailModel extends Entry {
     private PicBean accessory;
     private PicBean blackboard;
     private PicBean courseLive;
-    private PicBean job;
+    private PicBean homework;
     private TeachersBean teachers;
 
     public CommonModel getTaSummary() {
@@ -53,11 +53,11 @@ public class UnitDetailModel extends Entry {
     }
 
     public PicBean getJob() {
-        return job;
+        return homework;
     }
 
     public void setJob(PicBean job) {
-        this.job = job;
+        this.homework = job;
     }
 
     public TeachersBean getTeachers() {

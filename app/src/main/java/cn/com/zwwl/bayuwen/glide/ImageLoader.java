@@ -139,7 +139,7 @@ public class ImageLoader {
         }
         GlideApp.with(context).asBitmap()
                 .load(url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .transform(new GlideRoundTransform(context))
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)

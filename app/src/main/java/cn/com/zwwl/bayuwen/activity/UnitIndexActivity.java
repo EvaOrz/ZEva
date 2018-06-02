@@ -82,12 +82,23 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
                     tutorEval.setText(unitDetailModel.getTaSummary().getContent());
                     pptAdapter.setNewData(unitDetailModel.getAccessory().getData());
                     jobAdapter.setNewData(unitDetailModel.getJob().getData());
-                    teacher.setText(String.format("授课老师：%s", unitDetailModel.getTeachers().getTeacher().getName()));
+
+                    teacher.setText(String.format("授课老师: %s", unitDetailModel.getTeachers().getTeacher().getName()));
                     teacherVote.setChecked(unitDetailModel.getTeachers().getTeacher().getState() == 1);
-                    tutor.setText(String.format("助教老师：%s", unitDetailModel.getTeachers().getAssistant().getName()));
-                    tutorVote.setChecked(unitDetailModel.getTeachers().getAssistant().getState() == 1);
-                    adviser.setText(String.format("学业顾问：%s", unitDetailModel.getTeachers().getCounselor().getName()));
-                    adviserVote.setChecked(unitDetailModel.getTeachers().getCounselor().getState() == 1);
+                    if (unitDetailModel.getTeachers().getAssistant()!=null) {
+                        tutor.setText(String.format("助教老师: %s", unitDetailModel.getTeachers().getAssistant().getName()));
+                        tutorVote.setChecked(unitDetailModel.getTeachers().getAssistant().getState() == 1);
+                    }else {
+                        tutor.setText("助教老师: 无");
+                        tutorVote.setVisibility(View.GONE);
+                    }
+                    if (unitDetailModel.getTeachers().getCounselor()!=null) {
+                        adviser.setText(String.format("学业顾问: %s", unitDetailModel.getTeachers().getCounselor().getName()));
+                        adviserVote.setChecked(unitDetailModel.getTeachers().getCounselor().getState() == 1);
+                    }else {
+                        adviser.setText("学业顾问: 无");
+                        adviserVote.setVisibility(View.GONE);
+                    }
 
                 }
             }

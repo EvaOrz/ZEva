@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -36,6 +37,14 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
     StudyingCourseAdapter adapter;
     String kid;
     StudyingModel model;
+    @BindView(R.id.progress_layout)
+    LinearLayout progressLayout;
+    @BindView(R.id.course_eval)
+    AppCompatTextView courseEval;
+    @BindView(R.id.course_change)
+    AppCompatTextView courseChange;
+    @BindView(R.id.class_covert)
+    AppCompatTextView classCovert;
 
     @Override
     protected int setContentView() {
@@ -54,7 +63,7 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
         new StudyingCourseApi(this, kid, new ResponseCallBack<StudyingModel>() {
             @Override
             public void result(StudyingModel studyingModel, ErrorMsg errorMsg) {
-                if (studyingModel!=null){
+                if (studyingModel != null) {
                     model = studyingModel;
                     current.setText(String.valueOf(model.getCurrent()));
                     totalCourse.setText(String.valueOf(model.getCount()));
@@ -71,6 +80,12 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
     protected void initData() {
         kid = getIntent().getStringExtra("kid");
         setCustomTitle(getIntent().getStringExtra("title"));
+        if (getIntent().getBooleanExtra("is_trace", false)) {
+            progressLayout.setVisibility(View.GONE);
+            courseEval.setVisibility(View.GONE);
+            classCovert.setVisibility(View.GONE);
+            courseChange.setVisibility(View.GONE);
+        }
         getData();
     }
 
@@ -82,7 +97,7 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
                 Intent intent = new Intent(mActivity, UnitIndexActivity.class);
                 intent.putExtra("kId", model.getCompleteClass().get(position).getKid());
                 intent.putExtra("cId", model.getCompleteClass().get(position).getId());
-                intent.putExtra("title",model.getCompleteClass().get(position).getTitle());
+                intent.putExtra("title", model.getCompleteClass().get(position).getTitle());
                 startActivity(intent);
             }
         });
@@ -99,7 +114,7 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.course_eval:
-                intent.putExtra("kid",kid);
+                intent.putExtra("kid", kid);
                 intent.setClass(this, CourseEvalActivity.class);
                 break;
             case R.id.course_change:
@@ -118,4 +133,5 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
     public void close() {
         finish();
     }
+
 }

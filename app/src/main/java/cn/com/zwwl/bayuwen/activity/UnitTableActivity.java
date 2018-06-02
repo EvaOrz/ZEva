@@ -16,7 +16,7 @@ import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.UnitTableAdapter;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
-import cn.com.zwwl.bayuwen.model.LessonModel;
+import cn.com.zwwl.bayuwen.model.UnitModel;
 
 /**
  * 课程单元列表
@@ -44,9 +44,9 @@ public class UnitTableActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initData() {
-        List<LessonModel> courseModels = new ArrayList<>();
+        List<UnitModel> courseModels = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            LessonModel model = new LessonModel();
+            UnitModel model = new UnitModel();
             model.setTitle("XXX");
             courseModels.add(model);
         }

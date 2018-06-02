@@ -14,7 +14,7 @@ import java.util.List;
 public class KeModel extends Entry {
     private List<TeacherModel> teacherModels = new ArrayList<>();
     private List<LessonModel> lessonModels = new ArrayList<>();
-private String id;
+    private String id;
     private String kid;
     private String title;
     private String roomId;
@@ -440,16 +440,17 @@ private String id;
 
     /**
      * 返回tag
+     *
      * @return
      */
     public String getTagTxt() {
         if (online.equals("0")) {
-           return  "面授";
+            return "面授";
         } else {
             if (source.equals("1")) {
-               return "回放";
+                return "回放";
             } else if (source.equals("2")) {
-                return  "点播";
+                return "点播";
             }
         }
         return "";
@@ -795,8 +796,6 @@ private String id;
     public void setLessonModels(List<LessonModel> lessonModels) {
         this.lessonModels = lessonModels;
     }
-
-
 
 
 }

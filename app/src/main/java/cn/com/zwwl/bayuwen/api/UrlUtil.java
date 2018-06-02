@@ -215,4 +215,16 @@ public class UrlUtil {
     public static String addVote() {
         return HOST + "/vote";
     }
+    /**
+     * 获取已完成课次二级列表
+     */
+    public static String getFCourseList() {
+        return HOST + "/course/mytype";
+    }
+    /**
+     * 获取期末考试详情
+     */
+    public static String getFinal() {
+        return HOST + "/course/exam_list";
+    }
 }

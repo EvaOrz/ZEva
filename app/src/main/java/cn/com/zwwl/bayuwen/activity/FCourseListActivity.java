@@ -10,8 +10,6 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
@@ -19,24 +17,25 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.adapter.UnitTableAdapter;
-import cn.com.zwwl.bayuwen.api.ChildCourseApi;
+import cn.com.zwwl.bayuwen.adapter.FCourseChildAdapter;
+import cn.com.zwwl.bayuwen.api.FCourseListApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
-import cn.com.zwwl.bayuwen.model.BaseResponse;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.LessonModel;
-
-public class TraceRecordActivity extends BasicActivityWithTitle {
+import cn.com.zwwl.bayuwen.model.MyCourseModel;
+/**
+ *  已完成课程二级页面l
+ *  Created by zhumangmang at 2018/6/2 15:10
+ */
+public class FCourseListActivity extends BasicActivityWithTitle {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    UnitTableAdapter adapter;
+    FCourseChildAdapter adapter;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-    private int page = 1;
-    private String kid;
-    List<LessonModel> lessonModels;
+    private String type;
+    List<MyCourseModel.UnfinishedBean> lessonModels;
 
     @Override
     protected int setContentView() {
@@ -45,7 +44,7 @@ public class TraceRecordActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initView() {
-        kid = getIntent().getStringExtra("kid");
+        type = getIntent().getStringExtra("type");
         setCustomTitle(getIntent().getStringExtra("title"));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -54,27 +53,22 @@ public class TraceRecordActivity extends BasicActivityWithTitle {
     @Override
     protected void initData() {
         lessonModels = new ArrayList<>();
-        adapter = new UnitTableAdapter(lessonModels);
+        adapter = new FCourseChildAdapter(lessonModels);
         recyclerView.setAdapter(adapter);
         refresh.setRefreshContent(recyclerView);
         refresh.autoRefresh();
+        refresh.setEnableLoadMore(false);
     }
 
     private void getData() {
-        new ChildCourseApi(this, "7018", String.valueOf(page), new ResponseCallBack<BaseResponse>() {
+        new FCourseListApi(this, type, new ResponseCallBack<List<MyCourseModel.UnfinishedBean>>() {
             @Override
-            public void result(BaseResponse o, ErrorMsg errorMsg) {
-                if (refresh.getState() == RefreshState.Refreshing) refresh.finishRefresh();
-                if (refresh.getState() == RefreshState.Loading) refresh.finishLoadMore();
-                if (o != null) {
-                    if (page != 1) {
-                        lessonModels.addAll(o.getLectures());
-                    } else {
-                        lessonModels.clear();
-                        lessonModels.addAll(o.getLectures());
-                    }
+            public void result(List<MyCourseModel.UnfinishedBean> unfinishedBeans, ErrorMsg errorMsg) {
+                refresh.finishRefresh();
+                if (unfinishedBeans != null && unfinishedBeans.size() != 0) {
+                    lessonModels = unfinishedBeans;
+                    adapter.setNewData(unfinishedBeans);
                 }
-                adapter.setNewData(lessonModels);
             }
         });
     }
@@ -84,27 +78,16 @@ public class TraceRecordActivity extends BasicActivityWithTitle {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(mActivity, FCourseIndexActivity.class));
+                Intent intent=new Intent(mActivity,FCourseIndexActivity.class);
+                intent.putExtra("kid",lessonModels.get(position).getProducts().getKid());
+                intent.putExtra("title",lessonModels.get(position).getProducts().getTitle());
+                startActivity(intent);
             }
         });
         refresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshlayout) {
-                page = 1;
                 getData();
-
-            }
-        });
-        refresh.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshlayout) {
-                ++page;
-                if (page > 5) {
-                    refreshlayout.finishLoadMoreWithNoMoreData();
-                } else {
-                    getData();
-
-                }
             }
         });
     }
