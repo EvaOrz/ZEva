@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginStart="@dimen/dp_16"
-        android:text="原在班级" />
+        android:text="@string/old_class" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/old_layout"
@@ -26,24 +26,24 @@
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/o_pic"
-            android:layout_width="160dp"
+            android:layout_width="120dp"
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/dp_8"
             android:layout_marginEnd="@dimen/dp_10"
-            android:layout_marginLeft="@dimen/activity_vertical_margin"
-            android:layout_marginRight="@dimen/dp_10"
-            android:layout_marginStart="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_8"
             android:src="@mipmap/home_head_hot"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/o_course_name"
             android:layout_width="0dp"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_8"
-            android:text="二年级大语文"
             android:textSize="@dimen/sp_16"
             app:layout_constraintEnd_toStartOf="@id/o_arrow"
             app:layout_constraintStart_toEndOf="@id/o_pic"
@@ -54,7 +54,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
-            android:text="祝芒芒"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_14"
             app:layout_constraintEnd_toStartOf="@id/o_arrow"
@@ -64,9 +65,10 @@
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/o_school_name"
             android:layout_width="0dp"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
-            android:text="北京大学"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_14"
             app:layout_constraintEnd_toStartOf="@id/o_arrow"
@@ -78,7 +80,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
-            android:text="2017.3.19-2017.4.19"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_14"
             app:layout_constraintEnd_toStartOf="@id/o_arrow"
@@ -91,7 +94,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp_8"
             android:layout_marginTop="@dimen/dp_5"
-            android:text="8:00-10:00"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             android:textColor="@color/gray_light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/o_arrow"
@@ -119,7 +123,7 @@
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_10"
-        android:text="将转班级"
+        android:text="@string/new_class"
         app:layout_constraintTop_toBottomOf="@id/old_layout" />
 
     <android.support.constraint.ConstraintLayout
@@ -133,15 +137,14 @@
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/pic"
-            android:layout_width="160dp"
+            android:layout_width="120dp"
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/dp_8"
+            android:layout_marginStart="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_10"
-            android:layout_marginLeft="@dimen/activity_vertical_margin"
-            android:layout_marginRight="@dimen/dp_10"
-            android:layout_marginStart="@dimen/activity_vertical_margin"
             android:layout_marginTop="@dimen/dp_8"
             android:src="@mipmap/home_head_hot"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -150,8 +153,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_8"
-            android:text="二年级大语文"
             android:textSize="@dimen/sp_16"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             app:layout_constraintEnd_toStartOf="@id/arrow"
             app:layout_constraintStart_toEndOf="@id/pic"
             app:layout_constraintTop_toTopOf="parent" />
@@ -161,7 +165,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
-            android:text="祝芒芒"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_14"
             app:layout_constraintEnd_toStartOf="@id/arrow"
@@ -171,9 +176,10 @@
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/school_name"
             android:layout_width="0dp"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
-            android:text="北京大学"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_14"
             app:layout_constraintEnd_toStartOf="@id/arrow"
@@ -183,9 +189,10 @@
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/date"
             android:layout_width="0dp"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
-            android:text="2017.3.19-2017.4.19"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_14"
             app:layout_constraintEnd_toStartOf="@id/arrow"
@@ -195,10 +202,11 @@
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/time"
             android:layout_width="0dp"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp_8"
             android:layout_marginTop="@dimen/dp_5"
-            android:text="8:00-10:00"
             android:textColor="@color/gray_light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/arrow"
@@ -226,7 +234,7 @@
         android:background="@color/mainColor"
         android:gravity="center"
         android:padding="@dimen/dp_10"
-        android:text="确认提交"
+        android:text="@string/check_submit"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent" />
 </android.support.constraint.ConstraintLayout>

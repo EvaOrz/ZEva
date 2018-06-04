@@ -112,7 +112,7 @@ public class MainFrag3 extends BasicFragment {
         new MyCourseApi(activity, new ResponseCallBack<MyCourseModel>() {
             @Override
             public void result(MyCourseModel myCourseModel, ErrorMsg errorMsg) {
-                if (myCourseModel!=null){
+                if (myCourseModel != null) {
                     courseModel = myCourseModel;
                     bindView();
                 }
@@ -154,9 +154,9 @@ public class MainFrag3 extends BasicFragment {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent=new Intent(activity,FCourseListActivity.class);
-                intent.putExtra("type",courseModel.getCompleted().get(position).getId());
-                intent.putExtra("title",courseModel.getCompleted().get(position).getName());
+                Intent intent = new Intent(activity, FCourseListActivity.class);
+                intent.putExtra("type", courseModel.getCompleted().get(position).getId());
+                intent.putExtra("title", courseModel.getCompleted().get(position).getName());
                 startActivity(intent);
             }
         });
@@ -175,11 +175,13 @@ public class MainFrag3 extends BasicFragment {
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.on_arrow:
+                application.oldKe = courseModel.getUnfinished().get(0).getProducts();
                 intent.putExtra("kid", courseModel.getUnfinished().get(0).getKid());
                 intent.putExtra("title", courseModel.getUnfinished().get(0).getProducts().getTitle());
                 intent.setClass(activity, StudyingCourseActivity.class);
                 break;
             case R.id.off_arrow:
+                application.oldKe = courseModel.getUnfinished().get(1).getProducts();
                 intent.putExtra("kid", courseModel.getUnfinished().get(1).getKid());
                 intent.putExtra("title", courseModel.getUnfinished().get(1).getProducts().getTitle());
                 intent.setClass(activity, StudyingCourseActivity.class);
@@ -196,14 +198,16 @@ public class MainFrag3 extends BasicFragment {
                 intent.setClass(activity, VideoPlayActivity.class);
                 break;
             case R.id.on_trace:
+                application.oldKe = courseModel.getUnfinished().get(0).getProducts();
                 intent.putExtra("kid", courseModel.getUnfinished().get(0).getKid());
                 intent.putExtra("title", courseModel.getUnfinished().get(0).getProducts().getTitle());
-                intent.putExtra("is_trace",true);
+                intent.putExtra("is_trace", true);
                 intent.setClass(activity, StudyingCourseActivity.class);
             case R.id.off_trace:
+                application.oldKe = courseModel.getUnfinished().get(1).getProducts();
                 intent.putExtra("kid", courseModel.getUnfinished().get(1).getKid());
                 intent.putExtra("title", courseModel.getUnfinished().get(1).getProducts().getTitle());
-                intent.putExtra("is_trace",true);
+                intent.putExtra("is_trace", true);
                 intent.setClass(activity, StudyingCourseActivity.class);
                 break;
         }

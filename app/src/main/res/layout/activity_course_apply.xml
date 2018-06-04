@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:drawableEnd="@mipmap/home_header_more"
             android:drawableRight="@mipmap/home_header_more"
-            android:text="大语文 第X课"
             android:textSize="@dimen/sp_16" />
 
         <View
@@ -47,7 +46,6 @@
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="这是关于该课程单元内容的描述，这是关于该课程单元内容的描述，"
             android:textColor="@color/gray_light"
             app:layout_constraintTop_toBottomOf="@id/divider" />
     </android.support.constraint.ConstraintLayout>
@@ -59,7 +57,7 @@
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_10"
-        android:text="调课内容"
+        android:text="@string/transfer_course_class"
         app:layout_constraintTop_toBottomOf="@id/old_layout" />
 
     <android.support.constraint.ConstraintLayout
@@ -82,6 +80,7 @@
             android:layout_marginStart="@dimen/activity_vertical_margin"
             android:layout_marginTop="@dimen/dp_8"
             android:src="@mipmap/home_head_hot"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -90,8 +89,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_8"
-            android:text="二年级大语文"
             android:textSize="@dimen/sp_16"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             app:layout_constraintEnd_toStartOf="@id/arrow"
             app:layout_constraintStart_toEndOf="@id/pic"
             app:layout_constraintTop_toTopOf="parent" />
@@ -101,7 +101,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
-            android:text="祝芒芒"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_14"
             app:layout_constraintEnd_toStartOf="@id/arrow"
@@ -113,7 +114,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
-            android:text="北京大学"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_14"
             app:layout_constraintEnd_toStartOf="@id/arrow"
@@ -125,7 +127,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
-            android:text="2017.3.19-2017.4.19"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_14"
             app:layout_constraintEnd_toStartOf="@id/arrow"
@@ -138,7 +141,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp_8"
             android:layout_marginTop="@dimen/dp_5"
-            android:text="8:00-10:00"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             android:textColor="@color/gray_light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/arrow"
@@ -166,7 +170,7 @@
         android:background="@color/mainColor"
         android:gravity="center"
         android:padding="@dimen/dp_10"
-        android:text="确认提交"
+        android:text="@string/check_submit"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent" />
 </android.support.constraint.ConstraintLayout>

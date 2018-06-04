@@ -8,15 +8,15 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.model.UnitModel;
+import cn.com.zwwl.bayuwen.model.LessonModel;
 
-public class UnitTableAdapter extends BaseQuickAdapter<UnitModel, BaseViewHolder> {
-    public UnitTableAdapter(@Nullable List<UnitModel> data) {
+public class UnitTableAdapter extends BaseQuickAdapter<LessonModel, BaseViewHolder> {
+    public UnitTableAdapter(@Nullable List<LessonModel> data) {
         super(R.layout.item_unit_table, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, UnitModel item) {
+    protected void convert(BaseViewHolder helper, LessonModel item) {
         helper.setText(R.id.unit_name, item.getTitle());
     }
 }

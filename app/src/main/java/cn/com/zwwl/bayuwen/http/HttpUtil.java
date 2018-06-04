@@ -53,7 +53,7 @@ public class HttpUtil {
             clientBuilder.readTimeout(20, TimeUnit.SECONDS);//读取超时
             clientBuilder.connectTimeout(6, TimeUnit.SECONDS);//连接超时
             clientBuilder.writeTimeout(60, TimeUnit.SECONDS);//写入超时
-
+            clientBuilder.addInterceptor(new LoggerInterceptor());
             //支持HTTPS请求，跳过证书验证
             clientBuilder.sslSocketFactory(createSSLSocketFactory());
             clientBuilder.hostnameVerifier(new HostnameVerifier() {
@@ -433,6 +433,7 @@ public class HttpUtil {
             String accessToken = TempDataHelper.getAccessToken(mContext);
             if (!TextUtils.isEmpty(accessToken))
                 requestBuilder.addHeader("Access-Token", accessToken);
+
             request = requestBuilder.build();
         } catch (UnsupportedEncodingException e) {
 

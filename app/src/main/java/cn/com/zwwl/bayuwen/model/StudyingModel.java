@@ -24,7 +24,7 @@ public class StudyingModel extends Entry {
     private int current;
     private int next;
     private String nextTime;
-    private List<UnitModel> completeClass;
+    private List<LessonModel> completeClass;
 
     public int getOnline() {
         return online;
@@ -74,11 +74,11 @@ public class StudyingModel extends Entry {
         this.nextTime = nextTime;
     }
 
-    public List<UnitModel> getCompleteClass() {
+    public List<LessonModel> getCompleteClass() {
         return completeClass;
     }
 
-    public void setCompleteClass(List<UnitModel> completeClass) {
+    public void setCompleteClass(List<LessonModel> completeClass) {
         this.completeClass = completeClass;
     }
 

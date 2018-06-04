@@ -9,14 +9,16 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.UnitTableAdapter;
+import cn.com.zwwl.bayuwen.api.LessonListApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
-import cn.com.zwwl.bayuwen.model.UnitModel;
+import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.LessonModel;
 
 /**
  * 课程单元列表
@@ -28,6 +30,9 @@ public class UnitTableActivity extends BasicActivityWithTitle {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     UnitTableAdapter adapter;
+    List<LessonModel> lessonModelList;
+    private int operate_type;
+    private String kid = "10644";
 
     @Override
     protected int setContentView() {
@@ -40,18 +45,24 @@ public class UnitTableActivity extends BasicActivityWithTitle {
         type.setText(res.getString(R.string.chose_change_course_unit_by_need));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        adapter = new UnitTableAdapter(null);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
     protected void initData() {
-        List<UnitModel> courseModels = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            UnitModel model = new UnitModel();
-            model.setTitle("XXX");
-            courseModels.add(model);
-        }
-        adapter = new UnitTableAdapter(courseModels);
-        recyclerView.setAdapter(adapter);
+        operate_type = getIntent().getIntExtra("type", 0);
+            kid = getIntent().getStringExtra("kid");
+        new LessonListApi(this, kid, new ResponseCallBack<List<LessonModel>>() {
+            @Override
+            public void result(List<LessonModel> lessonModels, ErrorMsg errorMsg) {
+                if (lessonModels != null) {
+                    lessonModelList = lessonModels;
+                    adapter.setNewData(lessonModelList);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -59,7 +70,13 @@ public class UnitTableActivity extends BasicActivityWithTitle {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(mActivity, ConvertClassActivity.class));
+                if (operate_type == 0) {
+                    mApplication.oldLesson = lessonModelList.get(position);
+                    startActivity(new Intent(mActivity, ConvertClassActivity.class));
+                } else {
+                    mApplication.newLesson = lessonModelList.get(position);
+                    startActivity(new Intent(mActivity, CourseApplyActivity.class));
+                }
             }
         });
     }

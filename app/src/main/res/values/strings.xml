@@ -348,4 +348,9 @@
     <string name="study_report">学业报告</string>
     <string name="follow">关注</string>
     <string name="final_test">期末测试</string>
+    <string name="check_submit">确认提交</string>
+    <string name="transfer_course_content">调课内容</string>
+    <string name="transfer_course_class">调课班级</string>
+    <string name="old_class">原在班级</string>
+    <string name="new_class">将转班级</string>
 </resources>

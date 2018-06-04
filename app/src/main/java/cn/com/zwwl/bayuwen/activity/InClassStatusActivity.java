@@ -4,9 +4,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
@@ -21,7 +19,6 @@ import cn.com.zwwl.bayuwen.widget.decoration.HSpacesItemDecoration;
 public class InClassStatusActivity extends BasicActivityWithTitle {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    private List<String> imgUrls = new ArrayList<>();
 
     @Override
     protected int setContentView() {

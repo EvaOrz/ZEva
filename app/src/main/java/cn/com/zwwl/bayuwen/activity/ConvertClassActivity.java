@@ -5,6 +5,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -15,13 +16,17 @@ import java.util.List;
 import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CourseTableAdapter;
+import cn.com.zwwl.bayuwen.api.CourseListApi;
 import cn.com.zwwl.bayuwen.api.KeSelectTypeApi;
+import cn.com.zwwl.bayuwen.api.UrlUtil;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
-import cn.com.zwwl.bayuwen.model.CourseModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.KeTypeModel;
+import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.selectmenu.SelectMenuView;
 import cn.com.zwwl.bayuwen.view.selectmenu.SelectTempModel;
 
@@ -38,6 +43,8 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
     RecyclerView recyclerView;
     CourseTableAdapter adapter;
     KeTypeModel typeModel;
+    private String url = UrlUtil.getCDetailUrl(null) + "/search";
+    private List<KeModel> keModels;
 
     @Override
     protected int setContentView() {
@@ -46,6 +53,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initView() {
+        keModels = new ArrayList<>();
         if (mApplication.operate_type == 0) {
             setCustomTitle(res.getString(R.string.chose_chanable_class));
         } else {
@@ -53,19 +61,14 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        adapter = new CourseTableAdapter(null);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
     protected void initData() {
         getChoseType();
-        List<CourseModel> courseModels = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            CourseModel model = new CourseModel();
-            model.setPage("XXX");
-            courseModels.add(model);
-        }
-        adapter = new CourseTableAdapter(courseModels);
-        recyclerView.setAdapter(adapter);
+        getCourseData();
     }
 
     private void getChoseType() {
@@ -96,22 +99,21 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
         operate.setOnMenuSelectDataChangedListener(new SelectMenuView.OnMenuSelectDataChangedListener() {
             @Override
             public void onSortChanged(SelectTempModel sortType, int type) {
-                map.clear();
                 switch (type) {
                     case 1:
-                        map.put("users",sortType.getId());
+                        map.put("users", sortType.getId());
                         break;
                     case 2:
-                        map.put("type",sortType.getId());
+                        map.put("type", sortType.getId());
                         break;
                     case 3:
-                        map.put("online",sortType.getId());
+                        map.put("online", sortType.getId());
                         break;
                     case 4:
-                        map.put("school",sortType.getId());
+                        map.put("school", sortType.getId());
                         break;
                     default:
-                        map.put("time",sortType.getText());
+                        map.put("time", sortType.getText());
                         break;
                 }
                 getCourseData();
@@ -125,13 +127,52 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(mActivity, ClassDetailActivity.class));
+                mApplication.newKe = keModels.get(position);
+                if (mApplication.operate_type == 0) {
+                    Intent intent = new Intent(mActivity, UnitTableActivity.class);
+                    intent.putExtra("type", 1);
+                    intent.putExtra("kid", keModels.get(position).getKid());
+                    startActivity(intent);
+                } else {
+                    startActivity(new Intent(mActivity, ClassApplyActivity.class));
+                }
             }
         });
     }
 
     private void getCourseData() {
+        map.put("keyword", Tools.getText(search));
+        map.put("online", "0");
+        StringBuilder temp = new StringBuilder(url);
+        if (map.size() > 0) {
+            temp.append("?");
+            for (String key : map.keySet()) {
+                if (!TextUtils.isEmpty(map.get(key))) {
+                    String and = temp.toString().endsWith("?") ? "" : "&";
+                    temp.append(and).append(key).append("=").append(map.get(key));
+                }
+            }
+            new CourseListApi(mContext, temp.toString(), new FetchEntryListListener() {
+                @Override
+                public void setData(final List list) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            keModels.clear();
+                            if (Tools.listNotNull(list))
+                                keModels.addAll(list);
+                            adapter.setNewData(keModels);
+                        }
+                    });
 
+
+                }
+
+                @Override
+                public void setError(ErrorMsg error) {
+                }
+            });
+        }
     }
 
     @Override
@@ -139,4 +180,8 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
 
     }
 
+    @Override
+    public void close() {
+        finish();
+    }
 }

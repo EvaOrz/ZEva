@@ -24,6 +24,8 @@ import java.util.Map;
 
 import cn.com.zwwl.bayuwen.api.UrlUtil;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
+import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.service.NewMusicService;
 
 /**
@@ -81,6 +83,8 @@ public class MyApplication extends Application {
      * 课程跟踪
      */
     public int operate_type;
+    public LessonModel oldLesson,newLesson;
+    public KeModel oldKe,newKe;
 
     @Override
     public void onCreate() {

@@ -227,4 +227,16 @@ public class UrlUtil {
     public static String getFinal() {
         return HOST + "/course/exam_list";
     }
+    /**
+     * 获取子课列表
+     */
+    public static String getLecturesList() {
+        return HOST + "/transfer/lectures";
+    }
+    /**
+     * 添加课程(换班)
+     */
+    public static String addCourse() {
+        return HOST + "/transfer";
+    }
 }
