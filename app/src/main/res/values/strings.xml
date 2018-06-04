@@ -216,7 +216,7 @@
     <string name="kai_copy">复制拼团码</string>
     <string name="kai_share">分享拼团</string>
     <string name="kai_pay">报名付费</string>
-    <string name="tuan_success">报名成功</string>
+    <string name="tuan_success">付费状态</string>
     <string name="chakan_kecheng">查看课程跟踪</string>
 
     <!--会员资料-->

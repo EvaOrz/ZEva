@@ -3,6 +3,8 @@ package cn.com.zwwl.bayuwen.api.order;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,6 +14,7 @@ import cn.com.zwwl.bayuwen.api.UrlUtil;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.OrderModel;
 
 /**
  * 实时计算订单金额api
@@ -68,6 +71,15 @@ public class CountPriceApi extends BaseApi {
 
     @Override
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
+        if (errorMsg != null) {
+            listener.setError(errorMsg);
+        }
+        if (!isNull(json)) {
+            Gson gson = new Gson();
+            OrderModel.OrderDetailModel detailModel = gson.fromJson(json.toString(), OrderModel
+                    .OrderDetailModel.class);
+            listener.setData(detailModel);
 
+        }
     }
 }

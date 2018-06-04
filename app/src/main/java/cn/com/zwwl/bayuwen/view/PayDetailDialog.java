@@ -16,6 +16,7 @@ import java.util.TimerTask;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
+import cn.com.zwwl.bayuwen.model.OrderModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
 
 /**
@@ -27,9 +28,11 @@ public class PayDetailDialog {
     private Window window;
 
     private TextView price1, price2, price3, price4, price5, price6, price7;
+    private OrderModel.OrderDetailModel orderDetailModel;
 
-    public PayDetailDialog(Context context) {
+    public PayDetailDialog(Context context, OrderModel.OrderDetailModel orderDetailModel) {
         this.mContext = context;
+        this.orderDetailModel = orderDetailModel;
         init();
     }
 
@@ -51,7 +54,13 @@ public class PayDetailDialog {
         price5 = window.findViewById(R.id.pay_d_price5);
         price6 = window.findViewById(R.id.pay_d_price6);
         price7 = window.findViewById(R.id.pay_d_price7);
-
+        price1.setText(orderDetailModel.getOriginPrice() / 100 + "");
+        price2.setText(orderDetailModel.getLimitDiscount() / 100 + "");
+        price3.setText(orderDetailModel.getCouponDiscount() / 100 + "");
+        price4.setText(orderDetailModel.getPromotionDiscount() / 100 + "");
+        price5.setText(orderDetailModel.getGroupBuyDiscount() / 100 + "");
+        price6.setText(orderDetailModel.getAssets() / 100 + "");
+        price7.setText("需支付：￥" + orderDetailModel.getAmount() / 100);
         window.findViewById(R.id.pay_d_close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

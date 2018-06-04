@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -205,22 +206,27 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     }
 
     public void showToast(final String txt) {
-        new Handler().post(new Runnable() {
+        new Thread(new Runnable() {
+
             @Override
             public void run() {
-                Toast.makeText(mContext, txt, Toast.LENGTH_SHORT).show();
+                Looper.prepare();
+                Toast.makeText(getApplicationContext(), txt, Toast.LENGTH_SHORT).show();
+                Looper.loop();
             }
-        });
+        }).start();
     }
 
     public void showToast(final int id) {
+        new Thread(new Runnable() {
 
-        new Handler().post(new Runnable() {
             @Override
             public void run() {
+                Looper.prepare();
                 Toast.makeText(mContext, id, Toast.LENGTH_SHORT).show();
+                Looper.loop();
             }
-        });
+        }).start();
     }
 
     /**
