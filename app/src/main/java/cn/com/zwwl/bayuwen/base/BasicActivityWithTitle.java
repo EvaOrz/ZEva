@@ -58,12 +58,12 @@ public abstract class BasicActivityWithTitle extends AppCompatActivity {
 
     /**
      * 设置rootView是否可以滚动，意思是如果期望外层View是个ScrollView
-     * 就返回true,否则就返回false，默认外层是个ScrollView
+     * 就返回true,否则就返回false
      *
      * @return true & false
      */
     public boolean setParentScrollable() {
-        return true;
+        return false;
     }
 
 

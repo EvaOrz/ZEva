@@ -10,23 +10,19 @@ import java.util.Map;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.UnitDetailModel;
+import cn.com.zwwl.bayuwen.model.FinalModel;
 import cn.com.zwwl.bayuwen.util.GsonUtil;
 
-/**
- * 课程单元详情
- * Created by zhumangmang at 2018/5/31 15:11
- */
-public class UnitDetailApi extends BaseApi {
-    private ResponseCallBack callBack;
-    private Activity activity;
+public class FinalApi extends BaseApi {
     private String url;
+    private Activity activity;
+    private ResponseCallBack<FinalModel> callBack;
 
-    public UnitDetailApi(Activity context, String kId, String cId, ResponseCallBack callBack) {
+    public FinalApi(Activity context, String kid, ResponseCallBack<FinalModel> callBack) {
         super(context);
-        this.callBack = callBack;
-        url = UrlUtil.getUnitDetail() + "?kid=" + kId + "&lecture_id=" + cId;
         this.activity = context;
+        this.callBack = callBack;
+        url = UrlUtil.getFinal() + "?kid=" + kid;
         get();
     }
 
@@ -45,8 +41,11 @@ public class UnitDetailApi extends BaseApi {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (json != null)
-                    callBack.result(GsonUtil.parseJson(UnitDetailModel.class, json.toString()), errorMsg);
+                FinalModel model = null;
+                if (json != null) {
+                    model = GsonUtil.parseJson(FinalModel.class, json.toString());
+                }
+                callBack.result(model, errorMsg);
             }
         });
     }

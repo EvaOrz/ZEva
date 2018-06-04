@@ -316,7 +316,7 @@
         <!--提交转班申请-->
         <activity android:name=".activity.ClassApplyActivity" />
         <!--课程跟踪记录-->
-        <activity android:name=".activity.TraceRecordActivity" />
+        <activity android:name=".activity.FCourseListActivity" />
         <!--点击“记录”进入-->
         <activity android:name=".activity.FCourseIndexActivity" />
         <!--期末考试详情-->

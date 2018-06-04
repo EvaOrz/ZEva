@@ -10,23 +10,23 @@ import java.util.Map;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.UnitDetailModel;
+import cn.com.zwwl.bayuwen.model.MyCourseModel;
 import cn.com.zwwl.bayuwen.util.GsonUtil;
 
 /**
- * 课程单元详情
- * Created by zhumangmang at 2018/5/31 15:11
+ * 已完成课程课次列表
+ * Created by zhumangmang at 2018/6/1 14:27
  */
-public class UnitDetailApi extends BaseApi {
-    private ResponseCallBack callBack;
+public class FCourseListApi extends BaseApi {
     private Activity activity;
+    private ResponseCallBack callBack;
     private String url;
 
-    public UnitDetailApi(Activity context, String kId, String cId, ResponseCallBack callBack) {
+    public FCourseListApi(Activity context, String type, ResponseCallBack callBack) {
         super(context);
-        this.callBack = callBack;
-        url = UrlUtil.getUnitDetail() + "?kid=" + kId + "&lecture_id=" + cId;
         this.activity = context;
+        this.callBack = callBack;
+        url = UrlUtil.getFCourseList() + "?type=" + type;
         get();
     }
 
@@ -41,12 +41,12 @@ public class UnitDetailApi extends BaseApi {
     }
 
     @Override
-    protected void handler(final JSONObject json, JSONArray array, final ErrorMsg errorMsg) {
+    protected void handler(JSONObject json, final JSONArray array, final ErrorMsg errorMsg) {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (json != null)
-                    callBack.result(GsonUtil.parseJson(UnitDetailModel.class, json.toString()), errorMsg);
+                if (array != null)
+                    callBack.result(GsonUtil.parseJsonArray(MyCourseModel.UnfinishedBean.class, array.toString()), errorMsg);
             }
         });
     }

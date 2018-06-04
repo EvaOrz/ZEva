@@ -85,4 +85,6 @@ dependencies {
     implementation files('libs/alipaySdk-20160809.jar')
     implementation files('libs/beecloud-2.10.0.jar')
     implementation files('libs/zxing-3.2.0.jar')
+    //上拉刷新下拉加载
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-6'
 }

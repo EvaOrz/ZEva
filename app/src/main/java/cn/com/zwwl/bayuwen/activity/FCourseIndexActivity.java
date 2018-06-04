@@ -17,8 +17,12 @@ import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.TestListAdapter;
 import cn.com.zwwl.bayuwen.adapter.UnitTableAdapter;
+import cn.com.zwwl.bayuwen.api.StudyingCourseApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
-import cn.com.zwwl.bayuwen.model.CourseModel;
+import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.LessonModel;
+import cn.com.zwwl.bayuwen.model.StudyingModel;
 
 /**
  * 课程跟踪列表点击后进入该处
@@ -35,6 +39,8 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
     RecyclerView recyclerView;
     UnitTableAdapter unitTableAdapter;
     TestListAdapter testListAdapter;
+    StudyingModel model;
+    private String kid;
 
     @Override
     protected int setContentView() {
@@ -52,13 +58,16 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initData() {
-        List<CourseModel> courseModels = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            CourseModel model = new CourseModel();
-            model.setPage("XXX");
+        kid = getIntent().getStringExtra("kid");
+        setCustomTitle(getIntent().getStringExtra("title"));
+        getData();
+        List<LessonModel> courseModels = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            LessonModel model = new LessonModel();
+            model.setTitle("XXX");
             courseModels.add(model);
         }
-        unitTableAdapter = new UnitTableAdapter(courseModels);
+        unitTableAdapter = new UnitTableAdapter(null);
         testListAdapter = new TestListAdapter(courseModels);
         test.setNestedScrollingEnabled(false);
         recyclerView.setNestedScrollingEnabled(false);
@@ -66,18 +75,38 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
         recyclerView.setAdapter(unitTableAdapter);
     }
 
+    private void getData() {
+        new StudyingCourseApi(this, kid, new ResponseCallBack<StudyingModel>() {
+            @Override
+            public void result(StudyingModel studyingModel, ErrorMsg errorMsg) {
+                if (studyingModel != null) {
+                    model = studyingModel;
+                    unitTableAdapter.setNewData(model.getCompleteClass());
+                }
+            }
+        }
+        );
+    }
+
     @Override
     protected void setListener() {
         testListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(mActivity, ExamDetailsActivity.class));
+                Intent intent=new Intent(mActivity,ExamDetailsActivity.class);
+                intent.putExtra("kid","77");
+                intent.putExtra("title","XXX");
+                startActivity(intent);
             }
         });
         unitTableAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(mActivity, ConvertClassActivity.class));
+                Intent intent = new Intent(mActivity, UnitIndexActivity.class);
+                intent.putExtra("kId", model.getCompleteClass().get(position).getKid());
+                intent.putExtra("cId", model.getCompleteClass().get(position).getId());
+                intent.putExtra("title", model.getCompleteClass().get(position).getTitle());
+                startActivity(intent);
             }
         });
     }

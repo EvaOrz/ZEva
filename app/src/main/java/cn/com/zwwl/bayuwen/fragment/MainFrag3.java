@@ -25,7 +25,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.StudyingCourseActivity;
-import cn.com.zwwl.bayuwen.activity.TraceRecordActivity;
+import cn.com.zwwl.bayuwen.activity.FCourseListActivity;
 import cn.com.zwwl.bayuwen.activity.UploadPicActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.CompleteCourseAdapter;
@@ -154,7 +154,10 @@ public class MainFrag3 extends BasicFragment {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(getActivity(), TraceRecordActivity.class));
+                Intent intent=new Intent(activity,FCourseListActivity.class);
+                intent.putExtra("type",courseModel.getCompleted().get(position).getId());
+                intent.putExtra("title",courseModel.getCompleted().get(position).getName());
+                startActivity(intent);
             }
         });
     }
@@ -193,8 +196,15 @@ public class MainFrag3 extends BasicFragment {
                 intent.setClass(activity, VideoPlayActivity.class);
                 break;
             case R.id.on_trace:
+                intent.putExtra("kid", courseModel.getUnfinished().get(0).getKid());
+                intent.putExtra("title", courseModel.getUnfinished().get(0).getProducts().getTitle());
+                intent.putExtra("is_trace",true);
+                intent.setClass(activity, StudyingCourseActivity.class);
             case R.id.off_trace:
-                intent.setClass(activity, TraceRecordActivity.class);
+                intent.putExtra("kid", courseModel.getUnfinished().get(1).getKid());
+                intent.putExtra("title", courseModel.getUnfinished().get(1).getProducts().getTitle());
+                intent.putExtra("is_trace",true);
+                intent.setClass(activity, StudyingCourseActivity.class);
                 break;
         }
         startActivity(intent);

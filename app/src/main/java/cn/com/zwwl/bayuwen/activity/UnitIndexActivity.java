@@ -1,17 +1,21 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.CompoundButton;
 
 import butterknife.BindView;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.PicAdapter;
 import cn.com.zwwl.bayuwen.api.UnitDetailApi;
+import cn.com.zwwl.bayuwen.api.VoteApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -36,6 +40,12 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
     AppCompatTextView adviser;
     PicAdapter pptAdapter, jobAdapter;
     UnitDetailModel model;
+    @BindView(R.id.teacher_vote)
+    AppCompatCheckBox teacherVote;
+    @BindView(R.id.tutor_vote)
+    AppCompatCheckBox tutorVote;
+    @BindView(R.id.adviser_vote)
+    AppCompatCheckBox adviserVote;
 
     @Override
     protected int setContentView() {
@@ -72,9 +82,24 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
                     tutorEval.setText(unitDetailModel.getTaSummary().getContent());
                     pptAdapter.setNewData(unitDetailModel.getAccessory().getData());
                     jobAdapter.setNewData(unitDetailModel.getJob().getData());
-                    teacher.setText("授课老师：" + unitDetailModel.getTeachers().getTeacher().getName());
-                    tutor.setText("助教老师：" + unitDetailModel.getTeachers().getAssistant().getName());
-                    adviser.setText("学业顾问：" + unitDetailModel.getTeachers().getCounselor().getName());
+
+                    teacher.setText(String.format("授课老师: %s", unitDetailModel.getTeachers().getTeacher().getName()));
+                    teacherVote.setChecked(unitDetailModel.getTeachers().getTeacher().getState() == 1);
+                    if (unitDetailModel.getTeachers().getAssistant()!=null) {
+                        tutor.setText(String.format("助教老师: %s", unitDetailModel.getTeachers().getAssistant().getName()));
+                        tutorVote.setChecked(unitDetailModel.getTeachers().getAssistant().getState() == 1);
+                    }else {
+                        tutor.setText("助教老师: 无");
+                        tutorVote.setVisibility(View.GONE);
+                    }
+                    if (unitDetailModel.getTeachers().getCounselor()!=null) {
+                        adviser.setText(String.format("学业顾问: %s", unitDetailModel.getTeachers().getCounselor().getName()));
+                        adviserVote.setChecked(unitDetailModel.getTeachers().getCounselor().getState() == 1);
+                    }else {
+                        adviser.setText("学业顾问: 无");
+                        adviserVote.setVisibility(View.GONE);
+                    }
+
                 }
             }
         });
@@ -83,6 +108,34 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
     @Override
     protected void setListener() {
 
+    }
+
+    @OnCheckedChanged({R.id.teacher_vote, R.id.tutor_vote, R.id.adviser_vote})
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        switch (buttonView.getId()) {
+            case R.id.teacher_vote:
+                addVote("1", model.getTeachers().getTeacher().getId(), isChecked);
+                break;
+            case R.id.tutor_vote:
+                addVote("3", model.getTeachers().getAssistant().getId(), isChecked);
+                break;
+            default:
+                addVote("2", model.getTeachers().getCounselor().getId(), isChecked);
+                break;
+        }
+    }
+
+    private void addVote(String type, String id, boolean isChecked) {
+        map.clear();
+        map.put("to_uid", id);
+        map.put("status", isChecked ? "1" : "0");
+        map.put("theme", type);
+        new VoteApi(this, map, new ResponseCallBack() {
+            @Override
+            public void result(Object o, ErrorMsg errorMsg) {
+
+            }
+        });
     }
 
     @OnClick({R.id.submit_work, R.id.ppt})

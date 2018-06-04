@@ -8,15 +8,15 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.model.CourseModel;
+import cn.com.zwwl.bayuwen.model.LessonModel;
 
-public class TestListAdapter extends BaseQuickAdapter<CourseModel,BaseViewHolder> {
-    public TestListAdapter(@Nullable List<CourseModel> data) {
+public class TestListAdapter extends BaseQuickAdapter<LessonModel,BaseViewHolder> {
+    public TestListAdapter(@Nullable List<LessonModel> data) {
         super(R.layout.item_test_end,data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, CourseModel item) {
+    protected void convert(BaseViewHolder helper, LessonModel item) {
 
     }
 }

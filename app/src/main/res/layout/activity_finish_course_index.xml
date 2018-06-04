@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <android.support.v7.widget.AppCompatTextView
@@ -69,7 +70,7 @@
         android:drawableStart="@mipmap/home_head_hot"
         android:paddingEnd="@dimen/dp_16"
         android:paddingStart="@dimen/dp_16"
-        android:text="本期雷达图" />
+        android:text="@string/final_test" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/test"
