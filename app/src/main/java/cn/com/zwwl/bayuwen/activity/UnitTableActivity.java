@@ -14,7 +14,7 @@ import java.util.List;
 import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.UnitTableAdapter;
-import cn.com.zwwl.bayuwen.api.LessonListApi;
+import cn.com.zwwl.bayuwen.api.TransferLectureApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -53,7 +53,7 @@ public class UnitTableActivity extends BasicActivityWithTitle {
     protected void initData() {
         operate_type = getIntent().getIntExtra("type", 0);
             kid = getIntent().getStringExtra("kid");
-        new LessonListApi(this, kid, new ResponseCallBack<List<LessonModel>>() {
+        new TransferLectureApi(this, kid,operate_type, new ResponseCallBack<List<LessonModel>>() {
             @Override
             public void result(List<LessonModel> lessonModels, ErrorMsg errorMsg) {
                 if (lessonModels != null) {

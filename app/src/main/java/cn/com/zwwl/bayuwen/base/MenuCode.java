@@ -2,4 +2,5 @@ package cn.com.zwwl.bayuwen.base;
 
 public class MenuCode {
     public static final int SUBMIT=0;
+    public static final int HIDE_CLASS = 1;
 }

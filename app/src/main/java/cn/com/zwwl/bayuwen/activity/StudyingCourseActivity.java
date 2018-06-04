@@ -119,7 +119,7 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
                 break;
             case R.id.course_change:
                 mApplication.operate_type = 0;
-                intent.putExtra("kid", kid);
+                intent.putExtra("kid", "10644");
                 intent.setClass(this, UnitTableActivity.class);
                 break;
             case R.id.class_covert:

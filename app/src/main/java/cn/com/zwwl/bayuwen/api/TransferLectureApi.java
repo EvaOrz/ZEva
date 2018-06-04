@@ -18,16 +18,20 @@ import cn.com.zwwl.bayuwen.util.GsonUtil;
  * 获取子课列表
  * Created by zhumangmang at 2018/6/4 9:35
  */
-public class LessonListApi extends BaseApi {
+public class TransferLectureApi extends BaseApi {
     private ResponseCallBack<List<LessonModel>> callBack;
     private Activity activity;
     private String url;
 
-    public LessonListApi(Activity context, String kid, ResponseCallBack<List<LessonModel>> callBack) {
+    public TransferLectureApi(Activity context, String kid, ResponseCallBack<List<LessonModel>> callBack) {
+        this(context, kid, 0, callBack);
+    }
+
+    public TransferLectureApi(Activity context, String kid, int type, ResponseCallBack<List<LessonModel>> callBack) {
         super(context);
-        this.activity=context;
-        this.callBack=callBack;
-        url = UrlUtil.getLecturesList() + "?kid=" + kid;
+        this.activity = context;
+        this.callBack = callBack;
+        url = UrlUtil.getLecturesList(type) + "?kid=" + kid;
         get();
     }
 

@@ -19,7 +19,7 @@ import cn.com.zwwl.bayuwen.R;
 
 /**
  * @author Monty
- *         created at 2017/6/7 16:37
+ * created at 2017/6/7 16:37
  */
 
 public class IActivityImpl implements IActivity, Toolbar.OnMenuItemClickListener {
@@ -141,19 +141,23 @@ public class IActivityImpl implements IActivity, Toolbar.OnMenuItemClickListener
                 MenuItem submit = menu.findItem(R.id.action_submit);
                 submit.setVisible(true);
                 break;
+            case MenuCode.HIDE_CLASS:
+                MenuItem hide = menu.findItem(R.id.action_hide_class);
+                hide.setVisible(true);
+                break;
         }
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-       if (item.getItemId() == R.id.action_share) {
+        if (item.getItemId() == R.id.action_share) {
             mContext.onMenuClick(R.id.action_share);
         } else if (item.getItemId() == R.id.action_submit) {
             mContext.onMenuClick(R.id.action_submit);
-        }else if (item.getItemId() == R.id.action_settings) {
+        } else if (item.getItemId() == R.id.action_settings) {
             mContext.onMenuClick(R.id.action_settings);
-        }else if (item.getItemId()==R.id.action_order_no){
-            mContext.onMenuClick(R.id.action_order_no);
+        } else if (item.getItemId() == R.id.action_hide_class) {
+            mContext.onMenuClick(R.id.action_hide_class);
         }
         return false;
     }

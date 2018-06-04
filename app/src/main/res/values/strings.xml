@@ -359,4 +359,5 @@
     <string name="transfer_course_class">调课班级</string>
     <string name="old_class">原在班级</string>
     <string name="new_class">将转班级</string>
+    <string name="action_search">搜索</string>
 </resources>

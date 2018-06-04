@@ -21,11 +21,10 @@
         android:layout_height="@dimen/dp_10"
         android:background="@color/gray_line" />
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/pic"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/radar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"

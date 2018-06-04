@@ -251,7 +251,10 @@ public class UrlUtil {
     /**
      * 获取子课列表
      */
-    public static String getLecturesList() {
+    public static String getLecturesList(int type) {
+        if (type==1){
+            return HOST + "/transfer/second_lectures";
+        }
         return HOST + "/transfer/lectures";
     }
     /**

@@ -46,6 +46,7 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
     AppCompatCheckBox tutorVote;
     @BindView(R.id.adviser_vote)
     AppCompatCheckBox adviserVote;
+    private String kId, cId;
 
     @Override
     protected int setContentView() {
@@ -68,12 +69,12 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
     @Override
     protected void initData() {
         setCustomTitle(getIntent().getStringExtra("title"));
-        String kId = getIntent().getStringExtra("kId");
-        String cId = getIntent().getStringExtra("cId");
-        getData(kId, cId);
+        kId = getIntent().getStringExtra("kId");
+        cId = getIntent().getStringExtra("cId");
+        getData();
     }
 
-    private void getData(String kId, String cId) {
+    private void getData() {
         new UnitDetailApi(this, kId, cId, new ResponseCallBack<UnitDetailModel>() {
             @Override
             public void result(UnitDetailModel unitDetailModel, ErrorMsg errorMsg) {
@@ -85,17 +86,17 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
 
                     teacher.setText(String.format("授课老师: %s", unitDetailModel.getTeachers().getTeacher().getName()));
                     teacherVote.setChecked(unitDetailModel.getTeachers().getTeacher().getState() == 1);
-                    if (unitDetailModel.getTeachers().getAssistant()!=null) {
+                    if (unitDetailModel.getTeachers().getAssistant() != null) {
                         tutor.setText(String.format("助教老师: %s", unitDetailModel.getTeachers().getAssistant().getName()));
                         tutorVote.setChecked(unitDetailModel.getTeachers().getAssistant().getState() == 1);
-                    }else {
+                    } else {
                         tutor.setText("助教老师: 无");
                         tutorVote.setVisibility(View.GONE);
                     }
-                    if (unitDetailModel.getTeachers().getCounselor()!=null) {
+                    if (unitDetailModel.getTeachers().getCounselor() != null) {
                         adviser.setText(String.format("学业顾问: %s", unitDetailModel.getTeachers().getCounselor().getName()));
                         adviserVote.setChecked(unitDetailModel.getTeachers().getCounselor().getState() == 1);
-                    }else {
+                    } else {
                         adviser.setText("学业顾问: 无");
                         adviserVote.setVisibility(View.GONE);
                     }
@@ -130,6 +131,8 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
         map.put("to_uid", id);
         map.put("status", isChecked ? "1" : "0");
         map.put("theme", type);
+        map.put("kid", kId);
+        map.put("lecture_id", cId);
         new VoteApi(this, map, new ResponseCallBack() {
             @Override
             public void result(Object o, ErrorMsg errorMsg) {
