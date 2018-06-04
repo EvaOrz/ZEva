@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.haibin.calendarview.CalendarView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,6 +46,8 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
     // key:date value:日历事件列表
     private Map<String, List<CalendarEventModel>> mapDatas = new HashMap<>();
 
+    // 当前选中日期下事件列表
+    private List<CalendarEventModel> currentEvents = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,12 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
         initView();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initData();
     }
 
@@ -65,9 +74,9 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
         keRecyclerView.setLayoutManager(layoutmanager);
         calendarView = findViewById(R.id.calendarView);
         calendarView.setOnMonthChangeListener(this);
+        calendarView.setOnDateSelectedListener(this);
         calendarView.setRange(CalendarTools.getMinYear(), 1, CalendarTools.getMaxYear(), 12);
-
-        setScheme(CalendarTools.getCurrentYear(), CalendarTools.getCurrentMonth());
+        setKeData(0, 0, 0);
         handler.sendEmptyMessageDelayed(0, 200);
         findViewById(R.id.calendar_back).setOnClickListener(this);
         findViewById(R.id.calendar_add).setOnClickListener(this);
@@ -76,18 +85,10 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
     /**
      * 设置日历事件的下标
      */
-    private void setScheme(int year, int month) {
-        List<com.haibin.calendarview.Calendar> schemes = new ArrayList<>();
+    private void setCalendarScheme(int year, int month) {
+//        schemes.add(getSchemeCalendar(year, month, 18, 0xFFdcaa40, "20"));
+//        schemes.add(getSchemeCalendar(year, month, 25, 0xFFdcaa40, "1"));
 
-        schemes.add(getSchemeCalendar(year, month, 3, 0xFFdcaa40, "1"));
-        schemes.add(getSchemeCalendar(year, month, 6, 0xFFdcaa40, "2"));
-        schemes.add(getSchemeCalendar(year, month, 9, 0xFFdcaa40, "4"));
-        schemes.add(getSchemeCalendar(year, month, 13, 0xFFdcaa40, "22"));
-        schemes.add(getSchemeCalendar(year, month, 14, 0xFFdcaa40, "5"));
-        schemes.add(getSchemeCalendar(year, month, 15, 0xFFdcaa40, "8"));
-        schemes.add(getSchemeCalendar(year, month, 18, 0xFFdcaa40, "20"));
-        schemes.add(getSchemeCalendar(year, month, 25, 0xFFdcaa40, "1"));
-        calendarView.setSchemeDate(schemes);
     }
 
     private com.haibin.calendarview.Calendar getSchemeCalendar(int year, int month, int day, int
@@ -110,6 +111,28 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
                 case 0:// 定位到当前日期
                     calendarView.scrollToCurrent(true);
                     break;
+                case 1:// 初始化日历事件：1.添加日历标记；2.获取当前日期的日历事件
+                    try {
+                        List<com.haibin.calendarview.Calendar> schemes = new ArrayList<>();
+                        for (String key : mapDatas.keySet()) {
+                            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+                            Date d = sf.parse(key);
+                            Calendar c = Calendar.getInstance();
+                            c.setTime(d);
+                            schemes.add(getSchemeCalendar(c.get(Calendar.YEAR), c.get(Calendar
+                                            .MONTH) + 1, c.get(Calendar.DAY_OF_MONTH),
+                                    0xFFdcaa40, mapDatas.get(key).size() + ""));
+                        }
+                        calendarView.setSchemeDate(schemes);
+                    } catch (ParseException e) {
+
+                    }
+                    Calendar calendar = Calendar.getInstance();
+                    Date date = new Date();
+                    calendar.setTime(date);
+                    setKeData(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar
+                            .get(Calendar.DATE));
+                    break;
             }
 
         }
@@ -123,7 +146,6 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
     public void doMonthSelect(Calendar calendar) {
         calendarView.scrollToCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) +
                 1, 1);
-        setScheme(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH));
     }
 
     @Override
@@ -137,6 +159,7 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
             public void setData(Map<String, List<CalendarEventModel>> maps) {
                 if (maps != null && !maps.isEmpty()) {
                     mapDatas = maps;
+                    handler.sendEmptyMessage(1);
                 }
             }
 
@@ -169,14 +192,26 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
 
     @Override
     public void onDateSelected(com.haibin.calendarview.Calendar calendar, boolean isClick) {
-        String dataString = calendar.getYear() + "-" + calendar.getMonth() + "-" + calendar
-                .getDay();
-        Log.e("sssssss", dataString);
-        List<CalendarEventModel> calendarEventModels = new ArrayList<>();
+
+        setKeData(calendar.getYear(), calendar.getMonth(), calendar.getDay());
+
+    }
+
+    private void setKeData(int year, int month, int day) {
+        String dataString = year + "-" + getDateString(month) + "-" + getDateString(day);
+        currentEvents.clear();
         if (mapDatas.containsKey(dataString)) {
-            calendarEventModels.addAll(mapDatas.get(dataString));
+            currentEvents.addAll(mapDatas.get(dataString));
         }
-        calendarKeAdapter = new CalendarKeAdapter(mContext, calendarEventModels);
+        calendarKeAdapter = new CalendarKeAdapter(mContext, currentEvents);
         keRecyclerView.setAdapter(calendarKeAdapter);
+
+    }
+
+    private String getDateString(int i) {
+        if (i < 10) {
+            return "0" + i;
+        }
+        return i + "";
     }
 }

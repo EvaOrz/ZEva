@@ -14,40 +14,30 @@ import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
 /**
- * 发起拼团（获取拼团码）
- * <p>
- * 根据课程码开通课程
+ * 检查是否可以参团
  */
-public class TuanKaiApi extends BaseApi {
+public class CheckCanTuanApi extends BaseApi {
     private FetchEntryListener listener;
     private Map<String, String> pamas = new HashMap<>();
-    private boolean isGetCode = true;// 区分获取开团码和根据团购码开通课程
 
     /**
      * @param context
-     * @param pama     kid|code
+     * @param code
      * @param listener
      */
-    public TuanKaiApi(Context context, String pama, boolean isGetCode, FetchEntryListener
+    public CheckCanTuanApi(Context context, String code, FetchEntryListener
             listener) {
         super(context);
         mContext = context;
-        this.isGetCode = isGetCode;
         this.listener = listener;
-        if (isGetCode) {
-            pamas.put("kid", pama);
-        } else {
-            pamas.put("code", pama);
-        }
+        pamas.put("code", code);
         post();
     }
 
 
     @Override
     protected String getUrl() {
-        if (isGetCode)
-            return UrlUtil.faqiTuan();
-        else return UrlUtil.faqiTuan() + "/open";
+        return UrlUtil.checkCanTuan();
     }
 
     @Override
@@ -55,15 +45,6 @@ public class TuanKaiApi extends BaseApi {
         if (errorMsg != null)
             listener.setError(errorMsg);
         else listener.setError(null);
-
-        if (!isNull(json)) {
-            String purchase_code = json.optString("purchase_code");
-            ErrorMsg error = new ErrorMsg();
-            error.setDesc(purchase_code);
-            listener.setData(error);
-        } else {
-            listener.setData(null);
-        }
 
     }
 

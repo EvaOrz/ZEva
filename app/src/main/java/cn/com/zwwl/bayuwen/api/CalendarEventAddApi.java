@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.api;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,7 +26,7 @@ public class CalendarEventAddApi extends BaseApi {
     private Map<String, String> pamas = new HashMap<>();
 
     public CalendarEventAddApi(Context context, CalendarEventModel calendarEventModel, int
-            totalWeeks, String totalNumber, String[] courseDate, String teacher,
+            totalWeeks, String totalNumber, String courseDate, String teacher,
                                FetchEntryListener listener) {
         super(context);
         mContext = context;
@@ -33,13 +34,13 @@ public class CalendarEventAddApi extends BaseApi {
         pamas.put("userId", UserDataHelper.getUid(mContext));
         pamas.put("name", calendarEventModel.getName());// 课程名称
         pamas.put("orgName", calendarEventModel.getOrgName());
-        pamas.put("startTime", calendarEventModel.getStartTime());
-        pamas.put("endTime", calendarEventModel.getEndTime());
+        pamas.put("startTime", calendarEventModel.getStartTime() + ":00");
+        pamas.put("endTime", calendarEventModel.getEndTime() + ":00");
         pamas.put("totalWeeks", totalWeeks + "");
         pamas.put("teacher", teacher);
         pamas.put("orgId", calendarEventModel.getOutOrgId());
         pamas.put("totalNumber", totalNumber);
-        pamas.put("courseDates", courseDate.toString());
+        pamas.put("courseDates", courseDate);
         pamas.put("jPushAlias", "jPushAlias");
         post();
     }
@@ -51,7 +52,7 @@ public class CalendarEventAddApi extends BaseApi {
 
     @Override
     protected Map<String, String> getPostParams() {
-        return null;
+        return pamas;
     }
 
     @Override
@@ -60,6 +61,11 @@ public class CalendarEventAddApi extends BaseApi {
             listener.setError(errorMsg);
         }
         if (!isNull(json)) {
+            if (json.has("recordId")) {
+                ErrorMsg errorMsg1 = new ErrorMsg();
+                errorMsg1.setNo(json.optInt("recordId"));
+                listener.setData(errorMsg1);
+            }
 
         } else listener.setData(null);
     }

@@ -22,11 +22,13 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import cn.beecloud.BeeCloud;
 import cn.com.zwwl.bayuwen.api.UrlUtil;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.service.NewMusicService;
+import cn.com.zwwl.bayuwen.util.AddressTools;
 
 /**
  * Created by Eva. on 2018/3/23.
@@ -63,6 +65,7 @@ public class MyApplication extends Application {
     public static Class<?> stringCls;// string资源class
     public static Class<?> idsCls;// id资源class
     public static Map<String, Activity> activityMap = new HashMap<String, Activity>();
+    public static AddressTools addressTools;
 
     /**
      * 登录状态是否改变
@@ -97,7 +100,7 @@ public class MyApplication extends Application {
         QQ_APP_ID = "1105723648";
         QQ_SECRET = "SClqzj0HjnAx2ATM";
 
-
+        mContext = this;
         super.onCreate();
         initScreenInfo();
         initChannel();
@@ -105,6 +108,23 @@ public class MyApplication extends Application {
         initUmeng();
         UrlUtil.setHost();
         initAlbum();
+        initBeeCloud();
+        initAdressJson();
+    }
+
+    /**
+     * 初始化地区json
+     */
+    private void initAdressJson() {
+        addressTools = new AddressTools(mContext);
+    }
+
+    /**
+     * 初始化beecloud 支付模块
+     */
+    private void initBeeCloud() {
+        BeeCloud.setAppIdAndSecret("721109e7-16df-4697-adca-3d5ba26b85ff",
+                "bdd7ea95-977e-4771-bafa-dcc2e0ae57d7");
     }
 
     private void initAlbum() {
@@ -125,6 +145,9 @@ public class MyApplication extends Application {
         );
     }
 
+    /**
+     * 初始化leancloud 短信服务模块
+     */
     private void initLeanCloud() {
         // 初始化参数依次为 this, AppId, AppKey
         AVOSCloud.initialize(this, "8c05u6ekuwc5dh82jfahkxgdqr6wdxetvwosh6jstq71psfp",

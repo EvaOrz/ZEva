@@ -152,8 +152,6 @@ public class AddCalendarActivity extends BaseActivity {
     };
 
     private void doSave() {
-//        Log.e("sssssss", (CalendarTools.countTwoDayWeek
-//                (startDate, endDate));
         String name = nameEv.getText().toString();
         String totalNumber = cishuEv.getText().toString();
         String teacher = teacherEv.getText().toString();
@@ -178,6 +176,7 @@ public class AddCalendarActivity extends BaseActivity {
             calendarEventModel.setOutOrgId(calendarJigouModel.getId());
             calendarEventModel.setStartTime(shangTime);
             calendarEventModel.setEndTime(xiaTime);
+            showLoadingDialog(true);
             new CalendarEventAddApi(mContext, calendarEventModel, CalendarTools.countTwoDayWeek
                     (startDate, endDate), totalNumber,
                     transPeriod(), teacher, new FetchEntryListener() {
@@ -185,22 +184,23 @@ public class AddCalendarActivity extends BaseActivity {
 
                 @Override
                 public void setData(Entry entry) {
-
+                    showLoadingDialog(false);
+                    if (entry != null) finish();
                 }
 
                 @Override
                 public void setError(ErrorMsg error) {
-
+                    showLoadingDialog(false);
                 }
             });
         }
     }
 
-    private String[] transPeriod() {
-        String[] strs = new String[periods.size()];
+    private String transPeriod() {
+        String strs = "";
         SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
         for (int i = 0; i < periods.size(); i++) {
-            strs[i] = fm.format(periods.get(i));
+            strs += fm.format(periods.get(i)) + ",";
         }
         return strs;
     }

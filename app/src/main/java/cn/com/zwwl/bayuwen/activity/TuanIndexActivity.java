@@ -23,7 +23,9 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
-import cn.com.zwwl.bayuwen.api.order.TuanKaiApi;
+import cn.com.zwwl.bayuwen.api.order.CheckCanTuanApi;
+import cn.com.zwwl.bayuwen.api.order.GetTuanCodeApi;
+import cn.com.zwwl.bayuwen.api.order.KaiTuanbyCodeApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -183,86 +185,102 @@ public class TuanIndexActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tuan_index_intro:// 团购说明
+                goWeb();
                 break;
             case R.id.sure_dian:// 确认垫付
-                Intent i = new Intent(mContext, TuanPayActivity.class);
-                i.putExtra("TuanPayActivity_data", keModel);
-                startActivity(i);
+                getKaiTuanCode(2);
                 break;
             case R.id.tuan_index_kaituan:// 我要开团
-                getKaiTuanCode();
+                getKaiTuanCode(1);
                 break;
-            case R.id.tuan_index_code_bt:// 根据课程码开通课程
+            case R.id.tuan_index_code_bt:// 检查可否参团
                 String code = codeEditText.getText().toString();
                 if (!TextUtils.isEmpty(code))
-                    doKaitongBycode(code);
+                    checkCanTuan(code);
                 break;
 
         }
     }
 
-    /**
-     * 获取开团码
-     */
-    private void getKaiTuanCode() {
-        showLoadingDialog(true);
-        new TuanKaiApi(mContext, keModel.getGroupbuy().getItem_id(), true, new FetchEntryListener
-                () {
-            @Override
-            public void setError(ErrorMsg error) {
-                showLoadingDialog(false);
-                if (error != null) {
-                    showToast(error.getDesc());
-                }
-
-            }
-
-            @Override
-            public void setData(Entry entry) {
-                showLoadingDialog(false);
-                if (entry != null && entry instanceof ErrorMsg) {
-                    // 我要开团获取的开团码
-                    String tuanCode = ((ErrorMsg) entry).getDesc();
-                    Intent i = new Intent(mContext, TuanKaiActivity.class);
-                    i.putExtra("TuanKaiActivity_data", tuanCode);
-                    startActivity(i);
-                    finish();
-                }
-            }
-        });
+    public void goWeb() {
+        Intent i = new Intent(mContext, WebActivity.class);
+        i.putExtra("WebActivity_title", "团购说明");
+        i.putExtra("WebActivity_data", "");
+        startActivity(i);
     }
 
     /**
-     * 根据开团码开通课程
+     * 根据拼团码检查是否可以参团
      *
      * @param code
      */
-    private void doKaitongBycode(String code) {
+    private void checkCanTuan(final String code) {
         showLoadingDialog(true);
-        new TuanKaiApi(mContext, code, false, new FetchEntryListener() {
-            @Override
-            public void setError(ErrorMsg error) {
-                showLoadingDialog(false);
-                if (error == null) {// 没有错误信息，则操作成功
-                    startActivity(new Intent(mContext, TuanPayResultActivity.class));
-                    finish();
-                } else {
-                    showToast(error.getDesc());
-                }
-
-            }
-
+        new CheckCanTuanApi(mContext, code, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
 
             }
-        });
 
+            @Override
+            public void setError(ErrorMsg error) {
+                if (error == null) {// 可以参团
+                    Intent i = new Intent();
+                    i.setClass(mContext, TuanPayActivity.class);
+                    i.putExtra("TuanPayActivity_data", keModel);
+                    i.putExtra("TuanPayActivity_code", code);
+                    i.putExtra("TuanPayActivity_type", 0);// 单独参团
+                    startActivity(i);
+                } else {
+                    showToast("拼团码无效");
+                }
+            }
+        });
     }
+
+    /**
+     * 获取开团码
+     */
+    private void getKaiTuanCode(final int type) {
+        showLoadingDialog(true);
+        new GetTuanCodeApi(mContext, keModel.getGroupbuy().getItem_id(), type, new
+                FetchEntryListener() {
+                    @Override
+                    public void setError(ErrorMsg error) {
+                        showLoadingDialog(false);
+                        if (error != null) {
+                            showToast(error.getDesc());
+                        }
+
+                    }
+
+                    @Override
+                    public void setData(Entry entry) {
+                        showLoadingDialog(false);
+                        if (entry != null && entry instanceof ErrorMsg) {
+                            // 我要开团获取的开团码
+                            String tuanCode = ((ErrorMsg) entry).getDesc();
+                            Intent i = new Intent();
+                            if (type == 1) {
+                                i.setClass(mContext, TuanKaiActivity.class);
+                                i.putExtra("TuanKaiActivity_data", keModel);
+                                i.putExtra("TuanKaiActivity_code", tuanCode);
+                            } else if (type == 2) {
+                                i.setClass(mContext, TuanPayActivity.class);
+                                i.putExtra("TuanPayActivity_data", keModel);
+                                i.putExtra("TuanPayActivity_code", tuanCode);
+                                i.putExtra("TuanPayActivity_type", 1);// 垫付
+                            }
+                            startActivity(i);
+                        }
+                    }
+                });
+    }
+
 
     @Override
     protected void initData() {
-        dianNum.setText(keModel.getGroupbuy().getLimit_num());
+        dianNum.setText(keModel.getGroupbuy().getLimit_num() + "");
         dianJiao.setText(keModel.getGroupbuy().getMaterial_price() + "");
         dianKe.setText(keModel.getGroupbuy().getDiscount_pintrice() - keModel.getGroupbuy()
                 .getMaterial_price() + "");
