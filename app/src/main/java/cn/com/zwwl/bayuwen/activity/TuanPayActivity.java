@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,10 +19,15 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.beecloud.async.BCCallback;
+import cn.beecloud.async.BCResult;
+import cn.beecloud.entity.BCPayResult;
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.AddressApi;
 import cn.com.zwwl.bayuwen.api.order.CountPriceApi;
 import cn.com.zwwl.bayuwen.api.order.GetYueApi;
+import cn.com.zwwl.bayuwen.api.order.MakeOrderApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -29,6 +35,7 @@ import cn.com.zwwl.bayuwen.model.AddressModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.util.AddressTools;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.PayDetailDialog;
@@ -47,12 +54,13 @@ public class TuanPayActivity extends BaseActivity {
     private TextView tagTv, titleTv, teacherTv, xiaoquTv, dateTv, timeTv, yueTv;
     private ImageView imgView;
     private TextView dianNumTv, codeTv;
-
+    private EditText tuijianEv;
 
     private KeModel keModel;
     private String tuanCode;// 拼团码
     private String itemCode;// id组合码
     private String yueTxt = "0.00";// 账户余额
+    private AddressModel currentAddress;// 当前收货地址
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,7 +97,7 @@ public class TuanPayActivity extends BaseActivity {
         } else {
             itemCode = keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
         }
-        Log.e("ssssssssss",itemCode);
+        Log.e("ssssssssss", itemCode);
     }
 
     private void setGoodsInfo() {
@@ -116,6 +124,8 @@ public class TuanPayActivity extends BaseActivity {
         adresslayout = findViewById(R.id.go_select_layout);
         dianNumTv = findViewById(R.id.dian_num);
         codeTv = findViewById(R.id.tuan_code_tv);
+        tuijianEv = findViewById(R.id.tuijian_ev);
+        tuijianEv.clearFocus();
 
         tagTv = findViewById(R.id.ke_tag);
         titleTv = findViewById(R.id.ke_title);
@@ -163,6 +173,7 @@ public class TuanPayActivity extends BaseActivity {
                 case 0:
                     for (AddressModel addressModel : addressDatas) {
                         if (addressModel.getIs_default().equals("1")) {
+                            currentAddress = addressModel;// 赋值当前收货地址
                             adresslayout.setVisibility(View.VISIBLE);
                             addressTv.setVisibility(View.VISIBLE);
                             addTv.setVisibility(View.GONE);
@@ -208,7 +219,12 @@ public class TuanPayActivity extends BaseActivity {
                 new YouHuiJuanPopWindow(mContext);
                 break;
             case R.id.order_d_commit:// 提交订单
-                commit();
+                if (currentAddress == null) {
+                    showToast("请选择收货地址");
+                } else {
+                    commit();
+                }
+
                 break;
             case R.id.pay_detail:// 支付明细
                 new PayDetailDialog(mContext);
@@ -217,8 +233,22 @@ public class TuanPayActivity extends BaseActivity {
 
     }
 
+    // String channel, String coupon_code, String aid, String
+//            saleno, String assets, String item, String groupbuy
     private void commit() {
-//        new MakeOrderApi(mContext,)
+        String tuijianCode = tuijianEv.getText().toString();
+        new MakeOrderApi(mContext, "1", "", currentAddress.getId(), tuijianCode,
+                yueTxt, itemCode, tuanCode, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
     }
 
     public void goWeb() {
@@ -276,7 +306,7 @@ public class TuanPayActivity extends BaseActivity {
      * 实时计算金额
      */
     private void countPrice() {
-        new CountPriceApi(mContext, itemCode, "", "", yueTxt,tuanCode, new FetchEntryListener() {
+        new CountPriceApi(mContext, itemCode, "", "", yueTxt, tuanCode, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
 
@@ -288,5 +318,32 @@ public class TuanPayActivity extends BaseActivity {
             }
         });
     }
+
+    //支付结果返回入口
+    BCCallback bcCallback = new BCCallback() {
+        @Override
+        public void done(final BCResult bcResult) {
+            final BCPayResult bcPayResult = (BCPayResult) bcResult;
+
+            //根据你自己的需求处理支付结果
+            String result = bcPayResult.getResult();
+
+            if (result.equals(BCPayResult.RESULT_SUCCESS)) {
+                showToast("用户支付成功");
+            } else if (result.equals(BCPayResult.RESULT_CANCEL)) {
+                showToast("用户取消支付");
+            } else if (result.equals(BCPayResult.RESULT_FAIL)) {
+                showToast("支付失败, 原因: " + bcPayResult.getErrCode() +
+                        " # " + bcPayResult.getErrMsg() +
+                        " # " + bcPayResult.getDetailInfo());
+
+            } else if (result.equals(BCPayResult.RESULT_UNKNOWN)) {
+                //可能出现在支付宝8000返回状态
+                showToast("订单状态未知");
+            } else {
+                showToast("invalid return");
+            }
+        }
+    };
 
 }

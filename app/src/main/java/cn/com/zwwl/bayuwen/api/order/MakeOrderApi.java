@@ -24,8 +24,8 @@ public class MakeOrderApi extends BaseApi {
     /**
      * @param context
      * @param channel     1支付宝 2微信 11手动支付
-     * @param coupon_code
-     * @param aid
+     * @param coupon_code 优惠券码
+     * @param aid         地区id
      * @param saleno      推荐码
      * @param assets      账户余额
      * @param item

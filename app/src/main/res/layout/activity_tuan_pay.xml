@@ -429,6 +429,7 @@
                         android:textSize="@dimen/text_size_14" />
 
                     <EditText
+                        android:id="@+id/tuijian_ev"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"

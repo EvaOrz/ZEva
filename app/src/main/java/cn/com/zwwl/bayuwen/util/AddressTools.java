@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.util;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -186,5 +187,16 @@ public class AddressTools {
         public void setDid(String did) {
             this.did = did;
         }
+    }
+
+    /**
+     * 通过城市名称获取id
+     *
+     * @param cityName
+     */
+    public void getAidByCityname(String cityName) {
+        if (TextUtils.isEmpty(cityName)) return;
+
+
     }
 }

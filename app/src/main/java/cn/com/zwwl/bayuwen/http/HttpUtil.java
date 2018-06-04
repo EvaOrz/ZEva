@@ -288,7 +288,8 @@ public class HttpUtil {
         if (file != null) {
             for (File f : file) {
                 if (f.exists())
-                    requestBody.addFormDataPart("file", f.getName(), RequestBody.create(MediaType.parse("image/*"), f));
+                    requestBody.addFormDataPart("file", f.getName(), RequestBody.create(MediaType
+                            .parse("image/*"), f));
             }
         }
         Request.Builder requestBuilder = new Request.Builder();
@@ -421,7 +422,7 @@ public class HttpUtil {
                 requestBuilder.addHeader("Authorization", "");
             String city = "";
             if (TextUtils.isEmpty(TempDataHelper.getCurrentCity(mContext)))
-                city = URLEncoder.encode("北京", "UTF-8");
+                city = URLEncoder.encode("北京市", "UTF-8");
             else city = URLEncoder.encode(TempDataHelper.getCurrentCity(mContext), "UTF-8");
             requestBuilder.addHeader("City", city).addHeader
                     ("Device", "android");

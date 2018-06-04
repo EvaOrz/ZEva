@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.util.AddressTools;
 import cn.com.zwwl.bayuwen.util.AddressTools.*;
@@ -89,7 +90,7 @@ public class AddressPopWindow implements View.OnClickListener {
         view.findViewById(R.id.btn_myinfo_sure).setOnClickListener(this);
         view.findViewById(R.id.btn_myinfo_cancel).setOnClickListener(this);
 
-        addressTools = new AddressTools(mContext);
+        addressTools = MyApplication.addressTools;
         arrProvinces.clear();
         arrProvinces.addAll(addressTools.initProvinceList());
         resetProvince(0);
