@@ -3,19 +3,14 @@ package cn.com.zwwl.bayuwen.model;
 
 /**
  * 订单model
+ * <p>
+ * (我的订单页面列表数据)
  */
 public class OrderModel extends Entry {
 
-
     /**
-     * trade_channel : 1
-     * trade_fee : 1
-     * bill_no : 10180604140210664305
-     * bill_title : 四年级大语文
-     * trade_type : 1
-     * return_url : http%3A%2F%2Fm.dev.zhugexuetang.com%2F%2Forderdetail%2F10180604140210664305
+     * 支付时订单详情
      */
-
     private String trade_channel;
     private int trade_fee;
     private String bill_no;
@@ -23,6 +18,7 @@ public class OrderModel extends Entry {
     private String trade_type;
     private String return_url;
     private OrderDetailModel orderDetailModel;
+
 
     public String getTrade_channel() {
         return trade_channel;
@@ -82,20 +78,9 @@ public class OrderModel extends Entry {
 
     /**
      * 订单价格详情
+     * (支付页面订单detail dialog)
      */
     public static class OrderDetailModel extends Entry {
-
-        /**
-         * originPrice : 205000
-         * amount : 205000
-         * limitDiscount : 0
-         * couponDiscount : 0
-         * coursePrice : {"7018":0}
-         * orderDiscount : 0
-         * promotionDiscount : 0
-         * groupBuyDiscount : 0
-         * assets : 0
-         */
 
         private Double originPrice;
         private Double amount;

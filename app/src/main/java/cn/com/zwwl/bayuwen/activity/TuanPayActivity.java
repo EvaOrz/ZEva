@@ -235,7 +235,7 @@ public class TuanPayActivity extends BaseActivity {
             case R.id.tuan_code_copy:// 复制拼团码
                 ClipboardManager cm = (ClipboardManager) getSystemService(Context
                         .CLIPBOARD_SERVICE);
-                cm.setText("");
+                cm.setText(tuanCode);
                 showToast("已复制到剪切板");
                 break;
             case R.id.youhui_layout:// 优惠券

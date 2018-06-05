@@ -19,6 +19,7 @@ import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.model.OrderForMyListModel;
 
 /**
  * 我的订单api
@@ -30,7 +31,7 @@ public class MyOrderApi extends BaseApi {
 
     /**
      * @param context
-     * @param type         1:购课单 2:待付款 3:已付款 4:退款
+     * @param type         2:待付款 3:已付款
      * @param listListener
      */
     public MyOrderApi(Context context, int type, FetchEntryListListener listListener) {
@@ -57,26 +58,19 @@ public class MyOrderApi extends BaseApi {
         if (errorMsg != null) {
             listListener.setError(errorMsg);
         }
-        if (type == 1) {
-            listListener.setData(parseGoukeDan(jsonArray));
-        }
-
-    }
-
-    private List<KeModel> parseGoukeDan(JSONArray array) {
-        List<KeModel> keModelList = new ArrayList<>();
-        if (!isNull(array)) {
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject jsonObject = array.optJSONObject(i).optJSONObject("course");
-                if (!isNull(jsonObject)) {
-                    Gson gson = new Gson();
-                    KeModel keModel = gson.fromJson(jsonObject.toString(), KeModel.class);
-                    keModelList.add(keModel);
+        if (!isNull(json)) {
+            JSONArray array = json.optJSONArray("orders");
+            if (!isNull(array)) {
+                List<OrderForMyListModel> datas = new ArrayList<>();
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject jsonObject = array.optJSONObject(i);
+                    OrderForMyListModel o = new OrderForMyListModel();
+                    o.parseOrderForMyListModel(jsonObject, o);
+                    datas.add(o);
                 }
+                listListener.setData(datas);
             }
         }
-        return keModelList;
     }
-
 
 }

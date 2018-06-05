@@ -181,10 +181,14 @@ public class UrlUtil {
         return HOST + "/user/assets";
     }
 
-
     //我的订单
     public static String getMyOrder() {
         return HOST + "/order/myorder";
+    }
+
+    //获取订单详情
+    public static String getOrderDetail() {
+        return HOST + "/order/orderdetail";
     }
 
     // 加入、获取、删除购课单
@@ -212,6 +216,16 @@ public class UrlUtil {
         return HOST + "/organization";
     }
 
+    // 退费列表
+    public static String getTuifeeList() {
+        return HOST + "/refund/list";
+    }
+
+    // 退费理由列表
+    public static String getTuifeeReasonList() {
+        return HOST + "/order/refund_reason";
+    }
+
     /**
      * 正在进行课程
      */
@@ -236,12 +250,14 @@ public class UrlUtil {
     public static String addVote() {
         return HOST + "/vote";
     }
+
     /**
      * 获取已完成课次二级列表
      */
     public static String getFCourseList() {
         return HOST + "/course/mytype";
     }
+
     /**
      * 获取期末考试详情
      */

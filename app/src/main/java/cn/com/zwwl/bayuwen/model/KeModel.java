@@ -14,6 +14,7 @@ import java.util.List;
 public class KeModel extends Entry {
     private List<TeacherModel> teacherModels = new ArrayList<>();
     private List<LessonModel> lessonModels = new ArrayList<>();
+    private String cartId = ""; // 购课单id，购课单列表用，其他场合不用解析
     private String id;
     private String kid;
     private String title;
@@ -54,7 +55,7 @@ public class KeModel extends Entry {
     private String term;
     private String window_isopen;
     private Object remark;
-    private String source;
+    private String source = "1";
     private String level;
     private Object service;
     private String model;
@@ -64,7 +65,7 @@ public class KeModel extends Entry {
     private String school;
     private String city;
     private String num;
-    private String online;
+    private String online = "0";
     private String hours;
     private String discount_amount;
     private String discount_start_time;
@@ -797,5 +798,11 @@ public class KeModel extends Entry {
         this.lessonModels = lessonModels;
     }
 
+    public String getCartId() {
+        return cartId;
+    }
 
+    public void setCartId(String cartId) {
+        this.cartId = cartId;
+    }
 }

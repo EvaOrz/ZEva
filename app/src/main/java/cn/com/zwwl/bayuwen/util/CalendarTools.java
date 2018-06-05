@@ -120,7 +120,7 @@ public class CalendarTools {
             //            } else {
             format = new SimpleDateFormat(pattern);
             //            }
-            return format.format(new Date(time));
+            return format.format(new Date(time * 1000));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -186,6 +186,7 @@ public class CalendarTools {
 
     /**
      * 获取当前年份
+     *
      * @return
      */
     public static int getCurrentYear() {
@@ -196,6 +197,7 @@ public class CalendarTools {
 
     /**
      * 获取当前月份
+     *
      * @return
      */
     public static int getCurrentMonth() {

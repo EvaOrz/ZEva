@@ -21,31 +21,49 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.adapter.CartAdapter;
 import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
 import cn.com.zwwl.bayuwen.adapter.MyOrderAdapter;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
+import cn.com.zwwl.bayuwen.api.order.CartApi;
+import cn.com.zwwl.bayuwen.api.order.GetTuiFeeListApi;
 import cn.com.zwwl.bayuwen.api.order.MyOrderApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.model.OrderForMyListModel;
+import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
  * 我的订单页面
  */
-public class MyOrderActivity extends BaseActivity {
+public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     private ViewPager viewPager;
     private ListView view1, view2, view3, view4;
     private View line1, line2, line3, line4;
     private RadioButton button1, button2, button3, button4;
     private List<View> views = new ArrayList<>();
     private MyViewPagerAdapter adapter;
-    private MyOrderAdapter adapter1, adapter2, adapter3, adapter4;
+    private CartAdapter adapter1;
+    private MyOrderAdapter adapter2, adapter3, adapter4;
     private LinearLayout payLayout;
+    private TextView deleteBt, totalPrice;
+
+    private List<KeModel> data1List = new ArrayList<>();
+    private Map<String, Boolean> kidStatus = new HashMap<>();// 购课单列表的选中状态
+    private String deleteIds = "";// 可删除的课程串儿
+    private List<OrderForMyListModel> data2List = new ArrayList<>();
+    private List<OrderForMyListModel> data3List = new ArrayList<>();
+    private List<OrderForMyListModel> data4List = new ArrayList<>();
+
 
     private int initTabNum = 0; // 初始tab选中
 
@@ -56,6 +74,11 @@ public class MyOrderActivity extends BaseActivity {
         setContentView(R.layout.activity_my_order);
         initTabNum = getIntent().getIntExtra("MyOrderActivity_data", 0);
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initData();
     }
 
@@ -66,22 +89,38 @@ public class MyOrderActivity extends BaseActivity {
         line3 = findViewById(R.id.my_order_line3);
         line4 = findViewById(R.id.my_order_line4);
         payLayout = findViewById(R.id.my_order_pay_layout);
+        deleteBt = findViewById(R.id.my_order_delete);
+        totalPrice = findViewById(R.id.total_price);
 
         ColorDrawable colorDrawable = new ColorDrawable(Color.TRANSPARENT);
         view1 = new ListView(mContext);
         view1.setDivider(null);
         view1.setSelector(colorDrawable);
+        view1.setOnItemClickListener(this);
         view2 = new ListView(mContext);
         view2.setDivider(null);
         view2.setSelector(colorDrawable);
+        view2.setOnItemClickListener(this);
         view3 = new ListView(mContext);
         view3.setDivider(null);
         view3.setSelector(colorDrawable);
+        view3.setOnItemClickListener(this);
         view4 = new ListView(mContext);
         view4.setDivider(null);
         view4.setSelector(colorDrawable);
+        view4.setOnItemClickListener(this);
 
-        adapter1 = new MyOrderAdapter(this, 1);
+        adapter1 = new CartAdapter(this, new CartAdapter.OnItemCheckChangeListener() {
+            @Override
+            public void onCheckChange(String cartId, boolean cStatus) {
+                kidStatus.put(cartId, cStatus);
+
+                if (kidStatus.containsValue(true)) {
+                    handler.sendEmptyMessage(3);
+                } else handler.sendEmptyMessage(5);
+                handler.sendEmptyMessage(6);// 重置价格
+            }
+        });
         adapter2 = new MyOrderAdapter(this, 2);
         adapter3 = new MyOrderAdapter(this, 3);
         adapter4 = new MyOrderAdapter(this, 4);
@@ -94,32 +133,6 @@ public class MyOrderActivity extends BaseActivity {
         views.add(view3);
         views.add(view4);
 
-        view1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(mContext, OrderDetailActivity.class));
-            }
-        });
-        view2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(mContext, OrderDetailActivity.class));
-            }
-        });
-        view3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(mContext, OrderDetailActivity.class));
-            }
-        });
-        view4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(mContext, OrderDetailActivity.class));
-            }
-        });
-
-
         adapter = new MyViewPagerAdapter(views);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -131,6 +144,7 @@ public class MyOrderActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
+                initTabNum = position;
                 if (position == 0)
                     button1.setChecked(true);
                 else if (position == 1)
@@ -184,6 +198,7 @@ public class MyOrderActivity extends BaseActivity {
         });
         changeRadio(initTabNum);
         findViewById(R.id.my_order_back).setOnClickListener(this);
+        deleteBt.setOnClickListener(this);
     }
 
     @SuppressLint("HandlerLeak")
@@ -193,8 +208,39 @@ public class MyOrderActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
+                    adapter2.setData(data2List);
+                    adapter2.notifyDataSetChanged();
                     break;
                 case 1:
+                    adapter3.setData(data3List);
+                    adapter3.notifyDataSetChanged();
+                    break;
+                case 2:
+                    adapter4.setData(data4List);
+                    adapter4.notifyDataSetChanged();
+                    break;
+                case 3:// 显示删除按钮
+
+                    deleteBt.setVisibility(View.VISIBLE);
+
+                    break;
+                case 4:
+                    adapter1.setData(data1List);
+                    adapter1.notifyDataSetChanged();
+                    break;
+                case 5:// 隐藏删除按钮
+                    deleteBt.setVisibility(View.GONE);
+                    break;
+                case 6:// 购课单价格计算
+                    Double price = 0.00;
+                    deleteIds = "";
+                    for (int i = 0; i < data1List.size(); i++) {
+                        if (kidStatus.get(data1List.get(i).getCartId())) {// 选中
+                            deleteIds += data1List.get(i).getCartId() + ",";
+                            price += Double.valueOf(data1List.get(i).getBuyPrice());
+                        }
+                    }
+                    totalPrice.setText("合计：￥" + price / 100);
                     break;
             }
         }
@@ -228,14 +274,21 @@ public class MyOrderActivity extends BaseActivity {
 
     }
 
-
-    @Override
-    protected void initData() {
-
-        new MyOrderApi(mContext, 1, new FetchEntryListListener() {
+    private void initCartData() {
+        new CartApi(mContext, new FetchEntryListListener() {
             @Override
             public void setData(List entry) {
+                if (entry != null) {
+                    data1List.clear();
+                    data1List.addAll(entry);
+                    handler.sendEmptyMessage(4);
+                    kidStatus.clear();
+                    // 初始化选中状态
+                    for (KeModel k : data1List) {
+                        kidStatus.put(k.getCartId(), false);
+                    }
 
+                }
             }
 
             @Override
@@ -243,9 +296,20 @@ public class MyOrderActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void initData() {
+        initCartData();
+
         new MyOrderApi(mContext, 2, new FetchEntryListListener() {
             @Override
             public void setData(List entry) {
+                if (entry != null) {
+                    data2List.clear();
+                    data2List.addAll(entry);
+                    handler.sendEmptyMessage(0);
+                }
 
             }
 
@@ -257,7 +321,11 @@ public class MyOrderActivity extends BaseActivity {
         new MyOrderApi(mContext, 3, new FetchEntryListListener() {
             @Override
             public void setData(List entry) {
-
+                if (entry != null) {
+                    data3List.clear();
+                    data3List.addAll(entry);
+                    handler.sendEmptyMessage(1);
+                }
             }
 
             @Override
@@ -265,10 +333,14 @@ public class MyOrderActivity extends BaseActivity {
 
             }
         });
-        new MyOrderApi(mContext, 4, new FetchEntryListListener() {
+        new GetTuiFeeListApi(mContext, new FetchEntryListListener() {
             @Override
             public void setData(List entry) {
-
+                if (entry != null) {
+                    data4List.clear();
+                    data4List.addAll(entry);
+                    handler.sendEmptyMessage(2);
+                }
             }
 
             @Override
@@ -277,17 +349,6 @@ public class MyOrderActivity extends BaseActivity {
             }
         });
 
-
-        List<String> data = new ArrayList<>();
-        data.add("11");
-        adapter1.setData(data);
-        adapter1.notifyDataSetChanged();
-        adapter2.setData(data);
-        adapter2.notifyDataSetChanged();
-        adapter3.setData(data);
-        adapter3.notifyDataSetChanged();
-        adapter4.setData(data);
-        adapter4.notifyDataSetChanged();
     }
 
     @Override
@@ -297,9 +358,55 @@ public class MyOrderActivity extends BaseActivity {
             case R.id.my_order_back:
                 finish();
                 break;
-//            case R.id.my_order_you:// 优惠券
-//                break;
+            case R.id.my_order_delete:
+                doDelete();
+                break;
         }
     }
 
+    private void doDelete() {
+        showLoadingDialog(true);
+        new CartApi(mContext, deleteIds, 0, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+                if (error == null) {
+                    initCartData();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        switch (initTabNum) {
+            case 0:
+                Intent i = new Intent(mContext, CourseDetailActivity.class);
+                i.putExtra("CourseDetailActivity_id", data1List.get(position).getKid());
+                startActivity(i);
+                break;
+            case 1:
+                Intent i1 = new Intent(mContext, OrderDetailActivity.class);
+                i1.putExtra("OrderDetailActivity_data", data2List.get(position).getOid());
+                i1.putExtra("OrderDetailActivity_type", 1);
+                startActivity(i1);
+                break;
+            case 2:
+                Intent i2 = new Intent(mContext, OrderDetailActivity.class);
+                i2.putExtra("OrderDetailActivity_data", data3List.get(position).getOid());
+                i2.putExtra("OrderDetailActivity_type", 2);
+                startActivity(i2);
+                break;
+            case 3:
+                break;
+
+
+        }
+
+    }
 }

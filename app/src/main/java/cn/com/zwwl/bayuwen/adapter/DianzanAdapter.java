@@ -23,7 +23,6 @@ import cn.com.zwwl.bayuwen.widget.ViewHolder;
  */
 public class DianzanAdapter extends CheckScrollAdapter<ZanTeacherModel> {
     protected Context mContext;
-    protected List<Entry> mItemList = new ArrayList<>();
 
     public DianzanAdapter(Context context) {
         super(context);
@@ -31,7 +30,7 @@ public class DianzanAdapter extends CheckScrollAdapter<ZanTeacherModel> {
     }
 
     public void setData(List<ZanTeacherModel> mItemList) {
-        clearData();
+        clear();
         isScroll = false;
         synchronized (mItemList) {
             for (ZanTeacherModel item : mItemList) {
@@ -67,9 +66,6 @@ public class DianzanAdapter extends CheckScrollAdapter<ZanTeacherModel> {
         return viewHolder.getConvertView();
     }
 
-    public void clearData() {
-        mItemList.clear();
-    }
 
     public boolean isScroll() {
         return isScroll;

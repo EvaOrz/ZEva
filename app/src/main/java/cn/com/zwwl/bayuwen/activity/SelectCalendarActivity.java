@@ -59,7 +59,8 @@ public class SelectCalendarActivity extends BaseActivity {
         super.onClick(view);
         switch (view.getId()) {
             case R.id.calendar_add://
-                new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow.MyPeriodPickListener() {
+                new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow
+                        .MyPeriodPickListener() {
 
                     @Override
                     public void onPeriodPick(Date start, Date end) {
@@ -75,7 +76,6 @@ public class SelectCalendarActivity extends BaseActivity {
 
     public class SelectDateAdapter extends CheckScrollAdapter<Date> {
         protected Context mContext;
-        protected List<Date> mItemList = new ArrayList<>();
 
         public SelectDateAdapter(Context context) {
             super(context);
@@ -83,7 +83,6 @@ public class SelectCalendarActivity extends BaseActivity {
         }
 
         public void setData(List<Date> mItemList) {
-            clearData();
             clear();
             isScroll = false;
             synchronized (mItemList) {
@@ -96,7 +95,8 @@ public class SelectCalendarActivity extends BaseActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             final Date item = getItem(position);
-            ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_calender_select);
+            ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout
+                    .item_calender_select);
 
             ImageView delete = viewHolder.getView(R.id.calendar_select_delete);
             delete.setOnClickListener(new View.OnClickListener() {
@@ -109,10 +109,6 @@ public class SelectCalendarActivity extends BaseActivity {
             SimpleDateFormat fm = new SimpleDateFormat("yyyy年MM月dd日（EEEE）");
             textView.setText(fm.format(item));
             return viewHolder.getConvertView();
-        }
-
-        public void clearData() {
-            mItemList.clear();
         }
 
         public boolean isScroll() {

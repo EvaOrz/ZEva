@@ -283,6 +283,7 @@
     <string name="order_option18">组合优惠：</string>
     <string name="order_option19">团购优惠：</string>
     <string name="order_option20">余额抵扣：</string>
+    <string name="order_option21">支付时间：</string>
 
     <string name="lijibaoming">立即报名</string>
 
@@ -324,6 +325,7 @@
     <string name="tab2">课程大纲</string>
     <string name="tab3">家长评价</string>
     <string name="look_all">查看全部</string>
+    <string name="look_detail">查看详情</string>
     <string name="guwen">顾问</string>
     <string name="shuoming">说明</string>
     <string name="tuangou_baoming">团购报名</string>
