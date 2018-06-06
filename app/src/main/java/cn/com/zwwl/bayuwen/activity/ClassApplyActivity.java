@@ -16,6 +16,7 @@ import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.util.ToastUtil;
 
 /**
  * 转班申请提交
@@ -99,6 +100,8 @@ public class ClassApplyActivity extends BasicActivityWithTitle {
             public void result(CommonModel commonModel, ErrorMsg errorMsg) {
                 if (errorMsg == null) {
                     startActivity(new Intent(mActivity, ChangeResultActivity.class));
+                } else {
+                    ToastUtil.showShortToast(errorMsg.getDesc());
                 }
             }
         });

@@ -13,7 +13,7 @@
         android:drawablePadding="@dimen/dp_20"
         android:drawableTop="@mipmap/ic_launcher"
         android:gravity="center"
-        android:text="申请提交成功正在确认中"
+        android:text="@string/trace_result_hint_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -21,8 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_36"
-        android:text="可联系您的孩子专业学业顾问加快办理"
+        android:text="@string/trace_result_hint_2"
         app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/submit_result" />
 
@@ -33,7 +34,7 @@
         android:background="@color/mainColor"
         android:gravity="center"
         android:padding="@dimen/dp_10"
-        android:text="返回课程追踪首页"
+        android:text="@string/back_trace_home"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent" />
 </android.support.constraint.ConstraintLayout>

@@ -362,6 +362,15 @@
     <string name="old_class">原在班级</string>
     <string name="new_class">将转班级</string>
     <string name="action_search">搜索</string>
+    <string name="back_trace_home">返回课程追踪首页</string>
+    <string name="trace_result_hint_2">可联系您的孩子的\n专业学业顾问加快办理</string>
+    <string name="trace_result_hint_1">申请提交成功\n正在确认中</string>
+    <string name="un_finish">未完成</string>
+    <string name="radar_status_2">青铜</string>
+    <string name="radar_status_4">王者</string>
+    <string name="radar_status_3">白银</string>
+    <string name="radar_now">本期雷达图</string>
+    <string name="radar_finish">拼图完成</string>
 
     <!--退费-->
     <string name="tui_detail">退款详情</string>
@@ -378,4 +387,5 @@
     <string name="tui_fee_1">原路退费</string>
     <string name="tui_fee_2">账户退费</string>
     <string name="tui_fee_3">其他理由</string>
+
 </resources>

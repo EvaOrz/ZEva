@@ -3,5 +3,5 @@
     android:layout_width="56dp"
     android:layout_height="56dp"
     android:id="@+id/pic"
-    android:scaleType="fitCenter"
+    android:scaleType="center"
     android:src="@mipmap/pt_01" />
