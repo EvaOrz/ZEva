@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.AppCompatRadioButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_check_bg"
+    android:button="@null"
+    android:padding="@dimen/dp_8"
+    android:gravity="center"
+    android:textColor="@drawable/selector_checked_color"
+    android:textSize="@dimen/sp_12" />

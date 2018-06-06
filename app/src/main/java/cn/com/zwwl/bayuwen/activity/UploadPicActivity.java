@@ -21,11 +21,13 @@ import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.UploadPicAdapter;
 import cn.com.zwwl.bayuwen.api.UploadPicApi;
+import cn.com.zwwl.bayuwen.api.UploadWorkApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.base.MenuCode;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.util.Tools;
 
 /**
  * 上传照片
@@ -39,6 +41,8 @@ public class UploadPicActivity extends BasicActivityWithTitle {
     ArrayList<AlbumFile> albumFiles;
     UploadPicAdapter uploadPicAdapter;
     AlbumFile file;
+    String kid, cid;
+    StringBuilder urls;
 
     @Override
     protected int setContentView() {
@@ -52,6 +56,9 @@ public class UploadPicActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initData() {
+        urls = new StringBuilder();
+        kid = getIntent().getStringExtra("kid");
+        cid = getIntent().getStringExtra("cid");
         albumFiles = new ArrayList<>();
         file = new AlbumFile();
         file.setPath("");
@@ -118,14 +125,38 @@ public class UploadPicActivity extends BasicActivityWithTitle {
 
     @Override
     public void onMenuClick(int menuCode) {
+        if (albumFiles == null || albumFiles.size() == 0) return;
         List<File> files = new ArrayList<>();
         for (AlbumFile albumFile : albumFiles) {
             File f = new File(albumFile.getPath());
-                files.add(f);
+            files.add(f);
         }
         new UploadPicApi(this, files, new ResponseCallBack<List<CommonModel>>() {
             @Override
             public void result(List<CommonModel> commonModels, ErrorMsg errorMsg) {
+                if (commonModels != null && commonModels.size() > 0) {
+                    urls.setLength(0);
+                    for (CommonModel c : commonModels) {
+                        urls.append(c.getUrl()).append(",");
+                    }
+                    uploadWork();
+                }
+            }
+        });
+    }
+
+    private void uploadWork() {
+        map.clear();
+        map.put("url", urls.toString());
+        map.put("kid", "10644");
+        map.put("cid", "53693");
+        map.put("state", "1");
+        map.put("status", "1");
+        map.put("id","");
+        map.put("content", Tools.getText(content));
+        new UploadWorkApi(this, map, new ResponseCallBack<CommonModel>() {
+            @Override
+            public void result(CommonModel commonModel, ErrorMsg errorMsg) {
 
             }
         });

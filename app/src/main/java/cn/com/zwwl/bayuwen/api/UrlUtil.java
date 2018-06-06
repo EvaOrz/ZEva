@@ -263,4 +263,10 @@ public class UrlUtil {
     public static String addCourse() {
         return HOST + "/transfer";
     }
+    /**
+     * 上传作业
+     */
+    public static String addWork() {
+        return HOST+"/courseware";
+    }
 }

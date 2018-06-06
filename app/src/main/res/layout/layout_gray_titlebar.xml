@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main2_toolbar"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/bar_height"
-    android:background="@color/body_gray"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/colorPrimary"
     android:paddingLeft="@dimen/dp_10"
     android:paddingRight="@dimen/dp_10">
 

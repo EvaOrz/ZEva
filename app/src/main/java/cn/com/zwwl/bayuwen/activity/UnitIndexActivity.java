@@ -6,6 +6,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.CompoundButton;
 
@@ -17,6 +18,7 @@ import cn.com.zwwl.bayuwen.adapter.PicAdapter;
 import cn.com.zwwl.bayuwen.api.UnitDetailApi;
 import cn.com.zwwl.bayuwen.api.VoteApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
+import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UnitDetailModel;
@@ -47,6 +49,7 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
     @BindView(R.id.adviser_vote)
     AppCompatCheckBox adviserVote;
     private String kId, cId;
+    FinalEvalDialog evalDialog;
 
     @Override
     protected int setContentView() {
@@ -55,6 +58,7 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initView() {
+        evalDialog = new FinalEvalDialog(this);
         pptList.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         pptList.setItemAnimator(new DefaultItemAnimator());
         homework.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
@@ -141,11 +145,14 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
         });
     }
 
-    @OnClick({R.id.submit_work, R.id.ppt})
+    @OnClick({R.id.submit_work, R.id.ppt, R.id.month_report})
     @Override
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.month_report:
+                evalDialog.showAtLocation(teacher, Gravity.BOTTOM, 0, 0);
+                break;
             case R.id.submit_work:
                 intent.setClass(this, UploadPicActivity.class);
                 intent.putExtra("cId", "");

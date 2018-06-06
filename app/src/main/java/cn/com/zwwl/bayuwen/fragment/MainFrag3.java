@@ -188,10 +188,12 @@ public class MainFrag3 extends BasicFragment {
                 break;
             case R.id.on_work:
                 intent.putExtra("kid", courseModel.getUnfinished().get(0).getKid());
+                intent.putExtra("cid",courseModel.getUnfinished().get(0).getUid());
                 intent.setClass(activity, UploadPicActivity.class);
                 break;
             case R.id.off_work:
                 intent.putExtra("kid", courseModel.getUnfinished().get(1).getKid());
+                intent.putExtra("cid",courseModel.getUnfinished().get(1).getUid());
                 intent.setClass(activity, UploadPicActivity.class);
                 break;
             case R.id.look_video:

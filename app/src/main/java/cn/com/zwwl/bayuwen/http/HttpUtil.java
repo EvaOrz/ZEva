@@ -288,7 +288,7 @@ public class HttpUtil {
         if (file != null) {
             for (File f : file) {
                 if (f.exists())
-                    requestBody.addFormDataPart("file", f.getName(), RequestBody.create(MediaType
+                    requestBody.addFormDataPart(file.indexOf(f)+"", f.getName(), RequestBody.create(MediaType
                             .parse("image/*"), f));
             }
         }

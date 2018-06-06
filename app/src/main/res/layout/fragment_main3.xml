@@ -30,9 +30,9 @@
                 android:id="@+id/praiseTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@mipmap/user_about"
+                android:drawableLeft="@mipmap/icon_book"
                 android:drawablePadding="5dp"
-                android:drawableStart="@mipmap/user_about"
+                android:drawableStart="@mipmap/icon_book"
                 android:gravity="center_vertical|start"
                 android:padding="10dp"
                 android:text="@string/studying_course"
@@ -44,9 +44,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@color/item_bgColor"
+                android:background="@drawable/drawable_trace_gradient"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:padding="@dimen/dp_10">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                         android:drawableLeft="@mipmap/user_about"
                         android:drawablePadding="@dimen/dp_10"
                         android:drawableStart="@mipmap/user_about"
-                        android:textColor="@color/body_gray"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/sp_16"
                         app:layout_constraintEnd_toStartOf="@id/on_arrow"
                         app:layout_constraintStart_toStartOf="parent" />
@@ -69,7 +69,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_5"
-                        android:textColor="@color/body_gray"
+                        android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_12"
                         app:layout_constraintEnd_toStartOf="@id/on_arrow"
                         app:layout_constraintStart_toStartOf="parent"
@@ -97,7 +97,7 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginStart="@dimen/dp_10"
                         android:gravity="center"
-                        android:textColor="@color/body_gray"
+                        android:textColor="@color/gold"
                         android:textSize="@dimen/text_size_12"
                         app:layout_constraintEnd_toStartOf="@id/on_arrow"
                         app:layout_constraintTop_toBottomOf="@id/on_progress_value" />
@@ -107,7 +107,7 @@
                         android:layout_width="30dp"
                         android:layout_height="0dp"
                         android:scaleType="center"
-                        android:src="@mipmap/home_header_more"
+                        android:src="@mipmap/ic_arrow_next_yellow"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -123,24 +123,26 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/current_course_stage"
-                        android:textColor="@color/body_gray"
+                        android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_12" />
 
                     <LinearLayout
                         android:id="@+id/layout_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
                         android:background="@drawable/draw_gray_line_bg"
                         android:orientation="vertical"
-                        android:layout_marginTop="@dimen/dp_5"
                         app:layout_constraintTop_toBottomOf="@id/on_status">
+
                         <android.support.design.widget.TabLayout
                             android:id="@+id/tab"
-                            android:background="@color/transparent"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:background="@color/transparent"
                             android:gravity="top"
                             android:orientation="horizontal" />
+
                         <android.support.v4.view.ViewPager
                             android:id="@+id/mViewPager"
                             android:layout_width="match_parent"
@@ -148,18 +150,19 @@
                             android:background="@drawable/draw_gray_w_bg" />
                     </LinearLayout>
 
-
                     <android.support.v7.widget.AppCompatButton
                         android:id="@+id/on_work"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_40"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:background="@drawable/draw_gold_line"
-                        android:paddingEnd="@dimen/dp_10"
-                        android:paddingStart="@dimen/dp_10"
+                        android:background="@drawable/drawable_yellow_corner_button"
+                        android:drawableLeft="@mipmap/icon_upload"
+                        android:drawableStart="@mipmap/icon_upload"
+                        android:paddingEnd="@dimen/dp_20"
+                        android:paddingStart="@dimen/dp_20"
                         android:text="@string/submit_homework"
-                        android:textColor="@color/gold"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/sp_14"
                         app:layout_constraintEnd_toStartOf="@id/on_trace"
                         app:layout_constraintHorizontal_weight="1"
@@ -174,13 +177,15 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginStart="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:background="@drawable/draw_gold_line"
+                        android:background="@drawable/drawable_yellow_corner_button"
+                        android:drawableLeft="@mipmap/icon_trace"
+                        android:drawableStart="@mipmap/icon_trace"
                         android:paddingBottom="@dimen/dp_5"
                         android:paddingEnd="@dimen/dp_10"
                         android:paddingStart="@dimen/dp_10"
                         android:paddingTop="@dimen/dp_5"
                         android:text="@string/past_course_trace"
-                        android:textColor="@color/gold"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/sp_14"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_weight="1"
@@ -196,9 +201,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@color/item_bgColor"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/drawable_trace_gradient"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:padding="@dimen/dp_10">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -211,7 +217,7 @@
                         android:drawableLeft="@mipmap/user_about"
                         android:drawablePadding="@dimen/dp_10"
                         android:drawableStart="@mipmap/user_about"
-                        android:textColor="@color/body_gray"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/sp_16"
                         app:layout_constraintEnd_toStartOf="@id/off_arrow"
                         app:layout_constraintStart_toStartOf="parent" />
@@ -221,7 +227,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_5"
-                        android:textColor="@color/body_gray"
+                        android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_12"
                         app:layout_constraintEnd_toStartOf="@id/off_arrow"
                         app:layout_constraintStart_toStartOf="parent"
@@ -249,7 +255,7 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginStart="@dimen/dp_10"
                         android:gravity="center"
-                        android:textColor="@color/body_gray"
+                        android:textColor="@color/gold"
                         android:textSize="@dimen/text_size_12"
                         app:layout_constraintEnd_toStartOf="@id/off_arrow"
                         app:layout_constraintTop_toBottomOf="@id/off_progress_value" />
@@ -259,7 +265,7 @@
                         android:layout_width="30dp"
                         android:layout_height="0dp"
                         android:scaleType="center"
-                        android:src="@mipmap/home_header_more"
+                        android:src="@mipmap/ic_arrow_next_yellow"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -274,7 +280,7 @@
                         android:id="@+id/off_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/body_gray"
+                        android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_12" />
 
                     <LinearLayout
@@ -293,7 +299,9 @@
                             android:textColor="@color/gold"
                             android:textSize="@dimen/sp_14" />
 
-                        <include layout="@layout/layout_line" />
+                        <View
+                            style="@style/split_line"
+                            android:background="@color/gold" />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/feedback"
@@ -312,13 +320,15 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_40"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:background="@drawable/draw_gold_line"
+                        android:background="@drawable/drawable_yellow_corner_button"
+                        android:drawableLeft="@mipmap/icon_upload"
+                        android:drawableStart="@mipmap/icon_upload"
                         android:paddingBottom="@dimen/dp_5"
-                        android:paddingEnd="@dimen/dp_10"
-                        android:paddingStart="@dimen/dp_10"
+                        android:paddingEnd="24dp"
+                        android:paddingStart="24dp"
                         android:paddingTop="@dimen/dp_5"
                         android:text="@string/submit_homework"
-                        android:textColor="@color/gold"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/sp_14"
                         app:layout_constraintEnd_toStartOf="@id/off_trace"
                         app:layout_constraintHorizontal_weight="1"
@@ -333,13 +343,15 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginStart="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:background="@drawable/draw_gold_line"
+                        android:background="@drawable/drawable_yellow_corner_button"
+                        android:drawableLeft="@mipmap/icon_trace"
+                        android:drawableStart="@mipmap/icon_trace"
                         android:paddingBottom="@dimen/dp_5"
                         android:paddingEnd="@dimen/dp_10"
                         android:paddingStart="@dimen/dp_10"
                         android:paddingTop="@dimen/dp_5"
                         android:text="@string/past_course_trace"
-                        android:textColor="@color/gold"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/sp_14"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_weight="1"
@@ -352,13 +364,15 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_40"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:background="@drawable/draw_gold_line"
+                        android:background="@drawable/drawable_blue_corner_button"
+                        android:drawableLeft="@mipmap/icon_play"
+                        android:drawableStart="@mipmap/icon_play"
                         android:paddingBottom="@dimen/dp_5"
-                        android:paddingEnd="@dimen/dp_10"
-                        android:paddingStart="@dimen/dp_10"
+                        android:paddingEnd="100dp"
+                        android:paddingStart="100dp"
                         android:paddingTop="@dimen/dp_5"
                         android:text="@string/look_video"
-                        android:textColor="@color/gold"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/sp_14"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -371,8 +385,8 @@
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:drawableLeft="@mipmap/user_info"
-                android:drawableStart="@mipmap/user_info"
+                android:drawableLeft="@mipmap/icon_finish"
+                android:drawableStart="@mipmap/icon_finish"
                 android:padding="10dp"
                 android:text="@string/finish_course"
                 android:textColor="@color/body_gray"
