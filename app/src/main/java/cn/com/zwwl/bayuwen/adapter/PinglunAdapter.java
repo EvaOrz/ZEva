@@ -22,7 +22,6 @@ import cn.com.zwwl.bayuwen.widget.ViewHolder;
  */
 public class PinglunAdapter extends CheckScrollAdapter<PinglunModel> {
     protected Context mContext;
-    protected List<PinglunModel> mItemList = new ArrayList<>();
 
     public PinglunAdapter(Context context) {
         super(context);
@@ -30,7 +29,7 @@ public class PinglunAdapter extends CheckScrollAdapter<PinglunModel> {
     }
 
     public void setData(List<PinglunModel> mItemList) {
-        clearData();
+        clear();
         isScroll = false;
         synchronized (mItemList) {
             for (PinglunModel item : mItemList) {
@@ -57,10 +56,6 @@ public class PinglunAdapter extends CheckScrollAdapter<PinglunModel> {
         return viewHolder.getConvertView();
     }
 
-
-    public void clearData() {
-        mItemList.clear();
-    }
 
     public boolean isScroll() {
         return isScroll;

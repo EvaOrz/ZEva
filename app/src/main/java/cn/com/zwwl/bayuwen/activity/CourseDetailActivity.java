@@ -22,8 +22,7 @@ import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.api.CourseApi;
 import cn.com.zwwl.bayuwen.api.FollowApi;
 import cn.com.zwwl.bayuwen.api.fm.PinglunApi;
-import cn.com.zwwl.bayuwen.api.order.MakeOrderApi;
-import cn.com.zwwl.bayuwen.api.order.OrderAddApi;
+import cn.com.zwwl.bayuwen.api.order.CartApi;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -59,7 +58,7 @@ public class CourseDetailActivity extends BaseActivity {
     private View line1, line2, line3;
     private ImageView follow_status;
 
-    private LinearLayout teacherLayout;
+    private LinearLayout teacherLayout, groupLayout;
 
     private List<View> keDetailViews = new ArrayList<>();
     private CustomViewPager mViewPager;
@@ -79,8 +78,6 @@ public class CourseDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
         cid = getIntent().getStringExtra("CourseDetailActivity_id");
-        // 测试
-        cid = "7018";
         initView();
         initData();
     }
@@ -198,8 +195,9 @@ public class CourseDetailActivity extends BaseActivity {
             }
         });
 
+        groupLayout = findViewById(R.id.group_purchase_bt1);
         findViewById(R.id.ke_back).setOnClickListener(this);
-        findViewById(R.id.group_purchase_bt1).setOnClickListener(this);
+        groupLayout.setOnClickListener(this);
         findViewById(R.id.group_purchase_bt2).setOnClickListener(this);
         findViewById(R.id.ke_add).setOnClickListener(this);
         findViewById(R.id.followtv).setOnClickListener(this);
@@ -245,14 +243,14 @@ public class CourseDetailActivity extends BaseActivity {
                 break;
             case R.id.group_purchase_bt2: //单独报名
                 Intent j = new Intent(mContext, TuanPayActivity.class);
-                j.putExtra("TuanPayActivity_type",2);
+                j.putExtra("TuanPayActivity_type", 2);
                 j.putExtra("TuanPayActivity_data", keModel);
-                j.putExtra("TuanPayActivity_code","");
+                j.putExtra("TuanPayActivity_code", "");
                 startActivity(j);
                 break;
             case R.id.ke_add:// 加入购物车
                 showLoadingDialog(true);
-                new OrderAddApi(mContext, keModel.getKid(), new FetchEntryListener() {
+                new CartApi(mContext, keModel.getKid(), new FetchEntryListener() {
                     @Override
                     public void setData(Entry entry) {
 
@@ -345,13 +343,19 @@ public class CourseDetailActivity extends BaseActivity {
                 "yyyy-MM-dd"));
         time_tv.setText(keModel.getClass_start_at() + " - " + keModel.getClass_end_at
                 ());
+        priceTv2.setText("￥" + keModel.getBuyPrice());
+
         teacherLayout.removeAllViews();
         for (TeacherModel t : keModel.getTeacherModels())
             teacherLayout.addView(getTeacherView(t));
         if (keModel.getGroupbuy() != null) {
+            groupLayout.setVisibility(View.VISIBLE);
             priceTv1.setText("￥" + keModel.getGroupbuy().getDiscount_pintrice());
-            priceTv2.setText("￥" + keModel.getGroupbuy().getDiscount_pintrice());
+
+        } else {
+            groupLayout.setVisibility(View.INVISIBLE);
         }
+
 
         cDetailTabFrag1.setData(keModel.getLessonModels());
         cDetailTabFrag2.setData(keModel);

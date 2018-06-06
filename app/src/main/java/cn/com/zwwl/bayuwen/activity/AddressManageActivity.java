@@ -155,7 +155,6 @@ public class AddressManageActivity extends BaseActivity {
 
     public class AddressAdapter extends CheckScrollAdapter<AddressModel> {
         protected Context mContext;
-        protected List<AddressModel> mItemList = new ArrayList<>();
 
         public AddressAdapter(Context context) {
             super(context);
@@ -163,7 +162,6 @@ public class AddressManageActivity extends BaseActivity {
         }
 
         public void setData(List<AddressModel> mItemList) {
-            clearData();
             clear();
             isScroll = false;
             synchronized (mItemList) {
@@ -219,9 +217,6 @@ public class AddressManageActivity extends BaseActivity {
             return viewHolder.getConvertView();
         }
 
-        public void clearData() {
-            mItemList.clear();
-        }
 
         public boolean isScroll() {
             return isScroll;

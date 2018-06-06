@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -416,8 +418,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
+
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -500,9 +501,10 @@
 
 
                     <ImageView
+                        android:id="@+id/zhifubao_pay"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:background="@color/gray_dark" />
+                        android:background="@color/gold" />
 
                 </LinearLayout>
 
@@ -536,6 +538,7 @@
 
 
                     <ImageView
+                        android:id="@+id/weixin_pay"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:background="@color/gray_dark" />
@@ -596,13 +599,14 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/order_d_price"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
 
             android:gravity="right"
             android:paddingRight="10dp"
-            android:text="实付款：￥3800"
+            android:text="实付款：￥0.00"
             android:textColor="@color/gold"
             android:textSize="@dimen/text_size_14" />
 

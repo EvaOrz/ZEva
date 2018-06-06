@@ -43,16 +43,15 @@ public abstract class BaseApi {
         httpUtil.postDataAsynToNet(getUrl(), getPostParams(), new FetchDataListener() {
             @Override
             public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
-                Log.e(getUrl(), data);
                 handlerData(isSuccess, data, fromHttp);
             }
         });
     }
+
     protected void put() {
         httpUtil.putDataAsynToNet(getUrl(), getPostParams(), new FetchDataListener() {
             @Override
             public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
-                Log.e(getUrl(), data);
                 handlerData(isSuccess, data, fromHttp);
             }
         });
@@ -62,25 +61,24 @@ public abstract class BaseApi {
         httpUtil.postFile(getUrl(), file, new FetchDataListener() {
             @Override
             public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
-                Log.e(getUrl(), data);
                 handlerData(isSuccess, data, fromHttp);
             }
         });
     }
+
     protected void postMultiFile(List<File> file) {
         httpUtil.postMultiFile(getUrl(), file, new FetchDataListener() {
             @Override
             public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
-                Log.e(getUrl(), data);
                 handlerData(isSuccess, data, fromHttp);
             }
         });
     }
+
     protected void get() {
         httpUtil.getDataAsynFromNet(getUrl(), new FetchDataListener() {
             @Override
             public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
-                Log.e(getUrl(), data);
                 handlerData(isSuccess, data, fromHttp);
             }
         });
@@ -90,7 +88,6 @@ public abstract class BaseApi {
         httpUtil.deleteDataAsynToNet(getUrl(), getPostParams(), new FetchDataListener() {
             @Override
             public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
-                Log.e(getUrl(), data);
                 handlerData(isSuccess, data, fromHttp);
             }
         });
@@ -133,7 +130,7 @@ public abstract class BaseApi {
                     handler(null, null, getServerError());
                 } else {
                     if (object.optBoolean("success")) {// 解析data
-                        JsonParser parser=new JsonParser();
+                        JsonParser parser = new JsonParser();
                         JsonElement element = parser.parse(responseString);
                         JsonObject root = element.getAsJsonObject();
                         if (root.get("data").isJsonArray()) {

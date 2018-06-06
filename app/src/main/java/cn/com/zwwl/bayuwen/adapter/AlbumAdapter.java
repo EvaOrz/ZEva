@@ -21,7 +21,6 @@ import cn.com.zwwl.bayuwen.widget.ViewHolder;
  */
 public class AlbumAdapter extends CheckScrollAdapter<AlbumModel> {
     protected Context mContext;
-    protected List<AlbumModel> mItemList = new ArrayList<>();
 
     public AlbumAdapter(Context context) {
         super(context);
@@ -29,7 +28,6 @@ public class AlbumAdapter extends CheckScrollAdapter<AlbumModel> {
     }
 
     public void setData(List<AlbumModel> mItemList) {
-        clearData();
         clear();
         isScroll = false;
         synchronized (mItemList) {
@@ -59,10 +57,6 @@ public class AlbumAdapter extends CheckScrollAdapter<AlbumModel> {
                     .into(img);
 
         return viewHolder.getConvertView();
-    }
-
-    public void clearData() {
-        mItemList.clear();
     }
 
     public boolean isScroll() {

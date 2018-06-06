@@ -15,13 +15,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import cn.beecloud.BCPay;
 import cn.beecloud.async.BCCallback;
 import cn.beecloud.async.BCResult;
 import cn.beecloud.entity.BCPayResult;
+import cn.beecloud.entity.BCReqParams;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.AddressApi;
@@ -35,6 +40,7 @@ import cn.com.zwwl.bayuwen.model.AddressModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.model.OrderModel;
 import cn.com.zwwl.bayuwen.util.AddressTools;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
@@ -53,14 +59,18 @@ public class TuanPayActivity extends BaseActivity {
     private TextView nameTv, phoneTv, addressTv, addTv;
     private TextView tagTv, titleTv, teacherTv, xiaoquTv, dateTv, timeTv, yueTv;
     private ImageView imgView;
-    private TextView dianNumTv, codeTv;
+    private TextView dianNumTv, tuanCodeTv, priceTv;
     private EditText tuijianEv;
+    private ImageView zhifubaoBt, weixinBt;
 
     private KeModel keModel;
     private String tuanCode;// 拼团码
     private String itemCode;// id组合码
     private String yueTxt = "0.00";// 账户余额
     private AddressModel currentAddress;// 当前收货地址
+    private OrderModel orderModel;// 订单model
+    private OrderModel.OrderDetailModel detailModel; // 订单详情model
+    private int payType = 1;// 1：支付宝 2：微信
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +87,11 @@ public class TuanPayActivity extends BaseActivity {
         initView();
         initItemString();
         setGoodsInfo();
+        // 如果用到微信支付，在用到微信支付的Activity的onCreate函数里调用以下函数.
+        String initInfo = BCPay.initWechatPay(mContext, MyApplication.WEIXIN_APP_ID);
+        if (initInfo != null) {
+            Toast.makeText(this, "微信初始化失败：" + initInfo, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -97,12 +112,9 @@ public class TuanPayActivity extends BaseActivity {
         } else {
             itemCode = keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
         }
-        Log.e("ssssssssss", itemCode);
     }
 
     private void setGoodsInfo() {
-
-
         tagTv.setText(keModel.getTagTxt());
         titleTv.setText(keModel.getTitle());
         teacherTv.setText(keModel.getTname());
@@ -123,9 +135,13 @@ public class TuanPayActivity extends BaseActivity {
         addTv = findViewById(R.id.tuan_pay_addaddress);
         adresslayout = findViewById(R.id.go_select_layout);
         dianNumTv = findViewById(R.id.dian_num);
-        codeTv = findViewById(R.id.tuan_code_tv);
+        tuanCodeTv = findViewById(R.id.tuan_code_tv);
         tuijianEv = findViewById(R.id.tuijian_ev);
         tuijianEv.clearFocus();
+
+        priceTv = findViewById(R.id.order_d_price);
+        zhifubaoBt = findViewById(R.id.zhifubao_pay);
+        weixinBt = findViewById(R.id.weixin_pay);
 
         tagTv = findViewById(R.id.ke_tag);
         titleTv = findViewById(R.id.ke_title);
@@ -140,6 +156,8 @@ public class TuanPayActivity extends BaseActivity {
         pinLayout = findViewById(R.id.pintuan_layout);
         youhuiLayout = findViewById(R.id.youhui_layout);
 
+        zhifubaoBt.setOnClickListener(this);
+        weixinBt.setOnClickListener(this);
         findViewById(R.id.order_d_commit).setOnClickListener(this);
         findViewById(R.id.go_add_manage).setOnClickListener(this);
         findViewById(R.id.tuan_pay_back).setOnClickListener(this);
@@ -155,12 +173,13 @@ public class TuanPayActivity extends BaseActivity {
             pinLayout.setVisibility(View.GONE);
             dianLayout.setVisibility(View.VISIBLE);
             youhuiLayout.setVisibility(View.GONE);
+            dianNumTv.setText(keModel.getGroupbuy().getLimit_num() + "");
         } else if (type == 2) {
             pinLayout.setVisibility(View.GONE);
             dianLayout.setVisibility(View.GONE);
             youhuiLayout.setVisibility(View.VISIBLE);
         }
-        if (!TextUtils.isEmpty(tuanCode)) codeTv.setText(tuanCode);
+        if (!TextUtils.isEmpty(tuanCode)) tuanCodeTv.setText(tuanCode);
 
     }
 
@@ -192,6 +211,10 @@ public class TuanPayActivity extends BaseActivity {
                 case 2:// 更新账户余额
                     yueTv.setText(yueTxt);
                     break;
+                case 3:// 实时计算价格，之后更新最新价格
+                    priceTv.setText("实付款：￥" + detailModel.getAmount() / 100);
+                    break;
+
             }
         }
     };
@@ -212,7 +235,7 @@ public class TuanPayActivity extends BaseActivity {
             case R.id.tuan_code_copy:// 复制拼团码
                 ClipboardManager cm = (ClipboardManager) getSystemService(Context
                         .CLIPBOARD_SERVICE);
-                cm.setText("");
+                cm.setText(tuanCode);
                 showToast("已复制到剪切板");
                 break;
             case R.id.youhui_layout:// 优惠券
@@ -227,7 +250,21 @@ public class TuanPayActivity extends BaseActivity {
 
                 break;
             case R.id.pay_detail:// 支付明细
-                new PayDetailDialog(mContext);
+                if (detailModel != null) {
+                    new PayDetailDialog(mContext, detailModel);
+                }
+
+                break;
+
+            case R.id.zhifubao_pay:// 支付宝
+                zhifubaoBt.setBackgroundColor(getResources().getColor(R.color.gold));
+                weixinBt.setBackgroundColor(getResources().getColor(R.color.gray_dark));
+                payType = 1;
+                break;
+            case R.id.weixin_pay:// 微信
+                zhifubaoBt.setBackgroundColor(getResources().getColor(R.color.gray_dark));
+                weixinBt.setBackgroundColor(getResources().getColor(R.color.gold));
+                payType = 2;
                 break;
         }
 
@@ -237,15 +274,30 @@ public class TuanPayActivity extends BaseActivity {
 //            saleno, String assets, String item, String groupbuy
     private void commit() {
         String tuijianCode = tuijianEv.getText().toString();
-        new MakeOrderApi(mContext, "1", "", currentAddress.getId(), tuijianCode,
+        new MakeOrderApi(mContext, payType + "", "", currentAddress.getId(), tuijianCode,
                 yueTxt, itemCode, tuanCode, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
+                if (entry != null && entry instanceof OrderModel) {
+                    orderModel = (OrderModel) entry;
+                    if (orderModel.getTrade_fee() == 0) {// 如果支付价格是0元直接购买成功
+                        goPayResult(TuanPayResultActivity.PAY_SUCCESS, "报名付费成功");
+                    } else {
+                        if (payType == 2) {
+                            doWeixinPay();
+                        } else {
+                            doAliPay();
+                        }
+                    }
 
+                }
             }
 
             @Override
             public void setError(ErrorMsg error) {
+                if (error != null) {
+                    showToast(error.getDesc());
+                }
 
             }
         });
@@ -309,7 +361,10 @@ public class TuanPayActivity extends BaseActivity {
         new CountPriceApi(mContext, itemCode, "", "", yueTxt, tuanCode, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
-
+                if (entry != null && entry instanceof OrderModel.OrderDetailModel) {
+                    detailModel = (OrderModel.OrderDetailModel) entry;
+                    handler.sendEmptyMessage(3);
+                }
             }
 
             @Override
@@ -327,23 +382,87 @@ public class TuanPayActivity extends BaseActivity {
 
             //根据你自己的需求处理支付结果
             String result = bcPayResult.getResult();
-
+            int tt = 0;
+            String desc = "";
             if (result.equals(BCPayResult.RESULT_SUCCESS)) {
-                showToast("用户支付成功");
+                tt = TuanPayResultActivity.PAY_SUCCESS;
+                desc = "报名付费成功";
             } else if (result.equals(BCPayResult.RESULT_CANCEL)) {
-                showToast("用户取消支付");
+                tt = TuanPayResultActivity.PAY_CANCLE;
+                desc = "取消支付";
             } else if (result.equals(BCPayResult.RESULT_FAIL)) {
-                showToast("支付失败, 原因: " + bcPayResult.getErrCode() +
+                tt = TuanPayResultActivity.PAY_FAILD;
+                desc = "支付失败, 原因: " + bcPayResult.getErrCode() +
                         " # " + bcPayResult.getErrMsg() +
-                        " # " + bcPayResult.getDetailInfo());
+                        " # " + bcPayResult.getDetailInfo();
 
             } else if (result.equals(BCPayResult.RESULT_UNKNOWN)) {
+                tt = TuanPayResultActivity.PAY_UNKNOWN;
                 //可能出现在支付宝8000返回状态
-                showToast("订单状态未知");
+                desc = "订单状态未知";
             } else {
-                showToast("invalid return");
+                tt = TuanPayResultActivity.PAY_UNKNOWN;
+                desc = "invalid return";
             }
+            Log.e("ssssssss", desc);
+
+            goPayResult(tt, desc);
         }
     };
 
+    private void goPayResult(int t, String desc) {
+        Intent i = new Intent(mContext, TuanPayResultActivity.class);
+        i.putExtra("TuanPayResultActivity_data", t);
+        i.putExtra("TuanPayResultActivity_desc", desc);
+        startActivity(i);
+    }
+
+    private void doWeixinPay() {
+        Map<String, String> mapOptional = new HashMap<String, String>();
+
+        if (BCPay.isWXAppInstalledAndSupported() &&
+                BCPay.isWXPaySupported()) {
+
+            BCPay.PayParams payParams = new BCPay.PayParams();
+            payParams.channelType = BCReqParams.BCChannelTypes.WX_APP;
+            payParams.billTitle = orderModel.getBill_title();   //订单标题
+            payParams.billTotalFee = orderModel.getTrade_fee();    //订单金额(分)
+            payParams.billNum = orderModel.getBill_no();  //订单流水号
+//            payParams.couponId = "bbbf835d-f6b0-484f-bb6e-8e6082d4a35f";    // 优惠券ID
+            payParams.optional = mapOptional;            //扩展参数(可以null)
+
+            BCPay.getInstance(mContext).reqPaymentAsync(
+                    payParams,
+                    bcCallback);            //支付完成后回调入口
+
+        } else {
+            showToast("您尚未安装微信或者安装的微信版本不支持");
+        }
+    }
+
+    private void doAliPay() {
+        Map<String, String> mapOptional = new HashMap<>();
+//                        mapOptional.put("disable_pay_channels", "balance,creditCard");
+
+        BCPay.PayParams aliParam = new BCPay.PayParams();
+        aliParam.channelType = BCReqParams.BCChannelTypes.ALI_APP;
+        aliParam.billTitle = orderModel.getBill_title();
+        aliParam.billTotalFee = orderModel.getTrade_fee();
+        aliParam.billNum = orderModel.getBill_no();
+        aliParam.optional = mapOptional;
+
+        BCPay.getInstance(mContext).reqPaymentAsync(
+                aliParam, bcCallback);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //使用微信的，在initWechatPay的activity结束时detach
+        BCPay.detachWechat();
+
+        //清理当前的activity引用
+        BCPay.clear();
+    }
 }

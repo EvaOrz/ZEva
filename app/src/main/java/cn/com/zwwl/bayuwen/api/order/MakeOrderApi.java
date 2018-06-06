@@ -3,6 +3,8 @@ package cn.com.zwwl.bayuwen.api.order;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,6 +15,7 @@ import cn.com.zwwl.bayuwen.api.UrlUtil;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.OrderModel;
 
 /**
  * 生成订单
@@ -80,11 +83,27 @@ public class MakeOrderApi extends BaseApi {
         return null;
     }
 
+    /**
+     * {"trade_channel":"1","trade_fee":1,
+     * "bill_no":"10180604140210664305","bill_title":"四年级大语文","trade_type":"1",
+     * "return_url":"http%3A%2F%2Fm.dev.zhugexuetang
+     * .com%2F%2Forderdetail%2F10180604140210664305"}
+     *
+     * @param json
+     * @param jsonArray
+     * @param errorMsg
+     */
     @Override
     protected void handler(JSONObject json, JSONArray jsonArray, ErrorMsg errorMsg) {
         if (errorMsg != null) {
             listener.setError(errorMsg);
         } else listener.setError(null);
+
+        if (!isNull(json)) {
+            Gson gson = new Gson();
+            OrderModel orderModel = gson.fromJson(json.toString(), OrderModel.class);
+            listener.setData(orderModel);
+        }
 
     }
 

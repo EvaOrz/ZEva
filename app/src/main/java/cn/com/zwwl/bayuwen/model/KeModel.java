@@ -5,15 +5,17 @@ import java.util.List;
 
 /**
  * 课程model
- * online=0 线下（面授）课
- * online=1 线上课
- * <p>
- * source=1 直播（回放）
- * source=2 点播课
  */
 public class KeModel extends Entry {
     private List<TeacherModel> teacherModels = new ArrayList<>();
     private List<LessonModel> lessonModels = new ArrayList<>();
+    private String cartId = ""; // 购课单id，购课单列表用，其他场合不用解析
+    private String detailId = "";// 退费id，（退费选子课列表，退费课程列表）用，其他场合不用解析
+    /**
+     * refund 0:未退款 1:部分退款 2:全额退款 3:退款中 4:退款被拒绝
+     */
+    private String refund = "0";
+
     private String id;
     private String kid;
     private String title;
@@ -54,7 +56,7 @@ public class KeModel extends Entry {
     private String term;
     private String window_isopen;
     private Object remark;
-    private String source;
+    private String source = "1";// source=1 直播（回放）source=2 点播课
     private String level;
     private Object service;
     private String model;
@@ -64,7 +66,7 @@ public class KeModel extends Entry {
     private String school;
     private String city;
     private String num;
-    private String online;
+    private String online = "0";//  online=0 线下（面授）课  online=1 线上课
     private String hours;
     private String discount_amount;
     private String discount_start_time;
@@ -797,5 +799,27 @@ public class KeModel extends Entry {
         this.lessonModels = lessonModels;
     }
 
+    public String getCartId() {
+        return cartId;
+    }
 
+    public void setCartId(String cartId) {
+        this.cartId = cartId;
+    }
+
+    public String getDetailId() {
+        return detailId;
+    }
+
+    public void setDetailId(String detailId) {
+        this.detailId = detailId;
+    }
+
+    public String getRefund() {
+        return refund;
+    }
+
+    public void setRefund(String refund) {
+        this.refund = refund;
+    }
 }

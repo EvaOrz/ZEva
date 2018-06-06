@@ -216,7 +216,7 @@
     <string name="kai_copy">复制拼团码</string>
     <string name="kai_share">分享拼团</string>
     <string name="kai_pay">报名付费</string>
-    <string name="tuan_success">报名成功</string>
+    <string name="tuan_success">付费状态</string>
     <string name="chakan_kecheng">查看课程跟踪</string>
 
     <!--会员资料-->
@@ -283,7 +283,8 @@
     <string name="order_option18">组合优惠：</string>
     <string name="order_option19">团购优惠：</string>
     <string name="order_option20">余额抵扣：</string>
-
+    <string name="order_option21">支付时间：</string>
+    <string name="tui_fee_list">选择退费课程</string>
     <string name="lijibaoming">立即报名</string>
 
     <!--setting-->
@@ -324,6 +325,7 @@
     <string name="tab2">课程大纲</string>
     <string name="tab3">家长评价</string>
     <string name="look_all">查看全部</string>
+    <string name="look_detail">查看详情</string>
     <string name="guwen">顾问</string>
     <string name="shuoming">说明</string>
     <string name="tuangou_baoming">团购报名</string>
@@ -360,4 +362,20 @@
     <string name="old_class">原在班级</string>
     <string name="new_class">将转班级</string>
     <string name="action_search">搜索</string>
+
+    <!--退费-->
+    <string name="tui_detail">退款详情</string>
+    <string name="tui_detail_op1">退款总金额</string>
+    <string name="tui_detail_op2">退款原因：</string>
+    <string name="tui_detail_op3">退款金额：</string>
+    <string name="tui_detail_op4">申请时间：</string>
+    <string name="tui_detail_op5">退款编号：</string>
+    <string name="tui_detail_op6">拨打电话</string>
+    <string name="tui_detail_status1">待审核</string>
+    <string name="tui_detail_status2">退款中</string>
+    <string name="tui_detail_status3">已完成</string>
+    <string name="tui_detail_status4">已拒绝</string>
+    <string name="tui_fee_1">原路退费</string>
+    <string name="tui_fee_2">账户退费</string>
+    <string name="tui_fee_3">其他理由</string>
 </resources>

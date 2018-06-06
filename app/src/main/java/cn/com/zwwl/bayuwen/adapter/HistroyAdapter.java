@@ -22,7 +22,6 @@ import cn.com.zwwl.bayuwen.widget.ViewHolder;
  */
 public class HistroyAdapter extends CheckScrollAdapter<AlbumModel> {
     protected Context mContext;
-    protected List<AlbumModel> mItemList = new ArrayList<>();
 
     public HistroyAdapter(Context context) {
         super(context);
@@ -30,7 +29,7 @@ public class HistroyAdapter extends CheckScrollAdapter<AlbumModel> {
     }
 
     public void setData(List<AlbumModel> mItemList) {
-        clearData();
+        clear();
         isScroll = false;
         synchronized (mItemList) {
             for (AlbumModel item : mItemList) {
@@ -60,9 +59,6 @@ public class HistroyAdapter extends CheckScrollAdapter<AlbumModel> {
         return viewHolder.getConvertView();
     }
 
-    public void clearData() {
-        mItemList.clear();
-    }
 
     public boolean isScroll() {
         return isScroll;
