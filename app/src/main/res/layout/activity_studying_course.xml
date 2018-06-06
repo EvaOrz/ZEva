@@ -3,25 +3,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingEnd="@dimen/activity_horizontal_margin"
+    android:paddingStart="@dimen/activity_horizontal_margin">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="@string/course_progress"
+        android:textColor="@color/gray_dark" />
 
     <LinearLayout
         android:id="@+id/progress_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray_line"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/dp_5"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/dp_5">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/course_progress"
-            android:textColor="@color/gray_dark" />
 
         <ProgressBar
             android:id="@+id/course_progress"
@@ -29,10 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_weight="1"
-            android:secondaryProgress="80" />
+            android:layout_weight="1" />
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -46,8 +44,8 @@
             android:textSize="@dimen/sp_16" />
 
         <android.support.v7.widget.AppCompatTextView
-            android:layout_width="wrap_content"
             android:id="@+id/current"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dp_5"
@@ -94,15 +92,14 @@
         android:id="@+id/course_eval"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/draw_gray_line_bg"
         android:drawableEnd="@mipmap/home_header_more"
-        android:drawableLeft="@mipmap/home_head_hot"
+        android:drawableLeft="@mipmap/icon_finish"
         android:drawablePadding="@dimen/dp_10"
         android:drawableRight="@mipmap/home_header_more"
-        android:drawableStart="@mipmap/home_head_hot"
+        android:gravity="center_vertical"
+        android:drawableStart="@mipmap/icon_finish"
         android:paddingBottom="@dimen/dp_5"
         android:paddingEnd="@dimen/dp_10"
         android:paddingStart="@dimen/dp_10"
@@ -113,15 +110,14 @@
         android:id="@+id/course_change"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/draw_gray_line_bg"
         android:drawableEnd="@mipmap/home_header_more"
-        android:drawableLeft="@mipmap/home_head_hot"
+        android:drawableLeft="@mipmap/icon_finish"
         android:drawablePadding="@dimen/dp_10"
         android:drawableRight="@mipmap/home_header_more"
-        android:drawableStart="@mipmap/home_head_hot"
+        android:drawableStart="@mipmap/icon_finish"
+        android:gravity="center_vertical"
         android:paddingBottom="@dimen/dp_5"
         android:paddingEnd="@dimen/dp_10"
         android:paddingStart="@dimen/dp_10"
@@ -132,15 +128,14 @@
         android:id="@+id/class_covert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/draw_gray_line_bg"
         android:drawableEnd="@mipmap/home_header_more"
-        android:drawableLeft="@mipmap/home_head_hot"
+        android:drawableLeft="@mipmap/icon_finish"
         android:drawablePadding="@dimen/dp_10"
         android:drawableRight="@mipmap/home_header_more"
-        android:drawableStart="@mipmap/home_head_hot"
+        android:drawableStart="@mipmap/icon_finish"
+        android:gravity="center_vertical"
         android:paddingBottom="@dimen/dp_5"
         android:paddingEnd="@dimen/dp_10"
         android:paddingStart="@dimen/dp_10"
@@ -151,7 +146,5 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/dp_10" />
 </LinearLayout>

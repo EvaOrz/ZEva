@@ -3,6 +3,7 @@
     xmlns:toolbar="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -13,19 +14,17 @@
         toolbar:contentInsetStart="0dp"
         toolbar:elevation="4dp"
         toolbar:popupTheme="@style/ToolbarPopupTheme">
-        <android.support.v7.widget.AppCompatTextView
+
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
-            android:drawablePadding="@dimen/dp_5"
-            android:gravity="center_vertical"
-            android:paddingEnd="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingStart="@dimen/dp_10"
-            android:text="@string/back"
-            android:textAppearance="@style/ToolbarMenuTextSize"
-            android:textColor="@color/white" />
+            android:background="@drawable/drawable_back_bg"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_10"
+            android:scaleType="center"
+            android:src="@mipmap/icon_back" />
+
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
@@ -34,7 +33,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:textColor="@color/white"
-            android:textAppearance="@style/Toolbar.TitleText" />
+            android:textAppearance="@style/Toolbar.TitleText"
+            android:textColor="@color/white" />
     </android.support.v7.widget.Toolbar>
 </android.support.design.widget.AppBarLayout>

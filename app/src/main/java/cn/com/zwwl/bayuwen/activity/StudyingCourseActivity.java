@@ -20,6 +20,7 @@ import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.StudyingModel;
+import cn.com.zwwl.bayuwen.widget.decoration.HSpacesItemDecoration;
 
 /**
  * 在学课程
@@ -55,6 +56,7 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
     protected void initView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new HSpacesItemDecoration(res, R.dimen.dp_5));
         adapter = new StudyingCourseAdapter(null);
         recyclerView.setAdapter(adapter);
     }

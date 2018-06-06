@@ -3,12 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/draw_blue_corner"
-    android:paddingBottom="@dimen/dp_5"
-    android:layout_marginBottom="@dimen/dp_10"
-    android:paddingEnd="@dimen/dp_10"
-    android:paddingStart="@dimen/dp_10"
-    android:paddingTop="@dimen/dp_5">
+    android:background="@drawable/drawable_yellow_white_corner"
+    android:padding="@dimen/dp_10">
 
     <LinearLayout
         android:id="@+id/name_layout"
@@ -33,21 +29,21 @@
             android:layout_marginStart="@dimen/dp_10"
             android:drawableEnd="@mipmap/home_header_more"
             android:drawableRight="@mipmap/home_header_more"
-            android:textColor="@color/white"
             android:textSize="@dimen/sp_16" />
     </LinearLayout>
 
+    <View
+        android:id="@+id/divider"
+        style="@style/split_line"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@id/name_layout" />
+
     <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/draw_gray_line_bg"
-        android:paddingBottom="@dimen/dp_5"
-        android:paddingEnd="@dimen/dp_10"
-        android:paddingStart="@dimen/dp_10"
-        android:id="@+id/description"
-        android:paddingTop="@dimen/dp_5"
         android:textColor="@color/gray_dark"
         android:textSize="@dimen/sp_14"
-        app:layout_constraintTop_toBottomOf="@+id/name_layout" />
+        app:layout_constraintTop_toBottomOf="@id/divider" />
 </android.support.constraint.ConstraintLayout>

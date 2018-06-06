@@ -6,7 +6,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -24,8 +23,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.activity.StudyingCourseActivity;
 import cn.com.zwwl.bayuwen.activity.FCourseListActivity;
+import cn.com.zwwl.bayuwen.activity.StudyingCourseActivity;
 import cn.com.zwwl.bayuwen.activity.UploadPicActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.CompleteCourseAdapter;
@@ -46,9 +45,6 @@ import static cn.com.zwwl.bayuwen.MyApplication.mContext;
  * Created by zhumangmang at 2018/5/29 15:24
  */
 public class MainFrag3 extends BasicFragment {
-
-    @BindView(R.id.praiseTv)
-    AppCompatTextView praiseTv;
     @BindView(R.id.on_course_name)
     AppCompatTextView onCourseName;
     @BindView(R.id.on_progress_value)
@@ -61,10 +57,6 @@ public class MainFrag3 extends BasicFragment {
     TabLayout tab;
     @BindView(R.id.mViewPager)
     ViewPager mViewPager;
-    @BindView(R.id.on_work)
-    AppCompatButton onWork;
-    @BindView(R.id.on_trace)
-    AppCompatButton onTrace;
     @BindView(R.id.off_course_name)
     AppCompatTextView offCourseName;
     @BindView(R.id.off_progress_value)
@@ -81,7 +73,6 @@ public class MainFrag3 extends BasicFragment {
     AppCompatTextView offStatus;
 
     private CompleteCourseAdapter adapter;
-    private CoursePageAdapter mViewPagerAdapter;
     private List<Fragment> list = new ArrayList<>();
     private List<KeModel> finishCourse = new ArrayList<>();
     private List<String> mItemTitleList = new ArrayList<>();
@@ -137,7 +128,7 @@ public class MainFrag3 extends BasicFragment {
         list.add(evaluate1);
         FgEvaluate evaluate2 = FgEvaluate.newInstance(bean.getComments().getParent());
         list.add(evaluate2);
-        mViewPagerAdapter = new CoursePageAdapter(getFragmentManager(), list, mItemTitleList);
+        CoursePageAdapter mViewPagerAdapter = new CoursePageAdapter(getFragmentManager(), list, mItemTitleList);
         mViewPager.setAdapter(mViewPagerAdapter);
         bean = courseModel.getUnfinished().get(1);
         offCourseName.setText(bean.getProducts().getTitle());

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/toast_content"
+    android:textSize="@dimen/text_size_16"
+    android:gravity="center"
+    android:background="@drawable/toast_radius"
+    android:layout_height="match_parent" />

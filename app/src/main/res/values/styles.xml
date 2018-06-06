@@ -115,7 +115,7 @@
         <!-- android:textColorPrimary is the color of the title text in the Toolbar -->
         <item name="android:textColorPrimary">@color/white</item>
         <!-- actionMenuTextColor is the color of the text of action (menu) items -->
-        <item name="actionMenuTextColor">@color/white</item>
+        <item name="actionMenuTextColor">@color/gold</item>
         <!-- Tints the input fields like checkboxes and text fields -->
         <item name="colorAccent">@color/white</item>
         <!-- Applies to views in their normal state. -->
@@ -143,7 +143,7 @@
     </style>
 
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">@dimen/sp_20</item>
+        <item name="android:textSize">@dimen/text_size_20</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">normal</item>
     </style>
@@ -153,14 +153,13 @@
         <!--设置不覆盖锚点-->
         <item name="overlapAnchor">false</item>
     </style>
-
-    <dimen name="sp_20">20sp</dimen>
     <!--分割线-->
     <style name="split_line">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/line_height</item>
         <item name="android:background">@color/gray_line</item>
     </style>
+
     <style name="Popup_Style" mce_bogus="1" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/push_bottom_out</item>

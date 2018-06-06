@@ -10,17 +10,21 @@
         android:id="@+id/type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray_light"
+        android:background="@color/gray_line"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
+        android:text="@string/chose_change_course_unit_by_need"
         android:textColor="@color/gray_dark" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/type" />
 </android.support.constraint.ConstraintLayout>

@@ -88,7 +88,7 @@ public class MyApplication extends Application {
     public int operate_type;
     public LessonModel oldLesson,newLesson;
     public KeModel oldKe,newKe;
-
+    private static MyApplication instance;
     @Override
     public void onCreate() {
         WEIXIN_APP_ID = "wx22ea2fa3b35cb13f";
@@ -101,6 +101,7 @@ public class MyApplication extends Application {
         QQ_SECRET = "SClqzj0HjnAx2ATM";
 
         mContext = this;
+        instance=this;
         super.onCreate();
         initScreenInfo();
         initChannel();
@@ -195,4 +196,7 @@ public class MyApplication extends Application {
     }
 
 
+    public static Context getInstance() {
+        return instance;
+    }
 }

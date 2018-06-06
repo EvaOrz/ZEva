@@ -17,6 +17,7 @@ public class UnitTableAdapter extends BaseQuickAdapter<LessonModel, BaseViewHold
 
     @Override
     protected void convert(BaseViewHolder helper, LessonModel item) {
-        helper.setText(R.id.unit_name, item.getTitle());
+        helper.setText(R.id.course_name, item.getTitle());
+        helper.setText(R.id.description,item.getDesc());
     }
 }

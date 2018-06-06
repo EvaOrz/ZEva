@@ -19,6 +19,7 @@ import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.LessonModel;
+import cn.com.zwwl.bayuwen.widget.decoration.HSpacesItemDecoration;
 
 /**
  * 课程单元列表
@@ -45,6 +46,7 @@ public class UnitTableActivity extends BasicActivityWithTitle {
         type.setText(res.getString(R.string.chose_change_course_unit_by_need));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new HSpacesItemDecoration(res,R.dimen.dp_5));
         adapter = new UnitTableAdapter(null);
         recyclerView.setAdapter(adapter);
     }

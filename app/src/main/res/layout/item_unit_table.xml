@@ -3,35 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-    android:layout_marginStart="@dimen/activity_horizontal_margin"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/draw_gray_line_bg"
+    android:background="@drawable/drawable_yellow_white_corner"
     android:padding="@dimen/dp_10">
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/unit_name"
+    <LinearLayout
+        android:id="@+id/name_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableEnd="@mipmap/home_header_more"
-        android:drawableRight="@mipmap/home_header_more"
-        android:text="大语文 第X课"
-        android:textSize="@dimen/sp_16" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gold_circle"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/live_play"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_10" />
+
+        <TextView
+            android:id="@+id/course_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
+            android:drawableEnd="@mipmap/home_header_more"
+            android:drawableRight="@mipmap/home_header_more"
+            android:textSize="@dimen/sp_16" />
+    </LinearLayout>
 
     <View
         android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:layout_marginBottom="@dimen/dp_5"
-        android:layout_marginTop="@dimen/dp_5"
-        android:background="@color/gray_light"
-        app:layout_constraintTop_toBottomOf="@id/unit_name" />
+        style="@style/split_line"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@id/name_layout" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="这是关于该课程单元内容的描述，这是关于该课程单元内容的描述，"
-        android:textColor="@color/gray_light"
+        android:textColor="@color/gray_dark"
+        android:textSize="@dimen/sp_14"
         app:layout_constraintTop_toBottomOf="@id/divider" />
 </android.support.constraint.ConstraintLayout>

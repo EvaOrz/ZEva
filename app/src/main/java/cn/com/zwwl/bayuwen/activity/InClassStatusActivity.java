@@ -29,7 +29,7 @@ public class InClassStatusActivity extends BasicActivityWithTitle {
     protected void initView() {
         setDisplayShowTitleEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new HSpacesItemDecoration(10));
+        recyclerView.addItemDecoration(new HSpacesItemDecoration(res,R.dimen.dp_5));
     }
 
     @Override

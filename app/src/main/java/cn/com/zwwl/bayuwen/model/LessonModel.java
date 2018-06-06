@@ -32,6 +32,15 @@ public class LessonModel extends Entry {
     private Object substitute_tname;
     private Object class_id;
     private Object summarize;
+    private String desc;
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
     public String getId() {
         return id;

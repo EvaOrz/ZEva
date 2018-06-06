@@ -27,7 +27,6 @@
                 android:background="@color/item_bgColor" />
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/praiseTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@mipmap/icon_book"
@@ -94,8 +93,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_marginStart="@dimen/dp_10"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingEnd="0dp"
+                        android:paddingRight="0dp"
                         android:gravity="center"
                         android:textColor="@color/gold"
                         android:textSize="@dimen/text_size_12"
@@ -150,47 +151,53 @@
                             android:background="@drawable/draw_gray_w_bg" />
                     </LinearLayout>
 
-                    <android.support.v7.widget.AppCompatButton
+                    <LinearLayout
                         android:id="@+id/on_work"
-                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_40"
                         android:layout_marginTop="@dimen/dp_10"
                         android:background="@drawable/drawable_yellow_corner_button"
-                        android:drawableLeft="@mipmap/icon_upload"
-                        android:drawableStart="@mipmap/icon_upload"
-                        android:paddingEnd="@dimen/dp_20"
-                        android:paddingStart="@dimen/dp_20"
-                        android:text="@string/submit_homework"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_14"
+                        android:gravity="center"
                         app:layout_constraintEnd_toStartOf="@id/on_trace"
                         app:layout_constraintHorizontal_weight="1"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/layout_1" />
+                        app:layout_constraintTop_toBottomOf="@id/layout_1">
 
-                    <android.support.v7.widget.AppCompatButton
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:drawableLeft="@mipmap/icon_upload"
+                            android:drawableStart="@mipmap/icon_upload"
+                            android:gravity="center_vertical"
+                            android:text="@string/submit_homework"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/on_trace"
-                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_40"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginStart="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_10"
                         android:background="@drawable/drawable_yellow_corner_button"
-                        android:drawableLeft="@mipmap/icon_trace"
-                        android:drawableStart="@mipmap/icon_trace"
-                        android:paddingBottom="@dimen/dp_5"
-                        android:paddingEnd="@dimen/dp_10"
-                        android:paddingStart="@dimen/dp_10"
-                        android:paddingTop="@dimen/dp_5"
-                        android:text="@string/past_course_trace"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_14"
+                        android:gravity="center"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_weight="1"
                         app:layout_constraintStart_toEndOf="@id/on_work"
-                        app:layout_constraintTop_toBottomOf="@id/layout_1" />
+                        app:layout_constraintTop_toBottomOf="@id/layout_1">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:drawableLeft="@mipmap/icon_trace"
+                            android:drawableStart="@mipmap/icon_trace"
+                            android:gravity="center_vertical"
+                            android:text="@string/past_course_trace"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+
                 </android.support.constraint.ConstraintLayout>
 
 
@@ -252,8 +259,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_marginStart="@dimen/dp_10"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingEnd="0dp"
+                        android:paddingRight="0dp"
                         android:gravity="center"
                         android:textColor="@color/gold"
                         android:textSize="@dimen/text_size_12"
@@ -281,6 +290,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/gray_light"
+                        android:paddingBottom="@dimen/dp_10"
                         android:textSize="@dimen/text_size_12" />
 
                     <LinearLayout
@@ -313,70 +323,76 @@
                             android:textSize="@dimen/sp_14" />
                     </LinearLayout>
 
-
-                    <android.support.v7.widget.AppCompatButton
+                    <LinearLayout
                         android:id="@+id/off_work"
-                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_40"
                         android:layout_marginTop="@dimen/dp_10"
                         android:background="@drawable/drawable_yellow_corner_button"
-                        android:drawableLeft="@mipmap/icon_upload"
-                        android:drawableStart="@mipmap/icon_upload"
-                        android:paddingBottom="@dimen/dp_5"
-                        android:paddingEnd="24dp"
-                        android:paddingStart="24dp"
-                        android:paddingTop="@dimen/dp_5"
-                        android:text="@string/submit_homework"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_14"
+                        android:gravity="center"
                         app:layout_constraintEnd_toStartOf="@id/off_trace"
                         app:layout_constraintHorizontal_weight="1"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/layout_2" />
+                        app:layout_constraintTop_toBottomOf="@id/layout_2">
 
-                    <android.support.v7.widget.AppCompatButton
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:drawableLeft="@mipmap/icon_upload"
+                            android:drawableStart="@mipmap/icon_upload"
+                            android:gravity="center_vertical"
+                            android:text="@string/submit_homework"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/off_trace"
-                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_40"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginStart="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_10"
                         android:background="@drawable/drawable_yellow_corner_button"
-                        android:drawableLeft="@mipmap/icon_trace"
-                        android:drawableStart="@mipmap/icon_trace"
-                        android:paddingBottom="@dimen/dp_5"
-                        android:paddingEnd="@dimen/dp_10"
-                        android:paddingStart="@dimen/dp_10"
-                        android:paddingTop="@dimen/dp_5"
-                        android:text="@string/past_course_trace"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_14"
+                        android:gravity="center"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_weight="1"
                         app:layout_constraintStart_toEndOf="@id/off_work"
-                        app:layout_constraintTop_toBottomOf="@id/layout_2" />
+                        app:layout_constraintTop_toBottomOf="@id/layout_2">
 
-                    <android.support.v7.widget.AppCompatButton
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:drawableLeft="@mipmap/icon_trace"
+                            android:drawableStart="@mipmap/icon_trace"
+                            android:gravity="center_vertical"
+                            android:text="@string/past_course_trace"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/look_video"
-                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_40"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:background="@drawable/drawable_blue_corner_button"
-                        android:drawableLeft="@mipmap/icon_play"
-                        android:drawableStart="@mipmap/icon_play"
-                        android:paddingBottom="@dimen/dp_5"
-                        android:paddingEnd="100dp"
-                        android:paddingStart="100dp"
-                        android:paddingTop="@dimen/dp_5"
-                        android:text="@string/look_video"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_14"
+                        android:background="@drawable/drawable_yellow_corner_button"
+                        android:gravity="center"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/off_trace" />
+                        app:layout_constraintTop_toBottomOf="@id/off_trace">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:drawableLeft="@mipmap/icon_play"
+                            android:drawableStart="@mipmap/icon_play"
+                            android:gravity="center_vertical"
+                            android:text="@string/look_video"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+
                 </android.support.constraint.ConstraintLayout>
 
 

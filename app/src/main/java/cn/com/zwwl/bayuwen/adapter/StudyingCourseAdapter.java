@@ -18,5 +18,6 @@ public class StudyingCourseAdapter extends BaseQuickAdapter<LessonModel, BaseVie
     @Override
     protected void convert(BaseViewHolder helper, LessonModel item) {
         helper.setText(R.id.course_name, item.getTitle());
+        helper.setText(R.id.description,item.getDesc());
     }
 }

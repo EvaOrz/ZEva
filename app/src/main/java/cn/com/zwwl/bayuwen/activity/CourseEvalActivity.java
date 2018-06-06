@@ -1,6 +1,5 @@
 package cn.com.zwwl.bayuwen.activity;
 
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,6 +13,7 @@ import cn.com.zwwl.bayuwen.base.MenuCode;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.util.ToastUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
 
 /**
@@ -56,7 +56,7 @@ public class CourseEvalActivity extends BasicActivityWithTitle {
     @Override
     public void onMenuClick(int menuCode) {
         if (TextUtils.isEmpty(Tools.getText(content))) {
-            Snackbar.make(content, "请输入评价内容", Snackbar.LENGTH_LONG).show();
+            ToastUtil.showShortToast("请输入评价内容");
             return;
         }
         map.put("kid", kid);
@@ -66,10 +66,11 @@ public class CourseEvalActivity extends BasicActivityWithTitle {
         new EvalApi(this, map, new ResponseCallBack<CommonModel>() {
             @Override
             public void result(CommonModel commonModel, ErrorMsg errorMsg) {
-                if (errorMsg!=null){
-                    Snackbar.make(content, errorMsg.getDesc(), Snackbar.LENGTH_LONG).show();
-                }else {
-                    Snackbar.make(content, "success", Snackbar.LENGTH_LONG).show();
+                if (errorMsg != null) {
+                    ToastUtil.showShortToast(errorMsg.getDesc());
+                } else {
+                    ToastUtil.showShortToast("提交成功,谢谢您的评价");
+                    finish();
                 }
             }
         });

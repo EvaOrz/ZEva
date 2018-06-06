@@ -17,7 +17,7 @@ public class FCourseChildAdapter extends BaseQuickAdapter<MyCourseModel.Unfinish
 
     @Override
     protected void convert(BaseViewHolder helper, MyCourseModel.UnfinishedBean item) {
-        helper.setText(R.id.unit_name, item.getProducts().getTitle());
+        helper.setText(R.id.course_name, item.getProducts().getTitle());
         helper.setText(R.id.description, item.getProducts().getDesc());
     }
 }

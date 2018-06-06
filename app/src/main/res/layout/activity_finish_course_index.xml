@@ -24,6 +24,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/radar"
         android:layout_width="match_parent"
+        android:layout_marginRight="-20dp"
+        android:layout_marginEnd="-20dp"
         android:layout_height="wrap_content" />
 
     <LinearLayout

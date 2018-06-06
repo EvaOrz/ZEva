@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -26,6 +27,7 @@ import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.model.StudyingModel;
+import cn.com.zwwl.bayuwen.util.DensityUtil;
 
 /**
  * 课程跟踪列表点击后进入该处
@@ -47,6 +49,7 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
     StudyingModel model;
     private String kid;
     RadarAdapter radarAdapter;
+    List<CommonModel> models;
 
     @Override
     protected int setContentView() {
@@ -61,18 +64,28 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
         test.setLayoutManager(new LinearLayoutManager(this));
         test.setItemAnimator(new DefaultItemAnimator());
         radar.setLayoutManager(new GridLayoutManager(this, 10));
+        radar.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                int m=parent.getChildAdapterPosition(view)%10;
+                if (m!=0)
+                outRect.left = -DensityUtil.dip2px(res,R.dimen.dp_1)*m;
+                outRect.bottom = -DensityUtil.dip2px(res,R.dimen.dp_5);
+            }
+        });
         radar.setItemAnimator(new DefaultItemAnimator());
     }
 
     @Override
     protected void initData() {
-        List<CommonModel> models = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
+        models = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
             CommonModel model = new CommonModel();
             model.setContent("");
             models.add(model);
         }
-        radarAdapter=new RadarAdapter(models);
+        radarAdapter = new RadarAdapter(models);
         radar.setAdapter(radarAdapter);
         kid = getIntent().getStringExtra("kid");
         setCustomTitle(getIntent().getStringExtra("title"));
