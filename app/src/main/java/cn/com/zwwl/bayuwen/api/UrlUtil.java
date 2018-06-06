@@ -221,6 +221,21 @@ public class UrlUtil {
         return HOST + "/refund/list";
     }
 
+    // 退费详情
+    public static String getTuifeeDetail() {
+        return HOST + "/refund/detail";
+    }
+
+    // 原路退费
+    public static String yuanluTuifee() {
+        return HOST + "/refund";
+    }
+
+    // 账户退费
+    public static String accountTuifee() {
+        return HOST + "/fund/refund";
+    }
+
     // 退费理由列表
     public static String getTuifeeReasonList() {
         return HOST + "/order/refund_reason";

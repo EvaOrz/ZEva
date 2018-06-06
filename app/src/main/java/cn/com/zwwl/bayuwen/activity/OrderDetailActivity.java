@@ -3,6 +3,7 @@ package cn.com.zwwl.bayuwen.activity;
 import android.annotation.SuppressLint;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,15 +14,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.api.AddressApi;
 import cn.com.zwwl.bayuwen.api.order.OrderDetailApi;
-import cn.com.zwwl.bayuwen.api.order.TuiReasonApi;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.AddressModel;
@@ -30,7 +26,6 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.OrderForMyListModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
-import cn.com.zwwl.bayuwen.util.Tools;
 
 /**
  * 订单详情页面
@@ -91,6 +86,11 @@ public class OrderDetailActivity extends BaseActivity {
         oid = getIntent().getStringExtra("OrderDetailActivity_data");
         type = getIntent().getIntExtra("OrderDetailActivity_type", 0);
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initData();
     }
 
@@ -169,10 +169,6 @@ public class OrderDetailActivity extends BaseActivity {
                 if (entry != null && entry instanceof OrderForMyListModel) {
                     orderForMyListModel = (OrderForMyListModel) entry;
                     handler.sendEmptyMessage(0);
-                    // 退款页面，先获取退款理由
-                    if (type == 2) {
-//                        new TuiReasonApi(mContext,orderForMyListModel.getL)
-                    }
                 }
             }
 
@@ -240,7 +236,19 @@ public class OrderDetailActivity extends BaseActivity {
                 payType = 2;
                 break;
             case R.id.order_d_bt1:// 取消订单|申请退款
+                if (type == 1) {
 
+                } else if (type == 2) {
+                    for (KeModel k : orderForMyListModel.getKeModels()) {
+                        if (k.getRefund().equals("3")) {// 有正在退费的课程
+                            showToast("订单中有正在退费的课程，请完成退费后重试");
+                            return;
+                        }
+                    }
+                    Intent i = new Intent(mContext, OrderTuifeeListActivity.class);
+                    i.putExtra("OrderTuifeeActivity_data", orderForMyListModel);
+                    startActivity(i);
+                }
                 break;
             case R.id.order_d_bt2:// 去支付
                 break;

@@ -20,12 +20,10 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 public class TuiReasonApi extends BaseApi {
 
     private FetchEntryListListener listener;
-    private int type;// 0：offline 1：online
 
-    public TuiReasonApi(Context context, int type, FetchEntryListListener listener) {
+    public TuiReasonApi(Context context, FetchEntryListListener listener) {
         super(context);
         mContext = context;
-        this.type = type;
         this.listener = listener;
         get();
     }
@@ -46,27 +44,26 @@ public class TuiReasonApi extends BaseApi {
         if (errorMsg != null) listener.setError(errorMsg);
 
         if (!isNull(json)) {
-            if (type == 1) {
-                JSONArray offline = json.optJSONArray("offline");
-                if (!isNull(offline)) {
-                    listener.setData(parseErrorMsg(offline));
-                }
-            } else {
-                JSONArray online = json.optJSONArray("online");
-                if (!isNull(online)) {
-                    listener.setData(parseErrorMsg(online));
-                }
+            List<ErrorMsg> errorMsgs = new ArrayList<>();
+            JSONArray offline = json.optJSONArray("offline");
+            if (!isNull(offline)) {
+                errorMsgs.addAll(parseErrorMsg(0, offline));
             }
+            JSONArray online = json.optJSONArray("online");
+            if (!isNull(online)) {
+                errorMsgs.addAll(parseErrorMsg(1, online));
+            }
+            listener.setData(errorMsgs);
         }
     }
 
-    private List<ErrorMsg> parseErrorMsg(JSONArray array) {
+    private List<ErrorMsg> parseErrorMsg(int isOffline, JSONArray array) {
         List<ErrorMsg> offDatas = new ArrayList<>();
         for (int i = 0; i < array.length(); i++) {
             ErrorMsg e = new ErrorMsg();
             JSONObject j = array.optJSONObject(i);
             e.setDesc(j.optString("name"));
-            e.setNo(Integer.valueOf(j.optString("value")));
+            e.setNo(isOffline);
             offDatas.add(e);
         }
         return offDatas;

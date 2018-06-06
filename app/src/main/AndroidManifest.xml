@@ -272,6 +272,17 @@
             android:name=".activity.MyCollectionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <!--选择要退费的课程页面-->
+        <activity
+            android:name=".activity.OrderTuifeeListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <!--退费详情页面-->
+        <activity
+            android:name=".activity.OrderTuifeeDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
 
         <!--weixin pay-->
         <activity

@@ -284,7 +284,7 @@
     <string name="order_option19">团购优惠：</string>
     <string name="order_option20">余额抵扣：</string>
     <string name="order_option21">支付时间：</string>
-
+    <string name="tui_fee_list">选择退费课程</string>
     <string name="lijibaoming">立即报名</string>
 
     <!--setting-->
@@ -356,4 +356,21 @@
     <string name="study_report">学业报告</string>
     <string name="follow">关注</string>
     <string name="final_test">期末测试</string>
+
+    <!--退费-->
+    <string name="tui_detail">退款详情</string>
+    <string name="tui_detail_op1">退款总金额</string>
+    <string name="tui_detail_op2">退款原因：</string>
+    <string name="tui_detail_op3">退款金额：</string>
+    <string name="tui_detail_op4">申请时间：</string>
+    <string name="tui_detail_op5">退款编号：</string>
+    <string name="tui_detail_op6">拨打电话</string>
+    <string name="tui_detail_status1">待审核</string>
+    <string name="tui_detail_status2">退款中</string>
+    <string name="tui_detail_status3">已完成</string>
+
+
+    <string name="tui_fee_1">原路退费</string>
+    <string name="tui_fee_2">账户退费</string>
+    <string name="tui_fee_3">其他理由</string>
 </resources>

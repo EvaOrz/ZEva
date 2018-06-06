@@ -12,6 +12,9 @@ import java.util.List;
 /**
  * 我的订单页面
  * 待支付、已支付、退款售后model
+ * <p>
+ * 订单详情页面
+ * 订单model
  */
 public class OrderForMyListModel extends Entry {
 
@@ -172,30 +175,40 @@ public class OrderForMyListModel extends Entry {
         orderForMyListModel.setCreate_at(jsonObject.optString("create_at"));
         orderForMyListModel.setExpire_at(jsonObject.optString("expire_at"));
 
+        Gson gson = new Gson();
+        // 订单列表页面解析课程列表
         JSONArray courses = jsonObject.optJSONArray("courses");
         if (!isNull(courses)) {
-            orderForMyListModel.setKeModels(parseKe(courses));
+            List<KeModel> keModelList = new ArrayList<>();
+            for (int i = 0; i < courses.length(); i++) {
+                KeModel keModel = gson.fromJson(courses.optJSONObject(i).toString(), KeModel.class);
+                keModelList.add(keModel);
+            }
+            orderForMyListModel.setKeModels(keModelList);
         }
+        // 订单详情页面解析课程列表
         JSONArray details = jsonObject.optJSONArray("details");
         if (!isNull(details)) {
-            orderForMyListModel.setKeModels(parseKe(details));
+            List<KeModel> keModelList = new ArrayList<>();
+            for (int i = 0; i < details.length(); i++) {
+                JSONObject j = details.optJSONObject(i);
+                KeModel keModel = gson.fromJson(j.optJSONObject("course")
+                        .toString(), KeModel.class);
+                keModel.setDetailId(j.optString("id"));
+                keModel.setRefund(j.optString("refund"));
+                keModelList.add(keModel);
+            }
+            orderForMyListModel.setKeModels(keModelList);
         }
+
+
         JSONObject a = jsonObject.optJSONObject("address");
         AddressModel addressModel = new AddressModel();
-        if (!isNull(a))
+        if (!isNull(a)) {
             addressModel.parseAddressModel(a, addressModel);
-        
+        }
+        orderForMyListModel.setAddressModel(addressModel);
         return orderForMyListModel;
     }
 
-    private static List<KeModel> parseKe(JSONArray array) {
-        List<KeModel> keModelList = new ArrayList<>();
-        Gson gson = new Gson();
-        for (int i = 0; i < array.length(); i++) {
-            KeModel keModel = gson.fromJson(array.optJSONObject(i).toString(), KeModel.class);
-            keModelList.add(keModel);
-        }
-        return keModelList;
-
-    }
 }
