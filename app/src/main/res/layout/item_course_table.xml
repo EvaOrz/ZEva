@@ -99,7 +99,7 @@
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10"
+        android:layout_height="@dimen/dp_5"
         android:background="@color/gray_line"
         app:layout_constraintBottom_toBottomOf="parent" />
 </android.support.constraint.ConstraintLayout>

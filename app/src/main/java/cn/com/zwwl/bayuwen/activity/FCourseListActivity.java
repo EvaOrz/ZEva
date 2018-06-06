@@ -23,6 +23,8 @@ import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.MyCourseModel;
+import cn.com.zwwl.bayuwen.widget.decoration.HSpacesItemDecoration;
+
 /**
  *  已完成课程二级页面l
  *  Created by zhumangmang at 2018/6/2 15:10
@@ -48,6 +50,7 @@ public class FCourseListActivity extends BasicActivityWithTitle {
         setCustomTitle(getIntent().getStringExtra("title"));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new HSpacesItemDecoration(res,R.dimen.dp_5));
     }
 
     @Override

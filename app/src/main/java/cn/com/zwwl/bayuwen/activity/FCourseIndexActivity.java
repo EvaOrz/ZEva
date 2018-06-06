@@ -28,6 +28,7 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.model.StudyingModel;
 import cn.com.zwwl.bayuwen.util.DensityUtil;
+import cn.com.zwwl.bayuwen.widget.decoration.HSpacesItemDecoration;
 
 /**
  * 课程跟踪列表点击后进入该处
@@ -61,17 +62,20 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
         setCustomTitle("大语文");
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new HSpacesItemDecoration(res, R.dimen.dp_5));
         test.setLayoutManager(new LinearLayoutManager(this));
         test.setItemAnimator(new DefaultItemAnimator());
+        test.addItemDecoration(new HSpacesItemDecoration(res, R.dimen.dp_5));
+
         radar.setLayoutManager(new GridLayoutManager(this, 10));
         radar.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 super.getItemOffsets(outRect, view, parent, state);
-                int m=parent.getChildAdapterPosition(view)%10;
-                if (m!=0)
-                outRect.left = -DensityUtil.dip2px(res,R.dimen.dp_1)*m;
-                outRect.bottom = -DensityUtil.dip2px(res,R.dimen.dp_5);
+                int m = parent.getChildAdapterPosition(view) % 10;
+                if (m != 0)
+                    outRect.left = -DensityUtil.dip2px(res, R.dimen.line_height)* m;
+                outRect.bottom = -DensityUtil.dip2px(res, R.dimen.dp_5);
             }
         });
         radar.setItemAnimator(new DefaultItemAnimator());
