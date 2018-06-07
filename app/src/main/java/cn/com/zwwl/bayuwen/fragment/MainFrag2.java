@@ -23,6 +23,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.AllTeacherActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.SearchCourseActivity;
 import cn.com.zwwl.bayuwen.adapter.DianzanAdapter;
@@ -149,6 +150,7 @@ public class MainFrag2 extends Fragment
             }
         });
 
+        root.findViewById(R.id.look_all_teacher).setOnClickListener(this);
         mToolbarView.findViewById(R.id.left_more_iv).setOnClickListener(this);
         mToolbarView.findViewById(R.id.frame_msg).setOnClickListener(this);
         mToolbarView.findViewById(R.id.school_iv).setOnClickListener(this);
@@ -191,6 +193,9 @@ public class MainFrag2 extends Fragment
                 break;
             case R.id.left_more_iv:
                 ((MainActivity) getActivity()).openDrawer();
+                break;
+            case R.id.look_all_teacher:
+                startActivity(new Intent(mActivity, AllTeacherActivity.class));
                 break;
         }
     }

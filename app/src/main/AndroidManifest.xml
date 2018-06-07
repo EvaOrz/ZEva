@@ -236,7 +236,16 @@
             android:name=".activity.CourseDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-
+        <!--选择要退费的课程页面-->
+        <activity
+            android:name=".activity.AllTeacherActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <!--意见反馈页面-->
+        <activity
+            android:name=".activity.FeedBackActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <!--搜索页面-->
         <activity
             android:name=".activity.SearchCourseActivity"

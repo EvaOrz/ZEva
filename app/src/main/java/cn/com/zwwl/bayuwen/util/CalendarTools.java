@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.util;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.avos.avoscloud.utils.StringUtils;
 
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class CalendarTools {
     private static final long ONE_DAY_MS = 24 * 60 * 60 * 1000;
@@ -56,16 +58,6 @@ public class CalendarTools {
      */
     public static String getTime(long timeInSeconds) {
         StringBuffer sb = new StringBuffer();
-//        int hours = (int) timeInSeconds / 3600;
-//        if (hours >= 10) {
-//            sb.append(hours);
-//            sb.append(":");
-//
-//        } else if (hours > 0 && hours < 10) {
-//            sb.append(0).append(hours);
-//            sb.append(":");
-//        }
-
         long minutes = (int) (timeInSeconds / 60);
         if (minutes >= 10) {
             sb.append(minutes);
@@ -87,6 +79,46 @@ public class CalendarTools {
         return sb.toString();
     }
 
+    /**
+     * 秒数 -- 00时00分00秒时间格式转化
+     *
+     * @param timeInSeconds
+     * @return
+     */
+    public static String getTimeLeft(long timeInSeconds) {
+        StringBuffer sb = new StringBuffer();
+        int hours = (int) timeInSeconds / 3600;
+        if (hours >= 10) {
+            sb.append(hours);
+        } else if (hours > 0 && hours < 10) {
+            sb.append(0).append(hours);
+        } else {
+            sb.append("00");
+        }
+        sb.append("时");
+
+        long minutes = (int) (timeInSeconds / 60);
+        if (minutes >= 10) {
+            sb.append(minutes);
+        } else if (minutes > 0 && minutes < 10) {
+            sb.append(0).append(minutes);
+        } else {
+            sb.append("00");
+        }
+        sb.append("分");
+
+        int seconds = (int) (timeInSeconds % 60);
+        if (seconds >= 10) {
+            sb.append(seconds);
+        } else if (seconds > 0 && seconds < 10) {
+            sb.append(0).append(seconds);
+        } else {
+            sb.append("00");
+        }
+        sb.append("秒");
+        return sb.toString();
+    }
+
     // 将字符串转为时间戳
     public static long fromStringTotime(String user_time) {
         String re_time = null;
@@ -95,8 +127,8 @@ public class CalendarTools {
         try {
             d = sdf.parse(user_time);
             long l = d.getTime();
-            String str = String.valueOf(l);
-            re_time = str.substring(0, 10);
+            re_time = String.valueOf(l);
+//            re_time = str.substring(0, 10);
         } catch (ParseException e) {
             // TODO Auto-generated catch block e.printStackTrace();
         }
@@ -118,7 +150,7 @@ public class CalendarTools {
             //            if (TextUtils.equals("english", language)) {
             //                format = new SimpleDateFormat(pattern, Locale.ENGLISH);
             //            } else {
-            format = new SimpleDateFormat(pattern);
+            format = new SimpleDateFormat(pattern, Locale.getDefault());
             //            }
             return format.format(new Date(time * 1000));
         } catch (Exception e) {

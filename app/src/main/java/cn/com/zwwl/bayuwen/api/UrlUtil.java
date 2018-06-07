@@ -171,6 +171,11 @@ public class UrlUtil {
         return HOST + "/order/get";
     }
 
+    // 取消订单
+    public static String cancleOrder() {
+        return HOST + "/order/";
+    }
+
     //实时计算订单金额
     public static String countPrice() {
         return HOST + "/order/calculator";
@@ -279,25 +284,28 @@ public class UrlUtil {
     public static String getFinal() {
         return HOST + "/course/exam_list";
     }
+
     /**
      * 获取子课列表
      */
     public static String getLecturesList(int type) {
-        if (type==1){
+        if (type == 1) {
             return HOST + "/transfer/second_lectures";
         }
         return HOST + "/transfer/lectures";
     }
+
     /**
      * 添加课程(换班)
      */
     public static String addCourse() {
         return HOST + "/transfer";
     }
+
     /**
      * 上传作业
      */
     public static String addWork() {
-        return HOST+"/courseware";
+        return HOST + "/courseware";
     }
 }

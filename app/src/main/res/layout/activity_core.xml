@@ -151,6 +151,7 @@
                     android:background="@drawable/white_10radius_corner_bg"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     android:padding="5dp">
 
                     <ImageView

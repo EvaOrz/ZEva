@@ -25,6 +25,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
+import cn.com.zwwl.bayuwen.activity.FeedBackActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MyCollectionActivity;
 import cn.com.zwwl.bayuwen.activity.MyOrderActivity;
@@ -90,6 +91,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
         frag5ChildLayout = root.findViewById(R.id.frag5_child_layout);
         frag5Code = root.findViewById(R.id.frag5_code);
         frag5Level = root.findViewById(R.id.frag5_level);
+
     }
 
     public void initData(UserModel userModel) {
@@ -118,8 +120,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                         params.bottomMargin = 10;
                         params.rightMargin = 10;
                         for (int i = 0; i < childModels.size(); i++) {
-                            if (i < 3)
-                                frag5ChildLayout.addView(getChildView(childModels.get(i)), params);
+                            frag5ChildLayout.addView(getChildView(childModels.get(i)), params);
                         }
                     }
 
@@ -184,12 +185,13 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
             case R.id.frag5_banji://我关注的班级
                 startActivity(new Intent(mActivity, MyCollectionActivity.class));
                 break;
-            case R.id.frag5_code:// 填写团购验证码
+            case R.id.frag5_tuan_code:// 填写团购验证码
                 startActivity(new Intent(mActivity, TuanCodeUseActivity.class));
                 break;
             case R.id.frag5_invite:// 邀请好友加入大语文
                 break;
             case R.id.frag5_feedback:// 反馈
+                startActivity(new Intent(mActivity, FeedBackActivity.class));
                 break;
         }
     }

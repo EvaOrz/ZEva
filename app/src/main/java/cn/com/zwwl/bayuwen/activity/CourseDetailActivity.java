@@ -361,14 +361,21 @@ public class CourseDetailActivity extends BaseActivity {
         cDetailTabFrag2.setData(keModel);
     }
 
-    private View getTeacherView(TeacherModel teacherModel) {
+    private View getTeacherView(final TeacherModel teacherModel) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_cdetail_teacher, null);
         CircleImageView avatar = view.findViewById(R.id.cdetail_t_avatar);
         TextView name = view.findViewById(R.id.cdetail_t_name);
         ImageLoader.display(mContext, avatar, teacherModel.getPic(), R
                 .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
-
         name.setText(teacherModel.getName());
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, TeacherDetailActivity.class);
+                i.putExtra("tid", teacherModel.getTid());
+                startActivity(i);
+            }
+        });
         return view;
     }
 }

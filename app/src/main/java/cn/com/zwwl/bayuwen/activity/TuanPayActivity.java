@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -54,16 +55,15 @@ public class TuanPayActivity extends BaseActivity {
 
     private List<AddressModel> addressDatas = new ArrayList<>();
     private LinearLayout adresslayout;
-    private int type; // 0：单独参团 1：垫付参团 2：单独购买
+    private int type; // 0：单独参团 1：垫付参团 2：单独购买 3:购课单多选购买
     private LinearLayout pinLayout, dianLayout, youhuiLayout;
     private TextView nameTv, phoneTv, addressTv, addTv;
-    private TextView tagTv, titleTv, teacherTv, xiaoquTv, dateTv, timeTv, yueTv;
-    private ImageView imgView;
-    private TextView dianNumTv, tuanCodeTv, priceTv;
+    private LinearLayout keLayout;
+    private TextView dianNumTv, tuanCodeTv, yueTv, priceTv;
     private EditText tuijianEv;
     private ImageView zhifubaoBt, weixinBt;
 
-    private KeModel keModel;
+    private List<KeModel> keDatas = new ArrayList<>();
     private String tuanCode;// 拼团码
     private String itemCode;// id组合码
     private String yueTxt = "0.00";// 账户余额
@@ -79,8 +79,12 @@ public class TuanPayActivity extends BaseActivity {
         setContentView(R.layout.activity_tuan_pay);
         if (getIntent().getSerializableExtra("TuanPayActivity_data") != null && getIntent()
                 .getSerializableExtra("TuanPayActivity_data") instanceof KeModel) {
-            keModel = (KeModel) getIntent().getSerializableExtra("TuanPayActivity_data");
-        } else finish();
+            keDatas.add((KeModel) getIntent().getSerializableExtra("TuanPayActivity_data"));
+        }
+        if (getIntent().getSerializableExtra("TuanPayActivity_datas") != null) {
+            keDatas.addAll((List<KeModel>) getIntent().getSerializableExtra
+                    ("TuanPayActivity_datas"));
+        }
         type = getIntent().getIntExtra("TuanPayActivity_type", 0);
         tuanCode = getIntent().getStringExtra("TuanPayActivity_code");
 
@@ -104,28 +108,28 @@ public class TuanPayActivity extends BaseActivity {
      * 生成订单item串
      */
     private void initItemString() {
-        if (type == 1) {// 垫付需要循环
+        if (type == 1) {// 垫付需要循环垫付数量
+            KeModel keModel = keDatas.get(0);
             itemCode = keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
             for (int i = 0; i < keModel.getGroupbuy().getLimit_num() - 1; i++) {
                 itemCode += keModel.getKid() + "_1_" + "0";
             }
-        } else {
+        } else if (type == 0 || type == 2) { // 单独购买||单独参团
+            KeModel keModel = keDatas.get(0);
             itemCode = keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
+        } else if (type == 3) {
+            for (KeModel keModel : keDatas) {
+                itemCode += keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
+            }
         }
     }
 
     private void setGoodsInfo() {
-        tagTv.setText(keModel.getTagTxt());
-        titleTv.setText(keModel.getTitle());
-        teacherTv.setText(keModel.getTname());
-        xiaoquTv.setText(keModel.getSchool());
-        dateTv.setText(CalendarTools.format(Long.valueOf(keModel.getStartPtime()),
-                "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(keModel.getEndPtime()),
-                "yyyy-MM-dd"));
-        timeTv.setText(keModel.getClass_start_at() + " - " + keModel.getClass_end_at());
+        keLayout.removeAllViews();
+        for (KeModel keModel : keDatas) {
+            keLayout.addView(getKeView(keModel));
+        }
 
-        ImageLoader.display(mContext, imgView, keModel.getPic(), R
-                .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
     }
 
     private void initView() {
@@ -142,14 +146,7 @@ public class TuanPayActivity extends BaseActivity {
         priceTv = findViewById(R.id.order_d_price);
         zhifubaoBt = findViewById(R.id.zhifubao_pay);
         weixinBt = findViewById(R.id.weixin_pay);
-
-        tagTv = findViewById(R.id.ke_tag);
-        titleTv = findViewById(R.id.ke_title);
-        teacherTv = findViewById(R.id.ke_teacher);
-        xiaoquTv = findViewById(R.id.ke_xiaoqu);
-        dateTv = findViewById(R.id.ke_date);
-        timeTv = findViewById(R.id.ke_time);
-        imgView = findViewById(R.id.ke_avatar);
+        keLayout = findViewById(R.id.ke_layout);
         yueTv = findViewById(R.id.yue_tv);
 
         dianLayout = findViewById(R.id.dianfu_layout);
@@ -173,8 +170,8 @@ public class TuanPayActivity extends BaseActivity {
             pinLayout.setVisibility(View.GONE);
             dianLayout.setVisibility(View.VISIBLE);
             youhuiLayout.setVisibility(View.GONE);
-            dianNumTv.setText(keModel.getGroupbuy().getLimit_num() + "");
-        } else if (type == 2) {
+            dianNumTv.setText(keDatas.get(0).getGroupbuy().getLimit_num() + "");// 垫付只有一个kemodel
+        } else if (type == 2 || type == 3) {
             pinLayout.setVisibility(View.GONE);
             dianLayout.setVisibility(View.GONE);
             youhuiLayout.setVisibility(View.VISIBLE);
@@ -218,6 +215,38 @@ public class TuanPayActivity extends BaseActivity {
             }
         }
     };
+
+    /**
+     * 获取课程卡片
+     *
+     * @param model
+     * @return
+     */
+    private View getKeView(KeModel model) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_course_for_order, null);
+        TextView tag = view.findViewById(R.id.item_order_tag);
+        TextView title = view.findViewById(R.id.item_order_title);
+        TextView teacher = view.findViewById(R.id.item_order_teacher);
+        TextView date = view.findViewById(R.id.item_order_date);
+        TextView time = view.findViewById(R.id.item_order_time);
+        TextView xiaoqu = view.findViewById(R.id.item_order_xiaoqu);
+        ImageView pic = view.findViewById(R.id.item_order_pic);
+        ImageLoader.display(mContext, pic, model.getPic(), R.drawable.avatar_placeholder, R
+                .drawable.avatar_placeholder);
+
+        tag.setText(model.getTagTxt());
+        title.setText(model.getTitle());
+        teacher.setText(model.getTname());
+        date.setText(CalendarTools.format(Long.valueOf(model.getStartPtime()),
+                "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(model
+                        .getEndPtime()),
+                "yyyy-MM-dd"));
+        time.setText(model.getClass_start_at() + " - " + model.getClass_end_at
+                ());
+        xiaoqu.setText(model.getSchool());
+        return view;
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -404,8 +433,6 @@ public class TuanPayActivity extends BaseActivity {
                 tt = TuanPayResultActivity.PAY_UNKNOWN;
                 desc = "invalid return";
             }
-            Log.e("ssssssss", desc);
-
             goPayResult(tt, desc);
         }
     };

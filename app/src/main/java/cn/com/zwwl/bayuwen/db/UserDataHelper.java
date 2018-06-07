@@ -120,5 +120,17 @@ public class UserDataHelper {
         editor.putString(SIGNCODE, "");
         editor.commit();
     }
+
+    /**
+     * 获取推送别名
+     *
+     * @param context
+     * @return
+     */
+    public static String getPushAlias(Context context) {
+        String uid = getPref(context).getString(UID, "");
+        if (!TextUtils.isEmpty(uid)) return "zgxt_" + uid;
+        return null;
+    }
 }
 

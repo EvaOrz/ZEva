@@ -55,6 +55,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     private LinearLayout mainView;
     private DrawerLayout drawer;// 抽屉
     private LinearLayout childLayout;// 切换学生layout
+    private LinearLayout childAddBt;// 添加学生button
     private Fragment mTempFragment;
     private MainFrag1 mainFrag1;
     private MainFrag2 mainFrag2;
@@ -186,6 +187,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         yaoqing = findViewById(R.id.main_yaoqingma);
         gongxun = findViewById(R.id.main_gongxun);
         childLayout = findViewById(R.id.child_layout);
+        childAddBt = findViewById(R.id.child_add);
         giftGridView = findViewById(R.id.my_gifts);
         giftAdapter = new GiftAdapter(mContext, new ArrayList<CalendarOptionPopWindow
                 .CheckStatusModel>());
@@ -206,7 +208,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         findViewById(R.id.invite).setOnClickListener(this);
         findViewById(R.id.setting).setOnClickListener(this);
         findViewById(R.id.main_gongxun_rule).setOnClickListener(this);
-        findViewById(R.id.child_add).setOnClickListener(this);
+        childAddBt.setOnClickListener(this);
     }
 
     @SuppressLint("HandlerLeak")
@@ -223,6 +225,9 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
                     for (final ChildModel childModel : childModels) {
                         childLayout.addView(getChildView(childModel), params);
                     }
+                    if (childModels.size() < 3) {
+                        childAddBt.setVisibility(View.VISIBLE);
+                    } else childAddBt.setVisibility(View.GONE);
                     // 初始化侧边栏学员列表之后，同步fragment1\同步fragment5中学员信息
                     mainFrag1.loadChild(childModels);
                     mainFrag5.loadChild(childModels);

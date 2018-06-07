@@ -123,15 +123,22 @@ public class ChildInfoApi extends BaseApi {
         if (isNeedJsonArray) {// 获取列表
             if (!isNull(array)) {
                 List<ChildModel> childModels = new ArrayList<>();
+                boolean hasDefault = false;
                 for (int i = 0; i < array.length(); i++) {
-                    ChildModel c = new ChildModel();
-                    c.parseChildModel(array.optJSONObject(i), c);
-                    if (c.getIsdefault().equals("1")) {
-                        TempDataHelper.setCurrentChildNo(mContext, c.getNo());
-                        // todo?? 年级的类型待定
-                        TempDataHelper.setCurrentChildGrade(mContext, 0);
+                    if (i < 3) {
+                        ChildModel c = new ChildModel();
+                        c.parseChildModel(array.optJSONObject(i), c);
+                        if (c.getIsdefault().equals("1")) {
+                            hasDefault = true;
+                            saveStudent(c);
+                        }
+                        childModels.add(c);
                     }
-                    childModels.add(c);
+                }
+                // 如果服务端丢失默认学员信息，设置第一个为默认
+                if (!hasDefault && childModels.size() > 0) {
+                    childModels.get(0).setIsdefault("1");
+                    saveStudent(childModels.get(0));
                 }
                 listListener.setData(childModels);
 
@@ -139,7 +146,16 @@ public class ChildInfoApi extends BaseApi {
                 listListener.setData(null);
             }
         }
+    }
 
-
+    /**
+     * 存储默认学员信息
+     *
+     * @param c
+     */
+    private void saveStudent(ChildModel c) {
+        TempDataHelper.setCurrentChildNo(mContext, c.getNo());
+        // todo?? 年级的类型待定
+        TempDataHelper.setCurrentChildGrade(mContext, 0);
     }
 }

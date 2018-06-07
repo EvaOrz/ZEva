@@ -128,6 +128,11 @@ public class OrderTuifeeDetailActivity extends BaseActivity {
                     itemOrderTime.setText(model.getClass_start_at() + " - " + model.getClass_end_at
                             ());
                     itemOrderXiaoqu.setText(model.getSchool());
+                    tuiDetailOp2.setText(tuifeeModel.getReason());
+                    tuiDetailOp3.setText("￥" + Double.valueOf(tuifeeModel.getRefund_fee()) / 100);
+                    tuiDetailOp4.setText(tuifeeModel.getCreated_at());
+                    tuiDetailOp5.setText(tuifeeModel.getRefund_no());
+
                     if (tuifeeModel.getState() == 0) {// 待审核
                         seekBarThumb1.setBackgroundResource(R.drawable.dot_gray);
                         seekBar.setProgressDrawable(getResources().getDrawable(R.drawable

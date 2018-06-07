@@ -17,6 +17,7 @@ public class TempDataHelper {
      * 第一次进入应用
      */
     private static final String FIRST_USE = "firststartapp_";
+
     /**
      * 游客token
      */
@@ -115,5 +116,9 @@ public class TempDataHelper {
         editor.putBoolean(FIRST_USE, false);
         editor.commit();
     }
+
+
+
+
 }
 

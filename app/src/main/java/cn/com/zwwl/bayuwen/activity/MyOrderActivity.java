@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -20,6 +21,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -198,6 +200,7 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
         });
         changeRadio(initTabNum);
         findViewById(R.id.my_order_back).setOnClickListener(this);
+        findViewById(R.id.order_d_bt2).setOnClickListener(this);
         deleteBt.setOnClickListener(this);
     }
 
@@ -248,6 +251,7 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
 
     private void changeRadio(int position) {
         viewPager.setCurrentItem(position);
+        initTabNum = position;
         if (position == 0) {
             line1.setBackgroundColor(getResources().getColor(R.color.gold));
             payLayout.setVisibility(View.VISIBLE);
@@ -361,6 +365,21 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
             case R.id.my_order_delete:
                 doDelete();
                 break;
+            case R.id.order_d_bt2:// 购课单付费
+                List<KeModel> kes = new ArrayList<>();
+                for (int i = 0; i < data1List.size(); i++) {
+                    if (kidStatus.get(data1List.get(i).getCartId())) {// 选中
+                        kes.add(data1List.get(i));
+                    }
+                }
+                if (kes.size() > 0) {
+                    Intent i = new Intent(mContext, TuanPayActivity.class);
+                    i.putExtra("TuanPayActivity_datas", (Serializable) kes);
+                    i.putExtra("TuanPayActivity_type", 3);
+                    startActivity(i);
+                }
+
+                break;
         }
     }
 
@@ -410,8 +429,6 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
                 i3.putExtra("OrderTuifeeDetailActivity_kid", o.getKeModels().get(0).getKid());
                 startActivity(i3);
                 break;
-
-
         }
 
     }

@@ -204,6 +204,7 @@
     <string name="woxiandianshang">我先垫上</string>
     <string name="woyaokaituan">我要开团</string>
     <string name="pingtuan_hint">请输入您收到的拼团码</string>
+    <string name="pingtuan_hint1">请输入您收到的课程码</string>
     <string name="dian_option1">垫付数量</string>
     <string name="dian_option3">课程总价格</string>
     <string name="dian_option4">教材价格</string>
@@ -388,4 +389,6 @@
     <string name="tui_fee_2">账户退费</string>
     <string name="tui_fee_3">其他理由</string>
 
+    <!--教师-->
+    <string name="all_teacher">全部教师</string>
 </resources>
