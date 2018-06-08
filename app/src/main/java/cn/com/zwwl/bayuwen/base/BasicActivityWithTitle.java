@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import java.util.HashMap;
@@ -158,11 +159,11 @@ public abstract class BasicActivityWithTitle extends AppCompatActivity {
         super.onResume();
     }
 
-
-
-
-
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        mViewCode.onMenuItemClick(item);
+        return super.onOptionsItemSelected(item);
+    }
 
     protected abstract int setContentView();
 

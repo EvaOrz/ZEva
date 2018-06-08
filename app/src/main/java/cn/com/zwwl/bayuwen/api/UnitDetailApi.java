@@ -18,11 +18,11 @@ import cn.com.zwwl.bayuwen.util.GsonUtil;
  * Created by zhumangmang at 2018/5/31 15:11
  */
 public class UnitDetailApi extends BaseApi {
-    private ResponseCallBack callBack;
+    private ResponseCallBack<UnitDetailModel> callBack;
     private Activity activity;
     private String url;
 
-    public UnitDetailApi(Activity context, String kId, String cId, ResponseCallBack callBack) {
+    public UnitDetailApi(Activity context, String kId, String cId, ResponseCallBack<UnitDetailModel>  callBack) {
         super(context);
         this.callBack = callBack;
         url = UrlUtil.getUnitDetail() + "?kid=" + kId + "&lecture_id=" + cId;
@@ -45,8 +45,10 @@ public class UnitDetailApi extends BaseApi {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                UnitDetailModel model = null;
                 if (json != null)
-                    callBack.result(GsonUtil.parseJson(UnitDetailModel.class, json.toString()), errorMsg);
+                    model = GsonUtil.parseJson(UnitDetailModel.class, json.toString());
+                callBack.result(model, errorMsg);
             }
         });
     }

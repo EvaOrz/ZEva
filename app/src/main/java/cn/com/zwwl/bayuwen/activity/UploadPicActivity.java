@@ -125,7 +125,7 @@ public class UploadPicActivity extends BasicActivityWithTitle {
 
     @Override
     public void onMenuClick(int menuCode) {
-        if (albumFiles == null || albumFiles.size() == 0) return;
+        if (albumFiles == null || albumFiles.size() >1) return;
         List<File> files = new ArrayList<>();
         for (AlbumFile albumFile : albumFiles) {
             File f = new File(albumFile.getPath());

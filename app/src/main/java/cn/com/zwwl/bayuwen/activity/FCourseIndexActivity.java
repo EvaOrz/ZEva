@@ -74,7 +74,7 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
                 super.getItemOffsets(outRect, view, parent, state);
                 int m = parent.getChildAdapterPosition(view) % 10;
                 if (m != 0)
-                    outRect.left = -DensityUtil.dip2px(res, R.dimen.line_height)* m;
+                    outRect.left = -DensityUtil.dip2px(res, R.dimen.line_height) * m;
                 outRect.bottom = -DensityUtil.dip2px(res, R.dimen.dp_5);
             }
         });
@@ -136,6 +136,7 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(mActivity, UnitIndexActivity.class);
+                intent.putExtra("online", model.getOnline());
                 intent.putExtra("kId", model.getCompleteClass().get(position).getKid());
                 intent.putExtra("cId", model.getCompleteClass().get(position).getId());
                 intent.putExtra("title", model.getCompleteClass().get(position).getTitle());

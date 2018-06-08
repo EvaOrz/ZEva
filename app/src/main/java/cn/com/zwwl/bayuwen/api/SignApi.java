@@ -14,12 +14,16 @@ import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.GsonUtil;
 
-public class AddCourseApi extends BaseApi {
+/**
+ * 签到
+ * Created by zhumangmang at 2018/6/7 19:57
+ */
+public class SignApi extends BaseApi {
     private Activity activity;
     private HashMap<String, String> para;
     private ResponseCallBack<CommonModel> callBack;
 
-    public AddCourseApi(Activity context, HashMap<String, String> map, ResponseCallBack<CommonModel> callBack) {
+    public SignApi(Activity context, HashMap<String, String> map, ResponseCallBack<CommonModel> callBack) {
         super(context);
         this.activity = context;
         this.para = map;
@@ -29,7 +33,7 @@ public class AddCourseApi extends BaseApi {
 
     @Override
     protected String getUrl() {
-        return UrlUtil.addCourse();
+        return UrlUtil.sign();
     }
 
     @Override

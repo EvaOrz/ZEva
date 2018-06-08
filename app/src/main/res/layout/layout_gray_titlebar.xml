@@ -3,61 +3,47 @@
     android:id="@+id/main2_toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/colorPrimary"
-    android:paddingLeft="@dimen/dp_10"
-    android:paddingRight="@dimen/dp_10">
+    android:background="@color/colorPrimary">
 
-    <ImageView
-        android:id="@+id/left_more_iv"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_centerVertical="true"
-        android:background="@color/gray_dark" />
-
-    <FrameLayout
-        android:id="@+id/frame_msg"
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/menu_more"
+        android:src="@mipmap/icon_menu_more"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true">
+        android:contentDescription="@null"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"/>
 
-        <ImageView
-            android:id="@+id/msg_iv"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:background="@color/gray_dark" />
 
-        <ImageView
-            android:layout_width="3dp"
-            android:layout_height="3dp"
-            android:layout_gravity="right"
-            android:src="@drawable/draw_redrounds" />
-    </FrameLayout>
+        <android.support.v7.widget.AppCompatImageView
+            android:contentDescription="@null"
+            android:id="@+id/menu_news"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/icon_news"/>
 
-    <ImageView
-        android:id="@+id/school_iv"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="15dp"
-        android:layout_toLeftOf="@id/frame_msg"
-        android:background="@color/gray_dark" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_toLeftOf="@id/school_iv"
-        android:layout_toRightOf="@+id/left_more_iv"
+    <android.support.v7.widget.AppCompatImageView
+        android:contentDescription="@null"
+        android:id="@+id/menu_school"
+        android:layout_width="wrap_content"
+        android:layout_toStartOf="@id/menu_news"
+        android:layout_toLeftOf="@id/menu_news"
+        android:layout_height="match_parent"
+        android:src="@mipmap/icon_school"/>
+    <android.support.v7.widget.AppCompatTextView
         android:background="@drawable/white_btn_bg"
+        android:layout_centerVertical="true"
+        android:id="@+id/menu_search"
+        android:layout_toLeftOf="@id/menu_school"
+        android:layout_toRightOf="@id/menu_more"
+        android:layout_toEndOf="@id/menu_more"
+        android:layout_toStartOf="@id/menu_school"
+        android:drawableStart="@mipmap/icon_search"
+        android:drawableLeft="@mipmap/icon_search"
         android:gravity="center_vertical"
-        android:hint="@string/search"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:textColorHint="@color/gray_light"
-        android:textSize="@dimen/text_size_12" />
-
-
+        android:layout_width="match_parent"
+        android:text="@string/search"
+        android:textColor="@color/gray_line"
+        android:layout_height="@dimen/dp_36" />
 </RelativeLayout>

@@ -1,122 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:background="@color/gray_line">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/paper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:drawableEnd="@mipmap/home_header_more"
+            android:drawableLeft="@mipmap/icon_upload_work"
+            android:drawablePadding="@dimen/dp_10"
+            android:drawableRight="@mipmap/home_header_more"
+            android:drawableStart="@mipmap/icon_upload_work"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/dp_5"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/dp_5"
+            android:text="@string/paper_pic" />
+
+        <View style="@style/split_line" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/homework"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:background="@color/white" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/teacher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/white"
+            android:drawableEnd="@mipmap/home_header_more"
+            android:drawableLeft="@mipmap/icon_summary"
+            android:drawablePadding="@dimen/dp_10"
+            android:drawableRight="@mipmap/home_header_more"
+            android:drawableStart="@mipmap/icon_summary"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/dp_5"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/dp_5"
+            android:text="@string/teacher_eval" />
+
+        <View style="@style/split_line" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/teacher_eval"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:background="@color/white"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tutor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/white"
+            android:drawableEnd="@mipmap/home_header_more"
+            android:drawableLeft="@mipmap/icon_summary"
+            android:drawablePadding="@dimen/dp_10"
+            android:drawableRight="@mipmap/home_header_more"
+            android:drawableStart="@mipmap/icon_summary"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/dp_5"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/dp_5"
+            android:text="@string/tutor_eval" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/gray_line" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tutor_eval"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:background="@color/white"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@id/adviser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/white"
+            android:drawableEnd="@mipmap/home_header_more"
+            android:drawableLeft="@mipmap/icon_summary"
+            android:drawablePadding="@dimen/dp_10"
+            android:drawableRight="@mipmap/home_header_more"
+            android:drawableStart="@mipmap/icon_summary"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/dp_5"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/dp_5"
+            android:text="@string/adviser_eval" />
+
+        <View style="@style/split_line" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/adviser_eval"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:background="@color/white"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin" />
+    </LinearLayout>
+
     <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/feedback"
         android:layout_width="match_parent"
-        android:id="@+id/paper"
-        android:paddingTop="@dimen/dp_5"
-        android:paddingBottom="@dimen/dp_5"
-        android:drawableStart="@mipmap/home_head_hot"
-        android:drawableLeft="@mipmap/home_head_hot"
-        android:drawableRight="@mipmap/home_header_more"
-        android:drawablePadding="@dimen/dp_10"
-        android:text="@string/paper_pic"
-        android:drawableEnd="@mipmap/home_header_more"
-        android:background="@color/white"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:layout_height="wrap_content" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:background="@color/gray_line"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/homework"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10"
-        android:background="@color/gray_line"/>
-    <android.support.v7.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:paddingTop="@dimen/dp_5"
-        android:paddingBottom="@dimen/dp_5"
-        android:drawableStart="@mipmap/home_head_hot"
-        android:drawableLeft="@mipmap/home_head_hot"
-        android:drawableRight="@mipmap/home_header_more"
-        android:drawablePadding="@dimen/dp_10"
-        android:text="@string/teacher_eval"
-        android:drawableEnd="@mipmap/home_header_more"
-        android:background="@color/white"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:layout_height="wrap_content" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:background="@color/gray_line"/>
- <android.support.v7.widget.AppCompatTextView
-     android:layout_width="match_parent"
-     android:id="@+id/teacher_eval"
-     android:text="XXX"
-     android:layout_marginStart="@dimen/activity_horizontal_margin"
-     android:layout_marginEnd="@dimen/activity_horizontal_margin"
-     android:layout_height="@dimen/dp_60" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10"
-        android:background="@color/gray_line"/>
-    <android.support.v7.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:paddingTop="@dimen/dp_5"
-        android:paddingBottom="@dimen/dp_5"
-        android:text="@string/tutor_eval"
-        android:drawableStart="@mipmap/home_head_hot"
-        android:drawableLeft="@mipmap/home_head_hot"
-        android:drawableRight="@mipmap/home_header_more"
-        android:drawablePadding="@dimen/dp_10"
-        android:drawableEnd="@mipmap/home_header_more"
-        android:background="@color/white"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:layout_height="wrap_content" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:background="@color/gray_line"/>
-    <android.support.v7.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:id="@+id/tutor_eval"
-        android:text="XXX"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_height="@dimen/dp_60" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10"
-        android:background="@color/gray_line"/>
-    <android.support.v7.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:paddingTop="@dimen/dp_5"
-        android:paddingBottom="@dimen/dp_5"
-        android:text="@string/adviser_eval"
-        android:drawableStart="@mipmap/home_head_hot"
-        android:drawableLeft="@mipmap/home_head_hot"
-        android:drawableRight="@mipmap/home_header_more"
-        android:drawablePadding="@dimen/dp_10"
-        android:drawableEnd="@mipmap/home_header_more"
-        android:background="@color/white"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:layout_height="wrap_content" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:background="@color/gray_line"/>
-    <android.support.v7.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:id="@+id/adviser_eval"
-        android:text="XXX"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_height="@dimen/dp_60" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10"
-        android:background="@color/gray_line"/>
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="@color/gold"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="@string/parent_feedback"
+        android:textColor="@color/white" />
+</RelativeLayout>

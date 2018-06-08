@@ -97,6 +97,7 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(mActivity, UnitIndexActivity.class);
+                intent.putExtra("online",model.getOnline());
                 intent.putExtra("kId", model.getCompleteClass().get(position).getKid());
                 intent.putExtra("cId", model.getCompleteClass().get(position).getId());
                 intent.putExtra("title", model.getCompleteClass().get(position).getTitle());

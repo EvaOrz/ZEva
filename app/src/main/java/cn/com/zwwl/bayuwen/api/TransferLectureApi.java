@@ -5,6 +5,7 @@ import android.app.Activity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -47,13 +48,17 @@ public class TransferLectureApi extends BaseApi {
 
     @Override
     protected void handler(JSONObject json, final JSONArray array, final ErrorMsg errorMsg) {
-        if (array != null) {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    callBack.result(GsonUtil.parseJsonArray(LessonModel.class, array.toString()), errorMsg);
+
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<LessonModel> lessonModels = null;
+                if (array != null) {
+                    lessonModels = GsonUtil.parseJsonArray(LessonModel.class, array.toString());
                 }
-            });
-        }
+                callBack.result(lessonModels, errorMsg);
+            }
+        });
+
     }
 }

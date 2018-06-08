@@ -10,14 +10,15 @@ import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
+import cn.com.zwwl.bayuwen.model.CommentModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
 public class VoteApi extends BaseApi {
     private Activity activity;
-    private ResponseCallBack callBack;
+    private ResponseCallBack<CommentModel> callBack;
     private HashMap<String, String> para;
 
-    public VoteApi(Activity context, HashMap<String, String> map, ResponseCallBack callBack) {
+    public VoteApi(Activity context, HashMap<String, String> map, ResponseCallBack<CommentModel> callBack) {
         super(context);
         this.activity = context;
         this.para = map;
