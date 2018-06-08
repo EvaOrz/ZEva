@@ -369,4 +369,13 @@
     <string name="radar_status_3">白银</string>
     <string name="radar_now">本期雷达图</string>
     <string name="radar_finish">拼图完成</string>
+    <string name="input_advise_hint">请输入更多建议</string>
+    <string name="vote_title">为TA点赞</string>
+    <string name="class_teacher">授课老师</string>
+    <string name="study_adviser">学业顾问</string>
+    <string name="school_tutor">校区助手</string>
+    <string name="class_intro">班级介绍</string>
+    <string name="teacher_intro">教师介绍</string>
+    <string name="sign">签到</string>
+    <string name="parent_feedback">家长反馈</string>
 </resources>

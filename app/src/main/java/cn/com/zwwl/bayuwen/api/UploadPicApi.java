@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -62,10 +63,13 @@ public class UploadPicApi extends BaseApi {
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    callBack.result(GsonUtil.parseJsonArray(CommonModel.class, array.toString()),errorMsg);
+                    ArrayList<CommonModel> commonModel = null;
+                    if (array != null) {
+                        commonModel = GsonUtil.parseJsonArray(CommonModel.class, array.toString());
+                    }
+                    callBack.result(commonModel, errorMsg);
                 }
             });
-
         }
     }
 

@@ -5,6 +5,8 @@ import android.app.Activity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
@@ -19,10 +21,10 @@ import cn.com.zwwl.bayuwen.util.GsonUtil;
  */
 public class FCourseListApi extends BaseApi {
     private Activity activity;
-    private ResponseCallBack callBack;
+    private ResponseCallBack<List<MyCourseModel.UnfinishedBean>> callBack;
     private String url;
 
-    public FCourseListApi(Activity context, String type, ResponseCallBack callBack) {
+    public FCourseListApi(Activity context, String type, ResponseCallBack<List<MyCourseModel.UnfinishedBean>> callBack) {
         super(context);
         this.activity = context;
         this.callBack = callBack;
@@ -45,8 +47,11 @@ public class FCourseListApi extends BaseApi {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (array != null)
-                    callBack.result(GsonUtil.parseJsonArray(MyCourseModel.UnfinishedBean.class, array.toString()), errorMsg);
+                ArrayList<MyCourseModel.UnfinishedBean> unfinishedBeans = null;
+                if (array != null) {
+                    unfinishedBeans = GsonUtil.parseJsonArray(MyCourseModel.UnfinishedBean.class, array.toString());
+                }
+                callBack.result(unfinishedBeans, errorMsg);
             }
         });
     }

@@ -2,14 +2,27 @@ package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.adapter.ClassDetailAdapter;
+import cn.com.zwwl.bayuwen.api.ClassDetailApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
+import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
+import cn.com.zwwl.bayuwen.model.ClassModel;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.util.ToastUtil;
 
+/**
+ * 班级详情
+ * Created by zhumangmang at 2018/6/7 17:32
+ */
 public class ClassDetailActivity extends BasicActivityWithTitle {
     @BindView(R.id.class_name)
     AppCompatTextView className;
@@ -19,12 +32,14 @@ public class ClassDetailActivity extends BasicActivityWithTitle {
     AppCompatTextView totalStu;
     @BindView(R.id.course_progress)
     ProgressBar courseProgress;
+    @BindView(R.id.current_course)
+    AppCompatTextView currentCourse;
     @BindView(R.id.total_course)
     AppCompatTextView totalCourse;
     @BindView(R.id.class_introduce)
     AppCompatTextView classIntroduce;
     @BindView(R.id.teacher_introduce)
-    AppCompatTextView teacherIntroduce;
+    RecyclerView teacherIntroduce;
     @BindView(R.id.submit)
     AppCompatTextView submit;
 
@@ -41,11 +56,31 @@ public class ClassDetailActivity extends BasicActivityWithTitle {
         } else {
             submit.setText("选择转班");
         }
+        teacherIntroduce.setLayoutManager(new LinearLayoutManager(this));
+        teacherIntroduce.setItemAnimator(new DefaultItemAnimator());
     }
 
     @Override
     protected void initData() {
-
+        new ClassDetailApi(this, getIntent().getStringExtra("kid"), new ResponseCallBack<ClassModel>() {
+            @Override
+            public void result(ClassModel classModel, ErrorMsg errorMsg) {
+                if (classModel != null) {
+                    className.setText(classModel.getCourse().getTitle());
+                    currentStu.setText(classModel.getNum().getNow_num());
+                    totalStu.setText(classModel.getNum().getFull_num());
+                    courseProgress.setMax(classModel.getPlan().getCount());
+                    courseProgress.setProgress(classModel.getPlan().getCurrent());
+                    currentCourse.setText(String.valueOf(classModel.getPlan().getCurrent()));
+                    totalCourse.setText(String.valueOf(classModel.getPlan().getCount()));
+                    classIntroduce.setText(classModel.getCourse().getDesc());
+                    ClassDetailAdapter adapter = new ClassDetailAdapter(classModel.getTeacher());
+                    teacherIntroduce.setAdapter(adapter);
+                } else {
+                    ToastUtil.showShortToast(errorMsg.getDesc());
+                }
+            }
+        });
     }
 
     @Override

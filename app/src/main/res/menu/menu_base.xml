@@ -25,4 +25,11 @@
         android:title="@string/hide_full_class"
         android:visible="false"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sign"
+        android:orderInCategory="100"
+        android:title=""
+        android:visible="false"
+        app:actionLayout="@layout/menu_action_sign"
+        app:showAsAction="ifRoom" />
 </menu>

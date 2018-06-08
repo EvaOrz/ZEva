@@ -134,7 +134,9 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                     intent.putExtra("kid", keModels.get(position).getKid());
                     startActivity(intent);
                 } else {
-                    startActivity(new Intent(mActivity, ClassApplyActivity.class));
+                    Intent intent = new Intent(mActivity, ClassDetailActivity.class);
+                    intent.putExtra("kid", keModels.get(position).getKid());
+                    startActivity(intent);
                 }
             }
         });

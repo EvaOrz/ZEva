@@ -17,20 +17,20 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
+import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.SearchCourseActivity;
 import cn.com.zwwl.bayuwen.adapter.DianzanAdapter;
 import cn.com.zwwl.bayuwen.adapter.KeTagGridAdapter;
 import cn.com.zwwl.bayuwen.api.KeTagListApi;
-import cn.com.zwwl.bayuwen.api.KeTagListApi.*;
+import cn.com.zwwl.bayuwen.api.KeTagListApi.TagCourseModel;
 import cn.com.zwwl.bayuwen.api.PraiseListApi;
-import cn.com.zwwl.bayuwen.api.PraiseListApi.*;
+import cn.com.zwwl.bayuwen.api.PraiseListApi.PraiseModel;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
@@ -149,9 +149,10 @@ public class MainFrag2 extends Fragment
             }
         });
 
-        mToolbarView.findViewById(R.id.left_more_iv).setOnClickListener(this);
-        mToolbarView.findViewById(R.id.frame_msg).setOnClickListener(this);
-        mToolbarView.findViewById(R.id.school_iv).setOnClickListener(this);
+        mToolbarView.findViewById(R.id.menu_more).setOnClickListener(this);
+        mToolbarView.findViewById(R.id.menu_news).setOnClickListener(this);
+        mToolbarView.findViewById(R.id.menu_school).setOnClickListener(this);
+        mToolbarView.findViewById(R.id.menu_search).setOnClickListener(this);
     }
 
     private void setAdapterData() {
@@ -184,13 +185,16 @@ public class MainFrag2 extends Fragment
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.frame_msg:
-                Intent i = new Intent();
-                i.setClass(mActivity, SearchCourseActivity.class);
-                startActivity(i);
+            case R.id.menu_news:
+                startActivity(new Intent(mActivity, MessageActivity.class));
                 break;
-            case R.id.left_more_iv:
-                ((MainActivity) getActivity()).openDrawer();
+            case R.id.menu_more:
+                ((MainActivity)mActivity).openDrawer();
+                break;
+            case R.id.menu_school:
+                break;
+            case R.id.menu_search:
+                startActivity(new Intent(mActivity, SearchCourseActivity.class));
                 break;
         }
     }

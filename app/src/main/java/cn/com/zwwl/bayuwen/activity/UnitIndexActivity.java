@@ -6,6 +6,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -15,13 +16,18 @@ import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.PicAdapter;
+import cn.com.zwwl.bayuwen.api.SignApi;
 import cn.com.zwwl.bayuwen.api.UnitDetailApi;
 import cn.com.zwwl.bayuwen.api.VoteApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
+import cn.com.zwwl.bayuwen.base.MenuCode;
 import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
+import cn.com.zwwl.bayuwen.model.CommentModel;
+import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UnitDetailModel;
+import cn.com.zwwl.bayuwen.util.ToastUtil;
 
 /**
  * 课程单元详情首页
@@ -58,6 +64,8 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initView() {
+        if (getIntent().getIntExtra("online", -1) == 0)
+            showMenu(MenuCode.SIGN);
         evalDialog = new FinalEvalDialog(this);
         pptList.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         pptList.setItemAnimator(new DefaultItemAnimator());
@@ -137,9 +145,9 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
         map.put("theme", type);
         map.put("kid", kId);
         map.put("lecture_id", cId);
-        new VoteApi(this, map, new ResponseCallBack() {
+        new VoteApi(this, map, new ResponseCallBack<CommentModel>() {
             @Override
-            public void result(Object o, ErrorMsg errorMsg) {
+            public void result(CommentModel o, ErrorMsg errorMsg) {
 
             }
         });
@@ -170,6 +178,24 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
                 break;
         }
 
+    }
+
+    @Override
+    public void onMenuClick(int menuCode) {
+        map.clear();
+        map.put("kid", kId);
+        map.put("lecture_id", cId);
+        map.put("status", "1");
+        new SignApi(this, map, new ResponseCallBack<CommonModel>() {
+            @Override
+            public void result(CommonModel commonModel, ErrorMsg errorMsg) {
+                if (TextUtils.isEmpty(errorMsg.getDesc())) {
+                    ToastUtil.showShortToast("签到成功");
+                } else {
+                    ToastUtil.showShortToast(errorMsg.getDesc());
+                }
+            }
+        });
     }
 
     @Override

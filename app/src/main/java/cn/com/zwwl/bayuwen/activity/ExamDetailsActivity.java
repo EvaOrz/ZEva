@@ -87,17 +87,32 @@ public class ExamDetailsActivity extends BasicActivityWithTitle {
 
     }
 
-    @OnClick({R.id.paper})
+    @OnClick({R.id.paper, R.id.feedback, R.id.teacher, R.id.tutor, R.id.adviser})
     @Override
     public void onClick(View view) {
-        if (model.getExam() != null && model.getExam().size() > 0) {
-            Intent intent = new Intent(this, InClassStatusActivity.class);
-            String[] urls = new String[model.getExam().size()];
-            for (int i = 0; i < model.getExam().size(); i++)
-                urls[i] = model.getExam().get(i).getUrl();
-            intent.putExtra("urls", urls);
-            startActivity(intent);
+        Intent intent = new Intent();
+        switch (view.getId()) {
+            case R.id.paper:
+                if (model.getExam() != null && model.getExam().size() > 0) {
+                    intent.setClass(this, InClassStatusActivity.class);
+                    String[] urls = new String[model.getExam().size()];
+                    for (int i = 0; i < model.getExam().size(); i++)
+                        urls[i] = model.getExam().get(i).getUrl();
+                    intent.putExtra("urls", urls);
+
+                }
+                break;
+            case R.id.feedback:
+
+                break;
+            case R.id.teacher:
+                break;
+            case R.id.tutor:
+                break;
+            case R.id.adviser:
+                break;
         }
+        startActivity(intent);
     }
 
     @Override

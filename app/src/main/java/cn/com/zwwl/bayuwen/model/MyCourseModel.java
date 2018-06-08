@@ -1,5 +1,7 @@
 package cn.com.zwwl.bayuwen.model;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 import java.util.List;
 /**
  *  我的课程
@@ -26,7 +28,7 @@ public class MyCourseModel extends Entry{
         public void setUnfinished(List<UnfinishedBean> unfinished) {
             this.unfinished = unfinished;
         }
-        public static class UnfinishedBean {
+        public static class UnfinishedBean implements MultiItemEntity {
             /**
              * id : 204516
              * uid : 35432
@@ -96,6 +98,13 @@ public class MyCourseModel extends Entry{
 
             public void setPlan(PlanModel plan) {
                 this.plan = plan;
+            }
+
+            @Override
+            public int getItemType() {
+                if ("0".equals(products.getOnline()))
+                    return 0;
+                return 1;
             }
 
             public static class ProductsBean {

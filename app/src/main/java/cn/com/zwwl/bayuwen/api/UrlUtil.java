@@ -269,4 +269,17 @@ public class UrlUtil {
     public static String addWork() {
         return HOST+"/courseware";
     }
+    /**
+     * 班级详情
+     */
+    public static String classDetail() {
+        return HOST+"/transfer/course_detail";
+    }
+    /**
+     * 签到
+     */
+    public static String sign() {
+        return HOST+"/students/stusign";
+    }
+
 }
