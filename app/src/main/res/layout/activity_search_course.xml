@@ -34,8 +34,8 @@
             android:hint="@string/search"
             android:imeOptions="actionSearch"
             android:lines="1"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:textColorHint="@color/gray_light"
             android:textSize="@dimen/text_size_12" />
 

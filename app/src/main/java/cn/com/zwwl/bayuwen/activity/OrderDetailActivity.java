@@ -300,10 +300,15 @@ public class OrderDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.order_d_bt2:// 直接调起支付
-                if (payType == 2) {
-                    doWeixinPay();
+                if ((int) (leftTimeString / 1000) == 0) {
+                    showToast("请重新下单");
                 } else {
-                    doAliPay();
+                    if (payType == 2) {
+                        doWeixinPay();
+                    } else {
+                        doAliPay();
+                    }
+
                 }
 
                 break;

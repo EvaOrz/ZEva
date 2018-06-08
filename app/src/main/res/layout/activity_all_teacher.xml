@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/body_bg"
     android:orientation="vertical">
 
-    <RelativeLayout
+
+    <LinearLayout
+        android:id="@+id/search_head_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bar_height"
         android:background="@color/body_gray"
-        android:padding="10dp">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp">
 
         <ImageView
             android:id="@+id/all_t_back"
@@ -17,15 +24,38 @@
             android:layout_height="@dimen/back_size"
             android:src="@drawable/back_gray" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/all_teacher"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_16" />
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/white_btn_bg"
+            android:gravity="center_vertical"
+            android:hint="@string/search"
+            android:imeOptions="actionSearch"
+            android:lines="1"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColorHint="@color/gray_light"
+            android:textSize="@dimen/text_size_12" />
+
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/all_t_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:numColumns="4"
+        android:scrollbars="none" />
+
+    <cn.com.zwwl.bayuwen.view.selectmenu.TeacherMenuView
+        android:id="@+id/all_t_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_head_layout" />
 
 
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

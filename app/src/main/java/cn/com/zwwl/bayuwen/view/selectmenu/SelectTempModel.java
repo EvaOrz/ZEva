@@ -8,6 +8,7 @@ import cn.com.zwwl.bayuwen.model.KeTypeModel.*;
 import cn.com.zwwl.bayuwen.model.KeTypeModel.CourseTypeBean.*;
 import cn.com.zwwl.bayuwen.model.KeTypeModel.SchoolsBean.*;
 import cn.com.zwwl.bayuwen.model.KeTypeModel.SchooltimesBean.*;
+import cn.com.zwwl.bayuwen.model.TeacherTypeModel.*;
 import cn.com.zwwl.bayuwen.util.Tools;
 
 /**
@@ -16,6 +17,7 @@ import cn.com.zwwl.bayuwen.util.Tools;
 public class SelectTempModel extends Entry {
     private String id;
     private String text;
+    private boolean isCheck = false;// 教师多选筛选器用
 
     public String getId() {
         return id;
@@ -31,6 +33,14 @@ public class SelectTempModel extends Entry {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
     }
 
     /**
@@ -115,6 +125,32 @@ public class SelectTempModel extends Entry {
             l.add(s);
         }
         return l;
+    }
+
+    /**
+     * 解析教师年级
+     *
+     * @param gradesBeans
+     * @return
+     */
+    public static List<List<SelectTempModel>> parseTGrades(List<GradesModel> gradesBeans) {
+        List<List<SelectTempModel>> ll = new ArrayList<>();
+        List<SelectTempModel> l0 = new ArrayList<>();
+        for (GradesModel gradesModel : gradesBeans) {
+            SelectTempModel s = gradesModel.transToS();
+            l0.add(s);
+
+            if (Tools.listNotNull(gradesModel.getGrade())) {
+                List<SelectTempModel> l1 = new ArrayList<>();
+                for (GradesBean gradesBean : gradesModel.getGrade()) {
+                    SelectTempModel s1 = gradesBean.transToS();
+                    l1.add(s1);
+                }
+                ll.add(l1);
+            }
+        }
+        ll.add(0, l0);
+        return ll;
     }
 
     /**

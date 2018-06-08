@@ -68,7 +68,7 @@ public class CalendarMonthSelectView extends HorizontalScrollView {
             textView.setTextSize(16);
             textView.setPadding(10, 10, 10, 10);
             textView.setTag(calendars.get(i));
-            textView.setText(CalendarTools.format(calendars.get(i).getTimeInMillis(), "yyyy年MM月"));
+            textView.setText(CalendarTools.format(calendars.get(i).getTimeInMillis()/1000, "yyyy年MM月"));
             textView.setLayoutParams(new ViewGroup.LayoutParams(MyApplication.width / 3, ViewGroup.LayoutParams.WRAP_CONTENT));
             textView.setOnClickListener(new OnClickListener() {
                 @Override

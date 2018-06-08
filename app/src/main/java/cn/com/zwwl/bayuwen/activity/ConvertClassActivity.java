@@ -72,7 +72,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
     }
 
     private void getChoseType() {
-        new KeSelectTypeApi(mContext, new FetchEntryListener() {
+        new KeSelectTypeApi(mContext, 1,new FetchEntryListener() {
             @Override
             public void setData(final Entry entry) {
                 if (entry != null) {

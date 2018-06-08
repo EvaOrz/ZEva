@@ -125,10 +125,10 @@ public class UrlUtil {
         return HOST + "/vote/toplist";
     }
 
-    // 教师详情
+    // 教师详情 || 全部教师
     public static String getTeacherUrl(String tid) {
         if (TextUtils.isEmpty(tid))
-            return HOST + "/teachers/detail";
+            return HOST + "/teachers";
         return HOST + "/teachers/detail?tid=" + tid;
     }
 

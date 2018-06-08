@@ -148,7 +148,6 @@ public class SearchCourseActivity extends BaseActivity {
         keSelectAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void setOnItemClickListener(View view, int position) {
-
                 Intent intent = new Intent();
                 intent.putExtra("CourseDetailActivity_id", keModels.get(position).getKid());
                 intent.setClass(mContext, CourseDetailActivity.class);
@@ -221,7 +220,7 @@ public class SearchCourseActivity extends BaseActivity {
     @Override
     protected void initData() {
         // 获取筛选类型数据
-        new KeSelectTypeApi(mContext, new FetchEntryListener() {
+        new KeSelectTypeApi(mContext, 1, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
                 if (entry != null) {
@@ -235,8 +234,6 @@ public class SearchCourseActivity extends BaseActivity {
 
             }
         });
-
-
     }
 
     @SuppressLint("HandlerLeak")
@@ -255,6 +252,4 @@ public class SearchCourseActivity extends BaseActivity {
 
         }
     };
-
-
 }

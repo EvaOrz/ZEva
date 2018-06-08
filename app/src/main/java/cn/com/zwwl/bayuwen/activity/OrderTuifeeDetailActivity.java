@@ -99,7 +99,7 @@ public class OrderTuifeeDetailActivity extends BaseActivity {
     public void onClick(View view) {
         super.onClick(view);
         switch (view.getId()) {
-            case R.id.order_d_back:
+            case R.id.tui_d_back:
                 finish();
                 break;
             case R.id.bodadianhua:

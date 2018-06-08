@@ -417,8 +417,10 @@ public class TuanPayActivity extends BaseActivity {
                 tt = TuanPayResultActivity.PAY_SUCCESS;
                 desc = "报名付费成功";
             } else if (result.equals(BCPayResult.RESULT_CANCEL)) {
-                tt = TuanPayResultActivity.PAY_CANCLE;
-                desc = "取消支付";
+//                tt = TuanPayResultActivity.PAY_CANCLE;
+//                desc = "取消支付";
+                goOrderDetail();
+                return;
             } else if (result.equals(BCPayResult.RESULT_FAIL)) {
                 tt = TuanPayResultActivity.PAY_FAILD;
                 desc = "支付失败, 原因: " + bcPayResult.getErrCode() +
@@ -436,6 +438,13 @@ public class TuanPayActivity extends BaseActivity {
             goPayResult(tt, desc);
         }
     };
+
+    private void goOrderDetail() {
+        Intent i = new Intent(mContext, OrderDetailActivity.class);
+        i.putExtra("OrderDetailActivity_data", orderModel.getBill_no());
+        i.putExtra("OrderDetailActivity_type", 1);
+        startActivity(i);
+    }
 
     private void goPayResult(int t, String desc) {
         Intent i = new Intent(mContext, TuanPayResultActivity.class);

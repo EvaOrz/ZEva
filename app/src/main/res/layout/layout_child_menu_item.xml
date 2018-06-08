@@ -3,23 +3,40 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/child_textView"
+    <LinearLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:focusable="false"
-        android:gravity="center"
-        android:padding="10dp"
-        android:textColor="@color/body_gray"
-        android:textSize="@dimen/text_size_14" />
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/child_textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/body_gray"
+            android:textSize="@dimen/text_size_14" />
+
+        <CheckBox
+            android:id="@+id/child_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/line_height"
-        android:layout_below="@+id/child_textView"
+        android:layout_below="@id/layout"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@color/gray_line" />

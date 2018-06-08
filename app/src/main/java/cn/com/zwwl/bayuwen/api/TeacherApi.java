@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.api;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 
@@ -20,7 +21,7 @@ import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
 
 /**
- * 获取全部教师、教师详情Api
+ * 获取全部教师、按筛选条件获取教师列表、教师详情Api
  */
 public class TeacherApi extends BaseApi {
     private Map<String, String> pamas = new HashMap<>();
@@ -37,9 +38,39 @@ public class TeacherApi extends BaseApi {
     public TeacherApi(Context context, FetchEntryListListener listListener) {
         super(context);
         mContext = context;
-        isNeedJsonArray = true;
         this.listListener = listListener;
         this.url = UrlUtil.getTeacherUrl(null);
+        get();
+    }
+
+    /**
+     * 按筛选条件获取教师列表
+     *
+     * @param context
+     * @param type         项目id串
+     * @param users        年级串
+     * @param keyword      搜索关键字
+     * @param listListener
+     */
+    public TeacherApi(Context context, String type, String users, String keyword,
+                      FetchEntryListListener listListener) {
+        super(context);
+        mContext = context;
+        this.listListener = listListener;
+        this.url = UrlUtil.getTeacherUrl(null) + "/search?";
+
+        if (!TextUtils.isEmpty(type)) {
+            String and = url.endsWith("?") ? "" : "&";
+            url += and + "type=" + type;
+        }
+        if (!TextUtils.isEmpty(users)) {
+            String and = url.endsWith("?") ? "" : "&";
+            url += and + "users=" + users;
+        }
+        if (!TextUtils.isEmpty(keyword)) {
+            String and = url.endsWith("?") ? "" : "&";
+            url += and + "keyword=" + keyword;
+        }
         get();
     }
 
@@ -57,6 +88,7 @@ public class TeacherApi extends BaseApi {
         this.url = UrlUtil.getTeacherUrl(id);
         get();
     }
+
 
     @Override
     protected String getUrl() {
@@ -76,38 +108,50 @@ public class TeacherApi extends BaseApi {
             if (listener != null)
                 listener.setError(errorMsg);
         }
-        if (isNeedJsonArray) {// 获取列表
-            if (!isNull(array)) {
-                List<TeacherModel> ts = new ArrayList<>();
-                for (int i = 0; i < array.length(); i++) {
-                    TeacherModel t = new TeacherModel();
-                    t.parseTeacherModel(array.optJSONObject(i), t);
-                    ts.add(t);
-                }
-                listListener.setData(ts);
-
-            } else {// 增删改
-                listListener.setData(null);
+        // 解析教师筛选接口数据
+        if (!isNull(array)) {
+            List<TeacherModel> ts = new ArrayList<>();
+            for (int i = 0; i < array.length(); i++) {
+                TeacherModel t = new TeacherModel();
+                t.parseTeacherModel(array.optJSONObject(i), t);
+                ts.add(t);
             }
+            listListener.setData(ts);
         }
         if (!isNull(json)) {
-            JSONObject tjson = json.optJSONObject("teacher");
-            JSONArray carray = json.optJSONArray("courses");
-            TeacherModel t = new TeacherModel();
-            t.parseTeacherModel(tjson, t);
+            // 解析全部教师接口数据
+            if (listListener != null) {
+                JSONArray adata = json.optJSONArray("teachers");
+                if (!isNull(adata)) {
+                    List<TeacherModel> ts = new ArrayList<>();
+                    for (int i = 0; i < adata.length(); i++) {
+                        TeacherModel t = new TeacherModel();
+                        t.parseTeacherModel(adata.optJSONObject(i), t);
+                        ts.add(t);
+                    }
+                    listListener.setData(ts);
 
-            List<KeModel> keModelList = new ArrayList<>();
-            if (!isNull(carray)) {
-                for (int i = 0; i < carray.length(); i++) {
-                    KeModel k = new KeModel();
-                    Gson gs = new Gson();
-                    k = gs.fromJson(carray.optString(i), KeModel.class);
-                    keModelList.add(k);
                 }
-                t.setKeModels(keModelList);
+            }
+            // 解析教师详情接口数据
+            if (listener != null) {
+                JSONObject tjson = json.optJSONObject("teacher");
+                JSONArray carray = json.optJSONArray("courses");
+                TeacherModel t = new TeacherModel();
+                t.parseTeacherModel(tjson, t);
+                List<KeModel> keModelList = new ArrayList<>();
+                if (!isNull(carray)) {
+                    for (int i = 0; i < carray.length(); i++) {
+                        KeModel k = new KeModel();
+                        Gson gs = new Gson();
+                        k = gs.fromJson(carray.optString(i), KeModel.class);
+                        keModelList.add(k);
+                    }
+                    t.setKeModels(keModelList);
+                }
+                listener.setData(t);
             }
 
-            listener.setData(t);
-        } else listener.setData(null);
+        }
     }
 }
