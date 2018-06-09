@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.api.CourseApi;
@@ -36,6 +37,7 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.LessonModel;
+import cn.com.zwwl.bayuwen.model.PromotionModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
 import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
@@ -66,6 +68,7 @@ public class CourseDetailActivity extends BaseActivity {
     private ImageView follow_status;
     private TextView title_tv, add_tv, sure_tv, duihuan_tv;
     private LinearLayout nomalFooter;
+    private LinearLayout promotionLayout, promotionContain;
 
     private LinearLayout teacherLayout, groupLayout;
 
@@ -95,6 +98,7 @@ public class CourseDetailActivity extends BaseActivity {
             cid = keModel.getKid();
             code = getIntent().getStringExtra("CourseDetailActivity_id");
             setUi();
+            setkeData();
         } else {// nomal情况课程详情
             cid = getIntent().getStringExtra("CourseDetailActivity_id");
             initData();
@@ -196,6 +200,8 @@ public class CourseDetailActivity extends BaseActivity {
         add_tv = findViewById(R.id.ke_add);
         sure_tv = findViewById(R.id.duihuan_footer);
         nomalFooter = findViewById(R.id.nomal_footer);
+        promotionLayout = findViewById(R.id.promotion_layout);
+        promotionContain = findViewById(R.id.promotion_container);
         cDetailTabFrag1 = new KeDetailView1(mContext);
         cDetailTabFrag2 = new KeDetailView2(mContext);
         cDetailTabFrag3 = new KeDetailView3(mContext);
@@ -432,12 +438,25 @@ public class CourseDetailActivity extends BaseActivity {
         teacherLayout.removeAllViews();
         for (TeacherModel t : keModel.getTeacherModels())
             teacherLayout.addView(getTeacherView(t));
+
         if (keModel.getGroupbuy() != null) {
             groupLayout.setVisibility(View.VISIBLE);
             priceTv1.setText("￥" + keModel.getGroupbuy().getDiscount_pintrice());
-
         } else {
             groupLayout.setVisibility(View.INVISIBLE);
+        }
+        if (Tools.listNotNull(keModel.getPromotionModels())) {
+            promotionLayout.setVisibility(View.VISIBLE);
+            promotionContain.removeAllViews();
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(MyApplication.width
+                    / 2, LinearLayout.LayoutParams.WRAP_CONTENT);
+            for (int i = 0; i < keModel.getPromotionModels().size(); i++) {
+                promotionContain.addView(getPromotionView(i, keModel.getPromotionModels().get(i))
+                        , params);
+            }
+
+        } else {
+            promotionLayout.setVisibility(View.GONE);
         }
         cDetailTabFrag2.setData(keModel);
     }
@@ -454,6 +473,36 @@ public class CourseDetailActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent i = new Intent(mContext, TeacherDetailActivity.class);
                 i.putExtra("tid", teacherModel.getTid());
+                startActivity(i);
+            }
+        });
+        return view;
+    }
+
+    private View getPromotionView(final int position, final PromotionModel promotionModel) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_cdetail_promotion, null);
+        ImageView img = view.findViewById(R.id.cdetail_t_pic);
+        TextView name = view.findViewById(R.id.cdetail_t_name);
+        TextView price = view.findViewById(R.id.cdetail_t_price);
+        TextView youhui = view.findViewById(R.id.cdetail_t_youhui);
+
+        name.setText("套餐" + (position + 1) + "：");
+        price.setText("￥" + promotionModel.getOriginal_price());
+        youhui.setText("已优惠：￥" + promotionModel.getDiscount_price());
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, PromotionActivity.class);
+                i.putExtra("PromotionActivity_data", keModel);
+                i.putExtra("PromotionActivity_position", position);
+                startActivity(i);
+            }
+        });
+        view.findViewById(R.id.cdetail_t_buy).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, TeacherDetailActivity.class);
+//                i.putExtra("tid", teacherModel.getTid());
                 startActivity(i);
             }
         });

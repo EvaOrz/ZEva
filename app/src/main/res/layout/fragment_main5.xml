@@ -286,6 +286,32 @@
             <include layout="@layout/layout_line" />
 
             <LinearLayout
+                android:id="@+id/frag5_tuangou"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:background="@color/gray_dark" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/my_tuan"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_14" />
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_line" />
+
+            <LinearLayout
                 android:id="@+id/frag5_tuan_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

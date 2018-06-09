@@ -17,7 +17,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.api.ActionApi;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.util.BayuwenTools;
+import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.SmsTools;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
@@ -69,7 +69,7 @@ public class FmForgetPwdActivity extends BaseActivity {
 
             case R.id.forget_get_verify:
 
-                if (BayuwenTools.checkIsPhone(this, phone)) doGetVerifyCode(phone);
+                if (AppValue.checkIsPhone(this, phone)) doGetVerifyCode(phone);
                 break;
             case R.id.forget_next:// 下一步
                 phoneTip.setText(String.format(mContext.getResources().getString(R.string
@@ -80,7 +80,7 @@ public class FmForgetPwdActivity extends BaseActivity {
             case R.id.forget_commit:// 提交
                 String pwd = pwdEdit.getText().toString();
                 final String code = verifyEdit.getText().toString();
-                if (BayuwenTools.checkIsPhone(this, phone) && BayuwenTools.checkPwd(this, pwd)) {
+                if (AppValue.checkIsPhone(this, phone) && AppValue.checkPwd(this, pwd)) {
                     showLoadingDialog(true);
                     new ActionApi(this, phone, pwd, code, new FetchEntryListener() {
                         @Override

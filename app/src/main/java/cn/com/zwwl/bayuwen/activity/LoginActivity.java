@@ -14,7 +14,7 @@ import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
-import cn.com.zwwl.bayuwen.util.BayuwenTools;
+import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.view.LoginProblemPopWindow;
 
 /**
@@ -81,7 +81,7 @@ public class LoginActivity extends BaseActivity {
                 final String username = accountEdit.getText().toString();
                 String pwd = pwdEdit.getText().toString();
                 // 密码登录
-                if (BayuwenTools.checkIsPhone(LoginActivity.this, username) && BayuwenTools
+                if (AppValue.checkIsPhone(LoginActivity.this, username) && AppValue
                         .checkPwd(LoginActivity.this, pwd)) {
                     doLogin(LoginSigninApi.GetUserType.LOGIN, username, pwd);
                 }
