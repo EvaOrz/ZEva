@@ -5,50 +5,51 @@ import android.app.Activity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
-import cn.com.zwwl.bayuwen.model.CommonModel;
+import cn.com.zwwl.bayuwen.model.ClassModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.GsonUtil;
-
-public class AddCourseApi extends BaseApi {
+/**
+ *  班级详情
+ *  Created by zhumangmang at 2018/6/7 19:57
+ */
+public class ClassDetailApi extends BaseApi {
     private Activity activity;
-    private HashMap<String, String> para;
-    private ResponseCallBack<CommonModel> callBack;
+    private ResponseCallBack<ClassModel> callBack;
+    private String url;
 
-    public AddCourseApi(Activity context, HashMap<String, String> map, ResponseCallBack<CommonModel> callBack) {
+    public ClassDetailApi(Activity context, String kid, ResponseCallBack<ClassModel> callBack) {
         super(context);
         this.activity = context;
-        this.para = map;
+        url = UrlUtil.classDetail() + "?kid=" + kid;
         this.callBack = callBack;
-        post();
+        get();
     }
 
     @Override
     protected String getUrl() {
-        return UrlUtil.addCourse();
+        return url;
     }
 
     @Override
     protected Map<String, String> getPostParams() {
-        return para;
+        return null;
     }
 
     @Override
     protected void handler(final JSONObject json, JSONArray array, final ErrorMsg errorMsg) {
-
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                CommonModel commonModel = null;
-                if (json != null)
-                    commonModel = GsonUtil.parseJson(CommonModel.class, json.toString());
-                callBack.result(commonModel, errorMsg);
+                ClassModel classModel = null;
+                if (json != null) {
+                    classModel = GsonUtil.parseJson(ClassModel.class, json.toString());
+                }
+                callBack.result(classModel, errorMsg);
             }
         });
-
     }
 }

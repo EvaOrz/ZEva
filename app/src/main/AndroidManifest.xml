@@ -345,6 +345,8 @@
         <activity android:name=".activity.UnitIndexActivity" />
         <!--上传照片-->
         <activity android:name=".activity.UploadPicActivity" />
+        <!--教学总结-->
+        <activity android:name=".activity.TeacherSummaryActivity" />
 
 
         <!--腾讯定位SDK key-->

@@ -39,13 +39,14 @@ public class UploadWorkApi extends BaseApi {
 
     @Override
     protected void handler(final JSONObject json, JSONArray array, final ErrorMsg errorMsg) {
-        if (json != null) {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    callBack.result(GsonUtil.parseJson(CommonModel.class, json.toString()), errorMsg);
-                }
-            });
-        }
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                CommonModel commonModel = null;
+                if (json != null)
+                    commonModel = GsonUtil.parseJson(CommonModel.class, json.toString());
+                callBack.result(commonModel, errorMsg);
+            }
+        });
     }
 }

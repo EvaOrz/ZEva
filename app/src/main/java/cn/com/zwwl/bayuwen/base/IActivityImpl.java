@@ -22,7 +22,7 @@ import cn.com.zwwl.bayuwen.R;
  * created at 2017/6/7 16:37
  */
 
-public class IActivityImpl implements IActivity, Toolbar.OnMenuItemClickListener {
+public class IActivityImpl implements IActivity {
     private BasicActivityWithTitle mContext;
 
 
@@ -48,7 +48,6 @@ public class IActivityImpl implements IActivity, Toolbar.OnMenuItemClickListener
                 mContext.close();
             }
         });
-        mToolbar.setOnMenuItemClickListener(this);
         setCustomTitle("");
     }
 
@@ -136,7 +135,6 @@ public class IActivityImpl implements IActivity, Toolbar.OnMenuItemClickListener
     public void showMenu(int menuCode) {
         Menu menu = mToolbar.getMenu();
         switch (menuCode) {
-
             case MenuCode.SUBMIT:
                 MenuItem submit = menu.findItem(R.id.action_submit);
                 submit.setVisible(true);
@@ -145,21 +143,32 @@ public class IActivityImpl implements IActivity, Toolbar.OnMenuItemClickListener
                 MenuItem hide = menu.findItem(R.id.action_hide_class);
                 hide.setVisible(true);
                 break;
+
+            case MenuCode.SIGN:
+                final MenuItem sign = menu.findItem(R.id.action_sign);
+                sign.setVisible(true);
+                sign.getActionView().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mContext.onOptionsItemSelected(sign);
+                    }
+                });
+                break;
         }
     }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
+    public void onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.action_share) {
             mContext.onMenuClick(R.id.action_share);
         } else if (item.getItemId() == R.id.action_submit) {
             mContext.onMenuClick(R.id.action_submit);
         } else if (item.getItemId() == R.id.action_settings) {
             mContext.onMenuClick(R.id.action_settings);
+        } else if (item.getItemId() == R.id.action_sign) {
+            mContext.onMenuClick(R.id.action_sign);
         } else if (item.getItemId() == R.id.action_hide_class) {
             mContext.onMenuClick(R.id.action_hide_class);
         }
-        return false;
     }
 }
 

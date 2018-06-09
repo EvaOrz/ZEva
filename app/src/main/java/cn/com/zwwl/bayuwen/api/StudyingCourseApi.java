@@ -15,10 +15,10 @@ import cn.com.zwwl.bayuwen.util.GsonUtil;
 
 public class StudyingCourseApi extends BaseApi {
     private String kid;
-    ResponseCallBack listener;
+    ResponseCallBack<StudyingModel> listener;
     private Activity activity;
 
-    public StudyingCourseApi(Activity context, String kid, ResponseCallBack listener) {
+    public StudyingCourseApi(Activity context, String kid,  ResponseCallBack<StudyingModel> listener) {
         super(context);
         this.activity = context;
         this.listener = listener;
@@ -41,7 +41,9 @@ public class StudyingCourseApi extends BaseApi {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                listener.result(GsonUtil.parseJson(StudyingModel.class, json.toString()),errorMsg);
+                StudyingModel model=null;
+                if (json!=null)model=GsonUtil.parseJson(StudyingModel.class,json.toString());
+                listener.result(model,errorMsg);
             }
         });
 

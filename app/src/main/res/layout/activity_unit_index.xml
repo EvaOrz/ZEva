@@ -11,40 +11,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableEnd="@mipmap/home_header_more"
-        android:drawableLeft="@mipmap/home_head_hot"
-        android:drawablePadding="@dimen/dp_10"
+        android:drawableLeft="@mipmap/icon_report"
         android:drawableRight="@mipmap/home_header_more"
-        android:drawableStart="@mipmap/home_head_hot"
+        android:drawableStart="@mipmap/icon_report"
+        android:gravity="center_vertical"
         android:paddingBottom="@dimen/dp_5"
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/dp_5"
-        android:text="@string/study_report" />
+        android:text="@string/month_report" />
 
     <View
+        style="@style/split_line"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10"
-        android:background="@color/gray_line" />
+        android:layout_height="@dimen/dp_10" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/learning_summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableEnd="@mipmap/home_header_more"
-        android:drawableLeft="@mipmap/home_head_hot"
-        android:drawablePadding="@dimen/dp_10"
+        android:drawableLeft="@mipmap/icon_summary"
         android:drawableRight="@mipmap/home_header_more"
-        android:drawableStart="@mipmap/home_head_hot"
+        android:drawableStart="@mipmap/icon_summary"
+        android:gravity="center_vertical"
         android:paddingBottom="@dimen/dp_5"
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/dp_5"
         android:text="@string/learning_summary" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:background="@color/gray_line" />
+    <View style="@style/split_line" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tutor_eval"
@@ -54,29 +51,26 @@
         android:layout_marginStart="@dimen/activity_horizontal_margin" />
 
     <View
+        style="@style/split_line"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10"
-        android:background="@color/gray_line" />
+        android:layout_height="@dimen/dp_10" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/ppt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableEnd="@mipmap/home_header_more"
-        android:drawableLeft="@mipmap/home_head_hot"
-        android:drawablePadding="@dimen/dp_10"
+        android:drawableLeft="@mipmap/icon_ppt"
         android:drawableRight="@mipmap/home_header_more"
-        android:drawableStart="@mipmap/home_head_hot"
+        android:drawableStart="@mipmap/icon_ppt"
+        android:gravity="center_vertical"
         android:paddingBottom="@dimen/dp_5"
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/dp_5"
         android:text="@string/course_ppt" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:background="@color/gray_line" />
+    <View style="@style/split_line" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/ppt_list"
@@ -86,7 +80,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray_light"
+        android:background="@color/gray_line"
         android:orientation="vertical"
         android:paddingBottom="@dimen/dp_10"
         android:paddingEnd="@dimen/activity_horizontal_margin"
@@ -97,30 +91,34 @@
             android:id="@+id/class_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gold"
+            android:background="@mipmap/bg_blackbord"
             android:drawableEnd="@mipmap/home_header_more"
             android:drawablePadding="@dimen/dp_10"
             android:drawableRight="@mipmap/home_header_more"
+            android:gravity="center_vertical"
             android:paddingBottom="@dimen/dp_5"
             android:paddingEnd="@dimen/dp_10"
             android:paddingStart="@dimen/dp_10"
             android:paddingTop="@dimen/dp_5"
-            android:text="@string/book_class_status" />
+            android:text="@string/book_class_status"
+            android:textColor="@color/white" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/seat_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
-            android:background="@color/gold"
+            android:background="@mipmap/bg_seat"
             android:drawableEnd="@mipmap/home_header_more"
             android:drawablePadding="@dimen/dp_10"
             android:drawableRight="@mipmap/home_header_more"
+            android:gravity="center_vertical"
             android:paddingBottom="@dimen/dp_5"
             android:paddingEnd="@dimen/dp_10"
             android:paddingStart="@dimen/dp_10"
             android:paddingTop="@dimen/dp_5"
-            android:text="@string/seat_table" />
+            android:text="@string/seat_table"
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <android.support.v7.widget.AppCompatTextView
@@ -129,20 +127,17 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:drawableEnd="@mipmap/home_header_more"
-        android:drawableLeft="@mipmap/home_head_hot"
-        android:drawablePadding="@dimen/dp_10"
+        android:drawableLeft="@mipmap/icon_upload_work"
+        android:gravity="center_vertical"
         android:drawableRight="@mipmap/home_header_more"
-        android:drawableStart="@mipmap/home_head_hot"
+        android:drawableStart="@mipmap/icon_upload_work"
         android:paddingBottom="@dimen/dp_5"
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/dp_5"
         android:text="@string/submit_homework" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:background="@color/gray_line" />
+    <View style="@style/split_line" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/homework"
@@ -157,19 +152,16 @@
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@mipmap/home_head_hot"
-        android:drawablePadding="@dimen/dp_10"
-        android:drawableStart="@mipmap/home_head_hot"
+        android:drawableLeft="@mipmap/icon_vote_black"
+        android:drawableStart="@mipmap/icon_vote_black"
+        android:gravity="center_vertical"
         android:paddingBottom="@dimen/dp_5"
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/dp_5"
         android:text="@string/like_for" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:background="@color/gray_line" />
+    <View style="@style/split_line" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -194,11 +186,9 @@
 
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
+        style="@style/split_line"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:background="@color/gray_line" />
+        android:layout_marginStart="@dimen/activity_horizontal_margin" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -222,11 +212,9 @@
     </LinearLayout>
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
+        style="@style/split_line"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:background="@color/gray_line" />
+        android:layout_marginStart="@dimen/activity_horizontal_margin" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -249,8 +237,5 @@
             android:button="@drawable/selector_add_vote" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:background="@color/gray_line" />
+    <View style="@style/split_line" />
 </LinearLayout>

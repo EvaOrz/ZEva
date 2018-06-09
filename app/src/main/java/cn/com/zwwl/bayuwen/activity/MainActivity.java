@@ -168,7 +168,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
 
         mainFrag1 = MainFrag1.newInstance("hello world");
         mainFrag2 = MainFrag2.newInstance("hello world");
-        mainFrag3 = MainFrag3.newInstance("hello world");
+        mainFrag3 = MainFrag3.newInstance();
         mainFrag4 = MainFrag4.newInstance("hello world");
         mainFrag5 = MainFrag5.newInstance("hello world");
         switchFragment(mainFrag1);

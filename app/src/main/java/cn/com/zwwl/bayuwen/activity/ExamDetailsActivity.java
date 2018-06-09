@@ -5,6 +5,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import butterknife.BindView;
@@ -87,17 +88,46 @@ public class ExamDetailsActivity extends BasicActivityWithTitle {
 
     }
 
-    @OnClick({R.id.paper})
+    @OnClick({R.id.paper, R.id.feedback, R.id.teacher, R.id.tutor, R.id.adviser})
     @Override
     public void onClick(View view) {
-        if (model.getExam() != null && model.getExam().size() > 0) {
-            Intent intent = new Intent(this, InClassStatusActivity.class);
-            String[] urls = new String[model.getExam().size()];
-            for (int i = 0; i < model.getExam().size(); i++)
-                urls[i] = model.getExam().get(i).getUrl();
-            intent.putExtra("urls", urls);
-            startActivity(intent);
+        Intent intent = new Intent();
+        switch (view.getId()) {
+            case R.id.paper:
+                if (model.getExam() != null && model.getExam().size() > 0) {
+                    intent.setClass(this, InClassStatusActivity.class);
+                    String[] urls = new String[model.getExam().size()];
+                    for (int i = 0; i < model.getExam().size(); i++)
+                        urls[i] = model.getExam().get(i).getUrl();
+                    intent.putExtra("urls", urls);
+
+                }
+                break;
+            case R.id.feedback:
+                intent.setClass(this, FeedBackActivity.class);
+                break;
+            case R.id.teacher:
+                if (TextUtils.isEmpty(model.getTeachers().getContent())) return;
+                intent.setClass(this, TeacherSummaryActivity.class);
+                intent.putExtra("type", 0);
+                intent.putExtra("content", model.getTeachers().getContent());
+                break;
+            case R.id.tutor:
+                if (TextUtils.isEmpty(model.getTutors().getContent())) return;
+                intent.setClass(this, TeacherSummaryActivity.class);
+                intent.putExtra("type", 0);
+                intent.putExtra("content", model.getTutors().getContent());
+                intent.setClass(this, TeacherSummaryActivity.class);
+                break;
+            case R.id.adviser:
+                if (TextUtils.isEmpty(model.getStu_advisors().getContent())) return;
+                intent.setClass(this, TeacherSummaryActivity.class);
+                intent.putExtra("type", 0);
+                intent.putExtra("content", model.getStu_advisors().getContent());
+                intent.setClass(this, TeacherSummaryActivity.class);
+                break;
         }
+        startActivity(intent);
     }
 
     @Override
