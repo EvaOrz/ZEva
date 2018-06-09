@@ -43,7 +43,7 @@ public class TempDataHelper {
     }
 
     public static int getCurrentChildGrade(Context context) {
-        return getPref(context).getInt(CURRENT_CHILD_GRADE, 0);
+        return getPref(context).getInt(CURRENT_CHILD_GRADE, 1);
     }
 
     public static void setCurrentChildGrade(Context context, int grade) {
@@ -118,6 +118,17 @@ public class TempDataHelper {
     }
 
 
+    /**
+     * 清除登录或者注册后得到的数据
+     *
+     * @param context
+     */
+    public static void clearLoginInfo(Context context) {
+        Editor editor = getPref(context).edit();
+        editor.putString(CURRENT_CHILD_GRADE, "");
+        editor.putString(CURRENT_CHILD_NO, "");
+        editor.commit();
+    }
 
 
 }

@@ -33,6 +33,7 @@ public class ForgetPwdActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_pwd_new);
         initView();
+        needCheckLogin = false;
     }
 
     private void initView() {

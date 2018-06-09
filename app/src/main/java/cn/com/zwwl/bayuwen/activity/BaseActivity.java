@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
+import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.view.PlayController;
 
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -54,6 +56,10 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     private TextView errorTxt;// 加载错误提示
 
     private MusicStatusReceiver musicStatusReceiver;
+
+    // 因为必须要求登录，所以每个activity（除去登录、注册、忘记密码页面）都在Resume里面判断登录状态
+    public UserModel userModel;
+    public boolean needCheckLogin = true;
 
     /**
      * 播放／暂停
@@ -106,8 +112,11 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onResume() {
         super.onResume();
+        userModel = UserDataHelper.getUserLoginInfo(mContext);
+        if (needCheckLogin && userModel == null) {
+            startActivity(new Intent(mContext, LoginActivity.class));
+        }
         analycisUri();
-
     }
 
     protected abstract void initData();
@@ -130,7 +139,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         if (Intent.ACTION_VIEW.equals(action)) {
             Uri uri = i_getvalue.getData();
             fromHtmlUri = uri.toString();
-
         }
     }
 

@@ -3,12 +3,10 @@ package cn.com.zwwl.bayuwen.api;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,31 +14,31 @@ import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
-import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.LessonModel;
 
 /**
- * 获取课程列表接口
+ * 课程详情页面获取子课列表
  */
-public class CourseListApi extends BaseApi {
+public class LeasonListApi extends BaseApi {
     private FetchEntryListListener listListener;
     private String url;
 
-
     /**
-     * 选课中心获取数据列表
+     * 按照kid 获取子课列表
      *
      * @param context
-     * @param url
+     * @param cid
+     * @param page
      * @param listListener
      */
-    public CourseListApi(Context context, String url, FetchEntryListListener listListener) {
+    public LeasonListApi(Context context, String cid, int page, FetchEntryListListener
+            listListener) {
         super(context);
         mContext = context;
+        isNeedJsonArray = true;
         this.listListener = listListener;
-        this.url = url;
+        this.url = UrlUtil.getLecturesUrl(cid, String.valueOf(page));
         get();
     }
 
@@ -62,16 +60,16 @@ public class CourseListApi extends BaseApi {
 
         if (!isNull(json)) {
             Gson gson = new Gson();
-            // 解析选课中心课列表
-            JSONArray array = json.optJSONArray("data");
-            if (!isNull(array)) {
-                List<KeModel> ks = new ArrayList<>();
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject j = array.optJSONObject(i);
-                    KeModel keModel = gson.fromJson(j.toString(), KeModel.class);
-                    ks.add(keModel);
+            // 解析课程详情子课
+            JSONArray larray = json.optJSONArray("lectures");
+            if (!isNull(larray)) {
+                List<LessonModel> ls = new ArrayList<>();
+                for (int i = 0; i < larray.length(); i++) {
+                    LessonModel l = gson.fromJson(larray.optJSONObject(i).toString(), LessonModel
+                            .class);
+                    ls.add(l);
                 }
-                listListener.setData(ks);
+                listListener.setData(ls);
             }
         }
     }

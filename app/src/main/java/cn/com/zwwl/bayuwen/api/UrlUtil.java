@@ -139,10 +139,8 @@ public class UrlUtil {
         return HOST + "/course/" + cid;
     }
 
-    // 获取课程列表
+    // 获取课程的子课列表
     public static String getLecturesUrl(String cid, String page) {
-        if (TextUtils.isEmpty(cid))
-            return HOST + "/course/lectures";
         return HOST + "/course/lectures?id=" + cid + "&page=" + page;
     }
 
@@ -154,6 +152,11 @@ public class UrlUtil {
     // 发起拼团||我要垫付（获取拼团码）
     public static String faqiTuan() {
         return HOST + "/grouppurchase";
+    }
+
+    // 根据课程兑换码获取课程详情
+    public static String getKemodelByCode() {
+        return HOST + "/grouppurchase/course";
     }
 
     // 兑换拼团码
@@ -201,6 +204,11 @@ public class UrlUtil {
         return HOST + "/cart";
     }
 
+    // 礼物、奖状列表
+    public static String getHonorurl() {
+        return HOST + "/honor";
+    }
+
     //    public
     public static String getMyCourse() {
         return HOST + "/course/my";
@@ -244,6 +252,11 @@ public class UrlUtil {
     // 退费理由列表
     public static String getTuifeeReasonList() {
         return HOST + "/order/refund_reason";
+    }
+
+    // 反馈
+    public static String feedback() {
+        return HOST + "/userfeedback";
     }
 
     /**

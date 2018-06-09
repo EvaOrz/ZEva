@@ -62,10 +62,8 @@ public class SearchCourseActivity extends BaseActivity {
         tagId = getIntent().getStringExtra("SearchCourseActivity_id");
         initView();
         initData();
-        if (TextUtils.isEmpty(tagId)) {
-            initListData(baseUrl);
-        } else {
-            initTagData();
+        if (!TextUtils.isEmpty(tagId)) {
+            initListData(baseUrl + "?type=" + tagId);
         }
     }
 
@@ -184,29 +182,6 @@ public class SearchCourseActivity extends BaseActivity {
                 if (Tools.listNotNull(list))
                     keModels.addAll(list);
                 handler.sendEmptyMessage(0);
-            }
-
-            @Override
-            public void setError(ErrorMsg error) {
-                showLoadingDialog(false);
-            }
-        });
-    }
-
-    /**
-     * 获取某子课的数据
-     */
-    private void initTagData() {
-        showLoadingDialog(true);
-        new CourseListApi(mContext, tagId, 1, new FetchEntryListListener() {
-            @Override
-            public void setData(List list) {
-                showLoadingDialog(false);
-                keModels.clear();
-                if (Tools.listNotNull(list))
-                    keModels.addAll(list);
-                handler.sendEmptyMessage(0);
-
             }
 
             @Override

@@ -14,10 +14,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.api.CourseApi;
 import cn.com.zwwl.bayuwen.api.order.KaiTuanbyCodeApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.KeModel;
 
 /**
  * 团购码兑换课程页面
@@ -88,34 +90,30 @@ public class TuanCodeUseActivity extends BaseActivity {
             case R.id.code_use_bt:
                 String code = codeEditText.getText().toString();
                 if (!TextUtils.isEmpty(code))
-                    doKaitongBycode(code);
+                    getKeDeatil(code);
                 break;
         }
     }
 
-    /**
-     * 根据开团码开通课程
-     *
-     * @param code
-     */
-    private void doKaitongBycode(String code) {
+    private void getKeDeatil(final String code) {
         showLoadingDialog(true);
-        new KaiTuanbyCodeApi(mContext, code, new FetchEntryListener() {
+        new CourseApi(mContext, code, 0, new FetchEntryListener() {
             @Override
             public void setError(ErrorMsg error) {
-                showLoadingDialog(false);
-                if (error == null) {// 没有错误信息，则操作成功
-                    startActivity(new Intent(mContext, TuanPayResultActivity.class));
-                    finish();
-                } else {
+                if (error != null)
                     showToast(error.getDesc());
-                }
-
             }
 
             @Override
             public void setData(Entry entry) {
-
+                showLoadingDialog(false);
+                if (entry != null && entry instanceof KeModel) {
+                    KeModel keModel = (KeModel) entry;
+                    Intent intent = new Intent(mContext, CourseDetailActivity.class);
+                    intent.putExtra("CourseDetailActivity_data", keModel);
+                    intent.putExtra("CourseDetailActivity_id", code);
+                    startActivity(intent);
+                }
             }
         });
     }

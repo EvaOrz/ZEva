@@ -18,6 +18,7 @@
             android:src="@drawable/back_gray" />
 
         <TextView
+            android:id="@+id/ke_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -35,6 +36,20 @@
             android:textSize="@dimen/text_size_14" />
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/duihuan_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gold"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:text="请确认您的兑换课程"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_14"
+        android:visibility="gone" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -334,7 +349,20 @@
 
     <include layout="@layout/layout_line" />
 
+    <TextView
+        android:id="@+id/duihuan_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gold"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/sure"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_14"
+        android:visibility="gone" />
+
     <LinearLayout
+        android:id="@+id/nomal_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
