@@ -162,9 +162,7 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
                 evalDialog.showAtLocation(teacher, Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.submit_work:
-                intent.setClass(this, UploadPicActivity.class);
-                intent.putExtra("cId", "");
-                startActivity(intent);
+                startActivity(new Intent(this, WorkDetailsActivity.class));
                 break;
             case R.id.ppt:
                 if (model.getAccessory().getState() != 0) {

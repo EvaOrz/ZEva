@@ -403,5 +403,6 @@
     <string name="hint_advise_more">请输入更多建议</string>
     <string name="empty">无</string>
     <string name="submit_eval">提交评价</string>
+    <string name="work_pic">作业照片</string>
     >>>>>>> zhumangmang
 </resources>
