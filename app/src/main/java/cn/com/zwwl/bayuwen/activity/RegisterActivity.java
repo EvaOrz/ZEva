@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,7 +25,7 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.AddressTools;
-import cn.com.zwwl.bayuwen.util.BayuwenTools;
+import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.SmsTools;
 import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 
@@ -99,13 +98,13 @@ public class RegisterActivity extends BaseActivity {
                 break;
             case R.id.register_get_verify:
 
-                if (BayuwenTools.checkIsPhone(this, phone)) doGetVerifyCode(phone);
+                if (AppValue.checkIsPhone(this, phone)) doGetVerifyCode(phone);
                 break;
             case R.id.register_bt:
                 final String pwd = pwdEdit.getText().toString();
                 final String verifycode = verifyEdit.getText().toString();
-                if (BayuwenTools.checkIsPhone(this, phone) && BayuwenTools.checkPwd(this, pwd) &&
-                        BayuwenTools.checkCode(this, verifycode)) {
+                if (AppValue.checkIsPhone(this, phone) && AppValue.checkPwd(this, pwd) &&
+                        AppValue.checkCode(this, verifycode)) {
                     doRegister(phone, pwd, verifycode);
                 }
                 break;

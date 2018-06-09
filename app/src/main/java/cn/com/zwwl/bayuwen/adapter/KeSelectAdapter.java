@@ -20,9 +20,16 @@ import cn.com.zwwl.bayuwen.util.CalendarTools;
  * 选课页面课程列表adapter
  */
 public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
+    private int type = 0;
 
-    public KeSelectAdapter(Context mContext, List<KeModel> list) {
+    /**
+     * @param mContext
+     * @param type     0 :选课中心 1：组合优惠列表
+     * @param list
+     */
+    public KeSelectAdapter(Context mContext, int type, List<KeModel> list) {
         super(mContext, list);
+        this.type = type;
         this.mContext = mContext;
     }
 
@@ -45,7 +52,7 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
         final ViewHolder viewHolder = (ViewHolder) holder;
         KeModel keModel = list.get(position);
 
-        ImageLoader.display(mContext,viewHolder.img, keModel.getPic(), R
+        ImageLoader.display(mContext, viewHolder.img, keModel.getPic(), R
                 .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
         viewHolder.tag.setText(keModel.getTagTxt());
         viewHolder.title.setText(keModel.getTitle());
@@ -55,7 +62,11 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
                 "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(keModel.getEndPtime()),
                 "yyyy-MM-dd"));
         viewHolder.time.setText(keModel.getClass_start_at() + " - " + keModel.getClass_end_at());
-        viewHolder.left.setText("剩余名额：" + keModel.getNum());
+        if (type == 1) {
+            viewHolder.left.setVisibility(View.GONE);
+        } else {
+            viewHolder.left.setText("剩余名额：" + keModel.getNum());
+        }
         viewHolder.price.setText("￥" + keModel.getBuyPrice());
         setItemClickView(holder.itemView, position);
     }

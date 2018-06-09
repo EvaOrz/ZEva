@@ -42,6 +42,7 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.OrderModel;
+import cn.com.zwwl.bayuwen.model.PromotionModel;
 import cn.com.zwwl.bayuwen.util.AddressTools;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
@@ -55,7 +56,7 @@ public class TuanPayActivity extends BaseActivity {
 
     private List<AddressModel> addressDatas = new ArrayList<>();
     private LinearLayout adresslayout;
-    private int type; // 0：单独参团 1：垫付参团 2：单独购买 3:购课单多选购买
+    private int type; // 0：单独参团 1：垫付参团 2：单独购买 3:购课单多选购买 4:组合课购买
     private LinearLayout pinLayout, dianLayout, youhuiLayout;
     private TextView nameTv, phoneTv, addressTv, addTv;
     private LinearLayout keLayout;
@@ -64,6 +65,7 @@ public class TuanPayActivity extends BaseActivity {
     private ImageView zhifubaoBt, weixinBt;
 
     private List<KeModel> keDatas = new ArrayList<>();
+    private PromotionModel promotionModel; // 组合课购买场合、需要传入组合课model
     private String tuanCode;// 拼团码
     private String itemCode;// id组合码
     private String yueTxt = "0.00";// 账户余额
@@ -84,6 +86,11 @@ public class TuanPayActivity extends BaseActivity {
         if (getIntent().getSerializableExtra("TuanPayActivity_datas") != null) {
             keDatas.addAll((List<KeModel>) getIntent().getSerializableExtra
                     ("TuanPayActivity_datas"));
+        }
+        if (getIntent().getSerializableExtra("TuanPayActivity_promo") != null) {
+            promotionModel = (PromotionModel) getIntent().getSerializableExtra
+                    ("TuanPayActivity_promo");
+            keDatas.addAll(promotionModel.getKeModels());
         }
         type = getIntent().getIntExtra("TuanPayActivity_type", 0);
         tuanCode = getIntent().getStringExtra("TuanPayActivity_code");
@@ -106,6 +113,8 @@ public class TuanPayActivity extends BaseActivity {
 
     /**
      * 生成订单item串
+     * <p>
+     * 组合课购买不需要item
      */
     private void initItemString() {
         if (type == 1) {// 垫付需要循环垫付数量
@@ -117,7 +126,7 @@ public class TuanPayActivity extends BaseActivity {
         } else if (type == 0 || type == 2) { // 单独购买||单独参团
             KeModel keModel = keDatas.get(0);
             itemCode = keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
-        } else if (type == 3) {
+        } else if (type == 3) {// 购课单购买
             for (KeModel keModel : keDatas) {
                 itemCode += keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
             }
@@ -171,7 +180,7 @@ public class TuanPayActivity extends BaseActivity {
             dianLayout.setVisibility(View.VISIBLE);
             youhuiLayout.setVisibility(View.GONE);
             dianNumTv.setText(keDatas.get(0).getGroupbuy().getLimit_num() + "");// 垫付只有一个kemodel
-        } else if (type == 2 || type == 3) {
+        } else if (type == 2 || type == 3 || type == 4) {
             pinLayout.setVisibility(View.GONE);
             dianLayout.setVisibility(View.GONE);
             youhuiLayout.setVisibility(View.VISIBLE);
@@ -274,7 +283,11 @@ public class TuanPayActivity extends BaseActivity {
                 if (currentAddress == null) {
                     showToast("请选择收货地址");
                 } else {
-                    commit();
+
+                    if (promotionModel != null) {
+                        commit(promotionModel.getId());
+                    } else commit(null);
+
                 }
 
                 break;
@@ -299,12 +312,15 @@ public class TuanPayActivity extends BaseActivity {
 
     }
 
-    // String channel, String coupon_code, String aid, String
-//            saleno, String assets, String item, String groupbuy
-    private void commit() {
+    /**
+     * 生成订单
+     *
+     * @param promoId
+     */
+    private void commit(String promoId) {
         String tuijianCode = tuijianEv.getText().toString();
         new MakeOrderApi(mContext, payType + "", "", currentAddress.getId(), tuijianCode,
-                yueTxt, itemCode, tuanCode, new FetchEntryListener() {
+                yueTxt, itemCode, tuanCode, promoId, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
                 if (entry != null && entry instanceof OrderModel) {

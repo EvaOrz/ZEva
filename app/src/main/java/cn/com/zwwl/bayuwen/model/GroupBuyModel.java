@@ -9,9 +9,9 @@ public class GroupBuyModel extends Entry {
 
     private String id = "";
     private String title = "";
-    private String item_id = "";
+    private String kid = "";
     private double discount_pintrice;
-    private int limit_num ;
+    private int limit_num;
     private String start_time = "";
     private String end_time = "";
     private double material_price; // 教材价格
@@ -35,12 +35,12 @@ public class GroupBuyModel extends Entry {
         this.title = title;
     }
 
-    public String getItem_id() {
-        return item_id;
+    public String getKid() {
+        return kid;
     }
 
-    public void setItem_id(String item_id) {
-        this.item_id = item_id;
+    public void setKid(String kid) {
+        this.kid = kid;
     }
 
     public double getDiscount_pintrice() {
@@ -109,7 +109,7 @@ public class GroupBuyModel extends Entry {
 
     public GroupBuyModel parseGroupBuyModel(JSONObject jsonObject, GroupBuyModel groupBuyModel) {
         groupBuyModel.setId(jsonObject.optString("id"));
-        groupBuyModel.setItem_id(jsonObject.optString("item_id"));
+        groupBuyModel.setKid(jsonObject.optString("kid"));
         groupBuyModel.setTitle(jsonObject.optString("title"));
         groupBuyModel.setDiscount_pintrice(jsonObject.optDouble("discount_price"));
         groupBuyModel.setStart_time(jsonObject.optString("start_time"));

@@ -175,11 +175,11 @@ public class AllTeacherActivity extends BaseActivity {
             @Override
             public void setData(List list) {
                 showLoadingDialog(false);
+                teacherModels.clear();
                 if (Tools.listNotNull(list)) {
-                    teacherModels.clear();
                     teacherModels.addAll(list);
-                    handler.sendEmptyMessage(0);
                 }
+                handler.sendEmptyMessage(0);
             }
 
             @Override

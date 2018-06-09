@@ -144,11 +144,12 @@ public class MainFrag2 extends Fragment
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
-                intent.putExtra("SearchCourseActivity_id", tagList.get(position).getId()+"");
+                intent.putExtra("SearchCourseActivity_id", tagList.get(position).getId() + "");
                 intent.setClass(mActivity, SearchCourseActivity.class);
                 startActivity(intent);
             }
         });
+        root.findViewById(R.id.look_all_teacher).setOnClickListener(this);
         mToolbarView.findViewById(R.id.menu_more).setOnClickListener(this);
         mToolbarView.findViewById(R.id.menu_news).setOnClickListener(this);
         mToolbarView.findViewById(R.id.menu_school).setOnClickListener(this);
@@ -190,7 +191,7 @@ public class MainFrag2 extends Fragment
                 startActivity(new Intent(mActivity, MessageActivity.class));
                 break;
             case R.id.menu_more:
-                ((MainActivity)mActivity).openDrawer();
+                ((MainActivity) mActivity).openDrawer();
                 break;
             case R.id.menu_school:
                 break;

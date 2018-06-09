@@ -34,9 +34,11 @@ public class MakeOrderApi extends BaseApi {
      * @param item
      * @param groupbuy
      * @param listener
+     * @param promotion   组合课id
      */
     public MakeOrderApi(Context context, String channel, String coupon_code, String aid, String
-            saleno, String assets, String item, String groupbuy, FetchEntryListener listener) {
+            saleno, String assets, String item, String groupbuy, String promotion,
+                        FetchEntryListener listener) {
         super(context);
         mContext = context;
         this.listener = listener;
@@ -65,6 +67,10 @@ public class MakeOrderApi extends BaseApi {
         if (!TextUtils.isEmpty(item)) {
             String and = baseUrl.endsWith("?") ? "" : "&";
             baseUrl += and + "item=" + item;
+        }
+        if (!TextUtils.isEmpty(promotion)) {
+            String and = baseUrl.endsWith("?") ? "" : "&";
+            baseUrl += and + "promotion=" + promotion;
         }
         if (!TextUtils.isEmpty(groupbuy)) {
             String and = baseUrl.endsWith("?") ? "" : "&";

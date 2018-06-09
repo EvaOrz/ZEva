@@ -226,6 +226,41 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/promotion_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/body_bg" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:padding="10dp"
+                    android:text="组合套餐"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_14" />
+                <include layout="@layout/layout_line" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/promotion_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" />
+                </HorizontalScrollView>
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
@@ -339,11 +374,16 @@
 
             <include layout="@layout/layout_line" />
 
-            <LinearLayout
-                android:id="@+id/teacher_layout"
+            <HorizontalScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" />
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/teacher_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
         </LinearLayout>
     </ScrollView>
 

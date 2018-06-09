@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.widget.wheel.OnWheelChangedListener;
 import cn.com.zwwl.bayuwen.widget.wheel.OnWheelScrollListener;
 import cn.com.zwwl.bayuwen.widget.wheel.WheelView;
@@ -103,19 +104,7 @@ public class NianjiPopWindow implements View.OnClickListener {
     }
 
     public void initYears() {
-        arry_years.add(mContext.getResources().getString(R.string.g_1));
-        arry_years.add(mContext.getResources().getString(R.string.g_2));
-        arry_years.add(mContext.getResources().getString(R.string.g_3));
-        arry_years.add(mContext.getResources().getString(R.string.g_4));
-        arry_years.add(mContext.getResources().getString(R.string.g_5));
-        arry_years.add(mContext.getResources().getString(R.string.g_6));
-        arry_years.add(mContext.getResources().getString(R.string.g_7));
-        arry_years.add(mContext.getResources().getString(R.string.g_8));
-        arry_years.add(mContext.getResources().getString(R.string.g_9));
-        arry_years.add(mContext.getResources().getString(R.string.g_10));
-        arry_years.add(mContext.getResources().getString(R.string.g_11));
-        arry_years.add(mContext.getResources().getString(R.string.g_12));
-
+        arry_years.addAll(AppValue.getGradeStrings());
     }
 
 

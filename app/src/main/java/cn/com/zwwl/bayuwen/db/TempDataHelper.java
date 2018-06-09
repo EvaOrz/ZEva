@@ -6,7 +6,10 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
+import java.util.List;
+
 import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.util.AppValue;
 
 /**
  * 存储用户信息
@@ -43,12 +46,18 @@ public class TempDataHelper {
     }
 
     public static int getCurrentChildGrade(Context context) {
-        return getPref(context).getInt(CURRENT_CHILD_GRADE, 1);
+        String grade = getPref(context).getString(CURRENT_CHILD_GRADE, "");
+        for (int i = 0; i < AppValue.getGradeStrings().size(); i++) {
+            if (grade.equals(AppValue.getGradeStrings().get(i))) {
+                return i + 1;
+            }
+        }
+        return 0;
     }
 
-    public static void setCurrentChildGrade(Context context, int grade) {
+    public static void setCurrentChildGrade(Context context, String grade) {
         Editor editor = getPref(context).edit();
-        editor.putInt(CURRENT_CHILD_GRADE, grade);
+        editor.putString(CURRENT_CHILD_GRADE, grade);
         editor.commit();
     }
 

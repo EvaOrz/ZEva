@@ -13,11 +13,6 @@
         android:listSelector="@android:color/transparent"
         android:scrollbars="none" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line_height"
-        android:background="@color/gray_line" />
-
     <TextView
         android:id="@+id/frag_kedetail1_all"
         android:layout_width="match_parent"

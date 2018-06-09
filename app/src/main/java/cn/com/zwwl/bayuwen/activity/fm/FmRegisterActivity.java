@@ -16,7 +16,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.api.LoginSigninApi;
 import cn.com.zwwl.bayuwen.model.UserModel;
-import cn.com.zwwl.bayuwen.util.BayuwenTools;
+import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.SmsTools;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
@@ -63,13 +63,13 @@ public class FmRegisterActivity extends BaseActivity {
                 break;
             case R.id.register_get_verify:
 
-                if (BayuwenTools.checkIsPhone(this, phone)) doGetVerifyCode(phone);
+                if (AppValue.checkIsPhone(this, phone)) doGetVerifyCode(phone);
                 break;
             case R.id.register_bt:
                 final String pwd = pwdEdit.getText().toString();
                 final String verifycode = verifyEdit.getText().toString();
-                if (BayuwenTools.checkIsPhone(this, phone) && BayuwenTools.checkPwd(this, pwd) &&
-                        BayuwenTools.checkCode(this, verifycode)) {
+                if (AppValue.checkIsPhone(this, phone) && AppValue.checkPwd(this, pwd) &&
+                        AppValue.checkCode(this, verifycode)) {
                     doRegister(phone, pwd, verifycode);
                 }
                 break;

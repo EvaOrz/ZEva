@@ -1,20 +1,15 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-
-import com.maning.calendarlibrary.listeners.OnCalendarRangeChooseListener;
 
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -56,7 +51,7 @@ public class AddCalendarActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_calendar);
+        setContentView(R.layout.activity_calendar_add);
         initView();
         initData();
     }
