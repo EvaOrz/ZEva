@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -14,21 +15,27 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.api.CourseApi;
+import cn.com.zwwl.bayuwen.api.CourseListApi;
 import cn.com.zwwl.bayuwen.api.FollowApi;
+import cn.com.zwwl.bayuwen.api.LeasonListApi;
 import cn.com.zwwl.bayuwen.api.fm.PinglunApi;
 import cn.com.zwwl.bayuwen.api.order.CartApi;
+import cn.com.zwwl.bayuwen.api.order.KaiTuanbyCodeApi;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
 import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
@@ -57,6 +64,8 @@ public class CourseDetailActivity extends BaseActivity {
     private RadioButton button1, button2, button3;
     private View line1, line2, line3;
     private ImageView follow_status;
+    private TextView title_tv, add_tv, sure_tv, duihuan_tv;
+    private LinearLayout nomalFooter;
 
     private LinearLayout teacherLayout, groupLayout;
 
@@ -66,47 +75,46 @@ public class CourseDetailActivity extends BaseActivity {
 
     private KeModel keModel;
     private String cid;
+    private String code; // 兑换的课程码
     private KeDetailView1 cDetailTabFrag1;
     private KeDetailView2 cDetailTabFrag2;
     private KeDetailView3 cDetailTabFrag3;
     private List<PinglunModel> pinglunModels = new ArrayList<>();
-
+    private List<LessonModel> lesonModels = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
-        cid = getIntent().getStringExtra("CourseDetailActivity_id");
         initView();
-        initData();
+        // 兑换课程详情
+        if (getIntent().getSerializableExtra("CourseDetailActivity_data") != null && getIntent()
+                .getSerializableExtra("CourseDetailActivity_data") instanceof KeModel) {
+            keModel = (KeModel) getIntent().getSerializableExtra("CourseDetailActivity_data");
+            cid = keModel.getKid();
+            code = getIntent().getStringExtra("CourseDetailActivity_id");
+            setUi();
+        } else {// nomal情况课程详情
+            cid = getIntent().getStringExtra("CourseDetailActivity_id");
+            initData();
+        }
+        getPinglunData();
+        getLeasonsData();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
+    private void setUi() {
+        title_tv.setText("确认课程详情");
+        duihuan_tv.setVisibility(View.VISIBLE);
+        add_tv.setVisibility(View.GONE);
+        sure_tv.setVisibility(View.VISIBLE);
+        nomalFooter.setVisibility(View.GONE);
     }
 
-    @Override
-    protected void initData() {
-        new CourseApi(mContext, cid, new FetchEntryListener() {
-
-            @Override
-            public void setData(Entry entry) {
-                if (entry != null && entry instanceof KeModel) {
-                    keModel = (KeModel) entry;
-                    handler.sendEmptyMessage(0);
-                }
-
-            }
-
-            @Override
-            public void setError(ErrorMsg error) {
-                if (error != null)
-                    showToast(error.getDesc());
-            }
-        });
+    /**
+     * 获取评论列表
+     */
+    private void getPinglunData() {
         new PinglunApi(mContext, cid, null, new FetchEntryListListener() {
             @Override
             public void setData(List list) {
@@ -124,6 +132,51 @@ public class CourseDetailActivity extends BaseActivity {
         });
     }
 
+    /**
+     * 获取子课列表
+     */
+    private void getLeasonsData() {
+        new LeasonListApi(mContext, cid, 1, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+                if (Tools.listNotNull(list)) {
+                    lesonModels.clear();
+                    lesonModels.addAll(list);
+                    handler.sendEmptyMessage(4);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
+
+    }
+
+    @Override
+    protected void initData() {
+        cid = "209";
+        new CourseApi(mContext, cid, new FetchEntryListener() {
+
+            @Override
+            public void setData(Entry entry) {
+                if (entry != null && entry instanceof KeModel) {
+                    keModel = (KeModel) entry;
+                    handler.sendEmptyMessage(0);
+                }
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                if (error != null)
+                    showToast(error.getDesc());
+            }
+        });
+
+    }
+
     private void initView() {
         course_tv = findViewById(R.id.course_tv);
         classno_tv = findViewById(R.id.classno_tv);
@@ -138,7 +191,11 @@ public class CourseDetailActivity extends BaseActivity {
         teacherLayout = findViewById(R.id.teacher_layout);
         mViewPager = findViewById(R.id.videoList_vp);
         follow_status = findViewById(R.id.follow_status);
-
+        duihuan_tv = findViewById(R.id.duihuan_hint);
+        title_tv = findViewById(R.id.ke_title);
+        add_tv = findViewById(R.id.ke_add);
+        sure_tv = findViewById(R.id.duihuan_footer);
+        nomalFooter = findViewById(R.id.nomal_footer);
         cDetailTabFrag1 = new KeDetailView1(mContext);
         cDetailTabFrag2 = new KeDetailView2(mContext);
         cDetailTabFrag3 = new KeDetailView3(mContext);
@@ -199,7 +256,8 @@ public class CourseDetailActivity extends BaseActivity {
         findViewById(R.id.ke_back).setOnClickListener(this);
         groupLayout.setOnClickListener(this);
         findViewById(R.id.group_purchase_bt2).setOnClickListener(this);
-        findViewById(R.id.ke_add).setOnClickListener(this);
+        add_tv.setOnClickListener(this);
+        sure_tv.setOnClickListener(this);
         findViewById(R.id.followtv).setOnClickListener(this);
     }
 
@@ -267,7 +325,37 @@ public class CourseDetailActivity extends BaseActivity {
             case R.id.followtv:// 关注
                 doFollow();
                 break;
+            case R.id.duihuan_footer:// 兑换
+                doKaitongBycode(code);
+                break;
         }
+    }
+
+    /**
+     * 根据开团码开通课程
+     *
+     * @param code
+     */
+    private void doKaitongBycode(String code) {
+        showLoadingDialog(true);
+        new KaiTuanbyCodeApi(mContext, code, new FetchEntryListener() {
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+                if (error == null) {// 没有错误信息，则操作成功
+                    startActivity(new Intent(mContext, TuanPayResultActivity.class));
+                    finish();
+                } else {
+                    showToast(error.getDesc());
+                }
+
+            }
+
+            @Override
+            public void setData(Entry entry) {
+
+            }
+        });
     }
 
     /**
@@ -305,7 +393,10 @@ public class CourseDetailActivity extends BaseActivity {
                     setkeData();
                     break;
                 case 1:
-                    setPinglunData();
+                    cDetailTabFrag3.setData(pinglunModels);
+                    break;
+                case 4:
+                    cDetailTabFrag1.setData(lesonModels);
                     break;
                 case 2:// 关注状态
                     follow_status.setBackgroundColor(getResources().getColor(R.color.gold));
@@ -317,13 +408,6 @@ public class CourseDetailActivity extends BaseActivity {
             }
         }
     };
-
-    /**
-     * 设置评论信息
-     */
-    private void setPinglunData() {
-        cDetailTabFrag3.setData(pinglunModels);
-    }
 
     /**
      * 设置课程信息
@@ -355,9 +439,6 @@ public class CourseDetailActivity extends BaseActivity {
         } else {
             groupLayout.setVisibility(View.INVISIBLE);
         }
-
-
-        cDetailTabFrag1.setData(keModel.getLessonModels());
         cDetailTabFrag2.setData(keModel);
     }
 

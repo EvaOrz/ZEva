@@ -44,6 +44,24 @@ public class CourseApi extends BaseApi {
         get();
     }
 
+    /**
+     * 根据兑换的课程码获取课程详情
+     *
+     * @param context
+     * @param code
+     * @param flag
+     * @param listener
+     */
+    public CourseApi(Context context, String code, int flag, FetchEntryListener listener) {
+        super(context);
+        mContext = context;
+        this.listener = listener;
+        pamas.put("course_code", code);
+        this.url = UrlUtil.getKemodelByCode();
+        post();
+    }
+
+
     @Override
     protected String getUrl() {
         return url;
@@ -70,16 +88,6 @@ public class CourseApi extends BaseApi {
                     groupBuyModel.parseGroupBuyModel(gjson, groupBuyModel);
                     keModel.setGroupbuy(groupBuyModel);
                 }
-            }
-            JSONArray larray = json.optJSONArray("lessons");
-            if (!isNull(larray)) {
-                List<LessonModel> ls = new ArrayList<>();
-                for (int i = 0; i < larray.length(); i++) {
-                    LessonModel l = gson.fromJson(larray.optJSONObject(i).toString(), LessonModel
-                            .class);
-                    ls.add(l);
-                }
-                keModel.setLessonModels(ls);
             }
 
             JSONArray tarray = json.optJSONArray("teacher");

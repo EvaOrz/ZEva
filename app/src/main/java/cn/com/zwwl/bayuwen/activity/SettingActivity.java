@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 
 /**
  * 设置页面
@@ -26,7 +28,7 @@ public class SettingActivity extends BaseActivity {
         findViewById(R.id.setting_option2).setOnClickListener(this);
         findViewById(R.id.setting_option3).setOnClickListener(this);
         findViewById(R.id.setting_option4).setOnClickListener(this);
-
+        findViewById(R.id.setting_logout).setOnClickListener(this);
 
     }
 
@@ -46,7 +48,11 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.setting_option4:
                 break;
-
+            case R.id.setting_logout:
+                UserDataHelper.clearLoginInfo(mContext);
+                TempDataHelper.clearLoginInfo(mContext);
+                finish();
+                break;
 
         }
     }

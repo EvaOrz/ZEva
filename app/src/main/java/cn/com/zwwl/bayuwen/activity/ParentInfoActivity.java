@@ -16,11 +16,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import java.io.File;
+import java.util.List;
+
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.api.HonorListApi;
 import cn.com.zwwl.bayuwen.api.UploadPicApi;
 import cn.com.zwwl.bayuwen.api.UserInfoApi;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -32,7 +36,6 @@ import cn.com.zwwl.bayuwen.widget.FetchPhotoManager;
  * 编辑家长信息页面
  */
 public class ParentInfoActivity extends BaseActivity {
-    private UserModel userModel;
     private String picturePath;// 头像
     private static final String KEY_IMAGE = "data";
     private static final String AVATAR_PIC = "avatar.jpg";
@@ -50,7 +53,11 @@ public class ParentInfoActivity extends BaseActivity {
         setContentView(R.layout.activity_info_parent);
         picturePath = Environment.getExternalStorageDirectory().getPath() + "/" + AVATAR_PIC;
         initView();
-        userModel = UserDataHelper.getUserLoginInfo(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initData();
     }
 
@@ -161,12 +168,34 @@ public class ParentInfoActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        if (userModel == null) return;
         if (!TextUtils.isEmpty(userModel.getPic()))
             Glide.with(this).load(userModel.getPic()).into(aImg);
         nameEv.setText(userModel.getName());
         genderTv.setText(userModel.getSexTxt(userModel.getSex()));
         phoneTv.setText(userModel.getTel());
+
+        new HonorListApi(mContext, 1, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
+        new HonorListApi(mContext, 2, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
     }
 
     @SuppressLint("HandlerLeak")

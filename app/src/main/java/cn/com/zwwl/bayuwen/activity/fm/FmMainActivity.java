@@ -67,8 +67,6 @@ public class FmMainActivity extends BaseActivity {
         if (MyApplication.loginStatusChange) {
             MyApplication.loginStatusChange = false;
             userCenterView.getUserinfo();
-        } else if (UserDataHelper.getUserLoginInfo(this) == null) {
-            startActivityForResult(new Intent(this, FmLoginActivity.class), 102);
         }
         registerReceiver();//先恢复数据 再注册receiver
         /**

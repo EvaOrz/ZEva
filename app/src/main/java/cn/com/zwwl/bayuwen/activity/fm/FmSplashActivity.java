@@ -21,13 +21,17 @@ public class FmSplashActivity extends BaseActivity {
      * splash停留时间
      **/
     public static int SPLASH_DELAY_TIME = 1000;
-    private String[] needPermissions = new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.CAMERA,Manifest.permission.READ_CONTACTS};
+    private String[] needPermissions = new String[]{Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission
+            .WRITE_EXTERNAL_STORAGE, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission
+            .CAMERA, Manifest.permission.READ_CONTACTS};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        needCheckLogin = false;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             askPermission(needPermissions, 101);
         } else {

@@ -1,23 +1,13 @@
 package cn.com.zwwl.bayuwen.view;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.Unbinder;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.adapter.BaseRecylcerViewAdapter;
 import cn.com.zwwl.bayuwen.model.KeModel;
-import cn.com.zwwl.bayuwen.model.LessonModel;
 
 /**
  * 课程详情页 课程表

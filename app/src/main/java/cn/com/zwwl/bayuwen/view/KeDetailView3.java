@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,10 +16,15 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.BaseRecylcerViewAdapter;
+import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
 import cn.com.zwwl.bayuwen.glide.GlideApp;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
+import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.widget.NoScrollListView;
+import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
  * 课程详情页 课程表
@@ -26,9 +32,10 @@ import cn.com.zwwl.bayuwen.util.CalendarTools;
 public class KeDetailView3 extends LinearLayout {
 
     private Context context;
-    private List<PinglunModel> data = new ArrayList<>() ,allData = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private KeDetailPinglunAdapter adapter;
+    private List<PinglunModel> data = new ArrayList<>(), allData = new ArrayList<>();
+    private NoScrollListView listView;
+    private KePinglunsAdapter adapter;
+    private TextView lookAll;
 
     public KeDetailView3(Context context) {
         super(context);
@@ -40,16 +47,18 @@ public class KeDetailView3 extends LinearLayout {
     private void initView() {
         View view = LayoutInflater.from(context).inflate(R.layout.fragment_kedetail_1, null, false);
         addView(view);
-        recyclerView = view.findViewById(R.id.frag_kedetail1_list);
-        adapter = new KeDetailPinglunAdapter(context,data);
-        recyclerView.setAdapter(adapter);
-        view.findViewById(R.id.frag_kedetail1_all).setOnClickListener(new View.OnClickListener() {
+        listView = view.findViewById(R.id.frag_kedetail1_list);
+        adapter = new KePinglunsAdapter(context);
+        listView.setAdapter(adapter);
+
+        lookAll = view.findViewById(R.id.frag_kedetail1_all);
+        lookAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (allData.size() > data.size()) {
                     data.clear();
                     data.addAll(allData);
-                    adapter.notifyDataSetChanged();
+                    adapter.setData(data);
                 }
             }
         });
@@ -61,70 +70,62 @@ public class KeDetailView3 extends LinearLayout {
         allData.clear();
         allData.addAll(dataList);
 
-        if (dataList.size() > 2) {
+        if (!Tools.listNotNull(dataList)) {
+            lookAll.setVisibility(View.GONE);
+        } else if (dataList.size() > 2) {
             data.addAll(dataList.subList(0, 2));
         } else data.addAll(dataList);
-        adapter.notifyDataSetChanged();
-
+        adapter.setData(data);
     }
 
     /**
      * 评论adapter
      */
-    public class KeDetailPinglunAdapter extends BaseRecylcerViewAdapter<PinglunModel> {
+    public class KePinglunsAdapter extends CheckScrollAdapter<PinglunModel> {
+        protected Context mContext;
 
-        public KeDetailPinglunAdapter(Context mContext, List<PinglunModel> list) {
-            super(mContext, list);
-            this.mContext = mContext;
+        public KePinglunsAdapter(Context context) {
+            super(context);
+            mContext = context;
         }
 
-
-        @NonNull
-        @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int
-                viewType) {
-            return new ViewHolder(inflater.inflate(R.layout.item_pinglun, parent,
-                    false));
+        public void setData(List<PinglunModel> mItemList) {
+            clear();
+            isScroll = false;
+            synchronized (mItemList) {
+                for (PinglunModel item : mItemList) {
+                    add(item);
+                }
+            }
         }
 
         @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            final ViewHolder viewHolder = (ViewHolder) holder;
-            PinglunModel pinglunModel = list.get(position);
-            viewHolder.content.setText(pinglunModel.getContent());
-            if (pinglunModel.getUserModel() != null){
-                viewHolder.name.setText(pinglunModel.getUserModel().getName());
-                ImageLoader.display(mContext, viewHolder.image, pinglunModel.getUserModel().getPic(), R
+        public View getView(int position, View convertView, ViewGroup parent) {
+            final PinglunModel pinglunModel = getItem(position);
+            ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_pinglun);
+
+            ImageView image = viewHolder.getView(R.id.ping_avatar);
+            TextView time = viewHolder.getView(R.id.ping_time);
+            TextView name = viewHolder.getView(R.id.ping_name);
+            TextView content = viewHolder.getView(R.id.ping_content);
+
+            content.setText(pinglunModel.getContent());
+            if (pinglunModel.getUserModel() != null) {
+                name.setText(pinglunModel.getUserModel().getName());
+                ImageLoader.display(mContext, image, pinglunModel.getUserModel()
+                        .getPic(), R
                         .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
             }
-            viewHolder.time.setText(CalendarTools.format(Long.valueOf(pinglunModel.getCtime()) * 1000, "yyyy-MM-dd HH:mm:ss"));
+            time.setText(CalendarTools.format(Long.valueOf(pinglunModel.getCtime()) *
+                    1000, "yyyy-MM-dd HH:mm:ss"));
+            return viewHolder.getConvertView();
         }
 
-        @Override
-        public long getItemId(int position) {
-            return position;
+        public boolean isScroll() {
+            return isScroll;
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            private TextView time;
-            private TextView content;
-            private TextView name;
-            private ImageView image;
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-                initView();
-            }
-
-            private void initView() {
-                image = itemView.findViewById(R.id.ping_avatar);
-                time = itemView.findViewById(R.id.ping_time);
-                name = itemView.findViewById(R.id.ping_name);
-                content = itemView.findViewById(R.id.ping_content);
-            }
-        }
     }
-
 
 
 }

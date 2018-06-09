@@ -1,7 +1,7 @@
 package cn.com.zwwl.bayuwen.model;
 
 /**
- * 子课model
+ * 组合课程Model
  */
 public class LessonModel extends Entry {
     private String id;
@@ -266,3 +266,4 @@ public class LessonModel extends Entry {
         this.summarize = summarize;
     }
 }
+

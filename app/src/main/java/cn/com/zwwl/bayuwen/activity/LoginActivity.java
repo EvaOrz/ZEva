@@ -33,6 +33,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_login);
         initView();
+        needCheckLogin = false;
     }
 
     private void initView() {
@@ -60,7 +61,6 @@ public class LoginActivity extends BaseActivity {
             case R.id.login_back:
                 finish();
                 break;
-
             case R.id.login_register:
                 startActivity(new Intent(mContext, RegisterActivity.class));
                 finish();

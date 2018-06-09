@@ -3,18 +3,34 @@ package cn.com.zwwl.bayuwen.view;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.BaseRecylcerViewAdapter;
+import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
+import cn.com.zwwl.bayuwen.adapter.KeSelectAdapter;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
+import cn.com.zwwl.bayuwen.listener.OnItemClickListener;
+import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.LessonModel;
+import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.widget.NoScrollListView;
+import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
  * 课程详情页 课程表
@@ -22,9 +38,9 @@ import cn.com.zwwl.bayuwen.model.LessonModel;
 public class KeDetailView1 extends LinearLayout {
 
     private Context context;
-    private RecyclerView recyclerView;
+    private NoScrollListView listView;
     private TextView lookAll;
-    private KeDetailListAdapter adapter;
+    private KeLectruesAdapter adapter;
     private List<LessonModel> data = new ArrayList<>();
     private List<LessonModel> allData = new ArrayList<>();
 
@@ -38,21 +54,22 @@ public class KeDetailView1 extends LinearLayout {
     private void initView() {
         View view = LayoutInflater.from(context).inflate(R.layout.fragment_kedetail_1, null, false);
         addView(view);
-        recyclerView = view.findViewById(R.id.frag_kedetail1_list);
-        adapter = new KeDetailListAdapter(context, data);
-        recyclerView.setAdapter(adapter);
+        listView = view.findViewById(R.id.frag_kedetail1_list);
 
         lookAll = view.findViewById(R.id.frag_kedetail1_all);
         lookAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int record = data.size();
                 if (allData.size() > data.size()) {
                     data.clear();
                     data.addAll(allData);
-                    adapter.notifyDataSetChanged();
+                    adapter.setData(data);
                 }
             }
         });
+        adapter = new KeLectruesAdapter(context);
+        listView.setAdapter(adapter);
     }
 
     public void setData(List<LessonModel> dataList) {
@@ -60,64 +77,55 @@ public class KeDetailView1 extends LinearLayout {
         allData.clear();
         allData.addAll(dataList);
 
-        if (dataList.size() > 2) {
-            data.addAll(dataList.subList(0, 2));
+        if (!Tools.listNotNull(dataList)) {
+            lookAll.setVisibility(View.GONE);
+        } else if (dataList.size() > 2) {
+            data.addAll(dataList.subList(0, 3));
         } else data.addAll(dataList);
-        adapter.notifyDataSetChanged();
 
+        adapter.setData(data);
     }
 
-    /**
-     * 课程详情页课表item
-     */
-    public class KeDetailListAdapter extends BaseRecylcerViewAdapter<LessonModel> {
 
-        public KeDetailListAdapter(Context mContext, List<LessonModel> list) {
-            super(mContext, list);
-            this.mContext = mContext;
+    public class KeLectruesAdapter extends CheckScrollAdapter<LessonModel> {
+        protected Context mContext;
+
+        public KeLectruesAdapter(Context context) {
+            super(context);
+            mContext = context;
         }
 
-
-        @NonNull
-        @Override
-        public KeDetailListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int
-                viewType) {
-            return new KeDetailListAdapter.ViewHolder(inflater.inflate(R.layout.item_c_list, parent,
-                    false));
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            final KeDetailListAdapter.ViewHolder viewHolder = (KeDetailListAdapter.ViewHolder)
-                    holder;
-            viewHolder.video_id.setText(position + 1 + "");
-            viewHolder.video_title.setText(list.get(position).getTitle());
-            viewHolder.video_time.setText(list.get(position).getStart_at()
-                    + "  " + list.get(position).getClass_start_at()
-                    + "-" + list.get(position).getClass_end_at()
-                    + "(" + list.get(position).getHours() + "小时)");
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            private TextView video_title;
-            private TextView video_time;
-            private TextView video_id;
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-                initView();
-            }
-
-            private void initView() {
-                video_title = itemView.findViewById(R.id.course_d_title);
-                video_time = itemView.findViewById(R.id.course_d_time);
-                video_id = itemView.findViewById(R.id.course_d_id);
+        public void setData(List<LessonModel> mItemList) {
+            clear();
+            isScroll = false;
+            synchronized (mItemList) {
+                for (LessonModel item : mItemList) {
+                    add(item);
+                }
             }
         }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            final LessonModel item = getItem(position);
+            ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_c_list);
+
+            TextView video_id = viewHolder.getView(R.id.course_d_id);
+            TextView video_title = viewHolder.getView(R.id.course_d_title);
+            TextView video_time = viewHolder.getView(R.id.course_d_time);
+
+            video_id.setText(position + 1 + "");
+            video_title.setText(item.getTitle());
+            video_time.setText(item.getStart_at()
+                    + "  " + item.getClass_start_at()
+                    + "-" + item.getClass_end_at()
+                    + "(" + item.getHours() + "小时)");
+            return viewHolder.getConvertView();
+        }
+
+        public boolean isScroll() {
+            return isScroll;
+        }
+
     }
 }

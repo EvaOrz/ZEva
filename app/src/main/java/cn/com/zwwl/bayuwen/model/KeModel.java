@@ -8,7 +8,6 @@ import java.util.List;
  */
 public class KeModel extends Entry {
     private List<TeacherModel> teacherModels = new ArrayList<>();
-    private List<LessonModel> lessonModels = new ArrayList<>();
     private String cartId = ""; // 购课单id，购课单列表用，其他场合不用解析
     private String detailId = "";// 退费id，（退费选子课列表，退费课程列表）用，其他场合不用解析
     /**
@@ -789,14 +788,6 @@ public class KeModel extends Entry {
 
     public void setTeacherModels(List<TeacherModel> teacherModels) {
         this.teacherModels = teacherModels;
-    }
-
-    public List<LessonModel> getLessonModels() {
-        return lessonModels;
-    }
-
-    public void setLessonModels(List<LessonModel> lessonModels) {
-        this.lessonModels = lessonModels;
     }
 
     public String getCartId() {

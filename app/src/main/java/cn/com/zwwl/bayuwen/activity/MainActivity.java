@@ -30,6 +30,7 @@ import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.GiftAdapter;
 import cn.com.zwwl.bayuwen.api.ChildInfoApi;
+import cn.com.zwwl.bayuwen.api.HonorListApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.fragment.MainFrag1;
@@ -64,8 +65,6 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     private MainFrag5 mainFrag5;
     private ImageView avatar;
     private TextView name, yaoqing, gongxun;
-    private UserModel userModel;
-
 
     private MostGridView giftGridView;
     private GiftAdapter giftAdapter;
@@ -107,19 +106,11 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     @Override
     protected void onResume() {
         super.onResume();
-        userModel = UserDataHelper.getUserLoginInfo(mContext);
-        if (userModel == null) {
-            mContext.startActivity(new Intent(mContext, LoginActivity.class));
-        } else {
-            if (MyApplication.loginStatusChange) {
-                initLeftLayout();
-                mainFrag1.initData(userModel);
-                mainFrag5.initData(userModel);
-                initChildDta();
-                MyApplication.loginStatusChange = false;
-            }
-
+        if (MyApplication.loginStatusChange) {
+            initData();
+            MyApplication.loginStatusChange = false;
         }
+
     }
 
     /**
@@ -285,8 +276,11 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
 //    }
     @Override
     protected void initData() {
-
-
+        if (userModel == null) return;
+        initLeftLayout();
+        mainFrag1.initData(userModel);
+        mainFrag5.initData(userModel);
+        initChildDta();
     }
 
     /**
@@ -394,6 +388,19 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
             Glide.with(mContext).load(userModel.getPic()).into(avatar);
         yaoqing.setText("我的邀请码：" + userModel.getSignCode());
 //        gongxun.setText();
+
+        // 获取礼物数据
+        new HonorListApi(mContext, 2, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
 
     }
 

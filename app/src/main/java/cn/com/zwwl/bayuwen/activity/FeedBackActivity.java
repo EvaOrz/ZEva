@@ -6,12 +6,17 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.api.FeedbackApi;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
 /**
  * 意见反馈页面
@@ -75,6 +80,32 @@ public class FeedBackActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.feed_commit:
+                String content = ev.getText().toString();
+                if (TextUtils.isEmpty(content)) {
+                    showToast("请输入反馈内容");
+                } else if (limitNum < 0) {
+                    showToast("反馈内容过长");
+                } else {
+                    showLoadingDialog(true);
+                    new FeedbackApi(mContext, content, 3, new FetchEntryListener() {
+                        @Override
+                        public void setData(Entry entry) {
+
+                        }
+
+                        @Override
+                        public void setError(ErrorMsg error) {
+                            showLoadingDialog(false);
+                            if (error == null) {
+                                showToast("提交成功");
+                                finish();
+                            } else {
+                                showToast(error.getDesc());
+                            }
+                        }
+                    });
+                }
+
                 break;
         }
 

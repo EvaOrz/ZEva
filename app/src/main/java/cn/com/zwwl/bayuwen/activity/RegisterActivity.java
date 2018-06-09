@@ -49,6 +49,7 @@ public class RegisterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_register);
         initView();
+        needCheckLogin = false;
     }
 
     @Override

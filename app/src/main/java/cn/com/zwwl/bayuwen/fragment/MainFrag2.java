@@ -144,7 +144,7 @@ public class MainFrag2 extends Fragment
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
-                intent.putExtra("SearchCourseActivity_id", tagList.get(position).getId());
+                intent.putExtra("SearchCourseActivity_id", tagList.get(position).getId()+"");
                 intent.setClass(mActivity, SearchCourseActivity.class);
                 startActivity(intent);
             }
