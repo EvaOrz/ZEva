@@ -8,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -16,6 +15,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.FinalEvalAdapter;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.base.MenuCode;
+import cn.com.zwwl.bayuwen.model.EvalContentModel;
 import cn.com.zwwl.bayuwen.widget.decoration.GridItemDecoration;
 
 /**
@@ -47,13 +47,13 @@ public class CourseEvalActivity extends BasicActivityWithTitle {
     protected void initView() {
         showMenu(MenuCode.SUBMIT);
         setCustomTitle("课程评价");
-        initRecycler(label, 2, Arrays.asList("上课需要更幽默", "备课需要更充分", "下课需要更提前"), 0);
-        initRecycler(teacher, 3, Arrays.asList("张老师", "李老师", "王老师", "孙老师"), 1);
-        initRecycler(tutor, 3, Arrays.asList("张老师", "李老师"), 1);
-        initRecycler(adviser, 3, Arrays.asList("张老师"), 1);
+        initRecycler(label, 2, null, 0);
+        initRecycler(teacher, 3, null, 1);
+        initRecycler(tutor, 3, null, 1);
+        initRecycler(adviser, 3,null, 1);
     }
 
-    private void initRecycler(RecyclerView recyclerView, int spanCount, List<String> data, int type) {
+    private void initRecycler(RecyclerView recyclerView, int spanCount, List<EvalContentModel.DataBean> data, int type) {
         recyclerView.setLayoutManager(new GridLayoutManager(this, spanCount));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new GridItemDecoration(this));

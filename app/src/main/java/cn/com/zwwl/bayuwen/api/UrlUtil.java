@@ -320,5 +320,10 @@ public class UrlUtil {
     public static String sign() {
         return HOST+"/students/stusign";
     }
-
+    /**
+     * 获取月度、课程评价内容
+     */
+    public static String evalContent() {
+        return HOST+"/comment/list";
+    }
 }

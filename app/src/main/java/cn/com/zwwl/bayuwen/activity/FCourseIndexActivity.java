@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -16,18 +17,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
-import cn.com.zwwl.bayuwen.adapter.TestListAdapter;
 import cn.com.zwwl.bayuwen.adapter.UnitTableAdapter;
+import cn.com.zwwl.bayuwen.api.EvalLabelApi;
 import cn.com.zwwl.bayuwen.api.StudyingCourseApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
+import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.LessonModel;
+import cn.com.zwwl.bayuwen.model.EvalContentModel;
 import cn.com.zwwl.bayuwen.model.StudyingModel;
 import cn.com.zwwl.bayuwen.util.DensityUtil;
+import cn.com.zwwl.bayuwen.util.ToastUtil;
+import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.decoration.HSpacesItemDecoration;
 
 /**
@@ -41,16 +46,17 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
     AppCompatTextView percent;
     @BindView(R.id.radar)
     RecyclerView radar;
-    @BindView(R.id.test)
-    RecyclerView test;
+    @BindView(R.id.final_test)
+    AppCompatTextView test;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     UnitTableAdapter unitTableAdapter;
-    TestListAdapter testListAdapter;
     StudyingModel model;
     private String kid;
     RadarAdapter radarAdapter;
     List<CommonModel> models;
+    FinalEvalDialog evalDialog;
+    EvalContentModel evalContentModel;
 
     @Override
     protected int setContentView() {
@@ -60,13 +66,10 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
     @Override
     protected void initView() {
         setCustomTitle("大语文");
+        evalDialog = new FinalEvalDialog(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new HSpacesItemDecoration(res, R.dimen.dp_5));
-        test.setLayoutManager(new LinearLayoutManager(this));
-        test.setItemAnimator(new DefaultItemAnimator());
-        test.addItemDecoration(new HSpacesItemDecoration(res, R.dimen.dp_5));
-
         radar.setLayoutManager(new GridLayoutManager(this, 10));
         radar.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
@@ -93,19 +96,26 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
         radar.setAdapter(radarAdapter);
         kid = getIntent().getStringExtra("kid");
         setCustomTitle(getIntent().getStringExtra("title"));
+        test.setText(getIntent().getStringExtra("title"));
         getData();
-        List<LessonModel> courseModels = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            LessonModel model = new LessonModel();
-            model.setTitle("XXX");
-            courseModels.add(model);
-        }
+        getEvalContent();
         unitTableAdapter = new UnitTableAdapter(null);
-        testListAdapter = new TestListAdapter(courseModels);
-        test.setNestedScrollingEnabled(false);
         recyclerView.setNestedScrollingEnabled(false);
-        test.setAdapter(testListAdapter);
         recyclerView.setAdapter(unitTableAdapter);
+    }
+
+    /**
+     * 获取评论内容
+     */
+    private void getEvalContent() {
+        map.put("type", "1");
+        map.put("kid", kid);
+        new EvalLabelApi(this, map, new ResponseCallBack<EvalContentModel>() {
+            @Override
+            public void result(EvalContentModel model, ErrorMsg errorMsg) {
+                evalContentModel = model;
+            }
+        });
     }
 
     private void getData() {
@@ -123,13 +133,10 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
 
     @Override
     protected void setListener() {
-        testListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        evalDialog.setSubmitListener(new FinalEvalDialog.SubmitListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(mActivity, ExamDetailsActivity.class);
-                intent.putExtra("kid", "77");
-                intent.putExtra("title", "XXX");
-                startActivity(intent);
+            public void ok() {
+                ToastUtil.showShortToast("感谢评价");
             }
         });
         unitTableAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -145,8 +152,23 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
         });
     }
 
+    @OnClick({R.id.evaluate, R.id.final_test})
     @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.evaluate:
+                if (evalDialog == null) evalDialog = new FinalEvalDialog(this);
+                evalDialog.setData(1,kid, evalContentModel);
+                evalDialog.showAtLocation(percent, Gravity.BOTTOM, 0, 0);
+
+                break;
+            case R.id.final_test:
+                Intent intent = new Intent(mActivity, ExamDetailsActivity.class);
+                intent.putExtra("kid", kid);
+                intent.putExtra("title", Tools.getText(test));
+                startActivity(intent);
+                break;
+        }
 
     }
 

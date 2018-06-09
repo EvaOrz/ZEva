@@ -80,7 +80,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                         @Override
                         public void run() {
                             typeModel = (KeTypeModel) entry;
-                            operate.setData(typeModel);
+                            operate.setOfflineData(typeModel);
                         }
                     });
 
@@ -105,9 +105,6 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                         break;
                     case 2:
                         map.put("type", sortType.getId());
-                        break;
-                    case 3:
-                        map.put("online", sortType.getId());
                         break;
                     case 4:
                         map.put("school", sortType.getId());

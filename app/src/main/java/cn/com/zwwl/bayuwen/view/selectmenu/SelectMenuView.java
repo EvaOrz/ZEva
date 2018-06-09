@@ -89,6 +89,29 @@ public class SelectMenuView extends LinearLayout {
         mTwoHolder5.refreshData(dataLists5, 0, -1);
     }
 
+    /**
+     * 设置数据
+     */
+    public void setOfflineData(KeTypeModel keTypeModel) {
+        dataLists1.clear();
+        dataLists1.addAll(SelectTempModel.parseGrades(keTypeModel.getGrades()));
+        mOneHolder1.refreshData(dataLists1, 0);
+        dataLists2.clear();
+        dataLists2.addAll(SelectTempModel.parseCourse(keTypeModel.getCourseType()));
+        mTwoHolder2.refreshData(dataLists2, 0, -1);
+        mText3.setText("线下课");
+        findViewById(R.id.layout3).setClickable(false);
+//        dataLists3.clear();
+//        dataLists3.addAll(SelectTempModel.parseClass(keTypeModel.getClassType()));
+//        mOneHolder3.refreshData(dataLists3, 0);
+        dataLists4.clear();
+        dataLists4.addAll(SelectTempModel.parseSchool(keTypeModel.getSchools()));
+        mTwoHolder4.refreshData(dataLists4, 0, -1);
+        dataLists5.clear();
+        dataLists5.addAll(SelectTempModel.parseTimes(keTypeModel.getSchooltimes()));
+        mTwoHolder5.refreshData(dataLists5, 0, -1);
+    }
+
     private void init() {
         mOneHolder1 = new SortHolder(mContext);
         mOneHolder1.setOnSortInfoSelectedListener(new SortHolder.OnSortInfoSelectedListener() {

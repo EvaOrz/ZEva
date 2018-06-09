@@ -33,7 +33,7 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
         //判断传入的view以及传入的view的params是否为空，若其中一个为空则使用默认样式
         if (ItemDecorationView == null || ItemDecorationView.getLayoutParams() == null) {
             ItemDecorationView = new ImageView(context);
-            ItemDecorationView.setLayoutParams(new ViewGroup.LayoutParams(10, 10));
+            ItemDecorationView.setLayoutParams(new ViewGroup.LayoutParams(10, 20));
             ItemDecorationView.setBackgroundColor(context.getResources().getColor(R.color.transparent));
         }
 

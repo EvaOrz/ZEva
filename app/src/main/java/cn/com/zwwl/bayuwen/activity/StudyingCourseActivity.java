@@ -20,6 +20,7 @@ import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.StudyingModel;
+import cn.com.zwwl.bayuwen.util.ToastUtil;
 import cn.com.zwwl.bayuwen.widget.decoration.HSpacesItemDecoration;
 
 /**
@@ -46,6 +47,8 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
     AppCompatTextView courseChange;
     @BindView(R.id.class_covert)
     AppCompatTextView classCovert;
+    @BindView(R.id.course_title)
+    AppCompatTextView courseTitle;
 
     @Override
     protected int setContentView() {
@@ -87,6 +90,10 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
             courseEval.setVisibility(View.GONE);
             classCovert.setVisibility(View.GONE);
             courseChange.setVisibility(View.GONE);
+            courseTitle.setVisibility(View.GONE);
+        } else if ("1".equals(getIntent().getStringExtra("online"))) {
+            classCovert.setVisibility(View.GONE);
+            courseChange.setVisibility(View.GONE);
         }
         getData();
     }
@@ -97,7 +104,7 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(mActivity, UnitIndexActivity.class);
-                intent.putExtra("online",model.getOnline());
+                intent.putExtra("online", model.getOnline());
                 intent.putExtra("kId", model.getCompleteClass().get(position).getKid());
                 intent.putExtra("cId", model.getCompleteClass().get(position).getId());
                 intent.putExtra("title", model.getCompleteClass().get(position).getTitle());
@@ -117,20 +124,23 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.course_eval:
-                intent.putExtra("kid", kid);
-                intent.setClass(this, CourseEvalActivity.class);
+                ToastUtil.showShortToast("学完课程才能评价哦！");
+//                intent.putExtra("kid", kid);
+//                intent.setClass(this, CourseEvalActivity.class);
                 break;
             case R.id.course_change:
                 mApplication.operate_type = 0;
                 intent.putExtra("kid", "10644");
                 intent.setClass(this, UnitTableActivity.class);
+                startActivity(intent);
                 break;
             case R.id.class_covert:
                 mApplication.operate_type = 1;
                 intent.setClass(this, ConvertClassActivity.class);
+                startActivity(intent);
                 break;
         }
-        startActivity(intent);
+
     }
 
     @Override

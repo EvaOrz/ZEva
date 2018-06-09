@@ -400,5 +400,8 @@
     <string name="teacher_intro">教师介绍</string>
     <string name="sign">签到</string>
     <string name="parent_feedback">家长反馈</string>
->>>>>>> zhumangmang
+    <string name="hint_advise_more">请输入更多建议</string>
+    <string name="empty">无</string>
+    <string name="submit_eval">提交评价</string>
+    >>>>>>> zhumangmang
 </resources>

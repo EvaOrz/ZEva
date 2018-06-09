@@ -12,8 +12,8 @@
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="8dp"
         android:drawableLeft="@mipmap/radar_status_4"
-        android:gravity="center_vertical"
         android:drawableStart="@mipmap/radar_status_4"
+        android:gravity="center_vertical"
         android:text="@string/radar_now" />
 
     <View
@@ -23,13 +23,13 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/radar"
-        android:paddingStart="@dimen/dp_10"
-        android:paddingEnd="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@mipmap/radar_bg"
         android:layout_marginEnd="@dimen/dp_10"
-        android:layout_marginStart="@dimen/dp_10" />
+        android:layout_marginStart="@dimen/dp_10"
+        android:background="@mipmap/radar_bg"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_10" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -103,24 +103,57 @@
             android:text="87%" />
     </LinearLayout>
 
+    <View
+        style="@style/split_line"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_5" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:id="@+id/evaluate"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@mipmap/icon_arrow_gray"
+        android:drawableLeft="@mipmap/icon_summary"
+        android:drawablePadding="@dimen/dp_10"
+        android:drawableRight="@mipmap/icon_arrow_gray"
+        android:drawableStart="@mipmap/icon_summary"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/dp_16"
+        android:paddingStart="@dimen/dp_16"
+        android:text="@string/course_eval" />
+
+    <View
+        style="@style/split_line"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_5" />
+
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@color/gray_line"
         android:drawableLeft="@mipmap/icon_final_test"
         android:drawablePadding="@dimen/dp_10"
-        android:gravity="center_vertical"
         android:drawableStart="@mipmap/icon_final_test"
+        android:gravity="center_vertical"
         android:paddingEnd="@dimen/dp_16"
         android:paddingStart="@dimen/dp_16"
         android:text="@string/final_test" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/test"
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/final_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10" />
+        android:layout_marginBottom="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@drawable/drawable_trace_gradient"
+        android:drawableEnd="@mipmap/icon_arrow_gray"
+        android:drawableRight="@mipmap/icon_arrow_gray"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16" />
 
     <View
         android:layout_width="match_parent"

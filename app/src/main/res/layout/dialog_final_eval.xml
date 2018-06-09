@@ -12,7 +12,6 @@
         android:gravity="center"
         android:paddingBottom="@dimen/dp_10"
         android:paddingTop="@dimen/dp_10"
-        android:text="【五月份月度评价】"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
@@ -29,11 +28,11 @@
         app:layout_constraintTop_toBottomOf="@id/divider">
 
         <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/label_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp_20"
-            android:gravity="center"
-            android:text="老师上课是否活跃" />
+            android:gravity="center" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -57,7 +56,6 @@
                 android:paddingEnd="@dimen/dp_20"
                 android:paddingStart="@dimen/dp_20"
                 android:paddingTop="2dp"
-                android:text="活跃"
                 android:textColor="@drawable/selector_checked_color"
                 android:textSize="@dimen/sp_14" />
 
@@ -76,7 +74,6 @@
                 android:paddingEnd="@dimen/dp_20"
                 android:paddingStart="@dimen/dp_20"
                 android:paddingTop="@dimen/dp_2"
-                android:text="沉闷"
                 android:textColor="@drawable/selector_checked_color"
                 android:textSize="@dimen/sp_14" />
         </RadioGroup>
@@ -86,7 +83,7 @@
             android:layout_marginTop="@dimen/dp_36" />
 
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/star_eval"
+            android:id="@+id/next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -111,36 +108,39 @@
         app:layout_constraintTop_toBottomOf="@id/divider">
 
         <android.support.v7.widget.AppCompatRatingBar
+            android:id="@+id/star_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
             android:numStars="5"
             android:progressDrawable="@drawable/rating_bar"
-            android:rating="2"
             android:stepSize="1" />
 
         <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/star_eval"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_5"
-            android:text="一般，还需完善"
             android:textColor="@color/gold" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/label"
+            android:id="@+id/star_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp_10"
             android:layout_marginStart="@dimen/dp_10" />
 
         <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/other"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/dp_5"
             android:background="@drawable/draw_gray_line_bg"
-            android:hint="请输入更多建议"
+            android:hint="@string/hint_advise_more"
             android:paddingBottom="@dimen/dp_5"
             android:paddingEnd="@dimen/dp_10"
             android:paddingStart="@dimen/dp_10"
@@ -154,7 +154,7 @@
             android:drawablePadding="@dimen/dp_5"
             android:drawableStart="@mipmap/icon_vote_black"
             android:gravity="center"
-            android:text="为TA点赞"
+            android:text="@string/vote_title"
             android:textSize="@dimen/sp_16" />
 
         <View
@@ -172,10 +172,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
-                android:textSize="@dimen/sp_12"
-                android:text="授课老师" />
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/class_teacher"
+                android:textSize="@dimen/sp_12" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/teacher_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/empty"
+                android:textSize="@dimen/sp_12" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/teacher"
@@ -187,17 +197,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginStart="@dimen/dp_10">
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10">
 
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
-                android:textSize="@dimen/sp_12"
-                android:text="学业顾问" />
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/study_adviser"
+                android:textSize="@dimen/sp_12" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/adviser_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/empty"
+                android:textSize="@dimen/sp_12" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/adviser"
@@ -209,17 +229,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginStart="@dimen/dp_10">
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10">
 
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:textSize="@dimen/sp_12"
                 android:layout_marginRight="@dimen/dp_10"
-                android:text="校区助手" />
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/school_tutor"
+                android:textSize="@dimen/sp_12" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tutor_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/empty"
+                android:textSize="@dimen/sp_12" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/tutor"
@@ -239,7 +269,7 @@
             android:paddingEnd="@dimen/dp_20"
             android:paddingStart="@dimen/dp_20"
             android:paddingTop="@dimen/dp_8"
-            android:text="提交评价"
+            android:text="@string/submit_eval"
             android:textColor="@color/white" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

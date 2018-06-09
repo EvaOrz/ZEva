@@ -108,7 +108,7 @@ public class MainFrag3 extends BasicFragment {
                         application.oldKe = courseModel.getUnfinished().get(position).getProducts();
                         intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
                         intent.putExtra("title", courseModel.getUnfinished().get(position).getProducts().getTitle());
-                        intent.putExtra("online", courseModel.getUnfinished().get(position).getProducts().getTitle());
+                        intent.putExtra("online", courseModel.getUnfinished().get(position).getProducts().getOnline());
                         intent.setClass(activity, StudyingCourseActivity.class);
                         break;
                     case R.id.work:
