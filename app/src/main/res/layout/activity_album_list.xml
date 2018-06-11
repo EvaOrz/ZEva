@@ -15,7 +15,7 @@
             android:id="@+id/album_list_back"
             android:layout_width="@dimen/back_size"
             android:layout_height="@dimen/back_size"
-            android:src="@drawable/back_gray" />
+            android:src="@mipmap/icon_back" />
 
         <TextView
             android:id="@+id/album_list_title"
