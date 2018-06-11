@@ -54,7 +54,7 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
 
         ImageLoader.display(mContext, viewHolder.img, keModel.getPic(), R
                 .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
-        viewHolder.tag.setText(keModel.getTagTxt());
+        viewHolder.tag.setImageResource(keModel.getTagImg());
         viewHolder.title.setText(keModel.getTitle());
         viewHolder.teacher.setText(keModel.getTname());
         viewHolder.xiaoqu.setText(keModel.getSchool());
@@ -78,7 +78,7 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView img;
-        public TextView tag;
+        public ImageView tag;
         public TextView title;
         public TextView teacher;
         public TextView xiaoqu;

@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.model.CouponModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
@@ -37,14 +38,19 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
     private Context mContext;
     private PopupWindow window;
     private ListView listView;
-    private List<String> datas = new ArrayList<>();
     private YouhuiAdapter adapter;
+    private List<CouponModel> couponModels = new ArrayList<>();
+    private int type = 1;
 
     /**
      * @param context
+     * @param type    1:领取 2：使用
      */
-    public YouHuiJuanPopWindow(Context context) {
+    public YouHuiJuanPopWindow(Context context, int type, List<CouponModel> cs) {
         mContext = context;
+        this.type = type;
+        couponModels.clear();
+        couponModels.addAll(cs);
         init();
     }
 
@@ -55,11 +61,16 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
         view.findViewById(R.id.youhuijuan_close)
                 .setOnClickListener(this);
         listView = view.findViewById(R.id.youhuijuan_listview);
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        adapter = new YouhuiAdapter(mContext, datas);
+        adapter = new YouhuiAdapter(mContext, couponModels);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (type == 1) {
+                } else if (type == 2) {
+                }
+            }
+        });
         window = new PopupWindow(view, RelativeLayout.LayoutParams.FILL_PARENT,
                 RelativeLayout.LayoutParams.FILL_PARENT);
         window.setFocusable(true);
@@ -86,9 +97,9 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
     public class YouhuiAdapter extends BaseAdapter {
 
         private Context mContext;
-        private List<String> datas = new ArrayList<>();
+        private List<CouponModel> datas = new ArrayList<>();
 
-        public YouhuiAdapter(Context context, List<String> datas) {
+        public YouhuiAdapter(Context context, List<CouponModel> datas) {
             mContext = context;
             this.datas = datas;
         }
@@ -108,6 +119,19 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_youhuijuan);
+            CouponModel c = datas.get(position);
+
+            TextView name = viewHolder.getView(R.id.youhui_name);
+            TextView time = viewHolder.getView(R.id.youhui_time);
+            TextView bt = viewHolder.getView(R.id.youhui_bt);
+            name.setText(c.getDesc());
+            time.setText(c.getStart_use_time().substring(0, 10) + "至" + c.getEnd_use_time()
+                    .substring(0, 10));
+            if (type == 1) {
+                bt.setText("领取");
+            } else if (type == 2) {
+                bt.setText("使用");
+            }
 
             return viewHolder.getConvertView();
         }

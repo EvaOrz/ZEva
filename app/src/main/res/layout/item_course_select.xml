@@ -36,26 +36,19 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <TextView
+            <ImageView
                 android:id="@+id/stateTv"
-                android:layout_width="wrap_content"
+                android:layout_width="25dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/gold_circle"
-                android:gravity="center"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="回放"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_10" />
+              />
 
             <TextView
                 android:id="@+id/videoName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:text="庖丁阅读二年级春季"
                 android:textColor="@color/gray_dark"

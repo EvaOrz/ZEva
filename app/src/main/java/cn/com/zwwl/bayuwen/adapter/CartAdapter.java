@@ -51,7 +51,7 @@ public class CartAdapter extends CheckScrollAdapter<KeModel> {
         final KeModel model = getItem(position);
 
         CheckBox checkBox = viewHolder.getView(R.id.item_order_check);
-        TextView tag = viewHolder.getView(R.id.item_order_tag);
+        ImageView tag = viewHolder.getView(R.id.item_order_tag);
         TextView title = viewHolder.getView(R.id.item_order_title);
         TextView teacher = viewHolder.getView(R.id.item_order_teacher);
         TextView date = viewHolder.getView(R.id.item_order_date);
@@ -68,7 +68,7 @@ public class CartAdapter extends CheckScrollAdapter<KeModel> {
                 onItemCheckChangeListener.onCheckChange(model.getCartId(), isChecked);
             }
         });
-        tag.setText(model.getTagTxt());
+        tag.setImageResource(model.getTagImg());
         title.setText(model.getTitle());
         teacher.setText(model.getTname());
         date.setText(CalendarTools.format(Long.valueOf(model.getStartPtime()),

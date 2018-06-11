@@ -264,6 +264,16 @@ public class UrlUtil {
         return HOST + "/userfeedback";
     }
 
+    // 用户可使用的优惠券
+    public static String cuponListUrl() {
+        return HOST + "/coupon";
+    }
+
+    // 领取优惠券
+    public static String getCouponUrl() {
+        return HOST + "/coupon/grant";
+    }
+
     /**
      * 正在进行课程
      */
@@ -326,22 +336,25 @@ public class UrlUtil {
     public static String addWork() {
         return HOST + "/courseware";
     }
+
     /**
      * 班级详情
      */
     public static String classDetail() {
-        return HOST+"/transfer/course_detail";
+        return HOST + "/transfer/course_detail";
     }
+
     /**
      * 签到
      */
     public static String sign() {
-        return HOST+"/students/stusign";
+        return HOST + "/students/stusign";
     }
+
     /**
      * 获取月度、课程评价内容
      */
     public static String evalContent() {
-        return HOST+"/comment/list";
+        return HOST + "/comment/list";
     }
 }

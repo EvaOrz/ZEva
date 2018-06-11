@@ -233,7 +233,7 @@ public class TuanPayActivity extends BaseActivity {
      */
     private View getKeView(KeModel model) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_course_for_order, null);
-        TextView tag = view.findViewById(R.id.item_order_tag);
+        ImageView tag = view.findViewById(R.id.item_order_tag);
         TextView title = view.findViewById(R.id.item_order_title);
         TextView teacher = view.findViewById(R.id.item_order_teacher);
         TextView date = view.findViewById(R.id.item_order_date);
@@ -243,7 +243,7 @@ public class TuanPayActivity extends BaseActivity {
         ImageLoader.display(mContext, pic, model.getPic(), R.drawable.avatar_placeholder, R
                 .drawable.avatar_placeholder);
 
-        tag.setText(model.getTagTxt());
+        tag.setImageResource(model.getTagImg());
         title.setText(model.getTitle());
         teacher.setText(model.getTname());
         date.setText(CalendarTools.format(Long.valueOf(model.getStartPtime()),
@@ -277,7 +277,7 @@ public class TuanPayActivity extends BaseActivity {
                 showToast("已复制到剪切板");
                 break;
             case R.id.youhui_layout:// 优惠券
-                new YouHuiJuanPopWindow(mContext);
+//                new YouHuiJuanPopWindow(mContext,0,);
                 break;
             case R.id.order_d_commit:// 提交订单
                 if (currentAddress == null) {
@@ -299,13 +299,13 @@ public class TuanPayActivity extends BaseActivity {
                 break;
 
             case R.id.zhifubao_pay:// 支付宝
-                zhifubaoBt.setBackgroundColor(getResources().getColor(R.color.gold));
-                weixinBt.setBackgroundColor(getResources().getColor(R.color.gray_dark));
+                zhifubaoBt.setImageResource(R.drawable.radio_checked);
+                weixinBt.setImageResource(R.drawable.radio_default);
                 payType = 1;
                 break;
             case R.id.weixin_pay:// 微信
-                zhifubaoBt.setBackgroundColor(getResources().getColor(R.color.gray_dark));
-                weixinBt.setBackgroundColor(getResources().getColor(R.color.gold));
+                zhifubaoBt.setImageResource(R.drawable.radio_default);
+                weixinBt.setImageResource(R.drawable.radio_checked);
                 payType = 2;
                 break;
         }

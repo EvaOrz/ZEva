@@ -237,7 +237,7 @@ public class OrderDetailActivity extends BaseActivity {
      */
     private View getKeView(KeModel model) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_course_for_order, null);
-        TextView tag = view.findViewById(R.id.item_order_tag);
+        ImageView tag = view.findViewById(R.id.item_order_tag);
         TextView title = view.findViewById(R.id.item_order_title);
         TextView teacher = view.findViewById(R.id.item_order_teacher);
         TextView date = view.findViewById(R.id.item_order_date);
@@ -247,7 +247,7 @@ public class OrderDetailActivity extends BaseActivity {
         ImageLoader.display(mContext, pic, model.getPic(), R.drawable.avatar_placeholder, R
                 .drawable.avatar_placeholder);
 
-        tag.setText(model.getTagTxt());
+        tag.setImageResource(model.getTagImg());
         title.setText(model.getTitle());
         teacher.setText(model.getTname());
         date.setText(CalendarTools.format(Long.valueOf(model.getStartPtime()),
@@ -273,15 +273,14 @@ public class OrderDetailActivity extends BaseActivity {
                 cm.setText(orderForMyListModel.getOid());
                 showToast("已复制到剪切板");
                 break;
-
             case R.id.zhifubao_pay:// 支付宝
-                zhifubaoPay.setBackgroundColor(getResources().getColor(R.color.gold));
-                weixinPay.setBackgroundColor(getResources().getColor(R.color.gray_dark));
+                zhifubaoPay.setImageResource(R.drawable.radio_checked);
+                weixinPay.setImageResource(R.drawable.radio_default);
                 payType = 1;
                 break;
             case R.id.weixin_pay:// 微信
-                zhifubaoPay.setBackgroundColor(getResources().getColor(R.color.gray_dark));
-                weixinPay.setBackgroundColor(getResources().getColor(R.color.gold));
+                zhifubaoPay.setImageResource(R.drawable.radio_default);
+                weixinPay.setImageResource(R.drawable.radio_checked);
                 payType = 2;
                 break;
             case R.id.order_d_bt1:// 取消订单|申请退款

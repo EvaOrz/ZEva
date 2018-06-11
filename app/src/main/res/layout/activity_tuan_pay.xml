@@ -18,7 +18,7 @@
             android:id="@+id/tuan_pay_back"
             android:layout_width="@dimen/back_size"
             android:layout_height="@dimen/back_size"
-            android:src="@drawable/back_gray" />
+            android:src="@mipmap/icon_back" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -404,10 +404,9 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:background="@color/gray_dark" />
-
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@mipmap/icon_zfb" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -420,9 +419,9 @@
 
                     <ImageView
                         android:id="@+id/zhifubao_pay"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:background="@color/gold" />
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/radio_checked" />
 
                 </LinearLayout>
 
@@ -441,9 +440,9 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:background="@color/gray_dark" />
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@mipmap/icon_wx" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -457,9 +456,9 @@
 
                     <ImageView
                         android:id="@+id/weixin_pay"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:background="@color/gray_dark" />
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:background="@drawable/radio_default" />
 
                 </LinearLayout>
 
@@ -488,7 +487,13 @@
 
                     <CheckBox
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/selector_radio"
+                        android:checked="false"
+                        android:scaleX="0.7"
+                        android:scaleY="0.7"
+
+                        />
 
                     <TextView
                         android:id="@+id/tuikuan_info"
