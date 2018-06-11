@@ -88,13 +88,7 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
         adapter.setType(type);
         kid = getIntent().getStringExtra("kid");
         setCustomTitle(getIntent().getStringExtra("title"));
-        if (getIntent().getBooleanExtra("is_trace", false)) {
-            progressLayout.setVisibility(View.GONE);
-            courseEval.setVisibility(View.GONE);
-            classCovert.setVisibility(View.GONE);
-            courseChange.setVisibility(View.GONE);
-            courseTitle.setVisibility(View.GONE);
-        } else if ("1".equals(getIntent().getStringExtra("online"))) {
+        if ("1".equals(getIntent().getStringExtra("online"))) {
             classCovert.setVisibility(View.GONE);
             courseChange.setVisibility(View.GONE);
         }

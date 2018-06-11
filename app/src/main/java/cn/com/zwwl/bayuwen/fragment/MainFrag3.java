@@ -108,12 +108,10 @@ public class MainFrag3 extends BasicFragment {
                 int type= Tools.getCourseType(bean.getPlan().getOnline(), bean.getPlan().getSource(), bean.getProducts().getEnd_at());
                 switch (view.getId()) {
                     case R.id.arrow:
-                        application.oldKe = bean.getProducts();
-                        intent.putExtra("kid", bean.getKid());
-                        intent.putExtra("title", bean.getProducts().getTitle());
-                        intent.putExtra("online", bean.getProducts().getOnline());
-                        intent.putExtra("course_type",type);
-                        intent.setClass(activity, StudyingCourseActivity.class);
+                        intent.setClass(activity, UnitIndexActivity.class);
+                        intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
+                        intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan().getCurrentLectureId());
+                        intent.putExtra("online", courseModel.getUnfinished().get(position).getProducts().getOnline());
                         break;
                     case R.id.work:
                         intent.putExtra("kid", bean.getKid());
@@ -127,8 +125,8 @@ public class MainFrag3 extends BasicFragment {
                         application.oldKe = bean.getProducts();
                         intent.putExtra("kid", bean.getKid());
                         intent.putExtra("title", bean.getProducts().getTitle());
-                        intent.putExtra("is_trace", true);
                         intent.putExtra("course_type",type);
+                        intent.putExtra("online", courseModel.getUnfinished().get(position).getProducts().getOnline());
                         intent.setClass(activity, StudyingCourseActivity.class);
                         break;
                 }
