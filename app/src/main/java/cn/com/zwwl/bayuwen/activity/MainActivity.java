@@ -324,8 +324,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
                         public void onClick(DialogInterface dialog, int which) {
                             if (reportModel.getKeReport() != null) {
                                 if (reportModel.getKeReport().getComment_id() == null) {
-//                                    evalDialog.setData(1, reportModel.getKeReport().getKid());
-                                    evalDialog.setData(1, "4551");
+                                    evalDialog.setData(1, reportModel.getKeReport().getKid());
                                     evalDialog.showAtLocation(mainView, Gravity.BOTTOM, 0, 0);
                                 } else {
                                     Intent intent = new Intent(MainActivity.this, WebActivity.class);

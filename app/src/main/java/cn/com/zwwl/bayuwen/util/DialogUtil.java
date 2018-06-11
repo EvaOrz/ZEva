@@ -14,7 +14,7 @@ import cn.com.zwwl.bayuwen.R;
  */
 public class DialogUtil {
     public static AlertDialog showSingleDialog(Activity activity, int title, int message, OnClickListener positive) {
-        AlertDialog dialog = new AlertDialog.Builder(activity)
+        AlertDialog dialog = new AlertDialog.Builder(activity,R.style.AlertDialog)
                 .setTitle(title)
                 .setMessage(message)
                 .setCancelable(false)
@@ -25,7 +25,7 @@ public class DialogUtil {
     }
 
     public static AlertDialog showSingleDialog(Activity activity, String title, String message, OnClickListener positive) {
-        AlertDialog dialog = new AlertDialog.Builder(activity)
+        AlertDialog dialog = new AlertDialog.Builder(activity,R.style.AlertDialog)
                 .setTitle(title)
                 .setMessage(message)
                 .setCancelable(false)
@@ -36,7 +36,7 @@ public class DialogUtil {
     }
 
     public static AlertDialog showDoubleDialog(Activity activity, String title, String message, int positiveText, int negativeText, OnClickListener positive, OnClickListener negative) {
-        AlertDialog dialog = new AlertDialog.Builder(activity)
+        AlertDialog dialog = new AlertDialog.Builder(activity,R.style.AlertDialog)
                 .setTitle(title)
                 .setMessage(message)
                 .setCancelable(false)
@@ -48,7 +48,7 @@ public class DialogUtil {
     }
 
     public static AlertDialog showDoubleDialog(Activity activity, int title, int message, int positiveText, int negativeText, OnClickListener positive, OnClickListener negative) {
-        AlertDialog dialog = new AlertDialog.Builder(activity)
+        AlertDialog dialog = new AlertDialog.Builder(activity,R.style.AlertDialog)
                 .setTitle(title)
                 .setMessage(message)
                 .setCancelable(false)
@@ -60,7 +60,7 @@ public class DialogUtil {
     }
 
     public static AlertDialog showMultiDialog(Activity activity, int title, int message, int positiveText, int negativeText, OnClickListener positive, OnClickListener negative, OnClickListener neutral) {
-        AlertDialog dialog = new AlertDialog.Builder(activity)
+        AlertDialog dialog = new AlertDialog.Builder(activity,R.style.AlertDialog)
                 .setTitle(title)
                 .setMessage(message)
                 .setCancelable(false)
@@ -73,7 +73,7 @@ public class DialogUtil {
     }
 
     public static AlertDialog showDoubleDialog(Activity activity, int title, int message, OnClickListener positive, OnClickListener negative) {
-        AlertDialog dialog = new AlertDialog.Builder(activity)
+        AlertDialog dialog = new AlertDialog.Builder(activity,R.style.AlertDialog)
                 .setTitle(title)
                 .setMessage(message)
                 .setCancelable(false)
