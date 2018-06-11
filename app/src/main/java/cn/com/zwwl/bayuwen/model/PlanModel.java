@@ -21,6 +21,15 @@ public class PlanModel {
     private String currentLectureId;
     private int next;
     private String nextTime;
+    private int source;
+
+    public int getSource() {
+        return source;
+    }
+
+    public void setSource(int source) {
+        this.source = source;
+    }
 
     public int getOnline() {
         return online;

@@ -14,17 +14,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/course_name"
+        <LinearLayout
+            android:id="@+id/course_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/user_about"
-            android:drawablePadding="@dimen/dp_10"
-            android:drawableStart="@mipmap/user_about"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_16"
+            android:gravity="center_vertical"
             app:layout_constraintEnd_toStartOf="@id/arrow"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_replay" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/course_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_10"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/progress_value"
@@ -35,7 +47,7 @@
             android:textSize="@dimen/text_size_12"
             app:layout_constraintEnd_toStartOf="@id/arrow"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/course_name" />
+            app:layout_constraintTop_toBottomOf="@id/course_layout" />
 
         <ProgressBar
             android:id="@+id/progress"

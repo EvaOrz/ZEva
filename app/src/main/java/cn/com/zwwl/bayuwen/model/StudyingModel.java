@@ -23,8 +23,17 @@ public class StudyingModel extends Entry {
     private int count;
     private int current;
     private int next;
+    private int source;
     private String nextTime;
     private List<LessonModel> completeClass;
+
+    public int getSource() {
+        return source;
+    }
+
+    public void setSource(int source) {
+        this.source = source;
+    }
 
     public int getOnline() {
         return online;

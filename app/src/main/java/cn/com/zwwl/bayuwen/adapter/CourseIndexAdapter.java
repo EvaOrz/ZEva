@@ -24,6 +24,20 @@ public class CourseIndexAdapter extends BaseMultiItemQuickAdapter<MyCourseModel.
         helper.addOnClickListener(R.id.trace);
         helper.addOnClickListener(R.id.arrow);
         helper.addOnClickListener(R.id.work);
+        switch (Tools.getCourseType(item.getPlan().getOnline(), item.getPlan().getSource(), item.getProducts().getEnd_at())) {
+            case 1:
+                helper.setImageResource(R.id.logo, R.mipmap.icon_face_teach);
+                break;
+            case 2:
+                helper.setImageResource(R.id.logo, R.mipmap.icon_record);
+                break;
+            case 3:
+                helper.setImageResource(R.id.logo, R.mipmap.icon_live);
+                break;
+            case 4:
+                helper.setImageResource(R.id.logo, R.mipmap.icon_replay);
+                break;
+        }
         switch (helper.getItemViewType()) {
             case 0://线下
                 helper.setText(R.id.course_name, item.getProducts().getTitle());
