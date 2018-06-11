@@ -362,9 +362,8 @@ public class Tools {
     }
 
     public static int getCourseType(int online, int source, String time) {
-        if (online == 0) {
+        if (online == 0)
             return 0;//面授
-        }
         if (source == 2) return 1;//录播
         if (source == 1 && TimeUtil.convertToMillis(time) >= System.currentTimeMillis())
             return 3;//直播
