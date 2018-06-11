@@ -3,6 +3,7 @@ package cn.com.zwwl.bayuwen.api;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,6 +19,7 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.GroupBuyModel;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.LessonModel;
+import cn.com.zwwl.bayuwen.model.PromotionModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
 
 /**
@@ -87,6 +89,17 @@ public class CourseApi extends BaseApi {
                     GroupBuyModel groupBuyModel = new GroupBuyModel();
                     groupBuyModel.parseGroupBuyModel(gjson, groupBuyModel);
                     keModel.setGroupbuy(groupBuyModel);
+                }
+
+                JSONArray promotion = course.optJSONArray("promotion");
+                if (!isNull(promotion)) {
+                    List<PromotionModel> ps = new ArrayList<>();
+                    for (int i = 0; i < promotion.length(); i++) {
+                        PromotionModel p = new PromotionModel();
+                        p.parsePromotionModel(promotion.optJSONObject(i), p);
+                        ps.add(p);
+                    }
+                    keModel.setPromotionModels(ps);
                 }
             }
 

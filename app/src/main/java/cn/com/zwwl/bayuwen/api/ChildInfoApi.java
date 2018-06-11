@@ -155,7 +155,6 @@ public class ChildInfoApi extends BaseApi {
      */
     private void saveStudent(ChildModel c) {
         TempDataHelper.setCurrentChildNo(mContext, c.getNo());
-        // todo?? 年级的类型待定
-        TempDataHelper.setCurrentChildGrade(mContext, 0);
+        TempDataHelper.setCurrentChildGrade(mContext, c.getGrade());
     }
 }

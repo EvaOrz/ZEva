@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -141,7 +142,7 @@ public class SearchCourseActivity extends BaseActivity {
     }
 
     private void resetData() {
-        keSelectAdapter = new KeSelectAdapter(mContext, keModels);
+        keSelectAdapter = new KeSelectAdapter(mContext, 0, keModels);
         recyclerView.setAdapter(keSelectAdapter);
         keSelectAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override

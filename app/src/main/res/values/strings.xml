@@ -94,6 +94,7 @@
     <string name="about">关于诸葛学堂</string>
     <string name="logout">退出登录</string>
     <string name="my_follow">我关注的班级</string>
+    <string name="my_tuan">我的团购</string>
     <string name="feedback">意见反馈</string>
     <!--search-->
     <string name="search">搜索</string>
@@ -131,18 +132,7 @@
     <string name="plz_choose">请选择</string>
     <string name="upload_faild">上传头像失败</string>
     <string name="change_info_faild">修改信息失败</string>
-    <string name="g_1">一年级</string>
-    <string name="g_2">二年级</string>
-    <string name="g_3">三年级</string>
-    <string name="g_4">四年级</string>
-    <string name="g_5">五年级</string>
-    <string name="g_6">六年级</string>
-    <string name="g_7">初中一年级</string>
-    <string name="g_8">初中二年级</string>
-    <string name="g_9">初中三年级</string>
-    <string name="g_10">高中一年级</string>
-    <string name="g_11">高中二年级</string>
-    <string name="g_12">高中三年级</string>
+
 
     <!--base-->
     <string name="no_wifi">似乎已断开与互联网的连接</string>
@@ -287,6 +277,7 @@
     <string name="order_option21">支付时间：</string>
     <string name="tui_fee_list">选择退费课程</string>
     <string name="lijibaoming">立即报名</string>
+    <string name="lijibuy">立即购买</string>
 
     <!--setting-->
     <string name="settings">设置</string>
@@ -404,5 +395,4 @@
     <string name="empty">无</string>
     <string name="submit_eval">提交评价</string>
     <string name="work_pic">作业照片</string>
-    >>>>>>> zhumangmang
 </resources>

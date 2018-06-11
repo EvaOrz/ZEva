@@ -98,6 +98,7 @@ public class KeModel extends Entry {
     private String name;
     private String img;
     private GroupBuyModel groupbuy = new GroupBuyModel();
+    private List<PromotionModel> promotionModels = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -812,5 +813,13 @@ public class KeModel extends Entry {
 
     public void setRefund(String refund) {
         this.refund = refund;
+    }
+
+    public List<PromotionModel> getPromotionModels() {
+        return promotionModels;
+    }
+
+    public void setPromotionModels(List<PromotionModel> promotionModels) {
+        this.promotionModels = promotionModels;
     }
 }

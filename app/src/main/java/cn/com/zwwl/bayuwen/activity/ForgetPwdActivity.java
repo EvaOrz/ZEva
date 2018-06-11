@@ -17,7 +17,7 @@ import cn.com.zwwl.bayuwen.api.ActionApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.util.BayuwenTools;
+import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.SmsTools;
 
 public class ForgetPwdActivity extends BaseActivity {
@@ -56,14 +56,14 @@ public class ForgetPwdActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.forget_get_verify:
-                if (BayuwenTools.checkIsPhone(this, phone)) doGetVerifyCode(phone);
+                if (AppValue.checkIsPhone(this, phone)) doGetVerifyCode(phone);
                 break;
 
             case R.id.forget_sure:
                 final String pwd = pwdEv.getText().toString();
                 final String verifycode = codeEv.getText().toString();
-                if (BayuwenTools.checkIsPhone(this, phone) && BayuwenTools.checkPwd(this, pwd) &&
-                        BayuwenTools.checkCode(this, verifycode)) {
+                if (AppValue.checkIsPhone(this, phone) && AppValue.checkPwd(this, pwd) &&
+                        AppValue.checkCode(this, verifycode)) {
                     doReset(phone, pwd, verifycode);
                 }
                 break;

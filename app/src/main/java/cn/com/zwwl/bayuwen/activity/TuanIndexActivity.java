@@ -243,7 +243,7 @@ public class TuanIndexActivity extends BaseActivity {
      */
     private void getKaiTuanCode(final int type) {
         showLoadingDialog(true);
-        new GetTuanCodeApi(mContext, keModel.getGroupbuy().getItem_id(), type, new
+        new GetTuanCodeApi(mContext, keModel.getGroupbuy().getKid(), type, new
                 FetchEntryListener() {
                     @Override
                     public void setError(ErrorMsg error) {

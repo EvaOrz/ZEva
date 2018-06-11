@@ -21,7 +21,7 @@ import cn.com.zwwl.bayuwen.api.LoginSigninApi;
 
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.model.UserModel;
-import cn.com.zwwl.bayuwen.util.BayuwenTools;
+import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.SmsTools;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
@@ -96,7 +96,7 @@ public class FmLoginActivity extends BaseActivity {
                 break;
             case R.id.login_get_verify:
                 String phone = accountEdit.getText().toString();
-                if (BayuwenTools.checkIsPhone(this, phone)) doGetVerifyCode(phone);
+                if (AppValue.checkIsPhone(this, phone)) doGetVerifyCode(phone);
                 break;
             case R.id.login_bt:
                 final String username = accountEdit.getText().toString();
@@ -104,12 +104,12 @@ public class FmLoginActivity extends BaseActivity {
                 final String code = verifyEdit.getText().toString();
                 if (accountLayout.isShown()) {
                     // 密码登录
-                    if (BayuwenTools.checkIsPhone(FmLoginActivity.this, username) && BayuwenTools
+                    if (AppValue.checkIsPhone(FmLoginActivity.this, username) && AppValue
                             .checkPwd(FmLoginActivity.this, pwd)) {
                         doLogin(LoginSigninApi.GetUserType.LOGIN, username, pwd);
                     }
                 } else if (fastLayout.isShown()) {// 快捷登录，需要验证验证码
-                    if (BayuwenTools.checkIsPhone(FmLoginActivity.this, username) && BayuwenTools
+                    if (AppValue.checkIsPhone(FmLoginActivity.this, username) && AppValue
                             .checkCode(FmLoginActivity.this, code)) {
 
                         doLogin(LoginSigninApi.GetUserType.FAST_LOGIN, username, code);

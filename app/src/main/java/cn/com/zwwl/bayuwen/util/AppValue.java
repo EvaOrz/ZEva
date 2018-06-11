@@ -3,7 +3,10 @@ package cn.com.zwwl.bayuwen.util;
 import android.content.Context;
 
 import android.text.TextUtils;
+import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import cn.com.zwwl.bayuwen.R;
@@ -13,11 +16,7 @@ import cn.com.zwwl.bayuwen.activity.BaseActivity;
  * 工具类
  * Created by Eva. on 16/9/16.
  */
-public class BayuwenTools extends Tools {
-    public static final int STROKE = 2;// 边框宽度
-
-    public static final int REQUEST_ZOOM = 111;
-
+public class AppValue extends Tools {
 
     /**
      * 判断密码 ，不能少于6位
@@ -32,6 +31,23 @@ public class BayuwenTools extends Tools {
             return false;
         }
         return true;
+    }
+
+    public static List<String> getGradeStrings() {
+        List<String> grades = new ArrayList<>();
+        grades.add("一年级");
+        grades.add("二年级");
+        grades.add("三年级");
+        grades.add("四年级");
+        grades.add("五年级");
+        grades.add("六年级");
+        grades.add("初一");
+        grades.add("初二");
+        grades.add("初三");
+        grades.add("高一");
+        grades.add("高二");
+        grades.add("高三");
+        return grades;
     }
 
     /**
@@ -58,7 +74,8 @@ public class BayuwenTools extends Tools {
      */
     public static boolean checkIsPhone(Context context, String data) {
 
-        if (data.length() == 11 && !data.contains("@") && !(Pattern.compile("[a-zA-z]").matcher(data).find()))
+        if (data.length() == 11 && !data.contains("@") && !(Pattern.compile("[a-zA-z]").matcher
+                (data).find()))
             return true;
         else {
             showToast(context, R.string.get_account_error);// 手机号码格式错误
