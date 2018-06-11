@@ -169,6 +169,11 @@ public class UrlUtil {
         return HOST + "/grouppurchase/join";
     }
 
+    //我发起的、我参与的团购
+    public static String getMyTuan() {
+        return HOST + "/grouppurchase/my";
+    }
+
     // 生成订单
     public static String setOrder() {
         return HOST + "/order/get";

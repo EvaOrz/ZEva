@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -15,8 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +21,6 @@ import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.api.CourseApi;
-import cn.com.zwwl.bayuwen.api.CourseListApi;
 import cn.com.zwwl.bayuwen.api.FollowApi;
 import cn.com.zwwl.bayuwen.api.LeasonListApi;
 import cn.com.zwwl.bayuwen.api.fm.PinglunApi;
@@ -501,8 +497,9 @@ public class CourseDetailActivity extends BaseActivity {
         view.findViewById(R.id.cdetail_t_buy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(mContext, TeacherDetailActivity.class);
-//                i.putExtra("tid", teacherModel.getTid());
+                Intent i = new Intent(mContext, TuanPayActivity.class);
+                i.putExtra("TuanPayActivity_promo", keModel.getPromotionModels().get(position));
+                i.putExtra("TuanPayActivity_type", 4);
                 startActivity(i);
             }
         });

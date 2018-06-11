@@ -274,8 +274,6 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
         } else {
             line4.setBackgroundColor(getResources().getColor(R.color.transparent));
         }
-
-
     }
 
     private void initCartData() {

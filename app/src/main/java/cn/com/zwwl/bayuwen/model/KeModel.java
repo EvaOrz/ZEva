@@ -450,9 +450,12 @@ public class KeModel extends Entry {
             return "面授";
         } else {
             if (source.equals("1")) {
-                return "回放";
+                if (Long.valueOf(endPtime) > System.currentTimeMillis()) {
+                    return "直播";
+                } else
+                    return "回放";
             } else if (source.equals("2")) {
-                return "点播";
+                return "录播";
             }
         }
         return "";
