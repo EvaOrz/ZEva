@@ -21,9 +21,12 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@drawable/drawable_back_bg"
             android:paddingBottom="@dimen/dp_10"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/dp_10"
-            android:scaleType="centerInside"
+            android:scaleType="center"
             android:src="@mipmap/icon_back" />
+
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/title"
             android:layout_width="wrap_content"

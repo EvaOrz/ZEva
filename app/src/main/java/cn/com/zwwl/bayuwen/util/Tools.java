@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+import cn.com.zwwl.bayuwen.R;
 import okhttp3.Headers;
 
 /**
@@ -86,8 +87,6 @@ public class Tools {
 
         setCircle(imageView, output, canvas, radius);
     }
-
-
 
 
     /**
@@ -150,8 +149,6 @@ public class Tools {
         }
         return true;
     }
-
-
 
 
     /**
@@ -350,6 +347,7 @@ public class Tools {
         }
         return 0;
     }
+
     /**
      * 将小数转换成百分数
      */
@@ -361,5 +359,15 @@ public class Tools {
 
     public static String getText(TextView t) {
         return t.getText().toString().trim();
+    }
+
+    public static int getCourseType(int online, int source, String time) {
+        if (online == 0) {
+            return 0;//面授
+        }
+        if (source == 2) return 1;//录播
+        if (source == 1 && TimeUtil.convertToMillis(time) >= System.currentTimeMillis())
+            return 3;//直播
+        return 4;//回放
     }
 }
