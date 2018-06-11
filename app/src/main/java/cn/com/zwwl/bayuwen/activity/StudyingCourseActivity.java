@@ -49,6 +49,7 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
     AppCompatTextView classCovert;
     @BindView(R.id.course_title)
     AppCompatTextView courseTitle;
+    private int type;
 
     @Override
     protected int setContentView() {
@@ -83,6 +84,8 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initData() {
+        type = getIntent().getIntExtra("course_type", -1);
+        adapter.setType(type);
         kid = getIntent().getStringExtra("kid");
         setCustomTitle(getIntent().getStringExtra("title"));
         if (getIntent().getBooleanExtra("is_trace", false)) {
@@ -130,7 +133,8 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
                 break;
             case R.id.course_change:
                 mApplication.operate_type = 0;
-                intent.putExtra("kid", "10644");
+                intent.putExtra("kid", kid);
+                intent.putExtra("course_type", type);
                 intent.setClass(this, UnitTableActivity.class);
                 startActivity(intent);
                 break;

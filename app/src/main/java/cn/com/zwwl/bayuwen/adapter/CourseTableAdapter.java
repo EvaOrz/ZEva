@@ -28,5 +28,6 @@ public class CourseTableAdapter extends BaseQuickAdapter<KeModel, BaseViewHolder
                 "yyyy-MM-dd"));
         helper.setText(R.id.time, item.getClass_start_at() + "-" + item.getClass_end_at());
         ImageLoader.display(mContext,(AppCompatImageView)helper.getView(R.id.pic),item.getPic());
+        helper.setVisible(R.id.hide_full,"0".equals(item.getStock()));
     }
 }

@@ -397,4 +397,9 @@
     <string name="empty">无</string>
     <string name="submit_eval">提交评价</string>
     <string name="work_pic">作业照片</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="hint_title">提示</string>
+    <string name="report_hint">您有新的学业报告，赶紧进行评价查看吧!</string>
+    <string name="eval_look">评价</string>
 </resources>

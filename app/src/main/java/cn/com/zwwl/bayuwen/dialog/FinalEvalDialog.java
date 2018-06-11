@@ -29,6 +29,7 @@ import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.FinalEvalAdapter;
 import cn.com.zwwl.bayuwen.api.EvalApi;
+import cn.com.zwwl.bayuwen.api.EvalLabelApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -175,7 +176,7 @@ public class FinalEvalDialog extends PopupWindow {
             builder.append(dataBean.getValue()).append(",");
         }
         para.put("cond", builder.toString());
-        para.put("content", Tools.getText(other).isEmpty()?"":Tools.getText(other));
+        para.put("content", Tools.getText(other).isEmpty() ? "" : Tools.getText(other));
         para.put("type", String.valueOf(type));
         if (type == 1) {
             para.put("kid", kid);
@@ -187,40 +188,52 @@ public class FinalEvalDialog extends PopupWindow {
             @Override
             public void result(CommonModel commonModel, ErrorMsg errorMsg) {
                 if (commonModel != null) listener.ok();
+                else  listener.error(1);
             }
         });
 
     }
 
-    public void setData(int type, String kid, EvalContentModel evalContentModel) {
+    public void setData(int type, String kid) {
         this.kid = kid;
-        this.type=type;
-        title.setText(type == 1 ? "课程评价" : "月度评价");
-        //一级界面
-        label1.setText(evalContentModel.getShow().getTitle());
-        yes.setText(evalContentModel.getShow().getData().get(0).getName());
-        no.setText(evalContentModel.getShow().getData().get(1).getName());
-        //二级界面
-        setListData(teacher, teacherEmpty, evalContentModel.getTeacher(), teacherAdapter);
-        setListData(tutor, tutorEmpty, evalContentModel.getTutors(), tutorAdapter);
-        setListData(adviser, adviserEmpty, evalContentModel.getStu_advisors(), adviserAdapter);
-        score_rule = evalContentModel.getScore_rule();
+        this.type = type;
+        para.clear();
+        para.put("type", String.valueOf(type));
+        para.put("kid", kid);
+        getContent();
     }
 
-    public void setData(int type, String year, String month, EvalContentModel evalContentModel) {
-        this.type=type;
+    public void setData(int type, String year, String month) {
+        this.type = type;
         this.year = year;
         this.month = month;
-        title.setText(type == 1 ? "课程评价" : "月度评价");
-        //一级界面
-        label1.setText(evalContentModel.getShow().getTitle());
-        yes.setText(evalContentModel.getShow().getData().get(0).getName());
-        no.setText(evalContentModel.getShow().getData().get(1).getName());
-        //二级界面
-        setListData(teacher, teacherEmpty, evalContentModel.getTeacher(), teacherAdapter);
-        setListData(tutor, tutorEmpty, evalContentModel.getTutors(), tutorAdapter);
-        setListData(adviser, adviserEmpty, evalContentModel.getStu_advisors(), adviserAdapter);
-        score_rule = evalContentModel.getScore_rule();
+        para.clear();
+        para.put("type", String.valueOf(type));
+        para.put("year", year);
+        para.put("month", month);
+        getContent();
+    }
+
+    private void getContent() {
+        new EvalLabelApi(activity, para, new ResponseCallBack<EvalContentModel>() {
+            @Override
+            public void result(EvalContentModel model, ErrorMsg errorMsg) {
+                if (model != null) {
+                    title.setText(type == 1 ? "课程评价" : "月度评价");
+                    //一级界面
+                    label1.setText(model.getShow().getTitle());
+                    yes.setText(model.getShow().getData().get(0).getName());
+                    no.setText(model.getShow().getData().get(1).getName());
+                    //二级界面
+                    setListData(teacher, teacherEmpty, model.getTeacher(), teacherAdapter);
+                    setListData(tutor, tutorEmpty, model.getTutors(), tutorAdapter);
+                    setListData(adviser, adviserEmpty, model.getStu_advisors(), adviserAdapter);
+                    score_rule = model.getScore_rule();
+                }else {
+                    listener.error(0);
+                }
+            }
+        });
     }
 
     private void setListData(RecyclerView recyclerView, AppCompatTextView empty, List<EvalContentModel.DataBean> dataBeans, FinalEvalAdapter adapter) {
@@ -238,5 +251,6 @@ public class FinalEvalDialog extends PopupWindow {
 
     public interface SubmitListener {
         void ok();
+        void error(int code);
     }
 }

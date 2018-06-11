@@ -20,6 +20,7 @@ import cn.com.zwwl.bayuwen.api.CourseListApi;
 import cn.com.zwwl.bayuwen.api.KeSelectTypeApi;
 import cn.com.zwwl.bayuwen.api.UrlUtil;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
+import cn.com.zwwl.bayuwen.base.MenuCode;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
@@ -45,6 +46,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
     KeTypeModel typeModel;
     private String url = UrlUtil.getCDetailUrl(null) + "/search";
     private List<KeModel> keModels;
+    private List<KeModel> stockClass;
 
     @Override
     protected int setContentView() {
@@ -53,7 +55,9 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initView() {
+        showMenu(MenuCode.HIDE_CLASS);
         keModels = new ArrayList<>();
+        stockClass = new ArrayList<>();
         if (mApplication.operate_type == 0) {
             setCustomTitle(res.getString(R.string.chose_chanable_class));
         } else {
@@ -72,7 +76,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
     }
 
     private void getChoseType() {
-        new KeSelectTypeApi(mContext, 1,new FetchEntryListener() {
+        new KeSelectTypeApi(mContext, 1, new FetchEntryListener() {
             @Override
             public void setData(final Entry entry) {
                 if (entry != null) {
@@ -129,6 +133,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                     Intent intent = new Intent(mActivity, UnitTableActivity.class);
                     intent.putExtra("type", 1);
                     intent.putExtra("kid", keModels.get(position).getKid());
+                    intent.putExtra("course_type",1);
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(mActivity, ClassDetailActivity.class);
@@ -161,6 +166,11 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                             if (Tools.listNotNull(list))
                                 keModels.addAll(list);
                             adapter.setNewData(keModels);
+                            stockClass.clear();
+                            for (KeModel model : keModels) {
+                                if (!"0".equals(model.getStock())) stockClass.add(model);
+                            }
+
                         }
                     });
 
@@ -182,5 +192,10 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
     @Override
     public void close() {
         finish();
+    }
+
+    @Override
+    public void onMenuClick(int menuCode) {
+        adapter.setNewData(stockClass);
     }
 }

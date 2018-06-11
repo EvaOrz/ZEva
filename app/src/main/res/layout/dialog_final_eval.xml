@@ -48,7 +48,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/selector_check_bg"
                 android:button="@null"
-                android:checked="true"
                 android:drawableLeft="@drawable/selector_smile"
                 android:drawablePadding="@dimen/dp_10"
                 android:drawableStart="@drawable/selector_smile"

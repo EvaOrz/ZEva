@@ -12,7 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginStart="@dimen/dp_16"
-        android:text="调课内容"/>
+        android:drawableLeft="@mipmap/icon_change_content"
+        android:drawablePadding="@dimen/dp_10"
+        android:drawableStart="@mipmap/icon_change_content"
+        android:text="调课内容" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/old_layout"
@@ -29,8 +32,9 @@
             android:id="@+id/unit_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableEnd="@mipmap/home_header_more"
-            android:drawableRight="@mipmap/home_header_more"
+            android:drawableLeft="@mipmap/icon_face_teach"
+            android:drawablePadding="@dimen/dp_10"
+            android:drawableStart="@mipmap/icon_face_teach"
             android:textSize="@dimen/sp_16" />
 
         <View
@@ -57,6 +61,9 @@
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_10"
+        android:drawableLeft="@mipmap/icon_new_class"
+        android:drawableStart="@mipmap/icon_new_class"
+        android:gravity="center_vertical"
         android:text="@string/transfer_course_class"
         app:layout_constraintTop_toBottomOf="@id/old_layout" />
 
@@ -71,7 +78,7 @@
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/pic"
-            android:layout_width="160dp"
+            android:layout_width="120dp"
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/dp_8"
             android:layout_marginEnd="@dimen/dp_10"
@@ -80,19 +87,21 @@
             android:layout_marginStart="@dimen/activity_vertical_margin"
             android:layout_marginTop="@dimen/dp_8"
             android:src="@mipmap/home_head_hot"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/course_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_8"
-            android:textSize="@dimen/sp_16"
-            android:layout_marginStart="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_10"
-            app:layout_constraintEnd_toStartOf="@id/arrow"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_8"
+            android:drawableLeft="@mipmap/icon_face_teach"
+            android:drawableStart="@mipmap/icon_face_teach"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/pic"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -100,12 +109,15 @@
             android:id="@+id/teacher_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_5"
-            android:layout_marginStart="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5"
+            android:drawableLeft="@mipmap/icon_graduate"
+            android:drawablePadding="@dimen/dp_10"
+            android:drawableStart="@mipmap/icon_graduate"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_14"
-            app:layout_constraintEnd_toStartOf="@id/arrow"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/pic"
             app:layout_constraintTop_toBottomOf="@id/course_name" />
 
@@ -113,12 +125,15 @@
             android:id="@+id/school_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_5"
-            android:layout_marginStart="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5"
+            android:drawableLeft="@mipmap/icon_map"
+            android:drawablePadding="@dimen/dp_10"
+            android:drawableStart="@mipmap/icon_map"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_14"
-            app:layout_constraintEnd_toStartOf="@id/arrow"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/pic"
             app:layout_constraintTop_toBottomOf="@id/teacher_name" />
 
@@ -126,12 +141,15 @@
             android:id="@+id/date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_5"
-            android:layout_marginStart="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5"
+            android:drawableLeft="@mipmap/icon_calendar"
+            android:drawablePadding="@dimen/dp_10"
+            android:drawableStart="@mipmap/icon_calendar"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_14"
-            app:layout_constraintEnd_toStartOf="@id/arrow"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/pic"
             app:layout_constraintTop_toBottomOf="@id/school_name" />
 
@@ -140,26 +158,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp_8"
-            android:layout_marginTop="@dimen/dp_5"
-            android:layout_marginStart="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5"
+            android:drawableLeft="@mipmap/icon_clock"
+            android:drawablePadding="@dimen/dp_10"
+            android:drawableStart="@mipmap/icon_clock"
             android:textColor="@color/gray_light"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/arrow"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/pic"
             app:layout_constraintTop_toBottomOf="@id/date" />
-
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/arrow"
-            android:layout_width="20dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="@dimen/dp_16"
-            android:layout_marginRight="@dimen/dp_16"
-            android:scaleType="center"
-            android:src="@mipmap/home_header_more"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 

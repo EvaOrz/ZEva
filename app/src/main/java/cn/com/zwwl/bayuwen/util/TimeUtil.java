@@ -57,4 +57,19 @@ public class TimeUtil {
         }
         return 0;
     }
+
+    /**
+     * 获取当前年
+     */
+    public static String getCurrentM(){
+        Calendar c = Calendar.getInstance();//
+        return String.valueOf(c.get(Calendar.MONTH)+1);
+    }
+    /**
+     * 获取当前月
+     */
+    public static String getCurrentY(){
+        Calendar c = Calendar.getInstance();//
+        return String.valueOf(c.get(Calendar.YEAR));
+    }
 }

@@ -32,6 +32,7 @@ import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.MyCourseModel;
+import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
 import static cn.com.zwwl.bayuwen.MyApplication.mContext;
@@ -103,27 +104,31 @@ public class MainFrag3 extends BasicFragment {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent=new Intent();
+                MyCourseModel.UnfinishedBean bean = courseModel.getUnfinished().get(position);
+                int type= Tools.getCourseType(bean.getPlan().getOnline(), bean.getPlan().getSource(), bean.getProducts().getEnd_at());
                 switch (view.getId()) {
                     case R.id.arrow:
-                        application.oldKe = courseModel.getUnfinished().get(position).getProducts();
-                        intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
-                        intent.putExtra("title", courseModel.getUnfinished().get(position).getProducts().getTitle());
-                        intent.putExtra("online", courseModel.getUnfinished().get(position).getProducts().getOnline());
+                        application.oldKe = bean.getProducts();
+                        intent.putExtra("kid", bean.getKid());
+                        intent.putExtra("title", bean.getProducts().getTitle());
+                        intent.putExtra("online", bean.getProducts().getOnline());
+                        intent.putExtra("course_type",type);
                         intent.setClass(activity, StudyingCourseActivity.class);
                         break;
                     case R.id.work:
-                        intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
-                        intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan().getCurrentLectureId());
+                        intent.putExtra("kid", bean.getKid());
+                        intent.putExtra("cid", bean.getPlan().getCurrentLectureId());
                         intent.setClass(activity, UploadPicActivity.class);
                         break;
                     case R.id.look_video:
                         intent.setClass(activity, VideoPlayActivity.class);
                         break;
                     case R.id.trace:
-                        application.oldKe = courseModel.getUnfinished().get(0).getProducts();
-                        intent.putExtra("kid", courseModel.getUnfinished().get(0).getKid());
-                        intent.putExtra("title", courseModel.getUnfinished().get(0).getProducts().getTitle());
+                        application.oldKe = bean.getProducts();
+                        intent.putExtra("kid", bean.getKid());
+                        intent.putExtra("title", bean.getProducts().getTitle());
                         intent.putExtra("is_trace", true);
+                        intent.putExtra("course_type",type);
                         intent.setClass(activity, StudyingCourseActivity.class);
                         break;
                 }

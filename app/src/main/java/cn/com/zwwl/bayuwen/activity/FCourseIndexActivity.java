@@ -21,7 +21,6 @@ import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
 import cn.com.zwwl.bayuwen.adapter.UnitTableAdapter;
-import cn.com.zwwl.bayuwen.api.EvalLabelApi;
 import cn.com.zwwl.bayuwen.api.StudyingCourseApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
@@ -65,7 +64,6 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initView() {
-        setCustomTitle("大语文");
         evalDialog = new FinalEvalDialog(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -98,25 +96,12 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
         setCustomTitle(getIntent().getStringExtra("title"));
         test.setText(getIntent().getStringExtra("title"));
         getData();
-        getEvalContent();
         unitTableAdapter = new UnitTableAdapter(null);
+        unitTableAdapter.setType(getIntent().getIntExtra("course_type", -1));
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(unitTableAdapter);
     }
 
-    /**
-     * 获取评论内容
-     */
-    private void getEvalContent() {
-        map.put("type", "1");
-        map.put("kid", kid);
-        new EvalLabelApi(this, map, new ResponseCallBack<EvalContentModel>() {
-            @Override
-            public void result(EvalContentModel model, ErrorMsg errorMsg) {
-                evalContentModel = model;
-            }
-        });
-    }
 
     private void getData() {
         new StudyingCourseApi(this, kid, new ResponseCallBack<StudyingModel>() {
@@ -138,6 +123,11 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
             public void ok() {
                 ToastUtil.showShortToast("感谢评价");
             }
+
+            @Override
+            public void error(int code) {
+
+            }
         });
         unitTableAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -158,7 +148,7 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
         switch (view.getId()) {
             case R.id.evaluate:
                 if (evalDialog == null) evalDialog = new FinalEvalDialog(this);
-                evalDialog.setData(1,kid, evalContentModel);
+                evalDialog.setData(1, kid);
                 evalDialog.showAtLocation(percent, Gravity.BOTTOM, 0, 0);
 
                 break;
