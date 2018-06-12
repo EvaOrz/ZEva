@@ -19,6 +19,12 @@ public class HonorListApi extends BaseApi {
     private int type = 1;
     private FetchEntryListListener listListener;
 
+    /**
+     *
+     * @param context
+     * @param type 1.礼物 2.奖状
+     * @param listListener
+     */
     public HonorListApi(Context context, int type, FetchEntryListListener listListener) {
         super(context);
         this.type = type;

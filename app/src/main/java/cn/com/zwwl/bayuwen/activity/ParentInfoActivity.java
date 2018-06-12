@@ -174,17 +174,6 @@ public class ParentInfoActivity extends BaseActivity {
         genderTv.setText(userModel.getSexTxt(userModel.getSex()));
         phoneTv.setText(userModel.getTel());
 
-        new HonorListApi(mContext, 1, new FetchEntryListListener() {
-            @Override
-            public void setData(List list) {
-
-            }
-
-            @Override
-            public void setError(ErrorMsg error) {
-
-            }
-        });
         new HonorListApi(mContext, 2, new FetchEntryListListener() {
             @Override
             public void setData(List list) {
@@ -196,6 +185,7 @@ public class ParentInfoActivity extends BaseActivity {
 
             }
         });
+
     }
 
     @SuppressLint("HandlerLeak")

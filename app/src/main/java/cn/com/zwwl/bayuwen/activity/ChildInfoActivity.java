@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,16 +20,21 @@ import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.GiftAdapter;
+import cn.com.zwwl.bayuwen.adapter.JiangZhuangAdapter;
 import cn.com.zwwl.bayuwen.api.ChildInfoApi;
+import cn.com.zwwl.bayuwen.api.HonorListApi;
 import cn.com.zwwl.bayuwen.api.UploadPicApi;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
 import cn.com.zwwl.bayuwen.view.DatePopWindow;
@@ -51,9 +57,12 @@ public class ChildInfoActivity extends BaseActivity {
     private boolean isNeedChangePic = false;
     private boolean isModify = false;// 是否是修改信息
 
-    private MostGridView giftGridView;
-    private GiftAdapter giftAdapter;
+    private TextView deAll, deCancle;
+    private ImageView deDo;
 
+    private MostGridView giftGridView;
+    private JiangZhuangAdapter adapter;
+    private List<GiftAndJiangModel> datas = new ArrayList<>();
 
     private ChildModel childModel = new ChildModel();
 
@@ -82,13 +91,23 @@ public class ChildInfoActivity extends BaseActivity {
         ruxueTv = findViewById(R.id.info_p_ruxuetv);
         nianjiTv = findViewById(R.id.info_c_nianjitv);
         schoolEv = findViewById(R.id.info_c_schoolev);
-
+        deAll = findViewById(R.id.delete_all);
+        deCancle = findViewById(R.id.delete_cancle);
+        deDo = findViewById(R.id.delete_do);
 
         giftGridView = findViewById(R.id.gift_grid);
-        giftAdapter = new GiftAdapter(mContext, new ArrayList<CalendarOptionPopWindow
-                .CheckStatusModel>());
-        giftGridView.setAdapter(giftAdapter);
-
+        adapter = new JiangZhuangAdapter(mContext);
+        GiftAndJiangModel last = new GiftAndJiangModel();
+        last.setId(-1);
+        datas.add(last);
+        giftGridView.setAdapter(adapter);
+        adapter.setData(datas);
+        giftGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(mContext, JiangZhuangActivity.class));
+            }
+        });
         findViewById(R.id.info_c_back).setOnClickListener(this);
         findViewById(R.id.info_c_avatar).setOnClickListener(this);
         findViewById(R.id.info_c_sex).setOnClickListener(this);
@@ -96,6 +115,9 @@ public class ChildInfoActivity extends BaseActivity {
         findViewById(R.id.info_c_birth).setOnClickListener(this);
         findViewById(R.id.info_c_nianji).setOnClickListener(this);
         findViewById(R.id.info_c_save).setOnClickListener(this);
+        deAll.setOnClickListener(this);
+        deCancle.setOnClickListener(this);
+        deDo.setOnClickListener(this);
     }
 
     @Override
@@ -174,6 +196,22 @@ public class ChildInfoActivity extends BaseActivity {
                 }
                 break;
 
+            case R.id.delete_all:
+                deDo.setVisibility(View.GONE);
+                deCancle.setVisibility(View.GONE);
+                deAll.setVisibility(View.GONE);
+                break;
+            case R.id.delete_do:
+                deDo.setVisibility(View.GONE);
+                deCancle.setVisibility(View.VISIBLE);
+                deAll.setVisibility(View.VISIBLE);
+                break;
+            case R.id.delete_cancle://
+                deDo.setVisibility(View.VISIBLE);
+                deCancle.setVisibility(View.GONE);
+                deAll.setVisibility(View.GONE);
+                break;
+
         }
 
     }
@@ -242,6 +280,17 @@ public class ChildInfoActivity extends BaseActivity {
         birthTv.setText(childModel.getBirthday());
         ruxueTv.setText(childModel.getAdmission_time());
         nianjiTv.setText(childModel.getGrade());
+
+        new HonorListApi(mContext, 1, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
     }
 
     @SuppressLint("HandlerLeak")

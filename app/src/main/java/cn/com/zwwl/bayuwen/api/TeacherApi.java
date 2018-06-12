@@ -142,9 +142,8 @@ public class TeacherApi extends BaseApi {
                 List<KeModel> keModelList = new ArrayList<>();
                 if (!isNull(carray)) {
                     for (int i = 0; i < carray.length(); i++) {
-                        KeModel k = new KeModel();
                         Gson gs = new Gson();
-                        k = gs.fromJson(carray.optString(i), KeModel.class);
+                        KeModel k  = gs.fromJson(carray.optString(i), KeModel.class);
                         keModelList.add(k);
                     }
                     t.setKeModels(keModelList);
