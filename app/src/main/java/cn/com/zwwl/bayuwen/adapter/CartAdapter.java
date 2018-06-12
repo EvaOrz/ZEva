@@ -24,7 +24,7 @@ public class CartAdapter extends CheckScrollAdapter<KeModel> {
     private OnItemCheckChangeListener onItemCheckChangeListener;
 
     public interface OnItemCheckChangeListener {
-        public void onCheckChange(String cartId, boolean cStatus);
+        public void onCheckChange(int position, boolean cStatus);
     }
 
     public CartAdapter(Context context, OnItemCheckChangeListener onItemCheckChangeListener) {
@@ -46,7 +46,7 @@ public class CartAdapter extends CheckScrollAdapter<KeModel> {
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_order_cart);
         final KeModel model = getItem(position);
 
@@ -65,9 +65,13 @@ public class CartAdapter extends CheckScrollAdapter<KeModel> {
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                onItemCheckChangeListener.onCheckChange(model.getCartId(), isChecked);
+                onItemCheckChangeListener.onCheckChange(position, isChecked);
             }
         });
+        if (model.isHasSelect()) {
+            checkBox.setChecked(true);
+        } else checkBox.setChecked(false);
+
         tag.setImageResource(model.getTagImg());
         title.setText(model.getTitle());
         teacher.setText(model.getTname());

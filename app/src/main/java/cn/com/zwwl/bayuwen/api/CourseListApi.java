@@ -20,6 +20,7 @@ import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.LessonModel;
+import cn.com.zwwl.bayuwen.model.OrderModel;
 
 /**
  * 获取课程列表接口
@@ -44,6 +45,21 @@ public class CourseListApi extends BaseApi {
         get();
     }
 
+    /**
+     * 获取可开发票的课程列表
+     *
+     * @param context
+     * @param listListener
+     */
+    public CourseListApi(Context context, FetchEntryListListener listListener) {
+        super(context);
+        mContext = context;
+        this.listListener = listListener;
+        this.url = UrlUtil.getPiaoKeListUrl();
+        get();
+
+    }
+
     @Override
     protected String getUrl() {
         return url;
@@ -61,19 +77,34 @@ public class CourseListApi extends BaseApi {
         } else listListener.setError(null);
 
         if (!isNull(json)) {
-            Gson gson = new Gson();
             // 解析选课中心课列表
-            JSONArray array = json.optJSONArray("data");
-            if (!isNull(array)) {
-                List<KeModel> ks = new ArrayList<>();
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject j = array.optJSONObject(i);
-                    KeModel keModel = gson.fromJson(j.toString(), KeModel.class);
-                    ks.add(keModel);
+            listListener.setData(parseKemodel(json.optJSONArray("data")));
+        }
+
+        // 开票历史
+        if (!isNull(jsonArray)) {
+            listListener.setData(parseKemodel(jsonArray));
+        }
+    }
+
+    private List<KeModel> parseKemodel(JSONArray array) {
+        List<KeModel> ks = new ArrayList<>();
+        if (!isNull(array)) {
+            Gson gson = new Gson();
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject j = array.optJSONObject(i);
+                KeModel keModel = gson.fromJson(j.toString(), KeModel.class);
+                JSONObject jj = j.optJSONObject("order_detail");
+                if (!isNull(jj)) {
+                    OrderModel.OrderDetailModel detailModel = gson.fromJson(jj.toString(),
+                            OrderModel
+                                    .OrderDetailModel.class);
+                    keModel.setOrderDetailModel(detailModel);
                 }
-                listListener.setData(ks);
+                ks.add(keModel);
             }
         }
+        return ks;
     }
 
 }

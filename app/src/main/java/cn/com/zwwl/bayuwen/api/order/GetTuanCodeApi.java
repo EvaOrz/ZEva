@@ -54,12 +54,15 @@ public class GetTuanCodeApi extends BaseApi {
         if (!isNull(json)) {
             String purchase_code = json.optString("purchase_code");
             JSONObject discount = json.optJSONObject("discount");
-            int limit = discount.optInt("limit_num");
-            String endTime = discount.optString("end_time");
             GroupBuyModel groupBuyModel = new GroupBuyModel();
             groupBuyModel.setCode(purchase_code);
-            groupBuyModel.setLimit_num(limit);
-            groupBuyModel.setEnd_time(endTime);
+
+            if (!isNull(discount)){
+                int limit = Integer.valueOf(discount.optString("limit_num"));
+                String endTime = discount.optString("end_time");
+                groupBuyModel.setLimit_num(limit);
+                groupBuyModel.setEnd_time(endTime);
+            }
             listener.setData(groupBuyModel);
         }
 

@@ -103,7 +103,6 @@ public class CourseDetailActivity extends BaseActivity {
             setkeData();
         } else {// nomal情况课程详情
             cid = getIntent().getStringExtra("CourseDetailActivity_id");
-            cid = "7018";
             initData();
         }
         getPinglunData();
@@ -340,7 +339,7 @@ public class CourseDetailActivity extends BaseActivity {
                 doKaitongBycode(code);
                 break;
             case R.id.youhui_layout:// 领取优惠券
-                new YouHuiJuanPopWindow(mContext, 1, couponModels);
+                new YouHuiJuanPopWindow(mContext, couponModels);
                 break;
         }
     }

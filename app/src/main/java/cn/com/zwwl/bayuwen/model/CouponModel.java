@@ -11,6 +11,7 @@ public class CouponModel extends Entry {
     private String desc = "";
     private String start_use_time = "";
     private String end_use_time = "";
+    private String coupon_code = "";
 
     public String getId() {
         return id;
@@ -44,11 +45,20 @@ public class CouponModel extends Entry {
         this.end_use_time = end_use_time;
     }
 
+    public String getCoupon_code() {
+        return coupon_code;
+    }
+
+    public void setCoupon_code(String coupon_code) {
+        this.coupon_code = coupon_code;
+    }
+
     public static CouponModel parseCouponModel(JSONObject jsonObject, CouponModel couponModel) {
         couponModel.setId(jsonObject.optString("id"));
         couponModel.setDesc(jsonObject.optString("name"));
         couponModel.setStart_use_time(jsonObject.optString("start_use_time"));
         couponModel.setEnd_use_time(jsonObject.optString("end_use_time"));
+        couponModel.setCoupon_code(jsonObject.optString("coupon_code"));
         return couponModel;
     }
 }

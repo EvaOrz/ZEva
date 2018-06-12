@@ -120,6 +120,11 @@ public class UrlUtil {
         return HOST + "/course/type";
     }
 
+    // 获取可开发票的课程列表
+    public static String getPiaoKeListUrl() {
+        return HOST + "/course/invoice";
+    }
+
     // 赞列表
     public static String getTopListUrl() {
         return HOST + "/vote/toplist";

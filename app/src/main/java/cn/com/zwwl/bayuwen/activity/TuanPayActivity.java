@@ -32,12 +32,15 @@ import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.AddressApi;
 import cn.com.zwwl.bayuwen.api.order.CountPriceApi;
+import cn.com.zwwl.bayuwen.api.order.CouponApi;
 import cn.com.zwwl.bayuwen.api.order.GetYueApi;
 import cn.com.zwwl.bayuwen.api.order.MakeOrderApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.AddressModel;
+import cn.com.zwwl.bayuwen.model.CouponModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
@@ -60,13 +63,16 @@ public class TuanPayActivity extends BaseActivity {
     private LinearLayout pinLayout, dianLayout, youhuiLayout;
     private TextView nameTv, phoneTv, addressTv, addTv;
     private LinearLayout keLayout;
-    private TextView dianNumTv, tuanCodeTv, yueTv, priceTv;
+    private TextView dianNumTv, tuanCodeTv, yueTv, priceTv, couponTv;
     private EditText tuijianEv;
     private ImageView zhifubaoBt, weixinBt;
 
     private List<KeModel> keDatas = new ArrayList<>();
     private PromotionModel promotionModel; // 组合课购买场合、需要传入组合课model
+    // 优惠券数据
+    private List<CouponModel> couponModels = new ArrayList<>();
     private String tuanCode;// 拼团码
+    private String couponCode;// 优惠码
     private String itemCode;// id组合码
     private String yueTxt = "0.00";// 账户余额
     private AddressModel currentAddress;// 当前收货地址
@@ -98,6 +104,7 @@ public class TuanPayActivity extends BaseActivity {
         initView();
         initItemString();
         setGoodsInfo();
+        checkYouhui();
         // 如果用到微信支付，在用到微信支付的Activity的onCreate函数里调用以下函数.
         String initInfo = BCPay.initWechatPay(mContext, MyApplication.WEIXIN_APP_ID);
         if (initInfo != null) {
@@ -157,6 +164,7 @@ public class TuanPayActivity extends BaseActivity {
         weixinBt = findViewById(R.id.weixin_pay);
         keLayout = findViewById(R.id.ke_layout);
         yueTv = findViewById(R.id.yue_tv);
+        couponTv = findViewById(R.id.youhuiquan_tv);
 
         dianLayout = findViewById(R.id.dianfu_layout);
         pinLayout = findViewById(R.id.pintuan_layout);
@@ -221,6 +229,14 @@ public class TuanPayActivity extends BaseActivity {
                     priceTv.setText("实付款：￥" + detailModel.getAmount() / 100);
                     break;
 
+                case 4:// 显示可以使用的优惠券
+                    if (Tools.listNotNull(couponModels)) {
+                        couponTv.setText("");
+                    } else couponTv.setText("无可用");
+                    break;
+                case 5:// 显示选择使用的优惠券
+                    couponTv.setText(couponCode);
+                    break;
             }
         }
     };
@@ -277,7 +293,19 @@ public class TuanPayActivity extends BaseActivity {
                 showToast("已复制到剪切板");
                 break;
             case R.id.youhui_layout:// 优惠券
-//                new YouHuiJuanPopWindow(mContext,0,);
+                if (Tools.listNotNull(couponModels)) {
+                    new YouHuiJuanPopWindow(mContext, couponModels, new YouHuiJuanPopWindow
+                            .OnPickYouhuiListener() {
+
+                        @Override
+                        public void onPick(String coupon_code) {
+                            couponCode = coupon_code;
+                            handler.sendEmptyMessage(5);
+                        }
+                    });
+                } else {
+                    showToast("当前您没有可使用的优惠券");
+                }
                 break;
             case R.id.order_d_commit:// 提交订单
                 if (currentAddress == null) {
@@ -319,7 +347,7 @@ public class TuanPayActivity extends BaseActivity {
      */
     private void commit(String promoId) {
         String tuijianCode = tuijianEv.getText().toString();
-        new MakeOrderApi(mContext, payType + "", "", currentAddress.getId(), tuijianCode,
+        new MakeOrderApi(mContext, payType + "", couponCode, currentAddress.getId(), tuijianCode,
                 yueTxt, itemCode, tuanCode, promoId, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
@@ -403,20 +431,25 @@ public class TuanPayActivity extends BaseActivity {
      * 实时计算金额
      */
     private void countPrice() {
-        new CountPriceApi(mContext, itemCode, "", "", yueTxt, tuanCode, new FetchEntryListener() {
-            @Override
-            public void setData(Entry entry) {
-                if (entry != null && entry instanceof OrderModel.OrderDetailModel) {
-                    detailModel = (OrderModel.OrderDetailModel) entry;
-                    handler.sendEmptyMessage(3);
-                }
-            }
+        String promoId = "";
+        if (promotionModel != null) {
+            promoId = promotionModel.getId();
+        }
+        new CountPriceApi(mContext, itemCode, couponCode, promoId, yueTxt, tuanCode, new
+                FetchEntryListener() {
+                    @Override
+                    public void setData(Entry entry) {
+                        if (entry != null && entry instanceof OrderModel.OrderDetailModel) {
+                            detailModel = (OrderModel.OrderDetailModel) entry;
+                            handler.sendEmptyMessage(3);
+                        }
+                    }
 
-            @Override
-            public void setError(ErrorMsg error) {
+                    @Override
+                    public void setError(ErrorMsg error) {
 
-            }
-        });
+                    }
+                });
     }
 
     //支付结果返回入口
@@ -516,5 +549,32 @@ public class TuanPayActivity extends BaseActivity {
 
         //清理当前的activity引用
         BCPay.clear();
+    }
+
+    /**
+     * 检查是否有可用优惠券
+     */
+    private void checkYouhui() {
+        String kids = "";
+        for (KeModel k : keDatas) {
+            kids += k.getKid() + ",";
+        }
+        if (TextUtils.isEmpty(kids))
+            return;
+        new CouponApi(mContext, 0, kids, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+                if (Tools.listNotNull(list)) {
+                    couponModels.clear();
+                    couponModels.addAll(list);
+                    handler.sendEmptyMessage(4);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
     }
 }

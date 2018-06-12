@@ -1,59 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/body_bg"
+    android:orientation="horizontal"
     android:paddingBottom="10dp"
     android:paddingTop="10dp">
 
-    <ImageView
-        android:id="@+id/youhui_img"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/youhui_layout"
-        android:layout_alignTop="@id/youhui_layout"
-        android:background="@color/gray_dark" />
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_weight="1">
+
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_marginLeft="90dp"
+            android:background="@drawable/gray_white_xiankuang"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:id="@+id/youhui_name"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:lines="2"
+                android:text="超市代金券（指定商品可用）"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/text_size_14" />
+
+            <TextView
+                android:id="@+id/youhui_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="2017.4.7-2018.9.10"
+                android:textColor="@color/gray_light"
+                android:textSize="@dimen/text_size_10" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/youhui_img"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="@color/gray_dark" />
+    </RelativeLayout>
+
 
     <LinearLayout
-        android:id="@+id/youhui_layout"
+        android:id="@+id/click_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/youhui_img"
-        android:background="@drawable/white_10radius_corner_bg"
-        android:orientation="vertical"
+        android:layout_height="60dp"
+        android:layout_marginLeft="3dp"
+        android:background="@drawable/gray_white_xiankuang"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/youhui_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lines="2"
-            android:text="超市代金券（指定商品可用）"
-            android:textColor="@color/gray_dark"
-            android:textSize="@dimen/text_size_12" />
-
-        <TextView
-            android:id="@+id/youhui_me"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lines="1"
-            android:text="2017.4.7-2018.9.10"
-            android:textColor="@color/gray_light"
-            android:textSize="@dimen/text_size_10" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/youhui_layout"
-        android:layout_alignTop="@id/youhui_layout"
-        android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/youhui_layout"
-        android:background="@drawable/white_10radius_corner_bg"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
+            android:id="@+id/youhui_bt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/gold_circle"
@@ -67,4 +79,4 @@
     </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>
