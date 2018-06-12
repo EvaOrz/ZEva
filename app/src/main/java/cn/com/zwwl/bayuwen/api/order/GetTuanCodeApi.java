@@ -12,6 +12,7 @@ import cn.com.zwwl.bayuwen.api.UrlUtil;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.GroupBuyModel;
 
 /**
  * 发起拼团（获取我自己的拼团码）
@@ -25,6 +26,7 @@ public class GetTuanCodeApi extends BaseApi {
     /**
      * @param context
      * @param pama     kid|code
+     * @param type     1.普通 2.垫付
      * @param listener
      */
     public GetTuanCodeApi(Context context, String pama, int type, FetchEntryListener
@@ -51,11 +53,17 @@ public class GetTuanCodeApi extends BaseApi {
 
         if (!isNull(json)) {
             String purchase_code = json.optString("purchase_code");
-            ErrorMsg error = new ErrorMsg();
-            error.setDesc(purchase_code);
-            listener.setData(error);
-        } else {
-            listener.setData(null);
+            JSONObject discount = json.optJSONObject("discount");
+            GroupBuyModel groupBuyModel = new GroupBuyModel();
+            groupBuyModel.setCode(purchase_code);
+
+            if (!isNull(discount)){
+                int limit = Integer.valueOf(discount.optString("limit_num"));
+                String endTime = discount.optString("end_time");
+                groupBuyModel.setLimit_num(limit);
+                groupBuyModel.setEnd_time(endTime);
+            }
+            listener.setData(groupBuyModel);
         }
 
     }

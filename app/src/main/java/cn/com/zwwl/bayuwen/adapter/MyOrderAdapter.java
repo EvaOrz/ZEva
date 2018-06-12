@@ -96,7 +96,7 @@ public class MyOrderAdapter extends CheckScrollAdapter<OrderForMyListModel> {
 
     private View getItemView(KeModel keModel) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_order_ke, null);
-        TextView tag = view.findViewById(R.id.item_oder_tag);
+        ImageView tag = view.findViewById(R.id.item_oder_tag);
         TextView title = view.findViewById(R.id.item_oder_title);
         TextView teacher = view.findViewById(R.id.item_oder_teacher);
         TextView date = view.findViewById(R.id.item_oder_date);
@@ -106,7 +106,7 @@ public class MyOrderAdapter extends CheckScrollAdapter<OrderForMyListModel> {
         ImageView pic = view.findViewById(R.id.item_oder_pic);
         ImageLoader.display(mContext, pic, keModel.getPic(), R.drawable.avatar_placeholder, R
                 .drawable.avatar_placeholder);
-        tag.setText(keModel.getTagTxt());
+        tag.setImageResource(keModel.getTagImg());
         title.setText(keModel.getTitle());
         teacher.setText(keModel.getTname());
         date.setText(CalendarTools.format(Long.valueOf(keModel.getStartPtime()),

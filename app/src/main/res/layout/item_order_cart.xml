@@ -29,16 +29,11 @@
             android:orientation="horizontal"
             android:padding="10dp">
 
-            <TextView
+            <ImageView
                 android:id="@+id/item_order_tag"
-                android:layout_width="wrap_content"
+                android:layout_width="25dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/gold_circle"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="面授"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_10" />
+           />
 
             <TextView
                 android:id="@+id/item_order_title"

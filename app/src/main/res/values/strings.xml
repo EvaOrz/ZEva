@@ -313,6 +313,17 @@
     <string name="no_study_unit">课表 (当前未进行的课次)</string>
     <string name="chose_change_course_unit_by_need">选择需要调课的课次</string>
 
+    <!--开发票-->
+    <string name="piao_history">开票历史</string>
+    <string name="piao_kai">发票信息</string>
+    <string name="piao_shenqing">申请开票</string>
+    <string name="piao_option1">抬头类型</string>
+    <string name="piao_option2">发票抬头</string>
+    <string name="piao_option3">税号</string>
+    <string name="piao_option4">发票内容</string>
+    <string name="piao_option5">发票金额</string>
+
+
     <!--课程详情-->
     <string name="ke_detail">课程详情</string>
     <string name="tab1">课程表</string>

@@ -3,6 +3,8 @@ package cn.com.zwwl.bayuwen.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.com.zwwl.bayuwen.R;
+
 /**
  * 课程model
  */
@@ -14,6 +16,14 @@ public class KeModel extends Entry {
      * refund 0:未退款 1:部分退款 2:全额退款 3:退款中 4:退款被拒绝
      */
     private String refund = "0";
+    /**
+     * 是否被选中（购课单、开发票页面用）
+     */
+    private boolean hasSelect = false;
+    /**
+     * 订单model（发票历史页面用）
+     */
+    private OrderModel.OrderDetailModel orderDetailModel;
 
     private String id;
     private String kid;
@@ -440,25 +450,20 @@ public class KeModel extends Entry {
         return source;
     }
 
-    /**
-     * 返回tag
-     *
-     * @return
-     */
-    public String getTagTxt() {
-        if (online.equals("0")) {
-            return "面授";
+    public int getTagImg() {
+        if (online.equals("0")) {//面授
+            return R.mipmap.icon_face_teach;
         } else {
             if (source.equals("1")) {
-                if (Long.valueOf(endPtime) > System.currentTimeMillis()) {
-                    return "直播";
-                } else
-                    return "回放";
-            } else if (source.equals("2")) {
-                return "录播";
+                if (Long.valueOf(endPtime) > System.currentTimeMillis()) {//直播
+                    return R.mipmap.icon_live;
+                } else//回放
+                    return R.mipmap.icon_replay;
+            } else if (source.equals("2")) {//录播
+                return R.mipmap.icon_record;
             }
         }
-        return "";
+        return R.mipmap.icon_face_teach;
     }
 
     public void setSource(String source) {
@@ -824,5 +829,21 @@ public class KeModel extends Entry {
 
     public void setPromotionModels(List<PromotionModel> promotionModels) {
         this.promotionModels = promotionModels;
+    }
+
+    public boolean isHasSelect() {
+        return hasSelect;
+    }
+
+    public void setHasSelect(boolean hasSelect) {
+        this.hasSelect = hasSelect;
+    }
+
+    public OrderModel.OrderDetailModel getOrderDetailModel() {
+        return orderDetailModel;
+    }
+
+    public void setOrderDetailModel(OrderModel.OrderDetailModel orderDetailModel) {
+        this.orderDetailModel = orderDetailModel;
     }
 }

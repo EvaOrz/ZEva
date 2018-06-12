@@ -113,6 +113,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     protected void onResume() {
         super.onResume();
         if (MyApplication.loginStatusChange) {
+            Log.e("********", "登录状态变化");
             initData();
             MyApplication.loginStatusChange = false;
         }

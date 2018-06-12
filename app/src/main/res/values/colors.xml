@@ -44,6 +44,7 @@
     <!--basic color-->
     <color name="gold">#dcaa40</color>
     <color name="body_gray">#242c3f</color>
+    <color name="body_gray_light">#343C50</color>
 
     <!--lousx-->
     <color name="item_bgColor">#faf9f9</color>

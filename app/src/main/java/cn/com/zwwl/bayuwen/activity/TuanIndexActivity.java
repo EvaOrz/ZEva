@@ -29,6 +29,7 @@ import cn.com.zwwl.bayuwen.api.order.KaiTuanbyCodeApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.GroupBuyModel;
 import cn.com.zwwl.bayuwen.model.KeModel;
 
 /**
@@ -257,14 +258,14 @@ public class TuanIndexActivity extends BaseActivity {
                     @Override
                     public void setData(Entry entry) {
                         showLoadingDialog(false);
-                        if (entry != null && entry instanceof ErrorMsg) {
+                        if (entry != null && entry instanceof GroupBuyModel) {
                             // 我要开团获取的开团码
-                            String tuanCode = ((ErrorMsg) entry).getDesc();
+                            String tuanCode = ((GroupBuyModel) entry).getCode();
                             Intent i = new Intent();
                             if (type == 1) {
                                 i.setClass(mContext, TuanKaiActivity.class);
                                 i.putExtra("TuanKaiActivity_data", keModel);
-                                i.putExtra("TuanKaiActivity_code", tuanCode);
+                                i.putExtra("TuanKaiActivity_code", entry);
                             } else if (type == 2) {
                                 i.setClass(mContext, TuanPayActivity.class);
                                 i.putExtra("TuanPayActivity_data", keModel);

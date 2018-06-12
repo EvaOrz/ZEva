@@ -301,6 +301,21 @@
             android:name=".activity.OrderTuifeeDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <!--发票历史页面-->
+        <activity
+            android:name=".activity.PiaoHistoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <!--发票选择页面-->
+        <activity
+            android:name=".activity.PiaoKaiActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <!--开发票页面-->
+        <activity
+            android:name=".activity.PiaoSelectActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
 
 
         <!--weixin pay-->

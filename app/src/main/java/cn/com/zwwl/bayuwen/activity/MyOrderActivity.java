@@ -60,7 +60,6 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
     private TextView deleteBt, totalPrice;
 
     private List<KeModel> data1List = new ArrayList<>();
-    private Map<String, Boolean> kidStatus = new HashMap<>();// 购课单列表的选中状态
     private String deleteIds = "";// 可删除的课程串儿
     private List<OrderForMyListModel> data2List = new ArrayList<>();
     private List<OrderForMyListModel> data3List = new ArrayList<>();
@@ -114,12 +113,11 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
 
         adapter1 = new CartAdapter(this, new CartAdapter.OnItemCheckChangeListener() {
             @Override
-            public void onCheckChange(String cartId, boolean cStatus) {
-                kidStatus.put(cartId, cStatus);
+            public void onCheckChange(int position, boolean cStatus) {
+                if (data1List.size() > position)
+                    data1List.get(position).setHasSelect(cStatus);
 
-                if (kidStatus.containsValue(true)) {
-                    handler.sendEmptyMessage(3);
-                } else handler.sendEmptyMessage(5);
+                checkDeleteBtShow();
                 handler.sendEmptyMessage(6);// 重置价格
             }
         });
@@ -155,8 +153,6 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
                     button3.setChecked(true);
                 else if (position == 3)
                     button4.setChecked(true);
-
-
             }
 
             @Override
@@ -204,6 +200,16 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
         deleteBt.setOnClickListener(this);
     }
 
+    private void checkDeleteBtShow() {
+        boolean has = false;
+        for (KeModel k : data1List) {
+            if (k.isHasSelect()) has = true;
+        }
+        if (has) {// 显示
+            handler.sendEmptyMessage(3);
+        } else handler.sendEmptyMessage(5);// 隐藏
+    }
+
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
@@ -238,7 +244,7 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
                     Double price = 0.00;
                     deleteIds = "";
                     for (int i = 0; i < data1List.size(); i++) {
-                        if (kidStatus.get(data1List.get(i).getCartId())) {// 选中
+                        if (data1List.get(i).isHasSelect()) {// 选中
                             deleteIds += data1List.get(i).getCartId() + ",";
                             price += Double.valueOf(data1List.get(i).getBuyPrice());
                         }
@@ -253,6 +259,8 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
         viewPager.setCurrentItem(position);
         initTabNum = position;
         if (position == 0) {
+            deleteBt.setText("删除");
+            checkDeleteBtShow();
             line1.setBackgroundColor(getResources().getColor(R.color.gold));
             payLayout.setVisibility(View.VISIBLE);
         } else {
@@ -260,16 +268,20 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
             payLayout.setVisibility(View.GONE);
         }
         if (position == 1) {
+            deleteBt.setVisibility(View.GONE);
             line2.setBackgroundColor(getResources().getColor(R.color.gold));
         } else {
             line2.setBackgroundColor(getResources().getColor(R.color.transparent));
         }
         if (position == 2) {
+            deleteBt.setText("开发票");
+            deleteBt.setVisibility(View.VISIBLE);
             line3.setBackgroundColor(getResources().getColor(R.color.gold));
         } else {
             line3.setBackgroundColor(getResources().getColor(R.color.transparent));
         }
         if (position == 3) {
+            deleteBt.setVisibility(View.GONE);
             line4.setBackgroundColor(getResources().getColor(R.color.gold));
         } else {
             line4.setBackgroundColor(getResources().getColor(R.color.transparent));
@@ -284,12 +296,6 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
                     data1List.clear();
                     data1List.addAll(entry);
                     handler.sendEmptyMessage(4);
-                    kidStatus.clear();
-                    // 初始化选中状态
-                    for (KeModel k : data1List) {
-                        kidStatus.put(k.getCartId(), false);
-                    }
-
                 }
             }
 
@@ -361,12 +367,16 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
                 finish();
                 break;
             case R.id.my_order_delete:
-                doDelete();
+                if (initTabNum == 2) {
+                    startActivity(new Intent(mContext, PiaoHistoryActivity.class));
+                } else if (initTabNum == 0) {
+                    doDelete();
+                }
                 break;
             case R.id.order_d_bt2:// 购课单付费
                 List<KeModel> kes = new ArrayList<>();
                 for (int i = 0; i < data1List.size(); i++) {
-                    if (kidStatus.get(data1List.get(i).getCartId())) {// 选中
+                    if (data1List.get(i).isHasSelect()) {// 选中
                         kes.add(data1List.get(i));
                     }
                 }

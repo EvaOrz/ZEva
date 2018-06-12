@@ -42,7 +42,7 @@
         <ListView
             android:id="@+id/youhuijuan_listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
             android:divider="@null"
             android:listSelector="@android:color/transparent"
             android:scrollbars="none" />

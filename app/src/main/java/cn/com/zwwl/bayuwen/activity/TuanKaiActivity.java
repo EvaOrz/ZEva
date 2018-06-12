@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.model.GroupBuyModel;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.ShareTools;
 
@@ -20,8 +21,8 @@ import cn.com.zwwl.bayuwen.util.ShareTools;
  */
 public class TuanKaiActivity extends BaseActivity {
 
-    private String tuanCode = "";
-    private TextView codeTv;
+    private GroupBuyModel groupBuyModel;
+    private TextView codeTv, hintTv;
     private KeModel keModel;
 
     @Override
@@ -34,14 +35,21 @@ public class TuanKaiActivity extends BaseActivity {
                 instanceof KeModel) {
             keModel = (KeModel) getIntent().getSerializableExtra("TuanKaiActivity_data");
         }
-        tuanCode = getIntent().getStringExtra("TuanKaiActivity_code");
+        if (getIntent().getSerializableExtra("TuanKaiActivity_code") != null && getIntent()
+                .getSerializableExtra("TuanKaiActivity_code")
+                instanceof GroupBuyModel) {
+            groupBuyModel = (GroupBuyModel) getIntent().getSerializableExtra
+                    ("TuanKaiActivity_code");
+        }
         initView();
     }
 
     private void initView() {
         codeTv = findViewById(R.id.tuan_kai_code);
-        codeTv.setText("您的拼团码为：" + tuanCode);
-
+        codeTv.setText("您的拼团码为：" + groupBuyModel.getCode());
+        hintTv = findViewById(R.id.kai_hint);
+        hintTv.setText("请在" + groupBuyModel.getEnd_time() + "前邀请" + (groupBuyModel.getLimit_num()
+                - 1) + "以上的的好友参团");
         findViewById(R.id.tuan_kai_back).setOnClickListener(this);
         findViewById(R.id.tuan_kai_copy).setOnClickListener(this);
         findViewById(R.id.tuan_kai_share).setOnClickListener(this);
@@ -72,7 +80,7 @@ public class TuanKaiActivity extends BaseActivity {
             case R.id.tuan_kai_copy:// 复制拼团码
                 ClipboardManager cm = (ClipboardManager) getSystemService(Context
                         .CLIPBOARD_SERVICE);
-                cm.setText(tuanCode);
+                cm.setText(groupBuyModel.getCode());
                 showToast("已复制到剪切板");
                 break;
             case R.id.tuan_kai_share:// 分享拼团
@@ -82,7 +90,7 @@ public class TuanKaiActivity extends BaseActivity {
                 Intent i = new Intent();
                 i.setClass(mContext, TuanPayActivity.class);
                 i.putExtra("TuanPayActivity_data", keModel);
-                i.putExtra("TuanPayActivity_code", tuanCode);
+                i.putExtra("TuanPayActivity_code", groupBuyModel.getCode());
                 i.putExtra("TuanPayActivity_type", 0);// 单独参团
                 startActivity(i);
                 break;
