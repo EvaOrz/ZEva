@@ -23,6 +23,7 @@ import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.MyCourseModel;
+import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.decoration.HSpacesItemDecoration;
 
 /**
@@ -84,6 +85,7 @@ public class FCourseListActivity extends BasicActivityWithTitle {
                 Intent intent=new Intent(mActivity,FCourseIndexActivity.class);
                 intent.putExtra("kid",lessonModels.get(position).getProducts().getKid());
                 intent.putExtra("title",lessonModels.get(position).getProducts().getTitle());
+                intent.putExtra("course_type", Tools.getCourseType(Integer.parseInt(lessonModels.get(position).getProducts().getOnline()), Integer.parseInt(lessonModels.get(position).getProducts().getSource()), lessonModels.get(position).getProducts().getEnd_at()));
                 startActivity(intent);
             }
         });

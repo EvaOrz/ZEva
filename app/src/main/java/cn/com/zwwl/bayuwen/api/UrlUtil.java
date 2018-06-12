@@ -362,4 +362,16 @@ public class UrlUtil {
     public static String evalContent() {
         return HOST + "/comment/list";
     }
+    /**
+     * 获取最新报告
+     */
+    public static String pushReport() {
+        return HOST+"/monthreport/type";
+    }
+    /**
+     * 是否有报告
+     */
+    public static String haveReport() {
+        return HOST+"/monthreport/returnurl";
+    }
 }

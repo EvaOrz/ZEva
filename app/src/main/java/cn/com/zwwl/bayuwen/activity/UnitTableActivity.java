@@ -53,6 +53,8 @@ public class UnitTableActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initData() {
+        int course_type = getIntent().getIntExtra("course_type", -1);
+        adapter.setType(course_type);
         operate_type = getIntent().getIntExtra("type", 0);
             kid = getIntent().getStringExtra("kid");
         new TransferLectureApi(this, kid,operate_type, new ResponseCallBack<List<LessonModel>>() {

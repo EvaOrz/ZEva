@@ -95,7 +95,6 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
                     tutorEval.setText(unitDetailModel.getTaSummary().getContent());
                     pptAdapter.setNewData(unitDetailModel.getAccessory().getData());
                     jobAdapter.setNewData(unitDetailModel.getJob().getData());
-
                     teacher.setText(String.format("授课老师: %s", unitDetailModel.getTeachers().getTeacher().getName()));
                     teacherVote.setChecked(unitDetailModel.getTeachers().getTeacher().getState() == 1);
                     if (unitDetailModel.getTeachers().getAssistant() != null) {

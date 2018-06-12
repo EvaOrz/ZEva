@@ -1,23 +1,24 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.support.v4.app.FragmentTransaction;
 import android.widget.TextView;
-
 
 import com.bumptech.glide.Glide;
 import com.tencent.map.geolocation.TencentLocation;
@@ -31,8 +32,9 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.GiftAdapter;
 import cn.com.zwwl.bayuwen.api.ChildInfoApi;
 import cn.com.zwwl.bayuwen.api.HonorListApi;
+import cn.com.zwwl.bayuwen.api.ReportPushApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
-import cn.com.zwwl.bayuwen.db.UserDataHelper;
+import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
 import cn.com.zwwl.bayuwen.fragment.MainFrag1;
 import cn.com.zwwl.bayuwen.fragment.MainFrag2;
 import cn.com.zwwl.bayuwen.fragment.MainFrag3;
@@ -40,10 +42,12 @@ import cn.com.zwwl.bayuwen.fragment.MainFrag4;
 import cn.com.zwwl.bayuwen.fragment.MainFrag5;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.model.ReportModel;
+import cn.com.zwwl.bayuwen.util.DialogUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
 import cn.com.zwwl.bayuwen.widget.MostGridView;
@@ -71,6 +75,8 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
 
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
     private boolean isCanSetDefaultChild = true;// 是否可以设置默认学员
+    private FinalEvalDialog evalDialog;
+    private ReportModel reportModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +146,26 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     }
 
     private void initView() {
+        evalDialog = new FinalEvalDialog(this);
+        evalDialog.setSubmitListener(new FinalEvalDialog.SubmitListener() {
+            @Override
+            public void ok() {
+                if (reportModel.getKeReport() != null) {
+                    Intent intent = new Intent(MainActivity.this, WebActivity.class);
+                    intent.putExtra("WebActivity_data", reportModel.getKeReport().getUrl());
+                    startActivity(intent);
+                } else if (reportModel.getMonthReport() != null) {
+                    Intent intent = new Intent(MainActivity.this, WebActivity.class);
+                    intent.putExtra("WebActivity_data", reportModel.getMonthReport().getUrl());
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void error(int code) {
+                evalDialog.dismiss();
+            }
+        });
         mainView = findViewById(R.id.main_view);
         drawer = findViewById(R.id.drawer_layout);
         DrawerLayout.DrawerListener listen = new DrawerLayout.DrawerListener() {
@@ -282,6 +308,50 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         mainFrag1.initData(userModel);
         mainFrag5.initData(userModel);
         initChildDta();
+        getReport();
+    }
+
+    /**
+     * 获取最新报告
+     */
+    private void getReport() {
+        new ReportPushApi(this, new ResponseCallBack<ReportModel>() {
+            @Override
+            public void result(ReportModel model, ErrorMsg errorMsg) {
+                reportModel = model;
+                if (reportModel != null) {
+                    DialogUtil.showDoubleDialog(MainActivity.this, R.string.hint_title, R.string.report_hint, R.string.eval_look, R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (reportModel.getKeReport() != null) {
+                                if (reportModel.getKeReport().getComment_id() == null) {
+                                    evalDialog.setData(1, reportModel.getKeReport().getKid());
+                                    evalDialog.showAtLocation(mainView, Gravity.BOTTOM, 0, 0);
+                                } else {
+                                    Intent intent = new Intent(MainActivity.this, WebActivity.class);
+                                    intent.putExtra("WebActivity_data", reportModel.getKeReport().getUrl());
+                                    startActivity(intent);
+                                }
+                            } else if (reportModel.getMonthReport() != null) {
+                                if (reportModel.getMonthReport().getComment_id() == null) {
+                                    evalDialog.setData(2, reportModel.getMonthReport().getYear(), reportModel.getMonthReport().getMonth());
+                                    evalDialog.showAtLocation(mainView, Gravity.BOTTOM, 0, 0);
+                                } else {
+                                    Intent intent = new Intent(MainActivity.this, WebActivity.class);
+                                    intent.putExtra("WebActivity_data", reportModel.getMonthReport().getUrl());
+                                    startActivity(intent);
+                                }
+                            }
+                        }
+                    }, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                }
+            }
+        });
     }
 
     /**

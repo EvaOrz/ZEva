@@ -39,8 +39,6 @@ public class ClassApplyActivity extends BasicActivityWithTitle {
     AppCompatTextView oDate;
     @BindView(R.id.o_time)
     AppCompatTextView oTime;
-    @BindView(R.id.o_arrow)
-    AppCompatImageView oArrow;
     @BindView(R.id.now)
     AppCompatTextView now;
     @BindView(R.id.pic)
