@@ -1,7 +1,6 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
-import android.graphics.Rect;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -21,15 +20,15 @@ import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
 import cn.com.zwwl.bayuwen.adapter.UnitTableAdapter;
+import cn.com.zwwl.bayuwen.api.HaveReportApi;
 import cn.com.zwwl.bayuwen.api.StudyingCourseApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.EvalContentModel;
+import cn.com.zwwl.bayuwen.model.ReportModel;
 import cn.com.zwwl.bayuwen.model.StudyingModel;
-import cn.com.zwwl.bayuwen.util.DensityUtil;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.decoration.HSpacesItemDecoration;
@@ -55,7 +54,6 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
     RadarAdapter radarAdapter;
     List<CommonModel> models;
     FinalEvalDialog evalDialog;
-    EvalContentModel evalContentModel;
 
     @Override
     protected int setContentView() {
@@ -69,16 +67,16 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new HSpacesItemDecoration(res, R.dimen.dp_5));
         radar.setLayoutManager(new GridLayoutManager(this, 10));
-        radar.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                super.getItemOffsets(outRect, view, parent, state);
-                int m = parent.getChildAdapterPosition(view) % 10;
-                if (m != 0)
-                    outRect.left = -DensityUtil.dip2px(res, R.dimen.line_height) * m;
-                outRect.bottom = -DensityUtil.dip2px(res, R.dimen.dp_5);
-            }
-        });
+//        radar.addItemDecoration(new RecyclerView.ItemDecoration() {
+//            @Override
+//            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+//                super.getItemOffsets(outRect, view, parent, state);
+//                int m = parent.getChildAdapterPosition(view) % 10;
+//                if (m != 0)
+//                    outRect.left = -DensityUtil.dip2px(res, R.dimen.dp_1) * m;
+//                outRect.bottom = -DensityUtil.dip2px(res, R.dimen.dp_1);
+//            }
+//        });
         radar.setItemAnimator(new DefaultItemAnimator());
     }
 
@@ -137,6 +135,7 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
                 intent.putExtra("kId", model.getCompleteClass().get(position).getKid());
                 intent.putExtra("cId", model.getCompleteClass().get(position).getId());
                 intent.putExtra("title", model.getCompleteClass().get(position).getTitle());
+                intent.putExtra("video",1);
                 startActivity(intent);
             }
         });
@@ -147,10 +146,7 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.evaluate:
-                if (evalDialog == null) evalDialog = new FinalEvalDialog(this);
-                evalDialog.setData(1, kid);
-                evalDialog.showAtLocation(percent, Gravity.BOTTOM, 0, 0);
-
+                haveReport();
                 break;
             case R.id.final_test:
                 Intent intent = new Intent(mActivity, ExamDetailsActivity.class);
@@ -160,6 +156,27 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
                 break;
         }
 
+    }
+
+    private void haveReport() {
+        map.clear();
+        map.put("kid", kid);
+        map.put("type", "1");
+        new HaveReportApi(this, map, new ResponseCallBack<ReportModel.ReportBean>() {
+            @Override
+            public void result(ReportModel.ReportBean reportBean, ErrorMsg errorMsg) {
+                if (reportBean != null) {
+                    if (reportBean.getComment_id() != null) {
+                        ToastUtil.showShortToast("您已经评价过该课程");
+                    } else {
+                        evalDialog.setData(1, kid);
+                        evalDialog.showAtLocation(percent, Gravity.BOTTOM, 0, 0);
+                    }
+                } else {
+                    ToastUtil.showShortToast("您还不能评价该课程哦！");
+                }
+            }
+        });
     }
 
     @Override

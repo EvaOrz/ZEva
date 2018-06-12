@@ -39,7 +39,7 @@ public class CourseIndexAdapter extends BaseMultiItemQuickAdapter<MyCourseModel.
                 break;
         }
         switch (helper.getItemViewType()) {
-            case 0://线下
+            case 1://线上
                 helper.setText(R.id.course_name, item.getProducts().getTitle());
                 helper.setText(R.id.progress_value, String.format("课程进度（%s/%s）", item.getPlan().getCurrent(), item.getPlan().getCount()));
                 helper.setMax(R.id.progress, item.getPlan().getCount());
@@ -49,7 +49,7 @@ public class CourseIndexAdapter extends BaseMultiItemQuickAdapter<MyCourseModel.
                 helper.setText(R.id.status, String.format("下次上课时间:%s", item.getPlan().getNextTime()));
                 helper.addOnClickListener(R.id.look_video);
                 break;
-            default://线上
+            default://线下
                 helper.setText(R.id.course_name, item.getProducts().getTitle());
                 helper.setText(R.id.progress_value, String.format("课程进度（%s/%s）", item.getPlan().getCurrent(), item.getPlan().getCount()));
                 helper.setMax(R.id.progress, item.getPlan().getCount());

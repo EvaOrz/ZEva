@@ -53,6 +53,10 @@ public class ClassApplyActivity extends BasicActivityWithTitle {
     AppCompatTextView date;
     @BindView(R.id.time)
     AppCompatTextView time;
+    @BindView(R.id.stock)
+    AppCompatTextView stock;
+    @BindView(R.id.price)
+    AppCompatTextView price;
 
     @Override
     protected int setContentView() {
@@ -68,6 +72,8 @@ public class ClassApplyActivity extends BasicActivityWithTitle {
     protected void initData() {
         bind(mApplication.oldKe, oPic, oCourseName, oTeacherName, oSchoolName, oDate, oTime);
         bind(mApplication.newKe, pic, courseName, teacherName, schoolName, date, time);
+        stock.setText(String.format("剩余名额: %s", mApplication.newKe.getNum()));
+        price.setText(String.format("￥ %s", mApplication.newKe.getBuyPrice()));
     }
 
     public void bind(KeModel keModel, AppCompatImageView pic, AppCompatTextView courseName,
@@ -109,5 +115,4 @@ public class ClassApplyActivity extends BasicActivityWithTitle {
     public void close() {
         finish();
     }
-
 }

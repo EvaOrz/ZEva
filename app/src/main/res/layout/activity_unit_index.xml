@@ -87,14 +87,42 @@
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/dp_10">
 
+        <RelativeLayout
+            android:id="@+id/video_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80"
+            android:background="@drawable/drawable_video_gradient"
+            android:paddingEnd="@dimen/dp_10"
+            android:paddingStart="@dimen/dp_10">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/look_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableEnd="@mipmap/arrow_right_gray"
+                android:drawableRight="@mipmap/arrow_right_gray"
+                android:gravity="center_vertical"
+                android:text="@string/look_video"
+                android:textColor="@color/white" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                android:layout_centerInParent="true"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/icon_play" />
+        </RelativeLayout>
+
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/class_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
             android:background="@mipmap/bg_blackbord"
-            android:drawableEnd="@mipmap/home_header_more"
+            android:drawableEnd="@mipmap/arrow_right_gray"
             android:drawablePadding="@dimen/dp_10"
-            android:drawableRight="@mipmap/home_header_more"
+            android:drawableRight="@mipmap/arrow_right_gray"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/dp_5"
             android:paddingEnd="@dimen/dp_10"
@@ -109,9 +137,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
             android:background="@mipmap/bg_seat"
-            android:drawableEnd="@mipmap/home_header_more"
+            android:drawableEnd="@mipmap/arrow_right_gray"
             android:drawablePadding="@dimen/dp_10"
-            android:drawableRight="@mipmap/home_header_more"
+            android:drawableRight="@mipmap/arrow_right_gray"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/dp_5"
             android:paddingEnd="@dimen/dp_10"
@@ -128,9 +156,9 @@
         android:background="@color/white"
         android:drawableEnd="@mipmap/home_header_more"
         android:drawableLeft="@mipmap/icon_upload_work"
-        android:gravity="center_vertical"
         android:drawableRight="@mipmap/home_header_more"
         android:drawableStart="@mipmap/icon_upload_work"
+        android:gravity="center_vertical"
         android:paddingBottom="@dimen/dp_5"
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
@@ -177,11 +205,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <android.support.v7.widget.AppCompatCheckBox
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/teacher_vote"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/selector_add_vote" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 
@@ -204,11 +231,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <android.support.v7.widget.AppCompatCheckBox
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/tutor_vote"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/selector_add_vote" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <View
@@ -230,11 +256,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <android.support.v7.widget.AppCompatCheckBox
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/adviser_vote"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/selector_add_vote" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <View style="@style/split_line" />

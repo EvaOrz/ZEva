@@ -14,7 +14,7 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.EvalContentModel;
 
-public class FinalEvalAdapter extends BaseQuickAdapter<EvalContentModel.DataBean, BaseViewHolder> {
+public class FinalEvalLabelAdapter extends BaseQuickAdapter<EvalContentModel.DataBean, BaseViewHolder> {
     private SparseBooleanArray mSelectedPositions = new SparseBooleanArray();
 
     private void setItemChecked(int position, boolean isChecked) {
@@ -24,8 +24,8 @@ public class FinalEvalAdapter extends BaseQuickAdapter<EvalContentModel.DataBean
     private boolean isItemChecked(int position) {
         return mSelectedPositions.get(position);
     }
-    public FinalEvalAdapter(int layoutResId, @Nullable List<EvalContentModel.DataBean> data) {
-        super(layoutResId, data);
+    public FinalEvalLabelAdapter( @Nullable List<EvalContentModel.DataBean> data) {
+        super(R.layout.item_final_label, data);
     }
     @Override
     protected void convert(final BaseViewHolder helper, EvalContentModel.DataBean item) {

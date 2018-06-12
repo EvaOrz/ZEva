@@ -402,4 +402,6 @@
     <string name="hint_title">提示</string>
     <string name="report_hint">您有新的学业报告，赶紧进行评价查看吧!</string>
     <string name="eval_look">评价</string>
+    <string name="course_report">课程报告</string>
+    <string name="look_replay">查看回放</string>
 </resources>

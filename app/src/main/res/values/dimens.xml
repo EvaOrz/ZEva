@@ -65,4 +65,5 @@
     <dimen name="dp_2">2dip</dimen>
     <dimen name="dp_6">6dip</dimen>
     <dimen name="dp_300">300dip</dimen>
+    <dimen name="dp_80">80dip</dimen>
 </resources>

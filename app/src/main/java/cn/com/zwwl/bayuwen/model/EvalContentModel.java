@@ -70,6 +70,15 @@ public class EvalContentModel extends Entry {
         private String name;
         private int value;
         private String uid;
+        private int isPraised;
+
+        public int getIsPraised() {
+            return isPraised;
+        }
+
+        public void setIsPraised(int isPraised) {
+            this.isPraised = isPraised;
+        }
 
         public String getUid() {
             return uid;

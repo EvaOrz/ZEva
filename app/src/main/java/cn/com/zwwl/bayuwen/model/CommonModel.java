@@ -11,6 +11,15 @@ public class CommonModel {
     private String student_no;
     private String create_at;
     private String update_at;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getTid() {
         return tid;

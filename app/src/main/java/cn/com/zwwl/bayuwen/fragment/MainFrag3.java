@@ -111,7 +111,8 @@ public class MainFrag3 extends BasicFragment {
                         intent.setClass(activity, UnitIndexActivity.class);
                         intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
                         intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan().getCurrentLectureId());
-                        intent.putExtra("online", courseModel.getUnfinished().get(position).getProducts().getOnline());
+                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished().get(position).getProducts().getOnline()));
+                        intent.putExtra("video",0);
                         break;
                     case R.id.work:
                         intent.putExtra("kid", bean.getKid());
@@ -126,7 +127,7 @@ public class MainFrag3 extends BasicFragment {
                         intent.putExtra("kid", bean.getKid());
                         intent.putExtra("title", bean.getProducts().getTitle());
                         intent.putExtra("course_type",type);
-                        intent.putExtra("online", courseModel.getUnfinished().get(position).getProducts().getOnline());
+                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished().get(position).getProducts().getOnline()));
                         intent.setClass(activity, StudyingCourseActivity.class);
                         break;
                 }
@@ -139,7 +140,8 @@ public class MainFrag3 extends BasicFragment {
                 Intent intent = new Intent(activity, UnitIndexActivity.class);
                 intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
                 intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan().getCurrentLectureId());
-                intent.putExtra("online", courseModel.getUnfinished().get(position).getProducts().getOnline());
+                intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished().get(position).getProducts().getOnline()));
+                intent.putExtra("video",0);
                 startActivity(intent);
             }
         });

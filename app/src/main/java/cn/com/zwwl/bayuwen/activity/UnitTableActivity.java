@@ -33,7 +33,6 @@ public class UnitTableActivity extends BasicActivityWithTitle {
     UnitTableAdapter adapter;
     List<LessonModel> lessonModelList;
     private int operate_type;
-    private String kid = "10644";
 
     @Override
     protected int setContentView() {
@@ -56,7 +55,7 @@ public class UnitTableActivity extends BasicActivityWithTitle {
         int course_type = getIntent().getIntExtra("course_type", -1);
         adapter.setType(course_type);
         operate_type = getIntent().getIntExtra("type", 0);
-            kid = getIntent().getStringExtra("kid");
+        String kid = getIntent().getStringExtra("kid");
         new TransferLectureApi(this, kid,operate_type, new ResponseCallBack<List<LessonModel>>() {
             @Override
             public void result(List<LessonModel> lessonModels, ErrorMsg errorMsg) {

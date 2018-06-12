@@ -330,7 +330,6 @@
             android:name=".activity.StudyingCourseActivity"
             android:launchMode="singleTask" />
         <!--课程评价-->
-        <activity android:name=".activity.CourseEvalActivity" />
         <!--课程列表-->
         <activity android:name=".activity.CourseTableActivity" />
         <!--课程单元列表-->

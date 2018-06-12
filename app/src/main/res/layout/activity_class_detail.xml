@@ -191,9 +191,9 @@
         android:id="@+id/submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/mainColor"
+        android:background="@drawable/drawable_yellow_light"
         android:gravity="center"
         android:padding="@dimen/dp_10"
-        android:textColor="@color/white"
+        android:textColor="@color/gold"
         app:layout_constraintBottom_toBottomOf="parent" />
 </android.support.constraint.ConstraintLayout>

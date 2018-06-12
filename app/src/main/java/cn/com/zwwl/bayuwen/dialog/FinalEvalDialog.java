@@ -20,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RatingBar;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,9 +29,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.adapter.FinalEvalAdapter;
+import cn.com.zwwl.bayuwen.adapter.FinalEvalLabelAdapter;
+import cn.com.zwwl.bayuwen.adapter.FinalEvalVoteAdapter;
 import cn.com.zwwl.bayuwen.api.EvalApi;
 import cn.com.zwwl.bayuwen.api.EvalLabelApi;
+import cn.com.zwwl.bayuwen.api.VoteApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -74,7 +78,8 @@ public class FinalEvalDialog extends PopupWindow {
     AppCompatTextView tutorEmpty;
     @BindView(R.id.label_1)
     AppCompatTextView label1;
-    private FinalEvalAdapter labelAdapter, teacherAdapter, tutorAdapter, adviserAdapter;
+    private FinalEvalLabelAdapter labelAdapter;
+    private FinalEvalVoteAdapter teacherAdapter, tutorAdapter, adviserAdapter;
     private List<EvalContentModel.ScoreRuleBean> score_rule;
     private Activity activity;
     private WindowManager.LayoutParams lp;
@@ -83,6 +88,7 @@ public class FinalEvalDialog extends PopupWindow {
     private int type;
     private String kid, month, year;
     private SubmitListener listener;
+    private EvalContentModel contentModel;
 
     public FinalEvalDialog(Context context) {
         super(context);
@@ -114,25 +120,6 @@ public class FinalEvalDialog extends PopupWindow {
     }
 
     private void setListener() {
-    }
-
-    @Override
-    public void showAtLocation(View parent, int gravity, int x, int y) {
-        super.showAtLocation(parent, gravity, x, y);
-        lp.alpha = 0.4f;
-        activity.getWindow().setAttributes(lp);
-    }
-
-    private void initView() {
-        animation = AnimationUtils.loadAnimation(activity, R.anim.animation_up);
-        labelAdapter = new FinalEvalAdapter(R.layout.item_final_label, null);
-        teacherAdapter = new FinalEvalAdapter(R.layout.item_final_vote, null);
-        tutorAdapter = new FinalEvalAdapter(R.layout.item_final_vote, null);
-        adviserAdapter = new FinalEvalAdapter(R.layout.item_final_vote, null);
-        initRecycler(starLabel, 2, labelAdapter);
-        initRecycler(teacher, 3, teacherAdapter);
-        initRecycler(tutor, 3, tutorAdapter);
-        initRecycler(adviser, 3, adviserAdapter);
         starLevel.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
@@ -145,9 +132,80 @@ public class FinalEvalDialog extends PopupWindow {
                 }
             }
         });
+        teacherAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                vote("1", position, contentModel.getTeacher().get(position).getUid());
+            }
+        });
+        tutorAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                vote("3", position, contentModel.getTutors().get(position).getUid());
+            }
+        });
+        adviserAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                vote("2", position, contentModel.getStu_advisors().get(position).getUid());
+            }
+        });
     }
 
-    private void initRecycler(RecyclerView recyclerView, int spanCount, FinalEvalAdapter adapter) {
+    private void vote(final String theme, final int position, String tId) {
+        para.clear();
+        if (type == 1) {
+            para.put("kid", kid);
+        } else {
+            para.put("year", year);
+            para.put("month", month);
+        }
+        para.put("type", String.valueOf(type + 1));
+        para.put("theme", theme);
+        para.put("to_uid", tId);
+        new VoteApi(activity, para, new ResponseCallBack<CommonModel>() {
+            @Override
+            public void result(CommonModel commentModel, ErrorMsg errorMsg) {
+                if (commentModel != null) {
+                    switch (theme) {
+                        case "1":
+                            contentModel.getTeacher().get(position).setIsPraised(commentModel.getStatus());
+                            teacherAdapter.setNewData(contentModel.getTeacher());
+                            break;
+                        case "2":
+                            contentModel.getStu_advisors().get(position).setIsPraised(commentModel.getStatus());
+                            adviserAdapter.setNewData(contentModel.getStu_advisors());
+                            break;
+                        case "3":
+                            contentModel.getTutors().get(position).setIsPraised(commentModel.getStatus());
+                            tutorAdapter.setNewData(contentModel.getTutors());
+                            break;
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    public void showAtLocation(View parent, int gravity, int x, int y) {
+        super.showAtLocation(parent, gravity, x, y);
+        lp.alpha = 0.4f;
+        activity.getWindow().setAttributes(lp);
+    }
+
+    private void initView() {
+        animation = AnimationUtils.loadAnimation(activity, R.anim.animation_up);
+        labelAdapter = new FinalEvalLabelAdapter(null);
+        teacherAdapter = new FinalEvalVoteAdapter(null);
+        tutorAdapter = new FinalEvalVoteAdapter(null);
+        adviserAdapter = new FinalEvalVoteAdapter(null);
+        initRecycler(starLabel, 2, labelAdapter);
+        initRecycler(teacher, 3, teacherAdapter);
+        initRecycler(tutor, 3, tutorAdapter);
+        initRecycler(adviser, 3, adviserAdapter);
+    }
+
+    private void initRecycler(RecyclerView recyclerView, int spanCount, BaseQuickAdapter adapter) {
         recyclerView.setLayoutManager(new GridLayoutManager(activity, spanCount));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new GridItemDecoration(activity));
@@ -188,7 +246,7 @@ public class FinalEvalDialog extends PopupWindow {
             @Override
             public void result(CommonModel commonModel, ErrorMsg errorMsg) {
                 if (commonModel != null) listener.ok();
-                else  listener.error(1);
+                else listener.error(1);
             }
         });
 
@@ -218,6 +276,7 @@ public class FinalEvalDialog extends PopupWindow {
         new EvalLabelApi(activity, para, new ResponseCallBack<EvalContentModel>() {
             @Override
             public void result(EvalContentModel model, ErrorMsg errorMsg) {
+                contentModel = model;
                 if (model != null) {
                     title.setText(type == 1 ? "课程评价" : "月度评价");
                     //一级界面
@@ -229,14 +288,14 @@ public class FinalEvalDialog extends PopupWindow {
                     setListData(tutor, tutorEmpty, model.getTutors(), tutorAdapter);
                     setListData(adviser, adviserEmpty, model.getStu_advisors(), adviserAdapter);
                     score_rule = model.getScore_rule();
-                }else {
+                } else {
                     listener.error(0);
                 }
             }
         });
     }
 
-    private void setListData(RecyclerView recyclerView, AppCompatTextView empty, List<EvalContentModel.DataBean> dataBeans, FinalEvalAdapter adapter) {
+    private void setListData(RecyclerView recyclerView, AppCompatTextView empty, List<EvalContentModel.DataBean> dataBeans, FinalEvalVoteAdapter adapter) {
         if (dataBeans == null || dataBeans.size() == 0) {
             recyclerView.setVisibility(View.GONE);
         } else {
@@ -251,6 +310,7 @@ public class FinalEvalDialog extends PopupWindow {
 
     public interface SubmitListener {
         void ok();
+
         void error(int code);
     }
 }
