@@ -121,6 +121,7 @@ public class MainFrag3 extends BasicFragment {
                         break;
                     case R.id.look_video:
                         intent.setClass(activity, VideoPlayActivity.class);
+                        intent.putExtra("VideoPlayActivity_url",courseModel.getUnfinished().get(position).getPlan().getPlayUrl());
                         break;
                     case R.id.trace:
                         application.oldKe = bean.getProducts();

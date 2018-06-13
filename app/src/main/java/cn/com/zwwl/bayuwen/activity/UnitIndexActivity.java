@@ -152,7 +152,7 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
                 if (unitDetailModel != null) {
                     model = unitDetailModel;
                     if (!TextUtils.isEmpty(unitDetailModel.getTaSummary().getContent()))
-                    tutorEval.setText(unitDetailModel.getTaSummary().getContent());
+                        tutorEval.setText(unitDetailModel.getTaSummary().getContent());
                     else
                         tutorEval.setText("暂无");
                     pptAdapter.setNewData(unitDetailModel.getAccessory().getData());
@@ -253,9 +253,13 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
                 gotoWeb();
                 break;
             case R.id.submit_work:
-                intent.setClass(this, WorkDetailsActivity.class);
-                intent.putExtra("model", model.getHomework());
-                startActivity(intent);
+                if (model.getHomework() != null && model.getHomework().getState() == 1) {
+                    intent.setClass(this, WorkDetailsActivity.class);
+                    intent.putExtra("model", model.getHomework());
+                    startActivity(intent);
+                } else {
+                    ToastUtil.showShortToast("未上传作业");
+                }
                 break;
             case R.id.ppt:
                 if (model.getAccessory().getState() != 0) {
