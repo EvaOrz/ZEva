@@ -51,10 +51,11 @@ public class UploadPicApi extends BaseApi {
         if (listener != null) {
             if (errorMsg != null)
                 listener.setError(errorMsg);
-            if (!isNull(json)) {
-                UserModel m = new UserModel();
-                m.setPic(json.optString("url"));
-                listener.setData(m);
+            if (!isNull(array)) {
+                ArrayList<CommonModel> commonModel = GsonUtil.parseJsonArray(CommonModel.class,
+                        array.toString());
+                if (commonModel.size() > 0)
+                    listener.setData(commonModel.get(0));
             } else {
                 listener.setData(null);
             }

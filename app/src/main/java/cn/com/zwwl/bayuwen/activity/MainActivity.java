@@ -466,7 +466,8 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
 //        gongxun.setText();
 
         // 获取礼物数据
-        new HonorListApi(mContext, 2, new FetchEntryListListener() {
+        new HonorListApi(mContext, 2, TempDataHelper.getCurrentChildNo(mContext), new
+                FetchEntryListListener() {
             @Override
             public void setData(List list) {
 

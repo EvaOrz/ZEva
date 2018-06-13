@@ -210,7 +210,6 @@ public class AddCalendarActivity extends BaseActivity {
             case R.id.add_calendar_back:
                 finish();
                 break;
-
             case R.id.add_zengshan:// 增删课程
                 Intent intent = new Intent(mContext, SelectCalendarActivity.class);
                 intent.putExtra("SelectCalendarActivity_data", (Serializable) periods);
