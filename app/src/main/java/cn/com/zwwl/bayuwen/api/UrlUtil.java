@@ -380,4 +380,10 @@ public class UrlUtil {
     public static String TDetailList() {
         return HOST+"/teachers/tidcourse";
     }
+    /**
+     *获取评论
+     */
+    public static String getEvalList() {
+        return HOST + "/comment";
+    }
 }

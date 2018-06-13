@@ -22,7 +22,6 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.api.CourseApi;
 import cn.com.zwwl.bayuwen.api.FollowApi;
-import cn.com.zwwl.bayuwen.api.LeasonListApi;
 import cn.com.zwwl.bayuwen.api.fm.PinglunApi;
 import cn.com.zwwl.bayuwen.api.order.CartApi;
 import cn.com.zwwl.bayuwen.api.order.CouponApi;
@@ -34,7 +33,6 @@ import cn.com.zwwl.bayuwen.model.CouponModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
-import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.model.PromotionModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
 import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
@@ -83,7 +81,6 @@ public class CourseDetailActivity extends BaseActivity {
     private KeDetailView2 cDetailTabFrag2;
     private KeDetailView3 cDetailTabFrag3;
     private List<PinglunModel> pinglunModels = new ArrayList<>();
-    private List<LessonModel> lesonModels = new ArrayList<>();
     // 优惠券数据
     private List<CouponModel> couponModels = new ArrayList<>();
 
@@ -92,7 +89,6 @@ public class CourseDetailActivity extends BaseActivity {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
-        initView();
         // 兑换课程详情
         if (getIntent().getSerializableExtra("CourseDetailActivity_data") != null && getIntent()
                 .getSerializableExtra("CourseDetailActivity_data") instanceof KeModel) {
@@ -106,8 +102,7 @@ public class CourseDetailActivity extends BaseActivity {
             initData();
         }
         getPinglunData();
-        getLeasonsData();
-
+        initView();
     }
 
     private void setUi() {
@@ -137,28 +132,6 @@ public class CourseDetailActivity extends BaseActivity {
 
             }
         });
-    }
-
-    /**
-     * 获取子课列表
-     */
-    private void getLeasonsData() {
-        new LeasonListApi(mContext, cid, 1, new FetchEntryListListener() {
-            @Override
-            public void setData(List list) {
-                if (Tools.listNotNull(list)) {
-                    lesonModels.clear();
-                    lesonModels.addAll(list);
-                    handler.sendEmptyMessage(4);
-                }
-            }
-
-            @Override
-            public void setError(ErrorMsg error) {
-
-            }
-        });
-
     }
 
     @Override
@@ -205,9 +178,9 @@ public class CourseDetailActivity extends BaseActivity {
         nomalFooter = findViewById(R.id.nomal_footer);
         promotionLayout = findViewById(R.id.promotion_layout);
         promotionContain = findViewById(R.id.promotion_container);
-        cDetailTabFrag1 = new KeDetailView1(mContext);
+        cDetailTabFrag1 = new KeDetailView1(this,cid);
         cDetailTabFrag2 = new KeDetailView2(mContext);
-        cDetailTabFrag3 = new KeDetailView3(mContext);
+        cDetailTabFrag3 = new KeDetailView3(this,cid);
         keDetailViews.add(cDetailTabFrag1);
         keDetailViews.add(cDetailTabFrag2);
         keDetailViews.add(cDetailTabFrag3);
@@ -407,9 +380,6 @@ public class CourseDetailActivity extends BaseActivity {
                     break;
                 case 1:
                     cDetailTabFrag3.setData(pinglunModels);
-                    break;
-                case 4:
-                    cDetailTabFrag1.setData(lesonModels);
                     break;
                 case 2:// 关注状态
                     follow_status.setBackgroundColor(getResources().getColor(R.color.gold));

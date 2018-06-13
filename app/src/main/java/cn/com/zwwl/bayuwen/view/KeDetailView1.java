@@ -1,34 +1,24 @@
 package cn.com.zwwl.bayuwen.view;
 
+import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.adapter.BaseRecylcerViewAdapter;
 import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
-import cn.com.zwwl.bayuwen.adapter.KeSelectAdapter;
-import cn.com.zwwl.bayuwen.glide.ImageLoader;
-import cn.com.zwwl.bayuwen.listener.OnItemClickListener;
-import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.api.LessonListApi;
+import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
+import cn.com.zwwl.bayuwen.model.BaseResponse;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.LessonModel;
-import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
-import cn.com.zwwl.bayuwen.util.CalendarTools;
-import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.util.ToastUtil;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
@@ -37,18 +27,53 @@ import cn.com.zwwl.bayuwen.widget.ViewHolder;
  */
 public class KeDetailView1 extends LinearLayout {
 
-    private Context context;
+    private Activity context;
     private NoScrollListView listView;
     private TextView lookAll;
     private KeLectruesAdapter adapter;
     private List<LessonModel> data = new ArrayList<>();
     private List<LessonModel> allData = new ArrayList<>();
+    private int page = 1, totalPage;
+    private String cid;
 
-    public KeDetailView1(Context context) {
+    public KeDetailView1(Activity context, String cid) {
         super(context);
         this.context = context;
-
         initView();
+        this.cid = cid;
+        getLessonList();
+    }
+
+    private void getLessonList() {
+        new LessonListApi(context, cid, page, new ResponseCallBack<BaseResponse>() {
+            @Override
+            public void result(final BaseResponse baseResponse, ErrorMsg errorMsg) {
+                KeDetailView1.this.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (baseResponse != null) {
+                            int i = baseResponse.getTotal() / baseResponse.getPagesize();
+                            if (baseResponse.getTotal() % baseResponse.getPagesize() > 0)
+                                totalPage = i + 1;
+                            if (baseResponse.getLectures() != null && baseResponse.getLectures().size() > 0)
+                                allData.addAll(baseResponse.getLectures());
+                            if (page == 1) {
+                                if (allData.size() > 3) {
+                                    lookAll.setVisibility(VISIBLE);
+                                    data.addAll(allData.subList(0, 3));
+                                } else {
+                                    data.addAll(allData);
+                                }
+                            } else {
+                                data.clear();
+                                data.addAll(allData);
+                            }
+                        }
+                        adapter.setData(data);
+                    }
+                });
+            }
+        });
     }
 
     private void initView() {
@@ -60,32 +85,20 @@ public class KeDetailView1 extends LinearLayout {
         lookAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int record = data.size();
-                if (allData.size() > data.size()) {
+                if (data.size() == 3 && allData.size() > data.size()) {
                     data.clear();
                     data.addAll(allData);
-                    adapter.setData(data);
+                } else if (totalPage != 0 && page != totalPage) {
+                    ++page;
+                    getLessonList();
+                } else {
+                    ToastUtil.showShortToast("没有更多了");
                 }
             }
         });
         adapter = new KeLectruesAdapter(context);
         listView.setAdapter(adapter);
     }
-
-    public void setData(List<LessonModel> dataList) {
-        data.clear();
-        allData.clear();
-        allData.addAll(dataList);
-
-        if (!Tools.listNotNull(dataList)) {
-            lookAll.setVisibility(View.GONE);
-        } else if (dataList.size() > 2) {
-            data.addAll(dataList.subList(0, 3));
-        } else data.addAll(dataList);
-
-        adapter.setData(data);
-    }
-
 
     public class KeLectruesAdapter extends CheckScrollAdapter<LessonModel> {
         protected Context mContext;
@@ -114,7 +127,7 @@ public class KeDetailView1 extends LinearLayout {
             TextView video_title = viewHolder.getView(R.id.course_d_title);
             TextView video_time = viewHolder.getView(R.id.course_d_time);
 
-            video_id.setText(position + 1 + "");
+//            video_id.setText(position + 1 + "");
             video_title.setText(item.getTitle());
             video_time.setText(item.getStart_at()
                     + "  " + item.getClass_start_at()
