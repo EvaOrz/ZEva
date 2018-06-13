@@ -1,6 +1,9 @@
 package cn.com.zwwl.bayuwen.model;
 
-public class CommonModel {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class CommonModel implements Parcelable {
     private String content;
     private int state;
     private String id;
@@ -100,4 +103,53 @@ public class CommonModel {
     public void setState(int state) {
         this.state = state;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.content);
+        dest.writeInt(this.state);
+        dest.writeString(this.id);
+        dest.writeString(this.url);
+        dest.writeString(this.name);
+        dest.writeString(this.tid);
+        dest.writeString(this.kid);
+        dest.writeString(this.student_no);
+        dest.writeString(this.create_at);
+        dest.writeString(this.update_at);
+        dest.writeInt(this.status);
+    }
+
+    public CommonModel() {
+    }
+
+    protected CommonModel(Parcel in) {
+        this.content = in.readString();
+        this.state = in.readInt();
+        this.id = in.readString();
+        this.url = in.readString();
+        this.name = in.readString();
+        this.tid = in.readString();
+        this.kid = in.readString();
+        this.student_no = in.readString();
+        this.create_at = in.readString();
+        this.update_at = in.readString();
+        this.status = in.readInt();
+    }
+
+    public static final Parcelable.Creator<CommonModel> CREATOR = new Parcelable.Creator<CommonModel>() {
+        @Override
+        public CommonModel createFromParcel(Parcel source) {
+            return new CommonModel(source);
+        }
+
+        @Override
+        public CommonModel[] newArray(int size) {
+            return new CommonModel[size];
+        }
+    };
 }

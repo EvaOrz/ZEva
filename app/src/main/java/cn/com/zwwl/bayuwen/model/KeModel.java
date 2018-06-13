@@ -451,15 +451,15 @@ public class KeModel extends Entry {
     }
 
     public int getTagImg() {
-        if (online.equals("0")) {//面授
+        if ("0".equals(online)) {//面授
             return R.mipmap.icon_face_teach;
         } else {
-            if (source.equals("1")) {
+            if ("1".equals(source)) {
                 if (Long.valueOf(endPtime) > System.currentTimeMillis()) {//直播
                     return R.mipmap.icon_live;
                 } else//回放
                     return R.mipmap.icon_replay;
-            } else if (source.equals("2")) {//录播
+            } else if ("2".equals(source)) {//录播
                 return R.mipmap.icon_record;
             }
         }

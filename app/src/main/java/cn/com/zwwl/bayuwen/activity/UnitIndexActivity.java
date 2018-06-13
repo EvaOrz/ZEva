@@ -146,6 +146,8 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
     }
 
     private void getData() {
+        kId="209";
+        cId="2107";
         new UnitDetailApi(this, kId, cId, new ResponseCallBack<UnitDetailModel>() {
             @Override
             public void result(UnitDetailModel unitDetailModel, ErrorMsg errorMsg) {
@@ -153,7 +155,8 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
                     model = unitDetailModel;
                     tutorEval.setText(unitDetailModel.getTaSummary().getContent());
                     pptAdapter.setNewData(unitDetailModel.getAccessory().getData());
-                    jobAdapter.setNewData(unitDetailModel.getJob().getData());
+                    if (unitDetailModel.getHomework() != null)
+                        jobAdapter.setNewData(unitDetailModel.getHomework().getC_img());
                     teacher.setText(String.format("授课老师: %s", unitDetailModel.getTeachers().getTeacher().getName()));
                     teacherVote.setImageResource(unitDetailModel.getTeachers().getTeacher().getState() == 1 ?
                             R.mipmap.icon_vote_checked : R.mipmap.icon_vote_default);
@@ -244,7 +247,9 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
                 gotoWeb();
                 break;
             case R.id.submit_work:
-                startActivity(new Intent(this, WorkDetailsActivity.class));
+                intent.setClass(this, WorkDetailsActivity.class);
+                intent.putExtra("model", model.getHomework());
+                startActivity(intent);
                 break;
             case R.id.ppt:
                 if (model.getAccessory().getState() != 0) {

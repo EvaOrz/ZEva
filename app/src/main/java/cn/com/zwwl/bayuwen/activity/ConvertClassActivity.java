@@ -1,14 +1,22 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +29,13 @@ import cn.com.zwwl.bayuwen.api.KeSelectTypeApi;
 import cn.com.zwwl.bayuwen.api.UrlUtil;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.base.MenuCode;
-import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.KeTypeModel;
+import cn.com.zwwl.bayuwen.model.SearchModel;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.selectmenu.SelectMenuView;
 import cn.com.zwwl.bayuwen.view.selectmenu.SelectTempModel;
@@ -42,11 +51,14 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
     SelectMenuView operate;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.refresh)
+    SmartRefreshLayout refresh;
     CourseTableAdapter adapter;
     KeTypeModel typeModel;
     private String url = UrlUtil.getCDetailUrl(null) + "/search";
     private List<KeModel> keModels;
     private List<KeModel> stockClass;
+    private int page = 1;
 
     @Override
     protected int setContentView() {
@@ -67,12 +79,13 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new CourseTableAdapter(null);
         recyclerView.setAdapter(adapter);
+        refresh.setRefreshContent(recyclerView);
+        refresh.autoRefresh();
     }
 
     @Override
     protected void initData() {
         getChoseType();
-        getCourseData();
     }
 
     private void getChoseType() {
@@ -100,6 +113,32 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
 
     @Override
     protected void setListener() {
+        refresh.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshlayout) {
+                page = 1;
+                refresh.setNoMoreData(false);
+                getCourseData();
+            }
+        });
+        refresh.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                ++page;
+                getCourseData();
+            }
+        });
+        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    hideInput();
+                    map.put("keyword", Tools.getText(v));
+                    return true;
+                }
+                return false;
+            }
+        });
         operate.setOnMenuSelectDataChangedListener(new SelectMenuView.OnMenuSelectDataChangedListener() {
             @Override
             public void onSortChanged(SelectTempModel sortType, int type) {
@@ -133,7 +172,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                     Intent intent = new Intent(mActivity, UnitTableActivity.class);
                     intent.putExtra("type", 1);
                     intent.putExtra("kid", keModels.get(position).getKid());
-                    intent.putExtra("course_type",1);
+                    intent.putExtra("course_type", 1);
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(mActivity, ClassDetailActivity.class);
@@ -145,8 +184,8 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
     }
 
     private void getCourseData() {
-        map.put("keyword", Tools.getText(search));
         map.put("online", "0");
+        map.put("page", String.valueOf(page));
         StringBuilder temp = new StringBuilder(url);
         if (map.size() > 0) {
             temp.append("?");
@@ -156,29 +195,26 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                     temp.append(and).append(key).append("=").append(map.get(key));
                 }
             }
-            new CourseListApi(mContext, temp.toString(), new FetchEntryListListener() {
+            new CourseListApi(this, temp.toString(), new ResponseCallBack<SearchModel>() {
                 @Override
-                public void setData(final List list) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                public void result(SearchModel searchModel, ErrorMsg errorMsg) {
+                    refresh.finishRefresh();
+                    refresh.finishLoadMore();
+                    if (searchModel != null) {
+                        if (searchModel.get_meta().getCurrentPage() == searchModel.get_meta().getPageCount())
+                            refresh.finishLoadMoreWithNoMoreData();
+                        if (page == 1) {
                             keModels.clear();
-                            if (Tools.listNotNull(list))
-                                keModels.addAll(list);
-                            adapter.setNewData(keModels);
-                            stockClass.clear();
-                            for (KeModel model : keModels) {
-                                if (!"0".equals(model.getStock())) stockClass.add(model);
-                            }
-
+                            keModels.addAll(searchModel.getData());
+                        } else {
+                            keModels.addAll(searchModel.getData());
                         }
-                    });
-
-
-                }
-
-                @Override
-                public void setError(ErrorMsg error) {
+                    }
+                    stockClass.clear();
+                    for (KeModel model : keModels) {
+                        if (!"0".equals(model.getStock())) stockClass.add(model);
+                    }
+                    adapter.setNewData(keModels);
                 }
             });
         }

@@ -5,17 +5,15 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.PicAdapter;
-import cn.com.zwwl.bayuwen.api.FinalApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
-import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
-import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.FinalModel;
+import cn.com.zwwl.bayuwen.model.WorkDetailModel;
 
 /**
  * 查看作业
@@ -30,7 +28,7 @@ public class WorkDetailsActivity extends BasicActivityWithTitle {
     AppCompatTextView textWork;
     @BindView(R.id.teacher_eval)
     AppCompatTextView teacherEval;
-    private FinalModel model;
+    private WorkDetailModel model;
 
     @Override
     protected int setContentView() {
@@ -47,27 +45,18 @@ public class WorkDetailsActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initData() {
-        setCustomTitle(getIntent().getStringExtra("title"));
-        String kId = getIntent().getStringExtra("kid");
-        getData(kId);
-    }
-
-    private void getData(String kId) {
-        new FinalApi(this, kId, new ResponseCallBack<FinalModel>() {
-            @Override
-            public void result(FinalModel finalModel, ErrorMsg errorMsg) {
-                if (finalModel != null) {
-                    model = finalModel;
-                    workAdapter.setNewData(model.getExam());
-                    if (model.getTeachers() == null) {
-                        teacherEval.setText("无");
-                    } else {
-                        teacherEval.setText(model.getTeachers().getContent());
-                    }
-
-                }
-            }
-        });
+        model = getIntent().getParcelableExtra("model");
+        if (model != null) {
+            workAdapter.setNewData(model.getC_img());
+            if (!TextUtils.isEmpty(model.getC_desc()))
+                textWork.setText(model.getC_desc());
+            else
+                textWork.setText("无");
+            if (model.getT_desc() != null)
+                teacherEval.setText(model.getT_desc().getContent());
+            else
+                teacherEval.setText("暂无点评");
+        }
     }
 
     @Override
@@ -78,15 +67,20 @@ public class WorkDetailsActivity extends BasicActivityWithTitle {
     @OnClick(R.id.work)
     @Override
     public void onClick(View view) {
-        if (model.getExam() != null && model.getExam().size() > 0) {
+        if (model.getC_img() != null && model.getC_img().size() > 0) {
             Intent intent = new Intent(this, InClassStatusActivity.class);
-            String[] urls = new String[model.getExam().size()];
-            for (int i = 0; i < model.getExam().size(); i++)
-                urls[i] = model.getExam().get(i).getUrl();
+            String[] urls = new String[model.getC_img().size()];
+            for (int i = 0; i < model.getC_img().size(); i++)
+                urls[i] = model.getC_img().get(i).getUrl();
             intent.putExtra("urls", urls);
             startActivity(intent);
         }
 
+    }
+
+    @Override
+    public boolean setParentScrollable() {
+        return false;
     }
 
     @Override

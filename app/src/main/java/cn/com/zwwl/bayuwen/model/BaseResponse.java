@@ -6,7 +6,25 @@ public class BaseResponse{
     private String page;
     private String pagesize;
     private String total;
+    private int total_count;
     private List<LessonModel> lectures;
+    private List<KeModel>course;
+
+    public int getTotal_count() {
+        return total_count;
+    }
+
+    public void setTotal_count(int total_count) {
+        this.total_count = total_count;
+    }
+
+    public List<KeModel> getCourse() {
+        return course;
+    }
+
+    public void setCourse(List<KeModel> course) {
+        this.course = course;
+    }
 
     public String getPage() {
         return page;

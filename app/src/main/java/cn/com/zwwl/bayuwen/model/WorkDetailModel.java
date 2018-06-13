@@ -1,0 +1,158 @@
+package cn.com.zwwl.bayuwen.model;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class WorkDetailModel implements Parcelable {
+    private String c_desc;
+    private TDescBean t_desc;
+    private int state;
+    private List<CommonModel> c_img;
+
+    public List<CommonModel> getC_img() {
+        return c_img;
+    }
+
+    public void setC_img(List<CommonModel> c_img) {
+        this.c_img = c_img;
+    }
+
+    public String getC_desc() {
+        return c_desc;
+    }
+
+    public void setC_desc(String c_desc) {
+        this.c_desc = c_desc;
+    }
+
+    public TDescBean getT_desc() {
+        return t_desc;
+    }
+
+    public void setT_desc(TDescBean t_desc) {
+        this.t_desc = t_desc;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+
+
+    public static class TDescBean implements Parcelable {
+        private String uid;
+        private int role;
+        private String name;
+        private String content;
+
+        public String getUid() {
+            return uid;
+        }
+
+        public void setUid(String uid) {
+            this.uid = uid;
+        }
+
+        public int getRole() {
+            return role;
+        }
+
+        public void setRole(int role) {
+            this.role = role;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.uid);
+            dest.writeInt(this.role);
+            dest.writeString(this.name);
+            dest.writeString(this.content);
+        }
+
+        public TDescBean() {
+        }
+
+        protected TDescBean(Parcel in) {
+            this.uid = in.readString();
+            this.role = in.readInt();
+            this.name = in.readString();
+            this.content = in.readString();
+        }
+
+        public static final Creator<TDescBean> CREATOR = new Creator<TDescBean>() {
+            @Override
+            public TDescBean createFromParcel(Parcel source) {
+                return new TDescBean(source);
+            }
+
+            @Override
+            public TDescBean[] newArray(int size) {
+                return new TDescBean[size];
+            }
+        };
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.c_desc);
+        dest.writeParcelable(this.t_desc, flags);
+        dest.writeInt(this.state);
+        dest.writeList(this.c_img);
+    }
+
+    public WorkDetailModel() {
+    }
+
+    protected WorkDetailModel(Parcel in) {
+        this.c_desc = in.readString();
+        this.t_desc = in.readParcelable(TDescBean.class.getClassLoader());
+        this.state = in.readInt();
+        this.c_img = new ArrayList<CommonModel>();
+        in.readList(this.c_img, CommonModel.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<WorkDetailModel> CREATOR = new Parcelable.Creator<WorkDetailModel>() {
+        @Override
+        public WorkDetailModel createFromParcel(Parcel source) {
+            return new WorkDetailModel(source);
+        }
+
+        @Override
+        public WorkDetailModel[] newArray(int size) {
+            return new WorkDetailModel[size];
+        }
+    };
+}

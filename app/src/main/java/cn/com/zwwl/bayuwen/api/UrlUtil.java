@@ -374,4 +374,10 @@ public class UrlUtil {
     public static String haveReport() {
         return HOST+"/monthreport/returnurl";
     }
+    /**
+     * 教师详情课程列表
+     */
+    public static String TDetailList() {
+        return HOST+"/teachers/tidcourse";
+    }
 }

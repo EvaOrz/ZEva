@@ -48,4 +48,9 @@ public class InClassStatusActivity extends BasicActivityWithTitle {
     public void onClick(View view) {
 
     }
+
+    @Override
+    public void close() {
+        finish();
+    }
 }

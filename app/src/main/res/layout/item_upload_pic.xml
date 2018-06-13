@@ -20,5 +20,5 @@
         android:layout_height="20dp"
         android:layout_gravity="end"
         android:scaleType="centerCrop"
-        android:src="@mipmap/play_cpntrol_close" />
+        android:src="@mipmap/icon_delete_round" />
 </FrameLayout>

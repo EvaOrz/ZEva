@@ -5,27 +5,35 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.TCourseListAdapter;
+import cn.com.zwwl.bayuwen.api.TDetailListApi;
 import cn.com.zwwl.bayuwen.api.TeacherApi;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.listener.OnItemClickListener;
+import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
+import cn.com.zwwl.bayuwen.model.BaseResponse;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
-import cn.com.zwwl.bayuwen.widget.StopLinearLayoutManager;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
 /**
@@ -38,6 +46,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
     private TextView educal_background_tv;
     private TextView teaching_idea_tv;
     private ImageView iv_avatar;
+    private SmartRefreshLayout refreshLayout;
     private List<KeModel> keModels = new ArrayList<>();
 
     private RecyclerView recyclerView;
@@ -45,7 +54,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
     private TeacherModel teacherDetailModel;
 
     private String tid;
-
+    private int page = 1;
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
@@ -60,10 +69,6 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
                     teaching_idea_tv.setText(teacherDetailModel.getT_idea());
                     ImageLoader.display(mContext, iv_avatar, teacherDetailModel.getPic(), R
                             .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
-
-                    keModels.clear();
-                    keModels.addAll(teacherDetailModel.getKeModels());
-                    tCourseListAdapter.notifyDataSetChanged();
                     break;
             }
         }
@@ -77,6 +82,17 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
         tid = getIntent().getStringExtra("tid");
         initView();
         initData();
+        setListener();
+    }
+
+    private void setListener() {
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                ++page;
+                getCourseList();
+            }
+        });
     }
 
     @Override
@@ -99,6 +115,26 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
                 if (error != null) showToast(error.getDesc());
             }
         });
+        getCourseList();
+    }
+
+    /**
+     * 获取课程列表
+     */
+    private void getCourseList() {
+        new TDetailListApi(this, "58", page, new ResponseCallBack<BaseResponse>() {
+            @Override
+            public void result(BaseResponse baseResponse, ErrorMsg errorMsg) {
+                refreshLayout.finishLoadMore();
+                if (baseResponse != null) {
+                    keModels.addAll(baseResponse.getCourse());
+                    tCourseListAdapter.notifyDataSetChanged();
+                    if (page == baseResponse.getTotal_count())
+                        refreshLayout.finishLoadMoreWithNoMoreData();
+                }
+
+            }
+        });
     }
 
     private void initView() {
@@ -108,20 +144,17 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
         educal_background_tv = findViewById(R.id.educal_background_tv);
         teaching_idea_tv = findViewById(R.id.teaching_idea_tv);
         iv_avatar = findViewById(R.id.iv_avatar);
-
-        recyclerView = findViewById(R.id.td_reView);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        StopLinearLayoutManager linearLayoutManager = new StopLinearLayoutManager(mContext);
-        linearLayoutManager.setScrollEnabled(false);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color
                 .gray_line, R
                 .dimen.dp_1, OrientationHelper.VERTICAL));
-
         tCourseListAdapter = new TCourseListAdapter(mContext, keModels);
         recyclerView.setAdapter(tCourseListAdapter);
+        refreshLayout = findViewById(R.id.refresh);
+        refreshLayout.setRefreshContent(recyclerView);
         tCourseListAdapter.setOnItemClickListener(this);
-
         findViewById(R.id.teacher_back).setOnClickListener(this);
     }
 

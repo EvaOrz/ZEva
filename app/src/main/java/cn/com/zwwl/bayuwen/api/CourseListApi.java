@@ -1,26 +1,25 @@
 package cn.com.zwwl.bayuwen.api;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
-import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
-import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.model.OrderModel;
+import cn.com.zwwl.bayuwen.model.SearchModel;
+import cn.com.zwwl.bayuwen.util.GsonUtil;
 
 /**
  * 获取课程列表接口
@@ -28,7 +27,16 @@ import cn.com.zwwl.bayuwen.model.OrderModel;
 public class CourseListApi extends BaseApi {
     private FetchEntryListListener listListener;
     private String url;
+    private Activity activity;
+    private ResponseCallBack<SearchModel> callBack;
 
+    public CourseListApi(Activity context, String url, ResponseCallBack<SearchModel> callBack) {
+        super(context);
+        this.activity = context;
+        this.callBack = callBack;
+        this.url = url;
+        get();
+    }
 
     /**
      * 选课中心获取数据列表
@@ -71,19 +79,31 @@ public class CourseListApi extends BaseApi {
     }
 
     @Override
-    protected void handler(JSONObject json, JSONArray jsonArray, ErrorMsg errorMsg) {
-        if (errorMsg != null) {
-            listListener.setError(errorMsg);
-        } else listListener.setError(null);
+    protected void handler(final JSONObject json, JSONArray jsonArray, final ErrorMsg errorMsg) {
+        if (callBack != null) {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    SearchModel model = null;
+                    if (json != null)
+                        model = GsonUtil.parseJson(SearchModel.class, json.toString());
+                    callBack.result(model, errorMsg);
+                }
+            });
+        } else {
+            if (errorMsg != null) {
+                listListener.setError(errorMsg);
+            } else listListener.setError(null);
 
-        if (!isNull(json)) {
-            // 解析选课中心课列表
-            listListener.setData(parseKemodel(json.optJSONArray("data")));
-        }
+            if (!isNull(json)) {
+                // 解析选课中心课列表
+                listListener.setData(parseKemodel(json.optJSONArray("data")));
+            }
 
-        // 开票历史
-        if (!isNull(jsonArray)) {
-            listListener.setData(parseKemodel(jsonArray));
+            // 开票历史
+            if (!isNull(jsonArray)) {
+                listListener.setData(parseKemodel(jsonArray));
+            }
         }
     }
 

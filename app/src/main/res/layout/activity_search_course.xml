@@ -41,17 +41,24 @@
 
     </LinearLayout>
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/course_recyclerVie"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/search_head_layout" />
-
     <cn.com.zwwl.bayuwen.view.selectmenu.SelectMenuView
         android:id="@+id/select_ke_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/search_head_layout" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/select_ke_menu">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/course_recyclerVie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
 
 </RelativeLayout>

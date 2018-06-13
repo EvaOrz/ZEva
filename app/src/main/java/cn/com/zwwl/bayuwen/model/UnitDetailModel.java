@@ -4,21 +4,20 @@ import java.util.List;
 
 public class UnitDetailModel extends Entry {
 
-    /**
-     * taSummary : {"content":"hhhhhfdsfsdfds","state":1}
-     * accessory : {"data":[{"id":"6113","url":"http://img.zhugexuetang.com/%E5%8F%A4%E6%96%87%E4%BA%8C.jpg"},{"id":"6114","url":"http://img.zhugexuetang.com/FgeeEzlHXmfYpppvuSKaTG1fzhZ8"},{"id":"6115","url":"http://img.zhugexuetang.com/shaoxinyuedu.jpg"}],"state":1}
-     * blackboard : {"data":[{"id":"6118","url":"http://img.zhugexuetang.com/%E5%8F%A4%E6%96%87%E4%BA%8C.jpg"},{"id":"6119","url":"http://img.zhugexuetang.com/20170714160925.jpg"}],"state":1}
-     * courseLive : {"data":[{"id":"6116","url":"http://img.zhugexuetang.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20171213100111.jpg"},{"id":"6117","url":"http://img.zhugexuetang.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180411093048.jpg"}],"state":1}
-     * job : {"data":[],"state":0}
-     * teachers : {"teacher":{"id":"18","name":"窦昕","state":1},"assistant":{"id":"21348","name":"王建新助教","state":1},"counselor":{"id":"260932","name":"耿少京顾问","state":1}}
-     */
-
     private CommonModel taSummary;
     private PicBean accessory;
     private PicBean blackboard;
     private PicBean courseLive;
-    private PicBean homework;
+    private WorkDetailModel homework;
     private TeachersBean teachers;
+
+    public WorkDetailModel getHomework() {
+        return homework;
+    }
+
+    public void setHomework(WorkDetailModel homework) {
+        this.homework = homework;
+    }
 
     public CommonModel getTaSummary() {
         return taSummary;
@@ -50,14 +49,6 @@ public class UnitDetailModel extends Entry {
 
     public void setCourseLive(PicBean courseLive) {
         this.courseLive = courseLive;
-    }
-
-    public PicBean getJob() {
-        return homework;
-    }
-
-    public void setJob(PicBean job) {
-        this.homework = job;
     }
 
     public TeachersBean getTeachers() {

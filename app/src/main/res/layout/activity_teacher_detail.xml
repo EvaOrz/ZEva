@@ -27,7 +27,7 @@
 
     </RelativeLayout>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -214,21 +214,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:orientation="horizontal"
                 android:layout_marginTop="10dp"
+                android:background="@android:color/white"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="10dp">
+
                 <ImageView
                     android:layout_width="15dp"
-                    android:background="@color/gray_dark"
-                    android:layout_height="15dp" />
+                    android:layout_height="15dp"
+                    android:background="@color/gray_dark" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
                     android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
                     android:text="相关课程"
                     android:textColor="@color/gray_dark"
                     android:textSize="@dimen/text_size_14" />
@@ -237,10 +238,17 @@
 
             <include layout="@layout/layout_line" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/td_reView"
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/refresh"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

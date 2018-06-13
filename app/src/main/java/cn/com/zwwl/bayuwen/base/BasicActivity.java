@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import java.util.HashMap;
 
@@ -49,7 +50,14 @@ public abstract class BasicActivity extends AppCompatActivity  {
         mApplication = (MyApplication) getApplication();
         res = getResources();
     }
-
+    /**
+     * 隐藏软键盘
+     */
+    public void hideInput() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context
+                .INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+    }
     @Override
     protected void onResume() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
