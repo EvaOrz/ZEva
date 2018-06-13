@@ -151,6 +151,11 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         evalDialog = new FinalEvalDialog(this);
         evalDialog.setSubmitListener(new FinalEvalDialog.SubmitListener() {
             @Override
+            public void show() {
+                evalDialog.showAtLocation(mainView, Gravity.BOTTOM, 0, 0);
+            }
+
+            @Override
             public void ok() {
                 if (reportModel.getKeReport() != null) {
                     Intent intent = new Intent(MainActivity.this, WebActivity.class);
@@ -320,49 +325,51 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
             public void result(ReportModel model, ErrorMsg errorMsg) {
                 reportModel = model;
                 if (reportModel != null) {
-                    DialogUtil.showDoubleDialog(MainActivity.this, R.string.hint_title, R.string
-                            .report_hint, R.string.eval_look, R.string.cancel, new
-                            DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if (reportModel.getKeReport() != null) {
-                                        if (reportModel.getKeReport().getComment_id() == null) {
-                                            evalDialog.setData(1, reportModel.getKeReport()
-                                                    .getKid());
-                                            evalDialog.showAtLocation(mainView, Gravity.BOTTOM,
-                                                    0, 0);
-                                        } else {
-                                            Intent intent = new Intent(MainActivity.this,
-                                                    WebActivity
-                                                            .class);
-                                            intent.putExtra("WebActivity_data", reportModel
-                                                    .getKeReport()
-                                                    .getUrl());
-                                            startActivity(intent);
-                                        }
-                                    } else if (reportModel.getMonthReport() != null) {
-                                        if (reportModel.getMonthReport().getComment_id() == null) {
-                                            evalDialog.setData(2, reportModel.getMonthReport()
-                                                            .getYear(),
-                                                    reportModel.getMonthReport().getMonth());
-                                            evalDialog.showAtLocation(mainView, Gravity.BOTTOM,
-                                                    0, 0);
-                                        } else {
-                                            Intent intent = new Intent(MainActivity.this,
-                                                    WebActivity
-                                                            .class);
-                                            intent.putExtra("WebActivity_data", reportModel
-                                                    .getMonthReport().getUrl());
-                                            startActivity(intent);
+
+                    if ((reportModel.getMonthReport() != null && !TextUtils.isEmpty(reportModel
+                            .getMonthReport().getUrl())) || (reportModel.getKeReport() != null &&
+                            !TextUtils.isEmpty(reportModel.getKeReport().getUrl())))
+                        DialogUtil.showDoubleDialog(MainActivity.this, R.string.hint_title, R
+                                .string.report_hint, R.string.eval_look, R.string.cancel, new
+                                DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (reportModel.getKeReport() != null) {
+                                            if (reportModel.getKeReport().getComment_id() == null) {
+                                                evalDialog.setData(1, reportModel.getKeReport()
+                                                        .getKid());
+
+                                            } else {
+                                                Intent intent = new Intent(MainActivity.this,
+                                                        WebActivity
+                                                                .class);
+                                                intent.putExtra("WebActivity_data", reportModel
+                                                        .getKeReport().getUrl());
+                                                startActivity(intent);
+                                            }
+                                        } else if (reportModel.getMonthReport() != null) {
+                                            if (reportModel.getMonthReport().getComment_id() ==
+                                                    null) {
+                                                evalDialog.setData(2, reportModel.getMonthReport()
+                                                        .getYear(), reportModel.getMonthReport()
+                                                        .getMonth
+                                                                ());
+                                            } else {
+                                                Intent intent = new Intent(MainActivity.this,
+                                                        WebActivity
+                                                                .class);
+                                                intent.putExtra("WebActivity_data", reportModel
+                                                        .getMonthReport().getUrl());
+                                                startActivity(intent);
+                                            }
                                         }
                                     }
-                                }
-                            }, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
+                                }, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
                 }
             }
         });

@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -118,6 +119,11 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
     protected void setListener() {
         evalDialog.setSubmitListener(new FinalEvalDialog.SubmitListener() {
             @Override
+            public void show() {
+                evalDialog.showAtLocation(percent, Gravity.BOTTOM, 0, 0);
+            }
+
+            @Override
             public void ok() {
                 ToastUtil.showShortToast("感谢评价");
             }
@@ -165,12 +171,11 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
         new HaveReportApi(this, map, new ResponseCallBack<ReportModel.ReportBean>() {
             @Override
             public void result(ReportModel.ReportBean reportBean, ErrorMsg errorMsg) {
-                if (reportBean != null) {
+                if (reportBean != null&&!TextUtils.isEmpty(reportBean.getUrl())) {
                     if (reportBean.getComment_id() != null) {
                         ToastUtil.showShortToast("您已经评价过该课程");
                     } else {
                         evalDialog.setData(1, kid);
-                        evalDialog.showAtLocation(percent, Gravity.BOTTOM, 0, 0);
                     }
                 } else {
                     ToastUtil.showShortToast("您还不能评价该课程哦！");

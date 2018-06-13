@@ -1,7 +1,6 @@
 package cn.com.zwwl.bayuwen.api;
 
 import android.content.Context;
-import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

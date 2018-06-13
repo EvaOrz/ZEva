@@ -7,43 +7,48 @@
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/menu_more"
-        android:src="@mipmap/icon_menu_more"
-        android:layout_width="wrap_content"
-        android:contentDescription="@null"
+        android:layout_width="@dimen/dp_40"
         android:layout_height="match_parent"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:contentDescription="@null"
+        android:src="@mipmap/icon_menu_more" />
 
-
-        <android.support.v7.widget.AppCompatImageView
-            android:contentDescription="@null"
-            android:id="@+id/menu_news"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/icon_news"/>
 
     <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/menu_news"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
         android:contentDescription="@null"
+        android:scaleType="centerInside"
+        android:src="@mipmap/icon_news" />
+
+    <android.support.v7.widget.AppCompatImageView
         android:id="@+id/menu_school"
-        android:layout_width="wrap_content"
-        android:layout_toStartOf="@id/menu_news"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/menu_news"
-        android:layout_height="match_parent"
-        android:src="@mipmap/icon_school"/>
+        android:layout_toStartOf="@id/menu_news"
+        android:contentDescription="@null"
+        android:scaleType="centerInside"
+        android:src="@mipmap/icon_school" />
+
     <android.support.v7.widget.AppCompatTextView
-        android:background="@drawable/white_btn_bg"
-        android:layout_centerVertical="true"
         android:id="@+id/menu_search"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_36"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/menu_more"
         android:layout_toLeftOf="@id/menu_school"
         android:layout_toRightOf="@id/menu_more"
-        android:layout_toEndOf="@id/menu_more"
         android:layout_toStartOf="@id/menu_school"
-        android:drawableStart="@mipmap/icon_search"
+        android:background="@drawable/white_btn_bg"
         android:drawableLeft="@mipmap/icon_search"
+        android:drawableStart="@mipmap/icon_search"
         android:gravity="center_vertical"
-        android:layout_width="match_parent"
         android:text="@string/search"
-        android:textColor="@color/gray_line"
-        android:layout_height="@dimen/dp_36" />
+        android:textColor="@color/gray_line" />
 </RelativeLayout>

@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -47,9 +48,11 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
     private TextView teaching_idea_tv;
     private ImageView iv_avatar;
     private SmartRefreshLayout refreshLayout;
-    private List<KeModel> keModels = new ArrayList<>();
+
 
     private RecyclerView recyclerView;
+    NestedScrollView nestScroll;
+    private List<KeModel> keModels = new ArrayList<>();
     private TCourseListAdapter tCourseListAdapter;
     private TeacherModel teacherDetailModel;
 
@@ -146,6 +149,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
         iv_avatar = findViewById(R.id.iv_avatar);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color
                 .gray_line, R
@@ -153,7 +157,8 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
         tCourseListAdapter = new TCourseListAdapter(mContext, keModels);
         recyclerView.setAdapter(tCourseListAdapter);
         refreshLayout = findViewById(R.id.refresh);
-        refreshLayout.setRefreshContent(recyclerView);
+         nestScroll = findViewById(R.id.nest_scroll);
+        refreshLayout.setRefreshContent(nestScroll);
         tCourseListAdapter.setOnItemClickListener(this);
         findViewById(R.id.teacher_back).setOnClickListener(this);
     }
