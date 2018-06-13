@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/body_gray"
-                android:gravity="center_vertical"
+                android:gravity="top"
                 android:orientation="horizontal"
                 android:padding="5dp">
 
@@ -107,17 +107,11 @@
 
                 </cn.com.zwwl.bayuwen.widget.RoundAngleLayout>
 
-                <!--<cn.com.zwwl.bayuwen.widget.BannerView-->
-                <!--android:id="@+id/frag1_head"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:background="@color/body_bg"-->
-                <!--android:layout_height="100dp"-->
-                <!--android:layout_weight="1" />-->
 
-                <android.support.v4.view.ViewPager
+                <cn.com.zwwl.bayuwen.widget.LoopViewPager
                     android:id="@+id/frag1_head"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1" />
@@ -181,44 +175,30 @@
                     android:padding="5dp">
 
                     <TextView
+                        android:id="@+id/calendar_ri"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="13"
                         android:textColor="@color/gray_dark"
                         android:textSize="@dimen/text_size_22"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/calendar_yue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
-                        android:text="5月"
                         android:textColor="@color/gray_dark"
                         android:textSize="@dimen/text_size_14" />
 
                     <LinearLayout
+                        android:id="@+id/calendar_kecheng_layout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="【新东方】概念英语14:00-16:00"
-                            android:textColor="@color/gray_dark"
-                            android:textSize="@dimen/text_size_12" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="【新东方】概念英语14:00-16:00"
-                            android:textColor="@color/gray_dark"
-                            android:textSize="@dimen/text_size_12" />
-
-                    </LinearLayout>
 
                     <ImageView
                         android:layout_width="15dp"

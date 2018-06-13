@@ -10,7 +10,6 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +34,6 @@ import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
-import cn.com.zwwl.bayuwen.adapter.ImageBannerAdapter;
 import cn.com.zwwl.bayuwen.adapter.MainYixuanKeAdapter;
 import cn.com.zwwl.bayuwen.api.Index1Api;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
@@ -50,7 +48,9 @@ import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.ChildMenuPopView;
+import cn.com.zwwl.bayuwen.widget.LoopViewPager;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
+import cn.com.zwwl.bayuwen.widget.RoundAngleImageView;
 import cn.com.zwwl.bayuwen.widget.RoundAngleLayout;
 import cn.com.zwwl.bayuwen.widget.threed.GalleryTransformer;
 import cn.com.zwwl.bayuwen.widget.threed.InfiniteViewPager;
@@ -63,8 +63,7 @@ import cn.jzvd.JZUtils;
 public class MainFrag1 extends Fragment implements View.OnClickListener {
 
     private Activity mActivity;
-    private ViewPager bannerViewPager;
-    private ImageBannerAdapter imageBannerAdapter;
+    private LoopViewPager bannerView;
     private RoundAngleLayout studentLay, parentLay;// banner位的学生信息栏
     private TextView notificationTv, childTxt;
     private ImageView childImg, parentImg;
@@ -74,6 +73,8 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private RelativeLayout toolbar;//
     private InfiniteViewPager pingPager;// 拼图列表
     private ThreeDAdapter pingAdapter;
+    private TextView calendarRi,calendarYue;
+    private LinearLayout calendarLayout;
 
     private List<AdvBean> advBeans = new ArrayList<>();// banner数据
     private CalendarCourseBean calendarCourseBean;// calendar事件数据
@@ -83,7 +84,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private UserModel userModel;
     private int bannerWid, bannerHei;
 
-    private List<View> bannerDatas = new ArrayList<>();
     private List<AlbumModel> yixuanDatas = new ArrayList<>();// 已选课程data
 
     @Override
@@ -94,6 +94,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        bannerView.startLoop(true);
     }
 
     @Nullable
@@ -123,11 +124,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                 // removeGlobalOnLayoutListener() 方法在 API 16 后不再使用
                 // 使用新方法 removeOnGlobalLayoutListener() 代替
                 studentLay.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, bannerHei);
-                params.weight = 1;
-                params.leftMargin = 10;
-                params.rightMargin = 10;
-                bannerViewPager.setLayoutParams(params);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout
+                        .LayoutParams.MATCH_PARENT, bannerHei);
+                bannerView.setSize(params);
+
                 studentLay.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
                         .LayoutParams.WRAP_CONTENT, bannerHei));
                 parentLay.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams
@@ -155,7 +155,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                         advBeans.addAll(index1Model.getAdv());
                     }
                     calendarCourseBean = index1Model.getCalendarCourse();
-                    
+
                     selectedCourses.clear();
                     if (Tools.listNotNull(index1Model.getSelectedCourse())) {
                         selectedCourses.addAll(index1Model.getSelectedCourse());
@@ -175,31 +175,23 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
 
     }
 
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        bannerView.startLoop(false);
+    }
+
     private void initView() {
         toolbar = root.findViewById(R.id.toolbar);
         studentLay = root.findViewById(R.id.layout_student);
         parentLay = root.findViewById(R.id.layout_parent);
-        bannerViewPager = root.findViewById(R.id.frag1_head);
+        bannerView = root.findViewById(R.id.frag1_head);
         childTxt = root.findViewById(R.id.toolbar_title);
         childImg = root.findViewById(R.id.frag1_child_avatar);
         parentImg = root.findViewById(R.id.frag1_parent_avater);
         initSize();
 
-        for (int i = 0; i < 2; i++) {
-            RoundAngleLayout imageView = new RoundAngleLayout(mActivity, 10);
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(bannerWid, bannerHei));
-            imageView.setBackgroundResource(R.drawable.test_banner);
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(mActivity, VideoPlayActivity.class));
-                }
-            });
-            bannerDatas.add(imageView);
-        }
-        imageBannerAdapter = new ImageBannerAdapter(mActivity, bannerDatas);
-        imageBannerAdapter.notifyDataSetChanged();
-        bannerViewPager.setAdapter(imageBannerAdapter);
 
         notificationTv = root.findViewById(R.id.main_notification);
         notificationTv.setEllipsize(TextUtils.TruncateAt.MARQUEE);
@@ -275,6 +267,16 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                     }
                     break;
                 case 1:// 初始化页面数据
+                    List<View> views = new ArrayList<>();
+                    for (AdvBean advBean : advBeans) {
+                        RoundAngleImageView r = new RoundAngleImageView(mActivity);
+                        r.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        ImageLoader.display(mActivity, r, advBean.getPic(), R.mipmap.apply_logo,
+                                R.mipmap.apply_logo);
+                        views.add(r);
+                    }
+                    bannerView.setViewList(views);
+                    bannerView.startLoop(true);
                     break;
             }
         }
