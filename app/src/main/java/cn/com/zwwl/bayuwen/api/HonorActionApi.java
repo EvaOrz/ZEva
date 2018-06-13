@@ -47,6 +47,24 @@ public class HonorActionApi extends BaseApi {
     }
 
     /**
+     * 修改
+     *
+     * @param context
+     * @param model
+     * @param listener
+     */
+    public HonorActionApi(Context context, GiftAndJiangModel model, FetchEntryListener listener) {
+        super(context);
+        this.listener = listener;
+        pamas.put("title", model.getTitle());
+        pamas.put("desc", model.getTitle());
+        pamas.put("pic", model.getPic());
+        pamas.put("date", model.getDate());
+        url = UrlUtil.getHonorurl() + "/" + model.getId();
+        patch();
+    }
+
+    /**
      * 删除
      *
      * @param context

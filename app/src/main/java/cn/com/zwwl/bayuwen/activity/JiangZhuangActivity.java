@@ -139,22 +139,41 @@ public class JiangZhuangActivity extends BaseActivity {
 
     private void doSave() {
         showLoadingDialog(true);
-        new HonorActionApi(mContext, 1, giftAndJiangModel, new FetchEntryListener() {
-            @Override
-            public void setData(Entry entry) {
+        if (giftAndJiangModel.getId() == -1) {
+            new HonorActionApi(mContext, 1, giftAndJiangModel, new FetchEntryListener() {
+                @Override
+                public void setData(Entry entry) {
 
-            }
-
-            @Override
-            public void setError(ErrorMsg error) {
-                showLoadingDialog(false);
-                if (error == null) {
-                    finish();
-                } else {
-                    showToast(error.getDesc());
                 }
-            }
-        });
+
+                @Override
+                public void setError(ErrorMsg error) {
+                    showLoadingDialog(false);
+                    if (error == null) {
+                        finish();
+                    } else {
+                        showToast(error.getDesc());
+                    }
+                }
+            });
+        } else {
+            new HonorActionApi(mContext, giftAndJiangModel, new FetchEntryListener() {
+                @Override
+                public void setData(Entry entry) {
+
+                }
+
+                @Override
+                public void setError(ErrorMsg error) {
+                    showLoadingDialog(false);
+                    if (error == null) {
+                        finish();
+                    } else {
+                        showToast(error.getDesc());
+                    }
+                }
+            });
+        }
     }
 
     protected void doFecthPicture() {

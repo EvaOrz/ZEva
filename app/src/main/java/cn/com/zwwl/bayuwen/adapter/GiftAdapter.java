@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
+import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
@@ -20,16 +22,15 @@ import cn.com.zwwl.bayuwen.widget.ViewHolder;
 public class GiftAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<CalendarOptionPopWindow.CheckStatusModel> datas = new ArrayList<>();
+    private List<GiftAndJiangModel> datas = new ArrayList<>();
 
-    public GiftAdapter(Context context, List<CalendarOptionPopWindow.CheckStatusModel> datas) {
+    public GiftAdapter(Context context, List<GiftAndJiangModel> datas) {
         mContext = context;
         this.datas = datas;
     }
 
     public int getCount() {
-//        return datas.size();
-        return 13;
+        return datas.size();
     }
 
 
@@ -45,8 +46,13 @@ public class GiftAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout
                 .item_cdetail_teacher);
+        GiftAndJiangModel g = datas.get(position);
         ImageView imageView = viewHolder.getView(R.id.cdetail_t_avatar);
         TextView textView = viewHolder.getView(R.id.cdetail_t_name);
+
+        ImageLoader.display(mContext, imageView, g.getPic(), R.drawable.avatar_placeholder, R
+                .drawable.avatar_placeholder);
+        textView.setText(g.getTitle());
         return viewHolder.getConvertView();
     }
 

@@ -279,6 +279,11 @@ public class UrlUtil {
         return HOST + "/coupon/grant";
     }
 
+    // 获取首页第一个frag的数据
+    public static String getIndex() {
+        return HOST + "/my";
+    }
+
     /**
      * 正在进行课程
      */
@@ -362,26 +367,30 @@ public class UrlUtil {
     public static String evalContent() {
         return HOST + "/comment/list";
     }
+
     /**
      * 获取最新报告
      */
     public static String pushReport() {
-        return HOST+"/monthreport/type";
+        return HOST + "/monthreport/type";
     }
+
     /**
      * 是否有报告
      */
     public static String haveReport() {
-        return HOST+"/monthreport/returnurl";
+        return HOST + "/monthreport/returnurl";
     }
+
     /**
      * 教师详情课程列表
      */
     public static String TDetailList() {
-        return HOST+"/teachers/tidcourse";
+        return HOST + "/teachers/tidcourse";
     }
+
     /**
-     *获取评论
+     * 获取评论
      */
     public static String getEvalList() {
         return HOST + "/comment";

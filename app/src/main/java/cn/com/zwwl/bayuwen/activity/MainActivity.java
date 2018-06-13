@@ -46,6 +46,7 @@ import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.model.ReportModel;
 import cn.com.zwwl.bayuwen.util.DialogUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
@@ -74,6 +75,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     private GiftAdapter giftAdapter;
 
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
+    private List<GiftAndJiangModel> giftModels = new ArrayList<>();// 礼物数据
     private boolean isCanSetDefaultChild = true;// 是否可以设置默认学员
     private FinalEvalDialog evalDialog;
     private ReportModel reportModel;
@@ -207,9 +209,6 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         childLayout = findViewById(R.id.child_layout);
         childAddBt = findViewById(R.id.child_add);
         giftGridView = findViewById(R.id.my_gifts);
-        giftAdapter = new GiftAdapter(mContext, new ArrayList<CalendarOptionPopWindow
-                .CheckStatusModel>());
-        giftGridView.setAdapter(giftAdapter);
 
         tabButton1 = findViewById(R.id.bottom_nav_1);
         tabButton2 = findViewById(R.id.bottom_nav_2);
@@ -250,8 +249,9 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
                     mainFrag1.loadChild(childModels);
                     mainFrag5.loadChild(childModels);
                     break;
-                case 1:
-
+                case 1:// 更新礼物数据
+                    giftAdapter = new GiftAdapter(mContext, giftModels);
+                    giftGridView.setAdapter(giftAdapter);
                     break;
             }
         }
@@ -323,34 +323,41 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
                     DialogUtil.showDoubleDialog(MainActivity.this, R.string.hint_title, R.string
                             .report_hint, R.string.eval_look, R.string.cancel, new
                             DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (reportModel.getKeReport() != null) {
-                                if (reportModel.getKeReport().getComment_id() == null) {
-                                    evalDialog.setData(1, reportModel.getKeReport().getKid());
-                                    evalDialog.showAtLocation(mainView, Gravity.BOTTOM, 0, 0);
-                                } else {
-                                    Intent intent = new Intent(MainActivity.this, WebActivity
-                                            .class);
-                                    intent.putExtra("WebActivity_data", reportModel.getKeReport()
-                                            .getUrl());
-                                    startActivity(intent);
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (reportModel.getKeReport() != null) {
+                                        if (reportModel.getKeReport().getComment_id() == null) {
+                                            evalDialog.setData(1, reportModel.getKeReport()
+                                                    .getKid());
+                                            evalDialog.showAtLocation(mainView, Gravity.BOTTOM,
+                                                    0, 0);
+                                        } else {
+                                            Intent intent = new Intent(MainActivity.this,
+                                                    WebActivity
+                                                            .class);
+                                            intent.putExtra("WebActivity_data", reportModel
+                                                    .getKeReport()
+                                                    .getUrl());
+                                            startActivity(intent);
+                                        }
+                                    } else if (reportModel.getMonthReport() != null) {
+                                        if (reportModel.getMonthReport().getComment_id() == null) {
+                                            evalDialog.setData(2, reportModel.getMonthReport()
+                                                            .getYear(),
+                                                    reportModel.getMonthReport().getMonth());
+                                            evalDialog.showAtLocation(mainView, Gravity.BOTTOM,
+                                                    0, 0);
+                                        } else {
+                                            Intent intent = new Intent(MainActivity.this,
+                                                    WebActivity
+                                                            .class);
+                                            intent.putExtra("WebActivity_data", reportModel
+                                                    .getMonthReport().getUrl());
+                                            startActivity(intent);
+                                        }
+                                    }
                                 }
-                            } else if (reportModel.getMonthReport() != null) {
-                                if (reportModel.getMonthReport().getComment_id() == null) {
-                                    evalDialog.setData(2, reportModel.getMonthReport().getYear(),
-                                            reportModel.getMonthReport().getMonth());
-                                    evalDialog.showAtLocation(mainView, Gravity.BOTTOM, 0, 0);
-                                } else {
-                                    Intent intent = new Intent(MainActivity.this, WebActivity
-                                            .class);
-                                    intent.putExtra("WebActivity_data", reportModel
-                                            .getMonthReport().getUrl());
-                                    startActivity(intent);
-                                }
-                            }
-                        }
-                    }, new DialogInterface.OnClickListener() {
+                            }, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -470,16 +477,20 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         // 获取礼物数据
         new HonorListApi(mContext, 2, TempDataHelper.getCurrentChildNo(mContext), new
                 FetchEntryListListener() {
-            @Override
-            public void setData(List list) {
+                    @Override
+                    public void setData(List list) {
+                        if (Tools.listNotNull(list)) {
+                            giftModels.clear();
+                            giftModels.addAll(list);
+                            handler.sendEmptyMessage(1);
+                        }
+                    }
 
-            }
+                    @Override
+                    public void setError(ErrorMsg error) {
 
-            @Override
-            public void setError(ErrorMsg error) {
-
-            }
-        });
+                    }
+                });
 
     }
 
