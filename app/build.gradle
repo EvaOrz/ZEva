@@ -78,13 +78,14 @@ dependencies {
     implementation files('libs/umeng-shareboard-widget-6.9.2.jar')
     implementation files('libs/umeng-sharetool-6.9.2.jar')
     implementation files('libs/umeng-share-sina-simplify-6.9.2.jar')
+    // beecloud 支付
+    implementation files('libs/alipaySdk-20160809.jar')
+    implementation files('libs/beecloud-2.10.0.jar')
+    implementation files('libs/zxing-3.2.0.jar')
     // ViewPager圆点指示器
     implementation 'com.romandanylyk:pageindicatorview:0.2.0'
     // 图片选择（单选，多选）
     implementation 'com.yanzhenjie:album:2.1.1'
-    implementation files('libs/alipaySdk-20160809.jar')
-    implementation files('libs/beecloud-2.10.0.jar')
-    implementation files('libs/zxing-3.2.0.jar')
     //上拉刷新下拉加载
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-6'
 }

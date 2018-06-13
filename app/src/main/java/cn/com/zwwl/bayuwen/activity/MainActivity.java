@@ -34,6 +34,7 @@ import cn.com.zwwl.bayuwen.api.ChildInfoApi;
 import cn.com.zwwl.bayuwen.api.HonorListApi;
 import cn.com.zwwl.bayuwen.api.ReportPushApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
 import cn.com.zwwl.bayuwen.fragment.MainFrag1;
 import cn.com.zwwl.bayuwen.fragment.MainFrag2;
@@ -86,6 +87,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         setContentView(R.layout.activity_core);
         mContext = this;
         initView();
+        userModel = UserDataHelper.getUserLoginInfo(mContext);
         initData();
     }
 

@@ -36,16 +36,11 @@
             android:lines="1"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
+            android:textColor="@color/gray_dark"
             android:textColorHint="@color/gray_light"
             android:textSize="@dimen/text_size_12" />
 
     </LinearLayout>
-
-    <cn.com.zwwl.bayuwen.view.selectmenu.SelectMenuView
-        android:id="@+id/select_ke_menu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/search_head_layout" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refresh"
@@ -59,6 +54,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <cn.com.zwwl.bayuwen.view.selectmenu.SelectMenuView
+        android:id="@+id/select_ke_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_head_layout" />
 
 
 </RelativeLayout>

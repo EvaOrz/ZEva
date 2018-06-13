@@ -43,6 +43,8 @@ import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.Index1Model;
+import cn.com.zwwl.bayuwen.model.Index1Model.*;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.util.AppValue;
@@ -72,10 +74,13 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private RelativeLayout toolbar;//
     private InfiniteViewPager pingPager;// 拼图列表
     private ThreeDAdapter pingAdapter;
+
+    private List<AdvBean> advBeans = new ArrayList<>();// banner数据
+    private CalendarCourseBean calendarCourseBean;// calendar事件数据
+    private List<SelectedCourseBean> selectedCourses = new ArrayList<>();// 已选课程
     private List<View> pingtuData = new ArrayList<>();
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
     private UserModel userModel;
-
     private int bannerWid, bannerHei;
 
     private List<View> bannerDatas = new ArrayList<>();
@@ -143,6 +148,20 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         new Index1Api(mActivity, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
+                if (entry != null && entry instanceof Index1Model) {
+                    advBeans.clear();
+                    Index1Model index1Model = (Index1Model) entry;
+                    if (Tools.listNotNull(index1Model.getAdv())) {
+                        advBeans.addAll(index1Model.getAdv());
+                    }
+                    calendarCourseBean = index1Model.getCalendarCourse();
+                    
+                    selectedCourses.clear();
+                    if (Tools.listNotNull(index1Model.getSelectedCourse())) {
+                        selectedCourses.addAll(index1Model.getSelectedCourse());
+                    }
+                    handler.sendEmptyMessage(1);
+                }
 
             }
 
@@ -254,7 +273,8 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                                 Glide.with(mActivity).load(c.getPic()).into(childImg);
                         }
                     }
-
+                    break;
+                case 1:// 初始化页面数据
                     break;
             }
         }
