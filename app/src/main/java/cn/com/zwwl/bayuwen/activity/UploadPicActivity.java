@@ -5,6 +5,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -27,6 +28,7 @@ import cn.com.zwwl.bayuwen.base.MenuCode;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.util.ToastUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
 
 /**
@@ -125,34 +127,44 @@ public class UploadPicActivity extends BasicActivityWithTitle {
 
     @Override
     public void onMenuClick(int menuCode) {
-        if (albumFiles == null || albumFiles.size() >1) return;
-        List<File> files = new ArrayList<>();
-        for (AlbumFile albumFile : albumFiles) {
-            File f = new File(albumFile.getPath());
-            files.add(f);
+        if ((albumFiles == null || albumFiles.size() == 1) && TextUtils.isEmpty(Tools.getText(content))) {
+            ToastUtil.showShortToast("请先输入文字作业或上传作业图片");
+            return;
         }
-        new UploadPicApi(this, files, new ResponseCallBack<List<CommonModel>>() {
-            @Override
-            public void result(List<CommonModel> commonModels, ErrorMsg errorMsg) {
-                if (commonModels != null && commonModels.size() > 0) {
-                    urls.setLength(0);
-                    for (CommonModel c : commonModels) {
-                        urls.append(c.getUrl()).append(",");
-                    }
-                    uploadWork();
-                }
+        if (albumFiles != null && albumFiles.size() > 0) {
+            List<File> files = new ArrayList<>();
+            for (AlbumFile albumFile : albumFiles) {
+                File f = new File(albumFile.getPath());
+                files.add(f);
             }
-        });
+            new UploadPicApi(this, files, new ResponseCallBack<List<CommonModel>>() {
+                @Override
+                public void result(List<CommonModel> commonModels, ErrorMsg errorMsg) {
+                    if (commonModels != null && commonModels.size() > 0) {
+                        urls.setLength(0);
+                        for (CommonModel c : commonModels) {
+                            urls.append(c.getUrl()).append(",");
+                        }
+                        uploadWork();
+                    }
+                }
+            });
+        } else {
+            urls.setLength(0);
+            uploadWork();
+        }
+
     }
 
     private void uploadWork() {
         map.clear();
-        map.put("url", urls.toString());
-        map.put("kid", "10644");
-        map.put("cid", "53693");
+        if (urls.length() > 0)
+            map.put("url", urls.toString());
+        map.put("kid", kid);
+        map.put("cid", cid);
         map.put("state", "1");
         map.put("status", "1");
-        map.put("id","");
+        map.put("id", "");
         map.put("content", Tools.getText(content));
         new UploadWorkApi(this, map, new ResponseCallBack<CommonModel>() {
             @Override

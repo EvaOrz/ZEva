@@ -278,6 +278,7 @@ public class FinalEvalDialog extends PopupWindow {
             public void result(EvalContentModel model, ErrorMsg errorMsg) {
                 contentModel = model;
                 if (model != null) {
+                    listener.show();
                     title.setText(type == 1 ? "课程评价" : "月度评价");
                     //一级界面
                     label1.setText(model.getShow().getTitle());
@@ -310,7 +311,7 @@ public class FinalEvalDialog extends PopupWindow {
 
     public interface SubmitListener {
         void ok();
-
+void show();
         void error(int code);
     }
 }

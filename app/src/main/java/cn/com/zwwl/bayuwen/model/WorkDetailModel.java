@@ -7,18 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkDetailModel implements Parcelable {
+
     private String c_desc;
     private TDescBean t_desc;
     private int state;
     private List<CommonModel> c_img;
-
-    public List<CommonModel> getC_img() {
-        return c_img;
-    }
-
-    public void setC_img(List<CommonModel> c_img) {
-        this.c_img = c_img;
-    }
 
     public String getC_desc() {
         return c_desc;
@@ -44,13 +37,39 @@ public class WorkDetailModel implements Parcelable {
         this.state = state;
     }
 
+    public List<CommonModel> getC_img() {
+        return c_img;
+    }
 
+    public void setC_img(List<CommonModel> c_img) {
+        this.c_img = c_img;
+    }
 
     public static class TDescBean implements Parcelable {
+
         private String uid;
         private int role;
         private String name;
         private String content;
+
+        protected TDescBean(Parcel in) {
+            uid = in.readString();
+            role = in.readInt();
+            name = in.readString();
+            content = in.readString();
+        }
+
+        public static final Creator<TDescBean> CREATOR = new Creator<TDescBean>() {
+            @Override
+            public TDescBean createFromParcel(Parcel in) {
+                return new TDescBean(in);
+            }
+
+            @Override
+            public TDescBean[] newArray(int size) {
+                return new TDescBean[size];
+            }
+        };
 
         public String getUid() {
             return uid;
@@ -91,34 +110,13 @@ public class WorkDetailModel implements Parcelable {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.uid);
-            dest.writeInt(this.role);
-            dest.writeString(this.name);
-            dest.writeString(this.content);
+            dest.writeString(uid);
+            dest.writeInt(role);
+            dest.writeString(name);
+            dest.writeString(content);
         }
-
-        public TDescBean() {
-        }
-
-        protected TDescBean(Parcel in) {
-            this.uid = in.readString();
-            this.role = in.readInt();
-            this.name = in.readString();
-            this.content = in.readString();
-        }
-
-        public static final Creator<TDescBean> CREATOR = new Creator<TDescBean>() {
-            @Override
-            public TDescBean createFromParcel(Parcel source) {
-                return new TDescBean(source);
-            }
-
-            @Override
-            public TDescBean[] newArray(int size) {
-                return new TDescBean[size];
-            }
-        };
     }
+
 
     @Override
     public int describeContents() {

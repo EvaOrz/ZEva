@@ -146,14 +146,15 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
     }
 
     private void getData() {
-        kId="209";
-        cId="2107";
         new UnitDetailApi(this, kId, cId, new ResponseCallBack<UnitDetailModel>() {
             @Override
             public void result(UnitDetailModel unitDetailModel, ErrorMsg errorMsg) {
                 if (unitDetailModel != null) {
                     model = unitDetailModel;
+                    if (!TextUtils.isEmpty(unitDetailModel.getTaSummary().getContent()))
                     tutorEval.setText(unitDetailModel.getTaSummary().getContent());
+                    else
+                        tutorEval.setText("暂无");
                     pptAdapter.setNewData(unitDetailModel.getAccessory().getData());
                     if (unitDetailModel.getHomework() != null)
                         jobAdapter.setNewData(unitDetailModel.getHomework().getC_img());
@@ -186,6 +187,11 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
     @Override
     protected void setListener() {
         evalDialog.setSubmitListener(new FinalEvalDialog.SubmitListener() {
+            @Override
+            public void show() {
+                evalDialog.showAtLocation(tutorEval, Gravity.BOTTOM, 0, 0);
+            }
+
             @Override
             public void ok() {
                 Intent intent = new Intent(mActivity, WebActivity.class);
@@ -280,7 +286,6 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
                         evalDialog.setData(eval_type, reportBean.getYear(), reportBean.getMonth());
                         break;
                 }
-                evalDialog.showAtLocation(tutorEval, Gravity.BOTTOM, 0, 0);
             }
         }
     }
