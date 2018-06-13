@@ -27,15 +27,18 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.GiftAdapter;
 import cn.com.zwwl.bayuwen.adapter.JiangZhuangAdapter;
 import cn.com.zwwl.bayuwen.api.ChildInfoApi;
+import cn.com.zwwl.bayuwen.api.HonorActionApi;
 import cn.com.zwwl.bayuwen.api.HonorListApi;
 import cn.com.zwwl.bayuwen.api.UploadPicApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ChildModel;
+import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
 import cn.com.zwwl.bayuwen.view.DatePopWindow;
 import cn.com.zwwl.bayuwen.view.GenderPopWindow;
@@ -48,7 +51,6 @@ import cn.com.zwwl.bayuwen.widget.MostGridView;
  */
 public class ChildInfoActivity extends BaseActivity {
     private String picturePath;// 头像
-    private static final String KEY_IMAGE = "data";
     private static final String AVATAR_PIC = "avatar.jpg";
     private File photoFile;
     private ImageView aImg;
@@ -63,6 +65,7 @@ public class ChildInfoActivity extends BaseActivity {
     private MostGridView giftGridView;
     private JiangZhuangAdapter adapter;
     private List<GiftAndJiangModel> datas = new ArrayList<>();
+    private String deleteIds = "";// 待删除的id串
 
     private ChildModel childModel = new ChildModel();
 
@@ -82,6 +85,33 @@ public class ChildInfoActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getHonorList();
+    }
+
+
+    private void getHonorList() {
+        new HonorListApi(mContext, 1, childModel.getNo(), new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+                if (Tools.listNotNull(list)) {
+                    datas.clear();
+                    datas.addAll(list);
+                    addLast();
+                    handler.sendEmptyMessage(6);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
+
+    }
+
     private void initView() {
         aImg = findViewById(R.id.info_c_aimg);
         nameEv = findViewById(R.id.info_c_nametv);
@@ -97,15 +127,20 @@ public class ChildInfoActivity extends BaseActivity {
 
         giftGridView = findViewById(R.id.gift_grid);
         adapter = new JiangZhuangAdapter(mContext);
-        GiftAndJiangModel last = new GiftAndJiangModel();
-        last.setId(-1);
-        datas.add(last);
+        addLast();
         giftGridView.setAdapter(adapter);
         adapter.setData(datas);
         giftGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(mContext, JiangZhuangActivity.class));
+                if (datas.get(position).isDeleteStatus()) {
+                    doDelete(datas.get(position).getId() + "");
+                } else {
+                    Intent i = new Intent(mContext, JiangZhuangActivity.class);
+                    i.putExtra("JiangZhuangActivity_data", datas.get(position));
+                    startActivity(i);
+                }
+
             }
         });
         findViewById(R.id.info_c_back).setOnClickListener(this);
@@ -197,23 +232,40 @@ public class ChildInfoActivity extends BaseActivity {
                 break;
 
             case R.id.delete_all:
+                String deleteIds = "";
+                for (GiftAndJiangModel g : datas) {
+                    if (g.getId() != -1)
+                        deleteIds += g.getId() + ",";
+                }
+                doDelete(deleteIds);
                 deDo.setVisibility(View.GONE);
                 deCancle.setVisibility(View.GONE);
                 deAll.setVisibility(View.GONE);
+                datas.clear();
+                addLast();
+                handler.sendEmptyMessage(6);
                 break;
             case R.id.delete_do:
                 deDo.setVisibility(View.GONE);
                 deCancle.setVisibility(View.VISIBLE);
                 deAll.setVisibility(View.VISIBLE);
+                setCheckStatus(true);
                 break;
             case R.id.delete_cancle://
                 deDo.setVisibility(View.VISIBLE);
                 deCancle.setVisibility(View.GONE);
                 deAll.setVisibility(View.GONE);
+                setCheckStatus(false);
                 break;
 
         }
+    }
 
+    private void addLast() {
+        GiftAndJiangModel last = new GiftAndJiangModel();
+        last.setId(-1);
+        last.setStudent_no(childModel.getNo());
+        datas.add(last);
     }
 
     /**
@@ -225,8 +277,8 @@ public class ChildInfoActivity extends BaseActivity {
         new UploadPicApi(this, file, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
-                if (entry != null && entry instanceof UserModel) {
-                    childModel.setPic(((UserModel) entry).getPic());
+                if (entry != null && entry instanceof CommonModel) {
+                    childModel.setPic(((CommonModel) entry).getUrl());
                     commit();
 
                 }
@@ -280,17 +332,6 @@ public class ChildInfoActivity extends BaseActivity {
         birthTv.setText(childModel.getBirthday());
         ruxueTv.setText(childModel.getAdmission_time());
         nianjiTv.setText(childModel.getGrade());
-
-        new HonorListApi(mContext, 1, new FetchEntryListListener() {
-            @Override
-            public void setData(List list) {
-            }
-
-            @Override
-            public void setError(ErrorMsg error) {
-
-            }
-        });
     }
 
     @SuppressLint("HandlerLeak")
@@ -318,7 +359,9 @@ public class ChildInfoActivity extends BaseActivity {
                 case 5:// 性别选择
                     genderTv.setText(childModel.getSexTxt(childModel.getGender()));
                     break;
-
+                case 6:
+                    adapter.setData(datas);
+                    break;
             }
         }
     };
@@ -346,5 +389,33 @@ public class ChildInfoActivity extends BaseActivity {
             showToast(R.string.cancle);
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    private void setCheckStatus(boolean isCheck) {
+        for (int i = 0; i < datas.size(); i++) {
+            datas.get(i).setDeleteStatus(isCheck);
+        }
+        handler.sendEmptyMessage(6);
+    }
+
+    private void doDelete(String ids) {
+        showLoadingDialog(true);
+        new HonorActionApi(mContext, ids, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+                if (error == null) {
+                    finish();
+                } else {
+                    showToast(error.getDesc());
+                }
+            }
+        });
     }
 }

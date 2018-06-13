@@ -1,6 +1,6 @@
 package cn.com.zwwl.bayuwen.model;
 
-public class CommonModel {
+public class CommonModel extends  Entry{
     private String content;
     private int state;
     private String id;

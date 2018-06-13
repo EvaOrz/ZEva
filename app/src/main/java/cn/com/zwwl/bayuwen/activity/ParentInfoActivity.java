@@ -14,7 +14,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
+
 import java.io.File;
 import java.util.List;
 
@@ -23,9 +25,11 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.HonorListApi;
 import cn.com.zwwl.bayuwen.api.UploadPicApi;
 import cn.com.zwwl.bayuwen.api.UserInfoApi;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
@@ -119,8 +123,8 @@ public class ParentInfoActivity extends BaseActivity {
         new UploadPicApi(this, file, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
-                if (entry != null && entry instanceof UserModel) {
-                    userModel.setPic(((UserModel) entry).getPic());
+                if (entry != null && entry instanceof CommonModel) {
+                    userModel.setPic(((CommonModel) entry).getUrl());
                     commit();
 
                 }
@@ -174,7 +178,8 @@ public class ParentInfoActivity extends BaseActivity {
         genderTv.setText(userModel.getSexTxt(userModel.getSex()));
         phoneTv.setText(userModel.getTel());
 
-        new HonorListApi(mContext, 2, new FetchEntryListListener() {
+        new HonorListApi(mContext, 2, TempDataHelper.getCurrentChildNo(mContext), new
+                FetchEntryListListener() {
             @Override
             public void setData(List list) {
 

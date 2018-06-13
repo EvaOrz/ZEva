@@ -5,35 +5,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
+import cn.com.zwwl.bayuwen.api.HonorActionApi;
 import cn.com.zwwl.bayuwen.api.UploadPicApi;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
-import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.view.DatePopWindow;
 import cn.com.zwwl.bayuwen.widget.FetchPhotoManager;
-import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
  * 奖状编辑页面
@@ -41,19 +36,20 @@ import cn.com.zwwl.bayuwen.widget.ViewHolder;
 public class JiangZhuangActivity extends BaseActivity {
 
     private String picturePath;// 头像
-    private static final String KEY_IMAGE = "data";
     private static final String AVATAR_PIC = "jiangzhuang.jpg";
 
     private File photoFile;
     private GiftAndJiangModel giftAndJiangModel;
-    private ImageView pic, takeBt, deleteBt;
-    private EditText name, time;
 
+    private ImageView pic, takeBt, deleteBt;
+    private EditText name;
+    private TextView time;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
+        picturePath = Environment.getExternalStorageDirectory().getPath() + "/" + AVATAR_PIC;
         setContentView(R.layout.activity_jiangzhuang);
         if (getIntent().getSerializableExtra("JiangZhuangActivity_data") != null) {
             giftAndJiangModel = (GiftAndJiangModel) getIntent().getSerializableExtra
@@ -64,16 +60,43 @@ public class JiangZhuangActivity extends BaseActivity {
     }
 
     private void initView() {
-        findViewById(R.id.jiangzhuang_back).setOnClickListener(this);
-        pic = findViewById(R.id.jiang_img);
+        pic = findViewById(R.id.jiang_pic);
         takeBt = findViewById(R.id.jiang_bt1);
         deleteBt = findViewById(R.id.jiang_bt2);
         name = findViewById(R.id.jiang_name);
         time = findViewById(R.id.jiang_time);
+        findViewById(R.id.jiangzhuang_back).setOnClickListener(this);
+        findViewById(R.id.jiangzhuang_save).setOnClickListener(this);
+        takeBt.setOnClickListener(this);
+        deleteBt.setOnClickListener(this);
+        time.setOnClickListener(this);
 
-        if (giftAndJiangModel != null) {
-
+        if (giftAndJiangModel.getId() != -1) {
+            deleteBt.setVisibility(View.GONE);
+            name.setText(giftAndJiangModel.getTitle());
+            time.setText(giftAndJiangModel.getDate());
+            ImageLoader.display(mContext, pic, giftAndJiangModel.getPic(), null, null);
         }
+    }
+
+    private void doDelete() {
+        showLoadingDialog(true);
+        new HonorActionApi(mContext, giftAndJiangModel.getId() + "", new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+                if (error == null) {
+                    finish();
+                } else {
+                    showToast(error.getDesc());
+                }
+            }
+        });
     }
 
     @Override
@@ -83,8 +106,55 @@ public class JiangZhuangActivity extends BaseActivity {
             case R.id.jiangzhuang_back:
                 finish();
                 break;
-
+            case R.id.jiangzhuang_save:
+                String title = name.getText().toString();
+                if (TextUtils.isEmpty(giftAndJiangModel.getPic())) {
+                    showToast("请上传奖状图片");
+                } else if (TextUtils.isEmpty(title)) {
+                    showToast("请上传奖状名称");
+                } else if (TextUtils.isEmpty(giftAndJiangModel.getDate())) {
+                    showToast("请上传获奖时间");
+                } else
+                    giftAndJiangModel.setTitle(title);
+                doSave();
+                break;
+            case R.id.jiang_time:
+                hideJianpan();
+                new DatePopWindow(mContext, new DatePopWindow.MyDatePickListener() {
+                    @Override
+                    public void onDatePick(int year, int month, int day) {
+                        giftAndJiangModel.setDate(year + "-" + month + "-" + day);
+                        handler.sendEmptyMessage(1);
+                    }
+                });
+                break;
+            case R.id.jiang_bt1:
+                doFecthPicture();
+                break;
+            case R.id.jiang_bt2:
+                doDelete();
+                break;
         }
+    }
+
+    private void doSave() {
+        showLoadingDialog(true);
+        new HonorActionApi(mContext, 1, giftAndJiangModel, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+                if (error == null) {
+                    finish();
+                } else {
+                    showToast(error.getDesc());
+                }
+            }
+        });
     }
 
     protected void doFecthPicture() {
@@ -107,8 +177,10 @@ public class JiangZhuangActivity extends BaseActivity {
         new UploadPicApi(this, file, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
-                if (entry != null && entry instanceof UserModel) {
-                    String pic = ((UserModel) entry).getPic();
+                if (entry != null && entry instanceof CommonModel) {
+                    String pic = ((CommonModel) entry).getUrl();
+                    giftAndJiangModel.setPic(pic);
+                    handler.sendEmptyMessage(0);
                 }
             }
 
@@ -129,6 +201,10 @@ public class JiangZhuangActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
+                    ImageLoader.display(mContext, pic, giftAndJiangModel.getPic(), null, null);
+                    break;
+                case 1:// 更新时间
+                    time.setText(giftAndJiangModel.getDate());
                     break;
             }
         }

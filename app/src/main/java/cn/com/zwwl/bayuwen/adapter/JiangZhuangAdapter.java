@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
 import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
@@ -23,7 +24,6 @@ import cn.com.zwwl.bayuwen.widget.ViewHolder;
 public class JiangZhuangAdapter extends CheckScrollAdapter<GiftAndJiangModel> {
 
     private Context mContext;
-    private List<GiftAndJiangModel> datas = new ArrayList<>();
 
     public JiangZhuangAdapter(Context context) {
         super(context);
@@ -53,6 +53,14 @@ public class JiangZhuangAdapter extends CheckScrollAdapter<GiftAndJiangModel> {
         TextView textView = viewHolder.getView(R.id.jiang_name);
         LinearLayout layout1 = viewHolder.getView(R.id.jiang_layout1);
         TextView layout2 = viewHolder.getView(R.id.jiang_layout2);
+
+        ImageLoader.display(mContext, imageView, giftAndJiangModel.getPic(), null, null);
+        textView.setText(giftAndJiangModel.getTitle());
+        if (giftAndJiangModel.isDeleteStatus()) {
+            delete.setVisibility(View.VISIBLE);
+        } else {
+            delete.setVisibility(View.GONE);
+        }
         if (giftAndJiangModel.getId() == -1) {
             layout1.setVisibility(View.INVISIBLE);
             layout2.setVisibility(View.VISIBLE);

@@ -8,6 +8,7 @@ public class GiftAndJiangModel extends Entry {
     private int id;
     private String title;
     private String desc;
+    private String student_no ;
     private String pic;
     private int type;
     private String date;
@@ -61,11 +62,20 @@ public class GiftAndJiangModel extends Entry {
         this.type = type;
     }
 
+
     public String getDate() {
         return date;
     }
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getStudent_no() {
+        return student_no;
+    }
+
+    public void setStudent_no(String student_no) {
+        this.student_no = student_no;
     }
 }
