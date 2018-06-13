@@ -22,6 +22,15 @@ public class PlanModel {
     private int next;
     private String nextTime;
     private int source;
+private String playUrl;
+
+    public String getPlayUrl() {
+        return playUrl;
+    }
+
+    public void setPlayUrl(String playUrl) {
+        this.playUrl = playUrl;
+    }
 
     public int getSource() {
         return source;

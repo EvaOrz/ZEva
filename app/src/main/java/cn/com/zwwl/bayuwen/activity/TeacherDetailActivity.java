@@ -57,7 +57,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
     private TeacherModel teacherDetailModel;
 
     private String tid;
-    private int page = 1;
+    private int page = 1,totalPage;
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
@@ -130,9 +130,12 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
             public void result(BaseResponse baseResponse, ErrorMsg errorMsg) {
                 refreshLayout.finishLoadMore();
                 if (baseResponse != null) {
+                    totalPage=baseResponse.getTotal_count()/baseResponse.getPagesize();
+                    if (baseResponse.getTotal_count()%baseResponse.getPagesize()>0)
+                        totalPage+=1;
                     keModels.addAll(baseResponse.getCourse());
                     tCourseListAdapter.notifyDataSetChanged();
-                    if (page == baseResponse.getTotal_count())
+                    if (page ==totalPage)
                         refreshLayout.finishLoadMoreWithNoMoreData();
                 }
 
