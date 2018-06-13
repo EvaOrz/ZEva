@@ -320,7 +320,9 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
             public void result(ReportModel model, ErrorMsg errorMsg) {
                 reportModel = model;
                 if (reportModel != null) {
-                    DialogUtil.showDoubleDialog(MainActivity.this, R.string.hint_title, R.string.report_hint, R.string.eval_look, R.string.cancel, new DialogInterface.OnClickListener() {
+                    DialogUtil.showDoubleDialog(MainActivity.this, R.string.hint_title, R.string
+                            .report_hint, R.string.eval_look, R.string.cancel, new
+                            DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if (reportModel.getKeReport() != null) {
@@ -328,17 +330,22 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
                                     evalDialog.setData(1, reportModel.getKeReport().getKid());
                                     evalDialog.showAtLocation(mainView, Gravity.BOTTOM, 0, 0);
                                 } else {
-                                    Intent intent = new Intent(MainActivity.this, WebActivity.class);
-                                    intent.putExtra("WebActivity_data", reportModel.getKeReport().getUrl());
+                                    Intent intent = new Intent(MainActivity.this, WebActivity
+                                            .class);
+                                    intent.putExtra("WebActivity_data", reportModel.getKeReport()
+                                            .getUrl());
                                     startActivity(intent);
                                 }
                             } else if (reportModel.getMonthReport() != null) {
                                 if (reportModel.getMonthReport().getComment_id() == null) {
-                                    evalDialog.setData(2, reportModel.getMonthReport().getYear(), reportModel.getMonthReport().getMonth());
+                                    evalDialog.setData(2, reportModel.getMonthReport().getYear(),
+                                            reportModel.getMonthReport().getMonth());
                                     evalDialog.showAtLocation(mainView, Gravity.BOTTOM, 0, 0);
                                 } else {
-                                    Intent intent = new Intent(MainActivity.this, WebActivity.class);
-                                    intent.putExtra("WebActivity_data", reportModel.getMonthReport().getUrl());
+                                    Intent intent = new Intent(MainActivity.this, WebActivity
+                                            .class);
+                                    intent.putExtra("WebActivity_data", reportModel
+                                            .getMonthReport().getUrl());
                                     startActivity(intent);
                                 }
                             }
@@ -461,7 +468,8 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
 //        gongxun.setText();
 
         // 获取礼物数据
-        new HonorListApi(mContext, 2, new FetchEntryListListener() {
+        new HonorListApi(mContext, 2, TempDataHelper.getCurrentChildNo(mContext), new
+                FetchEntryListListener() {
             @Override
             public void setData(List list) {
 

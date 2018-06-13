@@ -3,7 +3,7 @@ package cn.com.zwwl.bayuwen.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class CommonModel implements Parcelable {
+public class CommonModel extends  Entry{
     private String content;
     private int state;
     private String id;
@@ -104,25 +104,7 @@ public class CommonModel implements Parcelable {
         this.state = state;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.content);
-        dest.writeInt(this.state);
-        dest.writeString(this.id);
-        dest.writeString(this.url);
-        dest.writeString(this.name);
-        dest.writeString(this.tid);
-        dest.writeString(this.kid);
-        dest.writeString(this.student_no);
-        dest.writeString(this.create_at);
-        dest.writeString(this.update_at);
-        dest.writeInt(this.status);
-    }
 
     public CommonModel() {
     }

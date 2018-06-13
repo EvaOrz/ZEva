@@ -56,13 +56,7 @@ public class ChildMenuPopView extends PopupWindow {
             });
             layout.addView(view);
         }
-        conentView.findViewById(R.id.pop_child_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity(new Intent(context, ChildInfoActivity.class));
-                dismiss();
-            }
-        });
+
 // 设置SelectPicPopupWindow的View
         this.setContentView(conentView);
 

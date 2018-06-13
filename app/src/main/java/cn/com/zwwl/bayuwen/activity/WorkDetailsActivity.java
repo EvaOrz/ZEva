@@ -45,7 +45,7 @@ public class WorkDetailsActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initData() {
-        model = getIntent().getParcelableExtra("model");
+        model = (WorkDetailModel)getIntent().getSerializableExtra("model");
         if (model != null) {
             workAdapter.setNewData(model.getC_img());
             if (!TextUtils.isEmpty(model.getC_desc()))
