@@ -163,7 +163,7 @@ public class OrderTuifeeListActivity extends BaseActivity implements TuifeeReasi
             final KeModel item = getItem(position);
             ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout
                     .item_course_for_order);
-            TextView tag = viewHolder.getView(R.id.item_order_tag);
+            ImageView tag = viewHolder.getView(R.id.item_order_tag);
             TextView title = viewHolder.getView(R.id.item_order_title);
             TextView teacher = viewHolder.getView(R.id.item_order_teacher);
             TextView date = viewHolder.getView(R.id.item_order_date);
@@ -173,7 +173,7 @@ public class OrderTuifeeListActivity extends BaseActivity implements TuifeeReasi
             ImageLoader.display(mContext, pic, item.getPic(), R.drawable.avatar_placeholder, R
                     .drawable.avatar_placeholder);
 
-            tag.setText(item.getTagTxt());
+            tag.setImageResource(item.getTagImg());
             title.setText(item.getTitle());
             teacher.setText(item.getTname());
             date.setText(CalendarTools.format(Long.valueOf(item.getStartPtime()),

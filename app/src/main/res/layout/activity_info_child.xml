@@ -16,7 +16,7 @@
             android:id="@+id/info_c_back"
             android:layout_width="@dimen/back_size"
             android:layout_height="@dimen/back_size"
-            android:src="@drawable/back_gray" />
+            android:src="@mipmap/icon_back" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -360,18 +360,57 @@
                 android:orientation="vertical"
                 android:padding="15dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/woderongyu"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/text_size_14" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/woderongyu"
+                        android:textColor="@color/gray_dark"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/delete_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="全部删除"
+                        android:textColor="@color/gold"
+                        android:textSize="@dimen/text_size_14"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/delete_cancle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="@string/cancle"
+                        android:textColor="@color/gold"
+                        android:textSize="@dimen/text_size_14"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/delete_do"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@color/gray_light" />
+
+                </LinearLayout>
+
 
                 <cn.com.zwwl.bayuwen.widget.MostGridView
                     android:id="@+id/gift_grid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:numColumns="5"
+                    android:numColumns="3"
                     android:scrollbars="none" />
 
             </LinearLayout>

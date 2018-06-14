@@ -22,17 +22,17 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.api.CourseApi;
 import cn.com.zwwl.bayuwen.api.FollowApi;
-import cn.com.zwwl.bayuwen.api.LeasonListApi;
 import cn.com.zwwl.bayuwen.api.fm.PinglunApi;
 import cn.com.zwwl.bayuwen.api.order.CartApi;
+import cn.com.zwwl.bayuwen.api.order.CouponApi;
 import cn.com.zwwl.bayuwen.api.order.KaiTuanbyCodeApi;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.CouponModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
-import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.model.PromotionModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
 import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
@@ -41,6 +41,7 @@ import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.KeDetailView1;
 import cn.com.zwwl.bayuwen.view.KeDetailView2;
 import cn.com.zwwl.bayuwen.view.KeDetailView3;
+import cn.com.zwwl.bayuwen.view.YouHuiJuanPopWindow;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.CustomViewPager;
 
@@ -59,6 +60,7 @@ public class CourseDetailActivity extends BaseActivity {
     private TextView date_tv;
     private TextView priceTv1;
     private TextView priceTv2;
+    private TextView youhuiBt;
     private RadioButton button1, button2, button3;
     private View line1, line2, line3;
     private ImageView follow_status;
@@ -79,14 +81,14 @@ public class CourseDetailActivity extends BaseActivity {
     private KeDetailView2 cDetailTabFrag2;
     private KeDetailView3 cDetailTabFrag3;
     private List<PinglunModel> pinglunModels = new ArrayList<>();
-    private List<LessonModel> lesonModels = new ArrayList<>();
+    // 优惠券数据
+    private List<CouponModel> couponModels = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
-        initView();
         // 兑换课程详情
         if (getIntent().getSerializableExtra("CourseDetailActivity_data") != null && getIntent()
                 .getSerializableExtra("CourseDetailActivity_data") instanceof KeModel) {
@@ -100,7 +102,7 @@ public class CourseDetailActivity extends BaseActivity {
             initData();
         }
         getPinglunData();
-        getLeasonsData();
+        initView();
     }
 
     private void setUi() {
@@ -132,31 +134,8 @@ public class CourseDetailActivity extends BaseActivity {
         });
     }
 
-    /**
-     * 获取子课列表
-     */
-    private void getLeasonsData() {
-        new LeasonListApi(mContext, cid, 1, new FetchEntryListListener() {
-            @Override
-            public void setData(List list) {
-                if (Tools.listNotNull(list)) {
-                    lesonModels.clear();
-                    lesonModels.addAll(list);
-                    handler.sendEmptyMessage(4);
-                }
-            }
-
-            @Override
-            public void setError(ErrorMsg error) {
-
-            }
-        });
-
-    }
-
     @Override
     protected void initData() {
-        cid = "209";
         new CourseApi(mContext, cid, new FetchEntryListener() {
 
             @Override
@@ -180,6 +159,7 @@ public class CourseDetailActivity extends BaseActivity {
     private void initView() {
         course_tv = findViewById(R.id.course_tv);
         classno_tv = findViewById(R.id.classno_tv);
+        youhuiBt = findViewById(R.id.youhui_layout);
         price_tv = findViewById(R.id.price_tv);
         course_iv = findViewById(R.id.course_iv);
         place_tv = findViewById(R.id.place_tv);
@@ -198,9 +178,9 @@ public class CourseDetailActivity extends BaseActivity {
         nomalFooter = findViewById(R.id.nomal_footer);
         promotionLayout = findViewById(R.id.promotion_layout);
         promotionContain = findViewById(R.id.promotion_container);
-        cDetailTabFrag1 = new KeDetailView1(mContext);
+        cDetailTabFrag1 = new KeDetailView1(this,cid);
         cDetailTabFrag2 = new KeDetailView2(mContext);
-        cDetailTabFrag3 = new KeDetailView3(mContext);
+        cDetailTabFrag3 = new KeDetailView3(this,cid);
         keDetailViews.add(cDetailTabFrag1);
         keDetailViews.add(cDetailTabFrag2);
         keDetailViews.add(cDetailTabFrag3);
@@ -260,6 +240,7 @@ public class CourseDetailActivity extends BaseActivity {
         findViewById(R.id.group_purchase_bt2).setOnClickListener(this);
         add_tv.setOnClickListener(this);
         sure_tv.setOnClickListener(this);
+        youhuiBt.setOnClickListener(this);
         findViewById(R.id.followtv).setOnClickListener(this);
     }
 
@@ -330,6 +311,9 @@ public class CourseDetailActivity extends BaseActivity {
             case R.id.duihuan_footer:// 兑换
                 doKaitongBycode(code);
                 break;
+            case R.id.youhui_layout:// 领取优惠券
+                new YouHuiJuanPopWindow(mContext, couponModels);
+                break;
         }
     }
 
@@ -397,14 +381,14 @@ public class CourseDetailActivity extends BaseActivity {
                 case 1:
                     cDetailTabFrag3.setData(pinglunModels);
                     break;
-                case 4:
-                    cDetailTabFrag1.setData(lesonModels);
-                    break;
                 case 2:// 关注状态
                     follow_status.setBackgroundColor(getResources().getColor(R.color.gold));
                     break;
                 case 3:// 未关注状态
                     follow_status.setBackgroundColor(getResources().getColor(R.color.gray_dark));
+                    break;
+                case 5:// 显示领取优惠券
+                    youhuiBt.setVisibility(View.VISIBLE);
                     break;
 
             }
@@ -455,6 +439,8 @@ public class CourseDetailActivity extends BaseActivity {
             promotionLayout.setVisibility(View.GONE);
         }
         cDetailTabFrag2.setData(keModel);
+        // 获取到课程信息之后  开始获取优惠券信息
+        checkYouhui();
     }
 
     private View getTeacherView(final TeacherModel teacherModel) {
@@ -504,5 +490,26 @@ public class CourseDetailActivity extends BaseActivity {
             }
         });
         return view;
+    }
+
+    /**
+     * 检查是否有优惠券
+     */
+    private void checkYouhui() {
+        new CouponApi(mContext, 1, keModel.getKid(), new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+                if (Tools.listNotNull(list)) {
+                    couponModels.clear();
+                    couponModels.addAll(list);
+                    handler.sendEmptyMessage(5);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
     }
 }

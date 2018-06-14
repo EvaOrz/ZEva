@@ -12,17 +12,4 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" />
 
-    <LinearLayout
-        android:id="@+id/pop_child_add"
-        android:layout_width="match_parent"
-        android:gravity="center_horizontal"
-        android:padding="10dp"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="15dp"
-            android:background="@color/gold"
-            android:layout_height="15dp" />
-    </LinearLayout>
-
 </LinearLayout>

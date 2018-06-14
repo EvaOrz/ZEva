@@ -14,23 +14,33 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
+
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.adapter.GiftAdapter;
 import cn.com.zwwl.bayuwen.api.HonorListApi;
 import cn.com.zwwl.bayuwen.api.UploadPicApi;
 import cn.com.zwwl.bayuwen.api.UserInfoApi;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.ChildModel;
+import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.GenderPopWindow;
 import cn.com.zwwl.bayuwen.widget.FetchPhotoManager;
+import cn.com.zwwl.bayuwen.widget.MostGridView;
 
 /**
  * 编辑家长信息页面
@@ -44,7 +54,10 @@ public class ParentInfoActivity extends BaseActivity {
     private EditText nameEv;
     private TextView genderTv, phoneTv;
     private boolean isNeedChangePic = false;
+    private MostGridView giftGridView;
+    private GiftAdapter giftAdapter;
 
+    private List<GiftAndJiangModel> giftModels = new ArrayList<>();// 礼物数据
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +79,8 @@ public class ParentInfoActivity extends BaseActivity {
         nameEv = findViewById(R.id.info_p_nametv);
         genderTv = findViewById(R.id.info_p_sextv);
         phoneTv = findViewById(R.id.info_p_phoneTv);
+        giftGridView = findViewById(R.id.gift_grid);
+
         findViewById(R.id.info_p_back).setOnClickListener(this);
         findViewById(R.id.info_p_avatar).setOnClickListener(this);
         findViewById(R.id.info_p_sex).setOnClickListener(this);
@@ -119,8 +134,8 @@ public class ParentInfoActivity extends BaseActivity {
         new UploadPicApi(this, file, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
-                if (entry != null && entry instanceof UserModel) {
-                    userModel.setPic(((UserModel) entry).getPic());
+                if (entry != null && entry instanceof CommonModel) {
+                    userModel.setPic(((CommonModel) entry).getUrl());
                     commit();
 
                 }
@@ -174,28 +189,23 @@ public class ParentInfoActivity extends BaseActivity {
         genderTv.setText(userModel.getSexTxt(userModel.getSex()));
         phoneTv.setText(userModel.getTel());
 
-        new HonorListApi(mContext, 1, new FetchEntryListListener() {
-            @Override
-            public void setData(List list) {
+        new HonorListApi(mContext, 2, TempDataHelper.getCurrentChildNo(mContext), new
+                FetchEntryListListener() {
+                    @Override
+                    public void setData(List list) {
+                        if (Tools.listNotNull(list)) {
+                            giftModels.clear();
+                            giftModels.addAll(list);
+                            handler.sendEmptyMessage(2);
+                        }
+                    }
 
-            }
+                    @Override
+                    public void setError(ErrorMsg error) {
 
-            @Override
-            public void setError(ErrorMsg error) {
+                    }
+                });
 
-            }
-        });
-        new HonorListApi(mContext, 2, new FetchEntryListListener() {
-            @Override
-            public void setData(List list) {
-
-            }
-
-            @Override
-            public void setError(ErrorMsg error) {
-
-            }
-        });
     }
 
     @SuppressLint("HandlerLeak")
@@ -204,16 +214,19 @@ public class ParentInfoActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
+                case 1:// 重新加载用户信息
+                    initData();
+                    break;
 
+                case 2:// 更新礼物数据
+                    giftAdapter = new GiftAdapter(mContext, giftModels);
+                    giftGridView.setAdapter(giftAdapter);
+                    break;
                 case 3:
                     isNeedChangePic = true;
                     Glide.with(mContext).load(photoFile).into(aImg);
                     break;
 
-
-                case 1:// 重新加载用户信息
-                    initData();
-                    break;
             }
         }
     };

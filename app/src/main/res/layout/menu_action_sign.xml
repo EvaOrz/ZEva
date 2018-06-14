@@ -5,5 +5,7 @@
     android:drawableEnd="@mipmap/icon_report"
     android:drawableRight="@mipmap/icon_report"
     android:gravity="center_vertical"
+    android:paddingEnd="@dimen/dp_10"
+   android:paddingStart="@dimen/dp_10"
     android:text="@string/sign"
     android:textColor="@color/gold" />

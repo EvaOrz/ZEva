@@ -88,7 +88,7 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
         adapter.setType(type);
         kid = getIntent().getStringExtra("kid");
         setCustomTitle(getIntent().getStringExtra("title"));
-        if ("1".equals(getIntent().getStringExtra("online"))) {
+        if (getIntent().getIntExtra("online",-1)==1) {
             classCovert.setVisibility(View.GONE);
             courseChange.setVisibility(View.GONE);
         }
@@ -105,6 +105,7 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
                 intent.putExtra("kId", model.getCompleteClass().get(position).getKid());
                 intent.putExtra("cId", model.getCompleteClass().get(position).getId());
                 intent.putExtra("title", model.getCompleteClass().get(position).getTitle());
+                intent.putExtra("video", 1);
                 startActivity(intent);
             }
         });
@@ -122,8 +123,6 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
         switch (view.getId()) {
             case R.id.course_eval:
                 ToastUtil.showShortToast("学完课程才能评价哦！");
-//                intent.putExtra("kid", kid);
-//                intent.setClass(this, CourseEvalActivity.class);
                 break;
             case R.id.course_change:
                 mApplication.operate_type = 0;

@@ -10,15 +10,16 @@ import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
-import cn.com.zwwl.bayuwen.model.CommentModel;
+import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.util.GsonUtil;
 
 public class VoteApi extends BaseApi {
     private Activity activity;
-    private ResponseCallBack<CommentModel> callBack;
+    private ResponseCallBack<CommonModel> callBack;
     private HashMap<String, String> para;
 
-    public VoteApi(Activity context, HashMap<String, String> map, ResponseCallBack<CommentModel> callBack) {
+    public VoteApi(Activity context, HashMap<String, String> map, ResponseCallBack<CommonModel> callBack) {
         super(context);
         this.activity = context;
         this.para = map;
@@ -37,11 +38,13 @@ public class VoteApi extends BaseApi {
     }
 
     @Override
-    protected void handler(JSONObject json, JSONArray array, final ErrorMsg errorMsg) {
+    protected void handler(final JSONObject json, JSONArray array, final ErrorMsg errorMsg) {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                callBack.result(null, errorMsg);
+                CommonModel model=null;
+                if (json!=null)model= GsonUtil.parseJson(CommonModel.class,json.toString());
+                callBack.result(model, errorMsg);
             }
         });
     }

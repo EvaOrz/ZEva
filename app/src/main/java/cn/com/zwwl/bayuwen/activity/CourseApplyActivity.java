@@ -42,6 +42,10 @@ public class CourseApplyActivity extends BasicActivityWithTitle {
     AppCompatTextView time;
     LessonModel lessonModel;
     KeModel keModel;
+    @BindView(R.id.stock)
+    AppCompatTextView stock;
+    @BindView(R.id.price)
+    AppCompatTextView price;
 
     @Override
     protected int setContentView() {
@@ -67,7 +71,8 @@ public class CourseApplyActivity extends BasicActivityWithTitle {
                 "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(keModel.getEndPtime()),
                 "yyyy-MM-dd"));
         time.setText(keModel.getClass_start_at() + "-" + keModel.getClass_end_at());
-
+        stock.setText(String.format("剩余名额: %s", mApplication.newKe.getNum()));
+        price.setText(String.format("￥ %s", mApplication.newKe.getBuyPrice()));
     }
 
     @Override
@@ -88,7 +93,7 @@ public class CourseApplyActivity extends BasicActivityWithTitle {
             public void result(CommonModel commonModel, ErrorMsg errorMsg) {
                 if (errorMsg == null) {
                     startActivity(new Intent(mActivity, ChangeResultActivity.class));
-                }else {
+                } else {
                     ToastUtil.showShortToast(errorMsg.getDesc());
                 }
             }
@@ -100,4 +105,5 @@ public class CourseApplyActivity extends BasicActivityWithTitle {
     public void close() {
         finish();
     }
+
 }

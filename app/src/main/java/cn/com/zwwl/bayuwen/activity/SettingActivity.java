@@ -47,6 +47,7 @@ public class SettingActivity extends BaseActivity {
             case R.id.setting_option3:
                 break;
             case R.id.setting_option4:
+                startActivity(new Intent(mContext, AboutActivity.class));
                 break;
             case R.id.setting_logout:
                 UserDataHelper.clearLoginInfo(mContext);

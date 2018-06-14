@@ -14,6 +14,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.maning.calendarlibrary.MNCalendarVertical;
 import com.maning.calendarlibrary.listeners.OnCalendarRangeChooseListener;
@@ -25,8 +26,14 @@ import java.util.Date;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.api.order.CouponApi;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.CouponModel;
 import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
@@ -37,14 +44,42 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
     private Context mContext;
     private PopupWindow window;
     private ListView listView;
-    private List<String> datas = new ArrayList<>();
     private YouhuiAdapter adapter;
+    private List<CouponModel> couponModels = new ArrayList<>();
+    private int type = 1;
+    private OnPickYouhuiListener listener;
+
+    public interface OnPickYouhuiListener {
+        public void onPick(String coupon_code);
+    }
 
     /**
+     * 可领取的优惠券
+     *
      * @param context
      */
-    public YouHuiJuanPopWindow(Context context) {
+    public YouHuiJuanPopWindow(Context context, List<CouponModel> cs) {
         mContext = context;
+        this.type = 1;
+        couponModels.clear();
+        couponModels.addAll(cs);
+        init();
+    }
+
+    /**
+     * 可使用的优惠券
+     *
+     * @param context
+     * @param cs
+     * @param listener
+     */
+    public YouHuiJuanPopWindow(Context context, List<CouponModel> cs, OnPickYouhuiListener
+            listener) {
+        mContext = context;
+        this.type = 2;
+        this.listener = listener;
+        couponModels.clear();
+        couponModels.addAll(cs);
         init();
     }
 
@@ -55,11 +90,9 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
         view.findViewById(R.id.youhuijuan_close)
                 .setOnClickListener(this);
         listView = view.findViewById(R.id.youhuijuan_listview);
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        adapter = new YouhuiAdapter(mContext, datas);
+        adapter = new YouhuiAdapter(mContext, couponModels);
         listView.setAdapter(adapter);
+
         window = new PopupWindow(view, RelativeLayout.LayoutParams.FILL_PARENT,
                 RelativeLayout.LayoutParams.FILL_PARENT);
         window.setFocusable(true);
@@ -86,9 +119,9 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
     public class YouhuiAdapter extends BaseAdapter {
 
         private Context mContext;
-        private List<String> datas = new ArrayList<>();
+        private List<CouponModel> datas = new ArrayList<>();
 
-        public YouhuiAdapter(Context context, List<String> datas) {
+        public YouhuiAdapter(Context context, List<CouponModel> datas) {
             mContext = context;
             this.datas = datas;
         }
@@ -108,10 +141,49 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_youhuijuan);
+            final CouponModel c = datas.get(position);
+
+            TextView name = viewHolder.getView(R.id.youhui_name);
+            TextView time = viewHolder.getView(R.id.youhui_time);
+            TextView bt = viewHolder.getView(R.id.youhui_bt);
+            name.setText(c.getDesc());
+            time.setText(c.getStart_use_time().substring(0, 10) + "至" + c.getEnd_use_time()
+                    .substring(0, 10));
+            if (type == 1) {
+                bt.setText("领取");
+            } else if (type == 2) {
+                bt.setText("使用");
+            }
+
+            viewHolder.getView(R.id.click_layout).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (type == 1) {
+                        lingqu(c.getId());
+                    } else if (type == 2) {
+                        listener.onPick(c.getCoupon_code());
+                    }
+                }
+            });
 
             return viewHolder.getConvertView();
         }
 
+    }
+
+    private void lingqu(String id) {
+        new CouponApi(mContext, id, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                if (error == null) AppValue.showToast(mContext, "领取成功");
+                else AppValue.showToast(mContext, error.getDesc());
+            }
+        });
     }
 
 

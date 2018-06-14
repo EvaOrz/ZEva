@@ -34,6 +34,7 @@ import cn.com.zwwl.bayuwen.api.ChildInfoApi;
 import cn.com.zwwl.bayuwen.api.HonorListApi;
 import cn.com.zwwl.bayuwen.api.ReportPushApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
 import cn.com.zwwl.bayuwen.fragment.MainFrag1;
 import cn.com.zwwl.bayuwen.fragment.MainFrag2;
@@ -46,6 +47,7 @@ import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.model.ReportModel;
 import cn.com.zwwl.bayuwen.util.DialogUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
@@ -74,6 +76,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     private GiftAdapter giftAdapter;
 
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
+    private List<GiftAndJiangModel> giftModels = new ArrayList<>();// 礼物数据
     private boolean isCanSetDefaultChild = true;// 是否可以设置默认学员
     private FinalEvalDialog evalDialog;
     private ReportModel reportModel;
@@ -84,6 +87,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         setContentView(R.layout.activity_core);
         mContext = this;
         initView();
+        userModel = UserDataHelper.getUserLoginInfo(mContext);
         initData();
     }
 
@@ -113,6 +117,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     protected void onResume() {
         super.onResume();
         if (MyApplication.loginStatusChange) {
+            Log.e("********", "登录状态变化");
             initData();
             MyApplication.loginStatusChange = false;
         }
@@ -147,6 +152,11 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
     private void initView() {
         evalDialog = new FinalEvalDialog(this);
         evalDialog.setSubmitListener(new FinalEvalDialog.SubmitListener() {
+            @Override
+            public void show() {
+                evalDialog.showAtLocation(mainView, Gravity.BOTTOM, 0, 0);
+            }
+
             @Override
             public void ok() {
                 if (reportModel.getKeReport() != null) {
@@ -206,9 +216,6 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         childLayout = findViewById(R.id.child_layout);
         childAddBt = findViewById(R.id.child_add);
         giftGridView = findViewById(R.id.my_gifts);
-        giftAdapter = new GiftAdapter(mContext, new ArrayList<CalendarOptionPopWindow
-                .CheckStatusModel>());
-        giftGridView.setAdapter(giftAdapter);
 
         tabButton1 = findViewById(R.id.bottom_nav_1);
         tabButton2 = findViewById(R.id.bottom_nav_2);
@@ -249,8 +256,9 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
                     mainFrag1.loadChild(childModels);
                     mainFrag5.loadChild(childModels);
                     break;
-                case 1:
-
+                case 1:// 更新礼物数据
+                    giftAdapter = new GiftAdapter(mContext, giftModels);
+                    giftGridView.setAdapter(giftAdapter);
                     break;
             }
         }
@@ -319,35 +327,51 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
             public void result(ReportModel model, ErrorMsg errorMsg) {
                 reportModel = model;
                 if (reportModel != null) {
-                    DialogUtil.showDoubleDialog(MainActivity.this, R.string.hint_title, R.string.report_hint, R.string.eval_look, R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (reportModel.getKeReport() != null) {
-                                if (reportModel.getKeReport().getComment_id() == null) {
-                                    evalDialog.setData(1, reportModel.getKeReport().getKid());
-                                    evalDialog.showAtLocation(mainView, Gravity.BOTTOM, 0, 0);
-                                } else {
-                                    Intent intent = new Intent(MainActivity.this, WebActivity.class);
-                                    intent.putExtra("WebActivity_data", reportModel.getKeReport().getUrl());
-                                    startActivity(intent);
-                                }
-                            } else if (reportModel.getMonthReport() != null) {
-                                if (reportModel.getMonthReport().getComment_id() == null) {
-                                    evalDialog.setData(2, reportModel.getMonthReport().getYear(), reportModel.getMonthReport().getMonth());
-                                    evalDialog.showAtLocation(mainView, Gravity.BOTTOM, 0, 0);
-                                } else {
-                                    Intent intent = new Intent(MainActivity.this, WebActivity.class);
-                                    intent.putExtra("WebActivity_data", reportModel.getMonthReport().getUrl());
-                                    startActivity(intent);
-                                }
+
+                    if ((reportModel.getMonthReport() != null && !TextUtils.isEmpty(reportModel
+                            .getMonthReport().getUrl())) || (reportModel.getKeReport() != null &&
+                            !TextUtils.isEmpty(reportModel.getKeReport().getUrl())))
+                        DialogUtil.showDoubleDialog(MainActivity.this, R.string.hint_title, R
+                                .string.report_hint, R.string.eval_look, R.string.cancel, new
+                                DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (reportModel.getKeReport() != null) {
+                                            if (reportModel.getKeReport().getComment_id() == null) {
+                                                evalDialog.setData(1, reportModel.getKeReport()
+                                                        .getKid());
+
+                                            } else {
+                                                Intent intent = new Intent(MainActivity.this,
+                                                        WebActivity
+                                                                .class);
+                                                intent.putExtra("WebActivity_data", reportModel
+                                                        .getKeReport().getUrl());
+                                                startActivity(intent);
+                                            }
+                                        } else if (reportModel.getMonthReport() != null) {
+                                            if (reportModel.getMonthReport().getComment_id() ==
+                                                    null) {
+                                                evalDialog.setData(2, reportModel.getMonthReport()
+                                                        .getYear(), reportModel.getMonthReport()
+                                                        .getMonth
+                                                                ());
+                                            } else {
+                                                Intent intent = new Intent(MainActivity.this,
+                                                        WebActivity
+                                                                .class);
+                                                intent.putExtra("WebActivity_data", reportModel
+                                                        .getMonthReport().getUrl());
+                                                startActivity(intent);
+                                            }
+                                        }
+                                    }
+                                }, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
                             }
-                        }
-                    }, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
+                        });
                 }
             }
         });
@@ -460,17 +484,22 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
 //        gongxun.setText();
 
         // 获取礼物数据
-        new HonorListApi(mContext, 2, new FetchEntryListListener() {
-            @Override
-            public void setData(List list) {
+        new HonorListApi(mContext, 2, TempDataHelper.getCurrentChildNo(mContext), new
+                FetchEntryListListener() {
+                    @Override
+                    public void setData(List list) {
+                        if (Tools.listNotNull(list)) {
+                            giftModels.clear();
+                            giftModels.addAll(list);
+                            handler.sendEmptyMessage(1);
+                        }
+                    }
 
-            }
+                    @Override
+                    public void setError(ErrorMsg error) {
 
-            @Override
-            public void setError(ErrorMsg error) {
-
-            }
-        });
+                    }
+                });
 
     }
 

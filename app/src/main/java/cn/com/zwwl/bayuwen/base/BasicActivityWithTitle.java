@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import java.util.HashMap;
 
@@ -164,7 +165,14 @@ public abstract class BasicActivityWithTitle extends AppCompatActivity {
         mViewCode.onMenuItemClick(item);
         return super.onOptionsItemSelected(item);
     }
-
+    /**
+     * 隐藏软键盘
+     */
+    public void hideInput() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context
+                .INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+    }
     protected abstract int setContentView();
 
     protected abstract void initView();

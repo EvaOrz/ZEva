@@ -3,7 +3,6 @@ package cn.com.zwwl.bayuwen.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -33,6 +32,11 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
         this.mContext = mContext;
     }
 
+    public void refresh(List<KeModel> list) {
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int
@@ -54,7 +58,7 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
 
         ImageLoader.display(mContext, viewHolder.img, keModel.getPic(), R
                 .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
-        viewHolder.tag.setText(keModel.getTagTxt());
+        viewHolder.tag.setImageResource(keModel.getTagImg());
         viewHolder.title.setText(keModel.getTitle());
         viewHolder.teacher.setText(keModel.getTname());
         viewHolder.xiaoqu.setText(keModel.getSchool());
@@ -78,7 +82,7 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView img;
-        public TextView tag;
+        public ImageView tag;
         public TextView title;
         public TextView teacher;
         public TextView xiaoqu;

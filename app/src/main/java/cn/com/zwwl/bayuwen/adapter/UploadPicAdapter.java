@@ -20,7 +20,7 @@ public class UploadPicAdapter extends BaseQuickAdapter<AlbumFile, BaseViewHolder
     protected void convert(BaseViewHolder helper, AlbumFile item) {
         if (helper.getLayoutPosition() == mData.size() - 1) {
             helper.setVisible(R.id.delete, false);
-            helper.setImageResource(R.id.pic, R.mipmap.home_head_hot);
+            helper.setImageResource(R.id.pic, R.mipmap.icon_add_pic);
         } else {
             helper.setVisible(R.id.delete, true);
             Album.getAlbumConfig().

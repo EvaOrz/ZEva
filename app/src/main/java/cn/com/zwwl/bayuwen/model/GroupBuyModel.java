@@ -8,6 +8,7 @@ import org.json.JSONObject;
 public class GroupBuyModel extends Entry {
 
     private String id = "";
+    private String code = "";// 拼团码
     private String title = "";
     private String kid = "";
     private double discount_pintrice;
@@ -49,6 +50,14 @@ public class GroupBuyModel extends Entry {
 
     public void setDiscount_pintrice(double discount_pintrice) {
         this.discount_pintrice = discount_pintrice;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public int getLimit_num() {

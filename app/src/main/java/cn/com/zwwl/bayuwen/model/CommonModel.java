@@ -1,6 +1,6 @@
 package cn.com.zwwl.bayuwen.model;
 
-public class CommonModel {
+public class CommonModel extends Entry {
     private String content;
     private int state;
     private String id;
@@ -11,6 +11,47 @@ public class CommonModel {
     private String student_no;
     private String create_at;
     private String update_at;
+    private int status;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getTid() {
         return tid;
@@ -52,43 +93,11 @@ public class CommonModel {
         this.update_at = update_at;
     }
 
-    public String getName() {
-        return name;
+    public int getStatus() {
+        return status;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

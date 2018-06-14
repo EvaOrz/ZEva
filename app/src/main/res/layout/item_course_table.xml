@@ -6,8 +6,8 @@
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/pic"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginBottom="@dimen/dp_8"
         android:layout_marginLeft="@dimen/activity_vertical_margin"
         android:layout_marginStart="@dimen/activity_vertical_margin"
@@ -26,7 +26,7 @@
         android:layout_marginEnd="@dimen/dp_10"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_8"
-        app:layout_constraintEnd_toStartOf="@id/arrow"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/pic"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -55,8 +55,8 @@
         android:drawablePadding="@dimen/dp_10"
         android:drawableStart="@mipmap/icon_graduate"
         android:textColor="@color/gray_light"
-        android:textSize="@dimen/sp_14"
-        app:layout_constraintEnd_toStartOf="@id/arrow"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/pic"
         app:layout_constraintTop_toBottomOf="@id/count_layout" />
 
@@ -71,8 +71,8 @@
         android:drawablePadding="@dimen/dp_10"
         android:drawableStart="@mipmap/icon_map"
         android:textColor="@color/gray_light"
-        android:textSize="@dimen/sp_14"
-        app:layout_constraintEnd_toStartOf="@id/arrow"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/pic"
         app:layout_constraintTop_toBottomOf="@id/teacher_name" />
 
@@ -87,7 +87,7 @@
         android:drawablePadding="@dimen/dp_10"
         android:drawableStart="@mipmap/icon_calendar"
         android:textColor="@color/gray_light"
-        android:textSize="@dimen/sp_14"
+        android:textSize="@dimen/sp_12"
         app:layout_constraintEnd_toStartOf="@id/arrow"
         app:layout_constraintStart_toEndOf="@id/pic"
         app:layout_constraintTop_toBottomOf="@id/school_name" />
@@ -102,6 +102,7 @@
         android:layout_marginTop="@dimen/dp_5"
         android:drawableLeft="@mipmap/icon_clock"
         android:drawablePadding="@dimen/dp_10"
+        android:textSize="@dimen/sp_12"
         android:drawableStart="@mipmap/icon_clock"
         android:textColor="@color/gray_light"
         app:layout_constraintBottom_toTopOf="@id/divider"
@@ -109,17 +110,33 @@
         app:layout_constraintStart_toEndOf="@id/pic"
         app:layout_constraintTop_toBottomOf="@id/date" />
 
-    <android.support.v7.widget.AppCompatImageView
+    <LinearLayout
         android:id="@+id/arrow"
-        android:layout_width="20dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginRight="@dimen/dp_16"
-        android:scaleType="center"
-        android:src="@mipmap/arrow_right_gray"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:gravity="bottom|end"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/stock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray_light"
+            android:textSize="@dimen/sp_12" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gold"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+
 
     <View
         android:id="@+id/divider"

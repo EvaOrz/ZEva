@@ -42,7 +42,7 @@ public class OrderTuifeeDetailActivity extends BaseActivity {
     @BindView(R.id.tui_text)
     TextView tuiTxt;
     @BindView(R.id.item_order_tag)
-    TextView itemOrderTag;
+    ImageView itemOrderTag;
     @BindView(R.id.item_order_title)
     TextView itemOrderTitle;
     @BindView(R.id.item_order_pic)
@@ -118,7 +118,7 @@ public class OrderTuifeeDetailActivity extends BaseActivity {
                     tuiDetailPrice.setText("￥" + Double.valueOf(tuifeeModel.getRefund_fee()) / 100);
                     tui_type.setText(tuifeeModel.getType() == 1 ? "原路退回" : "账户退回");
                     KeModel model = tuifeeModel.getKeModel();
-                    itemOrderTag.setText(model.getTagTxt());
+                    itemOrderTag.setImageResource(model.getTagImg());
                     itemOrderTitle.setText(model.getTitle());
                     itemOrderTeacher.setText(model.getTname());
                     itemOrderDate.setText(CalendarTools.format(Long.valueOf(model.getStartPtime()),

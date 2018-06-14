@@ -16,7 +16,7 @@
             android:id="@+id/jiangzhuang_back"
             android:layout_width="@dimen/back_size"
             android:layout_height="@dimen/back_size"
-            android:src="@drawable/back_gray" />
+            android:src="@mipmap/icon_back" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,33 +27,100 @@
             android:textSize="@dimen/text_size_16" />
 
         <TextView
+            android:id="@+id/jiangzhuang_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/delete_all"
+            android:text="@string/save"
             android:textColor="@color/gold"
             android:textSize="@dimen/text_size_16" />
     </RelativeLayout>
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/jiangzhuang_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/body_bg" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/gray_white_xiankuang"
-        android:gravity="center">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@color/gray_dark" />
+            android:id="@+id/jiang_pic"
+            android:layout_width="120dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/gray_light"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/jiang_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@null"
+                android:hint="@string/jiang_hint1"
+                android:textColor="@color/gray_dark"
+                android:textColorHint="@color/gray_light"
+                android:textSize="@dimen/text_size_12" />
+
+            <View
+                android:layout_width="match_parent"
+
+                android:layout_height="@dimen/line_height"
+                android:background="@color/gray_line" />
+
+            <TextView
+                android:id="@+id/jiang_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:hint="@string/jiang_hint2"
+                android:textColor="@color/gray_dark"
+                android:textColorHint="@color/gray_light"
+                android:textSize="@dimen/text_size_12" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/gray_line" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/line_height"
+            android:layout_height="match_parent"
+            android:background="@color/gray_line" />
+
+        <LinearLayout
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/jiang_bt1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@color/gray_dark" />
+
+            <ImageView
+                android:id="@+id/jiang_bt2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/gray_dark" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

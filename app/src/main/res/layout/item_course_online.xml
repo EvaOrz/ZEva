@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
+    android:layout_marginTop="@dimen/dp_10"
     android:background="@drawable/drawable_trace_gradient"
     android:orientation="vertical"
     android:padding="@dimen/dp_10">
@@ -30,7 +30,7 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/course_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginStart="@dimen/dp_10"
@@ -98,52 +98,37 @@
             android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/current_course_stage"
+            android:paddingBottom="@dimen/dp_10"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/text_size_12" />
 
         <LinearLayout
-            android:id="@+id/layout_1"
+            android:id="@+id/layout_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_5"
             android:background="@drawable/draw_gray_line_bg"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/status">
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tab"
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_40"
-                android:background="@color/transparent"
-                android:fillViewport="false"
-                android:gravity="top"
-                android:orientation="horizontal"
-                app:layout_scrollFlags="scroll"
-                app:tabIndicatorColor="@color/gold"
-                app:tabIndicatorHeight="@dimen/dp_1"
-                app:tabMode="fixed"
-                app:tabSelectedTextColor="@color/gold"
-                app:tabTextColor="@color/text_color_default">
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="@string/work_feedback"
+                android:textColor="@color/gold"
+                android:textSize="@dimen/sp_14" />
 
-                <android.support.design.widget.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="顾问对学生的评价" />
-
-                <android.support.design.widget.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="顾问对家长的评价" />
-            </android.support.design.widget.TabLayout>
+            <View
+                style="@style/split_line"
+                android:background="@color/gold" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/evaluate"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:padding="@dimen/dp_5"
-                android:text="@string/sign"
-                android:textColor="@color/body_gray" />
+                android:padding="5dp"
+                android:textColor="@color/body_gray"
+                android:textSize="@dimen/sp_14" />
         </LinearLayout>
 
         <LinearLayout
@@ -156,7 +141,7 @@
             app:layout_constraintEnd_toStartOf="@id/trace"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_1">
+            app:layout_constraintTop_toBottomOf="@id/layout_2">
 
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -180,7 +165,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@id/work"
-            app:layout_constraintTop_toBottomOf="@id/layout_1">
+            app:layout_constraintTop_toBottomOf="@id/layout_2">
 
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -190,10 +175,31 @@
                 android:gravity="center_vertical"
                 android:text="@string/past_course_trace"
                 android:textColor="@color/white" />
+
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/look_video"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/drawable_blue_corner_button"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/trace">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@mipmap/icon_play"
+                android:drawableStart="@mipmap/icon_play"
+                android:gravity="center_vertical"
+                android:text="@string/look_video"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
-
 
 </LinearLayout>

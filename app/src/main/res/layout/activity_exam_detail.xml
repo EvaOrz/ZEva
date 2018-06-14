@@ -128,9 +128,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="@color/gold"
+        android:background="@drawable/drawable_yellow_light"
         android:gravity="center"
         android:padding="@dimen/dp_10"
         android:text="@string/parent_feedback"
-        android:textColor="@color/white" />
+        android:textColor="@color/gold" />
 </RelativeLayout>

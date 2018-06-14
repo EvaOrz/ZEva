@@ -10,57 +10,66 @@
         android:id="@+id/top"
         layout="@layout/layout_gray_titlebar" />
 
-    <android.support.v4.widget.NestedScrollView
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:id="@+id/refresh"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top">
 
-        <LinearLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:id="@+id/nest_scroll"
+            android:visibility="invisible"
+            android:layout_height="match_parent">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/item_bgColor" />
-
-            <android.support.v7.widget.AppCompatTextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@mipmap/icon_book"
-                android:drawablePadding="5dp"
-                android:drawableStart="@mipmap/icon_book"
-                android:gravity="center_vertical|start"
-                android:padding="10dp"
-                android:text="@string/studying_course"
-                android:textColor="@color/body_gray"
-                android:textSize="@dimen/sp_16" />
+                android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/study_course"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:drawableLeft="@mipmap/icon_finish"
-                android:drawableStart="@mipmap/icon_finish"
-                android:padding="10dp"
-                android:text="@string/finish_course"
-                android:textColor="@color/body_gray"
-                android:textSize="@dimen/sp_16" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/item_bgColor" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp" />
-        </LinearLayout>
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/icon_book"
+                    android:drawablePadding="5dp"
+                    android:drawableStart="@mipmap/icon_book"
+                    android:gravity="center_vertical|start"
+                    android:padding="10dp"
+                    android:text="@string/studying_course"
+                    android:textColor="@color/body_gray"
+                    android:textSize="@dimen/sp_16" />
 
-    </android.support.v4.widget.NestedScrollView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/study_course"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:drawableLeft="@mipmap/icon_finish"
+                    android:drawableStart="@mipmap/icon_finish"
+                    android:padding="10dp"
+                    android:text="@string/finish_course"
+                    android:textColor="@color/body_gray"
+                    android:textSize="@dimen/sp_16" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
 </android.support.constraint.ConstraintLayout>

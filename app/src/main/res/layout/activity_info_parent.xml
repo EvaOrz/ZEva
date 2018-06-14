@@ -16,7 +16,7 @@
             android:id="@+id/info_p_back"
             android:layout_width="@dimen/back_size"
             android:layout_height="@dimen/back_size"
-            android:src="@drawable/back_gray" />
+            android:src="@mipmap/icon_back" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -25,6 +25,7 @@
             android:text="@string/huiyuanziliao"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_16" />
+
         <TextView
             android:id="@+id/info_p_save"
             android:layout_width="wrap_content"
@@ -90,9 +91,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
@@ -231,10 +232,12 @@
                     android:textColor="@color/gray_dark"
                     android:textSize="@dimen/text_size_14" />
 
-                <GridView
+                <cn.com.zwwl.bayuwen.widget.MostGridView
                     android:id="@+id/gift_grid"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:numColumns="5" />
 
             </LinearLayout>
 

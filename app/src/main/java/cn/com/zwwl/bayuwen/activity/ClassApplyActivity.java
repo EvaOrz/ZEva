@@ -9,9 +9,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.AddCourseApi;
+import cn.com.zwwl.bayuwen.api.ClassDetailApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
+import cn.com.zwwl.bayuwen.model.ClassModel;
 import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
@@ -53,6 +55,10 @@ public class ClassApplyActivity extends BasicActivityWithTitle {
     AppCompatTextView date;
     @BindView(R.id.time)
     AppCompatTextView time;
+    @BindView(R.id.stock)
+    AppCompatTextView stock;
+    @BindView(R.id.price)
+    AppCompatTextView price;
 
     @Override
     protected int setContentView() {
@@ -66,8 +72,23 @@ public class ClassApplyActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initData() {
-        bind(mApplication.oldKe, oPic, oCourseName, oTeacherName, oSchoolName, oDate, oTime);
+        getDetail();
         bind(mApplication.newKe, pic, courseName, teacherName, schoolName, date, time);
+        stock.setText(String.format("剩余名额: %s", mApplication.newKe.getNum()));
+        price.setText(String.format("￥ %s", mApplication.newKe.getBuyPrice()));
+    }
+
+    private void getDetail() {
+        new ClassDetailApi(this, mApplication.oldKe.getKid(), new ResponseCallBack<ClassModel>() {
+            @Override
+            public void result(ClassModel classModel, ErrorMsg errorMsg) {
+                if (classModel != null) {
+                    bind(classModel.getCourse(), oPic, oCourseName, oTeacherName, oSchoolName, oDate, oTime);
+                } else {
+                    ToastUtil.showShortToast(errorMsg.getDesc());
+                }
+            }
+        });
     }
 
     public void bind(KeModel keModel, AppCompatImageView pic, AppCompatTextView courseName,
@@ -109,5 +130,4 @@ public class ClassApplyActivity extends BasicActivityWithTitle {
     public void close() {
         finish();
     }
-
 }

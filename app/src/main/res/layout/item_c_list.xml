@@ -16,6 +16,7 @@
         <TextView
             android:id="@+id/course_d_id"
             android:layout_width="15dp"
+            android:visibility="gone"
             android:layout_height="15dp"
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_size_14" />

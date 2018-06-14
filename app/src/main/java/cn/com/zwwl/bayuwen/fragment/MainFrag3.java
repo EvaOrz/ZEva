@@ -2,6 +2,8 @@ package cn.com.zwwl.bayuwen.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +52,10 @@ public class MainFrag3 extends BasicFragment {
     RecyclerView studyCourse;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.nest_scroll)
+    NestedScrollView nestScroll;
+    @BindView(R.id.refresh)
+    SmartRefreshLayout refresh;
     private CompleteCourseAdapter adapter;
     private List<KeModel> finishCourse = new ArrayList<>();
     MyCourseModel courseModel;
@@ -67,20 +76,13 @@ public class MainFrag3 extends BasicFragment {
         studyCourse.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R.dimen.dp_5, OrientationHelper.VERTICAL));
         courseIndexAdapter = new CourseIndexAdapter(null);
         studyCourse.setAdapter(courseIndexAdapter);
+        refresh.setRefreshContent(nestScroll);
+        refresh.autoRefresh();
+        refresh.finishLoadMore(false);
     }
 
     @Override
     protected void initData() {
-
-        new MyCourseApi(activity, new ResponseCallBack<MyCourseModel>() {
-            @Override
-            public void result(MyCourseModel myCourseModel, ErrorMsg errorMsg) {
-                if (myCourseModel != null) {
-                    courseModel = myCourseModel;
-                    bindView();
-                }
-            }
-        });
     }
 
     private void bindView() {
@@ -91,6 +93,22 @@ public class MainFrag3 extends BasicFragment {
 
     @Override
     protected void setListener() {
+        refresh.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
+                new MyCourseApi(activity, new ResponseCallBack<MyCourseModel>() {
+                    @Override
+                    public void result(MyCourseModel myCourseModel, ErrorMsg errorMsg) {
+                        refreshLayout.finishRefresh();
+                        if (myCourseModel != null) {
+                            nestScroll.setVisibility(View.VISIBLE);
+                            courseModel = myCourseModel;
+                            bindView();
+                        }
+                    }
+                });
+            }
+        });
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -103,15 +121,16 @@ public class MainFrag3 extends BasicFragment {
         courseIndexAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent=new Intent();
+                Intent intent = new Intent();
                 MyCourseModel.UnfinishedBean bean = courseModel.getUnfinished().get(position);
-                int type= Tools.getCourseType(bean.getPlan().getOnline(), bean.getPlan().getSource(), bean.getProducts().getEnd_at());
+                int type = Tools.getCourseType(bean.getPlan().getOnline(), bean.getPlan().getSource(), bean.getProducts().getEnd_at());
                 switch (view.getId()) {
                     case R.id.arrow:
                         intent.setClass(activity, UnitIndexActivity.class);
                         intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
                         intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan().getCurrentLectureId());
-                        intent.putExtra("online", courseModel.getUnfinished().get(position).getProducts().getOnline());
+                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished().get(position).getProducts().getOnline()));
+                        intent.putExtra("video", 0);
                         break;
                     case R.id.work:
                         intent.putExtra("kid", bean.getKid());
@@ -120,13 +139,14 @@ public class MainFrag3 extends BasicFragment {
                         break;
                     case R.id.look_video:
                         intent.setClass(activity, VideoPlayActivity.class);
+                        intent.putExtra("VideoPlayActivity_url", courseModel.getUnfinished().get(position).getPlan().getPlayUrl());
                         break;
                     case R.id.trace:
                         application.oldKe = bean.getProducts();
                         intent.putExtra("kid", bean.getKid());
                         intent.putExtra("title", bean.getProducts().getTitle());
-                        intent.putExtra("course_type",type);
-                        intent.putExtra("online", courseModel.getUnfinished().get(position).getProducts().getOnline());
+                        intent.putExtra("course_type", type);
+                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished().get(position).getProducts().getOnline()));
                         intent.setClass(activity, StudyingCourseActivity.class);
                         break;
                 }
@@ -139,7 +159,8 @@ public class MainFrag3 extends BasicFragment {
                 Intent intent = new Intent(activity, UnitIndexActivity.class);
                 intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
                 intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan().getCurrentLectureId());
-                intent.putExtra("online", courseModel.getUnfinished().get(position).getProducts().getOnline());
+                intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished().get(position).getProducts().getOnline()));
+                intent.putExtra("video", 0);
                 startActivity(intent);
             }
         });
@@ -159,7 +180,7 @@ public class MainFrag3 extends BasicFragment {
                 startActivity(new Intent(activity, MessageActivity.class));
                 break;
             case R.id.menu_more:
-                ((MainActivity)activity).openDrawer();
+                ((MainActivity) activity).openDrawer();
                 break;
             case R.id.menu_school:
                 break;

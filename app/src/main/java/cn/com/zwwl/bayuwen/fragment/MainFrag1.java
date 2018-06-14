@@ -37,10 +37,17 @@ import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.ImageBannerAdapter;
 import cn.com.zwwl.bayuwen.adapter.MainYixuanKeAdapter;
+import cn.com.zwwl.bayuwen.api.Index1Api;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ChildModel;
+import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.Index1Model;
+import cn.com.zwwl.bayuwen.model.Index1Model.*;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
+import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.ChildMenuPopView;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
@@ -67,10 +74,13 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private RelativeLayout toolbar;//
     private InfiniteViewPager pingPager;// 拼图列表
     private ThreeDAdapter pingAdapter;
+
+    private List<AdvBean> advBeans = new ArrayList<>();// banner数据
+    private CalendarCourseBean calendarCourseBean;// calendar事件数据
+    private List<SelectedCourseBean> selectedCourses = new ArrayList<>();// 已选课程
     private List<View> pingtuData = new ArrayList<>();
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
     private UserModel userModel;
-
     private int bannerWid, bannerHei;
 
     private List<View> bannerDatas = new ArrayList<>();
@@ -79,7 +89,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -136,6 +145,33 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             ImageLoader.display(mActivity, parentImg, userModel.getPic(), R
                     .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
         }
+        new Index1Api(mActivity, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+                if (entry != null && entry instanceof Index1Model) {
+                    advBeans.clear();
+                    Index1Model index1Model = (Index1Model) entry;
+                    if (Tools.listNotNull(index1Model.getAdv())) {
+                        advBeans.addAll(index1Model.getAdv());
+                    }
+                    calendarCourseBean = index1Model.getCalendarCourse();
+                    
+                    selectedCourses.clear();
+                    if (Tools.listNotNull(index1Model.getSelectedCourse())) {
+                        selectedCourses.addAll(index1Model.getSelectedCourse());
+                    }
+                    handler.sendEmptyMessage(1);
+                }
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                if (error != null) {
+                    AppValue.showToast(mActivity, error.getDesc());
+                }
+            }
+        });
 
     }
 
@@ -237,7 +273,8 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                                 Glide.with(mActivity).load(c.getPic()).into(childImg);
                         }
                     }
-
+                    break;
+                case 1:// 初始化页面数据
                     break;
             }
         }
