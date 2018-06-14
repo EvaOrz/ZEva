@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.com.zwwl.bayuwen">
+
     <!-- 访问网络，某些位置信息需要从网络服务器获取 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -12,7 +13,6 @@
     <!-- 通过网络得到粗略位置 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-
     <!-- 修改WiFi状态，发起WiFi扫描, 需要WiFi信息用于网络定位 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <!-- 访问网络状态, 检测网络的可用性，需要网络运营商相关信息用于网络定位 -->
@@ -23,7 +23,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 显示顶层浮窗 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <!--访问通讯录-->
+    <!-- 访问通讯录 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <!-- camera -->
@@ -148,162 +148,160 @@
             android:name=".activity.MessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--日历页面-->
+        <!-- 日历页面 -->
         <activity
             android:name=".activity.CalendarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--添加课程页面-->
+        <!-- 添加课程页面 -->
         <activity
             android:name=".activity.AddCalendarActivity"
             android:screenOrientation="portrait"
-
             android:theme="@style/Theme.picker" />
-        <!--增减课程页面-->
+        <!-- 增减课程页面 -->
         <activity
             android:name=".activity.SelectCalendarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--我的勋章页面-->
+        <!-- 我的勋章页面 -->
         <activity
             android:name=".activity.AllXunzhangActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--去拼团页面-->
+        <!-- 去拼团页面 -->
         <activity
             android:name=".activity.TuanIndexActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--我要开团页面-->
+        <!-- 我要开团页面 -->
         <activity
             android:name=".activity.TuanKaiActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--我的团购页面-->
+        <!-- 我的团购页面 -->
         <activity
             android:name=".activity.MyTuanActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--组合优惠页面-->
+        <!-- 组合优惠页面 -->
         <activity
             android:name=".activity.PromotionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--团购付费页面-->
+        <!-- 团购付费页面 -->
         <activity
             android:name=".activity.TuanPayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--团购付费结果页面-->
+        <!-- 团购付费结果页面 -->
         <activity
             android:name=".activity.TuanPayResultActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--视频播放页面-->
+        <!-- 视频播放页面 -->
         <activity
             android:name=".activity.VideoPlayActivity"
             android:configChanges="screenSize|orientation"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--会员资料页面-->
+        <!-- 会员资料页面 -->
         <activity
             android:name=".activity.ParentInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--学生资料页面-->
+        <!-- 学生资料页面 -->
         <activity
             android:name=".activity.ChildInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--设置页面-->
+        <!-- 设置页面 -->
         <activity
             android:name=".activity.SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--账号与安全页面-->
+        <!-- 账号与安全页面 -->
         <activity
             android:name=".activity.SettingOption1Activity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--管理地址页面-->
+        <!-- 管理地址页面 -->
         <activity
             android:name=".activity.AddressManageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--添加地址页面-->
+        <!-- 添加地址页面 -->
         <activity
             android:name=".activity.AddressAddActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
-        <!--老师详情页面-->
+        <!-- 老师详情页面 -->
         <activity
             android:name=".activity.TeacherDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
-        <!--课程详情页面-->
+        <!-- 课程详情页面 -->
         <activity
             android:name=".activity.CourseDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--选择要退费的课程页面-->
+        <!-- 选择要退费的课程页面 -->
         <activity
             android:name=".activity.AllTeacherActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--意见反馈页面-->
+        <!-- 意见反馈页面 -->
         <activity
             android:name=".activity.FeedBackActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--搜索页面-->
+        <!-- 搜索页面 -->
         <activity
             android:name=".activity.SearchCourseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--选择城市页面-->
+        <!-- 选择城市页面 -->
         <activity
             android:name=".activity.CityPickActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--奖状页面-->
+        <!-- 奖状页面 -->
         <activity
             android:name=".activity.JiangZhuangActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--我的订单页面-->
+        <!-- 我的订单页面 -->
         <activity
             android:name=".activity.MyOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--兑换课程码-->
+        <!-- 兑换课程码 -->
         <activity
             android:name=".activity.TuanCodeUseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--订单详情页面-->
+        <!-- 订单详情页面 -->
         <activity
             android:name=".activity.OrderDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--我关注的班级页面-->
+        <!-- 我关注的班级页面 -->
         <activity
             android:name=".activity.MyCollectionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--选择要退费的课程页面-->
+        <!-- 选择要退费的课程页面 -->
         <activity
             android:name=".activity.OrderTuifeeListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--退费详情页面-->
+        <!-- 退费详情页面 -->
         <activity
             android:name=".activity.OrderTuifeeDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
-
-        <!--weixin pay-->
+        <!-- weixin pay -->
         <activity
             android:name="cn.beecloud.BCWechatPaymentActivity"
             android:launchMode="singleTop"
@@ -314,61 +312,62 @@
             android:exported="true"
             android:targetActivity="cn.beecloud.BCWechatPaymentActivity" />
 
-        <!--ali pay-->
+        <!-- ali pay -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <!--PPT-->
+        <!-- PPT -->
         <activity android:name=".activity.LookPPTActivity" />
-        <!--上传上课照片-->
+        <!-- 上传上课照片 -->
         <activity android:name=".activity.InClassStatusActivity" />
-        <!--正在进行课程-->
+        <!-- 正在进行课程 -->
         <activity
             android:name=".activity.StudyingCourseActivity"
             android:launchMode="singleTask" />
-        <!--课程评价-->
+        <!-- 课程评价 -->
         <activity android:name=".activity.CourseEvalActivity" />
-        <!--课程列表-->
+        <!-- 课程列表 -->
         <activity android:name=".activity.CourseTableActivity" />
-        <!--课程单元列表-->
+        <!-- 课程单元列表 -->
         <activity android:name=".activity.UnitTableActivity" />
-        <!--选择可调课班级-->
+        <!-- 选择可调课班级 -->
         <activity android:name=".activity.ConvertClassActivity" />
-        <!--班级详情-->
+        <!-- 班级详情 -->
         <activity android:name=".activity.ClassDetailActivity" />
-        <!--提交调课申请-->
+        <!-- 提交调课申请 -->
         <activity android:name=".activity.CourseApplyActivity" />
-        <!--调课（换班）结果-->
+        <!-- 调课（换班）结果 -->
         <activity android:name=".activity.ChangeResultActivity" />
-        <!--提交转班申请-->
+        <!-- 提交转班申请 -->
         <activity android:name=".activity.ClassApplyActivity" />
-        <!--课程跟踪记录-->
+        <!-- 课程跟踪记录 -->
         <activity android:name=".activity.FCourseListActivity" />
-        <!--点击“记录”进入-->
+        <!-- 点击“记录”进入 -->
         <activity android:name=".activity.FCourseIndexActivity" />
-        <!--期末考试详情-->
+        <!-- 期末考试详情 -->
         <activity android:name=".activity.ExamDetailsActivity" />
-        <!--具体课次首页-->
+        <!-- 具体课次首页 -->
         <activity android:name=".activity.UnitIndexActivity" />
-        <!--上传照片-->
+        <!-- 上传照片 -->
         <activity android:name=".activity.UploadPicActivity" />
-        <!--教学总结-->
+        <!-- 教学总结 -->
         <activity android:name=".activity.TeacherSummaryActivity" />
-        <!--查看作业-->
+        <!-- 查看作业 -->
         <activity android:name=".activity.WorkDetailsActivity" />
 
-
-        <!--腾讯定位SDK key-->
+        <!-- 腾讯定位SDK key -->
         <meta-data
             android:name="TencentMapSDK"
             android:value="PFQBZ-3TSR4-VGQUN-DN6WF-SWII5-7YBC5" />
-        <!--Glide 配置-->
+        <!-- Glide 配置 -->
         <meta-data
             android:name="cn.com.zwwl.bayuwen.glide.TGlideModule"
             android:value="GlideModule" />
+
+        <activity android:name=".activity.SysMessageActivity"></activity>
     </application>
 
 </manifest>
