@@ -40,7 +40,9 @@ import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.MainYixuanKeAdapter;
+import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
+import cn.com.zwwl.bayuwen.adapter.ViewPageAdapter;
 import cn.com.zwwl.bayuwen.api.Index1Api;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -81,7 +83,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private MainYixuanKeAdapter yixuanKeAdapter;
     private RelativeLayout toolbar;//
     private InfiniteViewPager pingPager;// 拼图列表
-    private ThreeDAdapter pingAdapter;
+    private MyViewPagerAdapter pingAdapter;
     private TextView calendarRi, calendarYue;
     private LinearLayout calendarLayout;
 
@@ -91,7 +93,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private List<View> pingtuData = new ArrayList<>();
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
     private UserModel userModel;
-    private int bannerWid, bannerHei;
+
+
+    private int bannerWid, bannerHei;// 轮播位宽高
+    private int pintuWid, pintuHei;// 拼图item的宽高
 
     private List<AlbumModel> yixuanDatas = new ArrayList<>();// 已选课程data
 
@@ -142,9 +147,23 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                 parentLay.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams
                         .WRAP_CONTENT, bannerHei));
 
+                pintuWid = MyApplication.width - 300;
+                pintuHei = (MyApplication.width - 300) * 6 / 9;
+                LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(pintuWid + 10,
+                        pintuHei +
+                                10);
+                params1.setMargins(0, 16, 0, 0);
+                pingPager.setLayoutParams(params1);
+
+                initPingtudata();// todo??
+                pingAdapter = new MyViewPagerAdapter(pingtuData);
+                pingPager.setAdapter(pingAdapter);
+                pingPager.setOffscreenPageLimit(3);
+                pingPager.setPageTransformer(true, new GalleryTransformer());
+                pingPager.setCurrentItem(2);
+
             }
         });
-
 
     }
 
@@ -199,7 +218,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         childTxt = root.findViewById(R.id.toolbar_title);
         childImg = root.findViewById(R.id.frag1_child_avatar);
         parentImg = root.findViewById(R.id.frag1_parent_avater);
-        initSize();
 
         calendarRi = root.findViewById(R.id.calendar_ri);
         calendarYue = root.findViewById(R.id.calendar_yue);
@@ -220,16 +238,9 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         yixuanKeAdapter.notifyDataSetChanged();
 
         pingPager = root.findViewById(R.id.pingtu_pager);
-        pingAdapter = new ThreeDAdapter(mActivity, pingtuData);
 
-        int totalwid = MyApplication.width - 400;
-        pingPager.setLayoutParams(new LinearLayout.LayoutParams(totalwid, LinearLayout
-                .LayoutParams.WRAP_CONTENT));
-        initPingtudata(totalwid);// todo??
-        pingPager.setAdapter(pingAdapter);
-        pingPager.setOffscreenPageLimit(3);
-        pingPager.setPageTransformer(true, new GalleryTransformer());
-        pingPager.setCurrentItem(2);
+        initSize();
+
 
         studentLay.setOnClickListener(this);
         parentLay.setOnClickListener(this);
@@ -243,28 +254,25 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     /**
      * 获取拼图列表数据
      */
-    private void initPingtudata(int totalwid) {
-
+    private void initPingtudata() {
         pingtuData.clear();
         for (int i = 0; i < 5; i++) {
             View view = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu, null);
-
+            view.setLayoutParams(new LinearLayout.LayoutParams(pintuWid + 10, pintuHei +
+                    10));
             RecyclerView recyclerView = view.findViewById(R.id.radar_fragmain1);
-
             List<CommonModel> models = new ArrayList<>();
             for (int j = 0; j < 54; j++) {
                 CommonModel model = new CommonModel();
                 model.setContent("");
                 models.add(model);
             }
-            RadarAdapter radarAdapter = new RadarAdapter(models, totalwid);
+            RadarAdapter radarAdapter = new RadarAdapter(models, 780);
             recyclerView.setAdapter(radarAdapter);
             recyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             pingtuData.add(view);
-
         }
-        pingAdapter.notifyDataSetChanged();
     }
 
     /**

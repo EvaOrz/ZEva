@@ -10,6 +10,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
 import cn.com.zwwl.bayuwen.model.CommonModel;
@@ -43,7 +44,7 @@ public class AllXunzhangActivity extends BaseActivity {
             model.setContent("");
             models.add(model);
         }
-        RadarAdapter radarAdapter = new RadarAdapter(models);
+        RadarAdapter radarAdapter = new RadarAdapter(models, MyApplication.width);
         radar.setAdapter(radarAdapter);
         radar.setLayoutManager(new GridLayoutManager(this, 9));
         radar.setItemAnimator(new DefaultItemAnimator());

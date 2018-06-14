@@ -20,10 +20,10 @@ public class RadarAdapter extends BaseQuickAdapter<CommonModel, BaseViewHolder> 
     private int colunms = 9;// 每行的拼图个数
     private int totalWidth = MyApplication.width;// 拼图控件的总宽度
 
-    private static int tuSideWidth = 34;// 每个拼图的边框宽度 *2
+    private static int tuSideWidth = 34 - 6;// 每个拼图的边框宽度 *2
     private static int tuMidWidth = 72;// 每个拼图的中间部分宽度
 
-    private static int tuPadding = 10;// 拼图的缝隙宽度
+//    private static int tuPadding = 10;// 拼图的缝隙宽度
 
 
     public RadarAdapter(@Nullable List<CommonModel> data) {
@@ -33,6 +33,7 @@ public class RadarAdapter extends BaseQuickAdapter<CommonModel, BaseViewHolder> 
     public RadarAdapter(@Nullable List<CommonModel> data, int totalWidth) {
         super(R.layout.item_radar, data);
         this.totalWidth = totalWidth;
+//        tuPadding = 10 * totalWidth / MyApplication.width;
     }
 
     @Override
@@ -42,9 +43,8 @@ public class RadarAdapter extends BaseQuickAdapter<CommonModel, BaseViewHolder> 
 
         int layoutWid = totalWidth / colunms;
         layout.setLayoutParams(new LinearLayout.LayoutParams(layoutWid, layoutWid));
-        int wid = layoutWid + layoutWid * tuSideWidth / tuMidWidth - tuPadding;
+        int wid = layoutWid + layoutWid * tuSideWidth / tuMidWidth;
         imageView.setLayoutParams(new LinearLayout.LayoutParams(wid, wid));
-
 
         if (helper.getLayoutPosition() == 0) {
             imageView.setImageResource(R.mipmap.pt_01);
