@@ -22,7 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.activity.ConvertClassActivity;
+import cn.com.zwwl.bayuwen.activity.FCourseListActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.SearchCourseActivity;
@@ -113,8 +113,7 @@ public class MainFrag3 extends BasicFragment {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(activity, ConvertClassActivity.class);
-//                Intent intent = new Intent(activity, FCourseListActivity.class);
+                Intent intent = new Intent(activity, FCourseListActivity.class);
                 intent.putExtra("type", courseModel.getCompleted().get(position).getId());
                 intent.putExtra("title", courseModel.getCompleted().get(position).getName());
                 startActivity(intent);
