@@ -20,8 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.activity.FCourseListActivity;
+import cn.com.zwwl.bayuwen.activity.ConvertClassActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.SearchCourseActivity;
@@ -71,16 +72,16 @@ public class MainFrag3 extends BasicFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R.dimen.dp_5, OrientationHelper.VERTICAL));
         adapter = new CompleteCourseAdapter(finishCourse);
+        adapter.setEmptyView(R.layout.empty_view, (ViewGroup) recyclerView.getParent());
         recyclerView.setAdapter(adapter);
         studyCourse.setLayoutManager(new LinearLayoutManager(mContext));
         studyCourse.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R.dimen.dp_5, OrientationHelper.VERTICAL));
         courseIndexAdapter = new CourseIndexAdapter(null);
+        courseIndexAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) studyCourse.getParent());
         studyCourse.setAdapter(courseIndexAdapter);
-        refresh.setRefreshContent(nestScroll);
         refresh.autoRefresh();
         refresh.finishLoadMore(false);
     }
-
     @Override
     protected void initData() {
     }
@@ -112,7 +113,8 @@ public class MainFrag3 extends BasicFragment {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(activity, FCourseListActivity.class);
+                Intent intent = new Intent(activity, ConvertClassActivity.class);
+//                Intent intent = new Intent(activity, FCourseListActivity.class);
                 intent.putExtra("type", courseModel.getCompleted().get(position).getId());
                 intent.putExtra("title", courseModel.getCompleted().get(position).getName());
                 startActivity(intent);
@@ -172,7 +174,7 @@ public class MainFrag3 extends BasicFragment {
     public static MainFrag3 newInstance() {
         return new MainFrag3();
     }
-
+    @OnClick({R.id.menu_more,R.id.menu_news,R.id.menu_school,R.id.menu_search})
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
