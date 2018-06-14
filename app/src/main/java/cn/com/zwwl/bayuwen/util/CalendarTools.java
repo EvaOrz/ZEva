@@ -130,9 +130,23 @@ public class CalendarTools {
             re_time = String.valueOf(l);
 //            re_time = str.substring(0, 10);
         } catch (ParseException e) {
-            // TODO Auto-generated catch block e.printStackTrace();
         }
         return Long.valueOf(re_time);
+    }
+
+    // 将字符串转为Calendar
+    public static Calendar fromStringToca(String user_time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        try {
+            Date d = sdf.parse(user_time);
+            calendar.setTime(d);
+
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block e.printStackTrace();
+        }
+
+        return calendar;
     }
 
     /**

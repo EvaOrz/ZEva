@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
@@ -46,6 +47,7 @@ import cn.com.zwwl.bayuwen.model.Index1Model.*;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.util.AppValue;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.ChildMenuPopView;
 import cn.com.zwwl.bayuwen.widget.LoopViewPager;
@@ -73,7 +75,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private RelativeLayout toolbar;//
     private InfiniteViewPager pingPager;// 拼图列表
     private ThreeDAdapter pingAdapter;
-    private TextView calendarRi,calendarYue;
+    private TextView calendarRi, calendarYue;
     private LinearLayout calendarLayout;
 
     private List<AdvBean> advBeans = new ArrayList<>();// banner数据
@@ -192,7 +194,9 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         parentImg = root.findViewById(R.id.frag1_parent_avater);
         initSize();
 
-
+        calendarRi = root.findViewById(R.id.calendar_ri);
+        calendarYue = root.findViewById(R.id.calendar_yue);
+        calendarLayout = root.findViewById(R.id.calendar_kecheng_layout);
         notificationTv = root.findViewById(R.id.main_notification);
         notificationTv.setEllipsize(TextUtils.TruncateAt.MARQUEE);
         notificationTv.setSingleLine(true);
@@ -212,6 +216,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         pingAdapter = new ThreeDAdapter(mActivity, pingtuData);
         initPingtudata();// todo??
         pingPager.setAdapter(pingAdapter);
+        pingPager.setPageMargin(80);
         pingPager.setOffscreenPageLimit(3);
         pingPager.setPageTransformer(true, new GalleryTransformer());
         pingPager.setCurrentItem(2);
@@ -277,6 +282,30 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                     }
                     bannerView.setViewList(views);
                     bannerView.startLoop(true);
+
+                    calendarLayout.removeAllViews();
+                    if (calendarCourseBean.getCourses().size() > 0) {
+                        Calendar ss = CalendarTools.fromStringToca(calendarCourseBean.getDate());
+                        calendarRi.setText(ss.get(Calendar.DATE) + "");
+                        calendarYue.setText(ss.get(Calendar.MONTH) + "月");
+
+                        for (CalendarCourseBean.CoursesBean coursesBean : calendarCourseBean
+                                .getCourses()) {
+                            TextView tip = new TextView(mActivity);
+                            tip.setText(coursesBean.getTitle() + " " + coursesBean
+                                    .getClass_start_at() + "-" + coursesBean.getClass_end_at());
+                            tip.setTextColor(getResources().getColor(R.color.gray_dark));
+                            tip.setTextSize(14);
+                            calendarLayout.addView(tip);
+
+                        }
+                    } else {
+                        TextView tip = new TextView(mActivity);
+                        tip.setText("请添加课程日历");
+                        tip.setTextColor(getResources().getColor(R.color.gray_dark));
+                        tip.setTextSize(14);
+                        calendarLayout.addView(tip);
+                    }
                     break;
             }
         }

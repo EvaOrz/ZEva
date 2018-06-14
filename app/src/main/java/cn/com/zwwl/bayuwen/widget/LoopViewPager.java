@@ -151,8 +151,8 @@ public class LoopViewPager extends LinearLayout {
     private void initLinearPosition() {
         mLinearPosition = new LinearLayout(getContext());
         mLinearPosition.setOrientation(LinearLayout.HORIZONTAL);
-        mLinearPosition.setPadding(0, 10, 0,
-                10);
+        mLinearPosition.setPadding(0, 20, 0,
+                20);
         mLinearPosition.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams
                 .WRAP_CONTENT));
     }

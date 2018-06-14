@@ -246,7 +246,8 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout
                             .LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     params.bottomMargin = 20;
-                    for (final ChildModel childModel : childModels) {
+
+                    for (ChildModel childModel : childModels) {
                         childLayout.addView(getChildView(childModel), params);
                     }
                     if (childModels.size() < 3) {

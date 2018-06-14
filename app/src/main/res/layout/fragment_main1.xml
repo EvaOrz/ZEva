@@ -13,15 +13,15 @@
 
         <ImageView
             android:id="@+id/toolbar_left"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_menu_more" />
 
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:layout_centerInParent="true"
             android:gravity="center"
             android:textColor="@color/white"
@@ -29,16 +29,16 @@
 
         <ImageView
             android:id="@+id/toolbar_right"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_news" />
 
         <ImageView
             android:id="@+id/toolbar_city"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/toolbar_right"
@@ -64,7 +64,8 @@
                 android:background="@color/body_gray"
                 android:gravity="top"
                 android:orientation="horizontal"
-                android:padding="5dp">
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
 
                 <cn.com.zwwl.bayuwen.widget.RoundAngleLayout
                     android:id="@+id/layout_student"
@@ -203,7 +204,7 @@
                     <ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:background="@color/black" />
+                        android:src="@drawable/mn_calendar_icon_arrow_right" />
 
                 </cn.com.zwwl.bayuwen.widget.RoundAngleLayout>
             </LinearLayout>
