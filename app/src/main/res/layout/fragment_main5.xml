@@ -33,7 +33,7 @@
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
-            <ImageView
+            <cn.com.zwwl.bayuwen.widget.CircleImageView
                 android:id="@+id/frag5_avatar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"

@@ -6,11 +6,10 @@
     android:gravity="center"
     android:padding="5dp">
 
-    <ImageView
-        android:id="@+id/img_3d"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/radar_fragmain1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray_light"
-        android:scaleType="fitXY" />
+        android:clipChildren="false" />
 
 </LinearLayout>

@@ -38,24 +38,14 @@ public class AllXunzhangActivity extends BaseActivity {
 
        RecyclerView radar = findViewById(R.id.radar);
        List<CommonModel> models = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 54; i++) {
             CommonModel model = new CommonModel();
             model.setContent("");
             models.add(model);
         }
         RadarAdapter radarAdapter = new RadarAdapter(models);
         radar.setAdapter(radarAdapter);
-        radar.setLayoutManager(new GridLayoutManager(this, 10));
-//        radar.addItemDecoration(new RecyclerView.ItemDecoration() {
-//            @Override
-//            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-//                super.getItemOffsets(outRect, view, parent, state);
-//                int m = parent.getChildAdapterPosition(view) % 10;
-//                if (m != 0)
-//                    outRect.left = -DensityUtil.dip2px(res, R.dimen.dp_1) * m;
-//                outRect.bottom = -DensityUtil.dip2px(res, R.dimen.dp_1);
-//            }
-//        });
+        radar.setLayoutManager(new GridLayoutManager(this, 9));
         radar.setItemAnimator(new DefaultItemAnimator());
     }
 

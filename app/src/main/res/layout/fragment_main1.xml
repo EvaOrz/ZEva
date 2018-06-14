@@ -76,7 +76,7 @@
                     android:orientation="vertical"
                     android:padding="10dp">
 
-                    <ImageView
+                    <cn.com.zwwl.bayuwen.widget.CircleImageView
                         android:id="@+id/frag1_child_avatar"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
@@ -126,7 +126,7 @@
                     android:orientation="vertical"
                     android:padding="10dp">
 
-                    <ImageView
+                    <cn.com.zwwl.bayuwen.widget.CircleImageView
                         android:id="@+id/frag1_parent_avater"
                         android:layout_width="40dp"
                         android:layout_height="40dp"

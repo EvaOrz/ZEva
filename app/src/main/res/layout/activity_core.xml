@@ -50,7 +50,7 @@
                         android:gravity="center_horizontal"
                         android:orientation="vertical">
 
-                        <ImageView
+                        <cn.com.zwwl.bayuwen.widget.CircleImageView
                             android:id="@+id/main_avatar"
                             android:layout_width="50dp"
                             android:layout_height="50dp"

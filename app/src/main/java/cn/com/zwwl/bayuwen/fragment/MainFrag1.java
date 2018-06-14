@@ -10,7 +10,11 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,10 +40,12 @@ import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.MainYixuanKeAdapter;
+import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
 import cn.com.zwwl.bayuwen.api.Index1Api;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ChildModel;
+import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.Index1Model;
@@ -50,6 +56,7 @@ import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.ChildMenuPopView;
+import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.LoopViewPager;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 import cn.com.zwwl.bayuwen.widget.RoundAngleImageView;
@@ -68,7 +75,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private LoopViewPager bannerView;
     private RoundAngleLayout studentLay, parentLay;// banner位的学生信息栏
     private TextView notificationTv, childTxt;
-    private ImageView childImg, parentImg;
+    private CircleImageView childImg, parentImg;
     private View root;
     private NoScrollListView yixuanKeListView;// 已选课程列表
     private MainYixuanKeAdapter yixuanKeAdapter;
@@ -214,9 +221,12 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
 
         pingPager = root.findViewById(R.id.pingtu_pager);
         pingAdapter = new ThreeDAdapter(mActivity, pingtuData);
-        initPingtudata();// todo??
+
+        int totalwid = MyApplication.width - 400;
+        pingPager.setLayoutParams(new LinearLayout.LayoutParams(totalwid, LinearLayout
+                .LayoutParams.WRAP_CONTENT));
+        initPingtudata(totalwid);// todo??
         pingPager.setAdapter(pingAdapter);
-        pingPager.setPageMargin(80);
         pingPager.setOffscreenPageLimit(3);
         pingPager.setPageTransformer(true, new GalleryTransformer());
         pingPager.setCurrentItem(2);
@@ -233,11 +243,24 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     /**
      * 获取拼图列表数据
      */
-    private void initPingtudata() {
+    private void initPingtudata(int totalwid) {
+
         pingtuData.clear();
         for (int i = 0; i < 5; i++) {
             View view = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu, null);
-            ImageView img = view.findViewById(R.id.img_3d);
+
+            RecyclerView recyclerView = view.findViewById(R.id.radar_fragmain1);
+
+            List<CommonModel> models = new ArrayList<>();
+            for (int j = 0; j < 54; j++) {
+                CommonModel model = new CommonModel();
+                model.setContent("");
+                models.add(model);
+            }
+            RadarAdapter radarAdapter = new RadarAdapter(models, totalwid);
+            recyclerView.setAdapter(radarAdapter);
+            recyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
             pingtuData.add(view);
 
         }
