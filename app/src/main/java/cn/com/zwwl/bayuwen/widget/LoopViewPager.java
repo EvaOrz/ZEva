@@ -1,6 +1,5 @@
 package cn.com.zwwl.bayuwen.widget;
 
-
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.os.Handler;
@@ -18,11 +17,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 
-public class BannerView extends FrameLayout {
+public class LoopViewPager extends LinearLayout {
 
     private static final int MSG_LOOP = 1000;
     private static long LOOP_INTERVAL = 5000;
@@ -34,11 +34,11 @@ public class BannerView extends FrameLayout {
     private int viewSize;
 
     private static class BannerHandler extends Handler {
-        private WeakReference<BannerView> weakReference = null;
+        private WeakReference<LoopViewPager> weakReference = null;
 
-        public BannerHandler(BannerView bannerView) {
+        public BannerHandler(LoopViewPager bannerView) {
             super(Looper.getMainLooper());
-            this.weakReference = new WeakReference<BannerView>(bannerView);
+            this.weakReference = new WeakReference<LoopViewPager>(bannerView);
         }
 
         @Override
@@ -47,14 +47,16 @@ public class BannerView extends FrameLayout {
             if (this.weakReference == null) {
                 return;
             }
-            BannerView bannerView = this.weakReference.get();
-            if (bannerView == null || bannerView.mViewPager == null || bannerView.mViewPager.getAdapter() == null || bannerView.mViewPager.getAdapter().getCount() <= 0) {
+            LoopViewPager loopViewPager = this.weakReference.get();
+            if (loopViewPager == null || loopViewPager.mViewPager == null || loopViewPager
+                    .mViewPager.getAdapter() == null || loopViewPager.mViewPager.getAdapter()
+                    .getCount() <= 0) {
 //                sendEmptyMessageDelayed(MSG_LOOP, LOOP_INTERVAL);
                 return;
             }
-            int curPos = bannerView.mViewPager.getCurrentItem();
-            curPos = (curPos + 1) % bannerView.mViewPager.getAdapter().getCount();
-            bannerView.mViewPager.setCurrentItem(curPos);
+            int curPos = loopViewPager.mViewPager.getCurrentItem();
+            curPos = (curPos + 1) % loopViewPager.mViewPager.getAdapter().getCount();
+            loopViewPager.mViewPager.setCurrentItem(curPos);
             if (hasMessages(MSG_LOOP)) {
                 removeMessages(MSG_LOOP);
             }
@@ -62,12 +64,19 @@ public class BannerView extends FrameLayout {
         }
     }
 
-    public BannerView(Context context) {
+    public LoopViewPager(Context context) {
         super(context);
+
         init();
     }
 
-    public BannerView(Context context, AttributeSet attrs) {
+    public void setSize(LayoutParams params) {
+        mViewPager.setLayoutParams(params);
+
+    }
+
+
+    public LoopViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -89,6 +98,8 @@ public class BannerView extends FrameLayout {
     }
 
     private void init() {
+        setOrientation(LinearLayout.VERTICAL);
+        setGravity(Gravity.CENTER_HORIZONTAL);
         initViewPager();
         initLinearPosition();
         this.addView(mViewPager);
@@ -97,12 +108,10 @@ public class BannerView extends FrameLayout {
 
     private void initViewPager() {
         mViewPager = new ViewPager(getContext());
-        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
-                , ViewGroup.LayoutParams.WRAP_CONTENT);
-        mViewPager.setLayoutParams(layoutParams);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int
+                    positionOffsetPixels) {
             }
 
             @Override
@@ -115,7 +124,7 @@ public class BannerView extends FrameLayout {
 
             }
         });
-        mViewPager.setOnTouchListener(new OnTouchListener() {
+        mViewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
@@ -142,12 +151,10 @@ public class BannerView extends FrameLayout {
     private void initLinearPosition() {
         mLinearPosition = new LinearLayout(getContext());
         mLinearPosition.setOrientation(LinearLayout.HORIZONTAL);
-        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
-                , ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
-        layoutParams.bottomMargin = getResources().getDimensionPixelSize(R.dimen.dimen_9dp);
-        mLinearPosition.setPadding(getResources().getDimensionPixelSize(R.dimen.dimen_9dp), 0, 0, 0);
-        mLinearPosition.setLayoutParams(layoutParams);
+        mLinearPosition.setPadding(0, 20, 0,
+                20);
+        mLinearPosition.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams
+                .WRAP_CONTENT));
     }
 
     public void setAdapter(PagerAdapter adapter) {
@@ -178,8 +185,11 @@ public class BannerView extends FrameLayout {
                 for (int i = 0; i < diffCnt; i++) {
                     if (needAdd) {
                         ImageView img = new ImageView(getContext());
-                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        layoutParams.rightMargin = getResources().getDimensionPixelOffset(R.dimen.dimen_9dp);
+                        LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
+                                LayoutParams
+                                        .WRAP_CONTENT);
+                        layoutParams.rightMargin = getResources().getDimensionPixelOffset(R.dimen
+                                .dimen_9dp);
                         img.setLayoutParams(layoutParams);
                         img.setBackgroundResource(R.drawable.banner_point);
                         mLinearPosition.addView(img);
@@ -191,7 +201,8 @@ public class BannerView extends FrameLayout {
             int curPos = mViewPager.getCurrentItem();
             for (int i = 0; i < mLinearPosition.getChildCount(); i++) {
                 if (i == (curPos % viewSize)) {
-                    mLinearPosition.getChildAt(i).setBackgroundResource(R.drawable.banner_point_select);
+                    mLinearPosition.getChildAt(i).setBackgroundResource(R.drawable
+                            .banner_point_select);
                 } else {
                     mLinearPosition.getChildAt(i).setBackgroundResource(R.drawable.banner_point);
                 }
@@ -203,7 +214,7 @@ public class BannerView extends FrameLayout {
         this.viewList = viewList;
         if (viewList != null && viewList.size() != 0) {
             viewSize = viewList.size();
-            BannerAdapter bannerAdapter = new BannerAdapter(viewList);
+            ImageBannerAdapter bannerAdapter = new ImageBannerAdapter(viewList);
             setAdapter(bannerAdapter);
         }
     }
@@ -222,43 +233,46 @@ public class BannerView extends FrameLayout {
         }
     }
 
-    public class BannerAdapter extends PagerAdapter {
+    /**
+     * banner 适配
+     */
+    public class ImageBannerAdapter extends PagerAdapter {
+        protected List<View> list = new ArrayList<>();
 
-        private List<View> viewList;
-        private int size;
-        private final int cacheCount = 3;
+        public ImageBannerAdapter(List<View> list) {
+            this.list = list;
+        }
 
-        public BannerAdapter(List<View> viewList) {
-            this.viewList = viewList;
-            size = viewList.size();
+
+        @Override
+        public int getCount() {
+            if (list != null && list.size() > 0) {
+                return list.size();
+            } else {
+                return 0;
+            }
+        }
+
+        @Override
+        public boolean isViewFromObject(View arg0, Object arg1) {
+            return arg0 == arg1;
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            if (viewList.size() > cacheCount) {
-                container.removeView(viewList.get(position % size));
-            }
+            container.removeView((View) object);
         }
 
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            ViewGroup parent = (ViewGroup) viewList.get(position % size).getParent();
-            if (parent != null) {
-                parent.removeView(viewList.get(position % size));
-            }
-            container.addView(viewList.get(position % size));
-            return viewList.get(position % size);
+        public Object instantiateItem(ViewGroup container, final int position) {
+//            final RecommentModel recommentModel = list.get(position);
+            container.addView(list.get(position));
+            return list.get(position);
         }
 
         @Override
-        public int getCount() {
-            return Integer.MAX_VALUE;
+        public void setPrimaryItem(ViewGroup container, int position, Object object) {
         }
 
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
     }
-
 }

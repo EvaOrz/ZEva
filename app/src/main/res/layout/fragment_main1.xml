@@ -13,15 +13,15 @@
 
         <ImageView
             android:id="@+id/toolbar_left"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_menu_more" />
 
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:layout_centerInParent="true"
             android:gravity="center"
             android:textColor="@color/white"
@@ -29,16 +29,16 @@
 
         <ImageView
             android:id="@+id/toolbar_right"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_news" />
 
         <ImageView
             android:id="@+id/toolbar_city"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/toolbar_right"
@@ -62,9 +62,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/body_gray"
-                android:gravity="center_vertical"
+                android:gravity="top"
                 android:orientation="horizontal"
-                android:padding="5dp">
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
 
                 <cn.com.zwwl.bayuwen.widget.RoundAngleLayout
                     android:id="@+id/layout_student"
@@ -75,7 +76,7 @@
                     android:orientation="vertical"
                     android:padding="10dp">
 
-                    <ImageView
+                    <cn.com.zwwl.bayuwen.widget.CircleImageView
                         android:id="@+id/frag1_child_avatar"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
@@ -107,17 +108,11 @@
 
                 </cn.com.zwwl.bayuwen.widget.RoundAngleLayout>
 
-                <!--<cn.com.zwwl.bayuwen.widget.BannerView-->
-                <!--android:id="@+id/frag1_head"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:background="@color/body_bg"-->
-                <!--android:layout_height="100dp"-->
-                <!--android:layout_weight="1" />-->
 
-                <android.support.v4.view.ViewPager
+                <cn.com.zwwl.bayuwen.widget.LoopViewPager
                     android:id="@+id/frag1_head"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1" />
@@ -131,7 +126,7 @@
                     android:orientation="vertical"
                     android:padding="10dp">
 
-                    <ImageView
+                    <cn.com.zwwl.bayuwen.widget.CircleImageView
                         android:id="@+id/frag1_parent_avater"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
@@ -142,7 +137,7 @@
                         android:layout_height="15dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
-                      android:src="@mipmap/icon_medal_y"
+                        android:src="@mipmap/icon_medal_y"
 
                         />
 
@@ -181,48 +176,34 @@
                     android:padding="5dp">
 
                     <TextView
+                        android:id="@+id/calendar_ri"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="13"
                         android:textColor="@color/gray_dark"
                         android:textSize="@dimen/text_size_22"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/calendar_yue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
-                        android:text="5月"
                         android:textColor="@color/gray_dark"
                         android:textSize="@dimen/text_size_14" />
 
                     <LinearLayout
+                        android:id="@+id/calendar_kecheng_layout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="【新东方】概念英语14:00-16:00"
-                            android:textColor="@color/gray_dark"
-                            android:textSize="@dimen/text_size_12" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="【新东方】概念英语14:00-16:00"
-                            android:textColor="@color/gray_dark"
-                            android:textSize="@dimen/text_size_12" />
-
-                    </LinearLayout>
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:contentDescription="@null"
                         android:src="@mipmap/arrow_right_gray" />
 
@@ -305,9 +286,9 @@
 
                 <cn.com.zwwl.bayuwen.widget.threed.InfiniteViewPager
                     android:id="@+id/pingtu_pager"
-                    android:layout_width="220dp"
+                    android:layout_width="300dp"
                     android:layout_height="150dp"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="10dp" />
             </LinearLayout>
 
             <!--已选课程-->
