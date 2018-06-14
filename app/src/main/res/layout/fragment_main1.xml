@@ -78,16 +78,15 @@
 
                     <cn.com.zwwl.bayuwen.widget.CircleImageView
                         android:id="@+id/frag1_child_avatar"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
 
                         android:src="@drawable/avatar_placeholder" />
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
                         android:src="@mipmap/icon_leaf"
 
                         />
@@ -128,15 +127,14 @@
 
                     <cn.com.zwwl.bayuwen.widget.CircleImageView
                         android:id="@+id/frag1_parent_avater"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:src="@drawable/avatar_placeholder" />
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
                         android:src="@mipmap/icon_medal_y"
 
                         />
@@ -220,8 +218,8 @@
                 android:padding="5dp">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:contentDescription="@null"
                     android:src="@mipmap/icon_warning_yellow" />
 
@@ -242,8 +240,8 @@
                     android:textSize="@dimen/text_size_12" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:contentDescription="@null"
                     android:src="@mipmap/icon_close" />
 

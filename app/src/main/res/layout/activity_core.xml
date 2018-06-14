@@ -58,9 +58,9 @@
                             android:src="@drawable/avatar_placeholder" />
 
                         <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:contentDescription="@null"
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
                             android:src="@mipmap/icon_medal_p" />
                     </LinearLayout>
 
@@ -120,9 +120,9 @@
                     android:paddingTop="10dp">
 
                     <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:contentDescription="@null"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
                         android:src="@mipmap/icon_change_p" />
 
                     <TextView
@@ -153,8 +153,8 @@
                     android:background="@drawable/white_10radius_corner_bg"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:visibility="gone"
-                    android:padding="5dp">
+                    android:padding="5dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="10dp"
@@ -175,9 +175,9 @@
                     android:paddingTop="10dp">
 
                     <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:contentDescription="@null"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
                         android:src="@mipmap/icon_verify" />
 
                     <TextView
@@ -203,10 +203,10 @@
                     android:paddingTop="10dp">
 
                     <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:contentDescription="@null"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:src="@mipmap/icon_invite"/>
+                        android:src="@mipmap/icon_invite" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -230,9 +230,9 @@
                     android:paddingTop="10dp">
 
                     <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:contentDescription="@null"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
                         android:src="@mipmap/icon_gift" />
 
                     <TextView
@@ -263,15 +263,16 @@
             android:id="@+id/setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="15dp">
+            android:padding="@dimen/dp_5">
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:contentDescription="@null"
-                android:src="@mipmap/icon_setting"/>
+                android:src="@mipmap/icon_setting" />
 
             <TextView
                 android:layout_width="match_parent"
