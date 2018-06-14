@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_dark"
+    android:background="@mipmap/login_bg"
     android:orientation="vertical"
     android:padding="15dp"
     tools:context=".activity.RegisterActivity">
@@ -15,8 +15,9 @@
         <ImageView
             android:id="@+id/register_back"
             android:layout_width="40dp"
+            android:contentDescription="@null"
             android:layout_height="40dp"
-            android:background="@color/black" />
+            android:src="@mipmap/icon_close_yellow"/>
 
         <TextView
             android:id="@+id/register_login"
@@ -60,7 +61,7 @@
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:background="@color/gray_light" />
+           android:src="@mipmap/icon_map" />
     </LinearLayout>
 
     <View
@@ -151,8 +152,9 @@
         <ImageView
             android:id="@+id/register_pwd_show"
             android:layout_width="20dp"
+            android:contentDescription="@null"
             android:layout_height="20dp"
-            android:background="@color/black" />
+            android:src="@mipmap/icon_hide_psd" />
     </LinearLayout>
 
     <View

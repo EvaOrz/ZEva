@@ -87,7 +87,7 @@
                         android:layout_height="15dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
-                        android:background="@color/green"
+                        android:src="@mipmap/icon_leaf"
 
                         />
 
@@ -142,7 +142,7 @@
                         android:layout_height="15dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
-                        android:background="@color/green"
+                      android:src="@mipmap/icon_medal_y"
 
                         />
 
@@ -221,9 +221,10 @@
                     </LinearLayout>
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:background="@color/black" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@null"
+                        android:src="@mipmap/arrow_right_gray" />
 
                 </cn.com.zwwl.bayuwen.widget.RoundAngleLayout>
             </LinearLayout>
@@ -238,16 +239,16 @@
                 android:padding="5dp">
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@color/white" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/icon_warning_yellow" />
 
                 <TextView
                     android:id="@+id/main_notification"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:ellipsize="marquee"
@@ -260,9 +261,10 @@
                     android:textSize="@dimen/text_size_12" />
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@color/white" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/icon_close" />
 
             </LinearLayout>
             <!--能力分析-->
@@ -284,7 +286,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@mipmap/user_info"
+                        android:drawableLeft="@mipmap/icon_analyze"
+                        android:drawableStart="@mipmap/icon_analyze"
                         android:gravity="center_vertical"
                         android:text="@string/nenglifenxi"
                         android:textColor="@color/black"
@@ -321,7 +324,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@mipmap/user_info"
+                    android:drawableLeft="@mipmap/icon_book"
+                    android:drawableStart="@mipmap/icon_book"
                     android:gravity="center_vertical"
                     android:text="@string/yixuankecheng"
                     android:textColor="@color/black"
@@ -350,7 +354,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@mipmap/user_info"
+                    android:drawableLeft="@mipmap/icon_medal"
+                    android:drawableStart="@mipmap/icon_medal"
                     android:gravity="center_vertical"
                     android:text="@string/suohuoxunzhang"
                     android:textColor="@color/black"
@@ -368,19 +373,19 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:src="@mipmap/home_1" />
+                        android:src="@mipmap/medal_gold" />
 
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:src="@mipmap/home_2" />
+                        android:src="@mipmap/medal_silver" />
 
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:src="@mipmap/home_3" />
+                        android:src="@mipmap/medal_copper" />
 
 
                 </LinearLayout>

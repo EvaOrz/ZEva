@@ -63,6 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
+            android:button="@drawable/selector_radio_round"
             android:text="@string/male"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_14" />
@@ -72,6 +73,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:button="@drawable/selector_radio_round"
             android:checked="false"
             android:text="@string/female"
             android:textColor="@color/white"

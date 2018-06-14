@@ -494,7 +494,7 @@
                 android:id="@+id/follow_status"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:background="@color/gray_dark" />
+                android:src="@mipmap/icon_star_default" />
 
             <TextView
                 android:layout_width="wrap_content"

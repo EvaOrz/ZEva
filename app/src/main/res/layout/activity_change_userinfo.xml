@@ -68,10 +68,10 @@
             android:src="@drawable/avatar_placeholder" />
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:src="@mipmap/home_header_more" />
+            android:src="@mipmap/arrow_right_gray" />
 
     </LinearLayout>
 
@@ -112,10 +112,10 @@
             android:textSize="@dimen/text_size_14" />
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:src="@mipmap/home_header_more" />
+            android:src="@mipmap/arrow_right_gray" />
 
     </LinearLayout>
 
@@ -158,10 +158,10 @@
 
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:src="@mipmap/home_header_more" />
+            android:src="@mipmap/arrow_right_gray" />
 
     </LinearLayout>
 
@@ -204,10 +204,10 @@
 
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:src="@mipmap/home_header_more" />
+            android:src="@mipmap/arrow_right_gray" />
 
     </LinearLayout>
 
@@ -249,10 +249,10 @@
             android:textSize="@dimen/text_size_14" />
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:src="@mipmap/home_header_more" />
+            android:src="@mipmap/arrow_right_gray" />
 
     </LinearLayout>
 
