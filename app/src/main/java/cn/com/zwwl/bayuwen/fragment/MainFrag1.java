@@ -10,8 +10,11 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +27,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
@@ -35,12 +39,15 @@ import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
-import cn.com.zwwl.bayuwen.adapter.ImageBannerAdapter;
 import cn.com.zwwl.bayuwen.adapter.MainYixuanKeAdapter;
+import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
+import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
+import cn.com.zwwl.bayuwen.adapter.ViewPageAdapter;
 import cn.com.zwwl.bayuwen.api.Index1Api;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ChildModel;
+import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.Index1Model;
@@ -48,9 +55,13 @@ import cn.com.zwwl.bayuwen.model.Index1Model.*;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.util.AppValue;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.ChildMenuPopView;
+import cn.com.zwwl.bayuwen.widget.CircleImageView;
+import cn.com.zwwl.bayuwen.widget.LoopViewPager;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
+import cn.com.zwwl.bayuwen.widget.RoundAngleImageView;
 import cn.com.zwwl.bayuwen.widget.RoundAngleLayout;
 import cn.com.zwwl.bayuwen.widget.threed.GalleryTransformer;
 import cn.com.zwwl.bayuwen.widget.threed.InfiniteViewPager;
@@ -63,17 +74,18 @@ import cn.jzvd.JZUtils;
 public class MainFrag1 extends Fragment implements View.OnClickListener {
 
     private Activity mActivity;
-    private ViewPager bannerViewPager;
-    private ImageBannerAdapter imageBannerAdapter;
+    private LoopViewPager bannerView;
     private RoundAngleLayout studentLay, parentLay;// banner位的学生信息栏
     private TextView notificationTv, childTxt;
-    private ImageView childImg, parentImg;
+    private CircleImageView childImg, parentImg;
     private View root;
     private NoScrollListView yixuanKeListView;// 已选课程列表
     private MainYixuanKeAdapter yixuanKeAdapter;
     private RelativeLayout toolbar;//
     private InfiniteViewPager pingPager;// 拼图列表
-    private ThreeDAdapter pingAdapter;
+    private MyViewPagerAdapter pingAdapter;
+    private TextView calendarRi, calendarYue;
+    private LinearLayout calendarLayout;
 
     private List<AdvBean> advBeans = new ArrayList<>();// banner数据
     private CalendarCourseBean calendarCourseBean;// calendar事件数据
@@ -81,9 +93,11 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private List<View> pingtuData = new ArrayList<>();
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
     private UserModel userModel;
-    private int bannerWid, bannerHei;
 
-    private List<View> bannerDatas = new ArrayList<>();
+
+    private int bannerWid, bannerHei;// 轮播位宽高
+    private int pintuWid, pintuHei;// 拼图item的宽高
+
     private List<AlbumModel> yixuanDatas = new ArrayList<>();// 已选课程data
 
     @Override
@@ -94,6 +108,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        bannerView.startLoop(true);
     }
 
     @Nullable
@@ -123,19 +138,32 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                 // removeGlobalOnLayoutListener() 方法在 API 16 后不再使用
                 // 使用新方法 removeOnGlobalLayoutListener() 代替
                 studentLay.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, bannerHei);
-                params.weight = 1;
-                params.leftMargin = 10;
-                params.rightMargin = 10;
-                bannerViewPager.setLayoutParams(params);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout
+                        .LayoutParams.MATCH_PARENT, bannerHei);
+                bannerView.setSize(params);
+
                 studentLay.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
                         .LayoutParams.WRAP_CONTENT, bannerHei));
                 parentLay.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams
                         .WRAP_CONTENT, bannerHei));
 
+                pintuWid = MyApplication.width - 300;
+                pintuHei = (MyApplication.width - 300) * 6 / 9;
+                LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(pintuWid + 10,
+                        pintuHei +
+                                10);
+                params1.setMargins(0, 16, 0, 0);
+                pingPager.setLayoutParams(params1);
+
+                initPingtudata();// todo??
+                pingAdapter = new MyViewPagerAdapter(pingtuData);
+                pingPager.setAdapter(pingAdapter);
+                pingPager.setOffscreenPageLimit(3);
+                pingPager.setPageTransformer(true, new GalleryTransformer());
+                pingPager.setCurrentItem(2);
+
             }
         });
-
 
     }
 
@@ -155,7 +183,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                         advBeans.addAll(index1Model.getAdv());
                     }
                     calendarCourseBean = index1Model.getCalendarCourse();
-                    
+
                     selectedCourses.clear();
                     if (Tools.listNotNull(index1Model.getSelectedCourse())) {
                         selectedCourses.addAll(index1Model.getSelectedCourse());
@@ -175,32 +203,25 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
 
     }
 
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        bannerView.startLoop(false);
+    }
+
     private void initView() {
         toolbar = root.findViewById(R.id.toolbar);
         studentLay = root.findViewById(R.id.layout_student);
         parentLay = root.findViewById(R.id.layout_parent);
-        bannerViewPager = root.findViewById(R.id.frag1_head);
+        bannerView = root.findViewById(R.id.frag1_head);
         childTxt = root.findViewById(R.id.toolbar_title);
         childImg = root.findViewById(R.id.frag1_child_avatar);
         parentImg = root.findViewById(R.id.frag1_parent_avater);
-        initSize();
 
-        for (int i = 0; i < 2; i++) {
-            RoundAngleLayout imageView = new RoundAngleLayout(mActivity, 10);
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(bannerWid, bannerHei));
-            imageView.setBackgroundResource(R.drawable.test_banner);
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(mActivity, VideoPlayActivity.class));
-                }
-            });
-            bannerDatas.add(imageView);
-        }
-        imageBannerAdapter = new ImageBannerAdapter(mActivity, bannerDatas);
-        imageBannerAdapter.notifyDataSetChanged();
-        bannerViewPager.setAdapter(imageBannerAdapter);
-
+        calendarRi = root.findViewById(R.id.calendar_ri);
+        calendarYue = root.findViewById(R.id.calendar_yue);
+        calendarLayout = root.findViewById(R.id.calendar_kecheng_layout);
         notificationTv = root.findViewById(R.id.main_notification);
         notificationTv.setEllipsize(TextUtils.TruncateAt.MARQUEE);
         notificationTv.setSingleLine(true);
@@ -217,12 +238,9 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         yixuanKeAdapter.notifyDataSetChanged();
 
         pingPager = root.findViewById(R.id.pingtu_pager);
-        pingAdapter = new ThreeDAdapter(mActivity, pingtuData);
-        initPingtudata();// todo??
-        pingPager.setAdapter(pingAdapter);
-        pingPager.setOffscreenPageLimit(3);
-        pingPager.setPageTransformer(true, new GalleryTransformer());
-        pingPager.setCurrentItem(2);
+
+        initSize();
+
 
         studentLay.setOnClickListener(this);
         parentLay.setOnClickListener(this);
@@ -240,11 +258,21 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         pingtuData.clear();
         for (int i = 0; i < 5; i++) {
             View view = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu, null);
-            ImageView img = view.findViewById(R.id.img_3d);
+            view.setLayoutParams(new LinearLayout.LayoutParams(pintuWid + 10, pintuHei +
+                    10));
+            RecyclerView recyclerView = view.findViewById(R.id.radar_fragmain1);
+            List<CommonModel> models = new ArrayList<>();
+            for (int j = 0; j < 54; j++) {
+                CommonModel model = new CommonModel();
+                model.setContent("");
+                models.add(model);
+            }
+            RadarAdapter radarAdapter = new RadarAdapter(models, 780);
+            recyclerView.setAdapter(radarAdapter);
+            recyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
             pingtuData.add(view);
-
         }
-        pingAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -275,6 +303,40 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                     }
                     break;
                 case 1:// 初始化页面数据
+                    List<View> views = new ArrayList<>();
+                    for (AdvBean advBean : advBeans) {
+                        RoundAngleImageView r = new RoundAngleImageView(mActivity);
+                        r.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        ImageLoader.display(mActivity, r, advBean.getPic(), R.mipmap.apply_logo,
+                                R.mipmap.apply_logo);
+                        views.add(r);
+                    }
+                    bannerView.setViewList(views);
+                    bannerView.startLoop(true);
+
+                    calendarLayout.removeAllViews();
+                    if (calendarCourseBean.getCourses().size() > 0) {
+                        Calendar ss = CalendarTools.fromStringToca(calendarCourseBean.getDate());
+                        calendarRi.setText(ss.get(Calendar.DATE) + "");
+                        calendarYue.setText(ss.get(Calendar.MONTH) + "月");
+
+                        for (CalendarCourseBean.CoursesBean coursesBean : calendarCourseBean
+                                .getCourses()) {
+                            TextView tip = new TextView(mActivity);
+                            tip.setText(coursesBean.getTitle() + " " + coursesBean
+                                    .getClass_start_at() + "-" + coursesBean.getClass_end_at());
+                            tip.setTextColor(getResources().getColor(R.color.gray_dark));
+                            tip.setTextSize(14);
+                            calendarLayout.addView(tip);
+
+                        }
+                    } else {
+                        TextView tip = new TextView(mActivity);
+                        tip.setText("请添加课程日历");
+                        tip.setTextColor(getResources().getColor(R.color.gray_dark));
+                        tip.setTextSize(14);
+                        calendarLayout.addView(tip);
+                    }
                     break;
             }
         }
