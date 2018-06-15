@@ -145,6 +145,11 @@
             android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <!-- 注册登录流程 添加学员-->
+        <activity
+            android:name=".activity.RegisterAddChildActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".activity.ForgetPwdActivity"
             android:screenOrientation="portrait"

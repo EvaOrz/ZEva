@@ -116,10 +116,10 @@ public class RegisterActivity extends BaseActivity implements TencentLocationLis
                 if (isShowPassword) {// 隐藏
                     pwdEdit.setInputType(InputType.TYPE_CLASS_TEXT | InputType
                             .TYPE_TEXT_VARIATION_PASSWORD);
-//                    pwdImg.setImageResource(R.drawable.password_unshow);
+                    pwdShow.setImageResource(R.mipmap.icon_hide_psd);
                 } else {//选择状态 显示明文--设置为可见的密码
                     pwdEdit.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-//                    pwdImg.setImageResource(R.drawable.password_show);
+                    pwdShow.setImageResource(R.mipmap.icon_view_psd);
                 }
                 isShowPassword = !isShowPassword;
                 break;
@@ -158,12 +158,14 @@ public class RegisterActivity extends BaseActivity implements TencentLocationLis
                 if (entry != null && entry instanceof UserModel) {
                     TempDataHelper.setCurrentCity(mContext, curCity);
                     MyApplication.loginStatusChange = true;
+                    startActivity(new Intent(mContext, RegisterAddChildActivity.class));
                     finish();
                 }
             }
 
             @Override
             public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
                 if (error != null)
                     showToast(error.getDesc());
 

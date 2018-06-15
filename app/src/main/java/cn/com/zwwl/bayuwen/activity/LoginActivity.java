@@ -97,10 +97,10 @@ public class LoginActivity extends BaseActivity implements TencentLocationListen
                 if (isShowPassword) {// 隐藏
                     pwdEdit.setInputType(InputType.TYPE_CLASS_TEXT | InputType
                             .TYPE_TEXT_VARIATION_PASSWORD);
-//                    pwdImg.setImageResource(R.drawable.password_unshow);
+                    showImg.setImageResource(R.mipmap.icon_hide_psd);
                 } else {//选择状态 显示明文--设置为可见的密码
                     pwdEdit.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-//                    pwdImg.setImageResource(R.drawable.password_show);
+                    showImg.setImageResource(R.mipmap.icon_view_psd);
                 }
                 isShowPassword = !isShowPassword;
                 break;
@@ -123,6 +123,7 @@ public class LoginActivity extends BaseActivity implements TencentLocationListen
 
             @Override
             public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
                 showToast(error.getDesc());
             }
         });
