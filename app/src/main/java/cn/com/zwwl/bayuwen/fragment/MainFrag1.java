@@ -39,11 +39,9 @@ import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
-import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.MainYixuanKeAdapter;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
-import cn.com.zwwl.bayuwen.adapter.ViewPageAdapter;
 import cn.com.zwwl.bayuwen.api.Index1Api;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
@@ -53,7 +51,9 @@ import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.Index1Model;
-import cn.com.zwwl.bayuwen.model.Index1Model.*;
+import cn.com.zwwl.bayuwen.model.Index1Model.AdvBean;
+import cn.com.zwwl.bayuwen.model.Index1Model.CalendarCourseBean;
+import cn.com.zwwl.bayuwen.model.Index1Model.SelectedCourseBean;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.util.AddressTools;
@@ -69,7 +69,6 @@ import cn.com.zwwl.bayuwen.widget.RoundAngleImageView;
 import cn.com.zwwl.bayuwen.widget.RoundAngleLayout;
 import cn.com.zwwl.bayuwen.widget.threed.GalleryTransformer;
 import cn.com.zwwl.bayuwen.widget.threed.InfiniteViewPager;
-import cn.com.zwwl.bayuwen.widget.threed.ThreeDAdapter;
 import cn.jzvd.JZUtils;
 
 /**
@@ -115,9 +114,25 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         bannerView.startLoop(true);
-        if (isCityChanged)
-            loadData();
+
     }
+
+    /**
+     * 默认fragment创建的时候是可见的，但是不会调用该方法！切换可见状态的时候会调用，但是调用onResume，onPause的时候却不会调用
+     *
+     * @param hidden
+     */
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            if (isCityChanged)
+                loadData();
+            Log.e("main_frag_city1", TempDataHelper.getCurrentCity(mActivity));
+        } else {
+        }
+    }
+
 
     @Nullable
     @Override
