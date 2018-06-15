@@ -18,6 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
 import cn.com.zwwl.bayuwen.adapter.UnitTableAdapter;
@@ -67,29 +68,19 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new HSpacesItemDecoration(res, R.dimen.dp_5));
-        radar.setLayoutManager(new GridLayoutManager(this, 10));
-//        radar.addItemDecoration(new RecyclerView.ItemDecoration() {
-//            @Override
-//            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-//                super.getItemOffsets(outRect, view, parent, state);
-//                int m = parent.getChildAdapterPosition(view) % 10;
-//                if (m != 0)
-//                    outRect.left = -DensityUtil.dip2px(res, R.dimen.dp_1) * m;
-//                outRect.bottom = -DensityUtil.dip2px(res, R.dimen.dp_1);
-//            }
-//        });
+        radar.setLayoutManager(new GridLayoutManager(this, 9));
         radar.setItemAnimator(new DefaultItemAnimator());
     }
 
     @Override
     protected void initData() {
         models = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 54; i++) {
             CommonModel model = new CommonModel();
             model.setContent("");
             models.add(model);
         }
-        radarAdapter = new RadarAdapter(models);
+        radarAdapter = new RadarAdapter(models, (int) (MyApplication.width*0.9));
         radar.setAdapter(radarAdapter);
         kid = getIntent().getStringExtra("kid");
         setCustomTitle(getIntent().getStringExtra("title"));
@@ -141,8 +132,14 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
                 intent.putExtra("kId", model.getCompleteClass().get(position).getKid());
                 intent.putExtra("cId", model.getCompleteClass().get(position).getId());
                 intent.putExtra("title", model.getCompleteClass().get(position).getTitle());
-                intent.putExtra("video",1);
+                intent.putExtra("video", 1);
                 startActivity(intent);
+            }
+        });
+        radarAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivity(new Intent(mActivity, AnswerActivity.class));
             }
         });
     }
@@ -171,7 +168,7 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
         new HaveReportApi(this, map, new ResponseCallBack<ReportModel.ReportBean>() {
             @Override
             public void result(ReportModel.ReportBean reportBean, ErrorMsg errorMsg) {
-                if (reportBean != null&&!TextUtils.isEmpty(reportBean.getUrl())) {
+                if (reportBean != null && !TextUtils.isEmpty(reportBean.getUrl())) {
                     if (reportBean.getComment_id() != null) {
                         ToastUtil.showShortToast("您已经评价过该课程");
                     } else {

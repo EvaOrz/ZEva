@@ -381,6 +381,10 @@
         <activity android:name=".activity.TeacherSummaryActivity" />
         <!--查看作业-->
         <activity android:name=".activity.WorkDetailsActivity" />
+        <!--闯关答题-->
+        <activity android:name=".activity.AnswerActivity" />
+        <!--闯关结果-->
+        <activity android:name=".activity.AnswerResultActivity" />
 
 
         <!--腾讯定位SDK key-->
