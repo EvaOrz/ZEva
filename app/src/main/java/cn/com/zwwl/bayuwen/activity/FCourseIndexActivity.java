@@ -89,7 +89,7 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
             model.setContent("");
             models.add(model);
         }
-        radarAdapter = new RadarAdapter(models);
+        radarAdapter = new RadarAdapter(models,Tools.getUiPixels(radar).first);
         radar.setAdapter(radarAdapter);
         kid = getIntent().getStringExtra("kid");
         setCustomTitle(getIntent().getStringExtra("title"));
