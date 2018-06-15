@@ -86,9 +86,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginBottom="5dp"
                         android:src="@mipmap/icon_leaf"
-
                         />
 
                     <TextView
@@ -134,7 +132,6 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginBottom="5dp"
                         android:src="@mipmap/icon_medal_y"
 
                         />

@@ -24,7 +24,7 @@ public class FmSplashActivity extends BaseActivity {
     private String[] needPermissions = new String[]{Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission
             .WRITE_EXTERNAL_STORAGE, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission
-            .CAMERA, Manifest.permission.READ_CONTACTS};
+            .CAMERA, Manifest.permission.READ_CONTACTS,Manifest.permission.SET_ALARM};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

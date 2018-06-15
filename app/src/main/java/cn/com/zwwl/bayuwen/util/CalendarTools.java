@@ -134,6 +134,21 @@ public class CalendarTools {
         return Long.valueOf(re_time);
     }
 
+    // 将字符串转为时间戳
+    public static long fromStringToLongtime(String user_time) {
+        String re_time = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        Date d;
+        try {
+            d = sdf.parse(user_time);
+            long l = d.getTime();
+            re_time = String.valueOf(l);
+//            re_time = str.substring(0, 10);
+        } catch (ParseException e) {
+        }
+        return Long.valueOf(re_time);
+    }
+
     // 将字符串转为Calendar
     public static Calendar fromStringToca(String user_time) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
