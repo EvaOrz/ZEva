@@ -315,7 +315,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                     bannerView.startLoop(true);
 
                     calendarLayout.removeAllViews();
-                    if (calendarCourseBean.getCourses().size() > 0) {
+                    if (calendarCourseBean != null && calendarCourseBean.getCourses().size() > 0) {
                         Calendar ss = CalendarTools.fromStringToca(calendarCourseBean.getDate());
                         calendarRi.setText(ss.get(Calendar.DATE) + "");
                         calendarYue.setText(ss.get(Calendar.MONTH) + "月");

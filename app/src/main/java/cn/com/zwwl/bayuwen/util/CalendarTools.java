@@ -136,17 +136,13 @@ public class CalendarTools {
 
     // 将字符串转为时间戳
     public static long fromStringToLongtime(String user_time) {
-        String re_time = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        Date d;
-        try {
-            d = sdf.parse(user_time);
-            long l = d.getTime();
-            re_time = String.valueOf(l);
-//            re_time = str.substring(0, 10);
-        } catch (ParseException e) {
-        }
-        return Long.valueOf(re_time);
+        String[] ss = user_time.split(":");
+        if (ss.length == 2) {
+            Long lh = Long.valueOf(ss[0]) * 60 * 60 * 1000;
+            Long lm = Long.valueOf(ss[1]) * 60 * 1000;
+            return lh + lm;
+        } else return 0;
+
     }
 
     // 将字符串转为Calendar

@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:button="@drawable/selector_radio"
+            android:button="@drawable/selector_checkbox"
             android:checked="false"
             android:scaleX="0.7"
             android:scaleY="0.7" />

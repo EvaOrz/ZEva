@@ -170,10 +170,14 @@ public class AddCalendarActivity extends BaseActivity {
                     Toast.makeText(mContext, "正在同步到系统日历", Toast.LENGTH_LONG).show();
 
                     for (Date date : periods) {
+                        long sss = CalendarTools.fromStringToLongtime(shangTime);
+                        long xxx = CalendarTools.fromStringToLongtime(xiaTime);
                         addCalendarEvent(mContext, nameEv.getText().toString(),
-                                calendarJigouModel.getName(), CalendarTools.fromStringToLongtime
-                                        (shangTime), CalendarTools.fromStringToLongtime(xiaTime));
+                                calendarJigouModel.getName(), date.getTime() + sss, date.getTime
+                                        () + xxx);
                     }
+                    Toast.makeText(mContext, "已同步课程到系统日历", Toast.LENGTH_SHORT).show();
+                    finish();
 
                     break;
             }
@@ -342,7 +346,7 @@ public class AddCalendarActivity extends BaseActivity {
     private static String CALENDARS_NAME = "test";
     private static String CALENDARS_ACCOUNT_NAME = "test@gmail.com";
     private static String CALENDARS_ACCOUNT_TYPE = "com.android.exchange";
-    private static String CALENDARS_DISPLAY_NAME = "测试账户";
+    private static String CALENDARS_DISPLAY_NAME = "大语文账户";
 
     /**
      * 添加日历账户
@@ -399,8 +403,8 @@ public class AddCalendarActivity extends BaseActivity {
      * @param context
      * @param title
      * @param description
-     * @param beginTime
-     * @param endTime
+     * @param beginTime   毫秒单位
+     * @param endTime     毫秒单位
      */
 
     public void addCalendarEvent(Context context, String title, String description, long
@@ -422,12 +426,12 @@ public class AddCalendarActivity extends BaseActivity {
 
         Calendar mCalendar = Calendar.getInstance();
         mCalendar.setTimeInMillis(beginTime);//设置开始时间
-        long start = mCalendar.getTime().getTime() * 1000;
+        long start = mCalendar.getTime().getTime();
         mCalendar.setTimeInMillis(endTime);//设置终止时间
-        long end = mCalendar.getTime().getTime() * 1000;
+        long end = mCalendar.getTime().getTime();
 
-        Log.e("start & end ", CalendarTools.format(start, "yyyy-MM-dd") + " ________  " +
-                CalendarTools.format(end, "yyyy-MM-dd"));
+        Log.e("start & end ", CalendarTools.format(start / 1000, "yyyy-MM-dd HH:mm") + " ________" +
+                CalendarTools.format(end / 1000, "yyyy-MM-dd HH:mm"));
 
         event.put(CalendarContract.Events.DTSTART, start);
         event.put(CalendarContract.Events.DTEND, start);

@@ -92,6 +92,9 @@
             <CheckBox
                 android:id="@+id/address_checkbox"
                 android:layout_width="wrap_content"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:background="@drawable/selector_checkbox"
                 android:layout_height="wrap_content" />
 
             <TextView
@@ -109,7 +112,7 @@
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:background="@color/gray_dark" />
+                android:src="@mipmap/bianji" />
 
             <TextView
                 android:id="@+id/address_edit"
@@ -124,7 +127,7 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginLeft="10dp"
-                android:background="@color/gray_dark" />
+               android:src="@mipmap/dalajitong"/>
 
             <TextView
                 android:id="@+id/address_delete"

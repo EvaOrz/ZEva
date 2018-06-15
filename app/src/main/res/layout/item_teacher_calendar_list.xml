@@ -6,7 +6,7 @@
     android:orientation="horizontal"
     android:paddingRight="5dp">
 
-    <ImageView
+    <cn.com.zwwl.bayuwen.widget.CircleImageView
         android:id="@+id/item_t_c_avatar"
         android:layout_width="20dp"
         android:layout_height="20dp"
