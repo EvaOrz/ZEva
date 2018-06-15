@@ -1,17 +1,21 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,11 +52,17 @@ public class AddressAddActivity extends BaseActivity {
     private AddressModel addressModel;
     private boolean isModify = false;// 是否是修改页面
 
+    private String[] needPermissions = new String[]{Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.READ_CONTACTS};
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_add);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            askPermission(needPermissions, 101);
+        }
         initView();
         if (getIntent().getSerializableExtra("AddressAddActivity_data") != null && getIntent()
                 .getSerializableExtra("AddressAddActivity_data") instanceof AddressModel) {
@@ -61,6 +71,7 @@ public class AddressAddActivity extends BaseActivity {
             isModify = true;
             initData();
         } else addressModel = new AddressModel();
+
 
     }
 
@@ -327,6 +338,24 @@ public class AddressAddActivity extends BaseActivity {
             }
 
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 101:
+                for (int i = 0; i < permissions.length; i++) {
+
+                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                        Log.e("ppppppppphas", permissions[i]);
+                    } else {
+                        Log.e("pppppppppno", permissions[i]);
+                    }
+                }
+                break;
+        }
+
     }
 
 }

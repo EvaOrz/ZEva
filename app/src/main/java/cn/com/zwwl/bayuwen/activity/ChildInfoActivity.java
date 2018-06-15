@@ -65,7 +65,6 @@ public class ChildInfoActivity extends BaseActivity {
     private MostGridView giftGridView;
     private JiangZhuangAdapter adapter;
     private List<GiftAndJiangModel> datas = new ArrayList<>();
-    private String deleteIds = "";// 待删除的id串
 
     private ChildModel childModel = new ChildModel();
 

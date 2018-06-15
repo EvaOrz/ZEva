@@ -57,7 +57,7 @@ import cn.com.zwwl.bayuwen.widget.MostGridView;
 /**
  *
  */
-public class MainActivity extends BaseActivity implements TencentLocationListener {
+public class MainActivity extends BaseActivity {
     private RadioButton tabButton1, tabButton2, tabButton3, tabButton4, tabButton5;
     private LinearLayout mainView;
     private DrawerLayout drawer;// 抽屉
@@ -304,11 +304,15 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
 
 
     /**
-     * 切换学生
+     * frag1 ,frag2,frag3切换城市
+     * 标记其他tab的状态
      */
-//    public void changeChild(ChildModel childModel) {
-//
-//    }
+    public void changeCity(int i) {
+        mainFrag1.isCityChanged = i == 0 ? false : true;
+        mainFrag2.isCityChanged = i == 1 ? false : true;
+        mainFrag3.isCityChanged = i == 2 ? false : true;
+    }
+
     @Override
     protected void initData() {
         if (userModel == null) return;
@@ -318,6 +322,7 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         initChildDta();
         getReport();
     }
+
 
     /**
      * 获取最新报告
@@ -511,16 +516,4 @@ public class MainActivity extends BaseActivity implements TencentLocationListene
         }
     }
 
-    @Override
-    public void onLocationChanged(TencentLocation tencentLocation, int i, String s) {
-        Log.e("sssssss", s + " __ " + tencentLocation.getCity());
-        if (TextUtils.isEmpty(TempDataHelper.getCurrentCity(this))) {
-            TempDataHelper.setCurrentCity(mContext, tencentLocation.getCity());
-        }
-    }
-
-    @Override
-    public void onStatusUpdate(String s, int i, String s1) {
-
-    }
 }

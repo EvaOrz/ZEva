@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/login_bg"
+    android:background="@drawable/login_bg"
     android:orientation="vertical"
     android:padding="15dp"
     tools:context=".activity.LoginActivity">
@@ -14,10 +14,10 @@
 
         <ImageView
             android:id="@+id/login_back"
-            android:contentDescription="@null"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/icon_close_yellow"/>
+            android:contentDescription="@null"
+            android:src="@mipmap/icon_close_yellow" />
 
         <TextView
             android:id="@+id/login_register"
@@ -30,12 +30,17 @@
             android:textSize="@dimen/text_size_14" />
     </RelativeLayout>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_marginRight="100dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/login_slogan" />
+
 
     <EditText
         android:id="@+id/login_account_edit"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bar_height"
-        android:layout_marginTop="100dp"
         android:background="@null"
         android:gravity="center_vertical"
         android:hint="@string/login_hint"

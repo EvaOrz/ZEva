@@ -3,13 +3,19 @@ package cn.com.zwwl.bayuwen.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.tencent.map.geolocation.TencentLocation;
+import com.tencent.map.geolocation.TencentLocationListener;
+
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.LoginSigninApi;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -20,7 +26,7 @@ import cn.com.zwwl.bayuwen.view.LoginProblemPopWindow;
 /**
  * 登录
  */
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements TencentLocationListener {
     private EditText accountEdit, pwdEdit;
     private ImageView showImg;
     private boolean isShowPassword = false;// 是否显示密码
@@ -120,5 +126,18 @@ public class LoginActivity extends BaseActivity {
                 showToast(error.getDesc());
             }
         });
+    }
+
+    @Override
+    public void onLocationChanged(TencentLocation tencentLocation, int i, String s) {
+        Log.e("sssssss", s + " __ " + tencentLocation.getCity());
+        if (TextUtils.isEmpty(TempDataHelper.getCurrentCity(this))) {
+            TempDataHelper.setCurrentCity(mContext, tencentLocation.getCity());
+        }
+    }
+
+    @Override
+    public void onStatusUpdate(String s, int i, String s1) {
+
     }
 }

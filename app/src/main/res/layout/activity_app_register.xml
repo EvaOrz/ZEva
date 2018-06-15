@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/login_bg"
+    android:background="@drawable/login_bg"
     android:orientation="vertical"
     android:padding="15dp"
     tools:context=".activity.RegisterActivity">
@@ -15,9 +15,9 @@
         <ImageView
             android:id="@+id/register_back"
             android:layout_width="40dp"
-            android:contentDescription="@null"
             android:layout_height="40dp"
-            android:src="@mipmap/icon_close_yellow"/>
+            android:contentDescription="@null"
+            android:src="@mipmap/icon_close_yellow" />
 
         <TextView
             android:id="@+id/register_login"
@@ -30,11 +30,17 @@
             android:textSize="@dimen/text_size_14" />
     </RelativeLayout>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="100dp"
+        android:src="@drawable/login_slogan" />
+
+
     <LinearLayout
         android:id="@+id/register_city_l"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bar_height"
-        android:layout_marginTop="100dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -53,15 +59,15 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="right|center_vertical"
-            android:text="@string/plz_choose"
             android:paddingRight="10dp"
+            android:text="@string/plz_choose"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/text_size_14" />
 
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
-           android:src="@mipmap/icon_map" />
+            android:src="@mipmap/icon_map" />
     </LinearLayout>
 
     <View
@@ -152,8 +158,8 @@
         <ImageView
             android:id="@+id/register_pwd_show"
             android:layout_width="20dp"
-            android:contentDescription="@null"
             android:layout_height="20dp"
+            android:contentDescription="@null"
             android:src="@mipmap/icon_hide_psd" />
     </LinearLayout>
 

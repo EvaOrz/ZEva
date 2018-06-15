@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -44,6 +45,7 @@ import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
 import cn.com.zwwl.bayuwen.adapter.ViewPageAdapter;
 import cn.com.zwwl.bayuwen.api.Index1Api;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ChildModel;
@@ -54,9 +56,11 @@ import cn.com.zwwl.bayuwen.model.Index1Model;
 import cn.com.zwwl.bayuwen.model.Index1Model.*;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
+import cn.com.zwwl.bayuwen.util.AddressTools;
 import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 import cn.com.zwwl.bayuwen.view.ChildMenuPopView;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.LoopViewPager;
@@ -86,6 +90,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private MyViewPagerAdapter pingAdapter;
     private TextView calendarRi, calendarYue;
     private LinearLayout calendarLayout;
+    private LinearLayout pingtu_indicator;// 拼图指示器
 
     private List<AdvBean> advBeans = new ArrayList<>();// banner数据
     private CalendarCourseBean calendarCourseBean;// calendar事件数据
@@ -94,9 +99,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
     private UserModel userModel;
 
-
     private int bannerWid, bannerHei;// 轮播位宽高
     private int pintuWid, pintuHei;// 拼图item的宽高
+
+    public boolean isCityChanged = false;// 城市状态是否变化
 
     private List<AlbumModel> yixuanDatas = new ArrayList<>();// 已选课程data
 
@@ -109,6 +115,8 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         bannerView.startLoop(true);
+        if (isCityChanged)
+            loadData();
     }
 
     @Nullable
@@ -152,14 +160,28 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                 LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(pintuWid + 10,
                         pintuHei +
                                 10);
-                params1.setMargins(0, 16, 0, 0);
+                params1.setMargins(0, 16, 0, 16);
                 pingPager.setLayoutParams(params1);
 
-                initPingtudata();// todo??
+                //
+                initPingtudata();
                 pingAdapter = new MyViewPagerAdapter(pingtuData);
                 pingPager.setAdapter(pingAdapter);
                 pingPager.setOffscreenPageLimit(3);
                 pingPager.setPageTransformer(true, new GalleryTransformer());
+                pingtu_indicator.removeAllViews();
+                for (int i = 0; i < pingtuData.size(); i++) {
+                    ImageView img = new ImageView(getContext());
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
+                            (LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    LinearLayout.LayoutParams
+                                            .WRAP_CONTENT);
+                    layoutParams.rightMargin = getResources().getDimensionPixelOffset(R.dimen
+                            .dp_5);
+                    img.setLayoutParams(layoutParams);
+                    img.setBackgroundResource(R.drawable.viewlooper_gray_status);
+                    pingtu_indicator.addView(img);
+                }
                 pingPager.setCurrentItem(2);
 
             }
@@ -173,6 +195,14 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             ImageLoader.display(mActivity, parentImg, userModel.getPic(), R
                     .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
         }
+        loadData();
+
+    }
+
+    /**
+     * 城市信息变换之后，页面需要刷新数据
+     */
+    public void loadData() {
         new Index1Api(mActivity, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
@@ -189,6 +219,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                         selectedCourses.addAll(index1Model.getSelectedCourse());
                     }
                     handler.sendEmptyMessage(1);
+                    isCityChanged = false;
                 }
 
             }
@@ -200,7 +231,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                 }
             }
         });
-
     }
 
 
@@ -218,6 +248,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         childTxt = root.findViewById(R.id.toolbar_title);
         childImg = root.findViewById(R.id.frag1_child_avatar);
         parentImg = root.findViewById(R.id.frag1_parent_avater);
+        pingtu_indicator = root.findViewById(R.id.pingtu_indicator);
 
         calendarRi = root.findViewById(R.id.calendar_ri);
         calendarYue = root.findViewById(R.id.calendar_yue);
@@ -238,9 +269,24 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         yixuanKeAdapter.notifyDataSetChanged();
 
         pingPager = root.findViewById(R.id.pingtu_pager);
+        pingPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int
+                    positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                updateLinearPosition(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         initSize();
-
 
         studentLay.setOnClickListener(this);
         parentLay.setOnClickListener(this);
@@ -249,6 +295,24 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         root.findViewById(R.id.go_xunzhang).setOnClickListener(this);
         root.findViewById(R.id.toolbar_left).setOnClickListener(this);
         root.findViewById(R.id.toolbar_right).setOnClickListener(this);
+        root.findViewById(R.id.toolbar_city).setOnClickListener(this);
+    }
+
+    /**
+     * 更新拼图的选中状态
+     *
+     * @param position
+     */
+    private void updateLinearPosition(int position) {
+        for (int i = 0; i < pingtu_indicator.getChildCount(); i++) {
+            if (i == position) {
+                pingtu_indicator.getChildAt(i).setBackgroundResource(R.drawable
+                        .viewlooper_gold_status);
+            } else {
+                pingtu_indicator.getChildAt(i).setBackgroundResource(R.drawable
+                        .viewlooper_gray_status);
+            }
+        }
     }
 
     /**
@@ -348,12 +412,27 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             case R.id.go_calendar:
                 startActivity(new Intent(mActivity, CalendarActivity.class));
                 break;
-
             case R.id.go_xunzhang:
                 startActivity(new Intent(mActivity, AllXunzhangActivity.class));
                 break;
             case R.id.toolbar_left:// 打开抽屉
                 ((MainActivity) mActivity).openDrawer();
+                break;
+            case R.id.toolbar_city:// 选择城市
+                new AddressPopWindow(mActivity, 1, new AddressPopWindow.OnAddressCListener() {
+
+                    @Override
+                    public void onClick(AddressTools.ProvinceModel province, AddressTools
+                            .CityModel city, AddressTools.DistModel dist) {
+                        if (city.getCtxt().equals("市辖区")) {
+                            TempDataHelper.setCurrentCity(mActivity, province.getPtxt());
+                        } else
+                            TempDataHelper.setCurrentCity(mActivity, city.getCtxt());
+                        loadData();
+                        ((MainActivity) mActivity).changeCity(0);
+                    }
+
+                });
                 break;
             case R.id.toolbar_right:
                 startActivity(new Intent(mActivity, MessageActivity.class));

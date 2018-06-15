@@ -240,7 +240,7 @@ public class AddressPopWindow implements View.OnClickListener {
         ArrayList<ProvinceModel> plist;
         ArrayList<CityModel> clist;
         ArrayList<DistModel> dlist;
-        int type = 0;
+        int type = 0;// 0：省 1：市 2：区
 
         protected AddressTextAdapter(Context context, ArrayList<ProvinceModel> list1,
                                      ArrayList<CityModel> list2, ArrayList<DistModel> list3, int

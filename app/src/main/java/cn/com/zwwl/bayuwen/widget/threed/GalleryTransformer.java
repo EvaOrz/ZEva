@@ -11,7 +11,6 @@ public class GalleryTransformer implements ViewPager.PageTransformer {
     public void transformPage(View view, float position) {
         float scale = 0.5f;
         float scaleValue = 1 - Math.abs(position) * scale;
-        Log.e("sssssssss", Math.abs(position) + "");
         view.setScaleX(scaleValue);
         view.setScaleY(scaleValue);
         view.setAlpha(scaleValue);

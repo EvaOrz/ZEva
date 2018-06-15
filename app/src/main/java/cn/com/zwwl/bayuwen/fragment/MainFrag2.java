@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,10 +33,13 @@ import cn.com.zwwl.bayuwen.api.KeTagListApi;
 import cn.com.zwwl.bayuwen.api.KeTagListApi.TagCourseModel;
 import cn.com.zwwl.bayuwen.api.PraiseListApi;
 import cn.com.zwwl.bayuwen.api.PraiseListApi.PraiseModel;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.util.AddressTools;
+import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 import cn.com.zwwl.bayuwen.widget.BannerView;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 import cn.com.zwwl.bayuwen.widget.observable.ObservableScrollView;
@@ -64,6 +68,8 @@ public class MainFrag2 extends Fragment
     private List<TagCourseModel> tagList = new ArrayList<>();
     private PraiseModel praiseModel;
 
+    public boolean isCityChanged = false;// 城市状态是否变化
+
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
@@ -82,10 +88,12 @@ public class MainFrag2 extends Fragment
         }
     };
 
-
     @Override
     public void onResume() {
         super.onResume();
+        if (isCityChanged) {// 切换城市之后 要重新获取课程tag list,点赞排行不必重新获取
+            getEleCourseList();
+        }
     }
 
     @Nullable
@@ -194,6 +202,19 @@ public class MainFrag2 extends Fragment
                 ((MainActivity) mActivity).openDrawer();
                 break;
             case R.id.menu_school:
+                new AddressPopWindow(mActivity, 1, new AddressPopWindow.OnAddressCListener() {
+
+                    @Override
+                    public void onClick(AddressTools.ProvinceModel province, AddressTools
+                            .CityModel city, AddressTools.DistModel dist) {
+                        if (city.getCtxt().equals("市辖区")) {
+                            TempDataHelper.setCurrentCity(mActivity, province.getPtxt());
+                        } else
+                            TempDataHelper.setCurrentCity(mActivity, city.getCtxt());
+                        getEleCourseList();
+                        ((MainActivity) mActivity).changeCity(1);
+                    }
+                });
                 break;
             case R.id.menu_search:
                 startActivity(new Intent(mActivity, SearchCourseActivity.class));
@@ -216,6 +237,7 @@ public class MainFrag2 extends Fragment
                     tagList.clear();
                     tagList.addAll(list);
                     handler.sendEmptyMessage(0);
+                    isCityChanged = false;
                 }
             }
 

@@ -86,8 +86,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@mipmap/icon_leaf"
-                        />
+                        android:src="@mipmap/icon_leaf" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -132,9 +131,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@mipmap/icon_medal_y"
-
-                        />
+                        android:src="@mipmap/icon_medal_y" />
 
                     <TextView
                         android:id="@+id/frag1_parent_gongxun"
@@ -283,7 +280,13 @@
                     android:id="@+id/pingtu_pager"
                     android:layout_width="300dp"
                     android:layout_height="150dp"
-                    android:layout_marginTop="10dp" />
+                    />
+
+                <LinearLayout
+                    android:id="@+id/pingtu_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
             </LinearLayout>
 
             <!--已选课程-->

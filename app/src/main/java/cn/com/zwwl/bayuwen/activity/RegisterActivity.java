@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.InputType;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.RequestMobileCodeCallback;
+import com.tencent.map.geolocation.TencentLocation;
+import com.tencent.map.geolocation.TencentLocationListener;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
@@ -32,7 +36,7 @@ import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 /**
  * 注册
  */
-public class RegisterActivity extends BaseActivity {
+public class RegisterActivity extends BaseActivity implements TencentLocationListener {
 
     private TextView getVerify;
     private ImageView pwdShow;
@@ -197,5 +201,19 @@ public class RegisterActivity extends BaseActivity {
             });
 
         }
+    }
+
+
+    @Override
+    public void onLocationChanged(TencentLocation tencentLocation, int i, String s) {
+        Log.e("sssssss", s + " __ " + tencentLocation.getCity());
+        if (TextUtils.isEmpty(TempDataHelper.getCurrentCity(this))) {
+            TempDataHelper.setCurrentCity(mContext, tencentLocation.getCity());
+        }
+    }
+
+    @Override
+    public void onStatusUpdate(String s, int i, String s1) {
+
     }
 }

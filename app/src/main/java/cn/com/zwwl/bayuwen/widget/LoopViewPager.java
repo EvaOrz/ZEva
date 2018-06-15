@@ -191,7 +191,7 @@ public class LoopViewPager extends LinearLayout {
                         layoutParams.rightMargin = getResources().getDimensionPixelOffset(R.dimen
                                 .dimen_9dp);
                         img.setLayoutParams(layoutParams);
-                        img.setBackgroundResource(R.drawable.banner_point);
+                        img.setBackgroundResource(R.drawable.viewlooper_gray_status);
                         mLinearPosition.addView(img);
                     } else {
                         mLinearPosition.removeViewAt(0);
@@ -202,9 +202,10 @@ public class LoopViewPager extends LinearLayout {
             for (int i = 0; i < mLinearPosition.getChildCount(); i++) {
                 if (i == (curPos % viewSize)) {
                     mLinearPosition.getChildAt(i).setBackgroundResource(R.drawable
-                            .banner_point_select);
+                            .viewlooper_gold_status);
                 } else {
-                    mLinearPosition.getChildAt(i).setBackgroundResource(R.drawable.banner_point);
+                    mLinearPosition.getChildAt(i).setBackgroundResource(R.drawable
+                            .viewlooper_gray_status);
                 }
             }
         }

@@ -16,6 +16,7 @@
         android:id="@+id/item_t_c_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
         android:ellipsize="end"
         android:lines="1"
         android:text="赵伯奇"

@@ -68,7 +68,7 @@
                         android:textColor="@color/gray_dark"
                         android:textSize="@dimen/text_size_14" />
 
-                    <ImageView
+                    <cn.com.zwwl.bayuwen.widget.CircleImageView
                         android:id="@+id/info_c_aimg"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
@@ -190,7 +190,7 @@
                     <ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:src="@mipmap/arrow_right_gray"/>
+                        android:src="@mipmap/arrow_right_gray" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -229,7 +229,7 @@
                     <ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:src="@mipmap/arrow_right_gray"/>
+                        android:src="@mipmap/arrow_right_gray" />
                 </LinearLayout>
 
                 <View
@@ -268,7 +268,7 @@
                     <ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:src="@mipmap/arrow_right_gray"/>
+                        android:src="@mipmap/arrow_right_gray" />
                 </LinearLayout>
 
                 <View
@@ -399,9 +399,9 @@
 
                     <ImageView
                         android:id="@+id/delete_do"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:background="@color/gray_light" />
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@mipmap/dalajitong" />
 
                 </LinearLayout>
 

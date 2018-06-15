@@ -62,26 +62,40 @@ public class MainFrag3 extends BasicFragment {
     MyCourseModel courseModel;
     CourseIndexAdapter courseIndexAdapter;
 
+    public boolean isCityChanged = false;// 城市状态是否变化
+
     @Override
-    protected View setContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected View setContentView(LayoutInflater inflater, ViewGroup container, Bundle
+            savedInstanceState) {
         return inflater.inflate(R.layout.fragment_main3, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isCityChanged) {// 切换城市之后 要重新获取课程tag list,点赞排行不必重新获取
+            initData();
+        }
     }
 
     @Override
     protected void initView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R.dimen.dp_5, OrientationHelper.VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R
+                .dimen.dp_5, OrientationHelper.VERTICAL));
         adapter = new CompleteCourseAdapter(finishCourse);
         adapter.setEmptyView(R.layout.empty_view, (ViewGroup) recyclerView.getParent());
         recyclerView.setAdapter(adapter);
         studyCourse.setLayoutManager(new LinearLayoutManager(mContext));
-        studyCourse.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R.dimen.dp_5, OrientationHelper.VERTICAL));
+        studyCourse.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R
+                .dimen.dp_5, OrientationHelper.VERTICAL));
         courseIndexAdapter = new CourseIndexAdapter(null);
         courseIndexAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) studyCourse.getParent());
         studyCourse.setAdapter(courseIndexAdapter);
         refresh.autoRefresh();
         refresh.finishLoadMore(false);
     }
+
     @Override
     protected void initData() {
     }
@@ -119,18 +133,22 @@ public class MainFrag3 extends BasicFragment {
                 startActivity(intent);
             }
         });
-        courseIndexAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        courseIndexAdapter.setOnItemChildClickListener(new BaseQuickAdapter
+                .OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent();
                 MyCourseModel.UnfinishedBean bean = courseModel.getUnfinished().get(position);
-                int type = Tools.getCourseType(bean.getPlan().getOnline(), bean.getPlan().getSource(), bean.getProducts().getEnd_at());
+                int type = Tools.getCourseType(bean.getPlan().getOnline(), bean.getPlan()
+                        .getSource(), bean.getProducts().getEnd_at());
                 switch (view.getId()) {
                     case R.id.arrow:
                         intent.setClass(activity, UnitIndexActivity.class);
                         intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
-                        intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan().getCurrentLectureId());
-                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished().get(position).getProducts().getOnline()));
+                        intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan
+                                ().getCurrentLectureId());
+                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
+                                .get(position).getProducts().getOnline()));
                         intent.putExtra("video", 0);
                         break;
                     case R.id.work:
@@ -140,14 +158,16 @@ public class MainFrag3 extends BasicFragment {
                         break;
                     case R.id.look_video:
                         intent.setClass(activity, VideoPlayActivity.class);
-                        intent.putExtra("VideoPlayActivity_url", courseModel.getUnfinished().get(position).getPlan().getPlayUrl());
+                        intent.putExtra("VideoPlayActivity_url", courseModel.getUnfinished().get
+                                (position).getPlan().getPlayUrl());
                         break;
                     case R.id.trace:
                         application.oldKe = bean.getProducts();
                         intent.putExtra("kid", bean.getKid());
                         intent.putExtra("title", bean.getProducts().getTitle());
                         intent.putExtra("course_type", type);
-                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished().get(position).getProducts().getOnline()));
+                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
+                                .get(position).getProducts().getOnline()));
                         intent.setClass(activity, StudyingCourseActivity.class);
                         break;
                 }
@@ -159,8 +179,10 @@ public class MainFrag3 extends BasicFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(activity, UnitIndexActivity.class);
                 intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
-                intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan().getCurrentLectureId());
-                intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished().get(position).getProducts().getOnline()));
+                intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan()
+                        .getCurrentLectureId());
+                intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished().get
+                        (position).getProducts().getOnline()));
                 intent.putExtra("video", 0);
                 startActivity(intent);
             }
@@ -173,7 +195,8 @@ public class MainFrag3 extends BasicFragment {
     public static MainFrag3 newInstance() {
         return new MainFrag3();
     }
-    @OnClick({R.id.menu_more,R.id.menu_news,R.id.menu_school,R.id.menu_search})
+
+    @OnClick({R.id.menu_more, R.id.menu_news, R.id.menu_school, R.id.menu_search})
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
