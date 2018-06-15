@@ -58,6 +58,7 @@ public class AddressPopWindow implements View.OnClickListener {
 
     public AddressPopWindow(Context context, int type, OnAddressCListener listener) {
         mContext = context;
+        this.type = type;
         this.listener = listener;
         init();
     }
@@ -87,6 +88,9 @@ public class AddressPopWindow implements View.OnClickListener {
         wvProvince = view.findViewById(R.id.wv_address_province);
         wvCitys = view.findViewById(R.id.wv_address_city);
         wvDist = view.findViewById(R.id.wv_address_dist);
+        if (type == 1) {
+            wvDist.setVisibility(View.GONE);
+        }
         view.findViewById(R.id.btn_myinfo_sure).setOnClickListener(this);
         view.findViewById(R.id.btn_myinfo_cancel).setOnClickListener(this);
 
