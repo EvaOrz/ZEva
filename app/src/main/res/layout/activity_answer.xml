@@ -26,17 +26,19 @@
             android:minHeight="@dimen/dp_5"
             android:paddingEnd="0dp"
             android:paddingStart="0dp"
-            android:progress="10"
             android:progressDrawable="@drawable/seek_bg"
-            android:thumb="@drawable/seek_thumb" />
+            android:splitTrack="false"
+            android:thumb="@drawable/seek_thumb"
+            android:thumbOffset="0dip" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/current"
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dp_5"
-            android:layout_marginStart="@dimen/dp_5"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
             android:gravity="center"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_16" />

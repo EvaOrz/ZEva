@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
         android:drawableLeft="@mipmap/icon_pt_yellow"
         android:drawableStart="@mipmap/icon_pt_yellow"
         android:gravity="center_vertical"
@@ -23,19 +24,20 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
+        android:layout_height="300dip"
         android:layout_marginEnd="@dimen/dp_10"
         android:layout_marginStart="@dimen/dp_10"
+        android:paddingStart="12dip"
+        android:paddingEnd="12dip"
+        android:paddingTop="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_20"
         android:background="@mipmap/radar_bg">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/radar"
             android:layout_width="match_parent"
             android:layout_height="240dip"
-            android:layout_marginBottom="@dimen/dp_20"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_20" />
+           />
     </LinearLayout>
 
 
@@ -126,8 +128,8 @@
         android:drawableRight="@mipmap/icon_arrow_gray"
         android:drawableStart="@mipmap/icon_summary"
         android:gravity="center_vertical"
-        android:paddingEnd="@dimen/dp_16"
-        android:paddingStart="@dimen/dp_16"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_10"
         android:text="@string/course_eval" />
 
     <View

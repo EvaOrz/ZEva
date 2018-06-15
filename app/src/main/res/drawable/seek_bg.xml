@@ -18,7 +18,6 @@
             <shape>
                 <corners android:radius="5dip" />
             </shape>
-
         </clip>
     </item>
     <item android:id="@*android:id/progress">

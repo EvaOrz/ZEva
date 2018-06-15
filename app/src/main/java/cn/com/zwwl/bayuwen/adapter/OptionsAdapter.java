@@ -39,21 +39,31 @@ public class OptionsAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, String item) {
+        helper.itemView.setEnabled(choose == -1);
         helper.setBackgroundRes(R.id.index, R.drawable.corner_index_normal);
         helper.setBackgroundRes(R.id.option_layout, R.drawable.corner_option_normal);
         helper.setVisible(R.id.logo, false);
         helper.setTextColor(R.id.index, ContextCompat.getColor(mContext, R.color.text_color_default));
-        if (helper.getLayoutPosition() == correct) {
-            helper.setVisible(R.id.logo, true);
-            helper.setTextColor(R.id.index, ContextCompat.getColor(mContext, R.color.white));
-            if (choose == correct) {
+        if (choose != -1) {
+            if (helper.getLayoutPosition() == correct) {
+                helper.setTextColor(R.id.index, ContextCompat.getColor(mContext, R.color.white));
+                helper.setVisible(R.id.logo, true);
                 helper.setBackgroundRes(R.id.index, R.drawable.corner_index_right);
                 helper.setBackgroundRes(R.id.option_layout, R.drawable.corner_option_right);
                 helper.setImageResource(R.id.logo, R.mipmap.icon_vote_default);
-            } else {
-                helper.setBackgroundRes(R.id.index, R.drawable.corner_index_wrong);
-                helper.setBackgroundRes(R.id.option_layout, R.drawable.corner_option_wrong);
-                helper.setImageResource(R.id.logo, R.mipmap.icon_vote_checked);
+            }
+            if (helper.getLayoutPosition() == choose) {
+                helper.setTextColor(R.id.index, ContextCompat.getColor(mContext, R.color.white));
+                helper.setVisible(R.id.logo, true);
+                if (choose == correct) {
+                    helper.setBackgroundRes(R.id.index, R.drawable.corner_index_right);
+                    helper.setBackgroundRes(R.id.option_layout, R.drawable.corner_option_right);
+                    helper.setImageResource(R.id.logo, R.mipmap.icon_vote_default);
+                } else {
+                    helper.setBackgroundRes(R.id.index, R.drawable.corner_index_wrong);
+                    helper.setBackgroundRes(R.id.option_layout, R.drawable.corner_option_wrong);
+                    helper.setImageResource(R.id.logo, R.mipmap.icon_vote_checked);
+                }
             }
         }
     }
