@@ -295,8 +295,8 @@
                 android:padding="10dp">
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:src="@mipmap/tuangou" />
 
                 <TextView

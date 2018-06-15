@@ -74,7 +74,8 @@ public class CalendarKeAdapter extends RecyclerView.Adapter<CalendarKeAdapter.Vi
                     item.getEndTime());
             if (Tools.listNotNull(item.getTeacher())) {
                 for (CalendarEventModel.TeacherBean teacherBean : item.getTeacher()) {
-                    holder.teacherLayout.addView(getChildView(teacherBean));
+                    holder.teacherLayout.addView(getChildView(teacherBean), LinearLayout
+                            .LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 }
             }
         }

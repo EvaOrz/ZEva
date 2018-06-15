@@ -9,9 +9,11 @@
     <CheckBox
         android:id="@+id/tuifee_reson_check"
         android:layout_width="wrap_content"
-
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+        android:button="@drawable/selector_checkbox"
+        android:checked="false"
+        android:scaleX="0.7"
+        android:scaleY="0.7" />
 
     <TextView
         android:id="@+id/tuifee_reson"
