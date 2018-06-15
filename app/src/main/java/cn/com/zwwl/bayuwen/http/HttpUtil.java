@@ -458,6 +458,29 @@ public class HttpUtil {
         return ssfFactory;
     }
 
+    public void postJson(String url, String json,final FetchDataListener listener) {
+        RequestBody  requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),json);
+
+        Request.Builder requestBuilder = new Request.Builder();
+        Request request = setRequestHeader(requestBuilder.post(requestBody).url(url));
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                listener.fetchData(false, null, false);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200)
+                    listener.fetchData(true, response.body().string(), true);
+                else {
+                    listener.fetchData(false, response.body().string(), true);
+                }
+            }
+        });
+    }
+
     /**
      * 用于信任所有证书
      */

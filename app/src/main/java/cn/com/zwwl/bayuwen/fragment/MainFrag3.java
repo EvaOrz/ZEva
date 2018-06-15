@@ -74,7 +74,7 @@ public class MainFrag3 extends BasicFragment {
     public void onResume() {
         super.onResume();
         if (isCityChanged) {// 切换城市之后 要重新获取课程tag list,点赞排行不必重新获取
-            initData();
+            refresh.autoRefresh();
         }
     }
 

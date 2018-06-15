@@ -9,21 +9,22 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.model.CommonModel;
 
 
-public class OptionsAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-    private int choose = -1, correct;
+public class OptionsAdapter extends BaseQuickAdapter<CommonModel, BaseViewHolder> {
+    private String choose = null, correct;
 
-    public OptionsAdapter(@Nullable List<String> data) {
+    public OptionsAdapter(@Nullable List<CommonModel> data) {
         super(R.layout.item_question_option, data);
     }
 
-    public void setChoose(int choose) {
+    public void setChoose(String choose) {
         this.choose = choose;
         notifyDataSetChanged();
     }
 
-    public int getChoose() {
+    public String getChoose() {
         return choose;
     }
 
@@ -31,38 +32,40 @@ public class OptionsAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
         return choose == correct;
     }
 
-    public void setOptions(List<String> options, int correct) {
-        choose = -1;
+    public void setOptions(List<CommonModel> options, String correct) {
+        choose = null;
         this.correct = correct;
         this.setNewData(options);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, String item) {
-        helper.itemView.setEnabled(choose == -1);
+    protected void convert(BaseViewHolder helper, CommonModel item) {
+        helper.itemView.setEnabled(choose == null);
+        helper.setText(R.id.index, item.getOption());
+        helper.setText(R.id.content, item.getContent());
         helper.setBackgroundRes(R.id.index, R.drawable.corner_index_normal);
         helper.setBackgroundRes(R.id.option_layout, R.drawable.corner_option_normal);
         helper.setVisible(R.id.logo, false);
         helper.setTextColor(R.id.index, ContextCompat.getColor(mContext, R.color.text_color_default));
-        if (choose != -1) {
-            if (helper.getLayoutPosition() == correct) {
+        if (choose != null) {
+            if (correct.equals(item.getOption())) {
                 helper.setTextColor(R.id.index, ContextCompat.getColor(mContext, R.color.white));
                 helper.setVisible(R.id.logo, true);
                 helper.setBackgroundRes(R.id.index, R.drawable.corner_index_right);
                 helper.setBackgroundRes(R.id.option_layout, R.drawable.corner_option_right);
-                helper.setImageResource(R.id.logo, R.mipmap.icon_vote_default);
+                helper.setImageResource(R.id.logo, R.mipmap.icon_wrong);
             }
-            if (helper.getLayoutPosition() == choose) {
+            if (item.getOption().equals(choose)) {
                 helper.setTextColor(R.id.index, ContextCompat.getColor(mContext, R.color.white));
                 helper.setVisible(R.id.logo, true);
-                if (choose == correct) {
+                if (correct.equals(choose)) {
                     helper.setBackgroundRes(R.id.index, R.drawable.corner_index_right);
                     helper.setBackgroundRes(R.id.option_layout, R.drawable.corner_option_right);
-                    helper.setImageResource(R.id.logo, R.mipmap.icon_vote_default);
+                    helper.setImageResource(R.id.logo, R.mipmap.icon_wrong);
                 } else {
                     helper.setBackgroundRes(R.id.index, R.drawable.corner_index_wrong);
                     helper.setBackgroundRes(R.id.option_layout, R.drawable.corner_option_wrong);
-                    helper.setImageResource(R.id.logo, R.mipmap.icon_vote_checked);
+                    helper.setImageResource(R.id.logo, R.mipmap.icon_right);
                 }
             }
         }

@@ -395,4 +395,18 @@ public class UrlUtil {
     public static String getEvalList() {
         return HOST + "/comment";
     }
+    /**
+     * 获取试题列表
+     */
+    public static String getQuestionList() {
+        return HOST + "/jigsaw/";
+    }
+
+    /**
+     *
+     *提交闯关答题
+     */
+    public static String submitAnswer() {
+        return HOST + "/jigsaw";
+    }
 }
