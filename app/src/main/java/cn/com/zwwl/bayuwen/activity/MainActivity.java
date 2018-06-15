@@ -466,7 +466,6 @@ public class MainActivity extends BaseActivity {
             mTempFragment = fragment;
             return;
         }
-
         if (fragment != mTempFragment) {
             if (!fragment.isAdded()) {
                 transaction.hide(mTempFragment)

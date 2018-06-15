@@ -26,6 +26,7 @@
             android:layout_centerVertical="true"
             android:text="@string/pass"
             android:textColor="@color/gold"
+            android:visibility="gone"
             android:textSize="@dimen/text_size_14" />
     </RelativeLayout>
 
