@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -33,15 +35,22 @@ import cn.com.zwwl.bayuwen.api.KeTagListApi;
 import cn.com.zwwl.bayuwen.api.KeTagListApi.TagCourseModel;
 import cn.com.zwwl.bayuwen.api.PraiseListApi;
 import cn.com.zwwl.bayuwen.api.PraiseListApi.PraiseModel;
+import cn.com.zwwl.bayuwen.api.fm.RecommentApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.Index1Model;
+import cn.com.zwwl.bayuwen.model.fm.RecommentModel;
 import cn.com.zwwl.bayuwen.util.AddressTools;
+import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 import cn.com.zwwl.bayuwen.widget.BannerView;
+import cn.com.zwwl.bayuwen.widget.LoopViewPager;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
+import cn.com.zwwl.bayuwen.widget.RoundAngleImageView;
 import cn.com.zwwl.bayuwen.widget.observable.ObservableScrollView;
 import cn.com.zwwl.bayuwen.widget.observable.ObservableScrollViewCallbacks;
 import cn.com.zwwl.bayuwen.widget.observable.ScrollState;
@@ -53,9 +62,8 @@ import cn.com.zwwl.bayuwen.widget.observable.ScrollUtils;
 public class MainFrag2 extends Fragment
         implements View.OnClickListener, ObservableScrollViewCallbacks {
     private Activity mActivity;
-    private BannerView bannerView;
+    private LoopViewPager bannerView;
     private View root;
-    private View mImageView;
     private RelativeLayout mToolbarView;
     private ObservableScrollView mScrollView;
     private GridView mGridView;
@@ -67,6 +75,7 @@ public class MainFrag2 extends Fragment
     private KeTagGridAdapter gridAdapter;
     private List<TagCourseModel> tagList = new ArrayList<>();
     private PraiseModel praiseModel;
+    private List<RecommentModel> bannerData = new ArrayList<>();
 
     public boolean isCityChanged = false;// 城市状态是否变化
 
@@ -84,6 +93,22 @@ public class MainFrag2 extends Fragment
                 case 1:
                     setAdapterData();
                     break;
+                case 2:
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout
+                            .LayoutParams.MATCH_PARENT, MyApplication.width * 9 / 16);
+                    bannerView.setSize(params);
+                    List<View> views = new ArrayList<>();
+                    for (RecommentModel recommentModel : bannerData) {
+                        ImageView r = new ImageView(mActivity);
+                        r.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        ImageLoader.display(mActivity, r, recommentModel.getPic(), R.mipmap
+                                        .app_icon,
+                                R.mipmap.app_icon);
+                        views.add(r);
+                    }
+                    bannerView.setViewList(views);
+                    bannerView.startLoop(true);
+                    break;
             }
         }
     };
@@ -100,9 +125,21 @@ public class MainFrag2 extends Fragment
             if (isCityChanged) {// 切换城市之后 要重新获取课程tag list,点赞排行不必重新获取
                 getEleCourseList();
             }
-            Log.e("main_frag_city2", TempDataHelper.getCurrentCity(mActivity));
         } else {
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        bannerView.startLoop(false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        bannerView.startLoop(true);
+
     }
 
     @Nullable
@@ -125,6 +162,29 @@ public class MainFrag2 extends Fragment
         super.onViewCreated(view, savedInstanceState);
         getEleCourseList();
         getPraiseList();
+        getBannerList();
+    }
+
+    private void getBannerList() {
+        new RecommentApi(mActivity, new RecommentApi.FetchRecommentListListener() {
+            @Override
+            public void setData(List<RecommentModel> list) {
+                if (Tools.listNotNull(list)) {
+                    bannerData.clear();
+                    for (RecommentModel r : list) {
+                        if (r.getParent().equals("19")) {
+                            bannerData.add(r);
+                        }
+                    }
+                    handler.sendEmptyMessage(2);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
     }
 
     /**
@@ -142,7 +202,7 @@ public class MainFrag2 extends Fragment
 
     private void initView() {
         mParallaxImageHeight = MyApplication.width * 9 / 16;
-        mImageView = root.findViewById(R.id.image);
+        bannerView = root.findViewById(R.id.frag2_head);
         mToolbarView = root.findViewById(R.id.main2_toolbar);
         mToolbarView.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, getResources().getColor
                 (R.color.transparent)));
@@ -151,7 +211,7 @@ public class MainFrag2 extends Fragment
 
         mScrollView = root.findViewById(R.id.scroll);
         mScrollView.setScrollViewCallbacks(this);
-        mScrollView.setZoomView(mImageView);
+        mScrollView.setZoomView(bannerView);
 
         tListView = root.findViewById(R.id.jiaoshi_layout);
         gListView = root.findViewById(R.id.guwen_layout);

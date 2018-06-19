@@ -279,8 +279,7 @@
                 <cn.com.zwwl.bayuwen.widget.threed.InfiniteViewPager
                     android:id="@+id/pingtu_pager"
                     android:layout_width="300dp"
-                    android:layout_height="150dp"
-                    />
+                    android:layout_height="150dp" />
 
                 <LinearLayout
                     android:id="@+id/pingtu_indicator"
@@ -349,20 +348,20 @@
 
 
                     <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:layout_weight="1"
                         android:src="@mipmap/medal_gold" />
 
                     <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:layout_weight="1"
                         android:src="@mipmap/medal_silver" />
 
                     <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:layout_weight="1"
                         android:src="@mipmap/medal_copper" />
 
@@ -375,8 +374,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/gold_circle"
                     android:gravity="center"
-
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:text="查看全部勋章"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_14" />

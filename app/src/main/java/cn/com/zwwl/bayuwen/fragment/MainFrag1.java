@@ -128,7 +128,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         if (!hidden) {
             if (isCityChanged)
                 loadData();
-            Log.e("main_frag_city1", TempDataHelper.getCurrentCity(mActivity));
         } else {
         }
     }
@@ -172,9 +171,9 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
 
                 pintuWid = MyApplication.width - 300;
                 pintuHei = (MyApplication.width - 300) * 6 / 9;
-                LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(pintuWid + 10,
+                LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(pintuWid + 20,
                         pintuHei +
-                                10);
+                                20);
                 params1.setMargins(0, 16, 0, 16);
                 pingPager.setLayoutParams(params1);
 
@@ -210,8 +209,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             ImageLoader.display(mActivity, parentImg, userModel.getPic(), R
                     .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
         }
-        loadData();
-
     }
 
     /**
@@ -337,8 +334,8 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         pingtuData.clear();
         for (int i = 0; i < 5; i++) {
             View view = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu, null);
-            view.setLayoutParams(new LinearLayout.LayoutParams(pintuWid + 10, pintuHei +
-                    10));
+            view.setLayoutParams(new LinearLayout.LayoutParams(pintuWid + 20, pintuHei +
+                    20));
             RecyclerView recyclerView = view.findViewById(R.id.radar_fragmain1);
             List<CommonModel> models = new ArrayList<>();
             for (int j = 0; j < 54; j++) {
@@ -346,7 +343,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                 model.setContent("");
                 models.add(model);
             }
-            RadarAdapter radarAdapter = new RadarAdapter(models, 780);
+            RadarAdapter radarAdapter = new RadarAdapter(models, pintuWid);
             recyclerView.setAdapter(radarAdapter);
             recyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -362,6 +359,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     public void loadChild(List<ChildModel> childModels) {
         this.childModels.clear();
         this.childModels.addAll(childModels);
+        loadData();
         handler.sendEmptyMessage(0);
     }
 
