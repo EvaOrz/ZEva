@@ -11,17 +11,17 @@ import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
+import cn.com.zwwl.bayuwen.model.AddTopicLabelModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.TopicMessageModel;
 import cn.com.zwwl.bayuwen.util.GsonUtil;
 
-public class TopicMessageApi extends BaseApi {
+public class AddTopicLabelApi extends BaseApi {
 
     private String url;
     private Activity activity;
-    ResponseCallBack<List<TopicMessageModel>> listener;
+    ResponseCallBack<List<AddTopicLabelModel>> listener;
 
-    public TopicMessageApi(Activity context, String url, ResponseCallBack<List<TopicMessageModel>> listener) {
+    public AddTopicLabelApi(Activity context, String url, ResponseCallBack<List<AddTopicLabelModel>> listener) {
         super(context);
         this.activity = context;
         this.url = url;
@@ -44,9 +44,9 @@ public class TopicMessageApi extends BaseApi {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ArrayList<TopicMessageModel> model = null;
+                ArrayList<AddTopicLabelModel> model = null;
                 if (array != null) {
-                    model = GsonUtil.parseJsonArray(TopicMessageModel.class, array.toString());
+                    model = GsonUtil.parseJsonArray(AddTopicLabelModel.class, array.toString());
 
                 }
                 listener.result(model, errorMsg);

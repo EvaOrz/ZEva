@@ -5,38 +5,35 @@ import android.app.Activity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.TopicMessageModel;
-import cn.com.zwwl.bayuwen.util.GsonUtil;
 
-public class TopicMessageApi extends BaseApi {
 
-    private String url;
+public class AddTopicContrimApi extends BaseApi {
     private Activity activity;
-    ResponseCallBack<List<TopicMessageModel>> listener;
+  private ResponseCallBack<String> callBack;
+    private HashMap<String, String> para;
 
-    public TopicMessageApi(Activity context, String url, ResponseCallBack<List<TopicMessageModel>> listener) {
+    public AddTopicContrimApi(Activity context, HashMap<String, String> para ,ResponseCallBack<String> callBack) {
         super(context);
         this.activity = context;
-        this.url = url;
-        this.listener =listener;
-        get();
+        this.para = para;
+        this.callBack = callBack;
+        post();
     }
 
     @Override
     protected String getUrl() {
-        return url;
+        return UrlUtil.getTopicMessage();
     }
 
     @Override
     protected Map<String, String> getPostParams() {
-        return null;
+        return para;
     }
 
     @Override
@@ -44,15 +41,12 @@ public class TopicMessageApi extends BaseApi {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ArrayList<TopicMessageModel> model = null;
-                if (array != null) {
-                    model = GsonUtil.parseJsonArray(TopicMessageModel.class, array.toString());
 
+                if (errorMsg == null||errorMsg.equals("")) {
+                    callBack.result("ss",errorMsg);
                 }
-                listener.result(model, errorMsg);
 
             }
         });
-
     }
 }

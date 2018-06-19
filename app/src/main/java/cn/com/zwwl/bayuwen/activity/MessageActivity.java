@@ -1,5 +1,6 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.fragment.NotifyFragment;
@@ -22,6 +24,7 @@ public class MessageActivity extends BaseActivity {
     private RadioButton notification, topic;
     private FrameLayout fg_view;
     private Fragment[] mFragments;
+    private TextView message_add;
     private int mIndex;
 
 
@@ -37,6 +40,8 @@ public class MessageActivity extends BaseActivity {
         notification = findViewById(R.id.message_bt1);
         topic = findViewById(R.id.message_bt2);
         fg_view=  findViewById(R.id.fg_view);
+        message_add=findViewById(R.id.message_add);
+        message_add.setOnClickListener(this);
         initFragment();
         notification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -120,6 +125,10 @@ public class MessageActivity extends BaseActivity {
                 topic.setBackgroundResource(R.drawable.gray_dark_circle);
                 setIndexSelected(1);
                 notification.setBackground(null);
+                break;
+            case R.id.message_add:
+                Intent intent2 = new Intent(mContext, CreateTopicActivity.class);
+                startActivity(intent2);
                 break;
 
         }

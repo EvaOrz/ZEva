@@ -300,17 +300,17 @@
             android:name=".activity.OrderTuifeeDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--发票历史页面-->
+        <!-- 发票历史页面 -->
         <activity
             android:name=".activity.PiaoHistoryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--发票选择页面-->
+        <!-- 发票选择页面 -->
         <activity
             android:name=".activity.PiaoKaiActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--开发票页面-->
+        <!-- 开发票页面 -->
         <activity
             android:name=".activity.PiaoSelectActivity"
             android:screenOrientation="portrait"
@@ -321,7 +321,7 @@
             android:name=".activity.AboutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--weixin pay-->
+        <!-- weixin pay -->
         <activity
             android:name="cn.beecloud.BCWechatPaymentActivity"
             android:launchMode="singleTop"
@@ -384,7 +384,14 @@
             android:name="cn.com.zwwl.bayuwen.glide.TGlideModule"
             android:value="GlideModule" />
 
-        <activity android:name=".activity.SysMessageActivity"></activity>
+        <activity android:name=".activity.SysMessageActivity" />
+        <activity android:name=".activity.InteractActivity" />
+        <activity android:name=".activity.CourseMessageActivity" />
+        <activity android:name=".activity.OtherMessageActivity" />
+        <activity android:name=".activity.MessageDetailActivity" />
+        <activity android:name=".activity.CreateTopicActivity" />
+        <activity android:name=".activity.TopicLabelActivity" />
+        <activity android:name=".activity.TopicDetailActivity"></activity>
     </application>
 
 </manifest>

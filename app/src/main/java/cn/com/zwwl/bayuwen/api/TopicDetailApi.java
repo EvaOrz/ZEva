@@ -7,32 +7,26 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
-import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.MessageModel;
+import cn.com.zwwl.bayuwen.model.TopicDetailModel;
 import cn.com.zwwl.bayuwen.util.GsonUtil;
 
-public class ChildMessageApi extends BaseApi {
-    private int page;
-    private int pageSize;
-    private String type;
+public class TopicDetailApi extends BaseApi {
+
     private String url;
     private Activity activity;
-    private String UserId;
-    ResponseCallBack<MessageModel> listener;
+    private String topicId;
+    ResponseCallBack<TopicDetailModel> listener;
 
-    public ChildMessageApi(Activity context,String type, int page, int pageSize, String url, ResponseCallBack<MessageModel> listener) {
+    public TopicDetailApi(Activity context,  String url,String topicId, ResponseCallBack<TopicDetailModel> listener) {
         super(context);
         this.activity = context;
         this.listener = listener;
-        this.type=type;
-        this.page = page;
-        this.pageSize=pageSize;
-        this.UserId = UserDataHelper.getUid(this.activity);
+        this.topicId = topicId;
 
-        this.url = url + "?receiveUserId=" + UserId + "&type="+type+"&page=" + page+"&pageSize="+pageSize;
+        this.url = url + "/" + topicId ;
         get();
     }
 
@@ -51,10 +45,9 @@ public class ChildMessageApi extends BaseApi {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                MessageModel model = null;
+                TopicDetailModel model = null;
                 if (json != null) {
-                    model = GsonUtil.parseJson(MessageModel.class, json.toString());
-
+                    model = GsonUtil.parseJson(TopicDetailModel.class, json.toString());
                 }
                 listener.result(model, errorMsg);
 
