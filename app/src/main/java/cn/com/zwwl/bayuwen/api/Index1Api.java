@@ -23,7 +23,6 @@ public class Index1Api extends BaseApi {
     public Index1Api(Context context, FetchEntryListener fetchEntryListener) {
         super(context);
         this.fetchEntryListener = fetchEntryListener;
-
         get();
     }
 

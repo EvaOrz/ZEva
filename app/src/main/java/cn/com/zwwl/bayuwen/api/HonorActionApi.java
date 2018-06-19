@@ -42,7 +42,7 @@ public class HonorActionApi extends BaseApi {
         pamas.put("pic", model.getPic());
         pamas.put("date", model.getDate());
         pamas.put("student_no", model.getStudent_no());
-        url = UrlUtil.getHonorurl();
+        url += UrlUtil.getHonorurl();
         post();
     }
 
@@ -60,7 +60,7 @@ public class HonorActionApi extends BaseApi {
         pamas.put("desc", model.getTitle());
         pamas.put("pic", model.getPic());
         pamas.put("date", model.getDate());
-        url = UrlUtil.getHonorurl() + "/" + model.getId();
+        url += UrlUtil.getHonorurl() + "/" + model.getId();
         patch();
     }
 

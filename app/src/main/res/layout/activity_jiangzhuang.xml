@@ -113,14 +113,14 @@
                 android:id="@+id/jiang_bt1"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@color/gray_dark" />
+                android:src="@mipmap/daxiangji" />
 
             <ImageView
                 android:id="@+id/jiang_bt2"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="20dp"
-                android:background="@color/gray_dark" />
+                android:src="@mipmap/dalajitong" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.FCourseListActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
@@ -33,11 +34,14 @@ import cn.com.zwwl.bayuwen.adapter.CompleteCourseAdapter;
 import cn.com.zwwl.bayuwen.adapter.CourseIndexAdapter;
 import cn.com.zwwl.bayuwen.api.MyCourseApi;
 import cn.com.zwwl.bayuwen.base.BasicFragment;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.MyCourseModel;
+import cn.com.zwwl.bayuwen.util.AddressTools;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
 import static cn.com.zwwl.bayuwen.MyApplication.mContext;
@@ -61,22 +65,45 @@ public class MainFrag3 extends BasicFragment {
     MyCourseModel courseModel;
     CourseIndexAdapter courseIndexAdapter;
 
+    public boolean isCityChanged = false;// 城市状态是否变化
+
     @Override
-    protected View setContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected View setContentView(LayoutInflater inflater, ViewGroup container, Bundle
+            savedInstanceState) {
         return inflater.inflate(R.layout.fragment_main3, container, false);
+    }
+
+
+    /**
+     * 默认fragment创建的时候是可见的，但是不会调用该方法！切换可见状态的时候会调用，但是调用onResume，onPause的时候却不会调用
+     *
+     * @param hidden
+     */
+    @Override
+
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            if (isCityChanged) {// 切换城市之后 要重新获取课程tag list,点赞排行不必重新获取
+                refresh.autoRefresh();
+            }
+        }
     }
 
     @Override
     protected void initView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R.dimen.dp_5, OrientationHelper.VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R
+                .dimen.dp_5, OrientationHelper.VERTICAL));
         adapter = new CompleteCourseAdapter(finishCourse);
+        adapter.setEmptyView(R.layout.empty_view, (ViewGroup) recyclerView.getParent());
         recyclerView.setAdapter(adapter);
         studyCourse.setLayoutManager(new LinearLayoutManager(mContext));
-        studyCourse.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R.dimen.dp_5, OrientationHelper.VERTICAL));
+        studyCourse.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R
+                .dimen.dp_5, OrientationHelper.VERTICAL));
         courseIndexAdapter = new CourseIndexAdapter(null);
+        courseIndexAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) studyCourse.getParent());
         studyCourse.setAdapter(courseIndexAdapter);
-        refresh.setRefreshContent(nestScroll);
         refresh.autoRefresh();
         refresh.finishLoadMore(false);
     }
@@ -118,18 +145,22 @@ public class MainFrag3 extends BasicFragment {
                 startActivity(intent);
             }
         });
-        courseIndexAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        courseIndexAdapter.setOnItemChildClickListener(new BaseQuickAdapter
+                .OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent();
                 MyCourseModel.UnfinishedBean bean = courseModel.getUnfinished().get(position);
-                int type = Tools.getCourseType(bean.getPlan().getOnline(), bean.getPlan().getSource(), bean.getProducts().getEnd_at());
+                int type = Tools.getCourseType(bean.getPlan().getOnline(), bean.getPlan()
+                        .getSource(), bean.getProducts().getEnd_at());
                 switch (view.getId()) {
                     case R.id.arrow:
                         intent.setClass(activity, UnitIndexActivity.class);
                         intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
-                        intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan().getCurrentLectureId());
-                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished().get(position).getProducts().getOnline()));
+                        intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan
+                                ().getCurrentLectureId());
+                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
+                                .get(position).getProducts().getOnline()));
                         intent.putExtra("video", 0);
                         break;
                     case R.id.work:
@@ -139,14 +170,16 @@ public class MainFrag3 extends BasicFragment {
                         break;
                     case R.id.look_video:
                         intent.setClass(activity, VideoPlayActivity.class);
-                        intent.putExtra("VideoPlayActivity_url", courseModel.getUnfinished().get(position).getPlan().getPlayUrl());
+                        intent.putExtra("VideoPlayActivity_url", courseModel.getUnfinished().get
+                                (position).getPlan().getPlayUrl());
                         break;
                     case R.id.trace:
                         application.oldKe = bean.getProducts();
                         intent.putExtra("kid", bean.getKid());
                         intent.putExtra("title", bean.getProducts().getTitle());
                         intent.putExtra("course_type", type);
-                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished().get(position).getProducts().getOnline()));
+                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
+                                .get(position).getProducts().getOnline()));
                         intent.setClass(activity, StudyingCourseActivity.class);
                         break;
                 }
@@ -158,8 +191,10 @@ public class MainFrag3 extends BasicFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(activity, UnitIndexActivity.class);
                 intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
-                intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan().getCurrentLectureId());
-                intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished().get(position).getProducts().getOnline()));
+                intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan()
+                        .getCurrentLectureId());
+                intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished().get
+                        (position).getProducts().getOnline()));
                 intent.putExtra("video", 0);
                 startActivity(intent);
             }
@@ -173,6 +208,7 @@ public class MainFrag3 extends BasicFragment {
         return new MainFrag3();
     }
 
+    @OnClick({R.id.menu_more, R.id.menu_news, R.id.menu_school, R.id.menu_search})
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -183,6 +219,20 @@ public class MainFrag3 extends BasicFragment {
                 ((MainActivity) activity).openDrawer();
                 break;
             case R.id.menu_school:
+                new AddressPopWindow(activity, 1, new AddressPopWindow.OnAddressCListener() {
+
+                    @Override
+                    public void onClick(AddressTools.ProvinceModel province, AddressTools
+                            .CityModel city, AddressTools.DistModel dist) {
+                        if (city.getCtxt().equals("市辖区")) {
+                            TempDataHelper.setCurrentCity(activity, province.getPtxt());
+                        } else
+                            TempDataHelper.setCurrentCity(activity, city.getCtxt());
+                        refresh.autoRefresh();
+                        ((MainActivity) activity).changeCity(2);
+                    }
+
+                });
                 break;
             case R.id.menu_search:
                 startActivity(new Intent(activity, SearchCourseActivity.class));

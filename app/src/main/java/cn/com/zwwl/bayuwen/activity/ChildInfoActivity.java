@@ -55,7 +55,7 @@ public class ChildInfoActivity extends BaseActivity {
     private File photoFile;
     private ImageView aImg;
     private EditText nameEv, phoneEv, schoolEv;
-    private TextView genderTv, birthTv, ruxueTv, nianjiTv;
+    private TextView genderTv, birthTv, ruxueTv, nianjiTv, noTv;
     private boolean isNeedChangePic = false;
     private boolean isModify = false;// 是否是修改信息
 
@@ -65,7 +65,6 @@ public class ChildInfoActivity extends BaseActivity {
     private MostGridView giftGridView;
     private JiangZhuangAdapter adapter;
     private List<GiftAndJiangModel> datas = new ArrayList<>();
-    private String deleteIds = "";// 待删除的id串
 
     private ChildModel childModel = new ChildModel();
 
@@ -124,6 +123,7 @@ public class ChildInfoActivity extends BaseActivity {
         deAll = findViewById(R.id.delete_all);
         deCancle = findViewById(R.id.delete_cancle);
         deDo = findViewById(R.id.delete_do);
+        noTv = findViewById(R.id.info_c_student_no);
 
         giftGridView = findViewById(R.id.gift_grid);
         adapter = new JiangZhuangAdapter(mContext);
@@ -332,6 +332,7 @@ public class ChildInfoActivity extends BaseActivity {
         birthTv.setText(childModel.getBirthday());
         ruxueTv.setText(childModel.getAdmission_time());
         nianjiTv.setText(childModel.getGrade());
+        noTv.setText(childModel.getNo());
     }
 
     @SuppressLint("HandlerLeak")

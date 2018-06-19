@@ -118,6 +118,7 @@
     <!--changeinfo-->
     <string name="touxiang">头像</string>
     <string name="xingming">姓名</string>
+    <string name="student_no">学员编号</string>
     <string name="gender">性别</string>
     <string name="phone">手机号</string>
     <string name="address">地址</string>
@@ -419,4 +420,10 @@
     <string name="hello_blank_fragment">Hhahahahahhahaha</string>
     <string name="course_report">课程报告</string>
     <string name="look_replay">查看回放</string>
+    <string name="empty_no_data">没有数据~</string>
+    <string name="next_question">下一题</string>
+    <string name="answer_parse">答案解析</string>
+    <string name="answer_error_summary">我的错题整理</string>
+    <string name="save_error_question">保存错题集</string>
+    <string name="back_answer_home">返回拼图主页</string>
 </resources>

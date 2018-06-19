@@ -116,9 +116,10 @@
             android:orientation="vertical">
 
             <ImageView
+                android:contentDescription="@null"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:background="@color/gray_dark" />
+                android:src="@mipmap/icon_add_p"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -167,9 +168,9 @@
                 android:textSize="@dimen/text_size_14" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:background="@drawable/mn_calendar_icon_arrow_right" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/arrow_right_gray" />
         </LinearLayout>
 
         <View

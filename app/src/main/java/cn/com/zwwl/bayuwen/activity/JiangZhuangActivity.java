@@ -56,7 +56,6 @@ public class JiangZhuangActivity extends BaseActivity {
                     ("JiangZhuangActivity_data");
         }
         initView();
-
     }
 
     private void initView() {

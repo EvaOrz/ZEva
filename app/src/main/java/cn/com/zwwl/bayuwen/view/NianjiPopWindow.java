@@ -71,7 +71,8 @@ public class NianjiPopWindow implements View.OnClickListener {
         wvDay.setVisibility(View.GONE);
 
         initYears();
-        mYearAdapter = new CalendarTextAdapter(mContext, arry_years, 1, maxTextSize, minTextSize);
+        mYearAdapter = new CalendarTextAdapter(mContext, arry_years, 0, maxTextSize, minTextSize);
+        currentText = arry_years.get(0);
         wvYear.setVisibleItems(5);
         wvYear.setViewAdapter(mYearAdapter);
 //        wvYear.setCurrentItem(1);

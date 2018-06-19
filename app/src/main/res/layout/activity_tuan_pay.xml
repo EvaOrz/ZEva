@@ -408,6 +408,7 @@
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:src="@mipmap/icon_zfb" />
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -489,7 +490,7 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:button="@drawable/selector_radio"
+                        android:button="@drawable/selector_checkbox"
                         android:checked="false"
                         android:scaleX="0.7"
                         android:scaleY="0.7"
