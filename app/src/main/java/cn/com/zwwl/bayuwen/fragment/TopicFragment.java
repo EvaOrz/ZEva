@@ -73,7 +73,7 @@ public class TopicFragment extends BasicFragment {
         allMessageList.setLayoutManager(new LinearLayoutManager(getActivity()));
         allMessageList.setItemAnimator(new DefaultItemAnimator());
 
-        topicMessageAdapter = new TopicMessageAdapter(messageModels);
+        topicMessageAdapter = new TopicMessageAdapter(null);
         allMessageList.setAdapter(topicMessageAdapter);
         refresh.setRefreshContent(allMessageList);
         refresh.autoRefresh();
@@ -87,6 +87,7 @@ public class TopicFragment extends BasicFragment {
                 refresh.finishLoadMore();
                 refresh.finishRefresh();
                 if (messageModel != null) {
+                    messageModels.clear();
                     messageModels=messageModel;
                     topicMessageAdapter.setNewData(messageModels);
                 } else {
@@ -137,29 +138,33 @@ public class TopicFragment extends BasicFragment {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    //hideJianpan();
 
-                    HttpData();
+                    HttpData1(v.getText().toString().trim());
                     return true;
                 }
                 return false;
             }
         });
-//        search_view.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if (keyCode==KeyEvent.KEYCODE_ENTER){
-//                    HttpData();
-//                }
-//                return false;
-//            }
-//        });
-
 
     }
 
+    private void HttpData1(String name) {
+        new TopicMessageApi(activity,url,name,new ResponseCallBack<List<TopicMessageModel>>() {
+            @Override
+            public void result(List<TopicMessageModel> messageModel, ErrorMsg errorMsg) {
+                refresh.finishLoadMore();
+                refresh.finishRefresh();
+                if (messageModel != null) {
+                    messageModels=messageModel;
+                    topicMessageAdapter.setNewData(messageModels);
+                } else {
+                    ToastUtil.showShortToast("暂无数据");
+                }
+            }
 
 
+        });
+    }
 
 
 }
