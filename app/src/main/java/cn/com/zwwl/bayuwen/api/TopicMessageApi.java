@@ -20,6 +20,16 @@ public class TopicMessageApi extends BaseApi {
     private String url;
     private Activity activity;
     ResponseCallBack<List<TopicMessageModel>> listener;
+    private String titlename;
+
+    public TopicMessageApi(Activity context, String url,String name, ResponseCallBack<List<TopicMessageModel>> listener) {
+        super(context);
+        this.activity = context;
+        this.titlename=name;
+        this.url = url+"?name="+this.titlename;
+        this.listener =listener;
+        get();
+    }
 
     public TopicMessageApi(Activity context, String url, ResponseCallBack<List<TopicMessageModel>> listener) {
         super(context);
@@ -28,7 +38,6 @@ public class TopicMessageApi extends BaseApi {
         this.listener =listener;
         get();
     }
-
     @Override
     protected String getUrl() {
         return url;

@@ -13,12 +13,12 @@ import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
 
-public class CancelVoteApi extends BaseApi {
+public class AddCommentApi extends BaseApi {
     private Activity activity;
   private ResponseCallBack<String> callBack;
     private HashMap<String, String> para;
 
-    public CancelVoteApi(Activity context, HashMap<String, String> para , ResponseCallBack<String> callBack) {
+    public AddCommentApi(Activity context, HashMap<String, String> para , ResponseCallBack<String> callBack) {
         super(context);
         this.activity = context;
         this.para = para;
@@ -28,7 +28,7 @@ public class CancelVoteApi extends BaseApi {
 
     @Override
     protected String getUrl() {
-        return UrlUtil.getCancelOrconfirmVote();
+        return UrlUtil.getTopicComment();
     }
 
     @Override
