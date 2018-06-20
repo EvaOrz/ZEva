@@ -83,7 +83,8 @@ public class FmView implements View.OnClickListener {
     private ImageView getBannerItem(final RecommentModel recommentModel) {
         ImageView view = new ImageView(context);
         view.setBackgroundColor(context.getResources().getColor(R.color.gray_line));
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(MyApplication.width, MyApplication.width * 9 / 32);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(MyApplication.width,
+                MyApplication.width * 9 / 32);
         view.setLayoutParams(params);
         view.setScaleType(ImageView.ScaleType.FIT_XY);
         Glide.with(context).load(recommentModel.getPic()).into(view);
@@ -91,7 +92,8 @@ public class FmView implements View.OnClickListener {
             @Override
             public void onClick(View v) {
 
-                if (recommentModel.getType().equals("1") && recommentModel.getAlbumModel() != null) {
+                if (recommentModel.getType().equals("1") && recommentModel.getAlbumModel() !=
+                        null) {
                     goAlbumDetailActivity(recommentModel.getAlbumModel().getKid());
                 }
             }
@@ -108,11 +110,9 @@ public class FmView implements View.OnClickListener {
                 case 0:
 //                    ((FmMainActivity) context).unshowPlayController();
                     break;
-
                 case 1:
 //                    ((FmMainActivity) context).showPlayController();
                     break;
-
                 case 2:// 初始化页面
                     albumAdapter.setData(albumDatas);
                     albumAdapter.notifyDataSetChanged();
@@ -130,7 +130,8 @@ public class FmView implements View.OnClickListener {
     private void initView() {
         view = LayoutInflater.from(context).inflate(R.layout.view_fm, null);
         bannerView = view.findViewById(R.id.fm_head);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(MyApplication.width, MyApplication.width * 9 / 32);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(MyApplication.width,
+                MyApplication.width * 9 / 32);
         bannerView.setLayoutParams(params);
 
         ((CallScrollView) view.findViewById(R.id.main_scroll)).setOnScrollListener(new CallScrollView.OnScrollListener() {
@@ -151,13 +152,6 @@ public class FmView implements View.OnClickListener {
         bt5 = view.findViewById(R.id.fm_bt_5);
         bt6 = view.findViewById(R.id.fm_bt_6);
         bt7 = view.findViewById(R.id.fm_bt_7);
-//        bt1.setCompoundDrawables(null, getDrawable(R.mipmap.home_1), null, null);
-//        bt2.setCompoundDrawables(null, getDrawable(R.mipmap.home_2), null, null);
-//        bt3.setCompoundDrawables(null, getDrawable(R.mipmap.home_3), null, null);
-//        bt4.setCompoundDrawables(null, getDrawable(R.mipmap.home_back), null, null);
-//        bt5.setCompoundDrawables(null, getDrawable(R.mipmap.home_story), null, null);
-//        bt6.setCompoundDrawables(null, getDrawable(R.mipmap.home_zhuaxue), null, null);
-//        bt7.setCompoundDrawables(null, getDrawable(R.mipmap.home_child), null, null);
         hotListView = view.findViewById(R.id.fm_hot_layout);
 
         albumAdapter = new AlbumAdapter(context);

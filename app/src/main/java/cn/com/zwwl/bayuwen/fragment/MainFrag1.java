@@ -15,7 +15,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +38,7 @@ import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
+import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.MainYixuanKeAdapter;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
@@ -54,6 +54,7 @@ import cn.com.zwwl.bayuwen.model.Index1Model;
 import cn.com.zwwl.bayuwen.model.Index1Model.AdvBean;
 import cn.com.zwwl.bayuwen.model.Index1Model.CalendarCourseBean;
 import cn.com.zwwl.bayuwen.model.Index1Model.SelectedCourseBean;
+import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.util.AddressTools;
@@ -101,9 +102,11 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private int bannerWid, bannerHei;// 轮播位宽高
     private int pintuWid, pintuHei;// 拼图item的宽高
 
+    private int paddingLeft, paddingRight, paddingTop, paddingBottom;
+
     public boolean isCityChanged = false;// 城市状态是否变化
 
-    private List<AlbumModel> yixuanDatas = new ArrayList<>();// 已选课程data
+    private List<KeModel> yixuanDatas = new ArrayList<>();// 已选课程data
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -171,13 +174,18 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
 
                 pintuWid = MyApplication.width - 300;
                 pintuHei = (MyApplication.width - 300) * 6 / 9;
-                LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(pintuWid + 20,
+                paddingLeft = pintuWid * 50 / 1018;
+                paddingRight = pintuWid * 50 / 1018;
+                paddingTop = pintuHei * 72 / 676;
+                paddingBottom = pintuHei * 112 / 676;
+
+                LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(pintuWid +
+                        paddingLeft + paddingRight,
                         pintuHei +
-                                20);
+                                paddingTop + paddingBottom);
                 params1.setMargins(0, 16, 0, 16);
                 pingPager.setLayoutParams(params1);
 
-                //
                 initPingtudata();
                 pingAdapter = new MyViewPagerAdapter(pingtuData);
                 pingPager.setAdapter(pingAdapter);
@@ -274,8 +282,8 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
 
         yixuanKeListView = root.findViewById(R.id.main_yixuan);
         yixuanKeAdapter = new MainYixuanKeAdapter(mActivity);
-        yixuanDatas.add(new AlbumModel());
-        yixuanDatas.add(new AlbumModel());
+        yixuanDatas.add(new KeModel());
+        yixuanDatas.add(new KeModel());
         yixuanKeListView.setAdapter(yixuanKeAdapter);
         yixuanKeAdapter.setData(yixuanDatas);
         yixuanKeAdapter.notifyDataSetChanged();
@@ -332,11 +340,20 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
      */
     private void initPingtudata() {
         pingtuData.clear();
+        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(pintuWid +
+                paddingLeft + paddingRight,
+                pintuHei +
+                        paddingTop + paddingBottom);
         for (int i = 0; i < 5; i++) {
             View view = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu, null);
-            view.setLayoutParams(new LinearLayout.LayoutParams(pintuWid + 20, pintuHei +
-                    20));
+            view.setLayoutParams(params1);
+            view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
             RecyclerView recyclerView = view.findViewById(R.id.radar_fragmain1);
+            recyclerView.setLayoutParams(new LinearLayout.LayoutParams(pintuWid, pintuHei));
+
+            if (i == 2) {
+                view.setBackgroundResource(R.drawable.pintu_bg_wangzhe);
+            }
             List<CommonModel> models = new ArrayList<>();
             for (int j = 0; j < 54; j++) {
                 CommonModel model = new CommonModel();
@@ -381,12 +398,22 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                     break;
                 case 1:// 初始化页面数据
                     List<View> views = new ArrayList<>();
-                    for (AdvBean advBean : advBeans) {
-                        RoundAngleImageView r = new RoundAngleImageView(mActivity);
-                        r.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    for (final AdvBean advBean : advBeans) {
+                        View view = LayoutInflater.from(mActivity).inflate(R.layout
+                                .item_frag1_banner, null);
+                        view.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent i = new Intent(mActivity, VideoPlayActivity.class);
+                                i.putExtra("VideoPlayActivity_url", advBean.getLink());
+                                i.putExtra("VideoPlayActivity_pic", advBean.getPic());
+                                startActivity(i);
+                            }
+                        });
+                        RoundAngleImageView r = view.findViewById(R.id.banner_omg);
                         ImageLoader.display(mActivity, r, advBean.getPic(), R.mipmap.apply_logo,
                                 R.mipmap.apply_logo);
-                        views.add(r);
+                        views.add(view);
                     }
                     bannerView.setViewList(views);
                     bannerView.startLoop(true);
@@ -405,7 +432,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                             tip.setTextColor(getResources().getColor(R.color.gray_dark));
                             tip.setTextSize(14);
                             calendarLayout.addView(tip);
-
                         }
                     } else {
                         TextView tip = new TextView(mActivity);

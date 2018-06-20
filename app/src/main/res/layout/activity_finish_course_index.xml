@@ -8,10 +8,10 @@
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_10"
         android:drawableLeft="@mipmap/icon_pt_yellow"
         android:drawableStart="@mipmap/icon_pt_yellow"
         android:gravity="center_vertical"
@@ -27,17 +27,16 @@
         android:layout_height="300dip"
         android:layout_marginEnd="@dimen/dp_10"
         android:layout_marginStart="@dimen/dp_10"
-        android:paddingStart="12dip"
-        android:paddingEnd="12dip"
-        android:paddingTop="@dimen/dp_20"
+        android:background="@drawable/pintu_bg_baiyin"
         android:paddingBottom="@dimen/dp_20"
-        android:background="@mipmap/radar_bg">
+        android:paddingEnd="12dip"
+        android:paddingStart="12dip"
+        android:paddingTop="@dimen/dp_20">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/radar"
             android:layout_width="match_parent"
-            android:layout_height="240dip"
-           />
+            android:layout_height="240dip" />
     </LinearLayout>
 
 

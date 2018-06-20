@@ -21,6 +21,7 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 
 /**
@@ -43,7 +44,8 @@ public class ChildMenuPopView extends PopupWindow {
             TextView name = view.findViewById(R.id.item_child_name);
             TextView grade = view.findViewById(R.id.item_child_grade);
             if (!TextUtils.isEmpty(childModel.getPic())) {
-                Glide.with(context).load(childModel.getPic()).into(avatar);
+                ImageLoader.display(context, avatar, childModel.getPic(), R.drawable
+                        .avatar_placeholder, R.drawable.avatar_placeholder);
             }
             name.setText(childModel.getName());
             grade.setText(childModel.getGrade());

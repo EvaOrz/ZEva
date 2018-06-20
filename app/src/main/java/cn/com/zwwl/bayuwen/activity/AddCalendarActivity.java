@@ -54,6 +54,7 @@ public class AddCalendarActivity extends BaseActivity {
     private EditText nameEv, cishuEv, addressEv, teacherEv, codeEv;
 
     private String shangTime, xiaTime;
+    private CalendarEventModel calendarEventModel;// 当前添加课程
     private CalendarJigouModel calendarJigouModel;// 当前课程机构
 
     private Date startDate, endDate;// 课程开始日期和结束日期
@@ -76,6 +77,10 @@ public class AddCalendarActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             askPermission(needPermissions, 101);
         }
+        if (getIntent().getSerializableExtra("AddCalendarActivity_data") != null && getIntent()
+                .getSerializableExtra("AddCalendarActivity_data") instanceof CalendarEventModel)
+            calendarEventModel = (CalendarEventModel) getIntent().getSerializableExtra
+                    ("AddCalendarActivity_data");
         initView();
         initData();
     }
@@ -97,12 +102,36 @@ public class AddCalendarActivity extends BaseActivity {
         jieTv1 = findViewById(R.id.jieke_date);
         jieTv2 = findViewById(R.id.jieke_week);
         weekCountTv = findViewById(R.id.week_count);
-
         nameEv = findViewById(R.id.content_name);
         cishuEv = findViewById(R.id.content_cishu);
         addressEv = findViewById(R.id.content_address);
         teacherEv = findViewById(R.id.content_teacher);
         codeEv = findViewById(R.id.content_code);
+
+        /**
+         * {
+         "id":"1300",
+         "kid":"154",
+         "orgName":"中文未来",
+         "courseDate":"2017-01-02",
+         "startTime":"19:01:00",
+         "endTime":"20:01:00",
+         "is_thirdorg":0,
+         "name":"初一秋季校内护航班",
+         "teacher":Array[5],
+         "school":"诸葛学堂网课",
+         "source":1,
+         "online":1
+         }
+         */
+        if (calendarEventModel != null) {
+            nameEv.setText(calendarEventModel.getName());
+            jigouTv.setText(calendarEventModel.getOrgName());
+            shangkeTv.setText(calendarEventModel.getStartTime());
+            xiangkeTv.setText(calendarEventModel.getEndTime());
+//            startDate = calendarEventModel.getStartTime()
+
+        } else calendarEventModel = new CalendarEventModel();
     }
 
     @Override
@@ -203,7 +232,6 @@ public class AddCalendarActivity extends BaseActivity {
         } else if (TextUtils.isEmpty(xiaTime)) {
             showToast("请填写下课时间");
         } else {
-            CalendarEventModel calendarEventModel = new CalendarEventModel();
             calendarEventModel.setName(name);
             calendarEventModel.setOrgName(calendarJigouModel.getName());
             calendarEventModel.setOutOrgId(calendarJigouModel.getId());

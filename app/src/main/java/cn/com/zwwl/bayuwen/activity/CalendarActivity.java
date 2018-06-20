@@ -72,6 +72,7 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
 
         LinearLayoutManager layoutmanager = new LinearLayoutManager(this);
         keRecyclerView.setLayoutManager(layoutmanager);
+
         calendarView = findViewById(R.id.calendarView);
         calendarView.setOnMonthChangeListener(this);
         calendarView.setOnDateSelectedListener(this);

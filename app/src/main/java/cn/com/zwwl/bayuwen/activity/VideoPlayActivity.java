@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.widget.MyVideoView;
 import cn.jzvd.JZVideoPlayer;
 
@@ -25,7 +26,8 @@ public class VideoPlayActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_play);
         videoUrl = getIntent().getStringExtra("VideoPlayActivity_url");
-        videoUrl = "https://v-cdn-bb.bbwc.cn/bloomberg/2017/02/07/20170207162511930/20170207162511930_index.m3u8";
+//        videoUrl = "https://v-cdn-bb.bbwc
+// .cn/bloomberg/2017/02/07/20170207162511930/20170207162511930_index.m3u8";
         picUrl = getIntent().getStringExtra("VideoPlayActivity_pic");
         initView();
     }
@@ -33,12 +35,15 @@ public class VideoPlayActivity extends BaseActivity {
     private void initView() {
         myVideoView = findViewById(R.id.video_view);
 
-        myVideoView.setUp(videoUrl, JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN, new OnBackButtonClickListener() {
-            @Override
-            public void onBackClick() {
-                finish();
-            }
-        });
+        myVideoView.setUp(videoUrl, JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN, new
+                OnBackButtonClickListener() {
+                    @Override
+                    public void onBackClick() {
+                        finish();
+                    }
+                });
+        ImageLoader.display(mContext, myVideoView.thumbImageView, picUrl, R.drawable
+                .avatar_placeholder, R.drawable.avatar_placeholder);
         myVideoView.fullscreenButton.setVisibility(View.GONE);// 禁止横竖屏切换
         myVideoView.startVideo();
 

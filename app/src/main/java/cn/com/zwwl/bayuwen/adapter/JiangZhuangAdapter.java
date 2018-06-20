@@ -16,6 +16,7 @@ import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
 import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
+import cn.com.zwwl.bayuwen.widget.RoundAngleImageView;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
@@ -48,7 +49,7 @@ public class JiangZhuangAdapter extends CheckScrollAdapter<GiftAndJiangModel> {
                 .item_jiangzhuang);
         GiftAndJiangModel giftAndJiangModel = getItem(position);
 
-        ImageView imageView = viewHolder.getView(R.id.jiang_img);
+        RoundAngleImageView imageView = viewHolder.getView(R.id.jiang_img);
         ImageView delete = viewHolder.getView(R.id.jiang_delete);
         TextView textView = viewHolder.getView(R.id.jiang_name);
         LinearLayout layout1 = viewHolder.getView(R.id.jiang_layout1);

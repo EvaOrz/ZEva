@@ -102,6 +102,7 @@
                 </LinearLayout>
 
                 <FrameLayout
+                    android:id="@+id/course_d_play"
                     android:layout_width="70dp"
                     android:layout_height="70dp">
 
@@ -290,7 +291,7 @@
                 android:background="@color/body_bg" />
 
             <RadioGroup
-
+                android:id="@+id/course_d_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

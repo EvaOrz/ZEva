@@ -41,6 +41,7 @@ import cn.com.zwwl.bayuwen.fragment.MainFrag2;
 import cn.com.zwwl.bayuwen.fragment.MainFrag3;
 import cn.com.zwwl.bayuwen.fragment.MainFrag4;
 import cn.com.zwwl.bayuwen.fragment.MainFrag5;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
@@ -246,8 +247,8 @@ public class MainActivity extends BaseActivity {
                             .LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     params.bottomMargin = 20;
 
-                    for (ChildModel childModel : childModels) {
-                        childLayout.addView(getChildView(childModel), params);
+                    for (int i = 0; i < childModels.size(); i++) {
+                        childLayout.addView(getChildView(childModels.get(i)), params);
                     }
                     if (childModels.size() < 3) {
                         childAddBt.setVisibility(View.VISIBLE);
@@ -275,7 +276,8 @@ public class MainActivity extends BaseActivity {
         name.setText(childModel.getName());
         grade.setText(childModel.getGrade());
         if (!TextUtils.isEmpty(childModel.getPic()))
-            Glide.with(mContext).load(childModel.getPic()).into(avat);
+            ImageLoader.display(mContext, avat, childModel.getPic(), R.drawable
+                    .avatar_placeholder, R.drawable.avatar_placeholder);
         if (childModel.getIsdefault().equals("1")) {
             bg.setBackgroundResource(R.drawable.gold_white_xiangkuang);
 

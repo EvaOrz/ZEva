@@ -47,25 +47,25 @@ public class RadarAdapter extends BaseQuickAdapter<CommonModel, BaseViewHolder> 
         imageView.setLayoutParams(new LinearLayout.LayoutParams(wid, wid));
 
         if (helper.getLayoutPosition() == 0) {
-            imageView.setImageResource(R.mipmap.pt_01);
+            imageView.setImageResource(R.drawable.tu1);
         } else if (helper.getLayoutPosition() > 0 && helper.getLayoutPosition() < 8) {
-            imageView.setImageResource(R.mipmap.pt_02);
+            imageView.setImageResource(R.drawable.tu2);
         } else if (helper.getLayoutPosition() == 8) {
-            imageView.setImageResource(R.mipmap.pt_03);
+            imageView.setImageResource(R.drawable.tu3);
         } else if (helper.getLayoutPosition() == 9 || helper.getLayoutPosition() == 18 || helper
                 .getLayoutPosition() == 27 || helper.getLayoutPosition() == 36) {
-            imageView.setImageResource(R.mipmap.pt_04);
+            imageView.setImageResource(R.drawable.tu4);
         } else if (helper.getLayoutPosition() == 17 || helper.getLayoutPosition() == 26 || helper
                 .getLayoutPosition() == 35 || helper.getLayoutPosition() == 44) {
-            imageView.setImageResource(R.mipmap.pt_06);
+            imageView.setImageResource(R.drawable.tu6);
         } else if (helper.getLayoutPosition() == 45) {
-            imageView.setImageResource(R.mipmap.pt_07);
+            imageView.setImageResource(R.drawable.tu7);
         } else if (helper.getLayoutPosition() > 45 && helper.getLayoutPosition() < 53) {
-            imageView.setImageResource(R.mipmap.pt_08);
+            imageView.setImageResource(R.drawable.tu8);
         } else if (helper.getLayoutPosition() == 53) {
-            imageView.setImageResource(R.mipmap.pt_09);
+            imageView.setImageResource(R.drawable.tu9);
         } else {
-            imageView.setImageResource(R.mipmap.pt_05);
+            imageView.setImageResource(R.drawable.tu5);
         }
     }
 }

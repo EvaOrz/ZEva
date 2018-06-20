@@ -17,8 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.AddCalendarActivity;
 import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
 import cn.com.zwwl.bayuwen.activity.TeacherDetailActivity;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.CalendarEventModel;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
@@ -66,7 +68,7 @@ public class CalendarKeAdapter extends RecyclerView.Adapter<CalendarKeAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (datas.size() > position) {
-            CalendarEventModel item = datas.get(position);
+            final CalendarEventModel item = datas.get(position);
             holder.tag.setText(item.getOrgName());
             holder.title.setText(item.getName());
             holder.xiaoqu.setText("校区：" + item.getSchool());
@@ -78,6 +80,14 @@ public class CalendarKeAdapter extends RecyclerView.Adapter<CalendarKeAdapter.Vi
                             .LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 }
             }
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, AddCalendarActivity.class);
+                    i.putExtra("AddCalendarActivity_data", item);
+                    context.startActivity(i);
+                }
+            });
         }
     }
 
@@ -89,7 +99,8 @@ public class CalendarKeAdapter extends RecyclerView.Adapter<CalendarKeAdapter.Vi
         ImageView avat = view.findViewById(R.id.item_t_c_avatar);
         name.setText(teacherBean.getName());
         if (!TextUtils.isEmpty(teacherBean.getPic()))
-            Glide.with(context).load(teacherBean.getPic()).into(avat);
+            ImageLoader.display(context, avat, teacherBean.getPic(), R.drawable
+                    .avatar_placeholder, R.drawable.avatar_placeholder);
 
         view.setOnClickListener(new View
                 .OnClickListener() {

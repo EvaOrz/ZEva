@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_child_bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/item_child_bg"
     android:background="@drawable/gold_white_xiangkuang"
     android:gravity="center_vertical"
     android:orientation="horizontal"
@@ -18,8 +18,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/child_name"
@@ -33,16 +33,17 @@
             android:id="@+id/child_grade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="小学三年级"
             android:layout_marginTop="5dp"
+            android:text="小学三年级"
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_size_12" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/item_child_go"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@color/gray_dark" />
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginRight="5dp"
+        android:src="@mipmap/child_edit" />
 
 </LinearLayout>

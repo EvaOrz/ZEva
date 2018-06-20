@@ -111,7 +111,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                     if (userModel != null) {
                         ImageLoader.display(mActivity, frag5Avatar, userModel.getPic(), R
                                 .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
-
+                        frag5Code.setText(userModel.getSignCode());
                         frag5Name.setText(userModel.getName());
                     }
                     if (Tools.listNotNull(childModels)) {
@@ -139,7 +139,8 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
         ImageView avat = view.findViewById(R.id.item_child_avatar);
         name.setText(childModel.getName());
         if (!TextUtils.isEmpty(childModel.getPic()))
-            Glide.with(mActivity).load(childModel.getPic()).into(avat);
+            ImageLoader.display(mActivity, avat, childModel.getPic(), R.drawable
+                    .avatar_placeholder, R.drawable.avatar_placeholder);
 
         view.setOnClickListener(new View
                 .OnClickListener() {

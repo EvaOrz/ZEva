@@ -29,12 +29,12 @@
     <color name="wheel_2">#eaffffff</color>
     <color name="wheel_3">#33ffffff</color>
     <color name="red">#EE001E</color>
-    <color name="oringe">#E86C4D</color>
+    <color name="oringe">#dcaa40</color>
 
     <!-- fm seekbar -->
-    <color name="seek_bar_before_thumb">#cd3333</color>
+    <color name="seek_bar_before_thumb">#dcaa40</color>
     <color name="seek_bar_after_thumb">#cdcdcd</color>
-    <color name="seek_bar_thumb_center">#dd3333</color>
+    <color name="seek_bar_thumb_center">#dcaa40</color>
 
     <!--lousx-->
     <color name="mainColor">#dca540</color>

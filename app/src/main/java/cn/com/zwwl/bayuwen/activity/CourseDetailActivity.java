@@ -1,17 +1,24 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -61,6 +68,7 @@ public class CourseDetailActivity extends BaseActivity {
     private TextView priceTv1;
     private TextView priceTv2;
     private TextView youhuiBt;
+    private RadioGroup radioGroup;
     private RadioButton button1, button2, button3;
     private View line1, line2, line3;
     private ImageView follow_status;
@@ -178,9 +186,9 @@ public class CourseDetailActivity extends BaseActivity {
         nomalFooter = findViewById(R.id.nomal_footer);
         promotionLayout = findViewById(R.id.promotion_layout);
         promotionContain = findViewById(R.id.promotion_container);
-        cDetailTabFrag1 = new KeDetailView1(this,cid);
+        cDetailTabFrag1 = new KeDetailView1(this, cid);
         cDetailTabFrag2 = new KeDetailView2(mContext);
-        cDetailTabFrag3 = new KeDetailView3(this,cid);
+        cDetailTabFrag3 = new KeDetailView3(this, cid);
         keDetailViews.add(cDetailTabFrag1);
         keDetailViews.add(cDetailTabFrag2);
         keDetailViews.add(cDetailTabFrag3);
@@ -196,6 +204,13 @@ public class CourseDetailActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 changeRadio(position);
+                if (position == 0)
+                    radioGroup.check(R.id.course_d_bt1);
+                else if (position == 1) {
+                    radioGroup.check(R.id.course_d_bt2);
+                } else if (position == 2) {
+                    radioGroup.check(R.id.course_d_bt3);
+                }
                 mViewPager.resetHeight(position);
             }
 
@@ -204,6 +219,7 @@ public class CourseDetailActivity extends BaseActivity {
 
             }
         });
+        radioGroup = findViewById(R.id.course_d_group);
         button1 = findViewById(R.id.course_d_bt1);
         button2 = findViewById(R.id.course_d_bt2);
         button3 = findViewById(R.id.course_d_bt3);
@@ -241,7 +257,10 @@ public class CourseDetailActivity extends BaseActivity {
         add_tv.setOnClickListener(this);
         sure_tv.setOnClickListener(this);
         youhuiBt.setOnClickListener(this);
+        findViewById(R.id.explainTv).setOnClickListener(this);
+        findViewById(R.id.adviserTv).setOnClickListener(this);
         findViewById(R.id.followtv).setOnClickListener(this);
+        findViewById(R.id.course_d_play).setOnClickListener(this);
     }
 
     /**
@@ -308,11 +327,33 @@ public class CourseDetailActivity extends BaseActivity {
             case R.id.followtv:// 关注
                 doFollow();
                 break;
+            case R.id.adviserTv:// 拨打顾问电话
+                String number = "10086";
+                //用intent启动拨打电话
+                int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission
+                        .CALL_PHONE);
+
+                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                    startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + number)));
+                } else {
+                    askPermission(new String[]{Manifest.permission.CALL_PHONE}, 101);
+                }
+
+                break;
+            case R.id.explainTv:// 说明
+                startActivity(new Intent(mContext, WebActivity.class));
+                break;
             case R.id.duihuan_footer:// 兑换
                 doKaitongBycode(code);
                 break;
             case R.id.youhui_layout:// 领取优惠券
                 new YouHuiJuanPopWindow(mContext, couponModels);
+                break;
+            case R.id.course_d_play:// 去播放
+                Intent i = new Intent(mContext, VideoPlayActivity.class);
+                i.putExtra("VideoPlayActivity_url", keModel.getVideo());
+                i.putExtra("VideoPlayActivity_pic", keModel.getPic());
+                startActivity(i);
                 break;
         }
     }
@@ -382,10 +423,10 @@ public class CourseDetailActivity extends BaseActivity {
                     cDetailTabFrag3.setData(pinglunModels);
                     break;
                 case 2:// 关注状态
-                    follow_status.setBackgroundColor(getResources().getColor(R.color.gold));
+                    follow_status.setImageResource(R.mipmap.icon_star_yellow);
                     break;
                 case 3:// 未关注状态
-                    follow_status.setBackgroundColor(getResources().getColor(R.color.gray_dark));
+                    follow_status.setImageResource(R.mipmap.icon_star_default);
                     break;
                 case 5:// 显示领取优惠券
                     youhuiBt.setVisibility(View.VISIBLE);
@@ -511,5 +552,23 @@ public class CourseDetailActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 101:
+                for (int i = 0; i < permissions.length; i++) {
+                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                        Log.e("ppppppppphas", permissions[i]);
+                    } else {
+                        Log.e("pppppppppno", permissions[i]);
+                    }
+                }
+
+                break;
+        }
+
     }
 }
