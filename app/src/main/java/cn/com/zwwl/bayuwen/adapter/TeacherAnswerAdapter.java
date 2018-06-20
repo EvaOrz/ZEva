@@ -45,13 +45,13 @@ public class TeacherAnswerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder mViewHolder;
-        if (convertView == null) {
+//        if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_teacher_answer_layout, null);
             mViewHolder = new ViewHolder(convertView);
 
-        } else {
-            mViewHolder = (ViewHolder) convertView.getTag();
-        }
+//        } else {
+//            mViewHolder = (ViewHolder) convertView.getTag();
+//        }
 
       mViewHolder.teacherTitlename.setText(titlename);
         mViewHolder.teacherName.setText(teacherCommentBeans.get(position).getUser_name());

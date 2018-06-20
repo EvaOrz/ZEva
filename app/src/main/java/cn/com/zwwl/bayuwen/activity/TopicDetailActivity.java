@@ -1,9 +1,16 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -14,6 +21,7 @@ import butterknife.ButterKnife;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.TeacherAnswerAdapter;
 import cn.com.zwwl.bayuwen.adapter.TopicUserAnswerAdapter;
+import cn.com.zwwl.bayuwen.api.AddCommentApi;
 import cn.com.zwwl.bayuwen.api.CancelVoteApi;
 import cn.com.zwwl.bayuwen.api.TopicDetailApi;
 import cn.com.zwwl.bayuwen.api.UrlUtil;
@@ -56,6 +64,8 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
     TextView commentTv;
     private  boolean flag=false;
     private HashMap<String ,String> params;
+    private HashMap<String ,String> comments;
+
 
     private String topic_id;    // 话题ID
     private String topicUrl = UrlUtil.getTopicMessage();
@@ -64,6 +74,7 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
     private List<TopicDetailModel.UserCommentBean> userCommentBeans;
     private TeacherAnswerAdapter teacherAnswerAdapter; //教师回复的adapter
     private TopicUserAnswerAdapter topicUserAnswerAdapter;//家长回复
+
 
 
 
@@ -77,6 +88,7 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
         setCustomTitle("话题名称");
 
         params=new HashMap<>();
+        comments=new HashMap<>();
         Intent intent = getIntent();
         topic_id = intent.getStringExtra("topicId");
         collectionIconId.setOnClickListener(this);
@@ -168,15 +180,64 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
                }
                break;
            case R.id.comment_tv:
-               initPopWindow();
+               initPopWindow();   //弹出popwindow
                break;
                
 
        }
     }
 
-    private void initPopWindow() {
+    private void initPopWindow() {   //评论的popwindow
+        View popView = View.inflate(this, R.layout.pop_comment_topic_layout, null);
+
+        EditText comment = popView.findViewById(R.id.feed_ev);
+//        int width = getResources().getDisplayMetrics().widthPixels;
+//        int height = getResources().getDisplayMetrics().heightPixels;
+
+      final  PopupWindow popupWindow = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+       // popWindow.setAnimationStyle(R.style.AnimBottom);
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);// 设置同意在外点击消失
+        popupWindow.setAnimationStyle(R.style.fetch_image_popup_anim);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.showAtLocation(this.getWindow().getDecorView(), Gravity.CENTER_HORIZONTAL, 30, 30);
+
+        comment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+                    Httpcomment(v.getText().toString().trim());
+                    popupWindow.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
+
+    private void Httpcomment(String trim) {
+        comments.put("topic_id",topic_id);
+        comments.put("content",trim);
+        new AddCommentApi(this,comments,new ResponseCallBack<String>() {
+            @Override
+            public void result(String message, ErrorMsg errorMsg) {
+
+                if (errorMsg == null) {
+
+                    ToastUtil.showShortToast("添加评论成功");
+
+                    HttpData(topic_id); //添加评论
+
+                } else {
+                    ToastUtil.showShortToast(errorMsg.getDesc());
+                }
+            }
+        });
+
+
+}
 
     private void cancelData(final boolean flag) {   //取消收藏的方法
         new CancelVoteApi(this,params,new ResponseCallBack<String>() {

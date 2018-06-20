@@ -45,13 +45,13 @@ public class TopicUserAnswerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder mViewHolder;
-        if (convertView == null) {
+      //  if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_user_topicdetail_layout, null);
             mViewHolder = new ViewHolder(convertView);
 
-        } else {
-            mViewHolder = (ViewHolder) convertView.getTag();
-        }
+       // } else {
+         //   mViewHolder = (ViewHolder) convertView.getTag();
+       // }
       if (userCommentBeans.get(position).getUser_pic()!=null) {
           ImageLoader.display(mContext, mViewHolder.userIcon, userCommentBeans.get(position).getUser_pic());
       }else{

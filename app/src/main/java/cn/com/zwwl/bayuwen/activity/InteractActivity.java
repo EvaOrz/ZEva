@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -58,7 +59,8 @@ public class InteractActivity extends BasicActivityWithTitle {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        notifyMessageAdapter = new NotifyMessageAdapter(messageModels);
+        notifyMessageAdapter = new NotifyMessageAdapter(null);
+        notifyMessageAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) recyclerView.getParent());
         recyclerView.setAdapter(notifyMessageAdapter);
         smartRefreshLayout.setRefreshContent(recyclerView);
         smartRefreshLayout.autoRefresh();

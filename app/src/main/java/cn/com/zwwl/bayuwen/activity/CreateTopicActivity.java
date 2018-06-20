@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.util.ToastUtil;
 
 public class CreateTopicActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -53,19 +54,23 @@ public class CreateTopicActivity extends AppCompatActivity implements View.OnCli
                 finish();
                 break;
             case R.id.keep_id:
-                topictile =entryEv.getText().toString();
-                topic_content =entryTopicContent.getText().toString();
+                topictile =entryEv.getText().toString().trim();
+                topic_content =entryTopicContent.getText().toString().trim();
                 if (checkbox1.isChecked()){
                   is_anonymous =1;
                 }else {
                     is_anonymous=0;
                 }
-               Intent intent= new Intent(this,TopicLabelActivity.class);
-                intent.putExtra("topictile",topictile);
-                intent.putExtra("topic_content",topic_content);
-                intent.putExtra("is_anonymous",is_anonymous);
-                startActivity(intent);
-                finish();
+                if (topictile.length()>0&&topic_content.length()>0) {
+                    Intent intent = new Intent(this, TopicLabelActivity.class);
+                    intent.putExtra("topictile", topictile);
+                    intent.putExtra("topic_content", topic_content);
+                    intent.putExtra("is_anonymous", is_anonymous);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    ToastUtil.showShortToast("请填写话题标题或者内容");
+                }
                 break;
 
         }
