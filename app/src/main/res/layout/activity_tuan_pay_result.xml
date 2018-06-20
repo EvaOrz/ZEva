@@ -39,7 +39,7 @@
             android:layout_width="120dp"
             android:layout_height="80dp"
             android:layout_marginTop="50dp"
-            android:background="@color/gray_dark" />
+           android:src="@mipmap/apply_logo" />
 
         <TextView
             android:id="@+id/pay_status"
@@ -57,11 +57,11 @@
         android:id="@+id/tuan_kai_pay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gold"
+        android:background="@drawable/drawable_yellow_light"
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/chakan_kecheng"
-        android:textColor="@color/white"
+        android:textColor="@color/gold"
         android:textSize="@dimen/text_size_16" />
 
 </LinearLayout>

@@ -16,10 +16,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.util.Pair;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,7 +37,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.MyApplication;
 import okhttp3.Headers;
 
 /**
@@ -352,5 +355,11 @@ public class Tools {
         if (source == 1 && TimeUtil.convertToMillis(time) >= System.currentTimeMillis())
             return 3;//直播
         return 4;//回放
+    }
+    public static Pair<Integer, Integer> getUiPixels(View view) {
+        int w = View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
+        view.measure(w, h);
+        return new Pair<>(view.getMeasuredHeight(),view.getMeasuredWidth());
     }
 }

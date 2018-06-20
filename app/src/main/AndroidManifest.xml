@@ -25,6 +25,11 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- 访问通讯录 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!--设置闹钟-->
+    <uses-permission android:name="android.permission.SET_ALARM" />
+    <!--访问日历-->
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <!-- camera -->
     <uses-permission android:name="android.permission.CAMERA" />
@@ -35,9 +40,9 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:testOnly="false"
         android:theme="@style/BaseTheme">
@@ -138,6 +143,11 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <!-- 注册登录流程 添加学员-->
+        <activity
+            android:name=".activity.RegisterAddChildActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
@@ -374,6 +384,10 @@
         <activity android:name=".activity.TeacherSummaryActivity" />
         <!-- 查看作业 -->
         <activity android:name=".activity.WorkDetailsActivity" />
+        <!--闯关答题-->
+        <activity android:name=".activity.AnswerActivity" />
+        <!--闯关结果-->
+        <activity android:name=".activity.AnswerResultActivity" />
 
         <!-- 腾讯定位SDK key -->
         <meta-data

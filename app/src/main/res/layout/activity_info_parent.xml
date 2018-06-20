@@ -69,7 +69,7 @@
                         android:textColor="@color/gray_dark"
                         android:textSize="@dimen/text_size_14" />
 
-                    <ImageView
+                    <cn.com.zwwl.bayuwen.widget.CircleImageView
                         android:id="@+id/info_p_aimg"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
@@ -78,7 +78,7 @@
                     <ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:src="@drawable/mn_calendar_icon_arrow_right" />
+                        android:src="@mipmap/arrow_right_gray" />
                 </LinearLayout>
 
                 <View
@@ -120,7 +120,7 @@
                     <ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:src="@drawable/mn_calendar_icon_arrow_right" />
+                        android:src="@mipmap/arrow_right_gray" />
                 </LinearLayout>
 
                 <View
@@ -157,7 +157,7 @@
                     <ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:src="@drawable/mn_calendar_icon_arrow_right" />
+                        android:src="@mipmap/arrow_right_gray" />
                 </LinearLayout>
 
                 <View
@@ -214,7 +214,7 @@
                 <ImageView
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:src="@drawable/mn_calendar_icon_arrow_right" />
+                    android:src="@mipmap/arrow_right_gray" />
             </LinearLayout>
 
             <LinearLayout
@@ -236,8 +236,8 @@
                     android:id="@+id/gift_grid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbars="none"
-                    android:numColumns="5" />
+                    android:numColumns="5"
+                    android:scrollbars="none" />
 
             </LinearLayout>
 

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
@@ -59,7 +60,6 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
     private List<KeModel> keModels;
     private List<KeModel> stockClass;
     private int page = 1;
-
     @Override
     protected int setContentView() {
         return R.layout.activity_convert_class;
@@ -77,9 +77,9 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new CourseTableAdapter(null);
+        adapter = new CourseTableAdapter(keModels);
+        adapter.setEmptyView(R.layout.empty_view,(ViewGroup)recyclerView.getParent());
         recyclerView.setAdapter(adapter);
-        refresh.setRefreshContent(recyclerView);
         refresh.autoRefresh();
     }
 
@@ -214,7 +214,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                     for (KeModel model : keModels) {
                         if (!"0".equals(model.getStock())) stockClass.add(model);
                     }
-                    adapter.setNewData(keModels);
+                        adapter.setNewData(keModels);
                 }
             });
         }

@@ -21,16 +21,16 @@
                 android:id="@+id/jiang_img"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:scaleType="centerCrop"
                 android:layout_margin="5dp"
-                android:background="@color/gray_light" />
+                android:background="@color/gray_light"
+                android:scaleType="centerCrop" />
 
             <ImageView
                 android:id="@+id/jiang_delete"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/draw_redrounds" />
+                android:src="@mipmap/icon_delete_round" />
         </RelativeLayout>
 
         <TextView
@@ -52,9 +52,9 @@
         android:layout_height="80dp"
         android:layout_margin="5dp"
         android:background="@drawable/gold_white_xiangkuang"
-        android:text="+"
         android:gravity="center"
+        android:text="+"
         android:textColor="@color/gold"
-        android:textSize="30sp" />
+        android:textSize="20sp" />
 
 </RelativeLayout>

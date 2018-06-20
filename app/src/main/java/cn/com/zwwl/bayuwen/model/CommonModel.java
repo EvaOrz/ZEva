@@ -12,6 +12,15 @@ public class CommonModel extends Entry {
     private String create_at;
     private String update_at;
     private int status;
+    private String option;
+
+    public String getOption() {
+        return option;
+    }
+
+    public void setOption(String option) {
+        this.option = option;
+    }
 
     public String getContent() {
         return content;

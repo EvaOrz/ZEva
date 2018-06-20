@@ -208,46 +208,6 @@ public class BannerView extends FrameLayout {
         }
     }
 
-    public void setTransformAnim(boolean flag) {
-        if (flag) {
-            mViewPager.setPageTransformer(true, new ViewPager.PageTransformer() {
-                private static final float MIN_SCALE = 0.75f;
-
-                @Override
-                public void transformPage(View view, float position) {
-                    int pageWidth = view.getWidth();
-                    if (position < -1) { // [-Infinity,-1)
-                        // This page is way off-screen to the left.
-                        view.setRotation(0);
-
-                    } else if (position <= 1) { // [-1,1]
-                        // Modify the default slide transition to shrink the page as well
-                        if (position < 0) {
-
-                            float mRot = (20f * position);
-                            view.setPivotX(view.getMeasuredWidth() * 0.5f);
-                            view.setPivotY(view.getMeasuredHeight());
-                            view.setRotation(mRot);
-                        } else {
-
-                            float mRot = (20f * position);
-                            view.setPivotX(view.getMeasuredWidth() * 0.5f);
-                            view.setPivotY(view.getMeasuredHeight());
-                            view.setRotation(mRot);
-                        }
-
-                        // Scale the page down (between MIN_SCALE and 1)
-
-                        // Fade the page relative to its size.
-
-                    } else { // (1,+Infinity]
-                        // This page is way off-screen to the right.
-                        view.setRotation(0);
-                    }
-                }
-            });
-        }
-    }
 
     public void setLoopInterval(long loopInterval) {
         LOOP_INTERVAL = loopInterval;

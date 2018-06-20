@@ -20,9 +20,10 @@
 
             <ImageView
                 android:id="@+id/frag5_setting"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:background="@color/gray_line" />
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="@null"
+                android:src="@mipmap/icon_setting" />
 
         </LinearLayout>
 
@@ -30,10 +31,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <ImageView
+            <cn.com.zwwl.bayuwen.widget.CircleImageView
                 android:id="@+id/frag5_avatar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -50,7 +51,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lines="1"
-                    android:text="王妈妈"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_18"
                     android:textStyle="bold" />
@@ -143,9 +143,9 @@
                 android:padding="10dp">
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:background="@color/gray_dark" />
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/icon_order" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -176,9 +176,9 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@color/gray_dark" />
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@mipmap/icon_buy_car" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -198,9 +198,9 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@color/gray_dark" />
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@mipmap/icon_not_pay" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -220,9 +220,9 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@color/gray_dark" />
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@mipmap/icon_yet_pay" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -242,9 +242,9 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@color/gray_dark" />
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@mipmap/icon_after_sale" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -269,9 +269,9 @@
                 android:padding="10dp">
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:background="@color/gray_dark" />
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/icon_follow" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -295,9 +295,9 @@
                 android:padding="10dp">
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:background="@color/gray_dark" />
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/tuangou" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -321,9 +321,9 @@
                 android:padding="10dp">
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:background="@color/gray_dark" />
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/icon_verify" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -347,9 +347,9 @@
                 android:padding="10dp">
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:background="@color/gray_dark" />
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/icon_invite" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -373,9 +373,9 @@
                 android:padding="10dp">
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:background="@color/gray_dark" />
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/icon_feedback" />
 
                 <TextView
                     android:layout_width="wrap_content"

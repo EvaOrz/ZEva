@@ -403,18 +403,6 @@ public class Index1Model extends Entry {
         }
 
         public static class PlanBean {
-            /**
-             * online : 0
-             * source : 2
-             * finish : false
-             * count : 16
-             * current : 0
-             * currentLectureId : 0
-             * next : 1
-             * nextTime : 2018-09-08 10:40:00
-             * completeClass : []
-             */
-
             private int online;
             private int source;
             private boolean finish;

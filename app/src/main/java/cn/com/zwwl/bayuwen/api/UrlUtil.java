@@ -399,29 +399,45 @@ public class UrlUtil {
     /**
      * 通知消息
      */
-    public static String getNotifyMessage(){
+    public static String getNotifyMessage() {
         return HOST + "/message";
     }
+
     /**
      * 话题列表
      */
-    public static String getTopicMessage(){
+    public static String getTopicMessage() {
         return HOST + "/topic";
     }
+
     /**
      * 添加话题标签
      */
-    public  static String getAddTopicTabel(){
-        return HOST+"/topic/courselist";
+    public static String getAddTopicTabel() {
+        return HOST + "/topic/courselist";
     }
-    /**
-     *
-     v2/topicvote
 
-     POST
-     话题点赞/取消点赞
+    /**
+     * v2/topicvote
+     * <p>
+     * POST
+     * 话题点赞/取消点赞
      */
-    public  static String getCancelOrconfirmVote(){
-        return HOST+"/topicvote";
+    public static String getCancelOrconfirmVote() {
+        return HOST + "/topicvote";
+    }
+
+    /**
+     * 获取试题列表
+     */
+    public static String getQuestionList() {
+        return HOST + "/jigsaw/";
+    }
+
+    /**
+     * 提交闯关答题
+     */
+    public static String submitAnswer() {
+        return HOST + "/jigsaw";
     }
 }

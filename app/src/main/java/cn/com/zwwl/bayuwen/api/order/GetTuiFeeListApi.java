@@ -54,12 +54,20 @@ public class GetTuiFeeListApi extends BaseApi {
                 JSONObject j = array.optJSONObject(i);
                 OrderForMyListModel o = new OrderForMyListModel();
                 o.setId(j.optString("id"));
-                o.setOid(j.optJSONObject("order").optString("oid"));
-                o.setReal_fee(j.optJSONObject("order").optString("real_fee"));
-                KeModel k = gson.fromJson(j.optJSONObject("course").toString(), KeModel.class);
-                List<KeModel> ks = new ArrayList<>();
-                ks.add(k);
-                o.setKeModels(ks);
+
+                JSONObject order = j.optJSONObject("order");
+                if (!isNull(order)){
+                    o.setOid(order.optString("oid"));
+                    o.setReal_fee(order.optString("real_fee"));
+                }
+                JSONObject course = j.optJSONObject("course");
+                if (!isNull(course)){
+                    KeModel k = gson.fromJson(course.toString(), KeModel.class);
+                    List<KeModel> ks = new ArrayList<>();
+                    ks.add(k);
+                    o.setKeModels(ks);
+                }
+
                 listModels.add(o);
             }
             listener.setData(listModels);

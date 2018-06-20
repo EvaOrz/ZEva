@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.api;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,14 +40,21 @@ public class ChildInfoApi extends BaseApi {
         super(context);
         mContext = context;
         pamas.put("name", childModel.getName());
-        pamas.put("tel", childModel.getTel());
-        pamas.put("grade", childModel.getGrade());
+        if (!TextUtils.isEmpty(childModel.getTel()))
+            pamas.put("tel", childModel.getTel());
+        if (!TextUtils.isEmpty(childModel.getGrade()))
+            pamas.put("grade", childModel.getGrade());
         pamas.put("gender", childModel.getGender() + "");
-        pamas.put("birthday", childModel.getBirthday());
-        pamas.put("isdefault", childModel.getIsdefault());
-        pamas.put("admission_time", childModel.getAdmission_time());
-        pamas.put("pic", childModel.getPic());
-        pamas.put("school", childModel.getSchool());
+        if (!TextUtils.isEmpty(childModel.getBirthday()))
+            pamas.put("birthday", childModel.getBirthday());
+        if (!TextUtils.isEmpty(childModel.getIsdefault()))
+            pamas.put("isdefault", childModel.getIsdefault());
+        if (!TextUtils.isEmpty(childModel.getAdmission_time()))
+            pamas.put("admission_time", childModel.getAdmission_time());
+        if (!TextUtils.isEmpty(childModel.getPic()))
+            pamas.put("pic", childModel.getPic());
+        if (!TextUtils.isEmpty(childModel.getSchool()))
+            pamas.put("school", childModel.getSchool());
         this.listener = listener;
         if (isModify) {
             this.url = UrlUtil.childUrl() + "/" + childModel.getId();
