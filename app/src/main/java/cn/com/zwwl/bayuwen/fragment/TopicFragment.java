@@ -74,6 +74,7 @@ public class TopicFragment extends BasicFragment {
         allMessageList.setItemAnimator(new DefaultItemAnimator());
 
         topicMessageAdapter = new TopicMessageAdapter(null);
+        topicMessageAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) allMessageList.getParent());
         allMessageList.setAdapter(topicMessageAdapter);
         refresh.setRefreshContent(allMessageList);
         refresh.autoRefresh();

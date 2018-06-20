@@ -61,4 +61,9 @@
     <!--lmj -->
     <color name="createTopicTitle">#242C3F</color>
     <color name="cancelcolor">#BA9240</color>
+    <color name="pink">#EF9F9F</color>
+    <color name="greendd">#96D689</color>
+    <color name="gray">#C3C3C3</color>
+    <color name="yellow">#F0C081</color>
+    <color name="topbackground">#EEEEEE</color>
 </resources>
