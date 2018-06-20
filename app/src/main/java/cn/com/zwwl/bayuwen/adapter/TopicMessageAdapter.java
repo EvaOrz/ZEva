@@ -23,7 +23,7 @@ public class TopicMessageAdapter extends BaseQuickAdapter<TopicMessageModel, Bas
     @Override
     protected void convert(BaseViewHolder helper, TopicMessageModel item) {
 
-        helper.setText(R.id.tv_topic_title, item.getCourse().getName());
+        helper.setText(R.id.tv_topic_title,item.getCourse()!=null?item.getCourse().getName():"");
         helper.setText(R.id.topic_name, item.getName());
         helper.setText(R.id.topic_content, item.getContent());
         helper.setText(R.id.tv_dianzan_id, item.getVote_num()+" 赞");
