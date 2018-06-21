@@ -53,7 +53,7 @@ public class OptionsAdapter extends BaseQuickAdapter<CommonModel, BaseViewHolder
                 helper.setVisible(R.id.logo, true);
                 helper.setBackgroundRes(R.id.index, R.drawable.corner_index_right);
                 helper.setBackgroundRes(R.id.option_layout, R.drawable.corner_option_right);
-                helper.setImageResource(R.id.logo, R.mipmap.icon_wrong);
+                helper.setImageResource(R.id.logo, R.mipmap.icon_right);
             }
             if (item.getOption().equals(choose)) {
                 helper.setTextColor(R.id.index, ContextCompat.getColor(mContext, R.color.white));
@@ -61,11 +61,11 @@ public class OptionsAdapter extends BaseQuickAdapter<CommonModel, BaseViewHolder
                 if (correct.equals(choose)) {
                     helper.setBackgroundRes(R.id.index, R.drawable.corner_index_right);
                     helper.setBackgroundRes(R.id.option_layout, R.drawable.corner_option_right);
-                    helper.setImageResource(R.id.logo, R.mipmap.icon_wrong);
+                    helper.setImageResource(R.id.logo, R.mipmap.icon_right);
                 } else {
                     helper.setBackgroundRes(R.id.index, R.drawable.corner_index_wrong);
                     helper.setBackgroundRes(R.id.option_layout, R.drawable.corner_option_wrong);
-                    helper.setImageResource(R.id.logo, R.mipmap.icon_right);
+                    helper.setImageResource(R.id.logo, R.mipmap.icon_wrong);
                 }
             }
         }
