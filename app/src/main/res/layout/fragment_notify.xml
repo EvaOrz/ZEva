@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.NotifyFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/system_notific_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dp_72"
+                android:layout_height="@dimen/dp_72"
+                android:src="@mipmap/system_img"/>
+            <TextView
+                android:layout_width="@dimen/dp_72"
+                android:layout_height="wrap_content"
+                android:text="系统通知"
+                android:gravity="center"
+                android:textColor="@color/gray_dark"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/interact_message_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dp_72"
+                android:layout_height="@dimen/dp_72"
+                android:src="@mipmap/interact_img"/>
+            <TextView
+                android:layout_width="@dimen/dp_72"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="互动通知"
+                android:textColor="@color/gray_dark"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/course_message_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dp_72"
+                android:layout_height="@dimen/dp_72"
+                android:src="@mipmap/course_img"/>
+            <TextView
+                android:layout_width="@dimen/dp_72"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="课程通知"
+                android:textColor="@color/gray_dark"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/other_message_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/dp_10"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dp_72"
+                android:layout_height="@dimen/dp_72"
+                android:src="@mipmap/other_img"/>
+            <TextView
+                android:layout_width="@dimen/dp_72"
+                android:layout_height="wrap_content"
+                android:text="其他"
+                android:gravity="center"
+                android:textColor="@color/gray_dark"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_marginTop="15dp"
+          android:background="@color/gray_line"
+          android:layout_height="5dp" />
+
+        <LinearLayout
+            android:id="@+id/all_message_lin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/refresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/all_message_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

@@ -56,4 +56,14 @@
     <color name="text_color_default">#ff4b4b4b</color>
     <color name="yellow_light_default">#FDF3E1</color>
     <color name="yellow_light_pressed">#F4E5CD</color>
+
+
+    <!--lmj -->
+    <color name="createTopicTitle">#242C3F</color>
+    <color name="cancelcolor">#BA9240</color>
+    <color name="pink">#EF9F9F</color>
+    <color name="greendd">#96D689</color>
+    <color name="gray">#C3C3C3</color>
+    <color name="yellow">#F0C081</color>
+    <color name="topbackground">#EEEEEE</color>
 </resources>

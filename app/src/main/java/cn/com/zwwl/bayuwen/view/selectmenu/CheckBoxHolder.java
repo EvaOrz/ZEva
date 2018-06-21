@@ -17,7 +17,6 @@ import cn.com.zwwl.bayuwen.R;
 
 /**
  * 科目
- * Created by vonchenchen on 2016/4/5 0005.
  */
 public class CheckBoxHolder extends BaseWidgetHolder<List<List<SelectTempModel>>> {
 
@@ -189,8 +188,8 @@ public class CheckBoxHolder extends BaseWidgetHolder<List<List<SelectTempModel>>
             if (convertView == null) {
                 holder = new RightViewHolder();
                 convertView = View.inflate(mContext, R.layout.layout_child_menu_item, null);
-                holder.checkBox = convertView.findViewById(R.id.child_checkbox);
-                holder.checkBox.setVisibility(View.VISIBLE);
+//                holder.checkBox = convertView.findViewById(R.id.child_checkbox);
+//                holder.checkBox.setVisibility(View.VISIBLE);
                 holder.rightText = convertView.findViewById(R.id.child_textView);
                 convertView.setTag(holder);
             } else {
@@ -198,15 +197,6 @@ public class CheckBoxHolder extends BaseWidgetHolder<List<List<SelectTempModel>>
             }
 
             holder.rightText.setText(mRightDataList.get(position).getText());
-
-            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener
-                    () {
-
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    setCheck(holder, isChecked, position);
-                }
-            });
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -221,10 +211,8 @@ public class CheckBoxHolder extends BaseWidgetHolder<List<List<SelectTempModel>>
         private void setCheck(RightViewHolder holder, boolean ischeck, int position) {
             mRightListRecord.get(position).setCheck(ischeck);// 更新记录数据
             if (ischeck) {
-                holder.checkBox.setChecked(true);
                 holder.rightText.setTextColor(context.getResources().getColor(R.color.gold));
             } else {
-                holder.checkBox.setChecked(false);
                 holder.rightText.setTextColor(context.getResources().getColor(R.color.gray_dark));
             }
 
@@ -240,7 +228,7 @@ public class CheckBoxHolder extends BaseWidgetHolder<List<List<SelectTempModel>>
 
     private static class RightViewHolder {
         TextView rightText;
-        CheckBox checkBox;
+//        CheckBox checkBox;
     }
 
 }

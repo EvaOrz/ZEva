@@ -10,18 +10,15 @@
         android:layout_height="@dimen/bar_height"
         android:background="@color/body_gray"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:orientation="horizontal">
 
 
         <TextView
             android:id="@+id/fm_search"
             android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:background="@drawable/white_btn_bg"
             android:gravity="center_vertical"
@@ -66,7 +63,7 @@
                     android:gravity="center_horizontal"
                     android:text="了就读书"
                     android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/text_size_10" />
+                    android:textSize="@dimen/text_size_14" />
 
                 <TextView
                     android:id="@+id/fm_bt_2"
@@ -78,7 +75,7 @@
                     android:gravity="center_horizontal"
                     android:text="干货讲座"
                     android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/text_size_10" />
+                    android:textSize="@dimen/text_size_14" />
 
                 <TextView
                     android:id="@+id/fm_bt_3"
@@ -90,7 +87,7 @@
                     android:gravity="center_horizontal"
                     android:text="统编教材"
                     android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/text_size_10" />
+                    android:textSize="@dimen/text_size_14" />
 
                 <TextView
                     android:id="@+id/fm_bt_4"
@@ -102,7 +99,7 @@
                     android:gravity="center_horizontal"
                     android:text="每日窦摘"
                     android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/text_size_10" />
+                    android:textSize="@dimen/text_size_14" />
 
             </LinearLayout>
 
@@ -126,7 +123,7 @@
                     android:gravity="center_horizontal"
                     android:text="名师精粹"
                     android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/text_size_10" />
+                    android:textSize="@dimen/text_size_14" />
 
                 <TextView
                     android:id="@+id/fm_bt_6"
@@ -138,7 +135,7 @@
                     android:gravity="center_horizontal"
                     android:text="精品课程"
                     android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/text_size_10" />
+                    android:textSize="@dimen/text_size_14" />
 
                 <TextView
                     android:id="@+id/fm_bt_7"
@@ -150,7 +147,7 @@
                     android:gravity="center_horizontal"
                     android:text="有声读物"
                     android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/text_size_10" />
+                    android:textSize="@dimen/text_size_14" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -161,7 +158,7 @@
                     android:gravity="center_horizontal"
                     android:text="窦神归来"
                     android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/text_size_10"
+                    android:textSize="@dimen/text_size_14"
                     android:visibility="invisible" />
 
             </LinearLayout>

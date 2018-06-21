@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,14 +59,8 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        handler.sendEmptyMessage(0);
-    }
 
     @Nullable
     @Override
@@ -76,6 +71,11 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
         return root;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        handler.sendEmptyMessage(0);
+    }
 
     private void initView() {
         root.findViewById(R.id.frag5_setting).setOnClickListener(this);
@@ -126,7 +126,6 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                             frag5ChildLayout.addView(getChildView(childModels.get(i)), params);
                         }
                     }
-
                     break;
             }
         }
@@ -162,7 +161,15 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
     public void loadChild(List<ChildModel> childModels) {
         this.childModels.clear();
         this.childModels.addAll(childModels);
+    }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            Log.e("ssssssss", "frag5 hidde");
+            handler.sendEmptyMessage(0);
+        }
     }
 
     @Override

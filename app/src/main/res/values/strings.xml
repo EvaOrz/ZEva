@@ -414,12 +414,27 @@
     <string name="hint_title">提示</string>
     <string name="report_hint">您有新的学业报告，赶紧进行评价查看吧!</string>
     <string name="eval_look">评价</string>
+    <string name="system_message">系统消息</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hhahahahahhahaha</string>
     <string name="course_report">课程报告</string>
     <string name="look_replay">查看回放</string>
+
+
+    <string name="keep">保存</string>
+    <string name="entry_title">输入标题</string>
+    <string name="entry_topic_content">输入话题内容</string>
+    <string name="create_Topic">创建话题</string>
+    <string name="comment">评论</string>
+
+
+
     <string name="empty_no_data">没有数据~</string>
     <string name="next_question">下一题</string>
     <string name="answer_parse">答案解析</string>
     <string name="answer_error_summary">我的错题整理</string>
     <string name="save_error_question">保存错题集</string>
     <string name="back_answer_home">返回拼图主页</string>
+
 </resources>

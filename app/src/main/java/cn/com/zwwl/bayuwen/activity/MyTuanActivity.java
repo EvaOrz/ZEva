@@ -157,12 +157,14 @@ public class MyTuanActivity extends BaseActivity {
         new MyTuanApi(mContext, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
-
+                showLoadingDialog(false);
             }
 
             @Override
             public void setError(ErrorMsg error) {
-
+                showLoadingDialog(false);
+                if (error !=null)
+                    showToast(error.getDesc());
             }
         });
     }

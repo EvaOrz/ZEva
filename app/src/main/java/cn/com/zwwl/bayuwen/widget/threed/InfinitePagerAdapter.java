@@ -129,7 +129,6 @@ public class InfinitePagerAdapter extends PagerAdapter {
 
     private void debug(String message) {
         if (DEBUG) {
-            Log.d(TAG, message);
         }
     }
 }

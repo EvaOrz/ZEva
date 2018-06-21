@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/id_topfragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.TopicFragment">
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:background="@color/gray_light"
+     android:orientation="vertical">
+
+     <EditText
+         android:id="@+id/search_view"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="15dp"
+         android:layout_marginRight="15dp"
+         android:layout_marginTop="@dimen/dp_5"
+         android:background="@drawable/white_btn_bg"
+         android:gravity="center_vertical"
+         android:hint="@string/search"
+         android:imeOptions="actionSearch"
+         android:lines="1"
+         android:paddingLeft="15dp"
+         android:paddingRight="15dp"
+         android:textColor="@color/gray_dark"
+         android:textColorHint="@color/gray_light"
+         android:textSize="@dimen/text_size_12" />
+     <LinearLayout
+         android:id="@+id/all_message_lin"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
+         <com.scwang.smartrefresh.layout.SmartRefreshLayout
+             android:id="@+id/refresh"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             >
+             <android.support.v7.widget.RecyclerView
+                 android:id="@+id/all_message_list"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+     </LinearLayout>
+ </LinearLayout>
+</FrameLayout>

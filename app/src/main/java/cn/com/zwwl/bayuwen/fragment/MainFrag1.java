@@ -398,7 +398,8 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                     break;
                 case 1:// 初始化页面数据
                     List<View> views = new ArrayList<>();
-                    for (final AdvBean advBean : advBeans) {
+                    for (int i = 0; i < advBeans.size(); i++) {
+                        final AdvBean advBean = advBeans.get(i);
                         View view = LayoutInflater.from(mActivity).inflate(R.layout
                                 .item_frag1_banner, null);
                         view.setOnClickListener(new View.OnClickListener() {
@@ -411,8 +412,8 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                             }
                         });
                         RoundAngleImageView r = view.findViewById(R.id.banner_omg);
-                        ImageLoader.display(mActivity, r, advBean.getPic(), R.mipmap.apply_logo,
-                                R.mipmap.apply_logo);
+                        ImageLoader.display(mActivity, r, advBean.getPic(), R.mipmap.app_icon,
+                                R.mipmap.app_icon);
                         views.add(view);
                     }
                     bannerView.setViewList(views);

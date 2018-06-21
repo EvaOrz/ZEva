@@ -155,7 +155,7 @@ public class AllTeacherActivity extends BaseActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(mContext,TeacherDetailActivity.class);
+                Intent i = new Intent(mContext, TeacherDetailActivity.class);
                 i.putExtra("tid", teacherModels.get(position).getTid());
                 startActivity(i);
             }
@@ -185,6 +185,8 @@ public class AllTeacherActivity extends BaseActivity {
             @Override
             public void setError(ErrorMsg error) {
                 showLoadingDialog(false);
+                if (error != null)
+                    showToast(error.getDesc());
             }
         });
     }
