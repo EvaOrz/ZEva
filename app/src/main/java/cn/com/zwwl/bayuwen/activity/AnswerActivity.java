@@ -69,7 +69,7 @@ public class AnswerActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initData() {
-        new QuestionListApi(this, "380", new ResponseCallBack<QuestionModel>() {
+        new QuestionListApi(this, "2", new ResponseCallBack<QuestionModel>() {
             @Override
             public void result(QuestionModel questionModel, ErrorMsg errorMsg) {
                 if (questionModel != null && questionModel.getQuestion() != null) {
@@ -100,24 +100,40 @@ public class AnswerActivity extends BasicActivityWithTitle {
             @Override
             public void onItemClick(BaseQuickAdapter quickAdapter, View view, int position) {
                 adapter.setChoose(choiceBeans.get(index - 1).getSelect().get(position).getOption());
-                if (index == choiceBeans.size()) {
-                    submit();
-                } else {
+//                if (answerBeans.size() == choiceBeans.size()) {
+//                    submit();
+//                } else {
                     QuestionModel.QuestionBean.ChoiceBean bean = new QuestionModel.QuestionBean.ChoiceBean();
                     bean.setAnswer(choiceBeans.get(index - 1).getSelect().get(position).getOption());
                     bean.setId(choiceBeans.get(index - 1).getId());
                     bean.setChoseTime(TimeUtil.getCurrentDate(FORMATTER_DEFAULT));
-                    choiceBeans.add(bean);
-                    progress.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            ++index;
-                            bindData();
+                    answerBeans.add(bean);
+                    if (answerBeans.size() != choiceBeans.size()){
+                        String a=choiceBeans.get(index-1).getSelect().get(position).getContent();
+                        String b=answerBeans.get(index-1).getAnswer();
+                        if (choiceBeans.get(index-1).getAnswer().equals( answerBeans.get(index-1).getAnswer())){   //判断所选择的答案和正确答案的却别
+
+                            progress.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ++index;
+                                    String a=choiceBeans.get(index-1).getSelect().get(0).getContent();
+                                    bindData();
+
+                                }
+                            }, 1000);
+                        }else{
+                            ToastUtil.showShortToast("AAAAA");
+
                         }
-                    }, 1000);
-                }
+
+                    }else{
+                        submit();
+
+            }
             }
         });
+
     }
 
     private void submit() {
@@ -125,7 +141,7 @@ public class AnswerActivity extends BasicActivityWithTitle {
         JSONArray array = new JSONArray();
 
         try {
-            for (QuestionModel.QuestionBean.ChoiceBean bean : choiceBeans
+            for (QuestionModel.QuestionBean.ChoiceBean bean : answerBeans
                     ) {
                 JSONObject object = new JSONObject();
                 object.put("questionId", bean.getId());

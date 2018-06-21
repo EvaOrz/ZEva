@@ -121,6 +121,8 @@ public class NotifyFragment extends BasicFragment {
                 intent.putExtra("title", messageModels.get(position).getTitle());
                 intent.putExtra("imageUrl", messageModels.get(position).getUrl());
                 startActivity(intent);
+//                Intent intent =new Intent(activity, AnswerActivity.class);
+//                startActivity(intent);
 
             }
         });

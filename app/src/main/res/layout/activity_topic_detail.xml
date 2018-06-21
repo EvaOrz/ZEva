@@ -102,6 +102,7 @@
         <cn.com.zwwl.bayuwen.widget.NoScrollListView
             android:id="@+id/teacher_asked_id"
             android:layout_marginTop="@dimen/dp_10"
+            android:divider="#00000000"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -109,8 +110,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:background="#F2F2F2"
+            android:layout_marginTop="@dimen/dp_10"
             android:orientation="vertical">
      <TextView
          android:id="@+id/jiazhanghuifu"
@@ -123,8 +125,9 @@
             <cn.com.zwwl.bayuwen.widget.NoScrollListView
                 android:id="@+id/user_asked_id"
                 android:layout_marginTop="@dimen/dp_10"
+                android:divider="#00000000"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="fill_parent">
 
             </cn.com.zwwl.bayuwen.widget.NoScrollListView>
 
