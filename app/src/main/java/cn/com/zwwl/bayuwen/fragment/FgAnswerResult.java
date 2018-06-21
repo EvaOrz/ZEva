@@ -10,15 +10,25 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.base.BasicFragment;
+import cn.com.zwwl.bayuwen.model.AnswerModel;
 
 public class FgAnswerResult extends BasicFragment {
-    @BindView(R.id.content)
-    AppCompatTextView content;
+    @BindView(R.id.title)
+    AppCompatTextView title;
+    @BindView(R.id.answer)
+    AppCompatTextView answer;
+    @BindView(R.id.description)
+    AppCompatTextView description;
 
-    public static Fragment newInstance(String content) {
+    public static Fragment newInstance(int position, AnswerModel content) {
         FgAnswerResult fragment = new FgAnswerResult();
         Bundle bundle = new Bundle();
-        bundle.putString("content", content);
+        bundle.putString("question",position+"、" +content.getTitle());
+        bundle.putString("des", content.getRemark());
+        for (AnswerModel.SelectBean bean : content.getSelect()) {
+            if (content.getAnswer().equals(bean.getOption()))
+                bundle.putString("answer", bean.getOption() + " . " + bean.getContent());
+        }
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -32,7 +42,9 @@ public class FgAnswerResult extends BasicFragment {
     protected void initView() {
         Bundle bundle = getArguments();
         if (bundle != null) {
-          content.setText(bundle.getString("content"));
+            title.setText(bundle.getString("question"));
+            answer.setText(String.format("正确答案: %s",bundle.getString("answer")));
+            description.setText(String.format("答案解析: %s",bundle.getString("des")));
         }
     }
 

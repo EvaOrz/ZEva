@@ -61,7 +61,11 @@ public class AnswerDialog extends PopupWindow {
     }
 
     public void end() {
-        next.setText("查看成绩");
-        next.setTag("查看成绩");
+        next.setText("答题结束");
+        next.setTag("答题结束");
+    }
+
+    public void setData(String remark) {
+        content.setText(remark);
     }
 }

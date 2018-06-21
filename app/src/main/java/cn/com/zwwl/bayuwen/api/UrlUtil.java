@@ -450,4 +450,10 @@ public class UrlUtil {
     public static String submitAnswer() {
         return HOST + "/jigsaw";
     }
+    /**
+     * 错题集
+     */
+    public static String errorList() {
+        return HOST + "/jigsaw/errorlist";
+    }
 }
