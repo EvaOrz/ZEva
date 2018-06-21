@@ -37,7 +37,7 @@ public class OrderDetailApi extends BaseApi {
         this.listener = listener;
         if (isDelete) {
             url = UrlUtil.cancleOrder() + oid;
-            get();
+            delete();
         } else {
             url = UrlUtil.getOrderDetail();
             pamas.put("oid", oid);

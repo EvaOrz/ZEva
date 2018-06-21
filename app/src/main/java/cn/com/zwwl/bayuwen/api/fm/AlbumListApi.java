@@ -102,18 +102,21 @@ public class AlbumListApi extends BaseApi {
         if (errorMsg != null)
             listener.setError(errorMsg);
 
-        if (!isNull(array)) {
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject o = array.optJSONObject(i);
-                AlbumModel f = new AlbumModel();
-                if (isCollect) {
-
-                    f.parseAlbumModel(o, f);
-                } else
-                    f.parseKinfo(o, f);
-                albumModels.add(f);
+        if (!isNull(json)) {
+            JSONArray jsonArray = json.optJSONArray("data");
+            if (!isNull(jsonArray)) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject o = jsonArray.optJSONObject(i);
+                    AlbumModel f = new AlbumModel();
+                    if (isCollect) {
+                        f.parseAlbumModel(o, f);
+                    } else
+                        f.parseKinfo(o, f);
+                    albumModels.add(f);
+                }
+                listener.setData(albumModels);
             }
-            listener.setData(albumModels);
+
         }
     }
 

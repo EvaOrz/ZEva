@@ -1,4 +1,4 @@
-package cn.com.zwwl.bayuwen.view;
+package cn.com.zwwl.bayuwen.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -51,10 +51,11 @@ public class ChangeInfoDialog implements View.OnClickListener {
         window = mDialog.getWindow();
         window.setContentView(R.layout.dialog_motify_sign);
 
-        mDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        mDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout
+                .LayoutParams.MATCH_PARENT);
 
-        edit = (EditText) window.findViewById(R.id.motify_sign_edit);
-        title = (TextView) window.findViewById(R.id.motify_sign_title);
+        edit = window.findViewById(R.id.motify_sign_edit);
+        title = window.findViewById(R.id.motify_sign_title);
         if (type == 1) {
             title.setText(R.string.motify_nickname);
             edit.setText(userModel.getName());
@@ -86,7 +87,8 @@ public class ChangeInfoDialog implements View.OnClickListener {
             // 请求获得焦点
             edit.requestFocus();
             // 调用系统输入法
-            InputMethodManager inputManager = (InputMethodManager) edit.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager inputManager = (InputMethodManager) edit.getContext()
+                    .getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.showSoftInput(edit, 0);
         }
     }
@@ -98,7 +100,8 @@ public class ChangeInfoDialog implements View.OnClickListener {
             if (!TextUtils.isEmpty(desc)) {
                 if (type == 1) {//
                     if (desc.getBytes().length > 24)
-                        Toast.makeText(mContext, R.string.nick_name_length_error, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, R.string.nick_name_length_error, Toast
+                                .LENGTH_SHORT).show();
                     else {
                         signChangeListener.setText(desc);
                     }

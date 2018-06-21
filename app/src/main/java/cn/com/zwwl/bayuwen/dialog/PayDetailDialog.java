@@ -1,4 +1,4 @@
-package cn.com.zwwl.bayuwen.view;
+package cn.com.zwwl.bayuwen.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

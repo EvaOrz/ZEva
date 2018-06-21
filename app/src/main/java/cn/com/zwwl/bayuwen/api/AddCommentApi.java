@@ -28,7 +28,8 @@ public class AddCommentApi extends BaseApi {
 
     @Override
     protected String getUrl() {
-        return UrlUtil.getTopicComment();
+        return "";
+//        return UrlUtil.getTopicComment();
     }
 
     @Override
