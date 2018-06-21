@@ -28,17 +28,21 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.api.CalendarEventAddApi;
+import cn.com.zwwl.bayuwen.api.CalendarDetailApi;
+import cn.com.zwwl.bayuwen.api.CalendarEActionApi;
 import cn.com.zwwl.bayuwen.api.CalendarJigouListApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.CalendarEventModel;
 import cn.com.zwwl.bayuwen.model.CalendarJigouModel;
+import cn.com.zwwl.bayuwen.model.CourseModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
@@ -50,14 +54,10 @@ import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
  */
 public class AddCalendarActivity extends BaseActivity {
     private TextView shangkeTv, xiangkeTv, jigouTv, kaiTv1, kaiTv2, jieTv1, jieTv2, weekCountTv;
-
     private EditText nameEv, cishuEv, addressEv, teacherEv, codeEv;
 
-    private String shangTime, xiaTime;
-    private CalendarEventModel calendarEventModel;// 当前添加课程
-    private CalendarJigouModel calendarJigouModel;// 当前课程机构
-
-    private Date startDate, endDate;// 课程开始日期和结束日期
+    private CalendarEventModel calendarEventModel;// 当前日历事件
+    private boolean isCanSave = true;// 日历事件不可以修改，只可以增减日期
     private List<Date> periods = new ArrayList<>();// 课程日期集合
     private List<CalendarJigouModel> jigouModels = new ArrayList<>();// 第三方机构列表
 
@@ -77,12 +77,37 @@ public class AddCalendarActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             askPermission(needPermissions, 101);
         }
-        if (getIntent().getSerializableExtra("AddCalendarActivity_data") != null && getIntent()
-                .getSerializableExtra("AddCalendarActivity_data") instanceof CalendarEventModel)
-            calendarEventModel = (CalendarEventModel) getIntent().getSerializableExtra
-                    ("AddCalendarActivity_data");
+        if (!TextUtils.isEmpty(getIntent().getStringExtra("AddCalendarActivity_data"))) {
+            isCanSave = false;
+            getDetail(getIntent().getStringExtra("AddCalendarActivity_data"));
+        } else calendarEventModel = new CalendarEventModel();
         initView();
         initData();
+    }
+
+    /**
+     * 获取第三方日历事件的详情
+     *
+     * @param id
+     */
+    private void getDetail(final String id) {
+        new CalendarDetailApi(mContext, id, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+                if (entry != null && entry instanceof CalendarEventModel) {
+                    calendarEventModel = (CalendarEventModel) entry;
+                    handler.sendEmptyMessage(5);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                if (error != null) {
+                    showToast(error.getDesc());
+                    calendarEventModel = new CalendarEventModel();
+                }
+            }
+        });
     }
 
     private void initView() {
@@ -107,31 +132,18 @@ public class AddCalendarActivity extends BaseActivity {
         addressEv = findViewById(R.id.content_address);
         teacherEv = findViewById(R.id.content_teacher);
         codeEv = findViewById(R.id.content_code);
-
-        /**
-         * {
-         "id":"1300",
-         "kid":"154",
-         "orgName":"中文未来",
-         "courseDate":"2017-01-02",
-         "startTime":"19:01:00",
-         "endTime":"20:01:00",
-         "is_thirdorg":0,
-         "name":"初一秋季校内护航班",
-         "teacher":Array[5],
-         "school":"诸葛学堂网课",
-         "source":1,
-         "online":1
-         }
-         */
-        if (calendarEventModel != null) {
-            nameEv.setText(calendarEventModel.getName());
-            jigouTv.setText(calendarEventModel.getOrgName());
-            shangkeTv.setText(calendarEventModel.getStartTime());
-            xiangkeTv.setText(calendarEventModel.getEndTime());
-//            startDate = calendarEventModel.getStartTime()
-
-        } else calendarEventModel = new CalendarEventModel();
+        if (!isCanSave) {
+            nameEv.setFocusable(false);
+            cishuEv.setFocusable(false);
+            addressEv.setFocusable(false);
+            teacherEv.setFocusable(false);
+            codeEv.setFocusable(false);
+            nameEv.setEnabled(false);
+            cishuEv.setEnabled(false);
+            addressEv.setEnabled(false);
+            teacherEv.setEnabled(false);
+            codeEv.setEnabled(false);
+        }
     }
 
     @Override
@@ -160,23 +172,16 @@ public class AddCalendarActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:// 更新上课时间
-                    shangkeTv.setText(shangTime);
+                    shangkeTv.setText(calendarEventModel.getStartTime());
                     break;
                 case 1:// 更新下课时间
-                    xiangkeTv.setText(xiaTime);
+                    xiangkeTv.setText(calendarEventModel.getEndTime());
                     break;
                 case 2:// 更新课程机构
-                    if (calendarJigouModel != null)
-                        jigouTv.setText(calendarJigouModel.getName());
+                    jigouTv.setText(calendarEventModel.getOrgName());
                     break;
 
                 case 3:// 更新课程日期
-                    DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
-                    kaiTv1.setText(df.format(startDate));
-                    kaiTv2.setText(new SimpleDateFormat("EEE").format(startDate));
-                    jieTv1.setText(df.format(endDate));
-                    jieTv2.setText(new SimpleDateFormat("EEE").format(endDate));
-                    weekCountTv.setText(CalendarTools.countTwoDayWeek(startDate, endDate) + "周");
                     new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow
                             .MyWeekChooseListener() {
                         @Override
@@ -193,31 +198,75 @@ public class AddCalendarActivity extends BaseActivity {
                             periods.clear();
                             periods.addAll(pickDays);
                         }
+
                     }, 5);
+                    setStartAndEndDate();
+                    weekCountTv.setText(calendarEventModel.getTotalWeeks() + "周");
                     break;
                 case 4:// 同步到系统日历
                     Toast.makeText(mContext, "正在同步到系统日历", Toast.LENGTH_LONG).show();
 
                     for (Date date : periods) {
-                        long sss = CalendarTools.fromStringToLongtime(shangTime);
-                        long xxx = CalendarTools.fromStringToLongtime(xiaTime);
+                        long sss = CalendarTools.fromStringToLongtime(calendarEventModel
+                                .getStartTime());
+                        long xxx = CalendarTools.fromStringToLongtime(calendarEventModel
+                                .getEndTime());
                         addCalendarEvent(mContext, nameEv.getText().toString(),
-                                calendarJigouModel.getName(), date.getTime() + sss, date.getTime
+                                calendarEventModel.getOrgName(), date.getTime() + sss, date.getTime
                                         () + xxx);
                     }
                     Toast.makeText(mContext, "已同步课程到系统日历", Toast.LENGTH_SHORT).show();
                     finish();
 
                     break;
+                case 5:// 修改事件初始化
+                    nameEv.setText(calendarEventModel.getName() + "");
+                    setStartAndEndDate();
+                    weekCountTv.setText(calendarEventModel.getTotalWeeks() + "周");
+                    shangkeTv.setText(calendarEventModel.getStartTime() + "");
+                    xiangkeTv.setText(calendarEventModel.getEndTime() + "");
+                    cishuEv.setText(calendarEventModel.getTotalNumber() + "");
+                    teacherEv.setText(calendarEventModel.getTeacherName() + "");
+                    addressEv.setText(calendarEventModel.getAddress() + "");
+                    jigouTv.setText(calendarEventModel.getOrgName() + "");
+                    codeEv.setText(calendarEventModel.getCode() + "");
+                    periods.clear();
+                    for (int i = 0; i < calendarEventModel.getCourseDates().size(); i++) {
+                        periods.add(CalendarTools.fromStringToca(calendarEventModel
+                                .getCourseDates().get(i).getCourseDate()).getTime());
+
+                    }
+                    break;
+                case 6:
+                    setStartAndEndDate();
+                    weekCountTv.setText(calendarEventModel.getTotalWeeks() + "周");
+                    break;
             }
         }
     };
+
+    private void setStartAndEndDate() {
+        if (Tools.listNotNull(periods)) {
+            Date start = periods.get(0);
+            Date end = periods.get(periods.size() - 1);
+            calendarEventModel.setTotalWeeks(CalendarTools.countTwoDayWeek(start, end));
+            DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+            kaiTv1.setText(df.format(start));
+            kaiTv2.setText(new SimpleDateFormat("EEE").format(start));
+
+            jieTv1.setText(df.format(end));
+            jieTv2.setText(new SimpleDateFormat("EEE").format(end));
+
+        }
+    }
 
     private void doSave() {
         String name = nameEv.getText().toString();
         String totalNumber = cishuEv.getText().toString();
         String teacher = teacherEv.getText().toString();
-        if (startDate == null || endDate == null) {
+        String address = addressEv.getText().toString();
+        String code = codeEv.getText().toString();
+        if (!Tools.listNotNull(periods)) {
             showToast("请选择课程开始和结束日期");
         } else if (TextUtils.isEmpty(name)) {
             showToast("请填写课程名称");
@@ -225,22 +274,21 @@ public class AddCalendarActivity extends BaseActivity {
             showToast("请填写课程次数");
         } else if (TextUtils.isEmpty(teacher)) {
             showToast("请填写授课老师");
-        } else if (calendarJigouModel == null) {
+        } else if (TextUtils.isEmpty(calendarEventModel.getOrgName())) {
             showToast("请填写机构名称");
-        } else if (TextUtils.isEmpty(shangTime)) {
+        } else if (TextUtils.isEmpty(calendarEventModel.getStartTime())) {
             showToast("请填写上课时间");
-        } else if (TextUtils.isEmpty(xiaTime)) {
+        } else if (TextUtils.isEmpty(calendarEventModel.getEndTime())) {
             showToast("请填写下课时间");
         } else {
             calendarEventModel.setName(name);
-            calendarEventModel.setOrgName(calendarJigouModel.getName());
-            calendarEventModel.setOutOrgId(calendarJigouModel.getId());
-            calendarEventModel.setStartTime(shangTime);
-            calendarEventModel.setEndTime(xiaTime);
+            calendarEventModel.setTotalNumber(Integer.valueOf(totalNumber));
+            calendarEventModel.setTeacherName(teacher);
+            calendarEventModel.setAddress(address);
+            calendarEventModel.setCode(code);
             showLoadingDialog(true);
-            new CalendarEventAddApi(mContext, calendarEventModel, CalendarTools.countTwoDayWeek
-                    (startDate, endDate), totalNumber,
-                    transPeriod(), teacher, new FetchEntryListener() {
+            new CalendarEActionApi(mContext, calendarEventModel,
+                    transPeriod(), new FetchEntryListener() {
 
 
                 @Override
@@ -282,55 +330,62 @@ public class AddCalendarActivity extends BaseActivity {
                 break;
             case R.id.add_zengshan:// 增删课程
                 Intent intent = new Intent(mContext, SelectCalendarActivity.class);
-                intent.putExtra("SelectCalendarActivity_data", (Serializable) periods);
+                if (isCanSave) {
+                    intent.putExtra("SelectCalendarActivity_data", (Serializable) periods);
+                } else {
+                    intent.putExtra("SelectCalendarActivity_data", calendarEventModel);
+                }
                 startActivityForResult(intent, 100);
                 break;
             case R.id.add_xiakeshijian:// 下课时间
+                if (!isCanSave) return;
                 hideJianpan();
                 new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow
                         .MyTimePickListener() {
                     @Override
                     public void onTimePick(int hour, int minute) {
-                        xiaTime = hour + ":" + minute;
+                        calendarEventModel.setEndTime(hour + ":" + minute);
                         handler.sendEmptyMessage(1);
                     }
                 }, 2);
                 break;
             case R.id.add_shangkeshijian:// 上课时间
+                if (!isCanSave) return;
                 hideJianpan();
                 new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow
                         .MyTimePickListener() {
                     @Override
                     public void onTimePick(int hour, int minute) {
-                        shangTime = hour + ":" + minute;
+                        calendarEventModel.setStartTime(hour + ":" + minute);
                         handler.sendEmptyMessage(0);
                     }
                 }, 1);
                 break;
 
             case R.id.add_kechengjigou:// 课程机构
+                if (!isCanSave) return;
                 hideJianpan();
                 new CalendarOptionPopWindow(mContext, jigouModels, new CalendarOptionPopWindow
                         .MyJigouChooseListener() {
                     @Override
                     public void onJigouChoose(CalendarJigouModel model) {
-                        calendarJigouModel = model;
+                        calendarEventModel.setOrgName(model.getName());
+                        calendarEventModel.setOutOrgId(model.getId());
                         handler.sendEmptyMessage(2);
                     }
                 }, 3);
                 break;
 
             case R.id.add_period:// 课程时间段选择器
+                if (!isCanSave) return;
                 hideJianpan();
                 new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow
                         .MyPeriodPickListener() {
 
                     @Override
                     public void onPeriodPick(Date start, Date end) {
-                        startDate = start;
-                        endDate = end;
                         periods.clear();
-                        periods.addAll(CalendarTools.betweenDays(startDate, endDate));
+                        periods.addAll(CalendarTools.betweenDays(start, end));
                         handler.sendEmptyMessage(3);
                     }
                 }, 4);
@@ -342,6 +397,14 @@ public class AddCalendarActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100) {
+            Serializable o = getIntent().getSerializableExtra("SelectCalendar_result_data");
+            if (o != null) {
+                periods.clear();
+                periods.addAll((ArrayList<Date>) o);
+                handler.sendEmptyMessage(6);
+            }
+        }
     }
 
     /**

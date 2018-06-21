@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,14 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
+import cn.com.zwwl.bayuwen.api.CalendarEActionApi;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.CalendarEventModel;
+import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
+import cn.com.zwwl.bayuwen.view.DatePopWindow;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
@@ -27,15 +35,30 @@ public class SelectCalendarActivity extends BaseActivity {
     private ListView listView;
     private SelectDateAdapter selectDateAdapter;
     private List<Date> datas = new ArrayList<>();
+    private CalendarEventModel calendarEventModel;
+    private boolean isDelete = false;// 是否是编辑日历事件
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_calendar);
-        Serializable o = getIntent().getSerializableExtra("SelectCalendarActivity_data");
-        if (o != null) {
-            datas.addAll((ArrayList<Date>) o);
+        if (getIntent().getSerializableExtra("SelectCalendarActivity_data") != null) {
+            if (getIntent().getSerializableExtra("SelectCalendarActivity_data") instanceof
+                    CalendarEventModel) {
+                calendarEventModel = (CalendarEventModel) getIntent().getSerializableExtra
+                        ("SelectCalendarActivity_data");
+                for (int i = 0; i < calendarEventModel.getCourseDates().size(); i++) {
+                    datas.add(CalendarTools.fromStringToca(calendarEventModel.getCourseDates()
+                            .get(i).getCourseDate()).getTime());
+                }
+                isDelete = true;
+            } else {
+                Serializable o = getIntent().getSerializableExtra("SelectCalendarActivity_data");
+                if (o != null) {
+                    datas.addAll((ArrayList<Date>) o);
+                }
+            }
         }
         initView();
     }
@@ -55,23 +78,54 @@ public class SelectCalendarActivity extends BaseActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent i = new Intent();
+        i.putExtra("SelectCalendar_result_data", (Serializable) datas);
+        setResult(101, i);
+    }
+
+    @Override
     public void onClick(View view) {
         super.onClick(view);
         switch (view.getId()) {
             case R.id.calendar_add://
-                new CalendarOptionPopWindow(mContext, new CalendarOptionPopWindow
-                        .MyPeriodPickListener() {
-
+                new DatePopWindow(mContext, new DatePopWindow.MyDatePickListener() {
                     @Override
-                    public void onPeriodPick(Date start, Date end) {
-
+                    public void onDatePick(int year, int month, int day) {
+                        String dateString = year + "-" + month + "-" + day;
+                        if (isDelete) {
+                            doAdd(dateString);
+                        }
+                        datas.add(CalendarTools.fromStringToca(dateString).getTime());
+                        selectDateAdapter.setData(datas);
                     }
-                }, 4);
+                });
                 break;
             case R.id.select_calendar_back:
                 finish();
                 break;
         }
+    }
+
+    private void doAdd(String courseDate) {
+        showLoadingDialog(true);
+        new CalendarEActionApi(mContext, calendarEventModel.getId(), courseDate, 0, new
+                FetchEntryListener() {
+
+                    @Override
+                    public void setData(Entry entry) {
+
+                    }
+
+                    @Override
+                    public void setError(ErrorMsg error) {
+                        showLoadingDialog(false);
+                        if (error != null) {
+                            showToast(error.getDesc());
+                        }
+                    }
+                });
     }
 
     public class SelectDateAdapter extends CheckScrollAdapter<Date> {
@@ -93,7 +147,7 @@ public class SelectCalendarActivity extends BaseActivity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             final Date item = getItem(position);
             ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout
                     .item_calender_select);
@@ -102,6 +156,12 @@ public class SelectCalendarActivity extends BaseActivity {
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (isDelete) {
+                        doDelete(position);
+                    } else {
+                        datas.remove(position);
+
+                    }
                     remove(item);
                 }
             });
@@ -113,6 +173,29 @@ public class SelectCalendarActivity extends BaseActivity {
 
         public boolean isScroll() {
             return isScroll;
+        }
+
+        private void doDelete(final int position) {
+            showLoadingDialog(true);
+            new CalendarEActionApi(mContext, calendarEventModel.getId(), calendarEventModel
+                    .getCourseDates().get(position).getId(), new FetchEntryListener() {
+
+                @Override
+                public void setData(Entry entry) {
+
+                }
+
+                @Override
+                public void setError(ErrorMsg error) {
+                    showLoadingDialog(false);
+                    if (error != null) {
+                        showToast(error.getDesc());
+                    } else {
+                        datas.remove(position);
+                    }
+
+                }
+            });
         }
 
     }

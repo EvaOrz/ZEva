@@ -23,7 +23,7 @@
             android:id="@+id/calendar_select_delete"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="@color/gray_dark" />
+            android:src="@mipmap/dalajitong" />
 
     </LinearLayout>
 

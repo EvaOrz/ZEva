@@ -33,8 +33,7 @@
             android:layout_centerVertical="true"
             android:text="+"
             android:textColor="@color/gold"
-            android:textSize="@dimen/text_size_20"
-            android:visibility="gone" />
+            android:textSize="@dimen/text_size_20" />
     </RelativeLayout>
 
     <LinearLayout

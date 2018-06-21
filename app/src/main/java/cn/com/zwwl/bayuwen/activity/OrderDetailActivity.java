@@ -30,6 +30,7 @@ import cn.beecloud.entity.BCPayResult;
 import cn.beecloud.entity.BCReqParams;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.order.OrderDetailApi;
+import cn.com.zwwl.bayuwen.dialog.AskDialog;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.AddressModel;
@@ -285,7 +286,12 @@ public class OrderDetailActivity extends BaseActivity {
                 break;
             case R.id.order_d_bt1:// 取消订单|申请退款
                 if (type == 1) {
-                    doCancleOrder();
+                    new AskDialog(mContext, "确认取消订单？", new AskDialog.OnSurePickListener() {
+                        @Override
+                        public void onSure() {
+                            doCancleOrder();
+                        }
+                    });
                 } else if (type == 2) {
                     for (KeModel k : orderForMyListModel.getKeModels()) {
                         if (k.getRefund().equals("3")) {// 有正在退费的课程

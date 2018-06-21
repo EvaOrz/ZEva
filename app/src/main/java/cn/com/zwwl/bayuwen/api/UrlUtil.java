@@ -229,7 +229,7 @@ public class UrlUtil {
         return HOST + "/course/calendar";
     }
 
-    // 添加日历事件
+    // 添加日历事件\获取日历事件详情
     public static String addCalendarEvent() {
         return HOST + "/courserecord";
     }

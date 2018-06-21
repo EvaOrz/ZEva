@@ -40,6 +40,7 @@ public class CalendarKeAdapter extends RecyclerView.Adapter<CalendarKeAdapter.Vi
         TextView xiaoqu;
         TextView time;
         LinearLayout teacherLayout;
+        LinearLayout calendar_item_bg;
 
 
         public ViewHolder(View view) {
@@ -49,6 +50,7 @@ public class CalendarKeAdapter extends RecyclerView.Adapter<CalendarKeAdapter.Vi
             xiaoqu = view.findViewById(R.id.calendar_item_xiaoqu);
             time = view.findViewById(R.id.calendar_item_time);
             teacherLayout = view.findViewById(R.id.calendar_item_child_layout);
+            calendar_item_bg = view.findViewById(R.id.calendar_item_bg);
         }
     }
 
@@ -71,9 +73,16 @@ public class CalendarKeAdapter extends RecyclerView.Adapter<CalendarKeAdapter.Vi
             final CalendarEventModel item = datas.get(position);
             holder.tag.setText(item.getOrgName());
             holder.title.setText(item.getName());
-            holder.xiaoqu.setText("校区：" + item.getSchool());
             holder.time.setText("时间：" + item.getCourseDate() + " " + item.getStartTime() + "-" +
                     item.getEndTime());
+
+            if (item.getIs_thirdorg() == 0) {
+                holder.calendar_item_bg.setBackgroundResource(R.drawable.gold_white_xiangkuang);
+                holder.xiaoqu.setText("校区：" + item.getSchool());
+            } else {
+                holder.calendar_item_bg.setBackgroundResource(R.drawable.gray_white_xiankuang);
+                holder.xiaoqu.setText("地址：" + item.getAddress());
+            }
             if (Tools.listNotNull(item.getTeacher())) {
                 for (CalendarEventModel.TeacherBean teacherBean : item.getTeacher()) {
                     holder.teacherLayout.addView(getChildView(teacherBean), LinearLayout
@@ -83,8 +92,11 @@ public class CalendarKeAdapter extends RecyclerView.Adapter<CalendarKeAdapter.Vi
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (item.getIs_thirdorg() == 0) {
+                        return;
+                    }
                     Intent i = new Intent(context, AddCalendarActivity.class);
-                    i.putExtra("AddCalendarActivity_data", item);
+                    i.putExtra("AddCalendarActivity_data", item.getId());
                     context.startActivity(i);
                 }
             });

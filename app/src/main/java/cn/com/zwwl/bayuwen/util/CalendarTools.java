@@ -137,7 +137,7 @@ public class CalendarTools {
     // 将字符串转为时间戳
     public static long fromStringToLongtime(String user_time) {
         String[] ss = user_time.split(":");
-        if (ss.length == 2) {
+        if (ss.length > 1) {
             Long lh = Long.valueOf(ss[0]) * 60 * 60 * 1000;
             Long lm = Long.valueOf(ss[1]) * 60 * 1000;
             return lh + lm;

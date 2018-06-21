@@ -9,6 +9,7 @@
     android:paddingTop="5dp">
 
     <LinearLayout
+        android:id="@+id/calendar_item_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gold_white_xiangkuang"
