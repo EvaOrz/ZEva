@@ -426,6 +426,16 @@ public class UrlUtil {
     public static String getCancelOrconfirmVote() {
         return HOST + "/topicvote";
     }
+    /**
+     *
+     v2/topiccomment
+
+     POST
+     添加话题评论
+     */
+    public  static  String getTopicComment(){
+        return  HOST+"/topiccomment";
+    }
 
     /**
      * 获取试题列表

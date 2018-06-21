@@ -24,9 +24,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.AnswerActivity;
 import cn.com.zwwl.bayuwen.activity.CourseMessageActivity;
 import cn.com.zwwl.bayuwen.activity.InteractActivity;
-import cn.com.zwwl.bayuwen.activity.MessageDetailActivity;
 import cn.com.zwwl.bayuwen.activity.OtherMessageActivity;
 import cn.com.zwwl.bayuwen.activity.SysMessageActivity;
 import cn.com.zwwl.bayuwen.adapter.NotifyMessageAdapter;
@@ -115,11 +115,13 @@ public class NotifyFragment extends BasicFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                Intent intent = new Intent(activity, MessageDetailActivity.class);
-                intent.putExtra("content", messageModels.get(position).getContent());
-                intent.putExtra("createTime", messageModels.get(position).getCreatedTime());
-                intent.putExtra("title", messageModels.get(position).getTitle());
-                intent.putExtra("imageUrl", messageModels.get(position).getUrl());
+//                Intent intent = new Intent(activity, MessageDetailActivity.class);
+//                intent.putExtra("content", messageModels.get(position).getContent());
+//                intent.putExtra("createTime", messageModels.get(position).getCreatedTime());
+//                intent.putExtra("title", messageModels.get(position).getTitle());
+//                intent.putExtra("imageUrl", messageModels.get(position).getUrl());
+//                startActivity(intent);
+                Intent intent =new Intent(activity, AnswerActivity.class);
                 startActivity(intent);
 
             }
