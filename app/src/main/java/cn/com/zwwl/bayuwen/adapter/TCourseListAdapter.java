@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class TCourseListAdapter extends BaseRecylcerViewAdapter<KeModel> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         final TCourseListAdapter.ViewHolder viewHolder = (TCourseListAdapter.ViewHolder) holder;
         KeModel keModel = list.get(position);
+        viewHolder.stateTv.setImageResource(keModel.getTagImg());
         viewHolder.fcNameTv.setText(keModel.getTitle());
         viewHolder.fcnoTv.setText("班级编码：" + keModel.getModel());
         viewHolder.fcplaceTv.setText(keModel.getSchool());
@@ -52,6 +54,7 @@ public class TCourseListAdapter extends BaseRecylcerViewAdapter<KeModel> {
         private TextView fcplaceTv;
         private TextView fctimeTv;
         private TextView fcpriceTv;
+        private ImageView stateTv;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -64,6 +67,7 @@ public class TCourseListAdapter extends BaseRecylcerViewAdapter<KeModel> {
             fcplaceTv = itemView.findViewById(R.id.place_tv);
             fctimeTv = itemView.findViewById(R.id.time_tv);
             fcpriceTv = itemView.findViewById(R.id.price_tv);
+            stateTv = itemView.findViewById(R.id.stateTv);
         }
     }
 }

@@ -55,7 +55,8 @@ public class KeDetailView1 extends LinearLayout {
                             int i = baseResponse.getTotal() / baseResponse.getPagesize();
                             if (baseResponse.getTotal() % baseResponse.getPagesize() > 0)
                                 totalPage = i + 1;
-                            if (baseResponse.getLectures() != null && baseResponse.getLectures().size() > 0)
+                            if (baseResponse.getLectures() != null && baseResponse.getLectures()
+                                    .size() > 0)
                                 allData.addAll(baseResponse.getLectures());
                             if (page == 1) {
                                 if (allData.size() > 3) {
@@ -132,7 +133,7 @@ public class KeDetailView1 extends LinearLayout {
             video_time.setText(item.getStart_at()
                     + "  " + item.getClass_start_at()
                     + "-" + item.getClass_end_at()
-                    + "(" + item.getHours() + "小时)");
+                    + "(" + item.getHours() + "课时)");
             return viewHolder.getConvertView();
         }
 

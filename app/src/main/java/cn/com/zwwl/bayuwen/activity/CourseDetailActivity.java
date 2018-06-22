@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -67,6 +66,7 @@ public class CourseDetailActivity extends BaseActivity {
     private TextView date_tv;
     private TextView priceTv1;
     private TextView priceTv2;
+    private TextView baoman_tv;
     private TextView youhuiBt;
     private RadioGroup radioGroup;
     private RadioButton button1, button2, button3;
@@ -76,7 +76,7 @@ public class CourseDetailActivity extends BaseActivity {
     private LinearLayout nomalFooter;
     private LinearLayout promotionLayout, promotionContain;
 
-    private LinearLayout teacherLayout, groupLayout;
+    private LinearLayout teacherLayout, groupLayout, buyLayout;
 
     private List<View> keDetailViews = new ArrayList<>();
     private CustomViewPager mViewPager;
@@ -176,6 +176,7 @@ public class CourseDetailActivity extends BaseActivity {
         date_tv = findViewById(R.id.date_tv);
         priceTv1 = findViewById(R.id.group_purchase_price1);
         priceTv2 = findViewById(R.id.group_purchase_price2);
+        baoman_tv = findViewById(R.id.group_purchase_price3);
         teacherLayout = findViewById(R.id.teacher_layout);
         mViewPager = findViewById(R.id.videoList_vp);
         follow_status = findViewById(R.id.follow_status);
@@ -253,7 +254,8 @@ public class CourseDetailActivity extends BaseActivity {
         groupLayout = findViewById(R.id.group_purchase_bt1);
         findViewById(R.id.ke_back).setOnClickListener(this);
         groupLayout.setOnClickListener(this);
-        findViewById(R.id.group_purchase_bt2).setOnClickListener(this);
+        buyLayout = findViewById(R.id.group_purchase_bt2);
+        buyLayout.setOnClickListener(this);
         add_tv.setOnClickListener(this);
         sure_tv.setOnClickListener(this);
         youhuiBt.setOnClickListener(this);
@@ -302,11 +304,16 @@ public class CourseDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.group_purchase_bt2: //单独报名
-                Intent j = new Intent(mContext, TuanPayActivity.class);
-                j.putExtra("TuanPayActivity_type", 2);
-                j.putExtra("TuanPayActivity_data", keModel);
-                j.putExtra("TuanPayActivity_code", "");
-                startActivity(j);
+                int leftNo = Integer.valueOf(keModel.getNum());
+                if (leftNo == 0) {
+                    showToast("该班已报满");
+                } else {
+                    Intent j = new Intent(mContext, PayActivity.class);
+                    j.putExtra("TuanPayActivity_type", 2);
+                    j.putExtra("TuanPayActivity_data", keModel);
+                    j.putExtra("TuanPayActivity_code", "");
+                    startActivity(j);
+                }
                 break;
             case R.id.ke_add:// 加入购物车
                 showLoadingDialog(true);
@@ -333,7 +340,7 @@ public class CourseDetailActivity extends BaseActivity {
                 int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission
                         .CALL_PHONE);
 
-                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
                     startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + number)));
                 } else {
                     askPermission(new String[]{Manifest.permission.CALL_PHONE}, 101);
@@ -466,6 +473,16 @@ public class CourseDetailActivity extends BaseActivity {
         } else {
             groupLayout.setVisibility(View.INVISIBLE);
         }
+        // 已报满的班显示灰色
+        int leftNo = Integer.valueOf(keModel.getNum());
+        if (leftNo == 0) {
+            add_tv.setVisibility(View.GONE);
+            groupLayout.setVisibility(View.INVISIBLE);
+            buyLayout.setBackgroundResource(R.drawable.gray_circle);
+            priceTv2.setVisibility(View.GONE);
+            baoman_tv.setText("已报满");
+
+        }
         if (Tools.listNotNull(keModel.getPromotionModels())) {
             promotionLayout.setVisibility(View.VISIBLE);
             promotionContain.removeAllViews();
@@ -524,7 +541,7 @@ public class CourseDetailActivity extends BaseActivity {
         view.findViewById(R.id.cdetail_t_buy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(mContext, TuanPayActivity.class);
+                Intent i = new Intent(mContext, PayActivity.class);
                 i.putExtra("TuanPayActivity_promo", keModel.getPromotionModels().get(position));
                 i.putExtra("TuanPayActivity_type", 4);
                 startActivity(i);

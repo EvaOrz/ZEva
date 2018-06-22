@@ -88,7 +88,7 @@ public class TuanKaiActivity extends BaseActivity {
                 break;
             case R.id.tuan_kai_pay:// 我要开团
                 Intent i = new Intent();
-                i.setClass(mContext, TuanPayActivity.class);
+                i.setClass(mContext, PayActivity.class);
                 i.putExtra("TuanPayActivity_data", keModel);
                 i.putExtra("TuanPayActivity_code", groupBuyModel.getCode());
                 i.putExtra("TuanPayActivity_type", 0);// 单独参团

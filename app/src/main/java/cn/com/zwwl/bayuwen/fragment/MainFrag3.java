@@ -25,6 +25,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.FCourseListActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
+import cn.com.zwwl.bayuwen.activity.CourseCenterActivity;
 import cn.com.zwwl.bayuwen.activity.SearchCourseActivity;
 import cn.com.zwwl.bayuwen.activity.StudyingCourseActivity;
 import cn.com.zwwl.bayuwen.activity.UnitIndexActivity;

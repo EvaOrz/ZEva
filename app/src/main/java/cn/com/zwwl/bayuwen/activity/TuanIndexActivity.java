@@ -25,7 +25,6 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.api.order.CheckCanTuanApi;
 import cn.com.zwwl.bayuwen.api.order.GetTuanCodeApi;
-import cn.com.zwwl.bayuwen.api.order.KaiTuanbyCodeApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -227,7 +226,7 @@ public class TuanIndexActivity extends BaseActivity {
             public void setError(ErrorMsg error) {
                 if (error == null) {// 可以参团
                     Intent i = new Intent();
-                    i.setClass(mContext, TuanPayActivity.class);
+                    i.setClass(mContext, PayActivity.class);
                     i.putExtra("TuanPayActivity_data", keModel);
                     i.putExtra("TuanPayActivity_code", code);
                     i.putExtra("TuanPayActivity_type", 0);// 单独参团
@@ -267,7 +266,7 @@ public class TuanIndexActivity extends BaseActivity {
                                 i.putExtra("TuanKaiActivity_data", keModel);
                                 i.putExtra("TuanKaiActivity_code", entry);
                             } else if (type == 2) {
-                                i.setClass(mContext, TuanPayActivity.class);
+                                i.setClass(mContext, PayActivity.class);
                                 i.putExtra("TuanPayActivity_data", keModel);
                                 i.putExtra("TuanPayActivity_code", tuanCode);
                                 i.putExtra("TuanPayActivity_type", 1);// 垫付

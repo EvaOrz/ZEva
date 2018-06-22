@@ -55,7 +55,7 @@ public class SortHolder extends BaseWidgetHolder<List<SelectTempModel>> {
     public void refreshData(List<SelectTempModel> data, int rightSelectedIndex) {
 
         this.mDataList = data;
-
+        mRightSelectedIndex = rightSelectedIndex;
         mRightAdapter = new SortHolder.RightAdapter(data, mRightSelectedIndex);
 
         listView.setAdapter(mRightAdapter);
@@ -113,6 +113,11 @@ public class SortHolder extends BaseWidgetHolder<List<SelectTempModel>> {
             }
 
             holder.rightText.setText(mRightDataList.get(position).getText());
+            if (mRightSelectedIndex == position) {
+                holder.rightText.setTextColor(mContext.getResources().getColor(R.color.gold));
+            } else {
+                holder.rightText.setTextColor(mContext.getResources().getColor(R.color.gray_dark));
+            }
             return convertView;
         }
     }

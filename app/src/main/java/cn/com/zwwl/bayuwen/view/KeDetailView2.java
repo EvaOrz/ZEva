@@ -24,7 +24,6 @@ public class KeDetailView2 extends LinearLayout {
     public KeDetailView2(Context context) {
         super(context);
         this.context = context;
-
         initView();
     }
 

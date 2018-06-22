@@ -94,10 +94,10 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
         listView.setAdapter(adapter);
 
         window = new PopupWindow(view, RelativeLayout.LayoutParams.FILL_PARENT,
-                RelativeLayout.LayoutParams.FILL_PARENT);
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
         window.setFocusable(true);
-
         window.setOutsideTouchable(true);
+        window.setAnimationStyle(R.style.fetch_image_popup_anim);
         window.update();
         window.setBackgroundDrawable(new BitmapDrawable());
         window.showAtLocation(view, Gravity.BOTTOM, 0, 0);
@@ -147,7 +147,7 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
             TextView time = viewHolder.getView(R.id.youhui_time);
             TextView bt = viewHolder.getView(R.id.youhui_bt);
             name.setText(c.getDesc());
-            time.setText(c.getStart_use_time().substring(0, 10) + "至" + c.getEnd_use_time()
+            time.setText(c.getStart_use_time().substring(0, 10) + " 至 " + c.getEnd_use_time()
                     .substring(0, 10));
             if (type == 1) {
                 bt.setText("领取");

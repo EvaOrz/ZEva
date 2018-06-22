@@ -53,7 +53,7 @@ import cn.com.zwwl.bayuwen.view.YouHuiJuanPopWindow;
 /**
  * 报名付费页面
  */
-public class TuanPayActivity extends BaseActivity {
+public class PayActivity extends BaseActivity {
 
     private List<AddressModel> addressDatas = new ArrayList<>();
     private LinearLayout adresslayout;

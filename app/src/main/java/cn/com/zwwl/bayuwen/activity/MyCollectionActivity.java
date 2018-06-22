@@ -55,7 +55,7 @@ public class MyCollectionActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    keSelectAdapter = new KeSelectAdapter(mContext, 0, keModels);
+                    keSelectAdapter = new KeSelectAdapter(mContext, 1, keModels);
                     recyclerView.setAdapter(keSelectAdapter);
                     keSelectAdapter.notifyDataSetChanged();
                     keSelectAdapter.setOnItemClickListener(new OnItemClickListener() {

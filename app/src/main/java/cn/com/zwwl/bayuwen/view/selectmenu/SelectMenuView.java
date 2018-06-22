@@ -70,14 +70,35 @@ public class SelectMenuView extends LinearLayout {
      * 设置数据
      *
      * @param keTypeModel
+     * @param gradeIndex  默认年级
+     * @param tagIdIndex  默认typeid
      */
-    public void setData(KeTypeModel keTypeModel) {
+    public void setData(KeTypeModel keTypeModel, String gradeIndex, String tagIdIndex) {
         dataLists1.clear();
         dataLists1.addAll(SelectTempModel.parseGrades(keTypeModel.getGrades()));
-        mOneHolder1.refreshData(dataLists1, 0);
+        int gradeDe = -1;
+        for (int i = 0; i < dataLists1.size(); i++) {
+            if (dataLists1.get(i).getText().equals(gradeIndex)) {
+                gradeDe = i;
+                mText1.setText(gradeIndex);
+            }
+        }
+        mOneHolder1.refreshData(dataLists1, gradeDe);
+
         dataLists2.clear();
         dataLists2.addAll(SelectTempModel.parseCourse(keTypeModel.getCourseType()));
-        mTwoHolder2.refreshData(dataLists2, 0, -1);
+        int leftIndex = -1, rightIndex = -1;
+        for (int i = 0; i < dataLists2.get(0).size(); i++) {
+            for (int j = 0; j < dataLists2.get(i + 1).size(); j++) {
+                if (dataLists2.get(i + 1).get(j).getId().equals(tagIdIndex)) {
+                    leftIndex = i;
+                    rightIndex = j;
+                    mText2.setText(dataLists2.get(i + 1).get(j).getText());
+                }
+            }
+        }
+        mTwoHolder2.refreshData(dataLists2, leftIndex, rightIndex);
+
         dataLists3.clear();
         dataLists3.addAll(SelectTempModel.parseClass(keTypeModel.getClassType()));
         mOneHolder3.refreshData(dataLists3, 0);

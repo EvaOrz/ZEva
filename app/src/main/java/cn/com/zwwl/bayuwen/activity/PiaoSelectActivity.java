@@ -58,11 +58,16 @@ public class PiaoSelectActivity extends BaseActivity {
                 handler.sendEmptyMessage(0);
             }
         });
-        adapter = new CartAdapter(this, new CartAdapter.OnItemCheckChangeListener() {
+        adapter = new CartAdapter(this, true, new CartAdapter.OnItemCheckChangeListener() {
             @Override
             public void onCheckChange(int position, boolean cStatus) {
                 if (datas.size() > position)
                     datas.get(position).setHasSelect(cStatus);
+            }
+
+            @Override
+            public void onDelete(int position) {
+
             }
         });
         listView.setAdapter(adapter);

@@ -1,7 +1,6 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,11 +9,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -23,13 +19,10 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CartAdapter;
-import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
 import cn.com.zwwl.bayuwen.adapter.MyOrderAdapter;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.api.order.CartApi;
@@ -41,8 +34,6 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.OrderForMyListModel;
-import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
-import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
  * 我的订单页面
@@ -111,14 +102,23 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
         view4.setSelector(colorDrawable);
         view4.setOnItemClickListener(this);
 
-        adapter1 = new CartAdapter(this, new CartAdapter.OnItemCheckChangeListener() {
+        adapter1 = new CartAdapter(this, false, new CartAdapter.OnItemCheckChangeListener() {
             @Override
             public void onCheckChange(int position, boolean cStatus) {
-                if (data1List.size() > position)
+                if (data1List.size() > position) {
                     data1List.get(position).setHasSelect(cStatus);
+                    checkDeleteBtShow();
+                    handler.sendEmptyMessage(6);// 重置价格
+                }
+            }
 
-                checkDeleteBtShow();
-                handler.sendEmptyMessage(6);// 重置价格
+            @Override
+            public void onDelete(int position) {
+                if (data1List.size() > position) {
+                    deleteIds = data1List.get(position).getCartId();
+                    doDelete();
+                }
+
             }
         });
         adapter2 = new MyOrderAdapter(this, 2);
@@ -381,7 +381,7 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
                     }
                 }
                 if (kes.size() > 0) {
-                    Intent i = new Intent(mContext, TuanPayActivity.class);
+                    Intent i = new Intent(mContext, PayActivity.class);
                     i.putExtra("TuanPayActivity_datas", (Serializable) kes);
                     i.putExtra("TuanPayActivity_type", 3);
                     startActivity(i);
@@ -402,6 +402,7 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
             @Override
             public void setError(ErrorMsg error) {
                 showLoadingDialog(false);
+                deleteIds = "";
                 if (error == null) {
                     initCartData();
                 }

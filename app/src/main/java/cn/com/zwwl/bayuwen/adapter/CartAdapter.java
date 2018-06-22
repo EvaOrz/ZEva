@@ -11,28 +11,33 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.dialog.AskDialog;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
- * 购课单列表adapter
+ * 购课单列表\开发票列表adapter
  */
 public class CartAdapter extends CheckScrollAdapter<KeModel> {
     protected Context mContext;
     private OnItemCheckChangeListener onItemCheckChangeListener;
+    private boolean isPiao = false;// 是否是开发票页面
 
     public interface OnItemCheckChangeListener {
         public void onCheckChange(int position, boolean cStatus);
+
+        public void onDelete(int position);
     }
 
-    public CartAdapter(Context context, OnItemCheckChangeListener onItemCheckChangeListener) {
+    public CartAdapter(Context context, boolean isPiao, OnItemCheckChangeListener
+            onItemCheckChangeListener) {
         super(context);
         mContext = context;
+        this.isPiao = isPiao;
         this.onItemCheckChangeListener = onItemCheckChangeListener;
     }
-
 
     public void setData(List<KeModel> mItemList) {
         clear();
@@ -50,7 +55,7 @@ public class CartAdapter extends CheckScrollAdapter<KeModel> {
         ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_order_cart);
         final KeModel model = getItem(position);
 
-        CheckBox checkBox = viewHolder.getView(R.id.item_order_check);
+        final CheckBox checkBox = viewHolder.getView(R.id.item_order_check);
         ImageView tag = viewHolder.getView(R.id.item_order_tag);
         TextView title = viewHolder.getView(R.id.item_order_title);
         TextView teacher = viewHolder.getView(R.id.item_order_teacher);
@@ -65,7 +70,17 @@ public class CartAdapter extends CheckScrollAdapter<KeModel> {
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                onItemCheckChangeListener.onCheckChange(position, isChecked);
+                if (!isPiao && isChecked && Integer.valueOf(model.getNum()) == 0) {
+                    new AskDialog(mContext, "该课程已满班，是否从购课单移除？", new AskDialog
+                            .OnSurePickListener() {
+                        @Override
+                        public void onSure() {
+                            checkBox.setChecked(false);
+                            onItemCheckChangeListener.onDelete(position);
+                        }
+                    });
+                } else
+                    onItemCheckChangeListener.onCheckChange(position, isChecked);
             }
         });
         if (model.isHasSelect()) {

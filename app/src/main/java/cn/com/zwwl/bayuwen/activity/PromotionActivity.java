@@ -10,14 +10,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,7 +150,7 @@ public class PromotionActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.promotion_buy:
-                Intent i = new Intent(mContext, TuanPayActivity.class);
+                Intent i = new Intent(mContext, PayActivity.class);
                 i.putExtra("TuanPayActivity_promo", keModel.getPromotionModels().get(position));
                 i.putExtra("TuanPayActivity_type", 4);
                 startActivity(i);

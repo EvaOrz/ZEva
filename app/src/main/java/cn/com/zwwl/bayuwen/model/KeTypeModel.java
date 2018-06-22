@@ -528,8 +528,8 @@ public class KeTypeModel extends Entry {
 
             public SelectTempModel transToS() {
                 SelectTempModel selectTempModel = new SelectTempModel();
-                selectTempModel.setId("");
-                selectTempModel.setText(date);
+                selectTempModel.setId(date);
+                selectTempModel.setText(content);
                 return selectTempModel;
             }
         }

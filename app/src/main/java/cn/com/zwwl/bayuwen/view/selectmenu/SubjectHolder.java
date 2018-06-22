@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
@@ -59,13 +60,28 @@ public class SubjectHolder extends BaseWidgetHolder<List<List<SelectTempModel>>>
 
                 mLeftSelectedIndex = position;
                 if (mLeftRecordView != null) {
-                    mLeftRecordView.setBackgroundResource(R.color.body_bg);
+                    mLeftRecordView.findViewById(R.id.ll_main).setBackgroundResource(R.color
+                            .body_bg);
+                    ((TextView) mLeftRecordView.findViewById(R.id.group_textView)).setTextColor
+                            (mContext.getResources().getColor(R.color.gray_dark));
                 }
-                view.setBackgroundResource(R.color.white);
+                view.findViewById(R.id.ll_main).setBackgroundResource(R.color
+                        .white);
+                ((TextView) view.findViewById(R.id.group_textView)).setTextColor
+                        (mContext.getResources().getColor(R.color.gold));
                 mLeftRecordView = view;
 
-                mRightAdapter.setDataList(mDataList.get(position + 1), mRightSelectedIndex);
-                mRightAdapter.notifyDataSetChanged();
+                if (mDataList.get(0).get(position).getText().equals("全部")) {// 如果点击全部，直接返回
+                    if (mOnRightListViewItemSelectedListener != null) {
+                        mOnRightListViewItemSelectedListener.OnRightListViewItemSelected
+                                (mDataList.get(0).get(position));
+                    }
+                    mRightAdapter.setDataList(new ArrayList<SelectTempModel>(), -1);
+                    mRightAdapter.notifyDataSetChanged();
+                } else {// 不是全部 初始化右边list
+                    mRightAdapter.setDataList(mDataList.get(position + 1), mRightSelectedIndex);
+                    mRightAdapter.notifyDataSetChanged();
+                }
             }
         });
 
@@ -105,7 +121,10 @@ public class SubjectHolder extends BaseWidgetHolder<List<List<SelectTempModel>>>
         mRightSelectedIndexRecord = mRightSelectedIndex;
 
         mLeftAdapter = new LeftAdapter(data.get(0), mLeftSelectedIndex);
-        mRightAdapter = new RightAdapter(data.get(1), mRightSelectedIndex);
+        if (data.get(0).get(mLeftSelectedIndex).getText().equals("全部")) {
+            mRightAdapter = new RightAdapter(new ArrayList<SelectTempModel>(), -1);
+        } else
+            mRightAdapter = new RightAdapter(data.get(mLeftSelectedIndex + 1), mRightSelectedIndex);
 
         mLeftListView.setAdapter(mLeftAdapter);
         mRightListView.setAdapter(mRightAdapter);
@@ -152,11 +171,13 @@ public class SubjectHolder extends BaseWidgetHolder<List<List<SelectTempModel>>>
             holder.leftText.setText(mLeftDataList.get(position).getText());
             if (mLeftSelectedIndex == position) {
                 holder.backgroundView.setBackgroundResource(R.color.white);  //选中项背景
-                if (position == 0 && mIsFirstMeasureLeft) {
+                holder.leftText.setTextColor(mContext.getResources().getColor(R.color.gold));
+                if (mIsFirstMeasureLeft) {
                     mIsFirstMeasureLeft = false;
                     mLeftRecordView = convertView;
                 }
             } else {
+                holder.leftText.setTextColor(mContext.getResources().getColor(R.color.gray_dark));
                 holder.backgroundView.setBackgroundResource(R.color.body_bg);  //其他项背景
             }
 
@@ -204,7 +225,7 @@ public class SubjectHolder extends BaseWidgetHolder<List<List<SelectTempModel>>>
             if (convertView == null) {
                 holder = new RightViewHolder();
                 convertView = View.inflate(mContext, R.layout.layout_child_menu_item, null);
-                holder.rightText = (TextView) convertView.findViewById(R.id.child_textView);
+                holder.rightText = convertView.findViewById(R.id.child_textView);
                 convertView.setTag(holder);
             } else {
                 holder = (RightViewHolder) convertView.getTag();
@@ -212,9 +233,9 @@ public class SubjectHolder extends BaseWidgetHolder<List<List<SelectTempModel>>>
 
             holder.rightText.setText(mRightDataList.get(position).getText());
             if (mRightSelectedIndex == position && mLeftSelectedIndex == mLeftSelectedIndexRecord) {
-//                holder.selectedImage.setVisibility(View.VISIBLE);
+                holder.rightText.setTextColor(mContext.getResources().getColor(R.color.gold));
             } else {
-//                holder.selectedImage.setVisibility(View.INVISIBLE);
+                holder.rightText.setTextColor(mContext.getResources().getColor(R.color.gray_dark));
             }
 
             return convertView;

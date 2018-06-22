@@ -155,7 +155,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:textColor="@color/gray_light"
+                            android:textColor="@color/gray_dark"
                             android:textSize="@dimen/text_size_12" />
                     </LinearLayout>
 
@@ -178,7 +178,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:textColor="@color/gray_light"
+                            android:textColor="@color/gray_dark"
                             android:textSize="@dimen/text_size_12" />
                     </LinearLayout>
 
@@ -201,7 +201,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:lines="1"
-                            android:textColor="@color/gray_light"
+                            android:textColor="@color/gray_dark"
                             android:textSize="@dimen/text_size_12" />
                     </LinearLayout>
 
@@ -225,7 +225,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:lines="1"
-                            android:textColor="@color/gray_light"
+                            android:textColor="@color/gray_dark"
                             android:textSize="@dimen/text_size_12" />
                     </LinearLayout>
 
@@ -555,6 +555,7 @@
                 android:textSize="@dimen/text_size_12" />
 
             <TextView
+                android:id="@+id/group_purchase_price3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/dandu_baoming"
