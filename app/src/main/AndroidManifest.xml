@@ -25,14 +25,17 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- 访问通讯录 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <!--设置闹钟-->
+    <!-- 设置闹钟 -->
     <uses-permission android:name="android.permission.SET_ALARM" />
-    <!--访问日历-->
+    <!-- 访问日历 -->
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <!-- camera -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -145,7 +148,7 @@
             android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!-- 注册登录流程 添加学员-->
+        <!-- 注册登录流程 添加学员 -->
         <activity
             android:name=".activity.RegisterAddChildActivity"
             android:screenOrientation="portrait"
@@ -384,9 +387,9 @@
         <activity android:name=".activity.TeacherSummaryActivity" />
         <!-- 查看作业 -->
         <activity android:name=".activity.WorkDetailsActivity" />
-        <!--闯关答题-->
+        <!-- 闯关答题 -->
         <activity android:name=".activity.AnswerActivity" />
-        <!--闯关结果-->
+        <!-- 闯关结果 -->
         <activity android:name=".activity.AnswerResultActivity" />
 
         <!-- 腾讯定位SDK key -->
@@ -405,7 +408,8 @@
         <activity android:name=".activity.MessageDetailActivity" />
         <activity android:name=".activity.CreateTopicActivity" />
         <activity android:name=".activity.TopicLabelActivity" />
-        <activity android:name=".activity.TopicDetailActivity"></activity>
+        <activity android:name=".activity.TopicDetailActivity" />
+        <activity android:name=".activity.CityActivity"></activity>
     </application>
 
 </manifest>
