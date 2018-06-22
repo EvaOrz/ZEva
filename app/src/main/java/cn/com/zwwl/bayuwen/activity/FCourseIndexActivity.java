@@ -139,7 +139,9 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
         radarAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(mActivity, AnswerActivity.class));
+                Intent intent=new Intent(mActivity,AnswerActivity.class);
+                intent.putExtra("puzzleId","");
+                startActivity(intent);
             }
         });
     }

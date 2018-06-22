@@ -35,9 +35,9 @@
 
     <!-- camera -->
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -382,8 +382,10 @@
         <activity android:name=".activity.ClassApplyActivity" />
         <!-- 课程跟踪记录 -->
         <activity android:name=".activity.FCourseListActivity" />
-        <!-- 点击“记录”进入 -->
-        <activity android:name=".activity.FCourseIndexActivity" />
+        <!-- 已完成课程条目点击进入 -->
+        <activity
+            android:name=".activity.FCourseIndexActivity"
+            android:launchMode="singleTask" />
         <!-- 期末考试详情 -->
         <activity android:name=".activity.ExamDetailsActivity" />
         <!-- 具体课次首页 -->
@@ -416,7 +418,7 @@
         <activity android:name=".activity.CreateTopicActivity" />
         <activity android:name=".activity.TopicLabelActivity" />
         <activity android:name=".activity.TopicDetailActivity" />
-        <activity android:name=".activity.CityActivity"></activity>
+        <activity android:name=".activity.CityActivity" />
     </application>
 
 </manifest>
