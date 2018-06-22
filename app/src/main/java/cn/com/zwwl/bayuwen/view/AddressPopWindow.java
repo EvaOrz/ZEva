@@ -10,19 +10,14 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.util.AddressTools;
-import cn.com.zwwl.bayuwen.util.AddressTools.*;
+import cn.com.zwwl.bayuwen.util.AddressTools.CityModel;
+import cn.com.zwwl.bayuwen.util.AddressTools.DistModel;
+import cn.com.zwwl.bayuwen.util.AddressTools.ProvinceModel;
 import cn.com.zwwl.bayuwen.widget.wheel.OnWheelChangedListener;
 import cn.com.zwwl.bayuwen.widget.wheel.OnWheelScrollListener;
 import cn.com.zwwl.bayuwen.widget.wheel.WheelView;
