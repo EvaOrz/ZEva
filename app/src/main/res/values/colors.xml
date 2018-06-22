@@ -66,4 +66,6 @@
     <color name="gray">#C3C3C3</color>
     <color name="yellow">#F0C081</color>
     <color name="topbackground">#EEEEEE</color>
+    <color name="hotcityColor">#FEFDFB</color>
+    <color name="citygold">#DCAA40</color>
 </resources>

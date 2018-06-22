@@ -101,6 +101,7 @@
     <!--search-->
     <string name="search">搜索</string>
     <string name="no_search">无相关搜索内容，请尝试其他关键词</string>
+    <string name="city_search">输入城市名或者拼音查询</string>
 
 
     <!-- user left-->
@@ -427,7 +428,6 @@
     <string name="entry_topic_content">输入话题内容</string>
     <string name="create_Topic">创建话题</string>
     <string name="comment">评论</string>
-
 
 
     <string name="empty_no_data">没有数据~</string>
