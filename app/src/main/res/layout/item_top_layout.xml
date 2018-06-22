@@ -23,7 +23,7 @@
               android:id="@+id/layout_topic_title"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:src="@color/oringe"/>
+              />
 
         <TextView
             android:id="@+id/tv_topic_title"

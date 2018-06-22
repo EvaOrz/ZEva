@@ -438,6 +438,12 @@ public class UrlUtil {
     }
 
     /**
+     * 城市列表
+     */
+    public  static  String getCityList(){
+        return  HOST+"/district/city";
+    }
+    /**
      * 获取试题列表
      */
     public static String getQuestionList() {

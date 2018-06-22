@@ -9,7 +9,7 @@
         android:id="@+id/catalog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background"
+        android:background="#EEEEEE"
         android:paddingBottom="5dip"
         android:paddingLeft="10dp"
         android:paddingTop="5dip"
@@ -26,11 +26,12 @@
         <TextView
             android:layout_marginTop="10dp"
             android:id="@+id/city_name"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="昌平区"
-            android:textColor="@android:color/black" />
+            android:textSize="@dimen/text_size_16"
+            android:text=""
+            android:textColor="@color/gray_dark" />
 
 
         <View
@@ -38,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.2dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/background" />
+            android:background="#EEEEEE" />
     </RelativeLayout>
 
 </LinearLayout>

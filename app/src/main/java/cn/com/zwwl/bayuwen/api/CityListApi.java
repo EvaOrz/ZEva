@@ -5,39 +5,37 @@ import android.app.Activity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
+import cn.com.zwwl.bayuwen.model.CitySortModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.TopicMessageModel;
 import cn.com.zwwl.bayuwen.util.GsonUtil;
 
-public class TopicMessageApi extends BaseApi {
+public class CityListApi extends BaseApi {
 
     private String url;
     private Activity activity;
-    ResponseCallBack<List<TopicMessageModel>> listener;
-    private String titlename;
+    ResponseCallBack<CitySortModel> listener;
+    private String searchText;
 
-    public TopicMessageApi(Activity context, String url,String name, ResponseCallBack<List<TopicMessageModel>> listener) {
-        super(context);
-        this.activity = context;
-        this.titlename=name;
-        this.url = url+"?name="+this.titlename;
-        this.listener =listener;
-        get();
-    }
-
-    public TopicMessageApi(Activity context, String url, ResponseCallBack<List<TopicMessageModel>> listener) {
+    public CityListApi(Activity context, String url, ResponseCallBack<CitySortModel> listener) {
         super(context);
         this.activity = context;
         this.url = url;
         this.listener =listener;
         get();
     }
+    public CityListApi(Activity context, String url,String searchText, ResponseCallBack<CitySortModel> listener) {
+        super(context);
+        this.activity = context;
+        this.url = url;
+        this.listener =listener;
+        this.searchText=searchText;
+        get();
+    }
+
     @Override
     protected String getUrl() {
         return url;
@@ -53,9 +51,9 @@ public class TopicMessageApi extends BaseApi {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ArrayList<TopicMessageModel> model = null;
-                if (array != null) {
-                    model = GsonUtil.parseJsonArray(TopicMessageModel.class, array.toString());
+                CitySortModel model = null;
+                if (json != null) {
+                    model = GsonUtil.parseJson(CitySortModel.class, json.toString());
 
                 }
                 listener.result(model, errorMsg);

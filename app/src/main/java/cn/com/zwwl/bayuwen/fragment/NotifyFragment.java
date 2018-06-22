@@ -24,6 +24,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.CityActivity;
 import cn.com.zwwl.bayuwen.activity.CourseMessageActivity;
 import cn.com.zwwl.bayuwen.activity.InteractActivity;
 import cn.com.zwwl.bayuwen.activity.MessageDetailActivity;
@@ -121,7 +122,7 @@ public class NotifyFragment extends BasicFragment {
                 intent.putExtra("title", messageModels.get(position).getTitle());
                 intent.putExtra("imageUrl", messageModels.get(position).getUrl());
                 startActivity(intent);
-//                Intent intent =new Intent(activity, AnswerActivity.class);
+//                Intent intent =new Intent(activity, CityActivity.class);
 //                startActivity(intent);
 
             }

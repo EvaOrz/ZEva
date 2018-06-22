@@ -13,7 +13,7 @@
         android:paddingBottom="5dip"
         android:paddingLeft="10dp"
         android:paddingTop="5dip"
-        android:text="A"
+        android:text="当前定位"
         android:textColor="@color/gray" />
 
     <RelativeLayout
@@ -26,11 +26,13 @@
         <TextView
             android:layout_marginTop="10dp"
             android:id="@+id/city_name"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/dp_72"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:gravity="center"
             android:text="昌平区"
-            android:textColor="@android:color/black" />
+            android:textSize="@dimen/dp_16"
+            android:background="@drawable/city_tv_bg"
+            android:textColor="@color/hotcityColor" />
 
 
         <View

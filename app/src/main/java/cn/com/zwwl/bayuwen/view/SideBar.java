@@ -1,4 +1,4 @@
-package com.example.rentalcarapp.sqzc.view;
+package cn.com.zwwl.bayuwen.view;
 
 
 import android.content.Context;
@@ -12,13 +12,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.rentalcarapp.R;
+import cn.com.zwwl.bayuwen.R;
 
 public class SideBar extends View {
 	// 触摸事件
 	private OnTouchingLetterChangedListener onTouchingLetterChangedListener;
 	// 26个字母
-	public static String[] b = { "热","A", "B", "C", "D", "E", "F", "G", "H", "I",
+	public static String[] b = { "定位","热门","A", "B", "C", "D", "E", "F", "G", "H", "I",
 			"J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
 			"W", "X", "Y", "Z" };
 	private int choose = -1;// 选中

@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/catalog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EEEEEE"
+        android:paddingBottom="5dip"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dip"
+        android:text="热门城市"
+        android:textColor="@color/gray" />
+
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="@android:color/white">
+
+       <cn.com.zwwl.bayuwen.widget.NoScrollGridView
+           android:id="@+id/no_scroll_gridview"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:numColumns="4"
+           >
+       </cn.com.zwwl.bayuwen.widget.NoScrollGridView>
+
+        <View
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:layout_alignParentBottom="true"
+            android:background="#EEEEEE" />
+    </RelativeLayout>
 
 </LinearLayout>

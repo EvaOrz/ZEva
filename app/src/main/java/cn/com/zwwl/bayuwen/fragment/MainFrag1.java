@@ -35,6 +35,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.AllXunzhangActivity;
 import cn.com.zwwl.bayuwen.activity.CalendarActivity;
 import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
+import cn.com.zwwl.bayuwen.activity.CityActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
@@ -459,20 +460,23 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                 ((MainActivity) mActivity).openDrawer();
                 break;
             case R.id.toolbar_city:// 选择城市
-                new AddressPopWindow(mActivity, 1, new AddressPopWindow.OnAddressCListener() {
+//                new AddressPopWindow(mActivity, 1, new AddressPopWindow.OnAddressCListener() {
+//
+//                    @Override
+//                    public void onClick(AddressTools.ProvinceModel province, AddressTools
+//                            .CityModel city, AddressTools.DistModel dist) {
+//                        if (city.getCtxt().equals("市辖区")) {
+//                            TempDataHelper.setCurrentCity(mActivity, province.getPtxt());
+//                        } else
+//                            TempDataHelper.setCurrentCity(mActivity, city.getCtxt());
+//                        loadData();
+//                        ((MainActivity) mActivity).changeCity(0);
+//                    }
+//
+//                });
 
-                    @Override
-                    public void onClick(AddressTools.ProvinceModel province, AddressTools
-                            .CityModel city, AddressTools.DistModel dist) {
-                        if (city.getCtxt().equals("市辖区")) {
-                            TempDataHelper.setCurrentCity(mActivity, province.getPtxt());
-                        } else
-                            TempDataHelper.setCurrentCity(mActivity, city.getCtxt());
-                        loadData();
-                        ((MainActivity) mActivity).changeCity(0);
-                    }
-
-                });
+                Intent intent =new Intent(getActivity(), CityActivity.class);
+                startActivity(intent);
                 break;
             case R.id.toolbar_right:
                 startActivity(new Intent(mActivity, MessageActivity.class));

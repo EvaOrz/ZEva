@@ -16,13 +16,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.util.Pair;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,7 +35,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import cn.com.zwwl.bayuwen.MyApplication;
 import okhttp3.Headers;
 
 /**
