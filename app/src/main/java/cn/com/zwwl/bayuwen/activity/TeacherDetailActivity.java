@@ -57,7 +57,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
     private TeacherModel teacherDetailModel;
 
     private String tid;
-    private int page = 1,totalPage;
+    private int page = 1, totalPage;
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
@@ -130,12 +130,14 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
             public void result(BaseResponse baseResponse, ErrorMsg errorMsg) {
                 refreshLayout.finishLoadMore();
                 if (baseResponse != null) {
-                    totalPage=baseResponse.getTotal_count()/baseResponse.getPagesize();
-                    if (baseResponse.getTotal_count()%baseResponse.getPagesize()>0)
-                        totalPage+=1;
-                    keModels.addAll(baseResponse.getCourse());
-                    tCourseListAdapter.notifyDataSetChanged();
-                    if (page ==totalPage)
+                    totalPage = baseResponse.getTotal_count() / baseResponse.getPagesize();
+                    if (baseResponse.getTotal_count() % baseResponse.getPagesize() > 0)
+                        totalPage += 1;
+                    if (baseResponse.getCourse() != null && baseResponse.getCourse().size() > 0) {
+                        keModels.addAll(baseResponse.getCourse());
+                        tCourseListAdapter.notifyDataSetChanged();
+                    }
+                    if (page == totalPage)
                         refreshLayout.finishLoadMoreWithNoMoreData();
                 }
 
@@ -160,7 +162,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
         tCourseListAdapter = new TCourseListAdapter(mContext, keModels);
         recyclerView.setAdapter(tCourseListAdapter);
         refreshLayout = findViewById(R.id.refresh);
-         nestScroll = findViewById(R.id.nest_scroll);
+        nestScroll = findViewById(R.id.nest_scroll);
         refreshLayout.setRefreshContent(nestScroll);
         tCourseListAdapter.setOnItemClickListener(this);
         findViewById(R.id.teacher_back).setOnClickListener(this);
