@@ -7,5 +7,5 @@
             <solid android:color="@android:color/transparent" />
         </shape>
     </item>
-    <item android:drawable="@mipmap/answer_indicator"/>
+    <item android:drawable="@drawable/ic_extension"/>
 </layer-list>

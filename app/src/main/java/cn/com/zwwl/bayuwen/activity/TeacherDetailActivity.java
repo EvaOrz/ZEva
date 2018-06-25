@@ -125,7 +125,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
      * 获取课程列表
      */
     private void getCourseList() {
-        new TDetailListApi(this, "58", page, new ResponseCallBack<BaseResponse>() {
+        new TDetailListApi(this, tid, page, new ResponseCallBack<BaseResponse>() {
             @Override
             public void result(BaseResponse baseResponse, ErrorMsg errorMsg) {
                 refreshLayout.finishLoadMore();
