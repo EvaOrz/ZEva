@@ -462,4 +462,10 @@ public class UrlUtil {
     public static String errorList() {
         return HOST + "/jigsaw/errorlist";
     }
+    /**
+     * 拼图列表
+     */
+    public static String puzzle() {
+        return HOST + "/jigsaw/list";
+    }
 }

@@ -23,12 +23,14 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
 import cn.com.zwwl.bayuwen.adapter.UnitTableAdapter;
 import cn.com.zwwl.bayuwen.api.HaveReportApi;
+import cn.com.zwwl.bayuwen.api.PuzzleApi;
 import cn.com.zwwl.bayuwen.api.StudyingCourseApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.PuzzleModel;
 import cn.com.zwwl.bayuwen.model.ReportModel;
 import cn.com.zwwl.bayuwen.model.StudyingModel;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
@@ -74,14 +76,6 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initData() {
-        models = new ArrayList<>();
-        for (int i = 0; i < 54; i++) {
-            CommonModel model = new CommonModel();
-            model.setContent("");
-            models.add(model);
-        }
-        radarAdapter = new RadarAdapter(models, (int) (MyApplication.width*0.9));
-        radar.setAdapter(radarAdapter);
         kid = getIntent().getStringExtra("kid");
         setCustomTitle(getIntent().getStringExtra("title"));
         test.setText(getIntent().getStringExtra("title"));
@@ -94,6 +88,16 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
 
 
     private void getData() {
+        new PuzzleApi(this, kid, new ResponseCallBack<ArrayList<PuzzleModel>>() {
+            @Override
+            public void result(ArrayList<PuzzleModel> puzzleModels, ErrorMsg errorMsg) {
+                if (puzzleModels!=null){
+                    models=puzzleModels.get(0).getSectionList();
+                    radarAdapter = new RadarAdapter(models, (int) (MyApplication.width*0.9));
+                    radar.setAdapter(radarAdapter);
+                }
+            }
+        });
         new StudyingCourseApi(this, kid, new ResponseCallBack<StudyingModel>() {
             @Override
             public void result(StudyingModel studyingModel, ErrorMsg errorMsg) {
@@ -140,7 +144,7 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent=new Intent(mActivity,AnswerActivity.class);
-                intent.putExtra("puzzleId","");
+                intent.putExtra("sectionId",models.get(position).getSectionId());
                 startActivity(intent);
             }
         });
