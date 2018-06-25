@@ -18,7 +18,6 @@ import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.BaseResponse;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.LessonModel;
-import cn.com.zwwl.bayuwen.util.ToastUtil;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
@@ -55,6 +54,7 @@ public class KeDetailView1 extends LinearLayout {
                             int i = baseResponse.getTotal() / baseResponse.getPagesize();
                             if (baseResponse.getTotal() % baseResponse.getPagesize() > 0)
                                 totalPage = i + 1;
+                            if (page == totalPage) lookAll.setVisibility(GONE);
                             if (baseResponse.getLectures() != null && baseResponse.getLectures()
                                     .size() > 0)
                                 allData.addAll(baseResponse.getLectures());
@@ -63,6 +63,7 @@ public class KeDetailView1 extends LinearLayout {
                                     lookAll.setVisibility(VISIBLE);
                                     data.addAll(allData.subList(0, 3));
                                 } else {
+                                    lookAll.setVisibility(GONE);
                                     data.addAll(allData);
                                 }
                             } else {
@@ -89,11 +90,10 @@ public class KeDetailView1 extends LinearLayout {
                 if (data.size() == 3 && allData.size() > data.size()) {
                     data.clear();
                     data.addAll(allData);
+                    if (page==totalPage)lookAll.setVisibility(GONE);
                 } else if (totalPage != 0 && page != totalPage) {
                     ++page;
                     getLessonList();
-                } else {
-                    ToastUtil.showShortToast("没有更多了");
                 }
             }
         });
@@ -127,8 +127,7 @@ public class KeDetailView1 extends LinearLayout {
             TextView video_id = viewHolder.getView(R.id.course_d_id);
             TextView video_title = viewHolder.getView(R.id.course_d_title);
             TextView video_time = viewHolder.getView(R.id.course_d_time);
-
-//            video_id.setText(position + 1 + "");
+            video_id.setText(String.valueOf(position+1));
             video_title.setText(item.getTitle());
             video_time.setText(item.getStart_at()
                     + "  " + item.getClass_start_at()
