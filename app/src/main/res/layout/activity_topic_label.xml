@@ -40,6 +40,7 @@
     <ListView
         android:id="@+id/list_lebal"
         android:layout_width="match_parent"
+        android:dividerHeight="0.5dp"
         android:layout_height="match_parent">
 
     </ListView>
