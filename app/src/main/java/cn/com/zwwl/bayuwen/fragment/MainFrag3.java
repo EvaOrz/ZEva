@@ -22,6 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.CityActivity;
 import cn.com.zwwl.bayuwen.activity.FCourseListActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
@@ -220,20 +221,22 @@ public class MainFrag3 extends BasicFragment {
                 ((MainActivity) activity).openDrawer();
                 break;
             case R.id.menu_school:
-                new AddressPopWindow(activity, 1, new AddressPopWindow.OnAddressCListener() {
-
-                    @Override
-                    public void onClick(AddressTools.ProvinceModel province, AddressTools
-                            .CityModel city, AddressTools.DistModel dist) {
-                        if (city.getCtxt().equals("市辖区")) {
-                            TempDataHelper.setCurrentCity(activity, province.getPtxt());
-                        } else
-                            TempDataHelper.setCurrentCity(activity, city.getCtxt());
-                        refresh.autoRefresh();
-                        ((MainActivity) activity).changeCity(2);
-                    }
-
-                });
+//                new AddressPopWindow(activity, 1, new AddressPopWindow.OnAddressCListener() {
+////
+////                    @Override
+////                    public void onClick(AddressTools.ProvinceModel province, AddressTools
+////                            .CityModel city, AddressTools.DistModel dist) {
+////                        if (city.getCtxt().equals("市辖区")) {
+////                            TempDataHelper.setCurrentCity(activity, province.getPtxt());
+////                        } else
+////                            TempDataHelper.setCurrentCity(activity, city.getCtxt());
+////                        refresh.autoRefresh();
+////                        ((MainActivity) activity).changeCity(2);
+////                    }
+////
+////                });
+                Intent intent =new Intent(getActivity(), CityActivity.class);
+                startActivity(intent);
                 break;
             case R.id.menu_search:
                 startActivity(new Intent(activity, SearchCourseActivity.class));

@@ -102,6 +102,7 @@ public class CityActivity extends BasicActivityWithTitle {
                     locationCity = ad.getLocality();
                 }
             }
+
 //            nowCity.setText(latLongString);
         }
 
@@ -159,6 +160,7 @@ public class CityActivity extends BasicActivityWithTitle {
                     // for ActivityCompat#requestPermissions for more details.
                     ActivityCompat.requestPermissions(CityActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
                             MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+                    return;
                 }
                 location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                 if (location != null) {
