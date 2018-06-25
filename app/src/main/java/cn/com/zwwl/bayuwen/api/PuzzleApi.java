@@ -5,24 +5,25 @@ import android.app.Activity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.QuestionModel;
+import cn.com.zwwl.bayuwen.model.PuzzleModel;
 import cn.com.zwwl.bayuwen.util.GsonUtil;
 
-public class QuestionListApi extends BaseApi {
+public class PuzzleApi extends BaseApi {
     private Activity activity;
     private String url;
-    private ResponseCallBack<QuestionModel> callBack;
+    private ResponseCallBack<ArrayList<PuzzleModel>> callBack;
 
-    public QuestionListApi(Activity context, String sectionId, ResponseCallBack<QuestionModel> callBack) {
+    public PuzzleApi(Activity context, String cId, ResponseCallBack<ArrayList<PuzzleModel>> callBack) {
         super(context);
         this.activity = context;
         this.callBack = callBack;
-        this.url = UrlUtil.getQuestionList() + sectionId;
+        url = UrlUtil.puzzle() + "?courseId=" + cId;
         get();
     }
 
@@ -37,14 +38,14 @@ public class QuestionListApi extends BaseApi {
     }
 
     @Override
-    protected void handler(final JSONObject json, JSONArray array, final ErrorMsg errorMsg) {
+    protected void handler(JSONObject json, final JSONArray array, final ErrorMsg errorMsg) {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                QuestionModel model = null;
-                if (json != null)
-                    model = GsonUtil.parseJson(QuestionModel.class, json.toString());
-                callBack.result(model, errorMsg);
+                ArrayList<PuzzleModel> models = null;
+                if (array != null)
+                    models = GsonUtil.parseJsonArray(PuzzleModel.class, array.toString());
+                callBack.result(models, errorMsg);
             }
         });
     }

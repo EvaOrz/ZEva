@@ -74,17 +74,17 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initData() {
-        models = new ArrayList<>();
-        for (int i = 0; i < 54; i++) {
-            CommonModel model = new CommonModel();
-            model.setContent("");
-            models.add(model);
-        }
-        radarAdapter = new RadarAdapter(models, (int) (MyApplication.width*0.9));
-        radar.setAdapter(radarAdapter);
         kid = getIntent().getStringExtra("kid");
         setCustomTitle(getIntent().getStringExtra("title"));
         test.setText(getIntent().getStringExtra("title"));
+        models=new ArrayList<>();
+        for (int i = 0; i < 54; i++) {
+            CommonModel model = new CommonModel();
+            model.setContent("" + i);
+            models.add(model);
+        }
+        radarAdapter = new RadarAdapter(models, (int) (MyApplication.width * 0.9));
+        radar.setAdapter(radarAdapter);
         getData();
         unitTableAdapter = new UnitTableAdapter(null);
         unitTableAdapter.setType(getIntent().getIntExtra("course_type", -1));
@@ -94,6 +94,15 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
 
 
     private void getData() {
+//        new PuzzleApi(this, kid, new ResponseCallBack<ArrayList<PuzzleModel>>() {
+//            @Override
+//            public void result(ArrayList<PuzzleModel> puzzleModels, ErrorMsg errorMsg) {
+//                if (puzzleModels != null) {
+//                    models = puzzleModels.get(0).getSectionList();
+//                    radarAdapter.setNewData(models);
+//                }
+//            }
+//        });
         new StudyingCourseApi(this, kid, new ResponseCallBack<StudyingModel>() {
             @Override
             public void result(StudyingModel studyingModel, ErrorMsg errorMsg) {
@@ -139,8 +148,8 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
         radarAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent=new Intent(mActivity,AnswerActivity.class);
-                intent.putExtra("puzzleId","");
+                Intent intent = new Intent(mActivity, AnswerActivity.class);
+                intent.putExtra("sectionId", models.get(position).getSectionId());
                 startActivity(intent);
             }
         });

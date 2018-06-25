@@ -311,7 +311,9 @@ public class FinalEvalDialog extends PopupWindow {
 
     public interface SubmitListener {
         void ok();
-void show();
+
+        void show();
+
         void error(int code);
     }
 }

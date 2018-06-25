@@ -46,7 +46,7 @@ public class AnswerResultActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initData() {
-        new ErrorListApi(this, "246", new ResponseCallBack<List<AnswerModel>>() {
+        new ErrorListApi(this, getIntent().getStringExtra("sectionId"), new ResponseCallBack<List<AnswerModel>>() {
             @Override
             public void result(List<AnswerModel> answerModels, ErrorMsg errorMsg) {
                 if (answerModels != null) {

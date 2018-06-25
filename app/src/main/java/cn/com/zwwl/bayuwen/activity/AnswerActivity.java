@@ -56,6 +56,7 @@ public class AnswerActivity extends BasicActivityWithTitle {
     List<QuestionModel.QuestionBean.ChoiceBean> choiceBeans;
     List<QuestionModel.QuestionBean.ChoiceBean> answerBeans;
     int index = 1;
+    private String sectionId;
 
     @Override
     protected int setContentView() {
@@ -74,7 +75,8 @@ public class AnswerActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initData() {
-        new QuestionListApi(this, "2", new ResponseCallBack<QuestionModel>() {
+        sectionId=getIntent().getStringExtra("sectionId");
+        new QuestionListApi(this, sectionId, new ResponseCallBack<QuestionModel>() {
             @Override
             public void result(QuestionModel questionModel, ErrorMsg errorMsg) {
                 if (questionModel != null && questionModel.getQuestion() != null) {
@@ -163,6 +165,7 @@ public class AnswerActivity extends BasicActivityWithTitle {
                 public void result(CommonModel commonModel, ErrorMsg errorMsg) {
                     Intent intent = new Intent(mActivity, AnswerResultActivity.class);
                     intent.putExtra("total", choiceBeans.size());
+                    intent.putExtra("sectionId",sectionId);
                     startActivity(intent);
                     if (errorMsg == null) {
                         ToastUtil.showShortToast("上传成功");
