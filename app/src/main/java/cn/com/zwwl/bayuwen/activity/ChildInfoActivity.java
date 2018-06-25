@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
@@ -39,6 +40,7 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.AppValue;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
 import cn.com.zwwl.bayuwen.view.DatePopWindow;
@@ -56,7 +58,7 @@ public class ChildInfoActivity extends BaseActivity {
     private File photoFile;
     private ImageView aImg;
     private EditText nameEv, phoneEv, schoolEv;
-    private TextView genderTv, birthTv, ruxueTv, nianjiTv, noTv;
+    private TextView genderTv, birthTv, ruxueTv, nianjiTv, noTv, titleTv;
     private boolean isNeedChangePic = false;
     private boolean isModify = false;// 是否是修改信息
 
@@ -124,6 +126,7 @@ public class ChildInfoActivity extends BaseActivity {
         deCancle = findViewById(R.id.delete_cancle);
         deDo = findViewById(R.id.delete_do);
         noTv = findViewById(R.id.info_c_student_no);
+        titleTv = findViewById(R.id.info_c_title);
 
         giftGridView = findViewById(R.id.gift_grid);
         adapter = new JiangZhuangAdapter(mContext);
@@ -164,6 +167,7 @@ public class ChildInfoActivity extends BaseActivity {
                 doFecthPicture();
                 break;
             case R.id.info_c_sex:
+                hideJianpan();
                 new GenderPopWindow(this, new GenderPopWindow.ChooseGenderListener() {
                     @Override
                     public void choose(int gender) {// 1男2女0保密
@@ -178,6 +182,7 @@ public class ChildInfoActivity extends BaseActivity {
                 });
                 break;
             case R.id.info_c_nianji:// 年级
+                hideJianpan();
                 new NianjiPopWindow(mContext, new NianjiPopWindow.MyNianjiPickListener() {
                     @Override
                     public void onNianjiPick(String string) {
@@ -187,23 +192,49 @@ public class ChildInfoActivity extends BaseActivity {
                 });
                 break;
             case R.id.info_c_birth:// 出生年月
-                new DatePopWindow(mContext, new DatePopWindow.MyDatePickListener() {
+                hideJianpan();
+                int y = CalendarTools.getCurrentYear(), m = CalendarTools.getCurrentMonth(), d =
+                        CalendarTools.getCurrentDay();
+                if (!TextUtils.isEmpty(childModel.getBirthday())) {
+                    Calendar c = CalendarTools.fromStringToca(childModel.getBirthday());
+                    if (c != null) {
+                        y = c.get(Calendar.YEAR);
+                        m = c.get(Calendar.MONTH) + 1;
+                        d = c.get(Calendar.DATE);
+                    }
+                }
+                new DatePopWindow(mContext, true, y, m, d, new DatePopWindow
+                        .MyDatePickListener() {
                     @Override
                     public void onDatePick(int year, int month, int day) {
                         childModel.setBirthday(year + "-" + month + "-" + day);
                         handler.sendEmptyMessage(0);
                     }
                 });
+
                 break;
 
             case R.id.info_c_ruxue:// 入学年月
-                new DatePopWindow(mContext, new DatePopWindow.MyDatePickListener() {
-                    @Override
-                    public void onDatePick(int year, int month, int day) {
-                        childModel.setAdmission_time(year + "-" + month + "-" + day);
-                        handler.sendEmptyMessage(2);
+                hideJianpan();
+                int y1 = CalendarTools.getCurrentYear(), m1 = CalendarTools.getCurrentMonth(), d1 =
+                        CalendarTools.getCurrentDay();
+                if (!TextUtils.isEmpty(childModel.getAdmission_time())) {
+                    Calendar c = CalendarTools.fromStringToca(childModel.getAdmission_time());
+                    if (c != null) {
+                        y1 = c.get(Calendar.YEAR);
+                        m1 = c.get(Calendar.MONTH) + 1;
+                        d1 = c.get(Calendar.DATE);
                     }
-                });
+                }
+                new DatePopWindow(mContext, false, y1, m1, d1, new
+                        DatePopWindow.MyDatePickListener() {
+                            @Override
+                            public void onDatePick(int year, int month, int day) {
+                                childModel.setAdmission_time(year + "-" + month);
+                                handler.sendEmptyMessage(2);
+                            }
+                        });
+
                 break;
             case R.id.info_c_save:
                 String na = nameEv.getText().toString();
@@ -334,6 +365,7 @@ public class ChildInfoActivity extends BaseActivity {
         ruxueTv.setText(childModel.getAdmission_time());
         nianjiTv.setText(childModel.getGrade());
         noTv.setText(childModel.getNo());
+        titleTv.setText(childModel.getName());
     }
 
     @SuppressLint("HandlerLeak")

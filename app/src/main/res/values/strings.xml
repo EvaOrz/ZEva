@@ -91,7 +91,7 @@
     <string name="my_info">个人资料</string>
     <string name="my_history">收听历史</string>
     <string name="tianxie_code">填写团购验证码</string>
-    <string name="about">关于诸葛学堂</string>
+    <string name="about">关于大语文</string>
     <string name="logout">退出登录</string>
     <string name="my_follow">我关注的班级</string>
     <string name="my_tuan">我的团购</string>
@@ -436,7 +436,7 @@
     <string name="answer_error_summary">我的错题整理</string>
     <string name="save_error_question">保存错题集</string>
     <string name="back_answer_home">返回拼图主页</string>
-    
+
     <string name="teacher_reply">---------------------  教师回复  ----------------------</string>
     <string name="family_reply">家长回复</string>
 

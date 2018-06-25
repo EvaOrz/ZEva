@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.widget.wheel.OnWheelChangedListener;
 import cn.com.zwwl.bayuwen.widget.wheel.OnWheelScrollListener;
 import cn.com.zwwl.bayuwen.widget.wheel.WheelView;
@@ -42,26 +43,50 @@ public class DatePopWindow implements View.OnClickListener {
     private int month;
     private int day;
 
-    private int currentYear = getYear();
-    private int currentMonth = 1;
-    private int currentDay = 1;
+    private int currentYear = CalendarTools.getCurrentYear();
+    private int currentMonth = CalendarTools.getCurrentMonth();
+    private int currentDay = CalendarTools.getCurrentDay();
 
     private int maxTextSize = 24;
     private int minTextSize = 14;
 
-    private boolean issetdata = false;
+    private boolean isNeedDay = true;// 是否需要日
+    private boolean isBeforeToday = true;// 是否需要早于今天
 
+    // 选中的时间项
     private String selectYear;
     private String selectMonth;
     private String selectDay;
 
 
     /**
+     * @param isBeforeToday 日历事件（今天之后）、奖状获取事件（今天之前）
      * @param context
      */
-    public DatePopWindow(Context context, MyDatePickListener listener) {
+    public DatePopWindow(Context context, boolean isBeforeToday, MyDatePickListener listener) {
         mContext = context;
         this.listener = listener;
+        this.isBeforeToday = isBeforeToday;
+        setDate(currentYear, currentMonth, currentDay);
+        init();
+    }
+
+    /**
+     * 带默认年月日的构造
+     *
+     * @param context
+     * @param isNeedDay
+     * @param y
+     * @param m
+     * @param d
+     * @param listener
+     */
+    public DatePopWindow(Context context, boolean isNeedDay, int y, int m, int d,
+                         MyDatePickListener listener) {
+        mContext = context;
+        this.isNeedDay = isNeedDay;
+        this.listener = listener;
+        setDate(y, m, d);
         init();
     }
 
@@ -86,23 +111,27 @@ public class DatePopWindow implements View.OnClickListener {
         wvDay = (WheelView) view.findViewById(R.id.wv_birth_day);
 
 
-        if (!issetdata) {
-            initData();
+        if (!isNeedDay) {
+            wvDay.setVisibility(View.GONE);
         }
-        initYears();
-        mYearAdapter = new CalendarTextAdapter(mContext, arry_years, setYear(currentYear), maxTextSize, minTextSize);
+
+        initYears(isBeforeToday);
+        mYearAdapter = new CalendarTextAdapter(mContext, arry_years, setYear(currentYear),
+                maxTextSize, minTextSize);
         wvYear.setVisibleItems(5);
         wvYear.setViewAdapter(mYearAdapter);
         wvYear.setCurrentItem(setYear(currentYear));
 
         initMonths(month);
-        mMonthAdapter = new CalendarTextAdapter(mContext, arry_months, setMonth(currentMonth), maxTextSize, minTextSize);
+        mMonthAdapter = new CalendarTextAdapter(mContext, arry_months, setMonth(currentMonth),
+                maxTextSize, minTextSize);
         wvMonth.setVisibleItems(5);
         wvMonth.setViewAdapter(mMonthAdapter);
         wvMonth.setCurrentItem(setMonth(currentMonth));
 
         initDays(day);
-        mDaydapter = new CalendarTextAdapter(mContext, arry_days, currentDay - 1, maxTextSize, minTextSize);
+        mDaydapter = new CalendarTextAdapter(mContext, arry_days, currentDay - 1, maxTextSize,
+                minTextSize);
         wvDay.setVisibleItems(5);
         wvDay.setViewAdapter(mDaydapter);
         wvDay.setCurrentItem(currentDay - 1);
@@ -118,7 +147,8 @@ public class DatePopWindow implements View.OnClickListener {
                 currentYear = Integer.parseInt(currentText);
                 setYear(currentYear);
                 initMonths(month);
-                mMonthAdapter = new CalendarTextAdapter(mContext, arry_months, 0, maxTextSize, minTextSize);
+                mMonthAdapter = new CalendarTextAdapter(mContext, arry_months, 0, maxTextSize,
+                        minTextSize);
                 wvMonth.setVisibleItems(5);
                 wvMonth.setViewAdapter(mMonthAdapter);
                 wvMonth.setCurrentItem(0);
@@ -150,7 +180,8 @@ public class DatePopWindow implements View.OnClickListener {
                 setTextviewSize(currentText, mMonthAdapter);
                 setMonth(Integer.parseInt(currentText));
                 initDays(day);
-                mDaydapter = new CalendarTextAdapter(mContext, arry_days, 0, maxTextSize, minTextSize);
+                mDaydapter = new CalendarTextAdapter(mContext, arry_days, 0, maxTextSize,
+                        minTextSize);
                 wvDay.setVisibleItems(5);
                 wvDay.setViewAdapter(mDaydapter);
                 wvDay.setCurrentItem(0);
@@ -199,10 +230,19 @@ public class DatePopWindow implements View.OnClickListener {
 
     }
 
-    public void initYears() {
-        for (int i = getYear(); i > 2000; i--) {
-            arry_years.add(i + "");
+    public void initYears(boolean isBeforeToday) {
+        if (isBeforeToday) {
+            for (int i = CalendarTools.getCurrentYear(); i > 2000; i--) {
+                arry_years.add(i + "");
+            }
+        } else {
+            for (int i = CalendarTools.getCurrentYear() + 2; i > CalendarTools.getCurrentYear() - 1;
+                 i--) {
+                arry_years.add(i + "");
+            }
+
         }
+
     }
 
     public void initMonths(int months) {
@@ -232,7 +272,8 @@ public class DatePopWindow implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btn_myinfo_sure:
 
-                listener.onDatePick(Integer.valueOf(selectYear), Integer.valueOf(selectMonth), Integer.valueOf(selectDay));
+                listener.onDatePick(Integer.valueOf(selectYear), Integer.valueOf(selectMonth),
+                        Integer.valueOf(selectDay));
                 break;
             case R.id.btn_myinfo_cancel:
 
@@ -244,7 +285,8 @@ public class DatePopWindow implements View.OnClickListener {
     private class CalendarTextAdapter extends AbstractWheelTextAdapter {
         ArrayList<String> list;
 
-        protected CalendarTextAdapter(Context context, ArrayList<String> list, int currentItem, int maxsize, int minsize) {
+        protected CalendarTextAdapter(Context context, ArrayList<String> list, int currentItem,
+                                      int maxsize, int minsize) {
             super(context, R.layout.item_birth_year, NO_RESOURCE, currentItem, maxsize, minsize);
             this.list = list;
             setItemTextResource(R.id.tempValue);
@@ -288,26 +330,6 @@ public class DatePopWindow implements View.OnClickListener {
         }
     }
 
-    public int getYear() {
-        Calendar c = Calendar.getInstance();
-        return c.get(Calendar.YEAR);
-    }
-
-    public int getMonth() {
-        Calendar c = Calendar.getInstance();
-        return c.get(Calendar.MONTH) + 1;
-    }
-
-    public int getDay() {
-        Calendar c = Calendar.getInstance();
-        return c.get(Calendar.DATE);
-    }
-
-    public void initData() {
-        setDate(getYear(), getMonth(), getDay());
-        this.currentDay = 1;
-        this.currentMonth = 1;
-    }
 
     /**
      * 设置年月日
@@ -320,12 +342,11 @@ public class DatePopWindow implements View.OnClickListener {
         selectYear = year + "";
         selectMonth = month + "";
         selectDay = day + "";
-        issetdata = true;
         this.currentYear = year;
         this.currentMonth = month;
         this.currentDay = day;
-        if (year == getYear()) {
-            this.month = getMonth();
+        if (year == CalendarTools.getCurrentYear()) {
+            this.month = CalendarTools.getCurrentMonth();
         } else {
             this.month = 12;
         }
@@ -339,12 +360,12 @@ public class DatePopWindow implements View.OnClickListener {
      */
     public int setYear(int year) {
         int yearIndex = 0;
-        if (year != getYear()) {
+        if (year != CalendarTools.getCurrentYear()) {
             this.month = 12;
         } else {
-            this.month = getMonth();
+            this.month = CalendarTools.getCurrentMonth();
         }
-        for (int i = getYear(); i > 1930; i--) {
+        for (int i = CalendarTools.getCurrentYear() + 2; i > 2000; i--) {
             if (i == year) {
                 return yearIndex;
             }
@@ -411,8 +432,8 @@ public class DatePopWindow implements View.OnClickListener {
                     break;
             }
         }
-        if (year == getYear() && month == getMonth()) {
-            this.day = getDay();
+        if (year == CalendarTools.getCurrentYear() && month == CalendarTools.getCurrentMonth()) {
+            this.day = CalendarTools.getCurrentDay();
         }
     }
 

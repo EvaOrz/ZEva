@@ -120,7 +120,7 @@ public class JiangZhuangActivity extends BaseActivity {
                 break;
             case R.id.jiang_time:
                 hideJianpan();
-                new DatePopWindow(mContext, new DatePopWindow.MyDatePickListener() {
+                new DatePopWindow(mContext, true, new DatePopWindow.MyDatePickListener() {
                     @Override
                     public void onDatePick(int year, int month, int day) {
                         giftAndJiangModel.setDate(year + "-" + month + "-" + day);
