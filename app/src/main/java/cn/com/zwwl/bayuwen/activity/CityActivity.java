@@ -82,31 +82,31 @@ public class CityActivity extends BasicActivityWithTitle {
     private double longitude = 0;
     private String locationCity;
     private Location location;
-    //调用系统Api取到当前城市
-    private Handler handler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
-            double[] data = (double[]) msg.obj;
-//            showJW.setText("经度：" + data[0] + "\t纬度:" + data[1]);
-
-            List<Address> addList = null;
-            Geocoder ge = new Geocoder(getApplicationContext());
-            try {
-                addList = ge.getFromLocation(data[0], data[1], 1);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            if (addList != null && addList.size() > 0) {
-                for (int i = 0; i < addList.size(); i++) {
-                    Address ad = addList.get(i);
-                    locationCity = ad.getLocality();
-                }
-            }
-
-//            nowCity.setText(latLongString);
-        }
-
-    };
+//    //调用系统Api取到当前城市
+//    private Handler handler = new Handler() {
+//        public void handleMessage(android.os.Message msg) {
+//            double[] data = (double[]) msg.obj;
+////            showJW.setText("经度：" + data[0] + "\t纬度:" + data[1]);
+//
+//            List<Address> addList = null;
+//            Geocoder ge = new Geocoder(getApplicationContext());
+//            try {
+//                addList = ge.getFromLocation(data[0], data[1], 1);
+//            } catch (IOException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//            if (addList != null && addList.size() > 0) {
+//                for (int i = 0; i < addList.size(); i++) {
+//                    Address ad = addList.get(i);
+//                    locationCity = ad.getLocality();
+//                }
+//            }
+//
+////            nowCity.setText(latLongString);
+//        }
+//
+//    };
 
 
     @Override
@@ -147,32 +147,46 @@ public class CityActivity extends BasicActivityWithTitle {
     }
 
     private void initGPS() {
-        new Thread() {
-            @Override
-            public void run() {
 
-                if (ActivityCompat.checkSelfPermission(CityActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+         if (ActivityCompat.checkSelfPermission(CityActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(CityActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-                    ActivityCompat.requestPermissions(CityActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+               ActivityCompat.requestPermissions(CityActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
                             MY_PERMISSIONS_REQUEST_READ_CONTACTS);
 
-                }else {
-                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                    if (location != null) {
-                        latitude = location.getLatitude(); // 经度
-                        longitude = location.getLongitude(); // 纬度
-                        double[] data = {latitude, longitude};
-                        Message msg = handler.obtainMessage();
-                        msg.obj = data;
-                        handler.sendMessage(msg);
-                    }
-                }
-            }
+               }else {
+                  LocationGPS();
+         }
 
-        }.start();
 
     }
+
+    private void LocationGPS() {
+        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if (location != null) {
+            latitude = location.getLatitude(); // 经度
+            longitude = location.getLongitude(); // 纬度
+            double[] data = {latitude, longitude};
+//                        Message msg = handler.obtainMessage();
+//                        msg.obj = data;
+//                        handler.sendMessage(msg);
+            List<Address> addList = null;
+            Geocoder ge = new Geocoder(getApplicationContext());
+            try {
+                addList = ge.getFromLocation(data[0], data[1], 1);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            if (addList != null && addList.size() > 0) {
+                for (int i = 0; i < addList.size(); i++) {
+                    Address ad = addList.get(i);
+                    locationCity = ad.getLocality();
+                }
+            }
+        }
+    }
+
 
 
     @Override
@@ -272,17 +286,10 @@ public class CityActivity extends BasicActivityWithTitle {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_CONTACTS:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                    if (location != null) {
-                        latitude = location.getLatitude(); // 经度
-                        longitude = location.getLongitude(); // 纬度
-                        double[] data = {latitude, longitude};
-                        Message msg = handler.obtainMessage();
-                        msg.obj = data;
-                        handler.sendMessage(msg);
+                    LocationGPS();
                     }
                 }
-        }
+
     }
 
     @Override
