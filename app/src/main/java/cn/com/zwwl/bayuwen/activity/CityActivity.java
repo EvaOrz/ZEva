@@ -80,7 +80,7 @@ public class CityActivity extends BasicActivityWithTitle {
     private double latitude = 0;
 
     private double longitude = 0;
-    private  String locationCity;
+    private String locationCity;
     private Location location;
     //调用系统Api取到当前城市
     private Handler handler = new Handler() {
@@ -115,7 +115,7 @@ public class CityActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initView() {
-        getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setCustomTitle("选择城市");
         nowCity.setText(TempDataHelper.getCurrentCity(this));
 
@@ -201,7 +201,7 @@ public class CityActivity extends BasicActivityWithTitle {
 
                     hotcityBeans = citySortModel.getHotcity();
 
-                    cityAdapter = new CityAdapter(CityActivity.this,locationCity, cityBeans, countryLvcountry, hotcityBeans);
+                    cityAdapter = new CityAdapter(CityActivity.this, locationCity, cityBeans, countryLvcountry, hotcityBeans);
                     countryLvcountry.setAdapter(cityAdapter);
 
                 } else {
@@ -237,7 +237,7 @@ public class CityActivity extends BasicActivityWithTitle {
 
                     hotcityBeans = citySortModel.getHotcity();
 
-                    cityAdapter = new CityAdapter(CityActivity.this,locationCity, cityBeans, countryLvcountry, hotcityBeans);
+                    cityAdapter = new CityAdapter(CityActivity.this, locationCity, cityBeans, countryLvcountry, hotcityBeans);
                     countryLvcountry.setAdapter(cityAdapter);
 
                 } else {
