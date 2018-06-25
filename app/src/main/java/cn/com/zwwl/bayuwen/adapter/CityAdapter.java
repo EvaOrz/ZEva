@@ -17,6 +17,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.CitySortModel;
+import cn.com.zwwl.bayuwen.util.SPUtils;
 import cn.com.zwwl.bayuwen.widget.NoScrollGridView;
 
 /**
@@ -33,13 +34,15 @@ public class CityAdapter extends BaseAdapter {
     //itemB类的type标志
     private static final int TYPE_B = 1;
     private static final int TYPE_C = 2;
+    private String locationCity;
 
 
-    public CityAdapter(Context mContext, List<CitySortModel.CityBean> cityBeans, ListView listView, List<CitySortModel.HotcityBean> hotcityBeans) {
+    public CityAdapter(Context mContext,String locationCity, List<CitySortModel.CityBean> cityBeans, ListView listView, List<CitySortModel.HotcityBean> hotcityBeans) {
         this.mContext = mContext;
         this.cityBeans = cityBeans;
         this.listView = listView;
         this.hotcityBeans = hotcityBeans;
+        this.locationCity=locationCity;
 
     }
     //获取数据设配器中条目类型的总数
@@ -131,13 +134,27 @@ public class CityAdapter extends BaseAdapter {
             case TYPE_A:
                 viewHolder1= (ViewHolder1) view.getTag();
 
-                viewHolder1.currentname.setText("北京");
+                viewHolder1.currentname.setText(locationCity);
+                viewHolder1.currentname.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SPUtils.put(mContext,"cityName",locationCity);
+                        ((Activity) mContext).finish();
+                    }
+                });
 
 
                 break;
             case TYPE_B:
                 viewHolder2= (ViewHolder2) view.getTag();
                 viewHolder2.noScrollGridView.setAdapter(new HotCityAdapter(mContext, hotcityBeans));
+                viewHolder2.noScrollGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        SPUtils.put(mContext,"cityName",hotcityBeans.get(position).getName());
+                        ((Activity) mContext).finish();
+                    }
+                });
 
                 break;
             case TYPE_C:
@@ -161,13 +178,14 @@ public class CityAdapter extends BaseAdapter {
                 break;
         }
 
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-
+                String a =cityBeans.get(position).getName();
+                SPUtils.put(mContext,"cityName",cityBeans.get(position).getName());
                 ((Activity) mContext).finish();
 
             }
