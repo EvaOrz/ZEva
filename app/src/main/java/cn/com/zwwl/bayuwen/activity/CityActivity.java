@@ -150,26 +150,23 @@ public class CityActivity extends BasicActivityWithTitle {
         new Thread() {
             @Override
             public void run() {
-                if (ActivityCompat.checkSelfPermission(CityActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(CityActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
+
+                if (ActivityCompat.checkSelfPermission(CityActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(CityActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
                     ActivityCompat.requestPermissions(CityActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
                             MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-                    return;
-                }
-                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                if (location != null) {
-                    latitude = location.getLatitude(); // 经度
-                    longitude = location.getLongitude(); // 纬度
-                    double[] data = {latitude, longitude};
-                    Message msg = handler.obtainMessage();
-                    msg.obj = data;
-                    handler.sendMessage(msg);
+
+                }else {
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if (location != null) {
+                        latitude = location.getLatitude(); // 经度
+                        longitude = location.getLongitude(); // 纬度
+                        double[] data = {latitude, longitude};
+                        Message msg = handler.obtainMessage();
+                        msg.obj = data;
+                        handler.sendMessage(msg);
+                    }
                 }
             }
 
@@ -275,6 +272,7 @@ public class CityActivity extends BasicActivityWithTitle {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_CONTACTS:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     if (location != null) {
                         latitude = location.getLatitude(); // 经度
                         longitude = location.getLongitude(); // 纬度
