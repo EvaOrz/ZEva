@@ -7,17 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.model.CitySortModel;
-import cn.com.zwwl.bayuwen.util.SPUtils;
 import cn.com.zwwl.bayuwen.widget.NoScrollGridView;
 
 /**
@@ -138,7 +136,7 @@ public class CityAdapter extends BaseAdapter {
                 viewHolder1.currentname.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SPUtils.put(mContext,"cityName",locationCity);
+                        TempDataHelper.setCurrentCity(mContext,locationCity);
                         ((Activity) mContext).finish();
                     }
                 });
@@ -151,7 +149,7 @@ public class CityAdapter extends BaseAdapter {
                 viewHolder2.noScrollGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        SPUtils.put(mContext,"cityName",hotcityBeans.get(position).getName());
+                        TempDataHelper.setCurrentCity(mContext,hotcityBeans.get(position).getName());
                         ((Activity) mContext).finish();
                     }
                 });
@@ -184,8 +182,8 @@ public class CityAdapter extends BaseAdapter {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String a =cityBeans.get(position).getName();
-                SPUtils.put(mContext,"cityName",cityBeans.get(position).getName());
+
+                TempDataHelper.setCurrentCity(mContext,cityBeans.get(position).getName());
                 ((Activity) mContext).finish();
 
             }
