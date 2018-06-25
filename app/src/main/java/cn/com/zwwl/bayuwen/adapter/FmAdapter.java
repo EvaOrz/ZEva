@@ -62,7 +62,7 @@ public class FmAdapter extends CheckScrollAdapter<FmModel> {
         }
 
 
-        id.setText(item.getId());
+        id.setText(String.valueOf(position + 1));
         title.setText(item.getTitle());
         play.setText(item.getPlay_num() + "");
         pinglun.setText("0");

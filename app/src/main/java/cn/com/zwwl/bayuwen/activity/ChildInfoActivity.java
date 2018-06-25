@@ -81,7 +81,6 @@ public class ChildInfoActivity extends BaseActivity {
             initData();
             isModify = true;
         }
-
     }
 
     @Override
@@ -98,9 +97,9 @@ public class ChildInfoActivity extends BaseActivity {
                 if (Tools.listNotNull(list)) {
                     datas.clear();
                     datas.addAll(list);
-                    addLast();
-                    handler.sendEmptyMessage(6);
                 }
+                addLast();
+                handler.sendEmptyMessage(6);
             }
 
             @Override
@@ -127,9 +126,7 @@ public class ChildInfoActivity extends BaseActivity {
 
         giftGridView = findViewById(R.id.gift_grid);
         adapter = new JiangZhuangAdapter(mContext);
-        addLast();
         giftGridView.setAdapter(adapter);
-        adapter.setData(datas);
         giftGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -412,7 +409,7 @@ public class ChildInfoActivity extends BaseActivity {
             public void setError(ErrorMsg error) {
                 showLoadingDialog(false);
                 if (error == null) {
-                    finish();
+                    showToast("删除成功");
                 } else {
                     showToast(error.getDesc());
                 }

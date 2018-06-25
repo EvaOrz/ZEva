@@ -121,7 +121,7 @@ public class SubjectHolder extends BaseWidgetHolder<List<List<SelectTempModel>>>
         mRightSelectedIndexRecord = mRightSelectedIndex;
 
         mLeftAdapter = new LeftAdapter(data.get(0), mLeftSelectedIndex);
-        if (data.get(0).get(mLeftSelectedIndex).getText().equals("全部")) {
+        if (mLeftSelectedIndex > -1 && data.get(0).get(mLeftSelectedIndex).getText().equals("全部")) {
             mRightAdapter = new RightAdapter(new ArrayList<SelectTempModel>(), -1);
         } else
             mRightAdapter = new RightAdapter(data.get(mLeftSelectedIndex + 1), mRightSelectedIndex);

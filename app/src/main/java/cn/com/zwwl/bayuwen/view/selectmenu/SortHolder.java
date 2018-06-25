@@ -1,10 +1,12 @@
 package cn.com.zwwl.bayuwen.view.selectmenu;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -41,7 +43,8 @@ public class SortHolder extends BaseWidgetHolder<List<SelectTempModel>> {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mRightSelectedIndex = position;
                 if (mOnSortInfoSelectedListener != null) {
-                    mOnSortInfoSelectedListener.onSortInfoSelected(mDataList.get(mRightSelectedIndex));
+                    mOnSortInfoSelectedListener.onSortInfoSelected(mDataList.get
+                            (mRightSelectedIndex));
                 }
             }
         });
@@ -53,12 +56,11 @@ public class SortHolder extends BaseWidgetHolder<List<SelectTempModel>> {
     }
 
     public void refreshData(List<SelectTempModel> data, int rightSelectedIndex) {
-
         this.mDataList = data;
         mRightSelectedIndex = rightSelectedIndex;
         mRightAdapter = new SortHolder.RightAdapter(data, mRightSelectedIndex);
-
         listView.setAdapter(mRightAdapter);
+        
     }
 
     public void setOnSortInfoSelectedListener(OnSortInfoSelectedListener
