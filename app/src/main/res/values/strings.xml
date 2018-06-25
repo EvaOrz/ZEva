@@ -235,7 +235,7 @@
     <string name="ruxue_day">入学年月</string>
     <string name="nianji">年级</string>
     <string name="zaiduxuexiao">在读学校</string>
-    <string name="jinji_lianxi">紧急联系</string>
+    <string name="jinji_lianxi">紧急联系电话</string>
     <!--奖状-->
     <string name="jiang_hint1">请输入奖状名称</string>
     <string name="jiang_hint2">请选择获奖日期</string>

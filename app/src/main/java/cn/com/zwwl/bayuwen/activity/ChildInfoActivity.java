@@ -38,6 +38,7 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
 import cn.com.zwwl.bayuwen.view.DatePopWindow;
@@ -94,8 +95,8 @@ public class ChildInfoActivity extends BaseActivity {
         new HonorListApi(mContext, 1, childModel.getNo(), new FetchEntryListListener() {
             @Override
             public void setData(List list) {
+                datas.clear();
                 if (Tools.listNotNull(list)) {
-                    datas.clear();
                     datas.addAll(list);
                 }
                 addLast();
@@ -216,15 +217,17 @@ public class ChildInfoActivity extends BaseActivity {
                 } else if (TextUtils.isEmpty(grade)) {
                     showToast("年级不能为空");
                 } else {
-                    childModel.setName(na);
-                    childModel.setSchool(school);
-                    childModel.setTel(phone);
+                    if (AppValue.checkIsPhone(mContext, phone)) {
+                        childModel.setName(na);
+                        childModel.setSchool(school);
+                        childModel.setTel(phone);
 
-                    showLoadingDialog(true);
-                    if (isNeedChangePic) {
-                        uploadPic(photoFile);
-                    } else
-                        commit();
+                        showLoadingDialog(true);
+                        if (isNeedChangePic) {
+                            uploadPic(photoFile);
+                        } else
+                            commit();
+                    }
                 }
                 break;
 
@@ -240,13 +243,14 @@ public class ChildInfoActivity extends BaseActivity {
                 deAll.setVisibility(View.GONE);
                 datas.clear();
                 addLast();
-                handler.sendEmptyMessage(6);
+                handler.sendEmptyMessage(7);
                 break;
             case R.id.delete_do:
                 deDo.setVisibility(View.GONE);
                 deCancle.setVisibility(View.VISIBLE);
                 deAll.setVisibility(View.VISIBLE);
                 setCheckStatus(true);
+
                 break;
             case R.id.delete_cancle://
                 deDo.setVisibility(View.VISIBLE);
@@ -357,9 +361,20 @@ public class ChildInfoActivity extends BaseActivity {
                 case 5:// 性别选择
                     genderTv.setText(childModel.getSexTxt(childModel.getGender()));
                     break;
-                case 6:
+                case 6:// 初始化荣誉数据
+                    if (datas.size() > 1) {
+                        deDo.setVisibility(View.VISIBLE);
+                    } else {
+                        deDo.setVisibility(View.GONE);
+                    }
+                    deCancle.setVisibility(View.GONE);
+                    deAll.setVisibility(View.GONE);
                     adapter.setData(datas);
                     break;
+                case 7:// 重置荣誉数据状态
+                    adapter.setData(datas);
+                    break;
+
             }
         }
     };
@@ -394,7 +409,7 @@ public class ChildInfoActivity extends BaseActivity {
         for (int i = 0; i < datas.size(); i++) {
             datas.get(i).setDeleteStatus(isCheck);
         }
-        handler.sendEmptyMessage(6);
+        handler.sendEmptyMessage(7);
     }
 
     private void doDelete(String ids) {
@@ -409,6 +424,7 @@ public class ChildInfoActivity extends BaseActivity {
             public void setError(ErrorMsg error) {
                 showLoadingDialog(false);
                 if (error == null) {
+                    getHonorList();
                     showToast("删除成功");
                 } else {
                     showToast(error.getDesc());
