@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 
 /**
@@ -26,7 +27,8 @@ public class AboutActivity extends BaseActivity {
     private void initView() {
         version = findViewById(R.id.about_version);
         version.setText(getResources().getString(R.string.app_name) + " " + Tools
-                .getAppVersionName(mContext));
+                .getAppVersionName(mContext) + " (" + CalendarTools.format(System
+                .currentTimeMillis() / 1000, "MM-dd") + ")");
         findViewById(R.id.about_back).setOnClickListener(this);
     }
 

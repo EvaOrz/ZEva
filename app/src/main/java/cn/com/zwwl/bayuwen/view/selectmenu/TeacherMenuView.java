@@ -32,7 +32,7 @@ public class TeacherMenuView extends LinearLayout {
     private List<List<SelectTempModel>> dataLists1 = new ArrayList<>();
     private List<List<SelectTempModel>> dataLists2 = new ArrayList<>();
 
-    private RelativeLayout mContentLayout;
+    private RelativeLayout mContentLayout, rl_trans_layout;
 
     private TextView mText1, mText2;
     private ImageView arrowImg1, arrowImg2;
@@ -84,6 +84,7 @@ public class TeacherMenuView extends LinearLayout {
         arrowImg2 = findViewById(R.id.layout2_img);
         sureBt = findViewById(R.id.menu_sure);
         mContentLayout = findViewById(R.id.rl_content);
+        rl_trans_layout = findViewById(R.id.rl_trans_layout);
 
         //点击年级
         findViewById(R.id.layout1).setOnClickListener(new OnClickListener() {
@@ -116,7 +117,7 @@ public class TeacherMenuView extends LinearLayout {
             }
         });
 
-        mContentLayout.setOnClickListener(new OnClickListener() {
+        rl_trans_layout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismissPopupWindow();
@@ -142,6 +143,9 @@ public class TeacherMenuView extends LinearLayout {
         mContentLayout.removeAllViews();
         mContentLayout.addView(view, ViewGroup.LayoutParams
                 .MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        rl_trans_layout.removeAllViews();
+        rl_trans_layout.addView(new View(mContext), ViewGroup.LayoutParams
+                .MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         isPopShow = true;
         setTabExtend(type);
         sureBt.setVisibility(View.VISIBLE);
@@ -151,6 +155,7 @@ public class TeacherMenuView extends LinearLayout {
 
     private void dismissPopupWindow() {
         mContentLayout.removeAllViews();
+        rl_trans_layout.removeAllViews();
         sureBt.setVisibility(View.GONE);
         isPopShow = false;
         setTabClose();

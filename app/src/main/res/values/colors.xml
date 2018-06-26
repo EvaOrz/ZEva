@@ -68,4 +68,5 @@
     <color name="topbackground">#EEEEEE</color>
     <color name="hotcityColor">#FEFDFB</color>
     <color name="citygold">#DCAA40</color>
+    <color name="user_asked_color">#3E3E3E</color>
 </resources>

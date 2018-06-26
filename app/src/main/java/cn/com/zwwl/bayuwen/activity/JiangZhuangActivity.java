@@ -71,11 +71,11 @@ public class JiangZhuangActivity extends BaseActivity {
         time.setOnClickListener(this);
 
         if (giftAndJiangModel.getId() != -1) {
-            deleteBt.setVisibility(View.GONE);
+            deleteBt.setVisibility(View.VISIBLE);
             name.setText(giftAndJiangModel.getTitle());
             time.setText(giftAndJiangModel.getDate());
             ImageLoader.display(mContext, pic, giftAndJiangModel.getPic(), null, null);
-        }
+        } else deleteBt.setVisibility(View.GONE);
     }
 
     private void doDelete() {
@@ -113,13 +113,14 @@ public class JiangZhuangActivity extends BaseActivity {
                     showToast("请上传奖状名称");
                 } else if (TextUtils.isEmpty(giftAndJiangModel.getDate())) {
                     showToast("请上传获奖时间");
-                } else
+                } else {
                     giftAndJiangModel.setTitle(title);
-                doSave();
+                    doSave();
+                }
                 break;
             case R.id.jiang_time:
                 hideJianpan();
-                new DatePopWindow(mContext, new DatePopWindow.MyDatePickListener() {
+                new DatePopWindow(mContext, true, new DatePopWindow.MyDatePickListener() {
                     @Override
                     public void onDatePick(int year, int month, int day) {
                         giftAndJiangModel.setDate(year + "-" + month + "-" + day);

@@ -37,8 +37,7 @@ public class AlbumApi extends BaseApi {
 
     @Override
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
-        if (errorMsg != null)
-            listener.setError(errorMsg);
+        listener.setError(errorMsg);
         if (!isNull(json)) {
             albumModel = new AlbumModel();
             albumModel.parseAlbumModel(json, albumModel);

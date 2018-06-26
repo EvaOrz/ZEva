@@ -112,9 +112,9 @@
                         android:background="@null"
 
                         android:gravity="right"
-                        android:lines="1"
+                        android:singleLine="true"
                         android:text="王妈妈"
-                        android:textColor="@color/gray_light"
+                        android:textColor="@color/gray_dark"
                         android:textSize="@dimen/text_size_14" />
 
                     <ImageView
@@ -151,7 +151,7 @@
                         android:layout_height="wrap_content"
                         android:lines="1"
                         android:text="女"
-                        android:textColor="@color/gray_light"
+                        android:textColor="@color/gray_dark"
                         android:textSize="@dimen/text_size_14" />
 
                     <ImageView
@@ -186,8 +186,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lines="1"
-                        android:text="15910725520"
-                        android:textColor="@color/gray_light"
+                        android:textColor="@color/gray_dark"
                         android:textSize="@dimen/text_size_14" />
 
                 </LinearLayout>

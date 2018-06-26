@@ -247,9 +247,8 @@ public class CalendarTools {
      * @return
      */
     public static int getCurrentYear() {
-        Calendar current = Calendar.getInstance();
-        current.setTime(new Date());
-        return current.get(Calendar.YEAR);
+        Calendar c = Calendar.getInstance();
+        return c.get(Calendar.YEAR);
     }
 
     /**
@@ -258,9 +257,18 @@ public class CalendarTools {
      * @return
      */
     public static int getCurrentMonth() {
-        Calendar current = Calendar.getInstance();
-        current.setTime(new Date());
-        return current.get(Calendar.MONTH);
+        Calendar c = Calendar.getInstance();
+        return c.get(Calendar.MONTH) + 1;
+    }
+
+    /**
+     * 获取当前日期
+     *
+     * @return
+     */
+    public static int getCurrentDay() {
+        Calendar c = Calendar.getInstance();
+        return c.get(Calendar.DATE);
     }
 
     /**

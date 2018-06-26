@@ -46,6 +46,7 @@ public class SelectMenuView extends LinearLayout {
 
     private OnMenuSelectDataChangedListener mOnMenuSelectDataChangedListener;
     private RelativeLayout mContentLayout;
+    private RelativeLayout rl_trans_layout;
 
     private TextView mText1, mText2, mText3, mText4, mText5;
     private ImageView arrowImg1, arrowImg2, arrowImg3, arrowImg4, arrowImg5;
@@ -216,7 +217,7 @@ public class SelectMenuView extends LinearLayout {
         arrowImg5 = findViewById(R.id.layout5_img);
 
         mContentLayout = findViewById(R.id.rl_content);
-
+        rl_trans_layout = findViewById(R.id.rl_trans_layout);
         //点击年级
         findViewById(R.id.layout1).setOnClickListener(new OnClickListener() {
             @Override
@@ -269,7 +270,7 @@ public class SelectMenuView extends LinearLayout {
             }
         });
 
-        mContentLayout.setOnClickListener(new OnClickListener() {
+        rl_trans_layout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismissPopupWindow();
@@ -295,6 +296,9 @@ public class SelectMenuView extends LinearLayout {
         mContentLayout.removeAllViews();
         mContentLayout.addView(view, ViewGroup.LayoutParams
                 .MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        rl_trans_layout.removeAllViews();
+        rl_trans_layout.addView(new View(mContext), ViewGroup.LayoutParams
+                .MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         isPopShow = true;
         setTabExtend(type);
         mTabRecorder = type;
@@ -303,6 +307,7 @@ public class SelectMenuView extends LinearLayout {
 
     private void dismissPopupWindow() {
         mContentLayout.removeAllViews();
+        rl_trans_layout.removeAllViews();
         isPopShow = false;
         setTabClose();
     }
