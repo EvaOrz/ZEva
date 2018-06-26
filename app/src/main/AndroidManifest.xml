@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- 通过网络得到粗略位置 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!--打电话-->
+    <!-- 打电话 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <!-- 修改WiFi状态，发起WiFi扫描, 需要WiFi信息用于网络定位 -->
@@ -177,7 +177,7 @@
             android:name=".activity.SelectCalendarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!--课程搜索页面-->
+        <!-- 课程搜索页面 -->
         <activity
             android:name=".activity.SearchCourseActivity"
             android:screenOrientation="portrait"
@@ -418,6 +418,7 @@
         <activity android:name=".activity.TopicLabelActivity" />
         <activity android:name=".activity.TopicDetailActivity" />
         <activity android:name=".activity.CityActivity" />
+        <activity android:name=".activity.OurFmActivity"></activity>
     </application>
 
 </manifest>

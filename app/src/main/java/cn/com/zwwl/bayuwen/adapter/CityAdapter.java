@@ -178,11 +178,8 @@ public class CityAdapter extends BaseAdapter {
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
                 TempDataHelper.setCurrentCity(mContext,cityBeans.get(position).getName());
                 ((Activity) mContext).finish();
 

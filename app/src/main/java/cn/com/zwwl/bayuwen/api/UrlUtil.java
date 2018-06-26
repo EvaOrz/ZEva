@@ -462,4 +462,18 @@ public class UrlUtil {
     public static String errorList() {
         return HOST + "/jigsaw/errorlist";
     }
+
+    /**
+     * 我的FM我的课程列表
+     */
+    public static String myFmCourse() {
+        return HOST + "/fm/buylist";
+    }
+
+    /**
+     * 我的FM我的收藏列表
+     */
+    public static String myFmCollection() {
+        return HOST + "/collection";
+    }
 }
