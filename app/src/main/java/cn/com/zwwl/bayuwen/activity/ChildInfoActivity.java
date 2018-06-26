@@ -141,7 +141,6 @@ public class ChildInfoActivity extends BaseActivity {
                     i.putExtra("JiangZhuangActivity_data", datas.get(position));
                     startActivity(i);
                 }
-
             }
         });
         findViewById(R.id.info_c_back).setOnClickListener(this);
