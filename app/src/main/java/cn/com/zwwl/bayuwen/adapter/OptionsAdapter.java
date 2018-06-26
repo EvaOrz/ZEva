@@ -29,7 +29,7 @@ public class OptionsAdapter extends BaseQuickAdapter<CommonModel, BaseViewHolder
     }
 
     public boolean isRight() {
-        return choose == correct;
+        return choose.equals(correct);
     }
 
     public void setOptions(List<CommonModel> options, String correct) {

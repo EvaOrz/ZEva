@@ -169,7 +169,11 @@ public class UploadPicActivity extends BasicActivityWithTitle {
         new UploadWorkApi(this, map, new ResponseCallBack<CommonModel>() {
             @Override
             public void result(CommonModel commonModel, ErrorMsg errorMsg) {
-
+                if (errorMsg != null) {
+                    ToastUtil.showShortToast(errorMsg.getDesc());
+                } else {
+                    finish();
+                }
             }
         });
     }

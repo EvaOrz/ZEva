@@ -7,7 +7,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_30"
+            android:gravity="center"
+            android:text="@string/answer_error_summary"
+            android:textSize="@dimen/sp_16" />
 
+        <View
+            android:id="@+id/divider"
+            style="@style/split_line"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10" />
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/title"
             android:layout_width="match_parent"
