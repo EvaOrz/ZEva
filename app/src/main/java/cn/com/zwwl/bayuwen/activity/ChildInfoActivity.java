@@ -364,6 +364,7 @@ public class ChildInfoActivity extends BaseActivity {
         ruxueTv.setText(childModel.getAdmission_time());
         nianjiTv.setText(childModel.getGrade());
         noTv.setText(childModel.getNo());
+        schoolEv.setText(childModel.getSchool());
         titleTv.setText(childModel.getName());
     }
 

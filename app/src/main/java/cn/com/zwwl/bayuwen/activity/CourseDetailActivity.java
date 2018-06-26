@@ -66,6 +66,7 @@ public class CourseDetailActivity extends BaseActivity {
     private TextView date_tv;
     private TextView priceTv1;
     private TextView priceTv2;
+    private TextView cantuan_tv;
     private TextView baoman_tv;
     private TextView youhuiBt;
     private RadioGroup radioGroup;
@@ -176,6 +177,7 @@ public class CourseDetailActivity extends BaseActivity {
         date_tv = findViewById(R.id.date_tv);
         priceTv1 = findViewById(R.id.group_purchase_price1);
         priceTv2 = findViewById(R.id.group_purchase_price2);
+        cantuan_tv = findViewById(R.id.group_purchase_price4);
         baoman_tv = findViewById(R.id.group_purchase_price3);
         teacherLayout = findViewById(R.id.teacher_layout);
         mViewPager = findViewById(R.id.videoList_vp);
@@ -289,6 +291,17 @@ public class CourseDetailActivity extends BaseActivity {
         }
     }
 
+    /**
+     * @param oid
+     * @param type 1：未完成、2：已完成
+     */
+    private void goOrderDetail(String oid, int type) {
+        Intent intent = new Intent(mContext, OrderDetailActivity.class);
+        intent.putExtra("OrderDetailActivity_data", oid);
+        intent.putExtra("OrderDetailActivity_type", type);
+        startActivity(intent);
+    }
+
     @Override
     public void onClick(View view) {
         super.onClick(view);
@@ -298,9 +311,15 @@ public class CourseDetailActivity extends BaseActivity {
                 break;
             case R.id.group_purchase_bt1: //团购报名
                 if (keModel.getGroupbuy() != null) {
-                    Intent i = new Intent(mContext, TuanIndexActivity.class);
-                    i.putExtra("TuanIndexActivity_data", keModel);
-                    startActivity(i);
+                    if (keModel.getGroupbuy().getState() == 1) {
+                        goOrderDetail(keModel.getGroupbuy().getOid() + "", 1);
+                    } else if (keModel.getGroupbuy().getState() == 2) {
+                        goOrderDetail(keModel.getGroupbuy().getOid() + "", 2);
+                    } else {
+                        Intent i = new Intent(mContext, TuanIndexActivity.class);
+                        i.putExtra("TuanIndexActivity_data", keModel);
+                        startActivity(i);
+                    }
                 }
                 break;
             case R.id.group_purchase_bt2: //单独报名
@@ -467,12 +486,6 @@ public class CourseDetailActivity extends BaseActivity {
         for (TeacherModel t : keModel.getTeacherModels())
             teacherLayout.addView(getTeacherView(t));
 
-        if (keModel.getGroupbuy() != null) {
-            groupLayout.setVisibility(View.VISIBLE);
-            priceTv1.setText("￥" + keModel.getGroupbuy().getDiscount_pintrice());
-        } else {
-            groupLayout.setVisibility(View.INVISIBLE);
-        }
         // 已报满的班显示灰色
         int leftNo = Integer.valueOf(keModel.getNum());
         if (leftNo == 0) {
@@ -483,6 +496,22 @@ public class CourseDetailActivity extends BaseActivity {
             baoman_tv.setText("已报满");
 
         }
+
+        // 已参团的情况
+        if (keModel.getGroupbuy() != null) {
+            groupLayout.setVisibility(View.VISIBLE);
+            if (keModel.getGroupbuy().getState() == 1 || keModel.getGroupbuy().getState() == 2) {
+                priceTv1.setVisibility(View.GONE);
+                cantuan_tv.setText("已参团");
+            } else {
+                priceTv1.setVisibility(View.VISIBLE);
+                cantuan_tv.setText("团购报名");
+                priceTv1.setText("￥" + keModel.getGroupbuy().getDiscount().getDiscount_price());
+            }
+        } else {
+            groupLayout.setVisibility(View.INVISIBLE);
+        }
+
         if (Tools.listNotNull(keModel.getPromotionModels())) {
             promotionLayout.setVisibility(View.VISIBLE);
             promotionContain.removeAllViews();
@@ -583,7 +612,6 @@ public class CourseDetailActivity extends BaseActivity {
                         Log.e("pppppppppno", permissions[i]);
                     }
                 }
-
                 break;
         }
 

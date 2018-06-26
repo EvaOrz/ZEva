@@ -125,7 +125,7 @@ public class PayActivity extends BaseActivity {
         if (type == 1) {// 垫付需要循环垫付数量
             KeModel keModel = keDatas.get(0);
             itemCode = keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
-            for (int i = 0; i < keModel.getGroupbuy().getLimit_num() - 1; i++) {
+            for (int i = 0; i < keModel.getGroupbuy().getDiscount().getLimit_num() - 1; i++) {
                 itemCode += keModel.getKid() + "_1_" + "0";
             }
         } else if (type == 0 || type == 2) { // 单独购买||单独参团
@@ -185,7 +185,8 @@ public class PayActivity extends BaseActivity {
             pinLayout.setVisibility(View.GONE);
             dianLayout.setVisibility(View.VISIBLE);
             youhuiLayout.setVisibility(View.GONE);
-            dianNumTv.setText(keDatas.get(0).getGroupbuy().getLimit_num() + "");// 垫付只有一个kemodel
+            dianNumTv.setText(keDatas.get(0).getGroupbuy().getDiscount().getLimit_num() + "");//
+            // 垫付只有一个kemodel
         } else if (type == 2 || type == 3 || type == 4) {
             pinLayout.setVisibility(View.GONE);
             dianLayout.setVisibility(View.GONE);

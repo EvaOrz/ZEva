@@ -52,6 +52,7 @@ public class DatePopWindow implements View.OnClickListener {
 
     private boolean isNeedDay = true;// 是否需要日
     private boolean isBeforeToday = true;// 是否需要早于今天
+    private int afterToYearNum = 3;// 取今年过后（包括今年在内）的年数
 
     // 选中的时间项
     private String selectYear;
@@ -236,7 +237,8 @@ public class DatePopWindow implements View.OnClickListener {
                 arry_years.add(i + "");
             }
         } else {
-            for (int i = CalendarTools.getCurrentYear() + 2; i > CalendarTools.getCurrentYear() - 1;
+            for (int i = CalendarTools.getCurrentYear() + afterToYearNum - 1; i > CalendarTools
+                    .getCurrentYear() - 1;
                  i--) {
                 arry_years.add(i + "");
             }
@@ -359,19 +361,33 @@ public class DatePopWindow implements View.OnClickListener {
      * @param year
      */
     public int setYear(int year) {
-        int yearIndex = 0;
+
         if (year != CalendarTools.getCurrentYear()) {
             this.month = 12;
         } else {
             this.month = CalendarTools.getCurrentMonth();
         }
-        for (int i = CalendarTools.getCurrentYear() + 2; i > 2000; i--) {
-            if (i == year) {
-                return yearIndex;
+        if (isBeforeToday) {// 取今年之前的日期
+            int yearIndex = 0;
+            for (int i = CalendarTools.getCurrentYear(); i > 2000; i--) {
+                if (i == year) {
+                    return yearIndex;
+                }
+                yearIndex++;
             }
-            yearIndex++;
+            return yearIndex;
+        } else {
+            int yearIndex = afterToYearNum - 1;
+            for (int i = CalendarTools.getCurrentYear(); i < CalendarTools.getCurrentYear() +
+                    afterToYearNum;
+                 i++) {
+                if (i == year) {
+                    return yearIndex;
+                }
+                yearIndex--;
+            }
+            return yearIndex;
         }
-        return yearIndex;
     }
 
     /**

@@ -143,9 +143,11 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
             ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_youhuijuan);
             final CouponModel c = datas.get(position);
 
+            TextView price = viewHolder.getView(R.id.youhui_img);
             TextView name = viewHolder.getView(R.id.youhui_name);
             TextView time = viewHolder.getView(R.id.youhui_time);
             TextView bt = viewHolder.getView(R.id.youhui_bt);
+            price.setText(c.getStart_use_time());
             name.setText(c.getDesc());
             time.setText(c.getStart_use_time().substring(0, 10) + " 至 " + c.getEnd_use_time()
                     .substring(0, 10));

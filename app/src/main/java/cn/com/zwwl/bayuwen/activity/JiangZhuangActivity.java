@@ -98,6 +98,7 @@ public class JiangZhuangActivity extends BaseActivity {
         });
     }
 
+
     @Override
     public void onClick(View view) {
         super.onClick(view);

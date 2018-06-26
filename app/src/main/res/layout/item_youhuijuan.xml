@@ -32,7 +32,6 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:lines="2"
-                android:text="超市代金券（指定商品可用）"
                 android:textColor="@color/gray_dark"
                 android:textSize="@dimen/text_size_14" />
 
@@ -41,16 +40,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lines="1"
-                android:text="2017.4.7-2018.9.10"
                 android:textColor="@color/gray_light"
                 android:textSize="@dimen/text_size_10" />
         </LinearLayout>
 
-        <ImageView
+        <TextView
             android:id="@+id/youhui_img"
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:background="@color/gray_dark" />
+            android:background="@color/youhui_bg"
+            android:textColor="@color/white"
+            android:textSize="50sp" />
     </RelativeLayout>
 
 

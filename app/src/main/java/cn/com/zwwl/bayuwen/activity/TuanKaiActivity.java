@@ -48,7 +48,7 @@ public class TuanKaiActivity extends BaseActivity {
         codeTv = findViewById(R.id.tuan_kai_code);
         codeTv.setText("您的拼团码为：" + groupBuyModel.getCode());
         hintTv = findViewById(R.id.kai_hint);
-        hintTv.setText("请在" + groupBuyModel.getEnd_time() + "前邀请" + (groupBuyModel.getLimit_num()
+        hintTv.setText("请在" + groupBuyModel.getDiscount().getEnd_time() + "前邀请" + (groupBuyModel.getDiscount().getLimit_num()
                 - 1) + "以上的的好友参团");
         findViewById(R.id.tuan_kai_back).setOnClickListener(this);
         findViewById(R.id.tuan_kai_copy).setOnClickListener(this);

@@ -31,6 +31,8 @@
     <color name="red">#EE001E</color>
     <color name="oringe">#dcaa40</color>
 
+    <color name="youhui_bg">#dc7f60</color>
+
     <!-- fm seekbar -->
     <color name="seek_bar_before_thumb">#dcaa40</color>
     <color name="seek_bar_after_thumb">#cdcdcd</color>

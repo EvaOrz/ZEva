@@ -243,7 +243,7 @@ public class TuanIndexActivity extends BaseActivity {
      */
     private void getKaiTuanCode(final int type) {
         showLoadingDialog(true);
-        new GetTuanCodeApi(mContext, keModel.getGroupbuy().getKid(), type, new
+        new GetTuanCodeApi(mContext, keModel.getGroupbuy().getDiscount().getKid() + "", type, new
                 FetchEntryListener() {
                     @Override
                     public void setError(ErrorMsg error) {
@@ -280,12 +280,13 @@ public class TuanIndexActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        dianNum.setText(keModel.getGroupbuy().getLimit_num() + "");
-        dianJiao.setText(keModel.getGroupbuy().getMaterial_price() + "");
-        dianKe.setText(keModel.getGroupbuy().getDiscount_pintrice() - keModel.getGroupbuy()
+        dianNum.setText(keModel.getGroupbuy().getDiscount().getLimit_num() + "");
+        dianJiao.setText(keModel.getGroupbuy().getDiscount().getMaterial_price() + "");
+        dianKe.setText(keModel.getGroupbuy().getDiscount().getDiscount_price() - keModel
+                .getGroupbuy().getDiscount()
                 .getMaterial_price() + "");
-        dianTotal.setText(keModel.getGroupbuy().getDiscount_pintrice() + "");
-        payTotal.setText(keModel.getGroupbuy().getTotal_price() + "");
+        dianTotal.setText(keModel.getGroupbuy().getDiscount().getDiscount_price() + "");
+        payTotal.setText(keModel.getGroupbuy().getDiscount().getTotal_price() + "");
     }
 
 }

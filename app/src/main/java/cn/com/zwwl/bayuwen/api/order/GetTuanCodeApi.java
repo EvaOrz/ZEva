@@ -2,6 +2,8 @@ package cn.com.zwwl.bayuwen.api.order;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -57,11 +59,11 @@ public class GetTuanCodeApi extends BaseApi {
             GroupBuyModel groupBuyModel = new GroupBuyModel();
             groupBuyModel.setCode(purchase_code);
 
-            if (!isNull(discount)){
-                int limit = Integer.valueOf(discount.optString("limit_num"));
-                String endTime = discount.optString("end_time");
-                groupBuyModel.setLimit_num(limit);
-                groupBuyModel.setEnd_time(endTime);
+            if (!isNull(discount)) {
+                Gson gson = new Gson();
+                GroupBuyModel.DiscountBean discountBean = gson.fromJson(discount.toString(),
+                        GroupBuyModel.DiscountBean.class);
+                groupBuyModel.setDiscount(discountBean);
             }
             listener.setData(groupBuyModel);
         }
