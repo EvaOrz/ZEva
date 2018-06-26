@@ -92,6 +92,7 @@ public class KeDetailView3 extends LinearLayout {
                 if (data.size() == 3 && allData.size() > data.size()) {
                     data.clear();
                     data.addAll(allData);
+                    adapter.setData(data);
                     if (page==totalPage)lookAll.setVisibility(GONE);
                 } else if (totalPage != 0 && page != totalPage) {
                     ++page;

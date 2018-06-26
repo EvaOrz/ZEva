@@ -51,9 +51,9 @@ public class KeDetailView1 extends LinearLayout {
                     @Override
                     public void run() {
                         if (baseResponse != null) {
-                            int i = baseResponse.getTotal() / baseResponse.getPagesize();
+                             totalPage = baseResponse.getTotal() / baseResponse.getPagesize();
                             if (baseResponse.getTotal() % baseResponse.getPagesize() > 0)
-                                totalPage = i + 1;
+                                totalPage = totalPage + 1;
                             if (page == totalPage) lookAll.setVisibility(GONE);
                             if (baseResponse.getLectures() != null && baseResponse.getLectures()
                                     .size() > 0)
@@ -91,6 +91,7 @@ public class KeDetailView1 extends LinearLayout {
                     data.clear();
                     data.addAll(allData);
                     if (page==totalPage)lookAll.setVisibility(GONE);
+                    adapter.setData(data);
                 } else if (totalPage != 0 && page != totalPage) {
                     ++page;
                     getLessonList();
