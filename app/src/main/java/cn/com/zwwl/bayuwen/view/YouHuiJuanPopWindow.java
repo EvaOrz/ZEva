@@ -50,7 +50,7 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
     private OnPickYouhuiListener listener;
 
     public interface OnPickYouhuiListener {
-        public void onPick(String coupon_code);
+        public void onPick(CouponModel couponModel);
     }
 
     /**
@@ -89,6 +89,7 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
                 R.layout.pop_youhuijuan, null);
         view.findViewById(R.id.youhuijuan_close)
                 .setOnClickListener(this);
+        view.findViewById(R.id.youhuijuan_no).setOnClickListener(this);
         listView = view.findViewById(R.id.youhuijuan_listview);
         adapter = new YouhuiAdapter(mContext, couponModels);
         listView.setAdapter(adapter);
@@ -108,6 +109,9 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.youhuijuan_close:
+                break;
+            case R.id.youhuijuan_no:
+                listener.onPick(null);
                 break;
         }
         window.dismiss();
@@ -144,11 +148,21 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
             final CouponModel c = datas.get(position);
 
             TextView price = viewHolder.getView(R.id.youhui_img);
+            TextView typeTv = viewHolder.getView(R.id.youhui_type);
             TextView name = viewHolder.getView(R.id.youhui_name);
             TextView time = viewHolder.getView(R.id.youhui_time);
             TextView bt = viewHolder.getView(R.id.youhui_bt);
-            price.setText("￥800");
-            name.setText(c.getDesc());
+
+            String desc = "";
+            if (c.getReduce().getDiscount() > 0) {// 折扣券
+                desc = (int) (c.getReduce().getDiscount() * 10) + "折";
+                typeTv.setText("折扣券");
+            } else {
+                desc = "￥" + (int) c.getReduce().getDecrease();
+                typeTv.setText("优惠券");
+            }
+            price.setText(desc);
+            name.setText(c.getName());
             time.setText(c.getStart_use_time().substring(0, 10) + " 至 " + c.getEnd_use_time()
                     .substring(0, 10));
             if (type == 1) {
@@ -163,7 +177,8 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
                     if (type == 1) {
                         lingqu(c.getId());
                     } else if (type == 2) {
-                        listener.onPick(c.getCoupon_code());
+                        listener.onPick(c);
+                        window.dismiss();
                     }
                 }
             });

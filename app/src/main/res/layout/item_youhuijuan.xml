@@ -58,6 +58,7 @@
                 android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/youhui_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="折扣券"
@@ -84,7 +85,7 @@
             android:id="@+id/youhui_bt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/gold_circle"
+            android:background="@drawable/orange_circle"
             android:paddingBottom="3dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"

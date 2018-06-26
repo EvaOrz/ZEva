@@ -45,7 +45,7 @@ public class GetTuiFeeListApi extends BaseApi {
 
     @Override
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
-        if (errorMsg != null) listener.setError(errorMsg);
+        listener.setError(errorMsg);
 
         if (!isNull(array)) {
             List<OrderForMyListModel> listModels = new ArrayList<>();

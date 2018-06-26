@@ -13,29 +13,32 @@ import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
 
-public class AddCommentApi extends BaseApi {
+public class CancelCollectApi extends BaseApi {
     private Activity activity;
   private ResponseCallBack<String> callBack;
-    private HashMap<String, String> para;
-
-    public AddCommentApi(Activity context, HashMap<String, String> para , ResponseCallBack<String> callBack) {
+    private String ID;
+    private String url;
+    public CancelCollectApi(Activity context,String id , ResponseCallBack<String> callBack) {
         super(context);
         this.activity = context;
-        this.para = para;
+        this.ID = id;
         this.callBack = callBack;
-        post();
+        this.url=UrlUtil.myFmCollection()+"/"+ID;
+        delete();
     }
 
     @Override
     protected String getUrl() {
-//        return "";
-        return UrlUtil.getTopicComment();
+
+        return url;
     }
 
     @Override
     protected Map<String, String> getPostParams() {
-        return para;
+        return null;
     }
+
+
 
     @Override
     protected void handler(final JSONObject json, final JSONArray array, final ErrorMsg errorMsg) {
@@ -43,7 +46,7 @@ public class AddCommentApi extends BaseApi {
             @Override
             public void run() {
 
-                if (errorMsg == null||errorMsg.equals("")) {
+                if (errorMsg != null||errorMsg.equals("")) {
                     callBack.result("ss",errorMsg);
                 }
 
