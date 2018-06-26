@@ -23,7 +23,6 @@ import cn.com.zwwl.bayuwen.model.CalendarEventModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
-import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
 import cn.com.zwwl.bayuwen.view.DatePopWindow;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
@@ -90,7 +89,7 @@ public class SelectCalendarActivity extends BaseActivity {
         super.onClick(view);
         switch (view.getId()) {
             case R.id.calendar_add://
-                new DatePopWindow(mContext, new DatePopWindow.MyDatePickListener() {
+                new DatePopWindow(mContext, false, new DatePopWindow.MyDatePickListener() {
                     @Override
                     public void onDatePick(int year, int month, int day) {
                         String dateString = year + "-" + month + "-" + day;

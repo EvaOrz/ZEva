@@ -56,6 +56,7 @@ public class AnswerActivity extends BasicActivityWithTitle {
     List<QuestionModel.QuestionBean.ChoiceBean> choiceBeans;
     List<QuestionModel.QuestionBean.ChoiceBean> answerBeans;
     int index = 1;
+    private String sectionId;
 
     @Override
     protected int setContentView() {
@@ -74,7 +75,8 @@ public class AnswerActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initData() {
-        new QuestionListApi(this, "2", new ResponseCallBack<QuestionModel>() {
+        sectionId=getIntent().getStringExtra("sectionId");
+        new QuestionListApi(this, sectionId, new ResponseCallBack<QuestionModel>() {
             @Override
             public void result(QuestionModel questionModel, ErrorMsg errorMsg) {
                 if (questionModel != null && questionModel.getQuestion() != null) {
@@ -115,8 +117,14 @@ public class AnswerActivity extends BasicActivityWithTitle {
                 progress.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        dialog.setData(choiceBeans.get(index - 1).getRemark());
-                        dialog.showAtLocation(progress, Gravity.BOTTOM, 0, 0);
+                        if (adapter.isRight()) {
+                            ++index;
+                            bindData();
+                        } else {
+                            dialog.setData(choiceBeans.get(index - 1).getRemark());
+                            dialog.showAtLocation(progress, Gravity.BOTTOM, 0, 0);
+                        }
+
                     }
                 }, 1000);
 
@@ -155,8 +163,9 @@ public class AnswerActivity extends BasicActivityWithTitle {
             new SubmitAnswerApi(mActivity, jsonObject.toString(), new ResponseCallBack<CommonModel>() {
                 @Override
                 public void result(CommonModel commonModel, ErrorMsg errorMsg) {
-                    Intent intent=new Intent(mActivity,AnswerResultActivity.class);
-                    intent.putExtra("total",choiceBeans.size());
+                    Intent intent = new Intent(mActivity, AnswerResultActivity.class);
+                    intent.putExtra("total", choiceBeans.size());
+                    intent.putExtra("sectionId",sectionId);
                     startActivity(intent);
                     if (errorMsg == null) {
                         ToastUtil.showShortToast("上传成功");

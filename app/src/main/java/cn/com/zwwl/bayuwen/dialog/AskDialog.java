@@ -31,7 +31,7 @@ public class AskDialog implements View.OnClickListener {
         mDialog.setCancelable(true);
         mDialog.setCanceledOnTouchOutside(false);// 屏蔽dialog外焦点，弹出键盘
         window = mDialog.getWindow();
-        window.setContentView(R.layout.dialog_motify_sign);
+        window.setContentView(R.layout.dialog_ask_sure);
 
         mDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout
                 .LayoutParams.MATCH_PARENT);

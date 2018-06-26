@@ -476,4 +476,10 @@ public class UrlUtil {
     public static String myFmCollection() {
         return HOST + "/collection";
     }
+    /**
+     * 拼图列表
+     */
+    public static String puzzle() {
+        return HOST + "/jigsaw/list";
+    }
 }

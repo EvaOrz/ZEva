@@ -91,7 +91,7 @@
     <string name="my_info">个人资料</string>
     <string name="my_history">收听历史</string>
     <string name="tianxie_code">填写团购验证码</string>
-    <string name="about">关于诸葛学堂</string>
+    <string name="about">关于大语文</string>
     <string name="logout">退出登录</string>
     <string name="my_follow">我关注的班级</string>
     <string name="my_tuan">我的团购</string>
@@ -235,7 +235,7 @@
     <string name="ruxue_day">入学年月</string>
     <string name="nianji">年级</string>
     <string name="zaiduxuexiao">在读学校</string>
-    <string name="jinji_lianxi">紧急联系</string>
+    <string name="jinji_lianxi">紧急联系电话</string>
     <!--奖状-->
     <string name="jiang_hint1">请输入奖状名称</string>
     <string name="jiang_hint2">请选择获奖日期</string>
@@ -331,7 +331,7 @@
     <string name="tab1">课程表</string>
     <string name="tab2">课程大纲</string>
     <string name="tab3">家长评价</string>
-    <string name="look_all">查看全部</string>
+    <string name="look_all">查看更多</string>
     <string name="look_detail">查看详情</string>
     <string name="guwen">顾问</string>
     <string name="shuoming">说明</string>

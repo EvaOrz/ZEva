@@ -314,8 +314,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     public void hideJianpan() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context
                 .INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
-        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
     }
 
     public void askPermission(String[] permissions, int requestCode) {

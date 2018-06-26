@@ -18,11 +18,11 @@ public class QuestionListApi extends BaseApi {
     private String url;
     private ResponseCallBack<QuestionModel> callBack;
 
-    public QuestionListApi(Activity context, String id, ResponseCallBack<QuestionModel> callBack) {
+    public QuestionListApi(Activity context, String sectionId, ResponseCallBack<QuestionModel> callBack) {
         super(context);
         this.activity = context;
         this.callBack = callBack;
-        this.url = UrlUtil.getQuestionList() + id;
+        this.url = UrlUtil.getQuestionList() + sectionId;
         get();
     }
 

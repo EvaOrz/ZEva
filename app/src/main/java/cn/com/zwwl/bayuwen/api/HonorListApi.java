@@ -50,7 +50,7 @@ public class HonorListApi extends BaseApi {
 
     @Override
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
-        if (errorMsg != null) listListener.setError(errorMsg);
+        listListener.setError(errorMsg);
 
         if (!isNull(array)) {
             List<GiftAndJiangModel> datas = new ArrayList<>();
@@ -60,6 +60,6 @@ public class HonorListApi extends BaseApi {
                 datas.add(g);
             }
             listListener.setData(datas);
-        }
+        } else listListener.setData(null);
     }
 }

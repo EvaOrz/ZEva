@@ -527,6 +527,7 @@
                 android:textSize="@dimen/text_size_12" />
 
             <TextView
+                android:id="@+id/group_purchase_price4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/tuangou_baoming"

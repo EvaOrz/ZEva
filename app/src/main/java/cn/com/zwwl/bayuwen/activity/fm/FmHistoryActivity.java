@@ -42,7 +42,6 @@ public class FmHistoryActivity extends BaseActivity {
         initData();
     }
 
-
     private void initView() {
         findViewById(R.id.history_back).setOnClickListener(this);
         today = findViewById(R.id.history__1);

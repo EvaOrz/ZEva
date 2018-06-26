@@ -21,7 +21,6 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.EvalListModel;
 import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
-import cn.com.zwwl.bayuwen.util.ToastUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
@@ -56,12 +55,15 @@ public class KeDetailView3 extends LinearLayout {
                     public void run() {
                         if (evalListModel != null) {
                             totalPage = evalListModel.getPageCount();
+                            if (page==totalPage)lookAll.setVisibility(GONE);
                             if (evalListModel.getData() != null && evalListModel.getData().size() > 0)
                                 allData.addAll(evalListModel.getData());
                             if (page == 1) {
                                 if (allData.size() > 3) {
                                     data.addAll(allData.subList(0, 3));
+                                    lookAll.setVisibility(VISIBLE);
                                 } else {
+                                    lookAll.setVisibility(GONE);
                                     data.addAll(allData);
                                 }
                             } else {
@@ -90,11 +92,11 @@ public class KeDetailView3 extends LinearLayout {
                 if (data.size() == 3 && allData.size() > data.size()) {
                     data.clear();
                     data.addAll(allData);
+                    adapter.setData(data);
+                    if (page==totalPage)lookAll.setVisibility(GONE);
                 } else if (totalPage != 0 && page != totalPage) {
                     ++page;
                     getEvalList();
-                } else {
-                    ToastUtil.showShortToast("没有更多了");
                 }
             }
         });
