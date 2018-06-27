@@ -25,13 +25,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.CalendarActivity;
 import cn.com.zwwl.bayuwen.activity.CityActivity;
 import cn.com.zwwl.bayuwen.activity.FCourseListActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
+import cn.com.zwwl.bayuwen.activity.ReportIndexActivity;
 import cn.com.zwwl.bayuwen.activity.SearchCourseActivity;
-import cn.com.zwwl.bayuwen.activity.StudyingCourseActivity;
-import cn.com.zwwl.bayuwen.activity.UnitIndexActivity;
+import cn.com.zwwl.bayuwen.activity.StudyingIndexActivity;
 import cn.com.zwwl.bayuwen.activity.UploadPicActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.CompleteCourseAdapter;
@@ -44,7 +45,6 @@ import cn.com.zwwl.bayuwen.model.Index1Model;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.MyCourseModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
-import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
 import static cn.com.zwwl.bayuwen.MyApplication.mContext;
@@ -128,13 +128,13 @@ public class MainFrag3 extends BasicFragment {
         if (calendarCourseBean != null && calendarCourseBean.getCourses().size() > 0) {
             Calendar ss = CalendarTools.fromStringToca(calendarCourseBean.getDate());
             calendarRi.setText(String.valueOf(ss.get(Calendar.DATE)));
-            calendarYue.setText(String.format("%s月",ss.get(Calendar.MONTH)));
+            calendarYue.setText(String.format("%s月", ss.get(Calendar.MONTH)));
 
             for (Index1Model.CalendarCourseBean.CoursesBean coursesBean : calendarCourseBean
                     .getCourses()) {
                 TextView tip = new TextView(activity);
-                tip.setText(String.format("%s %s-%s",coursesBean.getTitle() ,coursesBean
-                        .getClass_start_at(),coursesBean.getClass_end_at()));
+                tip.setText(String.format("%s %s-%s", coursesBean.getTitle(), coursesBean
+                        .getClass_start_at(), coursesBean.getClass_end_at()));
                 tip.setTextColor(getResources().getColor(R.color.gray_dark));
                 tip.setTextSize(14);
                 calendarLayout.addView(tip);
@@ -184,17 +184,24 @@ public class MainFrag3 extends BasicFragment {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent();
                 MyCourseModel.UnfinishedBean bean = courseModel.getUnfinished().get(position);
-                int type = Tools.getCourseType(bean.getPlan().getOnline(), bean.getPlan()
-                        .getSource(), bean.getProducts().getEnd_at());
+//                int type = Tools.getCourseType(bean.getPlan().getOnline(), bean.getPlan()
+//                        .getSource(), bean.getProducts().getEnd_at());
                 switch (view.getId()) {
                     case R.id.arrow:
-                        intent.setClass(activity, UnitIndexActivity.class);
-                        intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
-                        intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan
-                                ().getCurrentLectureId());
+                        application.oldKe = bean.getProducts();
+                        intent.setClass(activity, StudyingIndexActivity.class);
+                        intent.putExtra("kid", bean.getKid());
+                        intent.putExtra("title", bean.getProducts().getTitle());
                         intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
                                 .get(position).getProducts().getOnline()));
-                        intent.putExtra("video", 0);
+//                        intent.setClass(activity, UnitIndexActivity.class);
+//                        intent.putExtra("course_type", type);
+//                        intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
+//                        intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan
+//                                ().getCurrentLectureId());
+//                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
+//                                .get(position).getProducts().getOnline()));
+//                        intent.putExtra("video", 0);
                         break;
                     case R.id.work:
                         intent.putExtra("kid", bean.getKid());
@@ -207,13 +214,14 @@ public class MainFrag3 extends BasicFragment {
                                 (position).getPlan().getPlayUrl());
                         break;
                     case R.id.trace:
-                        application.oldKe = bean.getProducts();
+                        intent.setClass(activity, ReportIndexActivity.class);
                         intent.putExtra("kid", bean.getKid());
                         intent.putExtra("title", bean.getProducts().getTitle());
-                        intent.putExtra("course_type", type);
-                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
-                                .get(position).getProducts().getOnline()));
-                        intent.setClass(activity, StudyingCourseActivity.class);
+//                        application.oldKe = bean.getProducts();
+//                        intent.putExtra("course_type", type);
+//                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
+//                                .get(position).getProducts().getOnline()));
+//                        intent.setClass(activity, StudyingCourseActivity.class);
                         break;
                 }
                 startActivity(intent);
@@ -222,13 +230,16 @@ public class MainFrag3 extends BasicFragment {
         courseIndexAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(activity, UnitIndexActivity.class);
+                application.oldKe = courseModel.getUnfinished().get(position).getProducts();
+                Intent intent = new Intent(activity, StudyingIndexActivity.class);
                 intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
-                intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan()
-                        .getCurrentLectureId());
-                intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished().get
-                        (position).getProducts().getOnline()));
-                intent.putExtra("video", 0);
+                intent.putExtra("title", courseModel.getUnfinished().get(position).getProducts().getTitle());
+                intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
+                        .get(position).getProducts().getOnline()));
+//                Intent intent = new Intent(activity, UnitIndexActivity.class);
+//                intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
+//                intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan()
+//                        .getCurrentLectureId());
                 startActivity(intent);
             }
         });
@@ -241,10 +252,13 @@ public class MainFrag3 extends BasicFragment {
         return new MainFrag3();
     }
 
-    @OnClick({R.id.menu_more, R.id.menu_news, R.id.menu_school, R.id.menu_search})
+    @OnClick({R.id.menu_more, R.id.menu_news, R.id.menu_school, R.id.menu_search, R.id.go_calendar})
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.go_calendar:
+                startActivity(new Intent(activity, CalendarActivity.class));
+                break;
             case R.id.menu_news:
                 startActivity(new Intent(activity, MessageActivity.class));
                 break;

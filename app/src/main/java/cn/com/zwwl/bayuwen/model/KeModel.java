@@ -45,8 +45,8 @@ public class KeModel extends Entry {
     private String class_start_at;
     private String class_end_at;
     private Object class_start_at_bak;
-    private String startPtime = "0";
-    private String endPtime = "0";
+    private long startPtime;
+    private long endPtime;
     private String startBtime;
     private String endBtime;
     private String buyNum;
@@ -286,19 +286,19 @@ public class KeModel extends Entry {
         this.class_start_at_bak = class_start_at_bak;
     }
 
-    public String getStartPtime() {
+    public long getStartPtime() {
         return startPtime;
     }
 
-    public void setStartPtime(String startPtime) {
+    public void setStartPtime(long startPtime) {
         this.startPtime = startPtime;
     }
 
-    public String getEndPtime() {
+    public long getEndPtime() {
         return endPtime;
     }
 
-    public void setEndPtime(String endPtime) {
+    public void setEndPtime(long endPtime) {
         this.endPtime = endPtime;
     }
 

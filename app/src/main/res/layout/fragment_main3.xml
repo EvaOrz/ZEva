@@ -10,90 +10,14 @@
         android:id="@+id/top"
         layout="@layout/layout_gray_titlebar" />
 
-    <LinearLayout
-        android:id="@+id/report_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        app:layout_constraintTop_toBottomOf="@id/top">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/icon_finish"
-            android:drawableStart="@mipmap/icon_finish"
-            android:gravity="center_vertical"
-            android:text="@string/new_class_report" />
-
-        <View style="@style/split_line" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/report"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/go_calendar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/gold"
-        android:orientation="vertical"
-        android:padding="5dp"
-        app:layout_constraintTop_toBottomOf="@id/report_layout">
-
-        <cn.com.zwwl.bayuwen.widget.RoundAngleLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-            <TextView
-                android:id="@+id/calendar_ri"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/gray_dark"
-                android:textSize="@dimen/text_size_22"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/calendar_yue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:textColor="@color/gray_dark"
-                android:textSize="@dimen/text_size_14" />
-
-            <LinearLayout
-                android:id="@+id/calendar_kecheng_layout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical" />
-
-
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:contentDescription="@null"
-                android:src="@mipmap/arrow_right_gray" />
-
-        </cn.com.zwwl.bayuwen.widget.RoundAngleLayout>
-    </LinearLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/go_calendar">
+        app:layout_constraintTop_toBottomOf="@id/top">
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nest_scroll"
@@ -105,7 +29,84 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/report_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingEnd="@dimen/activity_horizontal_margin"
+                    android:paddingStart="@dimen/activity_horizontal_margin"
+                    app:layout_constraintTop_toBottomOf="@id/top">
 
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@mipmap/icon_finish"
+                        android:drawableStart="@mipmap/icon_finish"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/text_color_default"
+                        android:text="@string/new_class_report" />
+
+                    <View style="@style/split_line" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/report"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/go_calendar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gold"
+                    android:orientation="vertical"
+                    android:padding="5dp"
+                    app:layout_constraintTop_toBottomOf="@id/report_layout">
+
+                    <cn.com.zwwl.bayuwen.widget.RoundAngleLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:id="@+id/calendar_ri"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/gray_dark"
+                            android:textSize="@dimen/text_size_22"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/calendar_yue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dp"
+                            android:textColor="@color/gray_dark"
+                            android:textSize="@dimen/text_size_14" />
+
+                        <LinearLayout
+                            android:id="@+id/calendar_kecheng_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical" />
+
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:contentDescription="@null"
+                            android:src="@mipmap/arrow_right_gray" />
+
+                    </cn.com.zwwl.bayuwen.widget.RoundAngleLayout>
+                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
