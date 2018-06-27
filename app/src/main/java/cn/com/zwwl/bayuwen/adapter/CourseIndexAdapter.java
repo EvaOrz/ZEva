@@ -1,8 +1,6 @@
 package cn.com.zwwl.bayuwen.adapter;
 
 
-import android.support.design.widget.TabLayout;
-
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -38,45 +36,16 @@ public class CourseIndexAdapter extends BaseMultiItemQuickAdapter<MyCourseModel.
                 helper.setImageResource(R.id.logo, R.mipmap.icon_replay);
                 break;
         }
-        switch (helper.getItemViewType()) {
-            case 1://线上
-                helper.setText(R.id.course_name, item.getProducts().getTitle());
-                helper.setText(R.id.progress_value, String.format("课程进度（%s/%s）", item.getPlan().getCurrent(), item.getPlan().getCount()));
-                helper.setMax(R.id.progress, item.getPlan().getCount());
-                helper.setProgress(R.id.progress, item.getPlan().getCurrent());
-                helper.setText(R.id.per, Tools.parseDecimal((double) item.getPlan().getCurrent() / item.getPlan().getCount()));
-                helper.setText(R.id.evaluate, item.getComments().getJob());
-                helper.setText(R.id.status, String.format("下次上课时间:%s", item.getPlan().getNextTime()));
-                helper.addOnClickListener(R.id.look_video);
-                break;
-            default://线下
-                helper.setText(R.id.course_name, item.getProducts().getTitle());
-                helper.setText(R.id.progress_value, String.format("课程进度（%s/%s）", item.getPlan().getCurrent(), item.getPlan().getCount()));
-                helper.setMax(R.id.progress, item.getPlan().getCount());
-                helper.setProgress(R.id.progress, item.getPlan().getCurrent());
-                helper.setText(R.id.per, Tools.parseDecimal((double) item.getPlan().getCurrent() / item.getPlan().getCount()));
-                helper.setText(R.id.evaluate, item.getComments().getStudent());
-                ((TabLayout) helper.getView(R.id.tab)).addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                    @Override
-                    public void onTabSelected(TabLayout.Tab tab) {
-                        if (("顾问对学生的评价").equals(tab.getText().toString())) {
-                            helper.setText(R.id.evaluate, item.getComments().getStudent());
-                        } else {
-                            helper.setText(R.id.evaluate, item.getComments().getParent());
-                        }
-                    }
-
-                    @Override
-                    public void onTabUnselected(TabLayout.Tab tab) {
-
-                    }
-
-                    @Override
-                    public void onTabReselected(TabLayout.Tab tab) {
-
-                    }
-                });
-                break;
+        helper.setText(R.id.course_name, item.getProducts().getTitle());
+        helper.setText(R.id.course_progress, "这是一句描述");
+        helper.setMax(R.id.progress, item.getPlan().getCount());
+        helper.setProgress(R.id.progress, item.getPlan().getCurrent());
+        helper.setText(R.id.current, String.valueOf(item.getPlan().getCurrent()));
+        helper.setText(R.id.total_course, String.valueOf(item.getPlan().getCount()));
+        helper.setText(R.id.per, Tools.parseDecimal((double) item.getPlan().getCurrent() / item.getPlan().getCount()));
+        helper.setText(R.id.time, String.format("下次上课时间:%s", item.getPlan().getNextTime()));
+        if (helper.getItemViewType() == 1) {
+            helper.addOnClickListener(R.id.look_video);
         }
     }
 }
