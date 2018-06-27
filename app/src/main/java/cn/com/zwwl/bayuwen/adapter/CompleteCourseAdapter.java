@@ -23,9 +23,11 @@ public class CompleteCourseAdapter extends BaseQuickAdapter<KeModel,BaseViewHold
 
     @Override
     protected void convert(BaseViewHolder helper, KeModel item) {
-        helper.setText(R.id.course_name,item.getName());
-        helper.setText(R.id.description,item.getDesc());
-        ImageLoader.display(mContext,(ImageView)helper.getView(R.id.course_cover),item.getImg());
+        if (item!=null) {
+            helper.setText(R.id.course_name, item.getName());
+            helper.setText(R.id.description, item.getDesc());
+            ImageLoader.display(mContext, (ImageView) helper.getView(R.id.course_cover), item.getImg());
+        }
     }
 
 }

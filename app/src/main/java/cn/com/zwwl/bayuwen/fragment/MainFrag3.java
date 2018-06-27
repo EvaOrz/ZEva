@@ -163,6 +163,7 @@ public class MainFrag3 extends BasicFragment {
                         if (myCourseModel != null) {
                             nestScroll.setVisibility(View.VISIBLE);
                             courseModel = myCourseModel;
+                            calendarCourseBean = courseModel.getCalendarCourse();
                             bindView();
                         }
                     }

@@ -468,4 +468,10 @@ public class UrlUtil {
     public static String puzzle() {
         return HOST + "/jigsaw/list";
     }
+    /**
+     * 获取答题详情
+     */
+    public static String answerDeatil() {
+        return HOST + "/jigsaw/questiondetail";
+    }
 }

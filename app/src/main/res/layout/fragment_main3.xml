@@ -11,7 +11,6 @@
         layout="@layout/layout_gray_titlebar" />
 
 
-
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
@@ -21,6 +20,7 @@
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nest_scroll"
+            android:layout_marginTop="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="invisible">
@@ -29,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:id="@+id/report_layout"
                     android:layout_width="match_parent"
@@ -45,8 +46,8 @@
                         android:drawableLeft="@mipmap/icon_finish"
                         android:drawableStart="@mipmap/icon_finish"
                         android:gravity="center_vertical"
-                        android:textColor="@color/text_color_default"
-                        android:text="@string/new_class_report" />
+                        android:text="@string/new_class_report"
+                        android:textColor="@color/text_color_default" />
 
                     <View style="@style/split_line" />
 
@@ -60,6 +61,8 @@
                     android:id="@+id/go_calendar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:background="@color/gold"
                     android:orientation="vertical"
                     android:padding="5dp"
@@ -85,7 +88,8 @@
                             android:id="@+id/calendar_yue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="3dp"
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_5"
                             android:textColor="@color/gray_dark"
                             android:textSize="@dimen/text_size_14" />
 
@@ -107,36 +111,39 @@
 
                     </cn.com.zwwl.bayuwen.widget.RoundAngleLayout>
                 </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:background="@color/item_bgColor" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:drawableLeft="@mipmap/icon_book"
                     android:drawablePadding="5dp"
                     android:drawableStart="@mipmap/icon_book"
                     android:gravity="center_vertical|start"
-                    android:padding="10dp"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:paddingStart="@dimen/dp_10"
                     android:text="@string/studying_course"
-                    android:textColor="@color/body_gray"
+                    android:textColor="@color/text_color_default"
                     android:textSize="@dimen/sp_16" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/study_course"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:background="@color/white" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@color/white"
                     android:drawableLeft="@mipmap/icon_finish"
                     android:drawableStart="@mipmap/icon_finish"
-                    android:padding="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:paddingStart="@dimen/dp_10"
                     android:text="@string/finish_course"
-                    android:textColor="@color/body_gray"
+                    android:textColor="@color/text_color_default"
                     android:textSize="@dimen/sp_16" />
 
                 <android.support.v7.widget.RecyclerView

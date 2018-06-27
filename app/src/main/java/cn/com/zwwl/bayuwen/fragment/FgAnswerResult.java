@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.base.BasicFragment;
-import cn.com.zwwl.bayuwen.model.AnswerModel;
+import cn.com.zwwl.bayuwen.model.OptionModel;
 
 public class FgAnswerResult extends BasicFragment {
     @BindView(R.id.title)
@@ -20,15 +20,12 @@ public class FgAnswerResult extends BasicFragment {
     @BindView(R.id.description)
     AppCompatTextView description;
 
-    public static Fragment newInstance(int position, AnswerModel content) {
+    public static Fragment newInstance(int position, OptionModel content) {
         FgAnswerResult fragment = new FgAnswerResult();
         Bundle bundle = new Bundle();
-        bundle.putString("question",position+"、" +content.getTitle());
+        bundle.putString("question", position + "、" + content.getTitle());
         bundle.putString("des", content.getRemark());
-        for (AnswerModel.SelectBean bean : content.getSelect()) {
-            if (content.getAnswer().equals(bean.getOption()))
-                bundle.putString("answer", bean.getOption() + " . " + bean.getContent());
-        }
+        bundle.putString("answer", content.getAnswer());
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -43,8 +40,8 @@ public class FgAnswerResult extends BasicFragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             title.setText(bundle.getString("question"));
-            answer.setText(String.format("正确答案: %s",bundle.getString("answer")));
-            description.setText(String.format("答案解析: %s",bundle.getString("des")));
+            answer.setText(String.format("正确答案: %s", bundle.getString("answer")));
+            description.setText(String.format("答案解析: %s", bundle.getString("des")));
         }
     }
 

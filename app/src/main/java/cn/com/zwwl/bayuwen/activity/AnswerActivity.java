@@ -103,6 +103,11 @@ public class AnswerActivity extends BasicActivityWithTitle {
     }
 
     @Override
+    public boolean setParentScrollable() {
+        return true;
+    }
+
+    @Override
     protected void setListener() {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

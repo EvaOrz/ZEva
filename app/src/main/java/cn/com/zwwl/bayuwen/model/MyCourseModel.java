@@ -10,8 +10,15 @@ import java.util.List;
 public class MyCourseModel extends Entry{
         private List<KeModel> completed;
         private List<UnfinishedBean> unfinished;
+    private Index1Model.CalendarCourseBean calendarCourse;
 
+    public Index1Model.CalendarCourseBean getCalendarCourse() {
+        return calendarCourse;
+    }
 
+    public void setCalendarCourse(Index1Model.CalendarCourseBean calendarCourse) {
+        this.calendarCourse = calendarCourse;
+    }
 
     public List<KeModel> getCompleted() {
             return completed;
