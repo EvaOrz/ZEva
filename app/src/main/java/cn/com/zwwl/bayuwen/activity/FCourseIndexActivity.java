@@ -149,7 +149,8 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(mActivity, AnswerActivity.class);
-                intent.putExtra("sectionId", models.get(position).getSectionId());
+//                intent.putExtra("sectionId", models.get(position).getSectionId());
+                intent.putExtra("sectionId", "2");
                 startActivity(intent);
             }
         });
