@@ -23,7 +23,7 @@ public class CancelCollectApi extends BaseApi {
         this.activity = context;
         this.ID = id;
         this.callBack = callBack;
-        this.url=UrlUtil.myFmCollection()+"/"+ID;
+        this.url=UrlUtil.getCollecturl()+"/"+ID;
         delete();
     }
 

@@ -116,10 +116,10 @@
             android:orientation="vertical">
 
             <ImageView
-                android:contentDescription="@null"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@mipmap/icon_add_p"/>
+                android:contentDescription="@null"
+                android:src="@mipmap/icon_add_p" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -170,6 +170,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:background="@mipmap/arrow_right_gray" />
         </LinearLayout>
 
@@ -238,11 +239,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <LinearLayout
-                android:id="@+id/add_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
+            <!--<LinearLayout-->
+            <!--android:id="@+id/add_tag"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical" />-->
 
             <LinearLayout
                 android:id="@+id/add_layout"
@@ -253,12 +254,12 @@
                 android:visibility="gone">
 
                 <EditText
+                    android:id="@+id/add_ev"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/gray_xiankuang"
                     android:hint="@string/tag_hint"
-                    android:inputType="number"
                     android:lines="1"
                     android:padding="5dp"
                     android:textColor="@color/gray_dark"
@@ -266,6 +267,7 @@
                     android:textSize="@dimen/text_size_14" />
 
                 <TextView
+                    android:id="@+id/add_sure"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"

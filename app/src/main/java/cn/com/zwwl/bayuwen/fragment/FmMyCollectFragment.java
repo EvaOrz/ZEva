@@ -58,7 +58,7 @@ public class FmMyCollectFragment extends Fragment {
     }
 
     private void HttpData() {
-        String url= UrlUtil.myFmCollection();
+        String url= UrlUtil.getCollecturl();
         new FmListApi(getActivity(),url, new ResponseCallBack<List<FmListhiistoryModel>>() {
             @Override
             public void result(List<FmListhiistoryModel> messageModel, ErrorMsg errorMsg) {

@@ -44,9 +44,7 @@ import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.fm.RecommentModel;
-import cn.com.zwwl.bayuwen.util.AddressTools;
 import cn.com.zwwl.bayuwen.util.Tools;
-import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 import cn.com.zwwl.bayuwen.widget.LoopViewPager;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 import cn.com.zwwl.bayuwen.widget.observable.ObservableScrollView;
@@ -269,19 +267,6 @@ public class MainFrag2 extends Fragment
                 ((MainActivity) mActivity).openDrawer();
                 break;
             case R.id.menu_school:
-//                new AddressPopWindow(mActivity, 1, new AddressPopWindow.OnAddressCListener() {
-//
-//                    @Override
-//                    public void onClick(AddressTools.ProvinceModel province, AddressTools
-//                            .CityModel city, AddressTools.DistModel dist) {
-//                        if (city.getCtxt().equals("市辖区")) {
-//                            TempDataHelper.setCurrentCity(mActivity, province.getPtxt());
-//                        } else
-//                            TempDataHelper.setCurrentCity(mActivity, city.getCtxt());
-//                        getEleCourseList();
-//                        ((MainActivity) mActivity).changeCity(1);
-//                    }
-//                });
                 Intent intent =new Intent(getActivity(), CityActivity.class);
                 startActivity(intent);
                 break;

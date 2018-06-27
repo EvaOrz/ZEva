@@ -460,21 +460,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                 ((MainActivity) mActivity).openDrawer();
                 break;
             case R.id.toolbar_city:// 选择城市
-//                new AddressPopWindow(mActivity, 1, new AddressPopWindow.OnAddressCListener() {
-//
-//                    @Override
-//                    public void onClick(AddressTools.ProvinceModel province, AddressTools
-//                            .CityModel city, AddressTools.DistModel dist) {
-//                        if (city.getCtxt().equals("市辖区")) {
-//                            TempDataHelper.setCurrentCity(mActivity, province.getPtxt());
-//                        } else
-//                            TempDataHelper.setCurrentCity(mActivity, city.getCtxt());
-//                        loadData();
-//                        ((MainActivity) mActivity).changeCity(0);
-//                    }
-//
-//                });
-
                 Intent intent =new Intent(getActivity(), CityActivity.class);
                 startActivity(intent);
                 break;

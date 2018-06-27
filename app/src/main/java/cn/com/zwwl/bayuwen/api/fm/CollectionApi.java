@@ -13,6 +13,7 @@ import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 
 /**
@@ -22,19 +23,21 @@ public class CollectionApi extends BaseApi {
     private String url;
     private FetchEntryListener listener;
     private Map<String, String> pamas = new HashMap<>();
+    private int type;
 
     /**
      * 添加收藏
      *
      * @param context
      * @param content
-     * @param type     1-课程  2-文本  3-图片  4-链接
+     * @param type     1-课程  2-FM
      * @param listener
      */
     public CollectionApi(Context context, String content, int type, FetchEntryListener listener) {
         super(context);
         mContext = context;
-        pamas.put("content", content);
+        this.type = type;
+        pamas.put("kid", content);
         pamas.put("type", type + "");
         this.url = UrlUtil.getCollecturl();
         this.listener = listener;
@@ -48,7 +51,7 @@ public class CollectionApi extends BaseApi {
      * @param cid      收藏id
      * @param listener
      */
-    public CollectionApi(Context context, String cid, FetchEntryListener listener) {
+    public CollectionApi(Context context, int cid, FetchEntryListener listener) {
         super(context);
         mContext = context;
         this.url = UrlUtil.getCollecturl() + "/" + cid;
@@ -65,13 +68,20 @@ public class CollectionApi extends BaseApi {
 
     @Override
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
-        if (errorMsg != null)
-            listener.setError(errorMsg);
+        listener.setError(errorMsg);
 
         if (!isNull(json)) {
-//            ErrorMsg err = new ErrorMsg();
-//            err.setNo(json.optInt("id"));
-//            listener.setData(err);
+            if (type == 1) {
+                KeModel keModel = new KeModel();
+                // "state":1(关注) 0：（未关注）
+                keModel.setCollectionId(json.optInt("id"));
+                keModel.setCollection_state(json.optInt("state"));
+                listener.setData(keModel);
+            } else if (type == 2) {
+//                AlbumModel albumModel = new AlbumModel();
+//                albumModel.setConllectId(json.optInt("id"));
+            }
+
         }
     }
 

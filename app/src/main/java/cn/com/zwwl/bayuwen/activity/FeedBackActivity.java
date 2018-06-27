@@ -49,14 +49,13 @@ public class FeedBackActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.e("mmmmmmmmmmmm", count + "");
-                limitNum -= count;
-                handler.sendEmptyMessage(0);
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                limitNum = 200 - s.length();
+                handler.sendEmptyMessage(0);
             }
         });
     }

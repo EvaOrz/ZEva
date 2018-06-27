@@ -479,10 +479,5 @@ public class UrlUtil {
         return HOST + "/fm/buylist";
     }
 
-    /**
-     * 我的FM我的收藏列表
-     */
-    public static String myFmCollection() {
-        return HOST + "/collection";
-    }
+
 }

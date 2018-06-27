@@ -158,7 +158,8 @@ public class AddressPopWindow implements View.OnClickListener {
 
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
-                setTextviewSize((String) distAdapter.getItemText(wheel.getCurrentItem()),
+                curDist = arrDists.get(wheel.getCurrentItem());
+                setTextviewSize(curDist.getDtxt(),
                         distAdapter);
             }
         });

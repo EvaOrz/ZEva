@@ -12,6 +12,7 @@ public class KeModel extends Entry {
     private List<TeacherModel> teacherModels = new ArrayList<>();
     private String cartId = ""; // 购课单id，购课单列表用，其他场合不用解析
     private String detailId = "";// 退费id，（退费选子课列表，退费课程列表）用，其他场合不用解析
+    private int collectionId;// 收藏id,（收藏列表、课程详情）用，其他场合不用解析
     /**
      * refund 0:未退款 1:部分退款 2:全额退款 3:退款中 4:退款被拒绝
      */
@@ -109,6 +110,7 @@ public class KeModel extends Entry {
     private String img;
     private GroupBuyModel groupbuy = new GroupBuyModel();
     private List<PromotionModel> promotionModels = new ArrayList<>();
+    private int collection_state;//0-未关注 1-已关注
 
     public String getId() {
         return id;
@@ -845,5 +847,21 @@ public class KeModel extends Entry {
 
     public void setOrderDetailModel(OrderModel.OrderDetailModel orderDetailModel) {
         this.orderDetailModel = orderDetailModel;
+    }
+
+    public int getCollection_state() {
+        return collection_state;
+    }
+
+    public void setCollection_state(int collection_state) {
+        this.collection_state = collection_state;
+    }
+
+    public int getCollectionId() {
+        return collectionId;
+    }
+
+    public void setCollectionId(int collectionId) {
+        this.collectionId = collectionId;
     }
 }
