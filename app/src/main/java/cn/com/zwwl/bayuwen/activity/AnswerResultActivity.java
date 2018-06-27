@@ -2,8 +2,10 @@ package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.rd.PageIndicatorView;
 
@@ -30,8 +32,17 @@ public class AnswerResultActivity extends BasicActivityWithTitle {
     ViewPager viewPager;
     @BindView(R.id.pager_indicator)
     PageIndicatorView pagerIndicator;
+    @BindView(R.id.star_l)
+    AppCompatImageView starL;
+    @BindView(R.id.star_m)
+    AppCompatImageView starM;
+    @BindView(R.id.star_r)
+    AppCompatImageView starR;
+    @BindView(R.id.top_layout)
+    RelativeLayout topLayout;
     AnswerResultAdapter adapter;
     int total;
+
 
     @Override
     protected int setContentView() {
@@ -50,6 +61,29 @@ public class AnswerResultActivity extends BasicActivityWithTitle {
             @Override
             public void result(List<AnswerModel> answerModels, ErrorMsg errorMsg) {
                 if (answerModels != null) {
+                    double i = (double) (total - answerModels.size()) / total;
+                    if (i < 0.2) {
+                        topLayout.setBackgroundResource(R.mipmap.answer_result_fail_bg);
+                        starL.setImageResource(R.mipmap.answer_star_m_d);
+                        starM.setImageResource(R.mipmap.answer_star_m_d);
+                        starR.setImageResource(R.mipmap.answer_star_m_d);
+                    } else {
+                        topLayout.setBackgroundResource(R.mipmap.answer_result_bg);
+
+                        if (i >= 0.2 && i < 0.4) {
+                            starL.setImageResource(R.mipmap.answer_star_m_c);
+                            starM.setImageResource(R.mipmap.answer_star_m_d);
+                            starR.setImageResource(R.mipmap.answer_star_m_d);
+                        } else if (i >= 0.4 && i < 0.8) {
+                            starL.setImageResource(R.mipmap.answer_star_m_c);
+                            starM.setImageResource(R.mipmap.answer_star_m_c);
+                            starR.setImageResource(R.mipmap.answer_star_m_d);
+                        } else {
+                            starL.setImageResource(R.mipmap.answer_star_m_c);
+                            starM.setImageResource(R.mipmap.answer_star_m_c);
+                            starR.setImageResource(R.mipmap.answer_star_m_c);
+                        }
+                    }
                     answerResult.setText(String.format("答对%s/%s道题", total - answerModels.size(), total));
                     adapter = new AnswerResultAdapter(getSupportFragmentManager(), answerModels);
                     viewPager.setAdapter(adapter);
@@ -74,4 +108,5 @@ public class AnswerResultActivity extends BasicActivityWithTitle {
     public void close() {
         finish();
     }
+
 }

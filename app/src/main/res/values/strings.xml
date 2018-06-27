@@ -439,5 +439,6 @@
 
     <string name="teacher_reply">---------------------  教师回复  ----------------------</string>
     <string name="family_reply">家长回复</string>
+    <string name="new_class_report">最新课节报告</string>
 
 </resources>

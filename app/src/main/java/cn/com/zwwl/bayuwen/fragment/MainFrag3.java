@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -17,6 +19,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,14 +38,13 @@ import cn.com.zwwl.bayuwen.adapter.CompleteCourseAdapter;
 import cn.com.zwwl.bayuwen.adapter.CourseIndexAdapter;
 import cn.com.zwwl.bayuwen.api.MyCourseApi;
 import cn.com.zwwl.bayuwen.base.BasicFragment;
-import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.Index1Model;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.MyCourseModel;
-import cn.com.zwwl.bayuwen.util.AddressTools;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
-import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
 import static cn.com.zwwl.bayuwen.MyApplication.mContext;
@@ -61,11 +63,19 @@ public class MainFrag3 extends BasicFragment {
     NestedScrollView nestScroll;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
+    @BindView(R.id.report)
+    RecyclerView report;
+    @BindView(R.id.calendar_ri)
+    TextView calendarRi;
+    @BindView(R.id.calendar_yue)
+    TextView calendarYue;
+    @BindView(R.id.calendar_kecheng_layout)
+    LinearLayout calendarLayout;
     private CompleteCourseAdapter adapter;
     private List<KeModel> finishCourse = new ArrayList<>();
     MyCourseModel courseModel;
     CourseIndexAdapter courseIndexAdapter;
-
+    private Index1Model.CalendarCourseBean calendarCourseBean;// calendar事件数据
     public boolean isCityChanged = false;// 城市状态是否变化
 
     @Override
@@ -114,6 +124,28 @@ public class MainFrag3 extends BasicFragment {
     }
 
     private void bindView() {
+        calendarLayout.removeAllViews();
+        if (calendarCourseBean != null && calendarCourseBean.getCourses().size() > 0) {
+            Calendar ss = CalendarTools.fromStringToca(calendarCourseBean.getDate());
+            calendarRi.setText(String.valueOf(ss.get(Calendar.DATE)));
+            calendarYue.setText(String.format("%s月",ss.get(Calendar.MONTH)));
+
+            for (Index1Model.CalendarCourseBean.CoursesBean coursesBean : calendarCourseBean
+                    .getCourses()) {
+                TextView tip = new TextView(activity);
+                tip.setText(String.format("%s %s-%s",coursesBean.getTitle() ,coursesBean
+                        .getClass_start_at(),coursesBean.getClass_end_at()));
+                tip.setTextColor(getResources().getColor(R.color.gray_dark));
+                tip.setTextSize(14);
+                calendarLayout.addView(tip);
+            }
+        } else {
+            TextView tip = new TextView(activity);
+            tip.setText("请添加课程日历");
+            tip.setTextColor(getResources().getColor(R.color.gray_dark));
+            tip.setTextSize(14);
+            calendarLayout.addView(tip);
+        }
         finishCourse = courseModel.getCompleted();
         courseIndexAdapter.setNewData(courseModel.getUnfinished());
         adapter.setNewData(finishCourse);
@@ -234,7 +266,7 @@ public class MainFrag3 extends BasicFragment {
 ////                    }
 ////
 ////                });
-                Intent intent =new Intent(getActivity(), CityActivity.class);
+                Intent intent = new Intent(getActivity(), CityActivity.class);
                 startActivity(intent);
                 break;
             case R.id.menu_search:
