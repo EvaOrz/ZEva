@@ -130,9 +130,11 @@ public class KeDetailView1 extends LinearLayout {
             TextView video_time = viewHolder.getView(R.id.course_d_time);
             video_id.setText(String.valueOf(position+1));
             video_title.setText(item.getTitle());
+            String startTime= item.getClass_start_at();
+            String endtime=item.getClass_end_at();
             video_time.setText(item.getStart_at()
-                    + "  " + item.getClass_start_at()
-                    + "-" + item.getClass_end_at()
+                    + "  " + startTime.substring(0,startTime.length()-3)
+                    + "-" + endtime.substring(0,endtime.length()-3)
                     + "(" + item.getHours() + "课时)");
             return viewHolder.getConvertView();
         }
