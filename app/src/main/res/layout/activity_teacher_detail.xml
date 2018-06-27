@@ -223,23 +223,82 @@
                     android:layout_marginTop="10dp"
                     android:background="@android:color/white"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                      android:src="@mipmap/icon_course_relative" />
+                    <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:src="@mipmap/icon_course_relative" />-->
 
-                    <TextView
+                    <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:text="相关课程"-->
+                    <!--android:textColor="@color/gray_dark"-->
+                    <!--android:textSize="@dimen/text_size_14" />-->
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center_vertical"
-                        android:text="相关课程"
-                        android:textColor="@color/gray_dark"
-                        android:textSize="@dimen/text_size_14" />
-                </LinearLayout>
+                        android:background="@color/white"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/student_evaluate_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="@string/student_evaluate"
+                            android:textColor="@color/gray_dark"
+                            android:textSize="@dimen/text_size_14" />
+
+                        <TextView
+                            android:id="@+id/about_cource_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="相关课程"
+                            android:textColor="@color/gray_dark"
+                            android:textSize="@dimen/text_size_14" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/gray_line"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:id="@+id/teacher_detail_line1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_weight="1"
+                            android:background="@color/oringe" />
+
+
+
+                        <View
+                            android:id="@+id/teacher_detail_line2"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_weight="1"
+                            android:background="@color/oringe"
+                            android:visibility="invisible" />
+
+                    </LinearLayout>
+                    </LinearLayout>
 
 
                 <include layout="@layout/layout_line" />

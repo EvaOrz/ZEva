@@ -443,5 +443,6 @@
     <string name="new_class_report">最新课节报告</string>
     <string name="past_lesson_report">往次课节报告</string>
     <string name="student_attain">学员成就</string>
+    <string name="student_evaluate">学员评价</string>
 
 </resources>

@@ -48,6 +48,7 @@ public class MessageActivity extends BaseActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     notification.setBackgroundResource(R.drawable.gray_dark_circle);
+                    message_add.setVisibility(View.INVISIBLE);
                   setIndexSelected(0);
                 }
                 else {
@@ -61,6 +62,7 @@ public class MessageActivity extends BaseActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     topic.setBackgroundResource(R.drawable.gray_dark_circle);
+                    message_add.setVisibility(View.VISIBLE);
                     setIndexSelected(1);
                 }
                 else topic.setBackground(null);
@@ -116,16 +118,18 @@ public class MessageActivity extends BaseActivity {
             case R.id.message_back:
                 finish();
                 break;
-            case R.id.message_bt1:
-                notification.setBackgroundResource(R.drawable.gray_dark_circle);
-                setIndexSelected(0);
-                topic.setBackground(null);
-                break;
-            case R.id.message_bt2:
-                topic.setBackgroundResource(R.drawable.gray_dark_circle);
-                setIndexSelected(1);
-                notification.setBackground(null);
-                break;
+//            case R.id.message_bt1:
+//                notification.setBackgroundResource(R.drawable.gray_dark_circle);
+//                message_add.setVisibility(View.INVISIBLE);
+//                setIndexSelected(0);
+//                topic.setBackground(null);
+//                break;
+//            case R.id.message_bt2:
+//                topic.setBackgroundResource(R.drawable.gray_dark_circle);
+//                message_add.setVisibility(View.VISIBLE);
+//                setIndexSelected(1);
+//                notification.setBackground(null);
+//                break;
             case R.id.message_add:
                 Intent intent2 = new Intent(mContext, CreateTopicActivity.class);
                 startActivity(intent2);
