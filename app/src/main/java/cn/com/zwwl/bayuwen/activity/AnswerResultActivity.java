@@ -50,7 +50,7 @@ public class AnswerResultActivity extends BasicActivityWithTitle {
             @Override
             public void result(List<AnswerModel> answerModels, ErrorMsg errorMsg) {
                 if (answerModels != null) {
-                    answerResult.setText(String.format("%s/%s", total - answerModels.size(), total));
+                    answerResult.setText(String.format("答对%s/%s道题", total - answerModels.size(), total));
                     adapter = new AnswerResultAdapter(getSupportFragmentManager(), answerModels);
                     viewPager.setAdapter(adapter);
                     pagerIndicator.setCount(answerModels.size());
