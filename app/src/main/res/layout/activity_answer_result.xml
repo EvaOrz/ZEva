@@ -9,7 +9,7 @@
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_240"
-        android:background="@color/colorPrimary">
+        android:background="@mipmap/answer_result_bg">
 
         <android.support.v7.widget.AppCompatImageView
             android:layout_width="match_parent"
@@ -27,23 +27,26 @@
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/star_l"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
                 android:layout_marginTop="@dimen/dp_20"
                 android:rotation="270"
-                android:src="@mipmap/icon_rating_checked" />
+                android:src="@mipmap/answer_star_m_d" />
 
             <android.support.v7.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/icon_rating_checked" />
+                android:id="@+id/star_m"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                android:src="@mipmap/answer_star_m_d" />
 
             <android.support.v7.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/star_r"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
                 android:layout_marginTop="@dimen/dp_20"
                 android:rotation="90"
-                android:src="@mipmap/icon_rating_default" />
+                android:src="@mipmap/answer_star_m_d" />
         </LinearLayout>
 
         <android.support.v7.widget.AppCompatTextView
@@ -66,14 +69,16 @@
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_10"
         android:orientation="vertical">
+
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_width="match_parent"
             android:background="@drawable/drawable_gray_white_corner"
             android:paddingEnd="@dimen/dp_20"
             android:paddingStart="@dimen/dp_20" />
+
         <com.rd.PageIndicatorView
             android:id="@+id/pager_indicator"
             android:layout_width="wrap_content"
