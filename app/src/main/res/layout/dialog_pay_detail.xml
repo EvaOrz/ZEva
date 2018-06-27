@@ -28,8 +28,8 @@
 
             <ImageView
                 android:id="@+id/pay_d_close"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                android:src="@mipmap/icon_close_yellow" />

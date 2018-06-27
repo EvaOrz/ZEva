@@ -58,9 +58,8 @@ public class CourseApi extends BaseApi {
         super(context);
         mContext = context;
         this.listener = listener;
-        pamas.put("course_code", code);
-        this.url = UrlUtil.getKemodelByCode();
-        post();
+        this.url = UrlUtil.getKemodelByCode()+"?course_code="+code;
+        get();
     }
 
 

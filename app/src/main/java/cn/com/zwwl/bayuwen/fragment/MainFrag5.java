@@ -31,9 +31,11 @@ import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MyCollectionActivity;
 import cn.com.zwwl.bayuwen.activity.MyOrderActivity;
 import cn.com.zwwl.bayuwen.activity.MyTuanActivity;
+import cn.com.zwwl.bayuwen.activity.OurFmActivity;
 import cn.com.zwwl.bayuwen.activity.RegisterAddChildActivity;
 import cn.com.zwwl.bayuwen.activity.SettingActivity;
 import cn.com.zwwl.bayuwen.activity.TuanCodeUseActivity;
+import cn.com.zwwl.bayuwen.activity.fm.FmHistoryActivity;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
@@ -86,6 +88,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
         root.findViewById(R.id.frag5_order4).setOnClickListener(this);
         root.findViewById(R.id.frag5_banji).setOnClickListener(this);
         root.findViewById(R.id.frag5_tuangou).setOnClickListener(this);
+        root.findViewById(R.id.frag5_my_fm).setOnClickListener(this);
         root.findViewById(R.id.frag5_tuan_code).setOnClickListener(this);
         root.findViewById(R.id.frag5_invite).setOnClickListener(this);
         root.findViewById(R.id.frag5_feedback).setOnClickListener(this);
@@ -207,6 +210,9 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 break;
             case R.id.frag5_tuangou:// 我的团购
                 startActivity(new Intent(mActivity, MyTuanActivity.class));
+                break;
+            case R.id.frag5_my_fm:
+                startActivity(new Intent(mActivity, OurFmActivity.class));
                 break;
         }
     }

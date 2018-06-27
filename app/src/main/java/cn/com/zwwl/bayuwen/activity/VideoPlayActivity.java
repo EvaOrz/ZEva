@@ -2,6 +2,7 @@ package cn.com.zwwl.bayuwen.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 
 import cn.com.zwwl.bayuwen.R;
@@ -34,7 +35,6 @@ public class VideoPlayActivity extends BaseActivity {
 
     private void initView() {
         myVideoView = findViewById(R.id.video_view);
-
         myVideoView.setUp(videoUrl, JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN, new
                 OnBackButtonClickListener() {
                     @Override
@@ -52,7 +52,7 @@ public class VideoPlayActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        JZVideoPlayer.goOnPlayOnPause();
+        JZVideoPlayer.releaseAllVideos();
     }
 
     @Override

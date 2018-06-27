@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -118,13 +120,16 @@ public class AddressManageActivity extends BaseActivity {
         new AddressApi(mContext, aid, 1, new AddressApi.FetchAddressListListener() {
             @Override
             public void setData(List<AddressModel> list) {
-                initData();
+
             }
 
             @Override
             public void setError(ErrorMsg error) {
                 showLoadingDialog(false);
-                if (error != null) showToast(error.getDesc());
+                if (error != null) showToast(error.getDesc());else
+                {
+                    handler.sendEmptyMessage(1);
+                }
             }
         });
     }
@@ -140,6 +145,9 @@ public class AddressManageActivity extends BaseActivity {
                     addressAdapter.setData(datas);
                     addressAdapter.notifyDataSetChanged();
                     break;
+                case 1:
+                    initData();
+                     break;
             }
         }
     };
@@ -181,15 +189,27 @@ public class AddressManageActivity extends BaseActivity {
             TextView area1 = viewHolder.getView(R.id.item_a_area1);
             TextView area2 = viewHolder.getView(R.id.item_a_area2);
             CheckBox checkBox = viewHolder.getView(R.id.address_checkbox);
+            TextView defaul = viewHolder.getView(R.id.address_default);
+            LinearLayout undefault = viewHolder.getView(R.id.address_default1);
+
             name.setText(item.getTo_user());
             phone.setText(item.getPhone());
-            tag.setText(item.getAddress_alias());
+            if (TextUtils.isEmpty(item.getAddress_alias())) {
+                tag.setVisibility(View.GONE);
+            } else {
+                tag.setVisibility(View.VISIBLE);
+                tag.setText(item.getAddress_alias());
+            }
             area1.setText(item.getProvince() + item.getCity() + item.getDistrict());
             area2.setText(item.getAddress());
             if (item.getIs_default().equals("1")) {
-                checkBox.setChecked(true);
-            } else
+                defaul.setVisibility(View.VISIBLE);
+                undefault.setVisibility(View.INVISIBLE);
+            } else {
+                defaul.setVisibility(View.INVISIBLE);
+                undefault.setVisibility(View.VISIBLE);
                 checkBox.setChecked(false);
+            }
             viewHolder.getView(R.id.address_edit).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -100,6 +100,7 @@ public class TuanCodeUseActivity extends BaseActivity {
         new CourseApi(mContext, code, 0, new FetchEntryListener() {
             @Override
             public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
                 if (error != null)
                     showToast(error.getDesc());
             }

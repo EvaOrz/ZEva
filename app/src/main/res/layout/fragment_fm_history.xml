@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/body_bg"
+        android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/history__1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="15dp"
+                android:text="@string/today"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_14" />
+
+            <cn.com.zwwl.bayuwen.widget.NoScrollListView
+                android:id="@+id/history_listview1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/history__1"
+                android:background="@color/white"
+                android:divider="@null"
+                android:listSelector="@android:color/transparent" />
+
+            <TextView
+                android:id="@+id/history__2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/history_listview1"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:padding="15dp"
+                android:text="@string/yesterday"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_14" />
+
+            <cn.com.zwwl.bayuwen.widget.NoScrollListView
+                android:id="@+id/history_listview2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/history__2"
+                android:background="@color/white"
+                android:divider="@null"
+                android:listSelector="@android:color/transparent" />
+
+            <include
+                layout="@layout/view_no_wifi"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+    </ScrollView>
+    </LinearLayout>

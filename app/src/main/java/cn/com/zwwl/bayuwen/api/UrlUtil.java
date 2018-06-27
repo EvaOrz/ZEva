@@ -426,23 +426,24 @@ public class UrlUtil {
     public static String getCancelOrconfirmVote() {
         return HOST + "/topicvote";
     }
-    /**
-     *
-     v2/topiccomment
 
-     POST
-     添加话题评论
+    /**
+     * v2/topiccomment
+     * <p>
+     * POST
+     * 添加话题评论
      */
-    public  static  String getTopicComment(){
-        return  HOST+"/topiccomment";
+    public static String getTopicComment() {
+        return HOST + "/topiccomment";
     }
 
     /**
      * 城市列表
      */
-    public  static  String getCityList(){
-        return  HOST+"/district/city";
+    public static String getCityList() {
+        return HOST + "/district/city";
     }
+
     /**
      * 获取试题列表
      */
@@ -456,12 +457,14 @@ public class UrlUtil {
     public static String submitAnswer() {
         return HOST + "/jigsaw";
     }
+
     /**
      * 错题集
      */
     public static String errorList() {
         return HOST + "/jigsaw/errorlist";
     }
+
     /**
      * 拼图列表
      */
@@ -474,4 +477,12 @@ public class UrlUtil {
     public static String answerDeatil() {
         return HOST + "/jigsaw/questiondetail";
     }
+    /**
+     * 我的FM我的课程列表
+     */
+    public static String myFmCourse() {
+        return HOST + "/fm/buylist";
+    }
+
+
 }

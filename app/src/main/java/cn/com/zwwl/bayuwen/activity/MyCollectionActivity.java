@@ -9,14 +9,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.KeSelectAdapter;
-import cn.com.zwwl.bayuwen.api.FollowApi;
+import cn.com.zwwl.bayuwen.api.CollectionListApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.OnItemClickListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -93,7 +92,7 @@ public class MyCollectionActivity extends BaseActivity {
     @Override
     protected void initData() {
         showLoadingDialog(true);
-        new FollowApi(mContext, 1, new FetchEntryListListener() {
+        new CollectionListApi(mContext, 1, new FetchEntryListListener() {
             @Override
             public void setData(List list) {
                 showLoadingDialog(false);

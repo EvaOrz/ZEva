@@ -52,9 +52,9 @@ public class GroupBuyModel extends Entry {
         private int id;
         private String title;
         private int kid;
-        private Double discount_price;
-        private Double sponsor_price;
-        private Double join_price;
+        private double discount_price;
+        private double sponsor_price;
+        private double join_price;
         private int delayed;
         private int limit_num;
         private String start_time;
@@ -63,8 +63,8 @@ public class GroupBuyModel extends Entry {
         private String created_at;
         private String updated_at;
         private String operator;
-        private Double material_price;
-        private Double total_price;
+        private double material_price;
+        private double total_price;
 
         public int getId() {
             return id;
@@ -90,27 +90,27 @@ public class GroupBuyModel extends Entry {
             this.kid = kid;
         }
 
-        public Double getDiscount_price() {
+        public double getDiscount_price() {
             return discount_price;
         }
 
-        public void setDiscount_price(Double discount_price) {
+        public void setDiscount_price(double discount_price) {
             this.discount_price = discount_price;
         }
 
-        public Double getSponsor_price() {
+        public double getSponsor_price() {
             return sponsor_price;
         }
 
-        public void setSponsor_price(Double sponsor_price) {
+        public void setSponsor_price(double sponsor_price) {
             this.sponsor_price = sponsor_price;
         }
 
-        public Double getJoin_price() {
+        public double getJoin_price() {
             return join_price;
         }
 
-        public void setJoin_price(Double join_price) {
+        public void setJoin_price(double join_price) {
             this.join_price = join_price;
         }
 
@@ -178,19 +178,19 @@ public class GroupBuyModel extends Entry {
             this.operator = operator;
         }
 
-        public Double getMaterial_price() {
+        public double getMaterial_price() {
             return material_price;
         }
 
-        public void setMaterial_price(Double material_price) {
+        public void setMaterial_price(double material_price) {
             this.material_price = material_price;
         }
 
-        public Double getTotal_price() {
+        public double getTotal_price() {
             return total_price;
         }
 
-        public void setTotal_price(Double total_price) {
+        public void setTotal_price(double total_price) {
             this.total_price = total_price;
         }
     }

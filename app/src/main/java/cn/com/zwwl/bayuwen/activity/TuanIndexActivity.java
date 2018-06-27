@@ -224,6 +224,7 @@ public class TuanIndexActivity extends BaseActivity {
 
             @Override
             public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
                 if (error == null) {// 可以参团
                     Intent i = new Intent();
                     i.setClass(mContext, PayActivity.class);

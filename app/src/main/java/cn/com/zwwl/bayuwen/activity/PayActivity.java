@@ -70,9 +70,9 @@ public class PayActivity extends BaseActivity {
     // 优惠券数据
     private List<CouponModel> couponModels = new ArrayList<>();
     private String tuanCode;// 拼团码
-    private String couponCode;// 优惠码
+    private CouponModel currentCoupon;// 优惠码
     private String itemCode;// id组合码
-    private String yueTxt = "0.00";// 账户余额
+    private String yueTxt = "￥0.00";// 账户余额
     private AddressModel currentAddress;// 当前收货地址
     private OrderModel orderModel;// 订单model
     private OrderModel.OrderDetailModel detailModel; // 订单详情model
@@ -229,16 +229,28 @@ public class PayActivity extends BaseActivity {
                     break;
 
                 case 4:// 显示可以使用的优惠券
-                    if (Tools.listNotNull(couponModels)) {
-                        couponTv.setText("");
+                    if (currentCoupon != null) {
+                        couponTv.setText(getYouhuiPrice());
                     } else couponTv.setText("无可用");
                     break;
                 case 5:// 显示选择使用的优惠券
-                    couponTv.setText(couponCode);
+                    couponTv.setText(getYouhuiPrice());
+                    countPrice();// 选择优惠券之后需要重新计算明细
                     break;
             }
         }
     };
+
+    private String getYouhuiPrice() {
+        if (currentCoupon == null) return "不使用";
+        String desc = "";
+        if (currentCoupon.getReduce().getDiscount() > 0) {// 折扣券
+            desc = (int) (currentCoupon.getReduce().getDiscount() * 10) + "折";
+        } else {
+            desc = "-" + (int) currentCoupon.getReduce().getDecrease();
+        }
+        return desc;
+    }
 
     /**
      * 获取课程卡片
@@ -297,8 +309,8 @@ public class PayActivity extends BaseActivity {
                             .OnPickYouhuiListener() {
 
                         @Override
-                        public void onPick(String coupon_code) {
-                            couponCode = coupon_code;
+                        public void onPick(CouponModel couponModel) {
+                            currentCoupon = couponModel;
                             handler.sendEmptyMessage(5);
                         }
                     });
@@ -307,16 +319,9 @@ public class PayActivity extends BaseActivity {
                 }
                 break;
             case R.id.order_d_commit:// 提交订单
-                if (currentAddress == null) {
-                    showToast("请选择收货地址");
-                } else {
-
-                    if (promotionModel != null) {
-                        commit(promotionModel.getId());
-                    } else commit(null);
-
-                }
-
+                if (promotionModel != null) {
+                    commit(promotionModel.getId());
+                } else commit(null);
                 break;
             case R.id.pay_detail:// 支付明细
                 if (detailModel != null) {
@@ -346,6 +351,7 @@ public class PayActivity extends BaseActivity {
      */
     private void commit(String promoId) {
         String tuijianCode = tuijianEv.getText().toString();
+        String couponCode = currentCoupon == null ? "" : currentCoupon.getCoupon_code();
         new MakeOrderApi(mContext, payType + "", couponCode, currentAddress.getId(), tuijianCode,
                 yueTxt, itemCode, tuanCode, promoId, new FetchEntryListener() {
             @Override
@@ -430,10 +436,8 @@ public class PayActivity extends BaseActivity {
      * 实时计算金额
      */
     private void countPrice() {
-        String promoId = "";
-        if (promotionModel != null) {
-            promoId = promotionModel.getId();
-        }
+        String promoId = promotionModel == null ? "" : promotionModel.getId();
+        String couponCode = currentCoupon == null ? "" : currentCoupon.getCoupon_code();
         new CountPriceApi(mContext, itemCode, couponCode, promoId, yueTxt, tuanCode, new
                 FetchEntryListener() {
                     @Override
@@ -566,6 +570,7 @@ public class PayActivity extends BaseActivity {
                 if (Tools.listNotNull(list)) {
                     couponModels.clear();
                     couponModels.addAll(list);
+                    currentCoupon = couponModels.get(0);
                     handler.sendEmptyMessage(4);
                 }
             }

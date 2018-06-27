@@ -18,11 +18,12 @@ public class TDetailListApi extends BaseApi {
     private ResponseCallBack<BaseResponse> callBack;
     private String url;
 
-    public TDetailListApi(Activity context, String tId, int page, ResponseCallBack<BaseResponse> callBack) {
+
+    public TDetailListApi(Activity context, String tId, int page,int type, ResponseCallBack<BaseResponse> callBack) {
         super(context);
         this.activity = context;
         this.callBack = callBack;
-        url = UrlUtil.TDetailList() + "?tid=" + tId + "&page=" + page;
+        url = UrlUtil.TDetailList() + "?tid=" + tId + "&page=" + page+"&type="+type;
         get();
     }
 

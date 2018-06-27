@@ -27,7 +27,7 @@ public class AlbumModel extends Entry {
     private String update_time = "";
     private List<FmModel> fmModels = new ArrayList<>();
     private List<Teacher> teachers = new ArrayList<>();
-    private String conllectId = "";
+    private int conllectId ;
 
     public String getKid() {
         return kid;
@@ -141,11 +141,11 @@ public class AlbumModel extends Entry {
         this.created_at = created_at;
     }
 
-    public String getConllectId() {
+    public int getConllectId() {
         return conllectId;
     }
 
-    public void setConllectId(String conllectId) {
+    public void setConllectId(int conllectId) {
         this.conllectId = conllectId;
     }
 
@@ -215,7 +215,7 @@ public class AlbumModel extends Entry {
         albumModel.setUpdate_time(keinfo.optString("update_time"));
         JSONObject collect = keinfo.optJSONObject("collection");
         if (!isNull(collect)) {
-            albumModel.setConllectId(collect.optString("id"));
+            albumModel.setConllectId(collect.optInt("id"));
         }
         return albumModel;
     }
