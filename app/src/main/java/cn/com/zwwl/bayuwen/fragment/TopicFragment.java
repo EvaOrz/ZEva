@@ -65,10 +65,16 @@ public class TopicFragment extends BasicFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        HttpData();
+    }
+
+    @Override
     protected void initView() {
 
         messageModels = new ArrayList<>();
-        HttpData();
+
 
         allMessageList.setLayoutManager(new LinearLayoutManager(getActivity()));
         allMessageList.setItemAnimator(new DefaultItemAnimator());

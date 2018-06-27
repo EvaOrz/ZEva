@@ -123,6 +123,10 @@ public class TopicLabelActivity extends AppCompatActivity implements View.OnClic
                 if (errorMsg==null){
 
                     ToastUtil.showShortToast("创建话题成功");
+                    if (CreateTopicActivity.createTopicActivity!=null){
+                        CreateTopicActivity.createTopicActivity.finish();
+                    }
+                    finish();
                 } else {
                     ToastUtil.showShortToast(errorMsg.getDesc());
                 }

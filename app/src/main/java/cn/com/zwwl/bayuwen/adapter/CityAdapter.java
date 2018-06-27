@@ -244,7 +244,7 @@ public class CityAdapter extends BaseAdapter {
             String sortStr = cityBeans.get(i).getInitial();
             char firstChar = sortStr.toUpperCase().charAt(0);
             if (firstChar == section) {
-                return i+2;
+                return i;
             }
         }
 
