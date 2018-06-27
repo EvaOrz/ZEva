@@ -7,11 +7,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.fragment.FgAnswerResult;
-import cn.com.zwwl.bayuwen.model.AnswerModel;
+import cn.com.zwwl.bayuwen.model.OptionModel;
 
 public class AnswerResultAdapter  extends FragmentStatePagerAdapter {
-    private List<AnswerModel>answer;
-    public AnswerResultAdapter(FragmentManager fm, List<AnswerModel>answer) {
+    private List<OptionModel>answer;
+    public AnswerResultAdapter(FragmentManager fm, List<OptionModel>answer) {
         super(fm);
         this.answer=answer;
     }

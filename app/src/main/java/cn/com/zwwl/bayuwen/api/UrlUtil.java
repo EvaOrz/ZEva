@@ -491,7 +491,12 @@ public class UrlUtil {
     public static String puzzle() {
         return HOST + "/jigsaw/list";
     }
-
+    /**
+     * 获取答题详情
+     */
+    public static String answerDetail() {
+        return HOST + "/jigsaw/questiondetail";
+    }
     /**
      * 我的FM我的课程列表
      */

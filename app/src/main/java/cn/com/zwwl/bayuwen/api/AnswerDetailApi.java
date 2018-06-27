@@ -15,21 +15,16 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.OptionModel;
 import cn.com.zwwl.bayuwen.util.GsonUtil;
 
-/**
- * 错题本
- * Created by zhumangmang at 2018/6/21 14:23
- */
-public class ErrorListApi extends BaseApi {
+public class AnswerDetailApi extends BaseApi {
     private Activity activity;
     private ResponseCallBack<List<OptionModel>> callBack;
     private String url;
 
-    public ErrorListApi(Activity context, String pId, ResponseCallBack<List<OptionModel>> callBack) {
+    public AnswerDetailApi(Activity context, String pId, ResponseCallBack<List<OptionModel>> callBack) {
         super(context);
         this.activity = context;
         this.callBack = callBack;
-//        url = UrlUtil.errorList() + "?puzzleId=246&studentId=1201597";
-        url = UrlUtil.errorList() + "?puzzleId=" + pId + "&studentId=" + TempDataHelper.getCurrentChildNo(activity);
+        url = UrlUtil.answerDetail() + "?sectionId=" + pId + "&studentId=" + TempDataHelper.getCurrentChildNo(activity);
         get();
     }
 
