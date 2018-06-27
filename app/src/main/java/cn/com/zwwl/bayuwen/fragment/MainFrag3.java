@@ -87,8 +87,6 @@ public class MainFrag3 extends BasicFragment {
 
     /**
      * 默认fragment创建的时候是可见的，但是不会调用该方法！切换可见状态的时候会调用，但是调用onResume，onPause的时候却不会调用
-     *
-     * @param hidden
      */
     @Override
 

@@ -26,17 +26,32 @@
         android:scaleType="centerInside"
         android:src="@mipmap/icon_news" />
 
-    <android.support.v7.widget.AppCompatImageView
+    <LinearLayout
         android:id="@+id/menu_school"
-        android:layout_width="@dimen/dp_40"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_toLeftOf="@id/menu_news"
         android:layout_toStartOf="@id/menu_news"
-        android:contentDescription="@null"
-        android:scaleType="centerInside"
-        android:src="@mipmap/icon_school" />
+        android:gravity="center_vertical">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            android:src="@mipmap/yellow_map" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="北京"
+            android:textColor="@color/gold" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/menu_search"

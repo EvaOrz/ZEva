@@ -95,8 +95,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/dp_5"
-                android:layout_marginStart="@dimen/dp_5"
                 android:gravity="center"
                 android:text="@string/brace_left"
                 android:textSize="@dimen/text_size_10" />
@@ -106,8 +104,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/dp_5"
-                android:layout_marginStart="@dimen/dp_5"
                 android:gravity="center"
                 android:textColor="@color/gold"
                 android:textSize="@dimen/text_size_10" />
@@ -116,8 +112,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/dp_5"
-                android:layout_marginStart="@dimen/dp_5"
                 android:gravity="center"
                 android:text="@string/sig_xie"
                 android:textSize="@dimen/text_size_10" />
@@ -127,8 +121,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/dp_5"
-                android:layout_marginStart="@dimen/dp_5"
                 android:gravity="center"
                 android:textSize="@dimen/text_size_10" />
 
@@ -136,8 +128,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/dp_5"
-                android:layout_marginStart="@dimen/dp_5"
                 android:gravity="center"
                 android:text="@string/brace_right"
                 android:textSize="@dimen/text_size_10" />
