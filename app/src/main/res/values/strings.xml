@@ -440,5 +440,6 @@
     <string name="teacher_reply">---------------------  教师回复  ----------------------</string>
     <string name="family_reply">家长回复</string>
     <string name="my_fm">我的FM</string>
+    <string name="student_evaluate">学员评价</string>
 
 </resources>

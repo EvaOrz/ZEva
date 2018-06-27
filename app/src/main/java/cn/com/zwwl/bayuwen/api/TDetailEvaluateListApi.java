@@ -11,15 +11,16 @@ import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.BaseResponse;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.TeacherDetailStuentevaluateModel;
 import cn.com.zwwl.bayuwen.util.GsonUtil;
 
-public class TDetailListApi extends BaseApi {
+public class TDetailEvaluateListApi extends BaseApi {
     private Activity activity;
-    private ResponseCallBack<BaseResponse> callBack;
+    private ResponseCallBack<TeacherDetailStuentevaluateModel> callBack;
     private String url;
 
 
-    public TDetailListApi(Activity context, String tId, int page,int type, ResponseCallBack<BaseResponse> callBack) {
+    public TDetailEvaluateListApi(Activity context, String tId, int page, int type, ResponseCallBack<TeacherDetailStuentevaluateModel> callBack) {
         super(context);
         this.activity = context;
         this.callBack = callBack;
@@ -42,9 +43,9 @@ public class TDetailListApi extends BaseApi {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                BaseResponse response = null;
+                TeacherDetailStuentevaluateModel response = null;
                 if (json != null)
-                    response = GsonUtil.parseJson(BaseResponse.class, json.toString());
+                    response = GsonUtil.parseJson(TeacherDetailStuentevaluateModel.class, json.toString());
                 callBack.result(response, errorMsg);
             }
         });
