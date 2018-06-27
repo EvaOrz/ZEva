@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -64,6 +65,7 @@ public class PayActivity extends BaseActivity {
     private TextView dianNumTv, tuanCodeTv, yueTv, priceTv, couponTv;
     private EditText tuijianEv;
     private ImageView zhifubaoBt, weixinBt;
+    private CheckBox tuikuanCheckbox;
 
     private List<KeModel> keDatas = new ArrayList<>();
     private PromotionModel promotionModel; // 组合课购买场合、需要传入组合课model
@@ -156,6 +158,7 @@ public class PayActivity extends BaseActivity {
         tuanCodeTv = findViewById(R.id.tuan_code_tv);
         tuijianEv = findViewById(R.id.tuijian_ev);
         tuijianEv.clearFocus();
+        tuikuanCheckbox = findViewById(R.id.tuikuan_info_check);
 
         priceTv = findViewById(R.id.order_d_price);
         zhifubaoBt = findViewById(R.id.zhifubao_pay);
@@ -319,6 +322,10 @@ public class PayActivity extends BaseActivity {
                 }
                 break;
             case R.id.order_d_commit:// 提交订单
+                if (!tuikuanCheckbox.isChecked()) {
+                    showToast("请阅读并同意退款方式须知");
+                    return;
+                }
                 if (promotionModel != null) {
                     commit(promotionModel.getId());
                 } else commit(null);
@@ -352,7 +359,8 @@ public class PayActivity extends BaseActivity {
     private void commit(String promoId) {
         String tuijianCode = tuijianEv.getText().toString();
         String couponCode = currentCoupon == null ? "" : currentCoupon.getCoupon_code();
-        new MakeOrderApi(mContext, payType + "", couponCode, currentAddress.getId(), tuijianCode,
+        String addressId = currentAddress == null ? "" : currentAddress.getId();
+        new MakeOrderApi(mContext, payType + "", couponCode, addressId, tuijianCode,
                 yueTxt, itemCode, tuanCode, promoId, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
@@ -469,10 +477,8 @@ public class PayActivity extends BaseActivity {
                 tt = TuanPayResultActivity.PAY_SUCCESS;
                 desc = "报名付费成功";
             } else if (result.equals(BCPayResult.RESULT_CANCEL)) {
-//                tt = TuanPayResultActivity.PAY_CANCLE;
-//                desc = "取消支付";
-                goOrderDetail();
-                return;
+                tt = TuanPayResultActivity.PAY_CANCLE;
+                desc = "取消支付";
             } else if (result.equals(BCPayResult.RESULT_FAIL)) {
                 tt = TuanPayResultActivity.PAY_FAILD;
                 desc = "支付失败, 原因: " + bcPayResult.getErrCode() +
@@ -491,18 +497,13 @@ public class PayActivity extends BaseActivity {
         }
     };
 
-    private void goOrderDetail() {
-        Intent i = new Intent(mContext, OrderDetailActivity.class);
-        i.putExtra("OrderDetailActivity_data", orderModel.getBill_no());
-        i.putExtra("OrderDetailActivity_type", 1);
-        startActivity(i);
-    }
-
     private void goPayResult(int t, String desc) {
         Intent i = new Intent(mContext, TuanPayResultActivity.class);
         i.putExtra("TuanPayResultActivity_data", t);
+        i.putExtra("TuanPayResultActivity_oid", orderModel.getBill_no());
         i.putExtra("TuanPayResultActivity_desc", desc);
         startActivity(i);
+        finish();
     }
 
     private void doWeixinPay() {

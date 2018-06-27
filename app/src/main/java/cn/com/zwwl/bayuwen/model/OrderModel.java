@@ -82,80 +82,86 @@ public class OrderModel extends Entry {
      */
     public static class OrderDetailModel extends Entry {
 
-        private Double originPrice;
-        private Double amount;
-        private Double limitDiscount;
-        private Double couponDiscount;
-        private Double orderDiscount;
-        private Double promotionDiscount;
-        private Double groupBuyDiscount;
-        private Double assets;
+        private String oid;
+        private double originPrice;
+        private double amount;
+        private double limitDiscount;
+        private double couponDiscount;
+        private double orderDiscount;
+        private double promotionDiscount;
+        private double groupBuyDiscount;
+        private double assets;
 
-        public Double getOriginPrice() {
+        public String getOid() {
+            return oid;
+        }
+
+        public void setOid(String oid) {
+            this.oid = oid;
+        }
+
+        public double getOriginPrice() {
             return originPrice;
         }
 
-        public void setOriginPrice(Double originPrice) {
+        public void setOriginPrice(double originPrice) {
             this.originPrice = originPrice;
         }
 
-        public Double getAmount() {
+        public double getAmount() {
             return amount;
         }
 
-        public void setAmount(Double amount) {
+        public void setAmount(double amount) {
             this.amount = amount;
         }
 
-        public Double getLimitDiscount() {
+        public double getLimitDiscount() {
             return limitDiscount;
         }
 
-        public void setLimitDiscount(Double limitDiscount) {
+        public void setLimitDiscount(double limitDiscount) {
             this.limitDiscount = limitDiscount;
         }
 
-        public Double getCouponDiscount() {
+        public double getCouponDiscount() {
             return couponDiscount;
         }
 
-        public void setCouponDiscount(Double couponDiscount) {
+        public void setCouponDiscount(double couponDiscount) {
             this.couponDiscount = couponDiscount;
         }
 
-
-        public Double getOrderDiscount() {
+        public double getOrderDiscount() {
             return orderDiscount;
         }
 
-        public void setOrderDiscount(Double orderDiscount) {
+        public void setOrderDiscount(double orderDiscount) {
             this.orderDiscount = orderDiscount;
         }
 
-        public Double getPromotionDiscount() {
+        public double getPromotionDiscount() {
             return promotionDiscount;
         }
 
-        public void setPromotionDiscount(Double promotionDiscount) {
+        public void setPromotionDiscount(double promotionDiscount) {
             this.promotionDiscount = promotionDiscount;
         }
 
-        public Double getGroupBuyDiscount() {
+        public double getGroupBuyDiscount() {
             return groupBuyDiscount;
         }
 
-        public void setGroupBuyDiscount(Double groupBuyDiscount) {
+        public void setGroupBuyDiscount(double groupBuyDiscount) {
             this.groupBuyDiscount = groupBuyDiscount;
         }
 
-        public Double getAssets() {
+        public double getAssets() {
             return assets;
         }
 
-        public void setAssets(Double assets) {
+        public void setAssets(double assets) {
             this.assets = assets;
         }
-
-
     }
 }

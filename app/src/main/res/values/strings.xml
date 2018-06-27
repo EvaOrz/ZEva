@@ -322,7 +322,7 @@
     <string name="piao_option1">抬头类型</string>
     <string name="piao_option2">发票抬头</string>
     <string name="piao_option3">税号</string>
-    <string name="piao_option4">发票内容</string>
+    <string name="piao_option4">备注信息</string>
     <string name="piao_option5">发票金额</string>
 
 

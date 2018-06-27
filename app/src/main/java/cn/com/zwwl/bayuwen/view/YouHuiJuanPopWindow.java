@@ -89,7 +89,11 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
                 R.layout.pop_youhuijuan, null);
         view.findViewById(R.id.youhuijuan_close)
                 .setOnClickListener(this);
-        view.findViewById(R.id.youhuijuan_no).setOnClickListener(this);
+        TextView youNo = view.findViewById(R.id.youhuijuan_no);
+        youNo.setOnClickListener(this);
+        if (type == 1) {
+            youNo.setVisibility(View.GONE);
+        }else  youNo.setVisibility(View.VISIBLE);
         listView = view.findViewById(R.id.youhuijuan_listview);
         adapter = new YouhuiAdapter(mContext, couponModels);
         listView.setAdapter(adapter);

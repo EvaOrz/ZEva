@@ -7,21 +7,22 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
-import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.api.order.FaPiaoHistoryApi;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.FaPiaoModel;
+import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
@@ -30,7 +31,7 @@ import cn.com.zwwl.bayuwen.widget.ViewHolder;
 public class PiaoHistoryActivity extends BaseActivity {
 
     private ListView listView;
-    private List<KeModel> datas = new ArrayList<>();
+    private List<FaPiaoModel> datas = new ArrayList<>();
     private PiaoHistoryAdapter adapter;
 
 
@@ -42,16 +43,25 @@ public class PiaoHistoryActivity extends BaseActivity {
         initView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+    }
+
     private void initView() {
         listView = findViewById(R.id.piao_h_listview);
         adapter = new PiaoHistoryAdapter(mContext);
         listView.setAdapter(adapter);
 
-        datas.add(new KeModel());
-        datas.add(new KeModel());
-        datas.add(new KeModel());
-        handler.sendEmptyMessage(0);
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(mContext,PiaoKaiActivity.class);
+                i.putExtra("PiaoKaiActivity_data",datas.get(position));
+                startActivity(i);
+            }
+        });
         findViewById(R.id.piao_h_back).setOnClickListener(this);
         findViewById(R.id.piao_h_shenqing).setOnClickListener(this);
     }
@@ -86,11 +96,28 @@ public class PiaoHistoryActivity extends BaseActivity {
     @Override
     protected void initData() {
         showLoadingDialog(true);
+        new FaPiaoHistoryApi(mContext, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+                showLoadingDialog(false);
+                if (Tools.listNotNull(list)) {
+                    datas.clear();
+                    datas.addAll(list);
+                    handler.sendEmptyMessage(0);
+                }
+            }
 
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+                if (error != null) showToast(error.getDesc());
+
+            }
+        });
 
     }
 
-    public class PiaoHistoryAdapter extends CheckScrollAdapter<KeModel> {
+    public class PiaoHistoryAdapter extends CheckScrollAdapter<FaPiaoModel> {
         protected Context mContext;
 
         public PiaoHistoryAdapter(Context context) {
@@ -98,11 +125,11 @@ public class PiaoHistoryActivity extends BaseActivity {
             mContext = context;
         }
 
-        public void setData(List<KeModel> mItemList) {
+        public void setData(List<FaPiaoModel> mItemList) {
             clear();
             isScroll = false;
             synchronized (mItemList) {
-                for (KeModel item : mItemList) {
+                for (FaPiaoModel item : mItemList) {
                     add(item);
                 }
             }
@@ -110,15 +137,17 @@ public class PiaoHistoryActivity extends BaseActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            final KeModel item = getItem(position);
+            final FaPiaoModel item = getItem(position);
             ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout
                     .item_piao_history);
 
-            TextView title = viewHolder.getView(R.id.album_title);
-            TextView desc = viewHolder.getView(R.id.album_desc);
-            ImageView img = viewHolder.getView(R.id.album_img);
-            TextView learn = viewHolder.getView(R.id.album_learn_count);
-            TextView per = viewHolder.getView(R.id.album_period);
+            TextView title = viewHolder.getView(R.id.piao_title);
+            TextView date = viewHolder.getView(R.id.piao_date);
+            TextView price = viewHolder.getView(R.id.piao_price);
+
+            title.setText(item.getInvo_title());
+            date.setText(item.getCreated_at());
+            price.setText("￥" + item.getInvo_amount());
 
             return viewHolder.getConvertView();
         }

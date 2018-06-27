@@ -864,4 +864,5 @@ public class KeModel extends Entry {
     public void setCollectionId(int collectionId) {
         this.collectionId = collectionId;
     }
+
 }
