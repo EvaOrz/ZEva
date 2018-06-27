@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class FeedBackActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.e("mmmmmmmmmmmm", count + "");
                 limitNum -= count;
                 handler.sendEmptyMessage(0);
             }

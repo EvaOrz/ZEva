@@ -69,6 +69,9 @@ public class ChildInfoActivity extends BaseActivity {
     private JiangZhuangAdapter adapter;
     private List<GiftAndJiangModel> datas = new ArrayList<>();
 
+    // 记录学员修改之前入学年月
+    private int yyy;
+
     private ChildModel childModel = new ChildModel();
 
     @Override
@@ -215,22 +218,41 @@ public class ChildInfoActivity extends BaseActivity {
 
             case R.id.info_c_ruxue:// 入学年月
                 hideJianpan();
-                int y1 = CalendarTools.getCurrentYear(), m1 = CalendarTools.getCurrentMonth(), d1 =
+                int yRecord = CalendarTools.getCurrentYear(), mRecord = CalendarTools
+                        .getCurrentMonth
+                                (), dRecord =
                         CalendarTools.getCurrentDay();
                 if (!TextUtils.isEmpty(childModel.getAdmission_time())) {
-                    Calendar c = CalendarTools.fromStringToca(childModel.getAdmission_time());
+                    Calendar c = CalendarTools.fromStringToca1(childModel.getAdmission_time());
                     if (c != null) {
-                        y1 = c.get(Calendar.YEAR);
-                        m1 = c.get(Calendar.MONTH) + 1;
-                        d1 = c.get(Calendar.DATE);
+                        yRecord = c.get(Calendar.YEAR);
+                        mRecord = c.get(Calendar.MONTH) + 1;
+                        dRecord = c.get(Calendar.DATE);
                     }
                 }
-                new DatePopWindow(mContext, false, y1, m1, d1, new
+                yyy = yRecord;
+                new DatePopWindow(mContext, false, yRecord, mRecord, dRecord, new
                         DatePopWindow.MyDatePickListener() {
                             @Override
                             public void onDatePick(int year, int month, int day) {
                                 childModel.setAdmission_time(year + "-" + month);
                                 handler.sendEmptyMessage(2);
+
+                                int gradeNo = -1;
+                                for (int i = 0; i < AppValue.getGradeStrings().size(); i++) {
+                                    if (AppValue.getGradeStrings().get(i).equals(childModel
+                                            .getGrade())) {
+                                        gradeNo = i;
+                                    }
+                                }
+                                if (gradeNo > -1) {
+                                    int newGradeNo = gradeNo + year - yyy;
+                                    if (newGradeNo > -1) {
+                                        childModel.setGrade(AppValue.getGradeStrings().get
+                                                (newGradeNo));
+                                        handler.sendEmptyMessage(4);
+                                    }
+                                }
                             }
                         });
 

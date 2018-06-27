@@ -160,6 +160,20 @@ public class CalendarTools {
         return calendar;
     }
 
+    public static Calendar fromStringToca1(String user_time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        Calendar calendar = Calendar.getInstance();
+        try {
+            Date d = sdf.parse(user_time);
+            calendar.setTime(d);
+
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block e.printStackTrace();
+        }
+
+        return calendar;
+    }
+
     /**
      * 格式化日期
      *
