@@ -18,7 +18,7 @@ import cn.com.zwwl.bayuwen.model.KeModel;
 public class CompleteCourseAdapter extends BaseQuickAdapter<KeModel,BaseViewHolder> {
 
     public CompleteCourseAdapter(List<KeModel> list) {
-        super(R.layout.item_praise, list);
+        super(R.layout.item_course_complete, list);
     }
 
     @Override

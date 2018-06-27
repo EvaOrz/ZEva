@@ -24,8 +24,7 @@ public class AnswerDetailApi extends BaseApi {
         super(context);
         this.activity = context;
         this.callBack = callBack;
-//        url = UrlUtil.errorList() + "?puzzleId=246&studentId=1201597";
-        url = UrlUtil.answerDeatil() + "?sectionId=" + pId + "&studentId=" + TempDataHelper.getCurrentChildNo(activity);
+        url = UrlUtil.answerDetail() + "?sectionId=" + pId + "&studentId=" + TempDataHelper.getCurrentChildNo(activity);
         get();
     }
 

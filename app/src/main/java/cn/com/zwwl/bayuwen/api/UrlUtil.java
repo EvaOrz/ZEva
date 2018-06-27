@@ -474,7 +474,7 @@ public class UrlUtil {
     /**
      * 获取答题详情
      */
-    public static String answerDeatil() {
+    public static String answerDetail() {
         return HOST + "/jigsaw/questiondetail";
     }
     /**
