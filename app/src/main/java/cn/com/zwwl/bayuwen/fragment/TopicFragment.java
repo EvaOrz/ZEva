@@ -1,5 +1,6 @@
 package cn.com.zwwl.bayuwen.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,7 +23,10 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -56,6 +60,7 @@ public class TopicFragment extends BasicFragment {
 
     private String url = UrlUtil.getTopicMessage();
     private List<TopicMessageModel> messageModels;
+    public List<TopicMessageModel> messageModels1=new ArrayList<>();
     private TopicMessageAdapter topicMessageAdapter;
 
 
@@ -95,7 +100,27 @@ public class TopicFragment extends BasicFragment {
                 refresh.finishRefresh();
                 if (messageModel != null) {
                     messageModels.clear();
-                    messageModels=messageModel;
+                   //将List按照时间倒序排列
+                   messageModels =messageModel;
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                               Date d1;
+                               Date d2;
+                         TopicMessageModel topicMessageModel =new TopicMessageModel();
+                          //做一个冒泡排序，大的在数组的前列
+                              for(int i=0; i<messageModels.size()-1; i++){
+                                    for(int j=i+1; j<messageModels.size();j++){
+                                        ParsePosition pos1 = new ParsePosition(0);
+                                       ParsePosition pos2 = new ParsePosition(0);
+                                      d1 = sdf.parse(messageModels.get(i).getCreate_at(), pos1);
+                                     d2 = sdf.parse(messageModels.get(j).getCreate_at(), pos2);
+                                          if(d1.before(d2)){//如果队前日期靠前，调换顺序//
+                                           topicMessageModel=messageModels.get(i);
+                                            messageModels.set(i, messageModels.get(j));
+                                            messageModels.set(j, topicMessageModel);
+                                               }
+                                              }
+                                 }
+
                     topicMessageAdapter.setNewData(messageModels);
                 } else {
                     ToastUtil.showShortToast("暂无数据");
