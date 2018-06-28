@@ -2,6 +2,22 @@ package cn.com.zwwl.bayuwen.model;
 
 /**
  * 团购信息
+ *
+ *  "id":"195",
+ "purchase_code":"5B32F71E771AA",
+ "uid":"260935",
+ "type":"1",
+ "status":"0",
+ "valid":"1",
+ "end_time":"2018-06-29 00:00:00",
+ "discount_id":"10",
+ "created_at":"2018-06-27 10:31:58",
+ "discount":Object{...},
+ "course":Object{...},
+ "dianfu":0,
+ "detail":null,
+ "state":2,
+ "oid":"10180627172736477932"
  */
 public class GroupBuyModel extends Entry {
 
@@ -15,6 +31,8 @@ public class GroupBuyModel extends Entry {
     private int state = 0;
     private int oid;
     private String code = ""; // 开团码
+    private String purchase_code = ""; // 拼团码
+    private KeModel keModel;
 
     public DiscountBean getDiscount() {
         return discount;
@@ -193,5 +211,21 @@ public class GroupBuyModel extends Entry {
         public void setTotal_price(double total_price) {
             this.total_price = total_price;
         }
+    }
+
+    public KeModel getKeModel() {
+        return keModel;
+    }
+
+    public String getPurchase_code() {
+        return purchase_code;
+    }
+
+    public void setPurchase_code(String purchase_code) {
+        this.purchase_code = purchase_code;
+    }
+
+    public void setKeModel(KeModel keModel) {
+        this.keModel = keModel;
     }
 }
