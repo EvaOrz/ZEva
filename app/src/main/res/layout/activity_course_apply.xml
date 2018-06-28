@@ -5,19 +5,29 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-
-    <android.support.v7.widget.AppCompatTextView
+    <LinearLayout
         android:id="@+id/old"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginStart="@dimen/dp_16"
-        android:drawableLeft="@mipmap/icon_change_content"
-        android:drawablePadding="@dimen/dp_10"
-        android:drawableStart="@mipmap/icon_change_content"
-        android:text="调课内容" />
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:src="@mipmap/icon_change_content" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            android:text="调课内容" />
+    </LinearLayout>
+
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/old_layout"
@@ -28,16 +38,28 @@
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/draw_gray_line_bg"
         android:padding="@dimen/dp_10"
-        app:layout_constraintTop_toBottomOf="@id/old">
+        app:layout_constraintTop_toBottomOf="@+id/old">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/unit_name"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/unit_layout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/icon_face_teach"
-            android:drawablePadding="@dimen/dp_10"
-            android:drawableStart="@mipmap/icon_face_teach"
-            android:textSize="@dimen/sp_16" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_face_teach" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/unit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp_10"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
 
         <View
             android:id="@+id/divider"
@@ -46,7 +68,7 @@
             android:layout_marginBottom="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_5"
             android:background="@color/gray_light"
-            app:layout_constraintTop_toBottomOf="@id/unit_name" />
+            app:layout_constraintTop_toBottomOf="@id/unit_layout" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/description"
@@ -56,18 +78,30 @@
             app:layout_constraintTop_toBottomOf="@id/divider" />
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.v7.widget.AppCompatTextView
+
+    <LinearLayout
         android:id="@+id/now"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_10"
-        android:drawableLeft="@mipmap/icon_new_class"
-        android:drawableStart="@mipmap/icon_new_class"
         android:gravity="center_vertical"
-        android:text="@string/transfer_course_class"
-        app:layout_constraintTop_toBottomOf="@id/old_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/old_layout">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:src="@mipmap/icon_new_class" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            android:gravity="center_vertical"
+            android:text="@string/transfer_course_class" />
+    </LinearLayout>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -76,125 +110,156 @@
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/draw_gray_line_bg"
-        app:layout_constraintTop_toBottomOf="@id/now">
+        android:padding="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@+id/now">
 
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/pic"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginBottom="@dimen/dp_8"
-            android:layout_marginLeft="@dimen/activity_vertical_margin"
-            android:layout_marginStart="@dimen/activity_vertical_margin"
-            android:layout_marginTop="@dimen/dp_8"
-            android:scaleType="fitXY"
-            android:src="@mipmap/home_head_hot"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/count_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/count_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_8"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/pic"
-            app:layout_constraintTop_toTopOf="parent">
+        <FrameLayout
+            android:id="@+id/pic_layout"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_80"
+            app:layout_constraintStart_toStartOf="parent">
 
             <android.support.v7.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/icon_face_teach" />
+                android:id="@+id/pic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:foreground="#55000000" />
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/course_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginStart="@dimen/dp_10"
-                android:textSize="@dimen/sp_16" />
-        </LinearLayout>
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/teacher_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_5"
-            android:drawableLeft="@mipmap/icon_graduate"
-            android:drawablePadding="@dimen/dp_10"
-            android:drawableStart="@mipmap/icon_graduate"
-            android:textColor="@color/gray_light"
-            android:textSize="@dimen/sp_12"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/pic"
-            app:layout_constraintTop_toBottomOf="@id/count_layout" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/school_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_5"
-            android:drawableLeft="@mipmap/icon_map"
-            android:drawablePadding="@dimen/dp_10"
-            android:drawableStart="@mipmap/icon_map"
-            android:textColor="@color/gray_light"
-            android:textSize="@dimen/sp_12"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/pic"
-            app:layout_constraintTop_toBottomOf="@id/teacher_name" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_5"
-            android:drawableLeft="@mipmap/icon_calendar"
-            android:drawablePadding="@dimen/dp_10"
-            android:drawableStart="@mipmap/icon_calendar"
-            android:textColor="@color/gray_light"
-            android:textSize="@dimen/sp_12"
-            app:layout_constraintEnd_toStartOf="@id/arrow"
-            app:layout_constraintStart_toEndOf="@id/pic"
-            app:layout_constraintTop_toBottomOf="@id/school_name" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/time"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_8"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_5"
-            android:drawableLeft="@mipmap/icon_clock"
-            android:drawablePadding="@dimen/dp_10"
-            android:textSize="@dimen/sp_12"
-            android:drawableStart="@mipmap/icon_clock"
-            android:textColor="@color/gray_light"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/arrow"
-            app:layout_constraintStart_toEndOf="@id/pic"
-            app:layout_constraintTop_toBottomOf="@id/date" />
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/icon_play" />
+        </FrameLayout>
 
         <LinearLayout
-            android:id="@+id/arrow"
-            android:layout_width="wrap_content"
+            android:id="@+id/content_layout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_16"
-            android:layout_marginRight="@dimen/dp_16"
-            android:layout_marginBottom="@dimen/dp_8"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/pic_layout">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_face_teach" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/course_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@mipmap/icon_graduate" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/teacher_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:textColor="@color/gray_light"
+                    android:textSize="@dimen/sp_12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@mipmap/icon_map" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/school_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:textColor="@color/gray_light"
+                    android:textSize="@dimen/sp_12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@mipmap/icon_calendar" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:textColor="@color/gray_light"
+                    android:textSize="@dimen/sp_12" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@mipmap/icon_clock" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:textColor="@color/gray_light"
+                    android:textSize="@dimen/sp_12" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:gravity="bottom|end"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/stock"
@@ -207,8 +272,10 @@
                 android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginStart="@dimen/dp_5"
                 android:textColor="@color/gold"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/text_size_16" />
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>

@@ -67,10 +67,10 @@ public class CourseApplyActivity extends BasicActivityWithTitle {
         courseName.setText(keModel.getTitle());
         teacherName.setText(keModel.getTname());
         schoolName.setText(keModel.getSchool());
-        date.setText(CalendarTools.format(Long.valueOf(keModel.getStartPtime()),
-                "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(keModel.getEndPtime()),
-                "yyyy-MM-dd"));
-        time.setText(keModel.getClass_start_at() + "-" + keModel.getClass_end_at());
+        date.setText(String.format("%s至%s", CalendarTools.format(keModel.getStartPtime(),
+                "yyyy-MM-dd"), CalendarTools.format(keModel.getEndPtime(),
+                "yyyy-MM-dd")));
+        time.setText(String.format("%s-%s", keModel.getClass_start_at(), keModel.getClass_end_at()));
         stock.setText(String.format("剩余名额: %s", mApplication.newKe.getNum()));
         price.setText(String.format("￥ %s", mApplication.newKe.getBuyPrice()));
     }
