@@ -63,7 +63,6 @@ public class StudyingIndexActivity extends BasicActivityWithTitle {
     @Override
     protected void initData() {
         kid = getIntent().getStringExtra("kid");
-        kid="209";
         setCustomTitle(getIntent().getStringExtra("title"));
         online = getIntent().getIntExtra("online", -1);
         new StudyingClassInfoApi(this, kid, new ResponseCallBack<ClassModel>() {
@@ -100,6 +99,7 @@ public class StudyingIndexActivity extends BasicActivityWithTitle {
     @OnClick({R.id.course_change, R.id.class_covert, R.id.class_seat, R.id.middle_report, R.id.final_report, R.id.welcome})
     @Override
     public void onClick(View view) {
+        if (classModel == null) return;
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.course_change:
@@ -146,6 +146,14 @@ public class StudyingIndexActivity extends BasicActivityWithTitle {
                 }
                 break;
             default:
+                if (TextUtils.isEmpty(classModel.getWelcome_speech())) {
+                    ToastUtil.showShortToast(R.string.warning_no_mid_report);
+                } else {
+                    intent.setClass(mActivity, WebActivity.class);
+                    intent.putExtra("WebActivity_title", classModel.getCourse().getTitle());
+                    intent.putExtra("WebActivity_data", classModel.getWelcome_speech());
+                    startActivity(intent);
+                }
                 break;
         }
     }

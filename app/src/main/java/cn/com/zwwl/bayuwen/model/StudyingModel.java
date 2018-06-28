@@ -3,8 +3,8 @@ package cn.com.zwwl.bayuwen.model;
 import java.util.List;
 
 /**
- *  在学课程
- *  Created by zhumangmang at 2018/5/31 11:58
+ * 在学课程
+ * Created by zhumangmang at 2018/5/31 11:58
  */
 public class StudyingModel extends Entry {
 
@@ -29,6 +29,15 @@ public class StudyingModel extends Entry {
     private KeModel course;
     private String midterm_report;
     private String end_term_report;
+    private String welcome_speech;
+
+    public String getWelcome_speech() {
+        return welcome_speech;
+    }
+
+    public void setWelcome_speech(String welcome_speech) {
+        this.welcome_speech = welcome_speech;
+    }
 
     public KeModel getCourse() {
         return course;
