@@ -26,7 +26,8 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/dp_20"
-            android:text="dddd"
+            android:text=""
+            android:textStyle="bold"
             android:textColor="#242C3F" />
       </LinearLayout>
 
