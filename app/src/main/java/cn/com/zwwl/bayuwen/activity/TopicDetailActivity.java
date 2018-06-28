@@ -199,7 +199,6 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
                 break;
             case R.id.comment_tv:
                 initPopWindow();   //弹出popwindow
-
                 break;
 
 
@@ -240,7 +239,6 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
                 return false;
             }
         });
-
 
 
     }
