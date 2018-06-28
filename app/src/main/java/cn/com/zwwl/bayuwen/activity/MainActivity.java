@@ -89,6 +89,29 @@ public class MainActivity extends BaseActivity {
         initData();
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        int flag = intent.getIntExtra("Main_frag_no", 0);
+        switch (flag) {
+            case 1:
+                switchFragment(mainFrag1);
+                break;
+            case 2:
+                switchFragment(mainFrag2);
+                break;
+            case 3:
+                switchFragment(mainFrag3);
+                break;
+            case 4:
+                switchFragment(mainFrag4);
+                break;
+            case 5:
+                switchFragment(mainFrag5);
+                break;
+        }
+    }
+
     /**
      * 获取当前用户下的所有学员信息
      */
@@ -452,7 +475,7 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * 切换四个tab
+     * 切换五个tab
      *
      * @param fragment
      */

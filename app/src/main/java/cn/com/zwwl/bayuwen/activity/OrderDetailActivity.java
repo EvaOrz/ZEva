@@ -380,6 +380,7 @@ public class OrderDetailActivity extends BaseActivity {
     private void goPayResult(int t, String desc) {
         Intent i = new Intent(mContext, TuanPayResultActivity.class);
         i.putExtra("TuanPayResultActivity_data", t);
+        i.putExtra("TuanPayResultActivity_oid",oid);
         i.putExtra("TuanPayResultActivity_desc", desc);
         startActivity(i);
         finish();

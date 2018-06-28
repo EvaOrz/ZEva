@@ -507,8 +507,11 @@ public class CourseDetailActivity extends BaseActivity {
                 "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(keModel
                         .getEndPtime()),
                 "yyyy-MM-dd"));
-        time_tv.setText(keModel.getClass_start_at() + " - " + keModel.getClass_end_at
-                ());
+
+        String startTime=keModel.getClass_start_at();
+        String endtime=keModel.getClass_end_at();
+        time_tv.setText(startTime.substring(0,startTime.length()-3) + " - " + endtime.substring(0,endtime.length()-3));
+
         priceTv2.setText("￥" + keModel.getBuyPrice());
 
         teacherLayout.removeAllViews();

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -42,6 +43,11 @@ public class PiaoSelectActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piao_select);
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initData();
     }
 
@@ -97,18 +103,20 @@ public class PiaoSelectActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.piao_s_next:// 下一步
-                List<KeModel> ks = new ArrayList<>();
+                String oid_item = "";
                 for (int i = 0; i < datas.size(); i++) {
                     if (datas.get(i).isHasSelect()) {// 选中
-                        ks.add(datas.get(i));
+                        oid_item += datas.get(i).getKid() + "_" + datas.get(i)
+                                .getOrderDetailModel().getOid() + ",";
                     }
                 }
-                if (Tools.listNotNull(ks)) {
-                    Intent i = new Intent(mContext, PiaoKaiActivity.class);
-                    i.putExtra("PiaoKaiActivity_data", (Serializable) ks);
-                    startActivity(i);
-                } else {
+                if (TextUtils.isEmpty(oid_item)) {
                     showToast("请选择需要开发票的课程");
+
+                } else {
+                    Intent i = new Intent(mContext, PiaoKaiActivity.class);
+                    i.putExtra("PiaoKaiActivity_list", oid_item);
+                    startActivity(i);
                 }
 
                 break;

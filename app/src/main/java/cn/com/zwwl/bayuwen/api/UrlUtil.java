@@ -125,6 +125,26 @@ public class UrlUtil {
         return HOST + "/course/invoice";
     }
 
+    // 获取开发票的历史列表
+    public static String getPiaoHistoryUrl() {
+        return HOST + "/order/past_invoice";
+    }
+
+    // 发票详情
+    public static String getPiaoDetail() {
+        return HOST + "/order/invoice_detail";
+    }
+
+    // 申请开发票
+    public static String kaiPiao() {
+        return HOST + "/order/invoice";
+    }
+
+    // 计算开票价格
+    public static String countPiaoPrice() {
+        return HOST + "/order/reinvoice_cont";
+    }
+
     // 赞列表
     public static String getTopListUrl() {
         return HOST + "/vote/toplist";

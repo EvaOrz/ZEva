@@ -97,7 +97,7 @@ public class CartAdapter extends CheckScrollAdapter<KeModel> {
         time.setText(model.getClass_start_at() + " - " + model.getClass_end_at
                 ());
         xiaoqu.setText(model.getSchool());
-        price.setText(model.getBuyPrice());
+        price.setText("￥" + model.getBuyPrice());
 
         return viewHolder.getConvertView();
     }
