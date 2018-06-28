@@ -57,6 +57,7 @@ public class MyOrderAdapter extends CheckScrollAdapter<OrderForMyListModel> {
         LinearLayout keLayout = viewHolder.getView(R.id.item_oder_ke_layout);
         TextView price = viewHolder.getView(R.id.item_order_price);
         TextView bt = viewHolder.getView(R.id.item_order_bt);
+        ImageView wancheng_status = viewHolder.getView(R.id.wancheng_status);
 
         orderNo.setText("订单编号：" + model.getOid());
         keLayout.removeAllViews();
@@ -67,21 +68,24 @@ public class MyOrderAdapter extends CheckScrollAdapter<OrderForMyListModel> {
         }
         if (type == 2) {// 待付款
             waitPay.setVisibility(View.VISIBLE);
-            price.setText("需付款：" + Double.valueOf(model.getTotal_fee()) / 100 + "");
+            wancheng_status.setVisibility(View.GONE);
+            price.setText("需付款：" + model.getTotal_fee() / 100 + "");
             bt.setBackground(mContext.getResources().getDrawable(R.drawable
                     .gold_white_xiangkuang));
             bt.setText(R.string.go_pay);
             bt.setTextColor(mContext.getResources().getColor(R.color.gold));
         } else if (type == 3) {// 已付款
             waitPay.setVisibility(View.GONE);
-            price.setText("实付款：" + Double.valueOf(model.getReal_fee()) / 100 + "");
+            wancheng_status.setVisibility(View.VISIBLE);
+            price.setText("实付款：" + model.getReal_fee() / 100 + "");
             bt.setBackground(mContext.getResources().getDrawable(R.drawable
                     .gray_white_xiankuang));
             bt.setTextColor(mContext.getResources().getColor(R.color.gray_light));
             bt.setText(R.string.tuifei);
         } else if (type == 4) {// 退款/售后
             waitPay.setVisibility(View.GONE);
-            price.setText("实付款：" + Double.valueOf(model.getReal_fee()) / 100 + "");
+            wancheng_status.setVisibility(View.GONE);
+            price.setText("实付款：" + model.getReal_fee() / 100 + "");
             bt.setBackground(mContext.getResources().getDrawable(R.drawable
                     .gold_white_xiangkuang));
             bt.setText(R.string.look_detail);

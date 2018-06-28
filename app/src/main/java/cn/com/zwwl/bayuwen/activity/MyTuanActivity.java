@@ -2,6 +2,7 @@ package cn.com.zwwl.bayuwen.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +28,7 @@ import java.util.TimerTask;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
+import cn.com.zwwl.bayuwen.api.order.CheckCanTuanApi;
 import cn.com.zwwl.bayuwen.api.order.MyTuanApi;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -51,7 +54,7 @@ public class MyTuanActivity extends BaseActivity {
     private List<View> views = new ArrayList<>();
     private MyViewPagerAdapter adapter;
     private MyTuanAdapter adapter1, adapter2;
-    private List<GroupBuyModel> data1 = new ArrayList<>(), data2 = new ArrayList<>();
+    private List<TuanForMyListModel> data1 = new ArrayList<>(), data2 = new ArrayList<>();
 
 
     @Override
@@ -100,7 +103,19 @@ public class MyTuanActivity extends BaseActivity {
         adapter1 = new MyTuanAdapter(mContext);
         adapter2 = new MyTuanAdapter(mContext);
         view1.setAdapter(adapter1);
+        view1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                goOrderDetail(data1.get(position));
+            }
+        });
         view2.setAdapter(adapter2);
+        view2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                goOrderDetail(data2.get(position));
+            }
+        });
 
         adapter = new MyViewPagerAdapter(views);
         viewPager.setAdapter(adapter);
@@ -144,6 +159,51 @@ public class MyTuanActivity extends BaseActivity {
         });
 
         findViewById(R.id.my_tuan_back).setOnClickListener(this);
+    }
+
+    /**
+     * type 1:未完成 2:已完成
+     */
+    private void goOrderDetail(TuanForMyListModel tuan) {
+        if (tuan.getState() == 1 || tuan.getState() == 2) {
+            Intent i = new Intent(mContext, OrderDetailActivity.class);
+            i.putExtra("OrderDetailActivity_data", tuan.getOid());
+            i.putExtra("OrderDetailActivity_type", tuan.getState());
+            startActivity(i);
+        } else if (tuan.getState() == 0) {
+            checkCanTuan(tuan.getPurchase_code(), tuan.getKeModel());
+        }
+
+    }
+
+    /**
+     * 根据拼团码检查是否可以参团
+     *
+     * @param code
+     */
+    private void checkCanTuan(final String code, final KeModel keModel) {
+        showLoadingDialog(true);
+        new CheckCanTuanApi(mContext, code, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+                if (error == null) {// 可以参团
+                    Intent i = new Intent();
+                    i.setClass(mContext, PayActivity.class);
+                    i.putExtra("TuanPayActivity_data", keModel);
+                    i.putExtra("TuanPayActivity_code", code);
+                    i.putExtra("TuanPayActivity_type", 0);// 单独参团
+                    startActivity(i);
+                } else {
+                    showToast("拼团码无效");
+                }
+            }
+        });
     }
 
     private void changeRadio(int position) {
@@ -199,7 +259,7 @@ public class MyTuanActivity extends BaseActivity {
     }
 
 
-    public class MyTuanAdapter extends CheckScrollAdapter<GroupBuyModel> {
+    public class MyTuanAdapter extends CheckScrollAdapter<TuanForMyListModel> {
         protected Context mContext;
 
         public MyTuanAdapter(Context context) {
@@ -208,11 +268,11 @@ public class MyTuanActivity extends BaseActivity {
         }
 
 
-        public void setData(List<GroupBuyModel> mItemList) {
+        public void setData(List<TuanForMyListModel> mItemList) {
             clear();
             isScroll = false;
             synchronized (mItemList) {
-                for (GroupBuyModel item : mItemList) {
+                for (TuanForMyListModel item : mItemList) {
                     add(item);
                 }
             }
@@ -223,7 +283,7 @@ public class MyTuanActivity extends BaseActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout
                     .item_course_for_tuanlist);
-            GroupBuyModel model = getItem(position);
+            TuanForMyListModel model = getItem(position);
             ImageView item_tuan_tag = viewHolder.getView(R.id.item_tuan_tag);
             TextView item_tuan_title = viewHolder.getView(R.id.item_tuan_title);
             TextView item_tuan_code = viewHolder.getView(R.id.item_tuan_code);
@@ -251,12 +311,13 @@ public class MyTuanActivity extends BaseActivity {
                         "yyyy-MM-dd"));
                 item_tuan_time.setText(model.getKeModel().getClass_start_at() + " - " + model
                         .getKeModel().getClass_end_at());
-                yuanjia.setText("原价：￥"+ model.getKeModel().getBuyPrice());
+                yuanjia.setText("原价：￥" + model.getKeModel().getBuyPrice());
             }
             item_tuan_code.setText(model.getPurchase_code());
-            if (model.getDiscount() != null){
-                tuanjia.setText("团购价：￥"+ model.getDiscount().getDiscount_price());
-                dianjia.setText("垫付金额：￥"+model.getDiscount().get);
+            if (model.getDiscount() != null) {
+                tuanjia.setText("团购价：￥" + model.getDiscount().getDiscount_price());
+                dianjia.setText("垫付金额：￥" + model.getDiscount().getDiscount_price() * model
+                        .getDianfu());
             }
 
 

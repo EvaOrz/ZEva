@@ -41,7 +41,6 @@ import cn.com.zwwl.bayuwen.util.AnimationTools;
 import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.CommonWebView;
-import cn.com.zwwl.bayuwen.view.PlayController;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -69,7 +68,7 @@ public class AlbumDetailActivity extends BaseActivity {
     private LinearLayout contain, teacherContain;
     private TextView part1, part2, part3, part4;
     private View line1, line2, line3, line4;
-    private PlayController playController;
+//    private PlayController playController;
     private LinearLayout inputLayout;// 输入框
 
     private FmModel currentFmModel;// 当前正在播放的音频
@@ -145,9 +144,9 @@ public class AlbumDetailActivity extends BaseActivity {
         super.onResume();
         registerReceiver();//先恢复数据 再注册receiver
         if (MyApplication.newMusicService == null || !MyApplication.newMusicService.isPlaying()) {
-            playController.setVisibility(View.GONE);
+//            playController.setVisibility(View.GONE);
         } else {
-            playController.setVisibility(View.VISIBLE);
+//            playController.setVisibility(View.VISIBLE);
             currentFmModel = MyApplication.newMusicService.getCurrentModel();
             for (int i = 0; i < fmModels.size(); i++) {
                 if (fmModels.get(i).getId().equals(currentFmModel.getId())) {
@@ -156,7 +155,7 @@ public class AlbumDetailActivity extends BaseActivity {
             }
             handler.sendEmptyMessage(0);
             showPlayController();
-            playController.setData(currentFmModel);
+//            playController.setData(currentFmModel);
 
         }
     }
@@ -171,24 +170,24 @@ public class AlbumDetailActivity extends BaseActivity {
         likeBtn = findViewById(R.id.album_detail_like);
         shoucangBtn = findViewById(R.id.album_detail_shoucang);
         shareBtn = findViewById(R.id.album_detail_share);
-        playController = findViewById(R.id.ablum_detail_playcontroller);
-        playController.setListener(new PlayController.PlayControlClickListener() {
-            @Override
-            public void onPlayOrPauseClick() {
-                // 没有播放，则启动
-                if (MyApplication.newMusicService == null) {
-                    sendintent(ACTION_START_PLAY, 0);
-                } else {
-                    sendintent(ACTION_RESUME_PAUSE, 0);
-                    handler.sendEmptyMessage(MSG_RESUME_PAUSE);
-                }
-            }
-
-            @Override
-            public void onCloseClick() {
-                playController.setVisibility(View.GONE);
-            }
-        });
+//        playController = findViewById(R.id.ablum_detail_playcontroller);
+//        playController.setListener(new PlayController.PlayControlClickListener() {
+//            @Override
+//            public void onPlayOrPauseClick() {
+//                // 没有播放，则启动
+//                if (MyApplication.newMusicService == null) {
+//                    sendintent(ACTION_START_PLAY, 0);
+//                } else {
+//                    sendintent(ACTION_RESUME_PAUSE, 0);
+//                    handler.sendEmptyMessage(MSG_RESUME_PAUSE);
+//                }
+//            }
+//
+//            @Override
+//            public void onCloseClick() {
+//                playController.setVisibility(View.GONE);
+//            }
+//        });
         inputLayout = findViewById(R.id.album_detail_input);
         inputEdit = findViewById(R.id.album_detail_inputedit);
 
@@ -362,16 +361,17 @@ public class AlbumDetailActivity extends BaseActivity {
                     inputEdit.setText("");
                     break;
                 case MSG_START_PLAY: // ---------------－开始播放
-                    playController.setVisibility(View.VISIBLE);
+
                     showPlayController();
-                    playController.setPlay();
-                    playController.setData(currentFmModel);
+//                    playController.setVisibility(View.VISIBLE);
+//                    playController.setPlay();
+//                    playController.setData(currentFmModel);
 
                     handler.sendEmptyMessage(MSG_REFRESH_LIST);
                     Log.e("开始播放 currentPos", currentPosition + currentFmModel.getTitle());
                     break;
                 case MSG_CHANGE_TIME:
-                    playController.setCurrentTime(msg.arg1);
+//                    playController.setCurrentTime(msg.arg1);
                     break;
                 case MSG_REFRESH_LIST:
                     fmAdapter.setData(fmModels, currentPosition);// 更新gif播放
@@ -379,15 +379,15 @@ public class AlbumDetailActivity extends BaseActivity {
 
                 case MSG_RESUME_PAUSE:// 播放/暂停
                     if (MyApplication.newMusicService.isPlaying()) {
-                        playController.setPause();
+//                        playController.setPause();
                     } else {
-                        playController.setPlay();
+//                        playController.setPlay();
                     }
                     break;
                 case MSG_COMPLETE:// -------------------播放完成
                     // 最后一曲
                     if (currentPosition + 1 == fmModels.size()) {
-                        playController.setPause();
+//                        playController.setPause();
                         handler.sendEmptyMessage(MSG_REFRESH_LIST);
                     } else {// 开始下一曲
                         currentPosition++;
@@ -518,11 +518,11 @@ public class AlbumDetailActivity extends BaseActivity {
     }
 
     public void showPlayController() {
-        AnimationTools.with().bottomMoveToViewLocation(playController, 300);
+//        AnimationTools.with().bottomMoveToViewLocation(playController, 300);
     }
 
     public void unshowPlayController() {
-        AnimationTools.with().moveToViewBottom(playController, 300);
+//        AnimationTools.with().moveToViewBottom(playController, 300);
     }
 
     @Override

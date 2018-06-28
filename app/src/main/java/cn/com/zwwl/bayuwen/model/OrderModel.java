@@ -91,6 +91,7 @@ public class OrderModel extends Entry {
         private double promotionDiscount;
         private double groupBuyDiscount;
         private double assets;
+        private String warn;// 警告
 
         public String getOid() {
             return oid;
@@ -162,6 +163,14 @@ public class OrderModel extends Entry {
 
         public void setAssets(double assets) {
             this.assets = assets;
+        }
+
+        public String getWarn() {
+            return warn;
+        }
+
+        public void setWarn(String warn) {
+            this.warn = warn;
         }
     }
 }
