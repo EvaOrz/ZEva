@@ -177,7 +177,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
                     if (teacherDetailStuentevaluateModel.getComments() != null && teacherDetailStuentevaluateModel.getComments().size() > 0) {
                         commentsBeans.clear();
                         commentsBeans.addAll(teacherDetailStuentevaluateModel.getComments());
-//                        tCommitListAdapter = new TCommitListAdapter(mContext, commentsBeans);
+                        tCommitListAdapter = new TCommitListAdapter(mContext, commentsBeans);
                         recyclerView_xue.setAdapter(tCommitListAdapter);
                         tCommitListAdapter.notifyDataSetChanged();
                     }

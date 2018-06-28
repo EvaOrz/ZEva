@@ -12,6 +12,7 @@
         android:gravity="top"
         android:imeOptions="actionSend"
         android:inputType="text"
+        android:textIsSelectable="true"
         android:padding="10dp"
         android:hint="@string/comment"
         android:textColor="@color/gray_dark"
