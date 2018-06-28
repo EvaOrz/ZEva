@@ -8,17 +8,16 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.model.KeModel;
-import cn.com.zwwl.bayuwen.util.TimeUtil;
+import cn.com.zwwl.bayuwen.model.LessonModel;
 
-public class LessonReportAdapter extends BaseQuickAdapter<KeModel, BaseViewHolder> {
-    public LessonReportAdapter(@Nullable List<KeModel> data) {
+public class LessonReportAdapter extends BaseQuickAdapter<LessonModel, BaseViewHolder> {
+    public LessonReportAdapter(@Nullable List<LessonModel> data) {
         super(R.layout.item_lesson_report, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, KeModel item) {
+    protected void convert(BaseViewHolder helper, LessonModel item) {
         helper.setText(R.id.course_name, item.getTitle());
-        helper.setText(R.id.time, String.format("上课时间: %s", TimeUtil.parseTime(item.getStartPtime()*1000,"yyyy年MM月dd日 hh:MM")));
+        helper.setText(R.id.time, String.format("上课时间: %s", item.getStart_at()));
     }
 }

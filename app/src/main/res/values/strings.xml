@@ -444,5 +444,8 @@
     <string name="past_lesson_report">往次课节报告</string>
     <string name="student_attain">学员成就</string>
     <string name="student_evaluate">学员评价</string>
+    <string name="final_report">期末报告</string>
+    <string name="middle_report">期中报告</string>
+    <string name="warning_no_mid_report">您还没有该报告~</string>
 
 </resources>

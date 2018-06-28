@@ -35,14 +35,17 @@ import cn.com.zwwl.bayuwen.activity.SearchCourseActivity;
 import cn.com.zwwl.bayuwen.activity.StudyingIndexActivity;
 import cn.com.zwwl.bayuwen.activity.UploadPicActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
+import cn.com.zwwl.bayuwen.activity.WebActivity;
 import cn.com.zwwl.bayuwen.adapter.CompleteCourseAdapter;
 import cn.com.zwwl.bayuwen.adapter.CourseIndexAdapter;
+import cn.com.zwwl.bayuwen.adapter.LatestReportAdapter;
 import cn.com.zwwl.bayuwen.api.MyCourseApi;
 import cn.com.zwwl.bayuwen.base.BasicFragment;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.Index1Model;
 import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.model.LessonReportModel;
 import cn.com.zwwl.bayuwen.model.MyCourseModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
@@ -75,8 +78,10 @@ public class MainFrag3 extends BasicFragment {
     private List<KeModel> finishCourse = new ArrayList<>();
     MyCourseModel courseModel;
     CourseIndexAdapter courseIndexAdapter;
+    LatestReportAdapter reportAdapter;
     private Index1Model.CalendarCourseBean calendarCourseBean;// calendar事件数据
     public boolean isCityChanged = false;// 城市状态是否变化
+    private List<LessonReportModel> reportModels;
 
     @Override
     protected View setContentView(LayoutInflater inflater, ViewGroup container, Bundle
@@ -101,6 +106,11 @@ public class MainFrag3 extends BasicFragment {
 
     @Override
     protected void initView() {
+        report.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
+        report.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R
+                .dimen.dp_5, OrientationHelper.HORIZONTAL));
+        reportAdapter = new LatestReportAdapter(null);
+        report.setAdapter(reportAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R
                 .dimen.dp_5, OrientationHelper.VERTICAL));
@@ -122,6 +132,7 @@ public class MainFrag3 extends BasicFragment {
     }
 
     private void bindView() {
+        reportAdapter.setNewData(reportModels);
         calendarLayout.removeAllViews();
         if (calendarCourseBean != null && calendarCourseBean.getCourses().size() > 0) {
             Calendar ss = CalendarTools.fromStringToca(calendarCourseBean.getDate());
@@ -162,10 +173,21 @@ public class MainFrag3 extends BasicFragment {
                             nestScroll.setVisibility(View.VISIBLE);
                             courseModel = myCourseModel;
                             calendarCourseBean = courseModel.getCalendarCourse();
+                            reportModels = courseModel.getClassReport();
                             bindView();
                         }
                     }
                 });
+            }
+        });
+        reportAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(activity, WebActivity.class);
+                intent.putExtra("WebActivity_title", reportModels.get(position).getReport_name());
+                intent.putExtra("WebActivity_data", reportModels.get(position).getUrl());
+                startActivity(intent);
+
             }
         });
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

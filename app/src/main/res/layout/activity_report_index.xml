@@ -36,7 +36,6 @@
                 android:drawableLeft="@mipmap/user_about"
                 android:drawableStart="@mipmap/user_about"
                 android:gravity="center_vertical"
-                android:text="@string/course_progress"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toStartOf="@id/logo"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -46,7 +45,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="课程编码: 123456"
                 android:textColor="@color/gray_light"
                 android:textSize="@dimen/sp_12"
                 app:layout_constraintEnd_toStartOf="@id/logo"
@@ -62,7 +60,6 @@
             android:drawableLeft="@mipmap/icon_graduate"
             android:drawablePadding="@dimen/dp_10"
             android:drawableStart="@mipmap/icon_graduate"
-            android:text="授课老师: XXX"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_12" />
 
@@ -71,10 +68,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_3"
+            android:layout_marginLeft="@dimen/dp_3"
             android:drawableLeft="@mipmap/icon_map"
             android:drawablePadding="@dimen/dp_10"
             android:drawableStart="@mipmap/icon_map"
-            android:text="上课地点: XXX"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_12" />
 
@@ -86,7 +84,6 @@
             android:drawableLeft="@mipmap/icon_calendar"
             android:drawablePadding="@dimen/dp_10"
             android:drawableStart="@mipmap/icon_calendar"
-            android:text="上课日期: XXX"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_12" />
 
@@ -99,7 +96,6 @@
             android:drawableLeft="@mipmap/icon_clock"
             android:drawablePadding="@dimen/dp_10"
             android:drawableStart="@mipmap/icon_clock"
-            android:text="上课时间: XXX"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_12" />
     </LinearLayout>
@@ -117,20 +113,22 @@
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_100"
+            android:id="@+id/final_report"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:background="@drawable/drawable_yellow_corner_button"
             android:gravity="center"
-            android:text="期末报告"
+            android:text="@string/final_report"
             android:textColor="@color/white" />
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_100"
             android:layout_centerInParent="true"
+            android:id="@+id/middle_report"
             android:background="@drawable/drawable_yellow_corner_button"
             android:gravity="center"
-            android:text="期中报告"
+            android:text="@string/middle_report"
             android:textColor="@color/white" />
 
         <android.support.v7.widget.AppCompatTextView
@@ -140,6 +138,7 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/drawable_yellow_corner_button"
             android:gravity="center"
+            android:id="@+id/welcome"
             android:text="欢迎致辞"
             android:textColor="@color/white" />
     </RelativeLayout>
@@ -148,7 +147,7 @@
         android:id="@+id/recyclerView"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

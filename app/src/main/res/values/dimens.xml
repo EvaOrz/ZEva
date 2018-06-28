@@ -69,4 +69,5 @@
     <dimen name="dp_30">30dip</dimen>
     <dimen name="dp_240">240dip</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="dp_3">3dip</dimen>
 </resources>

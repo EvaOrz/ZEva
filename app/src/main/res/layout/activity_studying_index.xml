@@ -70,6 +70,8 @@
             android:id="@+id/school_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_3"
+            android:layout_marginStart="@dimen/dp_3"
             android:layout_marginTop="@dimen/dp_5"
             android:drawableLeft="@mipmap/icon_map"
             android:drawablePadding="@dimen/dp_10"
@@ -166,20 +168,22 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/sign_per"
-            android:text="签到率: 23%"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:textColor="@color/gray_light"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:text="签到率: 23%"
+            android:textColor="@color/gray_light" />
+
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/no_sign"
-            android:text="缺勤次数: 90次"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:textColor="@color/gray_light"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:text="缺勤次数: 90次"
+            android:textColor="@color/gray_light" />
+
         <View style="@style/split_line" />
     </LinearLayout>
 
