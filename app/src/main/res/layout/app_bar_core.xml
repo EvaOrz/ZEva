@@ -8,7 +8,6 @@
     tools:context=".activity.MainActivity">
 
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,20 +23,19 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/bottom_nav_1"
+                android:id="@+id/bottom_nav_3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:button="@null"
-                android:checked="true"
-                android:drawableTop="@drawable/home_img1_selector"
-                android:ellipsize="end"
+                android:checked="false"
+                android:drawableTop="@drawable/home_trace_selector"
                 android:gravity="center"
-                android:lines="1"
                 android:padding="2dp"
-                android:text="@string/main_tab1"
+                android:text="@string/main_tab3"
                 android:textColor="@drawable/oringe_text_checked"
                 android:textSize="@dimen/text_size_10" />
+
 
             <RadioButton
                 android:id="@+id/bottom_nav_2"
@@ -53,17 +51,20 @@
                 android:textColor="@drawable/oringe_text_checked"
                 android:textSize="@dimen/text_size_10" />
 
+
             <RadioButton
-                android:id="@+id/bottom_nav_3"
+                android:id="@+id/bottom_nav_1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:button="@null"
-                android:checked="false"
-                android:drawableTop="@drawable/home_trace_selector"
+                android:checked="true"
+                android:drawableTop="@drawable/home_img1_selector"
+                android:ellipsize="end"
                 android:gravity="center"
+                android:lines="1"
                 android:padding="2dp"
-                android:text="@string/main_tab3"
+                android:text="@string/student_attain"
                 android:textColor="@drawable/oringe_text_checked"
                 android:textSize="@dimen/text_size_10" />
 

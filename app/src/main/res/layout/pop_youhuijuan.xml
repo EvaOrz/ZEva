@@ -19,21 +19,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/youhuijuan_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="不使用"
+                android:layout_centerVertical="true"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/text_size_14" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:gravity="center"
                 android:text="@string/youhuiquan"
                 android:textColor="@color/gray_dark"
                 android:textSize="@dimen/text_size_16" />
 
             <ImageView
                 android:id="@+id/youhuijuan_close"
-                android:layout_width="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignParentRight="true"
-                android:layout_height="20dp"
                 android:src="@mipmap/icon_close_yellow" />
 
         </RelativeLayout>

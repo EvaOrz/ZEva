@@ -2,6 +2,8 @@ package cn.com.zwwl.bayuwen.api.order;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -65,9 +67,9 @@ public class CouponApi extends BaseApi {
 
         if (!isNull(array)) {
             List<CouponModel> couponModels = new ArrayList<>();
+            Gson gson = new Gson();
             for (int i = 0; i < array.length(); i++) {
-                CouponModel c = new CouponModel();
-                c.parseCouponModel(array.optJSONObject(i), c);
+                CouponModel c = gson.fromJson(array.optJSONObject(i).toString(), CouponModel.class);
                 couponModels.add(c);
             }
             listListener.setData(couponModels);

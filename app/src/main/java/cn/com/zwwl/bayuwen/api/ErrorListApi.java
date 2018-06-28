@@ -8,10 +8,11 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.Map;
 
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
-import cn.com.zwwl.bayuwen.model.AnswerModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.OptionModel;
 import cn.com.zwwl.bayuwen.util.GsonUtil;
 
 /**
@@ -20,15 +21,15 @@ import cn.com.zwwl.bayuwen.util.GsonUtil;
  */
 public class ErrorListApi extends BaseApi {
     private Activity activity;
-    private ResponseCallBack<List<AnswerModel>> callBack;
+    private ResponseCallBack<List<OptionModel>> callBack;
     private String url;
 
-    public ErrorListApi(Activity context, String pId, ResponseCallBack<List<AnswerModel>> callBack) {
+    public ErrorListApi(Activity context, String pId, ResponseCallBack<List<OptionModel>> callBack) {
         super(context);
         this.activity = context;
         this.callBack = callBack;
-        url = UrlUtil.errorList() + "?puzzleId=246&studentId=1201597";
-//        url = UrlUtil.getQuestionList() + "?puzzleId=" + pId + "&studentId=" + TempDataHelper.getCurrentChildNo(activity);
+//        url = UrlUtil.errorList() + "?puzzleId=246&studentId=1201597";
+        url = UrlUtil.errorList() + "?puzzleId=" + pId + "&studentId=" + TempDataHelper.getCurrentChildNo(activity);
         get();
     }
 
@@ -47,9 +48,9 @@ public class ErrorListApi extends BaseApi {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                List<AnswerModel> models = null;
+                List<OptionModel> models = null;
                 if (array != null)
-                    models = GsonUtil.parseJsonArray(AnswerModel.class, array.toString());
+                    models = GsonUtil.parseJsonArray(OptionModel.class, array.toString());
                 callBack.result(models, errorMsg);
             }
         });

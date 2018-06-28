@@ -115,10 +115,8 @@ public class AddressApi extends BaseApi {
     @Override
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
         try {
-            if (errorMsg != null) {
-                if (listListener != null)
-                    listListener.setError(errorMsg);
-            }
+            listListener.setError(errorMsg);
+
             if (!isNull(array)) {// 获取列表
                 List<AddressModel> addressModels = new ArrayList<>();
                 for (int i = 0; i < array.length(); i++) {

@@ -55,9 +55,7 @@ public class MyOrderApi extends BaseApi {
 
     @Override
     protected void handler(JSONObject json, JSONArray jsonArray, ErrorMsg errorMsg) {
-        if (errorMsg != null) {
-            listListener.setError(errorMsg);
-        }
+        listListener.setError(errorMsg);
         if (!isNull(json)) {
             JSONArray array = json.optJSONArray("orders");
             if (!isNull(array)) {

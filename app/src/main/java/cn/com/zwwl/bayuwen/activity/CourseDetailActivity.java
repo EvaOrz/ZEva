@@ -27,7 +27,7 @@ import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.api.CourseApi;
-import cn.com.zwwl.bayuwen.api.FollowApi;
+import cn.com.zwwl.bayuwen.api.fm.CollectionApi;
 import cn.com.zwwl.bayuwen.api.fm.PinglunApi;
 import cn.com.zwwl.bayuwen.api.order.CartApi;
 import cn.com.zwwl.bayuwen.api.order.CouponApi;
@@ -416,23 +416,46 @@ public class CourseDetailActivity extends BaseActivity {
      */
     private void doFollow() {
         showLoadingDialog(true);
-        new FollowApi(mContext, keModel.getKid(), 1, new FetchEntryListener() {
-            @Override
-            public void setData(Entry entry) {
-                showLoadingDialog(false);
-                if (entry != null && entry instanceof ErrorMsg) {
-                    ErrorMsg errorMsg = (ErrorMsg) entry;
-                    if (errorMsg.getNo() == 1)
-                        handler.sendEmptyMessage(2);
-                    else handler.sendEmptyMessage(3);
-                }
-            }
+        if (keModel.getCollection_state() == 1) {
+            new CollectionApi(mContext, keModel.getCollectionId(), new FetchEntryListener() {
+                @Override
+                public void setData(Entry entry) {
 
-            @Override
-            public void setError(ErrorMsg error) {
-                showLoadingDialog(false);
-            }
-        });
+                }
+
+                @Override
+                public void setError(ErrorMsg error) {
+                    showLoadingDialog(false);
+                    if (error != null)
+                        showToast(error.getDesc());
+                    else {
+                        keModel.setCollection_state(0);
+                        handler.sendEmptyMessage(3);
+                    }
+
+                }
+            });
+        } else {
+            new CollectionApi(mContext, keModel.getKid(), 1, new FetchEntryListener() {
+                @Override
+                public void setData(Entry entry) {
+                    showLoadingDialog(false);
+                    if (entry != null && entry instanceof ErrorMsg) {
+                        ErrorMsg errorMsg = (ErrorMsg) entry;
+                        keModel.setCollection_state(errorMsg.getNo());
+                        handler.sendEmptyMessage(3);
+                    }
+                }
+
+                @Override
+                public void setError(ErrorMsg error) {
+                    showLoadingDialog(false);
+                    if (error != null)
+                        showToast(error.getDesc());
+                }
+            });
+        }
+
     }
 
 
@@ -448,11 +471,8 @@ public class CourseDetailActivity extends BaseActivity {
                 case 1:
                     cDetailTabFrag3.setData(pinglunModels);
                     break;
-                case 2:// 关注状态
-                    follow_status.setImageResource(R.mipmap.icon_star_yellow);
-                    break;
-                case 3:// 未关注状态
-                    follow_status.setImageResource(R.mipmap.icon_star_default);
+                case 3:// 关注状态
+                    setFollow_status();
                     break;
                 case 5:// 显示领取优惠券
                     youhuiBt.setVisibility(View.VISIBLE);
@@ -461,6 +481,15 @@ public class CourseDetailActivity extends BaseActivity {
             }
         }
     };
+
+    private void setFollow_status() {
+        if (keModel.getCollection_state() == 1) {
+            follow_status.setImageResource(R.mipmap.icon_star_yellow);
+        } else {
+            follow_status.setImageResource(R.mipmap.icon_star_default);
+        }
+
+    }
 
     /**
      * 设置课程信息
@@ -497,7 +526,6 @@ public class CourseDetailActivity extends BaseActivity {
             buyLayout.setBackgroundResource(R.drawable.gray_circle);
             priceTv2.setVisibility(View.GONE);
             baoman_tv.setText("已报满");
-
         }
 
         // 已参团的情况
@@ -531,6 +559,7 @@ public class CourseDetailActivity extends BaseActivity {
         cDetailTabFrag2.setData(keModel);
         // 获取到课程信息之后  开始获取优惠券信息
         checkYouhui();
+        setFollow_status();
     }
 
     private View getTeacherView(final TeacherModel teacherModel) {

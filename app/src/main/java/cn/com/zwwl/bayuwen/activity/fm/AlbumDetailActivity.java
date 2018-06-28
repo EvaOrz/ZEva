@@ -439,7 +439,7 @@ public class AlbumDetailActivity extends BaseActivity {
             likeBtn.setCompoundDrawables(null, bb, null, null);
         }
 
-        if (TextUtils.isEmpty(albumModel.getConllectId())) {
+        if (albumModel.getConllectId() == 0) {
             Drawable cc = mContext.getResources().getDrawable(R.mipmap.shoucang_b);
             cc.setBounds(0, 0, cc.getMinimumWidth(), cc.getMinimumHeight());
             shoucangBtn.setCompoundDrawables(null, cc, null, null);
@@ -563,12 +563,12 @@ public class AlbumDetailActivity extends BaseActivity {
      * 收藏
      */
     private void doCollect() {
-        if (TextUtils.isEmpty(albumModel.getConllectId())) {// 添加
-            new CollectionApi(this, albumModel.getKid(), 1, new FetchEntryListener() {
+        if (albumModel.getConllectId() == 0) {// 添加
+            new CollectionApi(this, albumModel.getKid(), 2, new FetchEntryListener() {
                 @Override
                 public void setData(Entry entry) {
                     if (((ErrorMsg) entry).getNo() > 0) {// 返回了收藏id
-                        albumModel.setConllectId(((ErrorMsg) entry).getNo() + "");
+                        albumModel.setConllectId(((ErrorMsg) entry).getNo());
                         handler.sendEmptyMessage(7);
                     }
                 }
@@ -589,7 +589,7 @@ public class AlbumDetailActivity extends BaseActivity {
                 @Override
                 public void setError(ErrorMsg error) {
                     if (error == null) {
-                        albumModel.setConllectId(null);
+                        albumModel.setConllectId(0);
                         handler.sendEmptyMessage(7);
                     }
 

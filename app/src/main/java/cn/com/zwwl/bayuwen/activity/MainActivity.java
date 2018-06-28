@@ -21,8 +21,6 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.tencent.map.geolocation.TencentLocation;
-import com.tencent.map.geolocation.TencentLocationListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +50,6 @@ import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.model.ReportModel;
 import cn.com.zwwl.bayuwen.util.DialogUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
-import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
 import cn.com.zwwl.bayuwen.widget.MostGridView;
 
 /**
@@ -321,7 +318,7 @@ public class MainActivity extends BaseActivity {
         mainFrag1.initData(userModel);
         mainFrag5.initData(userModel);
         initChildDta();
-        getReport();
+//        getReport();
     }
 
 

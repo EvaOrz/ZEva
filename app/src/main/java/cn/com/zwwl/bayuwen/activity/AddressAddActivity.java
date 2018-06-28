@@ -37,20 +37,23 @@ import cn.com.zwwl.bayuwen.widget.AutoTextGroupView;
 
 /**
  * 添加地址页面
+ * <p>
+ * 待优化：自动定位、添加自定义标签
  */
 public class AddressAddActivity extends BaseActivity {
 
     private AutoTextGroupView tagView;
     private List<AddressTag> tagDatas = new ArrayList<>();
-    private LinearLayout addTag, addLayout;
-    private TextView provinceTv;
-    private EditText nameEv, phoneEv, addressEv;
+    private LinearLayout addLayout;
+    private TextView provinceTv, sureTv;
+    private EditText nameEv, phoneEv, addressEv, aliasEv;
     private String username, usernumber;
     private ProvinceModel provinceModel;
     private CityModel cityModel;
     private DistModel distModel;
     private AddressModel addressModel;
     private boolean isModify = false;// 是否是修改页面
+
 
     private String[] needPermissions = new String[]{Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.READ_CONTACTS};
@@ -99,12 +102,19 @@ public class AddressAddActivity extends BaseActivity {
                 } else {
                     addressModel.setTo_user(name);
                     addressModel.setPhone(phone);
-                    addressModel.setProvince(provinceModel.getPtxt());
-                    addressModel.setProvince_id(provinceModel.getPid());
-                    addressModel.setCity(cityModel.getCtxt());
-                    addressModel.setCity_id(cityModel.getCid());
-                    addressModel.setDistrict(distModel.getDtxt());
-                    addressModel.setDistrict_id(distModel.getDid());
+                    if (provinceModel != null) {
+                        addressModel.setProvince(provinceModel.getPtxt());
+                        addressModel.setProvince_id(provinceModel.getPid());
+                    }
+                    if (cityModel != null) {
+                        addressModel.setCity(cityModel.getCtxt());
+                        addressModel.setCity_id(cityModel.getCid());
+                    }
+                    if (distModel != null) {
+                        addressModel.setDistrict(distModel.getDtxt());
+                        addressModel.setDistrict_id(distModel.getDid());
+                    }
+
                     addressModel.setAddress(addre);
                     for (AddressTag tag : tagDatas) {
                         if (tag.isCheck) {
@@ -121,6 +131,7 @@ public class AddressAddActivity extends BaseActivity {
                 break;
 
             case R.id.a_a_address:// 选择地址
+                hideJianpan();
                 new AddressPopWindow(mContext, 0, new AddressPopWindow.OnAddressCListener() {
 
                     @Override
@@ -150,6 +161,10 @@ public class AddressAddActivity extends BaseActivity {
                 showLoadingDialog(false);
                 if (error != null)
                     showToast(error.getDesc());
+                else {
+                    showToast("保存成功");
+                    finish();
+                }
             }
         });
     }
@@ -176,7 +191,7 @@ public class AddressAddActivity extends BaseActivity {
                 .WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.setMargins(0, 0, 40, 20);
         for (AddressTag addressTag : tagDatas) {
-            tagView.addView(getTextView(addressTag, false), lp);
+            tagView.addView(getTextView(addressTag), lp);
         }
     }
 
@@ -188,11 +203,6 @@ public class AddressAddActivity extends BaseActivity {
             switch (msg.what) {
                 case 0:
                     initTag();
-                    break;
-
-                case 1:
-                    addTag.setVisibility(View.GONE);
-                    addLayout.setVisibility(View.VISIBLE);
                     break;
                 case 2:// 通讯录选择
                     nameEv.setText(username);
@@ -219,41 +229,30 @@ public class AddressAddActivity extends BaseActivity {
         nameEv = findViewById(R.id.a_a_name);
         phoneEv = findViewById(R.id.a_a_phone);
         tagView = findViewById(R.id.tag_view);
-        addTag = findViewById(R.id.add_tag);
-        addTag.addView(getTextView(null, true), new LinearLayout.LayoutParams(LinearLayout
-                .LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        sureTv = findViewById(R.id.add_sure);
+        aliasEv = findViewById(R.id.add_ev);
         addLayout = findViewById(R.id.add_layout);
         initTag();
-
     }
-
 
     /**
      * 初始化标签textview
      *
      * @return
      */
-    private TextView getTextView(AddressTag addressTag, final boolean isAdd) {
+    private TextView getTextView(AddressTag addressTag) {
         TextView view = new TextView(this);
 
-        if (isAdd) {
-            view.setText("+");
-            view.setTextSize(14);
-            view.setGravity(Gravity.CENTER);
+        view.setTag(addressTag);
+        view.setText(addressTag.getTagTxt());
+        view.setTextSize(12);
+        view.setGravity(Gravity.CENTER);
+        if (!addressTag.isCheck()) {
             view.setTextColor(getResources().getColor(R.color.gray_dark));
             view.setBackgroundResource(R.drawable.gray_white_xiankuang);
         } else {
-            view.setTag(addressTag);
-            view.setText(addressTag.getTagTxt());
-            view.setTextSize(12);
-            view.setGravity(Gravity.CENTER);
-            if (!addressTag.isCheck()) {
-                view.setTextColor(getResources().getColor(R.color.gray_dark));
-                view.setBackgroundResource(R.drawable.gray_white_xiankuang);
-            } else {
-                view.setTextColor(getResources().getColor(R.color.white));
-                view.setBackgroundResource(R.drawable.gold_circle);
-            }
+            view.setTextColor(getResources().getColor(R.color.white));
+            view.setBackgroundResource(R.drawable.gold_circle);
         }
         view.setPadding(40, 10, 40, 10);
 
@@ -262,19 +261,16 @@ public class AddressAddActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-                if (isAdd) {
-                    handler.sendEmptyMessage(1);
-                } else {
-                    AddressTag o = (AddressTag) v.getTag();
-                    for (int i = 0; i < tagDatas.size(); i++) {
-                        if (tagDatas.get(i).getTagTxt().equals(o.getTagTxt())) {
-                            boolean origin = tagDatas.get(i).isCheck;
-                            tagDatas.get(i).setCheck(!origin);
-                        } else
-                            tagDatas.get(i).setCheck(false);
-                    }
-                    handler.sendEmptyMessage(0);
+
+                AddressTag o = (AddressTag) v.getTag();
+                for (int i = 0; i < tagDatas.size(); i++) {
+                    if (tagDatas.get(i).getTagTxt().equals(o.getTagTxt())) {
+                        boolean origin = tagDatas.get(i).isCheck;
+                        tagDatas.get(i).setCheck(!origin);
+                    } else
+                        tagDatas.get(i).setCheck(false);
                 }
+                handler.sendEmptyMessage(0);
 
             }
         });

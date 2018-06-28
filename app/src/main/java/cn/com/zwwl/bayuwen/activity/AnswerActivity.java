@@ -29,6 +29,7 @@ import cn.com.zwwl.bayuwen.dialog.AnswerDialog;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.OptionModel;
 import cn.com.zwwl.bayuwen.model.QuestionModel;
 import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
@@ -53,8 +54,8 @@ public class AnswerActivity extends BasicActivityWithTitle {
     OptionsAdapter adapter;
     AnswerDialog dialog;
     QuestionModel model;
-    List<QuestionModel.QuestionBean.ChoiceBean> choiceBeans;
-    List<QuestionModel.QuestionBean.ChoiceBean> answerBeans;
+    List<OptionModel> choiceBeans;
+    List<OptionModel> answerBeans;
     int index = 1;
     private String sectionId;
 
@@ -102,6 +103,11 @@ public class AnswerActivity extends BasicActivityWithTitle {
     }
 
     @Override
+    public boolean setParentScrollable() {
+        return true;
+    }
+
+    @Override
     protected void setListener() {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -109,7 +115,7 @@ public class AnswerActivity extends BasicActivityWithTitle {
                 adapter.setChoose(choiceBeans.get(index - 1).getSelect().get(position).getOption());
                 if (index == choiceBeans.size())
                     dialog.end();
-                QuestionModel.QuestionBean.ChoiceBean bean = new QuestionModel.QuestionBean.ChoiceBean();
+                OptionModel bean = new OptionModel();
                 bean.setAnswer(choiceBeans.get(index - 1).getSelect().get(position).getOption());
                 bean.setId(choiceBeans.get(index - 1).getId());
                 bean.setChoseTime(TimeUtil.getCurrentDate(FORMATTER_DEFAULT));
@@ -150,7 +156,7 @@ public class AnswerActivity extends BasicActivityWithTitle {
         JSONArray array = new JSONArray();
 
         try {
-            for (QuestionModel.QuestionBean.ChoiceBean bean : answerBeans
+            for (OptionModel bean : answerBeans
                     ) {
                 JSONObject obj = new JSONObject();
                 obj.put("questionId", bean.getId());

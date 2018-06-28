@@ -9,6 +9,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.MyCourseModel;
+import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
 
 public class FCourseChildAdapter extends BaseQuickAdapter<MyCourseModel.UnfinishedBean, BaseViewHolder> {
@@ -33,6 +34,6 @@ public class FCourseChildAdapter extends BaseQuickAdapter<MyCourseModel.Unfinish
                 break;
         }
         helper.setText(R.id.course_name, item.getProducts().getTitle());
-        helper.setText(R.id.description, item.getProducts().getDesc());
+        helper.setText(R.id.description, String.format("上课时间: %s-%s", TimeUtil.parseTime(item.getProducts().getStartPtime()*1000,"yyyy年MM月dd日"), TimeUtil.parseTime(item.getProducts().getEndPtime()*1000,"yyyy年MM月dd日")));
     }
 }

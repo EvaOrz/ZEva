@@ -19,11 +19,11 @@ import java.util.List;
 public class OrderForMyListModel extends Entry {
 
     private String id;
-    private String oid;
+    private String oid = "";
     private String uid;
     private String title;
     private String total_fee;
-    private String real_fee;
+    private String real_fee = "0";
     private String state;
     private String pay_channel;
     private String pay_at;

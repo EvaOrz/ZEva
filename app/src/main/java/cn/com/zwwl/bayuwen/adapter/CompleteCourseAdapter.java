@@ -18,14 +18,16 @@ import cn.com.zwwl.bayuwen.model.KeModel;
 public class CompleteCourseAdapter extends BaseQuickAdapter<KeModel,BaseViewHolder> {
 
     public CompleteCourseAdapter(List<KeModel> list) {
-        super(R.layout.item_praise, list);
+        super(R.layout.item_course_complete, list);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, KeModel item) {
-        helper.setText(R.id.course_name,item.getName());
-        helper.setText(R.id.description,item.getDesc());
-        ImageLoader.display(mContext,(ImageView)helper.getView(R.id.course_cover),item.getImg());
+        if (item!=null) {
+            helper.setText(R.id.course_name, item.getName());
+            helper.setText(R.id.description, item.getDesc());
+            ImageLoader.display(mContext, (ImageView) helper.getView(R.id.course_cover), item.getImg());
+        }
     }
 
 }

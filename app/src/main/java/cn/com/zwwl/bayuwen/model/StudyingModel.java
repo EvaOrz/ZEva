@@ -26,6 +26,33 @@ public class StudyingModel extends Entry {
     private int source;
     private String nextTime;
     private List<LessonModel> completeClass;
+    private KeModel course;
+    private String midterm_report;
+    private String end_term_report;
+
+    public KeModel getCourse() {
+        return course;
+    }
+
+    public void setCourse(KeModel course) {
+        this.course = course;
+    }
+
+    public String getMidterm_report() {
+        return midterm_report;
+    }
+
+    public void setMidterm_report(String midterm_report) {
+        this.midterm_report = midterm_report;
+    }
+
+    public String getEnd_term_report() {
+        return end_term_report;
+    }
+
+    public void setEnd_term_report(String end_term_report) {
+        this.end_term_report = end_term_report;
+    }
 
     public int getSource() {
         return source;
