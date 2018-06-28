@@ -153,7 +153,29 @@
  </android.support.v4.widget.NestedScrollView>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/feed_ev"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/gray_white_xiankuang"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:imeOptions="actionSend"
+               android:visibility="gone"
+                android:padding="10dp"
+                android:hint="@string/comment"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/text_size_14" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:background="#EEEEEE"
         android:gravity="center_vertical"
         android:layout_height="@dimen/album_dp_50">
@@ -185,6 +207,8 @@
            android:textSize="@dimen/dp_16"
            android:gravity="center"
            android:text="评论"/>
+    </RelativeLayout>
+        </LinearLayout>
 
     </RelativeLayout>
 </RelativeLayout>
