@@ -108,10 +108,8 @@ public class FmView implements View.OnClickListener {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-//                    ((FmMainActivity) context).unshowPlayController();
                     break;
                 case 1:
-//                    ((FmMainActivity) context).showPlayController();
                     break;
                 case 2:// 初始化页面
                     albumAdapter.setData(albumDatas);

@@ -2,6 +2,7 @@ package cn.com.zwwl.bayuwen.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
@@ -18,14 +19,20 @@ public class AskDialog implements View.OnClickListener {
     private Window window;
     private OnSurePickListener onSurePickListener;
 
-    public AskDialog(Context context, String title, OnSurePickListener
+    public AskDialog(Context context, String content, OnSurePickListener
             onSurePickListener) {
         this.mContext = context;
         this.onSurePickListener = onSurePickListener;
-        init(title);
+        init(null, content);
+    }
+    public AskDialog(Context context,String title,  String content, OnSurePickListener
+            onSurePickListener) {
+        this.mContext = context;
+        this.onSurePickListener = onSurePickListener;
+        init(title, content);
     }
 
-    private void init(String txt) {
+    private void init(String tString, String cString) {
         mDialog = new Dialog(mContext, R.style.CustomDialog);
         mDialog.show();
         mDialog.setCancelable(true);
@@ -37,7 +44,11 @@ public class AskDialog implements View.OnClickListener {
                 .LayoutParams.MATCH_PARENT);
 
         TextView title = window.findViewById(R.id.motify_sign_title);
-        title.setText(txt);
+        if (!TextUtils.isEmpty(tString)) {
+            title.setText(tString);
+        }
+        TextView content = window.findViewById(R.id.motify_sign_content);
+        content.setText(cString);
 
         window.findViewById(R.id.motify_sign_sure).setOnClickListener(this);
         window.findViewById(R.id.motify_sign_cancle).setOnClickListener(this);

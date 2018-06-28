@@ -4,12 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.icu.text.UFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -82,6 +80,8 @@ public class OrderDetailActivity extends BaseActivity {
     TextView orderDBt1;
     @BindView(R.id.order_d_bt2)
     TextView orderDBt2;
+    @BindView(R.id.address_part)
+    LinearLayout addressPart;
 
 
     private Timer timer = new Timer();// 初始化定时器
@@ -146,17 +146,15 @@ public class OrderDetailActivity extends BaseActivity {
                             .getExpire_at()) - System.currentTimeMillis();
 
                     handler.sendEmptyMessage(1);
-                    needPrice.setText("需付款：￥" + Double.valueOf(orderForMyListModel.getTotal_fee()
-                    ) / 100);
+                    needPrice.setText("需付款：￥" + orderForMyListModel.getTotal_fee() / 100);
                     orderNo.setText(orderForMyListModel.getOid());
                     orderTime.setText(orderForMyListModel.getCreate_at());
                     payStyle.setText(orderForMyListModel.getPay_channel().equals("1") ? "支付宝" :
                             "微信");
                     orderPayTime.setText(orderForMyListModel.getPay_at());
                     if (type == 1) {
-                        needPrice2.setText("需付款：￥" + Double.valueOf(orderForMyListModel
-                                .getTotal_fee()
-                        ) / 100);
+                        needPrice2.setText("需付款：￥" + orderForMyListModel
+                                .getTotal_fee() / 100);
                         // 待支付启动倒计时器
                         timer.schedule(new TimerTask() {
 
@@ -167,14 +165,19 @@ public class OrderDetailActivity extends BaseActivity {
                             }
                         }, 0, 1000);
                     } else {
-                        needPrice2.setText("实付款：￥" + Double.valueOf(orderForMyListModel
-                                .getTotal_fee()
-                        ) / 100);
+                        needPrice2.setText("实付款：￥" + orderForMyListModel
+                                .getReal_fee() / 100);
                     }
                     AddressModel addressModel = orderForMyListModel.getAddressModel();
-                    addressName.setText(addressModel.getTo_user());
-                    addressDetail.setText(addressModel.getProvince() + addressModel.getCity()
-                            + addressModel.getDistrict() + addressModel.getAddress());
+                    if (addressModel == null) {
+                        addressPart.setVisibility(View.GONE);
+                    } else {
+                        addressName.setText(addressModel.getTo_user() + "  " + addressModel
+                                .getPhone());
+                        addressDetail.setText(addressModel.getProvince() + addressModel.getCity()
+                                + addressModel.getDistrict() + addressModel.getAddress());
+                    }
+
 
                     keLayout.removeAllViews();
                     for (KeModel keModel : orderForMyListModel.getKeModels()) {
@@ -380,7 +383,7 @@ public class OrderDetailActivity extends BaseActivity {
     private void goPayResult(int t, String desc) {
         Intent i = new Intent(mContext, TuanPayResultActivity.class);
         i.putExtra("TuanPayResultActivity_data", t);
-        i.putExtra("TuanPayResultActivity_oid",oid);
+        i.putExtra("TuanPayResultActivity_oid", oid);
         i.putExtra("TuanPayResultActivity_desc", desc);
         startActivity(i);
         finish();
@@ -395,7 +398,7 @@ public class OrderDetailActivity extends BaseActivity {
             BCPay.PayParams payParams = new BCPay.PayParams();
             payParams.channelType = BCReqParams.BCChannelTypes.WX_APP;
             payParams.billTitle = orderForMyListModel.getTitle();   //订单标题
-            payParams.billTotalFee = Integer.valueOf(orderForMyListModel.getReal_fee());
+            payParams.billTotalFee = (int) orderForMyListModel.getReal_fee();
             //订单金额(分)
             payParams.billNum = orderForMyListModel.getOid();  //订单流水号
 //            payParams.couponId = "bbbf835d-f6b0-484f-bb6e-8e6082d4a35f";    // 优惠券ID
@@ -417,7 +420,7 @@ public class OrderDetailActivity extends BaseActivity {
         BCPay.PayParams aliParam = new BCPay.PayParams();
         aliParam.channelType = BCReqParams.BCChannelTypes.ALI_APP;
         aliParam.billTitle = orderForMyListModel.getTitle();
-        aliParam.billTotalFee = Integer.valueOf(orderForMyListModel.getReal_fee());
+        aliParam.billTotalFee = (int) orderForMyListModel.getReal_fee();
         aliParam.billNum = orderForMyListModel.getOid();
         aliParam.optional = mapOptional;
 

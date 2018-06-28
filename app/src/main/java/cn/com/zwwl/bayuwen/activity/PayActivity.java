@@ -36,6 +36,7 @@ import cn.com.zwwl.bayuwen.api.order.CouponApi;
 import cn.com.zwwl.bayuwen.api.order.GetYueApi;
 import cn.com.zwwl.bayuwen.api.order.MakeOrderApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
+import cn.com.zwwl.bayuwen.dialog.AskDialog;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -73,7 +74,8 @@ public class PayActivity extends BaseActivity {
     private List<CouponModel> couponModels = new ArrayList<>();
     private String tuanCode;// 拼团码
     private CouponModel currentCoupon;// 优惠码
-    private String itemCode;// id组合码
+    private String itemCode = "";// id组合码，生成订单用
+    private String kidCode = "";// kid组合码，计算价格用
     private String yueTxt = "￥0.00";// 账户余额
     private AddressModel currentAddress;// 当前收货地址
     private OrderModel orderModel;// 订单model
@@ -126,17 +128,23 @@ public class PayActivity extends BaseActivity {
     private void initItemString() {
         if (type == 1) {// 垫付需要循环垫付数量
             KeModel keModel = keDatas.get(0);
+            kidCode = keModel.getKid();
             itemCode = keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
             for (int i = 0; i < keModel.getGroupbuy().getDiscount().getLimit_num() - 1; i++) {
-                itemCode += keModel.getKid() + "_1_" + "0";
+                itemCode += "," + keModel.getKid() + "_1_" + "0";
             }
-        } else if (type == 0 || type == 2) { // 单独购买||单独参团
+        } else if (type == 0 || type == 2) { //单独购买||单独参团
             KeModel keModel = keDatas.get(0);
+            kidCode = keModel.getKid();
             itemCode = keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
         } else if (type == 3) {// 购课单购买
             for (KeModel keModel : keDatas) {
-                itemCode += keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
+                kidCode += keModel.getKid() + ",";
+                itemCode += keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext)
+                        + ",";
             }
+            if (kidCode.length() > 0)
+                kidCode = kidCode.substring(0, kidCode.length() - 1);
         }
     }
 
@@ -229,6 +237,18 @@ public class PayActivity extends BaseActivity {
                     break;
                 case 3:// 实时计算价格，之后更新最新价格
                     priceTv.setText("实付款：￥" + detailModel.getAmount() / 100);
+                    if (!TextUtils.isEmpty(detailModel.getWarn())) {
+                        new AskDialog(mContext, "warn", detailModel.getWarn(), new AskDialog
+                                .OnSurePickListener() {
+
+
+                            @Override
+                            public void onSure() {
+
+                            }
+                        });
+                    }
+
                     break;
 
                 case 4:// 显示可以使用的优惠券
@@ -444,9 +464,9 @@ public class PayActivity extends BaseActivity {
      * 实时计算金额
      */
     private void countPrice() {
-        String promoId = promotionModel == null ? "" : promotionModel.getId();
-        String couponCode = currentCoupon == null ? "" : currentCoupon.getCoupon_code();
-        new CountPriceApi(mContext, itemCode, couponCode, promoId, yueTxt, tuanCode, new
+        String promoId = promotionModel == null ? "0" : promotionModel.getId();
+        String couponCode = currentCoupon == null ? "0" : currentCoupon.getCoupon_code();
+        new CountPriceApi(mContext, kidCode, couponCode, promoId, yueTxt, new
                 FetchEntryListener() {
                     @Override
                     public void setData(Entry entry) {
@@ -458,7 +478,7 @@ public class PayActivity extends BaseActivity {
 
                     @Override
                     public void setError(ErrorMsg error) {
-
+                        if (error != null) showToast(error.getDesc());
                     }
                 });
     }

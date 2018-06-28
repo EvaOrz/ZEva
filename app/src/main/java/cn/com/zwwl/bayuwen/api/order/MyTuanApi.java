@@ -16,6 +16,8 @@ import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.GroupBuyModel;
+import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.model.TuanForMyListModel;
 
 /**
  * 我的团购页面：
@@ -38,21 +40,29 @@ public class MyTuanApi extends BaseApi {
         if (!isNull(json)) {
             Gson gson = new Gson();
             JSONArray sponsor = json.optJSONArray("sponsor");
-            List<GroupBuyModel> sList = new ArrayList<>();
+            List<TuanForMyListModel> sList = new ArrayList<>();
             if (!isNull(sponsor)) {
                 for (int i = 0; i < sponsor.length(); i++) {
-                    GroupBuyModel g = gson.fromJson(sponsor.optJSONObject(i).toString(),
-                            GroupBuyModel.class);
+                    TuanForMyListModel g = gson.fromJson(sponsor.optJSONObject(i).toString(),
+                            TuanForMyListModel.class);
+                    g.setKeModel(gson.fromJson(sponsor.optJSONObject(i).optJSONObject("course")
+                            .toString(), KeModel.class));
+                    g.setDiscount(gson.fromJson(sponsor.optJSONObject(i).optJSONObject("discount")
+                            .toString(), GroupBuyModel.DiscountBean.class));
                     sList.add(g);
                 }
 
             }
-            List<GroupBuyModel> jList = new ArrayList<>();
+            List<TuanForMyListModel> jList = new ArrayList<>();
             JSONArray join = json.optJSONArray("join");
             if (!isNull(join)) {
                 for (int i = 0; i < join.length(); i++) {
-                    GroupBuyModel g = gson.fromJson(join.optJSONObject(i).toString(),
-                            GroupBuyModel.class);
+                    TuanForMyListModel g = gson.fromJson(join.optJSONObject(i).toString(),
+                            TuanForMyListModel.class);
+                    g.setKeModel(gson.fromJson(join.optJSONObject(i).optJSONObject("course")
+                            .toString(), KeModel.class));
+                    g.setDiscount(gson.fromJson(join.optJSONObject(i).optJSONObject("discount")
+                            .toString(), GroupBuyModel.DiscountBean.class));
                     jList.add(g);
                 }
             }

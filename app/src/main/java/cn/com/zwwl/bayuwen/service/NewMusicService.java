@@ -22,6 +22,7 @@ import cn.com.zwwl.bayuwen.model.fm.FmModel;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.view.music.MusicWindow;
 
 public class NewMusicService extends Service {
     // 全局音乐播放器
@@ -161,6 +162,7 @@ public class NewMusicService extends Service {
     public void start() {
         if (mediaPlayer != null && !isPlaying()) {
             mediaPlayer.start();
+            MusicWindow.showPopupWindow(this);
             playStatus = 1;
             // 开始播放向页面发送播放message
             Message m = new Message();

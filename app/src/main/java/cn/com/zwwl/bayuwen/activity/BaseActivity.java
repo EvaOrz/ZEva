@@ -30,9 +30,7 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.model.UserModel;
-import cn.com.zwwl.bayuwen.view.PlayController;
 
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 
 /**
@@ -46,7 +44,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      */
     protected String fromHtmlUri = "";
     public Context mContext;
-    public PlayController playController;// 音乐播放器
     private Dialog dialog;
 
     private RelativeLayout process_layout;//
@@ -314,11 +311,12 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     public void hideJianpan() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context
                 .INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
 
     }
 
-    public void askPermission(String[] permissions, int requestCode) {
+    public boolean askPermission(String[] permissions, int requestCode) {
         List<String> ll = new ArrayList<>();
         for (int i = 0; i < permissions.length; i++) {
             int permissionCheck = ContextCompat.checkSelfPermission(this, permissions[i]);
@@ -327,9 +325,12 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                 ll.add(permissions[i]);
             }
         }
-        if (ll.size() > 0)
+        if (ll.size() > 0) {
             ActivityCompat.requestPermissions(this, (String[]) ll.toArray(new String[ll.size()]),
                     requestCode);
+            return false;
+        } else
+            return true;
     }
 
     /**
