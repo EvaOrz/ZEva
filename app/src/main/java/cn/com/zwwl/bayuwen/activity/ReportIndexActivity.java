@@ -129,9 +129,9 @@ public class ReportIndexActivity extends BasicActivityWithTitle {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.middle_report:
-                if (TextUtils.isEmpty(model.getMidterm_report())){
+                if (TextUtils.isEmpty(model.getMidterm_report())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
-                }else {
+                } else {
                     Intent intent = new Intent(mActivity, WebActivity.class);
                     intent.putExtra("WebActivity_title", model.getCourse().getTitle());
                     intent.putExtra("WebActivity_data", model.getMidterm_report());
@@ -139,9 +139,9 @@ public class ReportIndexActivity extends BasicActivityWithTitle {
                 }
                 break;
             case R.id.final_report:
-                if (TextUtils.isEmpty(model.getMidterm_report())){
+                if (TextUtils.isEmpty(model.getMidterm_report())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
-                }else {
+                } else {
                     Intent intent = new Intent(mActivity, WebActivity.class);
                     intent.putExtra("WebActivity_title", model.getCourse().getTitle());
                     intent.putExtra("WebActivity_data", model.getEnd_term_report());
@@ -149,6 +149,14 @@ public class ReportIndexActivity extends BasicActivityWithTitle {
                 }
                 break;
             default:
+                if (TextUtils.isEmpty(model.getWelcome_speech())) {
+                    ToastUtil.showShortToast(R.string.warning_no_mid_report);
+                } else {
+                    Intent intent = new Intent(mActivity, WebActivity.class);
+                    intent.putExtra("WebActivity_title", model.getCourse().getTitle());
+                    intent.putExtra("WebActivity_data", model.getWelcome_speech());
+                    startActivity(intent);
+                }
                 break;
         }
     }

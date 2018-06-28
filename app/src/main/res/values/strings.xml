@@ -447,5 +447,6 @@
     <string name="final_report">期末报告</string>
     <string name="middle_report">期中报告</string>
     <string name="warning_no_mid_report">您还没有该报告~</string>
+    <string name="welcome_speech">欢迎致辞</string>
 
 </resources>
