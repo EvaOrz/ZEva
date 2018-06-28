@@ -7,6 +7,42 @@ public class ClassModel extends Entry {
     private KeModel course;
     private List<TeacherModel> teacher;
     private PlanModel plan;
+    private String midterm_report;
+    private String end_term_report;
+    private String signInRate;
+    private int absenteeism;
+
+    public String getMidterm_report() {
+        return midterm_report;
+    }
+
+    public void setMidterm_report(String midterm_report) {
+        this.midterm_report = midterm_report;
+    }
+
+    public String getEnd_term_report() {
+        return end_term_report;
+    }
+
+    public void setEnd_term_report(String end_term_report) {
+        this.end_term_report = end_term_report;
+    }
+
+    public String getSignInRate() {
+        return signInRate;
+    }
+
+    public void setSignInRate(String signInRate) {
+        this.signInRate = signInRate;
+    }
+
+    public int getAbsenteeism() {
+        return absenteeism;
+    }
+
+    public void setAbsenteeism(int absenteeism) {
+        this.absenteeism = absenteeism;
+    }
 
     public NumBean getNum() {
         return num;

@@ -35,7 +35,7 @@ setDisplayShowTitleEnabled(false);
     @OnClick(R.id.submit)
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(this, StudyingCourseActivity.class));
+        startActivity(new Intent(this, StudyingIndexActivity.class));
     }
 
     @Override

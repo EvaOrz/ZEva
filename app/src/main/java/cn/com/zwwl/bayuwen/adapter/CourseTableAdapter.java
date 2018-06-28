@@ -21,15 +21,16 @@ public class CourseTableAdapter extends BaseQuickAdapter<KeModel, BaseViewHolder
     @Override
     protected void convert(BaseViewHolder helper, KeModel item) {
         helper.setText(R.id.course_name, item.getTitle());
-        helper.setText(R.id.teacher_name,item.getTname());
-        helper.setText(R.id.school_name,item.getSchool());
-        helper.setText(R.id.stock,"剩余名额: " + item.getNum());
-        helper.setText(R.id.price,"￥" +item.getBuyPrice());
-        helper.setText(R.id.date, CalendarTools.format(Long.valueOf(item.getStartPtime()),
-                "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(item.getEndPtime()),
+        helper.setText(R.id.teacher_name, item.getTname());
+        helper.setText(R.id.school_name, item.getSchool());
+        helper.setText(R.id.stock, "剩余名额: " + item.getNum());
+        helper.setText(R.id.price, "￥" + item.getBuyPrice());
+        helper.setText(R.id.date, CalendarTools.format(item.getStartPtime(),
+                "yyyy-MM-dd") + " 至 " + CalendarTools.format(item.getEndPtime(),
                 "yyyy-MM-dd"));
         helper.setText(R.id.time, item.getClass_start_at() + "-" + item.getClass_end_at());
-        ImageLoader.display(mContext,(AppCompatImageView)helper.getView(R.id.pic),item.getPic());
-        helper.setVisible(R.id.hide_full,"0".equals(item.getStock()));
+        ImageLoader.display(mContext, (AppCompatImageView) helper.getView(R.id.pic), item.getPic());
+        helper.setVisible(R.id.hide_full, "0".equals(item.getStock()));
+        helper.addOnClickListener(R.id.pic_layout);
     }
 }

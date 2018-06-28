@@ -483,6 +483,11 @@ public class UrlUtil {
     public static String myFmCourse() {
         return HOST + "/fm/buylist";
     }
-
+    /**
+     * 课程跟踪-用户班级信息
+     */
+    public static String traceClassDetail() {
+        return HOST + "/course/userdetail";
+    }
 
 }

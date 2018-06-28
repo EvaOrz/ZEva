@@ -16,8 +16,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +59,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
     private List<KeModel> keModels;
     private List<KeModel> stockClass;
     private int page = 1;
+
     @Override
     protected int setContentView() {
         return R.layout.activity_convert_class;
@@ -78,7 +78,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new CourseTableAdapter(keModels);
-        adapter.setEmptyView(R.layout.empty_view,(ViewGroup)recyclerView.getParent());
+        adapter.setEmptyView(R.layout.empty_view, (ViewGroup) recyclerView.getParent());
         recyclerView.setAdapter(adapter);
         refresh.autoRefresh();
     }
@@ -113,19 +113,27 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
 
     @Override
     protected void setListener() {
-        refresh.setOnRefreshListener(new OnRefreshListener() {
+        refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
-            public void onRefresh(@NonNull RefreshLayout refreshlayout) {
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                ++page;
+                getCourseData();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page = 1;
                 refresh.setNoMoreData(false);
                 getCourseData();
             }
         });
-        refresh.setOnLoadMoreListener(new OnLoadMoreListener() {
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                ++page;
-                getCourseData();
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent i = new Intent(mActivity, VideoPlayActivity.class);
+                i.putExtra("VideoPlayActivity_url", keModels.get(position).getVideo());
+                i.putExtra("VideoPlayActivity_pic", keModels.get(position).getPic());
+                startActivity(i);
             }
         });
         search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -214,7 +222,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                     for (KeModel model : keModels) {
                         if (!"0".equals(model.getStock())) stockClass.add(model);
                     }
-                        adapter.setNewData(keModels);
+                    adapter.setNewData(keModels);
                 }
             });
         }

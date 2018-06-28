@@ -97,8 +97,8 @@ public class ClassApplyActivity extends BasicActivityWithTitle {
         courseName.setText(keModel.getTitle());
         teacherName.setText(keModel.getTname());
         schoolName.setText(keModel.getSchool());
-        date.setText(CalendarTools.format(Long.valueOf(keModel.getStartPtime()),
-                "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(keModel.getEndPtime()),
+        date.setText(CalendarTools.format(keModel.getStartPtime(),
+                "yyyy-MM-dd") + " 至 " + CalendarTools.format(keModel.getEndPtime(),
                 "yyyy-MM-dd"));
         time.setText(keModel.getClass_start_at() + "-" + keModel.getClass_end_at());
     }
