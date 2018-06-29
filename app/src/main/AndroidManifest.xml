@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:installLocation="preferExternal"
     package="cn.com.zwwl.bayuwen">
 
     <!-- 访问网络，某些位置信息需要从网络服务器获取 -->

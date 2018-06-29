@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatEditText;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -36,6 +37,7 @@ import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.TopicDetailModel;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
+import cn.com.zwwl.bayuwen.view.MultiLineEditText;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 
@@ -209,7 +211,7 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
     private void initPopWindow() {   //评论的popwindow
         View popView = View.inflate(this, R.layout.pop_comment_topic_layout, null);
 
-        EditText comment = popView.findViewById(R.id.feed_ev);
+        MultiLineEditText comment = popView.findViewById(R.id.feed_ev);
 
         final PopupWindow popupWindow = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, false);
         popupWindow.setFocusable(true);
@@ -220,6 +222,7 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
         comment.setFocusable(true);
         comment.setFocusableInTouchMode(true);
         comment.requestFocus();
+       //调出软键盘
         InputMethodManager imm = (InputMethodManager) TopicDetailActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
 
@@ -230,7 +233,8 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
         comment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEND) {
+
+                if (actionId==EditorInfo.IME_ACTION_SEND ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
 
                     Httpcomment(v.getText().toString().trim());
                     popupWindow.dismiss();
