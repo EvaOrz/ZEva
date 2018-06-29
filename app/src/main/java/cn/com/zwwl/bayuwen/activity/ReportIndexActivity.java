@@ -1,7 +1,6 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -29,6 +28,7 @@ import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.model.StudyingModel;
 import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
+import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
 /**
@@ -37,7 +37,7 @@ import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
  */
 public class ReportIndexActivity extends BasicActivityWithTitle {
     @BindView(R.id.logo)
-    AppCompatImageView logo;
+    CircleImageView logo;
     @BindView(R.id.course_name)
     AppCompatTextView courseName;
     @BindView(R.id.course_code)
@@ -107,7 +107,8 @@ public class ReportIndexActivity extends BasicActivityWithTitle {
             teacherName.setText(String.format("授课老师: %s", keModel.getTname()));
             schoolName.setText(String.format("上课地点: %s", keModel.getSchool()));
             date.setText(String.format("上课日期: %s-%s", TimeUtil.parseTime(keModel.getStartPtime() * 1000, "yyyy年MM月dd日"), TimeUtil.parseTime(keModel.getEndPtime() * 1000, "yyyy年MM月dd日")));
-            time.setText(String.format("上课时间: %s%s-%s", keModel.getWeekday(), keModel.getClass_start_at(), keModel.getClass_end_at()));
+            time.setText(String.format("上课时间: %s%s-%s", keModel.getWeekday(),
+                    TimeUtil.parseToHm(keModel.getClass_start_at()), TimeUtil.parseToHm(keModel.getClass_end_at())));
             ImageLoader.display(this, logo, keModel.getPic());
         }
         if (model.getCompleteClass() != null) {
@@ -129,9 +130,9 @@ public class ReportIndexActivity extends BasicActivityWithTitle {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.middle_report:
-                if (TextUtils.isEmpty(model.getMidterm_report())){
+                if (TextUtils.isEmpty(model.getMidterm_report())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
-                }else {
+                } else {
                     Intent intent = new Intent(mActivity, WebActivity.class);
                     intent.putExtra("WebActivity_title", model.getCourse().getTitle());
                     intent.putExtra("WebActivity_data", model.getMidterm_report());
@@ -139,9 +140,9 @@ public class ReportIndexActivity extends BasicActivityWithTitle {
                 }
                 break;
             case R.id.final_report:
-                if (TextUtils.isEmpty(model.getMidterm_report())){
+                if (TextUtils.isEmpty(model.getMidterm_report())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
-                }else {
+                } else {
                     Intent intent = new Intent(mActivity, WebActivity.class);
                     intent.putExtra("WebActivity_title", model.getCourse().getTitle());
                     intent.putExtra("WebActivity_data", model.getEnd_term_report());
@@ -149,6 +150,14 @@ public class ReportIndexActivity extends BasicActivityWithTitle {
                 }
                 break;
             default:
+                if (TextUtils.isEmpty(model.getWelcome_speech())) {
+                    ToastUtil.showShortToast(R.string.warning_no_mid_report);
+                } else {
+                    Intent intent = new Intent(mActivity, WebActivity.class);
+                    intent.putExtra("WebActivity_title", model.getCourse().getTitle());
+                    intent.putExtra("WebActivity_data", model.getWelcome_speech());
+                    startActivity(intent);
+                }
                 break;
         }
     }

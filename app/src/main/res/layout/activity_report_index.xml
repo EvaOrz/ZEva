@@ -21,20 +21,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.AppCompatImageView
+            <cn.com.zwwl.bayuwen.widget.CircleImageView
                 android:id="@+id/logo"
-                android:layout_width="@dimen/dp_60"
+                android:layout_width="@dimen/dp_80"
                 android:layout_height="@dimen/dp_60"
-                android:src="@drawable/drawable_yellow_corner_button"
+                app:borderRadius="@dimen/dp_10"
+                app:isEdge="true"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:type="1" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/course_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@mipmap/user_about"
-                android:drawableStart="@mipmap/user_about"
                 android:gravity="center_vertical"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toStartOf="@id/logo"
@@ -44,6 +44,7 @@
                 android:id="@+id/course_code"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
                 android:gravity="center_vertical"
                 android:textColor="@color/gray_light"
                 android:textSize="@dimen/sp_12"
@@ -52,52 +53,94 @@
                 app:layout_constraintTop_toBottomOf="@id/course_name" />
         </android.support.constraint.ConstraintLayout>
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/teacher_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_5"
-            android:drawableLeft="@mipmap/icon_graduate"
-            android:drawablePadding="@dimen/dp_10"
-            android:drawableStart="@mipmap/icon_graduate"
-            android:textColor="@color/gray_light"
-            android:textSize="@dimen/sp_12" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/school_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_5"
-            android:layout_marginStart="@dimen/dp_3"
-            android:layout_marginLeft="@dimen/dp_3"
-            android:drawableLeft="@mipmap/icon_map"
-            android:drawablePadding="@dimen/dp_10"
-            android:drawableStart="@mipmap/icon_map"
-            android:textColor="@color/gray_light"
-            android:textSize="@dimen/sp_12" />
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:src="@mipmap/icon_graduate" />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_5"
-            android:drawableLeft="@mipmap/icon_calendar"
-            android:drawablePadding="@dimen/dp_10"
-            android:drawableStart="@mipmap/icon_calendar"
-            android:textColor="@color/gray_light"
-            android:textSize="@dimen/sp_12" />
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/teacher_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginStart="@dimen/dp_5"
+                android:textColor="@color/gray_light"
+                android:textSize="@dimen/sp_12" />
+        </LinearLayout>
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/time"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_8"
             android:layout_marginTop="@dimen/dp_5"
-            android:drawableLeft="@mipmap/icon_clock"
-            android:drawablePadding="@dimen/dp_10"
-            android:drawableStart="@mipmap/icon_clock"
-            android:textColor="@color/gray_light"
-            android:textSize="@dimen/sp_12" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:src="@mipmap/icon_map" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/school_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginStart="@dimen/dp_5"
+                android:textColor="@color/gray_light"
+                android:textSize="@dimen/sp_12" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:src="@mipmap/icon_calendar" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginStart="@dimen/dp_5"
+                android:textColor="@color/gray_light"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:src="@mipmap/icon_clock" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginStart="@dimen/dp_5"
+                android:textColor="@color/gray_light"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
@@ -105,15 +148,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@color/white"
-        android:paddingBottom="@dimen/dp_5"
+        android:paddingBottom="@dimen/dp_10"
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/dp_5">
+        android:paddingTop="@dimen/dp_10">
 
         <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/final_report"
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_100"
-            android:id="@+id/final_report"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:background="@drawable/drawable_yellow_corner_button"
@@ -122,32 +165,32 @@
             android:textColor="@color/white" />
 
         <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/middle_report"
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_100"
             android:layout_centerInParent="true"
-            android:id="@+id/middle_report"
             android:background="@drawable/drawable_yellow_corner_button"
             android:gravity="center"
             android:text="@string/middle_report"
             android:textColor="@color/white" />
 
         <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/welcome"
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_100"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:background="@drawable/drawable_yellow_corner_button"
             android:gravity="center"
-            android:id="@+id/welcome"
-            android:text="欢迎致辞"
+            android:text="@string/welcome_speech"
             android:textColor="@color/white" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_10" />
 
 
 </LinearLayout>

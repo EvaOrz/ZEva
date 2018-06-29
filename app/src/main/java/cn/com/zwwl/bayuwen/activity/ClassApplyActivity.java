@@ -18,6 +18,7 @@ import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
 
 /**
@@ -25,10 +26,6 @@ import cn.com.zwwl.bayuwen.util.ToastUtil;
  * Created by zhumangmang at 2018/5/28 17:30
  */
 public class ClassApplyActivity extends BasicActivityWithTitle {
-
-
-    @BindView(R.id.old)
-    AppCompatTextView old;
     @BindView(R.id.o_pic)
     AppCompatImageView oPic;
     @BindView(R.id.o_course_name)
@@ -41,8 +38,6 @@ public class ClassApplyActivity extends BasicActivityWithTitle {
     AppCompatTextView oDate;
     @BindView(R.id.o_time)
     AppCompatTextView oTime;
-    @BindView(R.id.now)
-    AppCompatTextView now;
     @BindView(R.id.pic)
     AppCompatImageView pic;
     @BindView(R.id.course_name)
@@ -97,10 +92,10 @@ public class ClassApplyActivity extends BasicActivityWithTitle {
         courseName.setText(keModel.getTitle());
         teacherName.setText(keModel.getTname());
         schoolName.setText(keModel.getSchool());
-        date.setText(CalendarTools.format(Long.valueOf(keModel.getStartPtime()),
-                "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(keModel.getEndPtime()),
-                "yyyy-MM-dd"));
-        time.setText(keModel.getClass_start_at() + "-" + keModel.getClass_end_at());
+        date.setText(String.format("%s至%s", CalendarTools.format(keModel.getStartPtime(),
+                "yyyy-MM-dd"), CalendarTools.format(keModel.getEndPtime(),
+                "yyyy-MM-dd")));
+        time.setText(String.format("%s-%s", TimeUtil.parseToHm(keModel.getClass_start_at()), TimeUtil.parseToHm(keModel.getClass_end_at())));
     }
 
     @Override

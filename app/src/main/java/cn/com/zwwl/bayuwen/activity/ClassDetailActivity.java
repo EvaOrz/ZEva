@@ -67,7 +67,7 @@ public class ClassDetailActivity extends BasicActivityWithTitle {
             public void result(ClassModel classModel, ErrorMsg errorMsg) {
                 if (classModel != null) {
                     className.setText(classModel.getCourse().getTitle());
-                    currentStu.setText(classModel.getNum().getNow_num().isEmpty()?"0":classModel.getNum().getNow_num());
+                    currentStu.setText(classModel.getNum().getNow_num()==null?"0":classModel.getNum().getNow_num());
                     totalStu.setText(classModel.getNum().getFull_num());
                     courseProgress.setMax(classModel.getPlan().getCount());
                     courseProgress.setProgress(classModel.getPlan().getCurrent());

@@ -3,21 +3,20 @@ package cn.com.zwwl.bayuwen.activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +59,8 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
     private List<KeModel> keModels;
     private List<KeModel> stockClass;
     private int page = 1;
+    AppCompatTextView emptyContent;
+
     @Override
     protected int setContentView() {
         return R.layout.activity_convert_class;
@@ -78,7 +79,10 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new CourseTableAdapter(keModels);
-        adapter.setEmptyView(R.layout.empty_view,(ViewGroup)recyclerView.getParent());
+        View emptyView = getLayoutInflater().inflate(R.layout.empty_view, null);
+        emptyContent = emptyView.findViewById(R.id.empty_content);
+        emptyContent.setText("努力记载中~");
+        adapter.setEmptyView(emptyView);
         recyclerView.setAdapter(adapter);
         refresh.autoRefresh();
     }
@@ -113,19 +117,27 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
 
     @Override
     protected void setListener() {
-        refresh.setOnRefreshListener(new OnRefreshListener() {
+        refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
-            public void onRefresh(@NonNull RefreshLayout refreshlayout) {
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                ++page;
+                getCourseData();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page = 1;
                 refresh.setNoMoreData(false);
                 getCourseData();
             }
         });
-        refresh.setOnLoadMoreListener(new OnLoadMoreListener() {
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                ++page;
-                getCourseData();
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent i = new Intent(mActivity, VideoPlayActivity.class);
+                i.putExtra("VideoPlayActivity_url", keModels.get(position).getVideo());
+                i.putExtra("VideoPlayActivity_pic", keModels.get(position).getPic());
+                startActivity(i);
             }
         });
         search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -156,6 +168,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                         map.put("time", sortType.getText());
                         break;
                 }
+                page = 1;
                 getCourseData();
             }
 
@@ -214,7 +227,8 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                     for (KeModel model : keModels) {
                         if (!"0".equals(model.getStock())) stockClass.add(model);
                     }
-                        adapter.setNewData(keModels);
+                    if (keModels == null || keModels.size() == 0) emptyContent.setText("没有数据~");
+                    adapter.setNewData(keModels);
                 }
             });
         }

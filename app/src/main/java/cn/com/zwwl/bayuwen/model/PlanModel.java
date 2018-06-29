@@ -23,6 +23,15 @@ public class PlanModel {
     private String nextTime;
     private int source;
 private String playUrl;
+private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getPlayUrl() {
         return playUrl;

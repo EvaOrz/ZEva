@@ -15,14 +15,13 @@
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/draw_gray_line_bg"
         android:gravity="start|top"
-        android:hint="随便说点什么吧"
-        android:minHeight="@dimen/dp_180"
+        android:hint="点击输入文字！"
+        android:minHeight="@dimen/dp_100"
         android:padding="@dimen/dp_10"
         android:textColorHint="@color/gray_light" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
         app:layout_constraintTop_toBottomOf="@id/content" />
 </android.support.constraint.ConstraintLayout>

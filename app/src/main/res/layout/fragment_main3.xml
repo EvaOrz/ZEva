@@ -8,8 +8,6 @@
     <include
         android:id="@+id/top"
         layout="@layout/layout_gray_titlebar" />
-
-
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
