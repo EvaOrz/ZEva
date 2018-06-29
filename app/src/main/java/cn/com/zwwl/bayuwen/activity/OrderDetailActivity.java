@@ -294,6 +294,11 @@ public class OrderDetailActivity extends BaseActivity {
                         public void onSure() {
                             doCancleOrder();
                         }
+
+                        @Override
+                        public void onCancle() {
+                            
+                        }
                     });
                 } else if (type == 2) {
                     for (KeModel k : orderForMyListModel.getKeModels()) {

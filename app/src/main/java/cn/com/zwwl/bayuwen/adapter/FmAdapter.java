@@ -3,6 +3,7 @@ package cn.com.zwwl.bayuwen.adapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
@@ -23,17 +24,15 @@ import cn.com.zwwl.bayuwen.widget.ViewHolder;
  */
 public class FmAdapter extends CheckScrollAdapter<FmModel> {
     protected Context mContext;
-    private int cuPosition = -1;
 
     public FmAdapter(Context context) {
         super(context);
         mContext = context;
     }
 
-    public void setData(List<FmModel> mItemList, int cuPosition) {
+    public void setData(List<FmModel> mItemList) {
         clear();
         isScroll = false;
-        this.cuPosition = cuPosition;
         synchronized (mItemList) {
             for (FmModel item : mItemList) {
                 add(item);
@@ -52,17 +51,29 @@ public class FmAdapter extends CheckScrollAdapter<FmModel> {
         TextView pinglun = viewHolder.getView(R.id.fm_pinglun);
         TextView time = viewHolder.getView(R.id.fm_time);
         GifView gif = viewHolder.getView(R.id.fm_gif);
-        if (position == cuPosition) {
-            id.setVisibility(View.INVISIBLE);
-            gif.setVisibility(View.VISIBLE);
-            gif.setMovieResource(R.raw.gif_red);
-        } else {
-            id.setVisibility(View.VISIBLE);
+        ImageView lock = viewHolder.getView(R.id.fm_lock);
+
+        if (item.getGifSta() == 0) {
             gif.setVisibility(View.INVISIBLE);
+            if (item.getStatus() == 0) {// id
+                id.setVisibility(View.VISIBLE);
+                lock.setVisibility(View.INVISIBLE);
+                id.setText(String.valueOf(position + 1));
+            } else if (item.getStatus() == 1) {// lock
+                id.setVisibility(View.INVISIBLE);
+                lock.setVisibility(View.VISIBLE);
+            }
+        } else {
+            id.setVisibility(View.INVISIBLE);
+            lock.setVisibility(View.INVISIBLE);
+            gif.setVisibility(View.VISIBLE);
+            if (item.getGifSta() == 1) {//loading
+                gif.setMovieResource(R.raw.fm_loading);
+            } else if (item.getGifSta() == 2) {
+                gif.setMovieResource(R.raw.gif_red);
+            }
         }
 
-
-        id.setText(String.valueOf(position + 1));
         title.setText(item.getTitle());
         play.setText(item.getPlay_num() + "");
         pinglun.setText("0");

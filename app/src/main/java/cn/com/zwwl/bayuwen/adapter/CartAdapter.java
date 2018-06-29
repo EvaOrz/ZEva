@@ -78,6 +78,11 @@ public class CartAdapter extends CheckScrollAdapter<KeModel> {
                             checkBox.setChecked(false);
                             onItemCheckChangeListener.onDelete(position);
                         }
+
+                        @Override
+                        public void onCancle() {
+                            
+                        }
                     });
                 } else
                     onItemCheckChangeListener.onCheckChange(position, isChecked);

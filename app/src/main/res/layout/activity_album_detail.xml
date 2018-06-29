@@ -86,6 +86,16 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/album_buy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gold"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_14"
+        android:visibility="gone" />
+
     <cn.com.zwwl.bayuwen.widget.CallScrollView
         android:id="@+id/album_detail_scroll"
         android:layout_width="match_parent"
@@ -183,47 +193,79 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-
                             android:paddingTop="10dp">
 
-                            <TextView
+                            <LinearLayout
                                 android:id="@+id/album_detail_like"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:drawablePadding="7dp"
-                                android:drawableTop="@mipmap/like_b"
-                                android:gravity="center_horizontal"
+                                android:orientation="vertical"
+                                android:paddingLeft="20dp">
 
-                                android:text="@string/like"
-                                android:textColor="@color/gray_dark"
-                                android:textSize="@dimen/text_size_12" />
+                                <ImageView
+                                    android:id="@+id/album_detail_like_img"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/like_b" />
 
-                            <TextView
+                                <TextView
+                                    android:id="@+id/album_detail_like_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="@string/like"
+                                    android:textColor="@color/gray_dark"
+                                    android:textSize="@dimen/text_size_12" />
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:id="@+id/album_detail_shoucang"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:drawablePadding="5dp"
-                                android:drawableTop="@mipmap/shoucang_b"
                                 android:gravity="center_horizontal"
+                                android:orientation="vertical">
 
-                                android:text="@string/collect"
-                                android:textColor="@color/gray_dark"
-                                android:textSize="@dimen/text_size_12" />
+                                <ImageView
+                                    android:id="@+id/album_detail_shoucang_img"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/shoucang_b" />
 
-                            <TextView
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="@string/collect"
+                                    android:textColor="@color/gray_dark"
+                                    android:textSize="@dimen/text_size_12" />
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:id="@+id/album_detail_share"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:drawablePadding="5dp"
-                                android:drawableTop="@mipmap/share_a"
-                                android:gravity="center_horizontal"
+                                android:gravity="right"
+                                android:orientation="vertical"
+                                android:paddingRight="20dp">
 
-                                android:text="@string/share"
-                                android:textColor="@color/gray_dark"
-                                android:textSize="@dimen/text_size_12" />
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@mipmap/share_a" />
+
+                                <TextView
+                                    android:id="@+id/album_detail_shoucang_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="@string/share"
+                                    android:textColor="@color/gray_dark"
+                                    android:textSize="@dimen/text_size_12" />
+                            </LinearLayout>
+
                         </LinearLayout>
 
                     </LinearLayout>

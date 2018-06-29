@@ -167,7 +167,6 @@ public class PayActivity extends BaseActivity {
         tuijianEv = findViewById(R.id.tuijian_ev);
         tuijianEv.clearFocus();
         tuikuanCheckbox = findViewById(R.id.tuikuan_info_check);
-
         priceTv = findViewById(R.id.order_d_price);
         zhifubaoBt = findViewById(R.id.zhifubao_pay);
         weixinBt = findViewById(R.id.weixin_pay);
@@ -238,9 +237,14 @@ public class PayActivity extends BaseActivity {
                 case 3:// 实时计算价格，之后更新最新价格
                     priceTv.setText("实付款：￥" + detailModel.getAmount() / 100);
                     if (!TextUtils.isEmpty(detailModel.getWarn())) {
-                        new AskDialog(mContext, "warn", detailModel.getWarn(), new AskDialog
+                        new AskDialog(mContext, true, detailModel.getWarn(), new AskDialog
                                 .OnSurePickListener() {
 
+                            @Override
+                            public void onCancle() {
+                                currentCoupon = null;
+                                handler.sendEmptyMessage(5);
+                            }
 
                             @Override
                             public void onSure() {

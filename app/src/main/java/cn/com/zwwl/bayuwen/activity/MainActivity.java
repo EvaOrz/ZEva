@@ -50,6 +50,7 @@ import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.model.ReportModel;
 import cn.com.zwwl.bayuwen.util.DialogUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.view.music.MusicWindow;
 import cn.com.zwwl.bayuwen.widget.MostGridView;
 
 /**
@@ -72,12 +73,15 @@ public class MainActivity extends BaseActivity {
 
     private MostGridView giftGridView;
     private GiftAdapter giftAdapter;
+    private View barLayout;
 
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
     private List<GiftAndJiangModel> giftModels = new ArrayList<>();// 礼物数据
     private boolean isCanSetDefaultChild = true;// 是否可以设置默认学员
     private FinalEvalDialog evalDialog;
     private ReportModel reportModel;
+
+    public boolean isGoAlbumActivity = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,13 +139,21 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
+        MusicWindow.getInstance(this).movetoController(getViewHeight(barLayout));
+        isGoAlbumActivity = false;
         super.onResume();
         if (MyApplication.loginStatusChange) {
             Log.e("********", "登录状态变化");
             initData();
             MyApplication.loginStatusChange = false;
         }
+    }
 
+    @Override
+    protected void onStop() {
+        if (!isGoAlbumActivity)
+            MusicWindow.getInstance(this).hidePopupWindow();
+        super.onStop();
     }
 
     /**
@@ -242,6 +254,7 @@ public class MainActivity extends BaseActivity {
         tabButton3 = findViewById(R.id.bottom_nav_3);
         tabButton4 = findViewById(R.id.bottom_nav_4);
         tabButton5 = findViewById(R.id.bottom_nav_5);
+        barLayout = findViewById(R.id.botoom_nav);
         tabButton1.setOnClickListener(this);
         tabButton2.setOnClickListener(this);
         tabButton3.setOnClickListener(this);

@@ -21,13 +21,14 @@ public class AlbumModel extends Entry {
     private String tname = "";
     private int likeNum;
     private boolean likeState = false;
-    private String buyPrice = "";
+    private double buyPrice;
     private String type = "";
     private String created_at = "";
     private String update_time = "";
     private List<FmModel> fmModels = new ArrayList<>();
     private List<Teacher> teachers = new ArrayList<>();
-    private int conllectId ;
+    private int conllectId;
+    private boolean is_buy = false;
 
     public String getKid() {
         return kid;
@@ -85,11 +86,11 @@ public class AlbumModel extends Entry {
         this.likeState = likeState;
     }
 
-    public String getBuyPrice() {
+    public double getBuyPrice() {
         return buyPrice;
     }
 
-    public void setBuyPrice(String buyPrice) {
+    public void setBuyPrice(double buyPrice) {
         this.buyPrice = buyPrice;
     }
 
@@ -157,6 +158,14 @@ public class AlbumModel extends Entry {
         this.desc = desc;
     }
 
+    public boolean isIs_buy() {
+        return is_buy;
+    }
+
+    public void setIs_buy(boolean is_buy) {
+        this.is_buy = is_buy;
+    }
+
     public AlbumModel() {
     }
 
@@ -208,11 +217,13 @@ public class AlbumModel extends Entry {
         albumModel.setTid(keinfo.optString("tid"));
         albumModel.setDesc(keinfo.optString("desc"));
         albumModel.setTname(keinfo.optString("tname"));
-        albumModel.setBuyPrice(keinfo.optString("buyPrice"));
+        albumModel.setBuyPrice(keinfo.optDouble("buyPrice"));
         albumModel.setCreated_at(keinfo.optString("created_at"));
         albumModel.setLikeNum(keinfo.optInt("likeNum"));
         albumModel.setLikeState(keinfo.optBoolean("likeState", false));
         albumModel.setUpdate_time(keinfo.optString("update_time"));
+        albumModel.setIs_buy(keinfo.optBoolean("is_buy"));
+
         JSONObject collect = keinfo.optJSONObject("collection");
         if (!isNull(collect)) {
             albumModel.setConllectId(collect.optInt("id"));
@@ -240,6 +251,11 @@ public class AlbumModel extends Entry {
                 JSONObject o = array.optJSONObject(i);
                 FmModel f = new FmModel();
                 f.parseFmModel(o, f);
+                if (albumModel.getBuyPrice() > 0 && !albumModel.isIs_buy()) {
+                    if (!fmModels.get(i).getFree().equals("1")) {
+                        fmModels.get(i).setStatus(1);
+                    }
+                }
                 fmModels.add(f);
             }
         }

@@ -26,7 +26,7 @@ public class ShareTools {
         UMWeb web = new UMWeb(webUrl);
         web.setTitle(title);//标题
         UMImage image = new UMImage(context, pic);//网络图片
-        UMImage thumb = new UMImage(context, R.mipmap.ic_launcher);
+        UMImage thumb = new UMImage(context, R.mipmap.app_icon);
         image.setThumb(thumb);
         web.setThumb(image);  //缩略图
         web.setDescription(desc);//描述

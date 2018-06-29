@@ -35,10 +35,13 @@ public class PlayListPopWindow {
     private PlayerListAdapter adapter;
     private List<FmModel> fmModelList;
     private View view;
+    private String tname;
 
-    public PlayListPopWindow(Context context, List<FmModel> fmModelList, OnItemClickListener listener) {
+    public PlayListPopWindow(Context context, List<FmModel> fmModelList, String tName,
+                             OnItemClickListener listener) {
         mContext = context;
         this.listener = listener;
+        this.tname = tName;
         this.fmModelList = fmModelList;
         init();
     }
@@ -122,7 +125,7 @@ public class PlayListPopWindow {
                 gif.setVisibility(View.INVISIBLE);
             }
             title.setText(item.getTitle());
-            name.setText("  -  " + "C君");
+            name.setText("  -  " + tname);
             return viewHolder.getConvertView();
         }
 

@@ -114,6 +114,11 @@ public class CourseDetailActivity extends BaseActivity {
         initView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void setUi() {
         title_tv.setText("确认课程详情");
         duihuan_tv.setVisibility(View.VISIBLE);

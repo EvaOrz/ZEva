@@ -1,7 +1,10 @@
 package cn.com.zwwl.bayuwen.activity.fm;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,6 +30,7 @@ import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.PlayListPopWindow;
+import cn.com.zwwl.bayuwen.view.music.MusicWindow;
 
 /**
  * 播放器页面
@@ -37,6 +41,7 @@ public class MusicPlayActivity extends BaseActivity {
     private ImageView image, playOrPause, nextBtn, preBtn;
     private SeekBar seekBar;
     private PlayListPopWindow playListPopWindow;
+    private MusicStatusReceiver musicStatusReceiver;
 
     private AlbumModel albumModel;
     private ArrayList<FmModel> fmModels = new ArrayList<>();
@@ -56,32 +61,58 @@ public class MusicPlayActivity extends BaseActivity {
     }
 
     /**
+     * 注册音乐播放器的监听receiver，用于接收音乐播放情况，更新UI
+     */
+    public void registerReceiver() {
+        //实例化过滤器；
+        IntentFilter intentFilter = new IntentFilter();
+        //添加过滤的Action值；
+        intentFilter.addAction(ACTION_RESUME_PAUSE);
+        intentFilter.addAction(ACTION_START_PLAY);
+        intentFilter.addAction(ACTION_MSG_COMPLETE);
+        intentFilter.addAction(ACTION_CHANGE_TIME);
+        intentFilter.addAction(ACTION_REFRESH_LIST);
+        intentFilter.addAction(ACTION_ALBUM_PRE);
+        intentFilter.addAction(ACTION_ALBUM_NEXT);
+        //实例化广播监听器；
+        musicStatusReceiver = new MusicStatusReceiver();
+        //将广播监听器和过滤器注册在一起；
+        registerReceiver(musicStatusReceiver, intentFilter);
+    }
+
+
+    /**
      * 播放器页面初始化只有恢复播放数据的情况
      */
     @Override
     protected void initData() {
-        if (MyApplication.newMusicService != null) {
-            albumModel = MyApplication.newMusicService.getCurrentAl();
-            currentFmModel = MyApplication.newMusicService.getCurrentModel();
-            if (Tools.listNotNull(albumModel.getFmModels())) {
-                fmModels.clear();
-                fmModels.addAll(albumModel.getFmModels());
-                playListPopWindow = new PlayListPopWindow(this, fmModels, new PlayListPopWindow.OnItemClickListener() {
-                    @Override
-                    public void choose(int position) {
-                        changeMusic(position);
-                    }
-                });
-                for (int i = 0; i < fmModels.size(); i++) {
-                    if (fmModels.get(i).getId().equals(currentFmModel.getId())) {
-                        currentPos = i;
-                    }
-                }
-                handler.sendEmptyMessage(0);
-                checkPreNext();
-            }
 
+        albumModel = (AlbumModel) getIntent().getSerializableExtra("MusicPlayActivity_al");
+        currentFmModel = (FmModel) getIntent().getSerializableExtra("MusicPlayActivity_fm");
+
+        if (Tools.listNotNull(albumModel.getFmModels())) {
+            fmModels.clear();
+            fmModels.addAll(albumModel.getFmModels());
+            String tname = "";
+            if (Tools.listNotNull(albumModel.getTeachers())) {
+                tname = albumModel.getTeachers().get(0).getName();
+            }
+            playListPopWindow = new PlayListPopWindow(this, fmModels, tname, new PlayListPopWindow
+                    .OnItemClickListener() {
+                @Override
+                public void choose(int position) {
+                    changeMusic(position);
+                }
+            });
+            for (int i = 0; i < fmModels.size(); i++) {
+                if (fmModels.get(i).getId().equals(currentFmModel.getId())) {
+                    currentPos = i;
+                }
+            }
+            handler.sendEmptyMessage(0);
+            checkPreNext();
         }
+
     }
 
     private void initView() {
@@ -143,15 +174,20 @@ public class MusicPlayActivity extends BaseActivity {
 
     private void checkPreNext() {
         if (currentPos == 0) {
-            preBtn.setImageResource(R.mipmap.player_previous_dis);
+            preBtn.setImageResource(R.drawable.player_previous_dis);
         } else if (currentPos + 1 == fmModels.size()) {
-            nextBtn.setImageResource(R.mipmap.player_next_dis);
+            nextBtn.setImageResource(R.drawable.player_next_dis);
         } else {
-            preBtn.setImageResource(R.mipmap.player_previous);
-            nextBtn.setImageResource(R.mipmap.player_next);
+            preBtn.setImageResource(R.drawable.player_previous);
+            nextBtn.setImageResource(R.drawable.player_next);
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MusicWindow.getInstance(mContext).showPopupWindow();
+    }
 
     @Override
     public void onClick(View view) {
@@ -160,20 +196,19 @@ public class MusicPlayActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.fm_share:
-                ShareTools.doShareWeb(this, albumModel.getTitle(), albumModel.getContent(), albumModel.getPic(), "http://baidu.com");
+                ShareTools.doShareWeb(this, albumModel.getTitle(), albumModel.getContent(),
+                        albumModel.getPic(), "http://baidu.com");
                 break;
             case R.id.fm_play:
-                // 没有播放，则启动
-                if (MyApplication.newMusicService == null) {
-                    sendintent(ACTION_START_PLAY, 0);
+                sendintent(ACTION_RESUME_PAUSE, 0);
+                if (MusicWindow.isPlaying) {
+                    playOrPause.setImageResource(R.drawable.player_pause);
                 } else {
-                    sendintent(ACTION_RESUME_PAUSE, 0);
-                    handler.sendEmptyMessage(MSG_RESUME_PAUSE);
+                    playOrPause.setImageResource(R.drawable.player_play);
                 }
 
                 break;
             case R.id.fm_previous:
-
                 if (currentPos > 0) {
                     currentPos--;
                     checkPreNext();
@@ -182,7 +217,6 @@ public class MusicPlayActivity extends BaseActivity {
                 } else Toast.makeText(mContext, "已是列表第一首", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fm_next:
-
                 if (currentPos + 1 < fmModels.size()) {
                     currentPos++;
                     checkPreNext();
@@ -206,15 +240,21 @@ public class MusicPlayActivity extends BaseActivity {
                     Glide.with(mContext).load(albumModel.getPic()).into(image);
                     alTitle.setText(albumModel.getTitle());
                     fmTitle.setText(currentFmModel.getTitle());
-                    wholeTimebox.setText(CalendarTools.getTime(Long.valueOf(currentFmModel.getAudioDuration())));
+                    wholeTimebox.setText(CalendarTools.getTime(Long.valueOf(currentFmModel
+                            .getAudioDuration())));
                     seekBar.setMax(Integer.valueOf(currentFmModel.getAudioDuration()));
                     progress = 0;
                     seekBar.setProgress(0);
                     playTimebox.setText("00:00");
+                    if (MusicWindow.getInstance(mContext).isPlaying) {
+                        playOrPause.setImageResource(R.drawable.player_play);
+                    } else {
+                        playOrPause.setImageResource(R.drawable.player_pause);
+                    }
                     break;
 
                 case MSG_START_PLAY: // ---------------－开始播放
-                    playOrPause.setImageResource(R.mipmap.player_pause);
+                    playOrPause.setImageResource(R.drawable.player_play);
                     handler.sendEmptyMessage(MSG_REFRESH_LIST);
                     playListPopWindow.setCurrentPos(currentPos);
                     Log.e("开始播放 currentPos", currentPos + currentFmModel.getTitle());
@@ -228,19 +268,13 @@ public class MusicPlayActivity extends BaseActivity {
                     playTimebox.setText(CalendarTools.getTime(seekBar.getProgress()));
                     break;
                 case MSG_REFRESH_LIST:
-//                    adapter.setList(fmModels, showCount);
+                    playListPopWindow.setCurrentPos(currentPos);
                     break;
-                case MSG_RESUME_PAUSE:// 播放/暂停
-                    if (MyApplication.newMusicService.isPlaying()) {
-                        playOrPause.setImageResource(R.mipmap.player_play);
-                    } else {
-                        playOrPause.setImageResource(R.mipmap.player_pause);
-                    }
-                    break;
+
                 case MSG_COMPLETE:// -------------------播放完成
                     // 最后一曲
                     if (currentPos + 1 == fmModels.size()) {
-                        playOrPause.setImageResource(R.mipmap.player_play);
+                        playOrPause.setImageResource(R.drawable.player_play);
                         handler.sendEmptyMessage(MSG_REFRESH_LIST);
                     } else {// 开始下一曲
                         currentPos++;
@@ -254,11 +288,6 @@ public class MusicPlayActivity extends BaseActivity {
     };
 
 
-    @Override
-    protected void getMusicMsg(Message ms) {
-        handler.sendMessage(ms);
-    }
-
     /**
      * 主动换歌
      */
@@ -266,9 +295,33 @@ public class MusicPlayActivity extends BaseActivity {
         if (!Tools.listNotNull(fmModels)) return;
         currentPos = p;
         currentFmModel = fmModels.get(p);
+        handler.sendEmptyMessage(0);
         // 更新播放状态
         sendintent(ACTION_START_PLAY, 0);// 主动切歌
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (musicStatusReceiver != null)
+            unregisterReceiver(musicStatusReceiver);
+
+    }
+
+    /**
+     * 监听音乐播放Service的receiver
+     */
+    class MusicStatusReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // 开始播放、播放完成、更新时间
+            if (intent.getAction().equals(ACTION_START_PLAY) || intent.getAction().equals
+                    (ACTION_MSG_COMPLETE) || intent.getAction().equals(ACTION_CHANGE_TIME)) {
+                handler.sendMessage((Message) intent.getParcelableExtra("music_service_message"));
+
+            }
+        }
+    }
 
 }

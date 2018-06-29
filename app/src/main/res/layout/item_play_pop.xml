@@ -32,11 +32,15 @@
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_size_12" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
         <cn.com.zwwl.bayuwen.widget.GifView
             android:id="@+id/pop_gif"
-            android:layout_width="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_height="20dp" />
+            android:layout_width="15dp"
+            android:layout_height="15dp" />
 
     </LinearLayout>
 

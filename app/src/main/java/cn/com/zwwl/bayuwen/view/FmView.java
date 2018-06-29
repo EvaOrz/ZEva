@@ -21,6 +21,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.fm.AlbumDetailActivity;
 import cn.com.zwwl.bayuwen.activity.fm.AlbumListActivity;
 import cn.com.zwwl.bayuwen.activity.fm.FmSearchActivity;
@@ -177,7 +178,10 @@ public class FmView implements View.OnClickListener {
      */
     private void goAlbumDetailActivity(String kid) {
         Intent intent = new Intent(context, AlbumDetailActivity.class);
+        if (context instanceof MainActivity)
+            ((MainActivity) context).isGoAlbumActivity = true;
         intent.putExtra("AlbumDetailActivity_data", kid);
+        intent.putExtra("is_from_main", true);
         context.startActivity(intent);
     }
 

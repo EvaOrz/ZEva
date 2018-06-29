@@ -2,10 +2,12 @@ package cn.com.zwwl.bayuwen.view;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
@@ -93,7 +95,7 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
         youNo.setOnClickListener(this);
         if (type == 1) {
             youNo.setVisibility(View.GONE);
-        }else  youNo.setVisibility(View.VISIBLE);
+        } else youNo.setVisibility(View.VISIBLE);
         listView = view.findViewById(R.id.youhuijuan_listview);
         adapter = new YouhuiAdapter(mContext, couponModels);
         listView.setAdapter(adapter);

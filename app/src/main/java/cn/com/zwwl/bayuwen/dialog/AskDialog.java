@@ -23,16 +23,17 @@ public class AskDialog implements View.OnClickListener {
             onSurePickListener) {
         this.mContext = context;
         this.onSurePickListener = onSurePickListener;
-        init(null, content);
+        init(false, content);
     }
-    public AskDialog(Context context,String title,  String content, OnSurePickListener
+
+    public AskDialog(Context context, boolean payWarnFlag, String content, OnSurePickListener
             onSurePickListener) {
         this.mContext = context;
         this.onSurePickListener = onSurePickListener;
-        init(title, content);
+        init(payWarnFlag, content);
     }
 
-    private void init(String tString, String cString) {
+    private void init(boolean payWarnFlag, String cString) {
         mDialog = new Dialog(mContext, R.style.CustomDialog);
         mDialog.show();
         mDialog.setCancelable(true);
@@ -44,8 +45,11 @@ public class AskDialog implements View.OnClickListener {
                 .LayoutParams.MATCH_PARENT);
 
         TextView title = window.findViewById(R.id.motify_sign_title);
-        if (!TextUtils.isEmpty(tString)) {
-            title.setText(tString);
+        TextView sureBt = window.findViewById(R.id.motify_sign_sure);
+        TextView cancleBt = window.findViewById(R.id.motify_sign_cancle);
+        if (payWarnFlag) {
+            sureBt.setText("使用");
+            cancleBt.setText("不使用");
         }
         TextView content = window.findViewById(R.id.motify_sign_content);
         content.setText(cString);
@@ -57,15 +61,25 @@ public class AskDialog implements View.OnClickListener {
 
     public interface OnSurePickListener {
         public void onSure();
+
+        public void onCancle();
     }
 
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.motify_sign_sure) {
-            if (onSurePickListener != null) {
-                onSurePickListener.onSure();
-            }
+
+        switch (v.getId()) {
+            case R.id.motify_sign_sure:
+                if (onSurePickListener != null) {
+                    onSurePickListener.onSure();
+                }
+                break;
+            case R.id.motify_sign_cancle:
+                if (onSurePickListener != null) {
+                    onSurePickListener.onCancle();
+                }
+                break;
         }
         mDialog.cancel();
     }

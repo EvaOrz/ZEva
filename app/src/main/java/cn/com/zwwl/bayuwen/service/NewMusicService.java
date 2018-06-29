@@ -1,6 +1,8 @@
 package cn.com.zwwl.bayuwen.service;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Handler;
@@ -21,6 +23,7 @@ import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.model.fm.FmModel;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.music.MusicWindow;
 
@@ -33,11 +36,11 @@ public class NewMusicService extends Service {
 
     public AlbumModel albumModel;
     public FmModel currentFmModel;
+    private int currentPosition = -1;// 当前正在播放的音频在列表中的位置
 
     @Override
     public void onCreate() {
         super.onCreate();
-        MyApplication.newMusicService = this;
     }
 
     @Nullable
@@ -76,31 +79,25 @@ public class NewMusicService extends Service {
     private void init(Intent intent) {
         if (mediaPlayer != null) {
             mediaPlayer.release();
-            playStatus = 0;
+            setPlayStatus(0);
             mediaPlayer = null;
             isReleased = true;
         }
         albumModel = (AlbumModel) intent.getSerializableExtra("play_model");
-        int posi = intent.getIntExtra("play_model_position", 0);
+        currentPosition = intent.getIntExtra("play_model_position", 0);
 
         if (albumModel != null && Tools.listNotNull(albumModel.getFmModels()) && albumModel
-                .getFmModels().size() > posi) {
+                .getFmModels().size() > currentPosition) {
             List<FmModel> datas = new ArrayList<>();
             datas.addAll(albumModel.getFmModels());
-            currentFmModel = datas.get(posi);
+            currentFmModel = datas.get(currentPosition);
             prepare(currentFmModel.getAudioUrl());
         }
-    }
 
-
-    /**
-     * 重新启动页面，向页面传递当前播放数据
-     */
-    public AlbumModel getCurrentAl() {
-        return albumModel;
     }
 
     public void prepare(String path) {
+        MusicWindow.getInstance(this).setFmData(albumModel, currentFmModel);
         if (mediaPlayer == null && !isPlaying()) { // 新播放音频
             mediaPlayer = new MediaPlayer();
             isReleased = false;
@@ -121,10 +118,20 @@ public class NewMusicService extends Service {
 
                 @Override
                 public void onCompletion(MediaPlayer mp) {
-                    playStatus = 3;
-                    Message msg = new Message();
-                    msg.what = BaseActivity.MSG_COMPLETE;
-                    notifyActivity(BaseActivity.ACTION_MSG_COMPLETE, msg);
+                    setPlayStatus(3);
+
+
+                    // 最后一曲
+                    if (currentPosition + 1 == albumModel.getFmModels().size()) {
+                        Message msg = new Message();
+                        msg.what = BaseActivity.MSG_COMPLETE;
+                        notifyActivity(BaseActivity.ACTION_MSG_COMPLETE, msg);
+                    } else {// 开始下一曲
+                        currentPosition++;
+                        currentFmModel = albumModel.getFmModels().get(currentPosition);
+                        prepare(currentFmModel.getAudioUrl());
+                    }
+
                 }
             });
             mediaPlayer.setOnInfoListener(new MediaPlayer.OnInfoListener() {
@@ -152,18 +159,14 @@ public class NewMusicService extends Service {
         }
     }
 
-    protected boolean isCompleted() {
-        return playStatus == 3 ? true : false;
-    }
-
     /**
      * 开始播放,申请音频焦点
      */
     public void start() {
         if (mediaPlayer != null && !isPlaying()) {
             mediaPlayer.start();
-            MusicWindow.showPopupWindow(this);
-            playStatus = 1;
+            MusicWindow.getInstance(this).showPopupWindow();
+            setPlayStatus(1);
             // 开始播放向页面发送播放message
             Message m = new Message();
             m.what = BaseActivity.MSG_START_PLAY;
@@ -179,7 +182,7 @@ public class NewMusicService extends Service {
     public void pause() {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
-            playStatus = 2;
+            setPlayStatus(2);
         }
     }
 
@@ -190,7 +193,7 @@ public class NewMusicService extends Service {
         if (mediaPlayer != null && !isPlaying()) {
             mediaPlayer.start();
             handler.post(runnable);
-            playStatus = 1;
+            setPlayStatus(1);
         }
     }
 
@@ -199,7 +202,19 @@ public class NewMusicService extends Service {
             mediaPlayer.release();
             isReleased = true;
             mediaPlayer = null;
-            playStatus = 0;
+            setPlayStatus(0);
+        }
+    }
+
+
+    private void setPlayStatus(int i) {
+        playStatus = i;
+        if (playStatus == 1) {
+            MusicWindow.getInstance(NewMusicService.this).isPlaying = true;
+            MusicWindow.getInstance(this).setStart();
+        } else {
+            MusicWindow.getInstance(NewMusicService.this).isPlaying = false;
+            MusicWindow.getInstance(this).setPause();
         }
     }
 
@@ -235,6 +250,8 @@ public class NewMusicService extends Service {
     private void toUpdateProgress() {
         if (mediaPlayer != null && !isReleased && isPlaying()) {
             int progress = mediaPlayer.getCurrentPosition() / 1000;
+            MusicWindow.getInstance(this).setCurrentTime(progress, CalendarTools.getTime(Long
+                    .valueOf(currentFmModel.getAudioDuration())));
             Message message = new Message();
             message.what = BaseActivity.MSG_CHANGE_TIME;
             message.arg1 = progress;
@@ -246,11 +263,6 @@ public class NewMusicService extends Service {
     public void setIsChanging() {
         isReleased = true;
     }
-
-    public FmModel getCurrentModel() {
-        return currentFmModel;
-    }
-
 
     /**
      * 增加播放量
@@ -268,7 +280,6 @@ public class NewMusicService extends Service {
             }
         });
     }
-
 
 }
 
