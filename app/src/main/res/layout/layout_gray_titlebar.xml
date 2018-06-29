@@ -13,6 +13,7 @@
         android:contentDescription="@null"
         android:paddingBottom="@dimen/dp_10"
         android:paddingTop="@dimen/dp_10"
+        android:background="@drawable/drawable_back_bg"
         android:scaleType="centerInside"
         android:src="@mipmap/icon_menu_more" />
 

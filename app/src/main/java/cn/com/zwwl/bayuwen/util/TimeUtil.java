@@ -101,11 +101,4 @@ public class TimeUtil {
        String[]str=time.split(":");
        return str[0]+":"+str[1];
     }
-    /**
-     *yyyy-MM-dd hh:MM:ss-->yyyy-MM-dd hh:MM
-     */
-    public static  String parseToDHm(String time){
-        long l= convertToMillis(time,"yyyy-MM-dd hh:MM:ss");
-        return parseTime(l);
-    }
 }
