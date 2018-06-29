@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/dp_20"
             android:textColor="@color/black"
-            android:text="dddddd"/>
+            android:text=""/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,27 +28,27 @@
             android:id="@+id/teacher_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_dark"
+            android:textColor="#999999"
             android:textSize="@dimen/dp_16"
-            android:text="ddddd"/>
+            android:text=""/>
 
             <TextView
                 android:id="@+id/teacher_dateId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_5"
-                android:textColor="@color/gray_dark"
+                android:textColor="#9A9A9A"
                 android:textSize="@dimen/dp_14"
-                android:text="ddddd"/>
+                android:text=""/>
 
         </LinearLayout>
         <TextView
             android:id="@+id/teacher_answer_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_dark"
+            android:textColor="#818181"
             android:textSize="@dimen/dp_16"
-            android:text="ddddd"/>
+            android:text=""/>
 
     </LinearLayout>
 
