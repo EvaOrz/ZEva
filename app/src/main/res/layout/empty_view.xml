@@ -11,9 +11,10 @@
         android:contentDescription="@null"
         android:src="@drawable/ic_empty" />
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/empty_content"
         android:layout_marginTop="@dimen/dp_10"
         android:text="@string/empty_no_data"
         android:textColor="@color/gray_dark" />

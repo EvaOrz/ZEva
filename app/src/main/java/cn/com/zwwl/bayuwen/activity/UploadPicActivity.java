@@ -25,6 +25,7 @@ import cn.com.zwwl.bayuwen.api.UploadPicApi;
 import cn.com.zwwl.bayuwen.api.UploadWorkApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.base.MenuCode;
+import cn.com.zwwl.bayuwen.dialog.LoadingDialog;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -45,6 +46,7 @@ public class UploadPicActivity extends BasicActivityWithTitle {
     AlbumFile file;
     String kid, cid;
     StringBuilder urls;
+    LoadingDialog loadingDialog;
 
     @Override
     protected int setContentView() {
@@ -53,11 +55,14 @@ public class UploadPicActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initView() {
+        setCustomTitle("作业上传");
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
     }
 
     @Override
     protected void initData() {
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.setContent("正在上传");
         urls = new StringBuilder();
         kid = getIntent().getStringExtra("kid");
         cid = getIntent().getStringExtra("cid");
@@ -82,7 +87,11 @@ public class UploadPicActivity extends BasicActivityWithTitle {
                         uploadPicAdapter.setNewData(albumFiles);
                         break;
                     default:
-                        selectImage();
+                        if (albumFiles.size() == 6) {
+                            ToastUtil.showShortToast("最多允许上传五张图片");
+                        } else {
+                            selectImage();
+                        }
                         break;
                 }
             }
@@ -95,7 +104,7 @@ public class UploadPicActivity extends BasicActivityWithTitle {
                 .multipleChoice()
                 .camera(true)
                 .columnCount(2)
-                .selectCount(6)
+                .selectCount(5)
                 .checkedList(albumFiles)
                 .widget(
                         Widget.newDarkBuilder(this)
@@ -137,6 +146,7 @@ public class UploadPicActivity extends BasicActivityWithTitle {
                 File f = new File(albumFile.getPath());
                 files.add(f);
             }
+            loadingDialog.show();
             new UploadPicApi(this, files, new ResponseCallBack<List<CommonModel>>() {
                 @Override
                 public void result(List<CommonModel> commonModels, ErrorMsg errorMsg) {
@@ -146,11 +156,15 @@ public class UploadPicActivity extends BasicActivityWithTitle {
                             urls.append(c.getUrl()).append(",");
                         }
                         uploadWork();
+                    } else {
+                        loadingDialog.dismiss();
+                        ToastUtil.showShortToast("上传失败");
                     }
                 }
             });
         } else {
             urls.setLength(0);
+            loadingDialog.show();
             uploadWork();
         }
 
@@ -169,6 +183,7 @@ public class UploadPicActivity extends BasicActivityWithTitle {
         new UploadWorkApi(this, map, new ResponseCallBack<CommonModel>() {
             @Override
             public void result(CommonModel commonModel, ErrorMsg errorMsg) {
+                loadingDialog.dismiss();
                 if (errorMsg != null) {
                     ToastUtil.showShortToast(errorMsg.getDesc());
                 } else {
@@ -181,5 +196,13 @@ public class UploadPicActivity extends BasicActivityWithTitle {
     @Override
     public void close() {
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
     }
 }

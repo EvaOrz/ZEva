@@ -3,13 +3,13 @@ package cn.com.zwwl.bayuwen.activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
@@ -59,6 +59,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
     private List<KeModel> keModels;
     private List<KeModel> stockClass;
     private int page = 1;
+    AppCompatTextView emptyContent;
 
     @Override
     protected int setContentView() {
@@ -78,7 +79,10 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new CourseTableAdapter(keModels);
-        adapter.setEmptyView(R.layout.empty_view, (ViewGroup) recyclerView.getParent());
+        View emptyView = getLayoutInflater().inflate(R.layout.empty_view, null);
+        emptyContent = emptyView.findViewById(R.id.empty_content);
+        emptyContent.setText("努力记载中~");
+        adapter.setEmptyView(emptyView);
         recyclerView.setAdapter(adapter);
         refresh.autoRefresh();
     }
@@ -164,6 +168,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                         map.put("time", sortType.getText());
                         break;
                 }
+                page = 1;
                 getCourseData();
             }
 
@@ -222,6 +227,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                     for (KeModel model : keModels) {
                         if (!"0".equals(model.getStock())) stockClass.add(model);
                     }
+                    if (keModels == null || keModels.size() == 0) emptyContent.setText("没有数据~");
                     adapter.setNewData(keModels);
                 }
             });

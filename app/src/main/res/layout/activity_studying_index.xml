@@ -21,10 +21,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.AppCompatImageView
+            <cn.com.zwwl.bayuwen.widget.CircleImageView
                 android:id="@+id/logo"
-                android:layout_width="@dimen/dp_60"
+                android:layout_width="@dimen/dp_80"
                 android:layout_height="@dimen/dp_60"
+                android:scaleType="fitXY"
+                app:borderRadius="@dimen/dp_10"
+                app:type="1"
+                app:isEdge="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -203,25 +207,25 @@
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/dp_5"
-            android:text="@string/seat_table" />
+            android:text="@string/sign_status" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/sign_per"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:textSize="@dimen/sp_12"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:textColor="@color/gray_light" />
+            android:textColor="@color/gray_light"
+            android:textSize="@dimen/sp_12" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/no_sign"
-            android:textSize="@dimen/sp_12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:textColor="@color/gray_light" />
+            android:textColor="@color/gray_light"
+            android:textSize="@dimen/sp_12" />
 
         <View
             style="@style/split_line"

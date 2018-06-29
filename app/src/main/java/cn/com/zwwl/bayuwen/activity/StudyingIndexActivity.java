@@ -1,7 +1,6 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,6 +17,7 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
+import cn.com.zwwl.bayuwen.widget.CircleImageView;
 
 /**
  * 课程跟踪正在进行课程点击箭头进入该界面
@@ -25,7 +25,7 @@ import cn.com.zwwl.bayuwen.util.ToastUtil;
  */
 public class StudyingIndexActivity extends BasicActivityWithTitle {
     @BindView(R.id.logo)
-    AppCompatImageView logo;
+    CircleImageView logo;
     @BindView(R.id.course_name)
     AppCompatTextView courseName;
     @BindView(R.id.course_code)
@@ -84,7 +84,7 @@ public class StudyingIndexActivity extends BasicActivityWithTitle {
             teacherName.setText(String.format("授课老师: %s", keModel.getTname()));
             schoolName.setText(String.format("上课地点: %s", keModel.getSchool()));
             date.setText(String.format("上课日期: %s-%s", TimeUtil.parseTime(keModel.getStartPtime() * 1000, "yyyy年MM月dd日"), TimeUtil.parseTime(keModel.getEndPtime() * 1000, "yyyy年MM月dd日")));
-            time.setText(String.format("上课时间: %s%s-%s", keModel.getWeekday(), keModel.getClass_start_at(), keModel.getClass_end_at()));
+            time.setText(String.format("上课时间: %s%s-%s", keModel.getWeekday(), TimeUtil.parseToHm(keModel.getClass_start_at()), TimeUtil.parseToHm(keModel.getClass_end_at())));
             ImageLoader.display(this, logo, keModel.getPic());
         }
         signPer.setText(String.format("签到率: %s%s", classModel.getSignInRate(), "%"));
@@ -109,7 +109,7 @@ public class StudyingIndexActivity extends BasicActivityWithTitle {
                 }
                 mApplication.operate_type = 0;
                 intent.putExtra("kid", kid);
-                intent.putExtra("course_type", 0);
+                intent.putExtra("course_type", 1);
                 intent.setClass(this, UnitTableActivity.class);
                 startActivity(intent);
                 break;

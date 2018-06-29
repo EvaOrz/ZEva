@@ -8,6 +8,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.MyCourseModel;
+import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
 
 public class CourseIndexAdapter extends BaseMultiItemQuickAdapter<MyCourseModel.UnfinishedBean, BaseViewHolder> {
@@ -37,13 +38,13 @@ public class CourseIndexAdapter extends BaseMultiItemQuickAdapter<MyCourseModel.
                 break;
         }
         helper.setText(R.id.course_name, item.getProducts().getTitle());
-        helper.setText(R.id.course_progress, "这是一句描述");
+        helper.setText(R.id.course_progress, item.getPlan().getTitle());
         helper.setMax(R.id.progress, item.getPlan().getCount());
         helper.setProgress(R.id.progress, item.getPlan().getCurrent());
         helper.setText(R.id.current, String.valueOf(item.getPlan().getCurrent()));
         helper.setText(R.id.total_course, String.valueOf(item.getPlan().getCount()));
         helper.setText(R.id.per, Tools.parseDecimal((double) item.getPlan().getCurrent() / item.getPlan().getCount()));
-        helper.setText(R.id.time, String.format("下次上课时间:%s", item.getPlan().getNextTime()));
+        helper.setText(R.id.time, String.format("下次上课时间:%s", TimeUtil.parseToDHm(item.getPlan().getNextTime())));
         if (helper.getItemViewType() == 1) {
             helper.addOnClickListener(R.id.look_video);
         }

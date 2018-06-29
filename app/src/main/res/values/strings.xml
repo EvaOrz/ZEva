@@ -448,5 +448,6 @@
     <string name="middle_report">期中报告</string>
     <string name="warning_no_mid_report">您还没有该报告~</string>
     <string name="welcome_speech">欢迎致辞</string>
+    <string name="sign_status">签到情况</string>
 
 </resources>

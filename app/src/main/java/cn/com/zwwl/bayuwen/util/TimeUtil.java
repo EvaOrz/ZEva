@@ -1,5 +1,7 @@
 package cn.com.zwwl.bayuwen.util;
 
+import android.text.TextUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -19,6 +21,14 @@ public class TimeUtil {
      */
     public static String parseTime(long time, String formatterStr) {
         SimpleDateFormat formatter = new SimpleDateFormat(formatterStr, Locale.getDefault());
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+        return formatter.format(time);
+    }
+    /**
+     * Long-->String
+     */
+    public static String parseTime(long time) {
+        SimpleDateFormat formatter = new SimpleDateFormat(FORMATTER_DEFAULT, Locale.getDefault());
         formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
         return formatter.format(time);
     }
@@ -57,7 +67,17 @@ public class TimeUtil {
         }
         return 0;
     }
-
+    public static long convertToMillis(String date,String formatter) {
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat(formatter, Locale.getDefault());
+        try {
+            c.setTime(sdf.parse(date));
+            return c.getTimeInMillis();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
     /**
      * 获取当前年
      */
@@ -71,5 +91,21 @@ public class TimeUtil {
     public static String getCurrentY(){
         Calendar c = Calendar.getInstance();//
         return String.valueOf(c.get(Calendar.YEAR));
+    }
+
+    /**
+     *hh:MM:ss--->hh:MM
+     */
+    public static  String parseToHm(String time){
+       if (TextUtils.isEmpty(time))return null;
+       String[]str=time.split(":");
+       return str[0]+":"+str[1];
+    }
+    /**
+     *yyyy-MM-dd hh:MM:ss-->yyyy-MM-dd hh:MM
+     */
+    public static  String parseToDHm(String time){
+        long l= convertToMillis(time,"yyyy-MM-dd hh:MM:ss");
+        return parseTime(l);
     }
 }

@@ -68,6 +68,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <!-- 注册 -->
         <activity
@@ -420,8 +421,7 @@
         <activity android:name=".activity.CityActivity" />
         <activity android:name=".activity.OurFmActivity"></activity>
         <!--课程跟踪正在进行课程点击箭头进入该界面-->
-        <activity android:name=".activity.StudyingIndexActivity"
-            android:launchMode="singleTask"/>
+        <activity android:name=".activity.StudyingIndexActivity" />
         <!--课程跟踪点击“往次”，或已完成课程二级页面点击条目进入该页面-->
         <activity android:name=".activity.ReportIndexActivity" />
     </application>

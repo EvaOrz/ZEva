@@ -147,8 +147,8 @@
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/arrow"
-            android:layout_width="@dimen/dp_40"
-            android:layout_height="@dimen/dp_40"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
             android:scaleType="centerInside"
             android:src="@mipmap/ic_arrow_next_yellow"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -174,11 +174,14 @@
             app:rv_backgroundColor="@color/gold"
             app:rv_cornerRadius="@dimen/dp_40">
 
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="@dimen/dp_22"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_upload" />
+
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:drawableLeft="@mipmap/icon_upload"
-                android:drawableStart="@mipmap/icon_upload"
                 android:gravity="center_vertical"
                 android:text="@string/submit_homework"
                 android:textColor="@color/white" />
@@ -197,12 +200,13 @@
             app:layout_constraintStart_toEndOf="@id/work"
             app:rv_backgroundColor="@color/gold"
             app:rv_cornerRadius="@dimen/dp_40">
-
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="@dimen/dp_22"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_trace" />
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:drawableLeft="@mipmap/icon_trace"
-                android:drawableStart="@mipmap/icon_trace"
                 android:gravity="center_vertical"
                 android:text="@string/past_lesson_report"
                 android:textColor="@color/white" />
