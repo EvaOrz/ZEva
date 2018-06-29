@@ -8,6 +8,7 @@
     <include
         android:id="@+id/top"
         layout="@layout/layout_gray_titlebar" />
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
@@ -43,16 +44,29 @@
                     android:paddingTop="@dimen/dp_5"
                     app:layout_constraintTop_toBottomOf="@id/top">
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@mipmap/icon_finish"
-                        android:drawableStart="@mipmap/icon_finish"
-                        android:gravity="center_vertical"
-                        android:text="@string/new_class_report"
-                        android:textColor="@color/text_color_default" />
+                        android:orientation="horizontal">
 
-                    <View style="@style/split_line" />
+                        <android.support.v7.widget.AppCompatImageView
+                            android:layout_width="@dimen/dp_22"
+                            android:layout_height="@dimen/dp_22"
+                            android:scaleType="centerInside"
+                            android:src="@mipmap/icon_book" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="@string/new_class_report"
+                            android:textColor="@color/text_color_default" />
+                    </LinearLayout>
+
+                    <View
+                        style="@style/split_line"
+                        android:layout_marginBottom="@dimen/dp_5"
+                        android:layout_marginTop="@dimen/dp_5" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/report"
@@ -123,18 +137,31 @@
                     android:layout_height="@dimen/dp_10"
                     android:background="@color/body_bg" />
 
-                <android.support.v7.widget.AppCompatTextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@mipmap/icon_book"
-                    android:drawablePadding="5dp"
-                    android:drawableStart="@mipmap/icon_book"
-                    android:gravity="center_vertical|start"
-                    android:paddingEnd="@dimen/dp_10"
-                    android:paddingStart="@dimen/dp_10"
-                    android:text="@string/studying_course"
-                    android:textColor="@color/text_color_default"
-                    android:textSize="@dimen/sp_16" />
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:paddingEnd="@dimen/activity_horizontal_margin"
+                    android:paddingStart="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/dp_5">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="@dimen/dp_22"
+                        android:layout_height="@dimen/dp_22"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/icon_book" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_5"
+                        android:layout_marginStart="@dimen/dp_5"
+                        android:gravity="center_vertical|start"
+                        android:text="@string/studying_course"
+                        android:textColor="@color/text_color_default" />
+                </LinearLayout>
+
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/study_course"
@@ -146,17 +173,31 @@
                     android:layout_height="@dimen/dp_10"
                     android:background="@color/body_bg" />
 
-                <android.support.v7.widget.AppCompatTextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@mipmap/icon_finish"
-                    android:drawableStart="@mipmap/icon_finish"
-                    android:gravity="center_vertical"
-                    android:paddingEnd="@dimen/dp_10"
-                    android:paddingStart="@dimen/dp_10"
-                    android:text="@string/finish_course"
-                    android:textColor="@color/text_color_default"
-                    android:textSize="@dimen/sp_16" />
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:paddingEnd="@dimen/activity_horizontal_margin"
+                    android:paddingStart="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/dp_5">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="@dimen/dp_22"
+                        android:layout_height="@dimen/dp_22"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/icon_finish" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_5"
+                        android:layout_marginStart="@dimen/dp_5"
+                        android:gravity="center_vertical"
+                        android:text="@string/finish_course"
+                        android:textColor="@color/text_color_default" />
+                </LinearLayout>
+
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerView"

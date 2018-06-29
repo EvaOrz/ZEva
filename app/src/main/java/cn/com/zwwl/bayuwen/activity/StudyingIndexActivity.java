@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
@@ -42,6 +43,14 @@ public class StudyingIndexActivity extends BasicActivityWithTitle {
     AppCompatTextView signPer;
     @BindView(R.id.no_sign)
     AppCompatTextView noSign;
+    @BindView(R.id.sign_logo)
+    AppCompatImageView signLogo;
+    @BindView(R.id.course_logo)
+    AppCompatImageView courseLogo;
+    @BindView(R.id.class_logo)
+    AppCompatImageView classLogo;
+    @BindView(R.id.seat_logo)
+    AppCompatImageView seatLogo;
     private String kid;
     private int online;
     private ClassModel classModel;
@@ -65,6 +74,10 @@ public class StudyingIndexActivity extends BasicActivityWithTitle {
         kid = getIntent().getStringExtra("kid");
         setCustomTitle(getIntent().getStringExtra("title"));
         online = getIntent().getIntExtra("online", -1);
+        signLogo.setImageResource(online == 1 ? R.mipmap.sign_gray : R.mipmap.sign_yellow);
+        courseLogo.setImageResource(online == 1 ? R.mipmap.convert_course_gray : R.mipmap.convert_course_yellow);
+        classLogo.setImageResource(online == 1 ? R.mipmap.convert_class_gray : R.mipmap.convert_class_yellow);
+        seatLogo.setImageResource(online == 1 ? R.mipmap.class_seat_gray : R.mipmap.class_seat_yellow);
         new StudyingClassInfoApi(this, kid, new ResponseCallBack<ClassModel>() {
             @Override
             public void result(ClassModel model, ErrorMsg errorMsg) {
@@ -104,7 +117,7 @@ public class StudyingIndexActivity extends BasicActivityWithTitle {
         switch (view.getId()) {
             case R.id.course_change:
                 if (online == 1) {
-                    ToastUtil.showShortToast("线上班级暂不支持调课");
+                    ToastUtil.showShortToast("线上课不支持该功能");
                     return;
                 }
                 mApplication.operate_type = 0;
@@ -115,7 +128,7 @@ public class StudyingIndexActivity extends BasicActivityWithTitle {
                 break;
             case R.id.class_covert:
                 if (online == 1) {
-                    ToastUtil.showShortToast("线上班级暂不支持换班");
+                    ToastUtil.showShortToast("线上课不支持该功能");
                     return;
                 }
                 mApplication.operate_type = 1;
@@ -123,6 +136,10 @@ public class StudyingIndexActivity extends BasicActivityWithTitle {
                 startActivity(intent);
                 break;
             case R.id.class_seat:
+                if (online == 1) {
+                    ToastUtil.showShortToast("线上课不支持该功能");
+                    return;
+                }
                 ToastUtil.showShortToast("敬请期待");
                 break;
             case R.id.middle_report:
@@ -162,4 +179,6 @@ public class StudyingIndexActivity extends BasicActivityWithTitle {
     public void close() {
         finish();
     }
+
+
 }

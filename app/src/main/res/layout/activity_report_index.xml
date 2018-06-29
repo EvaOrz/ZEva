@@ -62,7 +62,7 @@
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="@dimen/dp_16"
                 android:layout_height="@dimen/dp_16"
-                android:src="@mipmap/icon_graduate" />
+                android:src="@mipmap/person_yellow" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/teacher_name"
@@ -84,7 +84,7 @@
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="@dimen/dp_16"
                 android:layout_height="@dimen/dp_16"
-                android:src="@mipmap/icon_map" />
+                android:src="@mipmap/map_yellow" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/school_name"
@@ -106,7 +106,7 @@
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="@dimen/dp_16"
                 android:layout_height="@dimen/dp_16"
-                android:src="@mipmap/icon_calendar" />
+                android:src="@mipmap/calendar_yellow" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/date"
@@ -129,7 +129,7 @@
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="@dimen/dp_16"
                 android:layout_height="@dimen/dp_16"
-                android:src="@mipmap/icon_clock" />
+                android:src="@mipmap/clock_yellow" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/time"
@@ -159,8 +159,9 @@
             android:layout_height="@dimen/dp_100"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:background="@drawable/drawable_yellow_corner_button"
-            android:gravity="center"
+            android:background="@mipmap/icon_report_bg"
+            android:gravity="top|center_horizontal"
+            android:paddingTop="@dimen/dp_24"
             android:text="@string/final_report"
             android:textColor="@color/white" />
 
@@ -169,8 +170,9 @@
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_100"
             android:layout_centerInParent="true"
-            android:background="@drawable/drawable_yellow_corner_button"
-            android:gravity="center"
+            android:background="@mipmap/icon_report_bg"
+            android:gravity="top|center_horizontal"
+            android:paddingTop="@dimen/dp_24"
             android:text="@string/middle_report"
             android:textColor="@color/white" />
 
@@ -180,8 +182,9 @@
             android:layout_height="@dimen/dp_100"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/drawable_yellow_corner_button"
-            android:gravity="center"
+            android:background="@mipmap/icon_report_bg"
+            android:gravity="top|center_horizontal"
+            android:paddingTop="@dimen/dp_24"
             android:text="@string/welcome_speech"
             android:textColor="@color/white" />
     </RelativeLayout>

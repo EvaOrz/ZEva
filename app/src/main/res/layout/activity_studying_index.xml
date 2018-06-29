@@ -27,10 +27,10 @@
                 android:layout_height="@dimen/dp_60"
                 android:scaleType="fitXY"
                 app:borderRadius="@dimen/dp_10"
-                app:type="1"
                 app:isEdge="true"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:type="1" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/course_name"
@@ -64,7 +64,7 @@
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="@dimen/dp_16"
                 android:layout_height="@dimen/dp_16"
-                android:src="@mipmap/icon_graduate" />
+                android:src="@mipmap/person_yellow" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/teacher_name"
@@ -86,7 +86,7 @@
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="@dimen/dp_16"
                 android:layout_height="@dimen/dp_16"
-                android:src="@mipmap/icon_map" />
+                android:src="@mipmap/map_yellow" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/school_name"
@@ -108,7 +108,7 @@
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="@dimen/dp_16"
                 android:layout_height="@dimen/dp_16"
-                android:src="@mipmap/icon_calendar" />
+                android:src="@mipmap/calendar_yellow" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/date"
@@ -131,7 +131,7 @@
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="@dimen/dp_16"
                 android:layout_height="@dimen/dp_16"
-                android:src="@mipmap/icon_clock" />
+                android:src="@mipmap/clock_yellow" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/time"
@@ -161,8 +161,9 @@
             android:layout_height="@dimen/dp_100"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:background="@drawable/drawable_yellow_corner_button"
-            android:gravity="center"
+            android:background="@mipmap/icon_report_bg"
+            android:gravity="top|center_horizontal"
+            android:paddingTop="@dimen/dp_24"
             android:text="@string/final_report"
             android:textColor="@color/white" />
 
@@ -171,8 +172,9 @@
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_100"
             android:layout_centerInParent="true"
-            android:background="@drawable/drawable_yellow_corner_button"
-            android:gravity="center"
+            android:background="@mipmap/icon_report_bg"
+            android:gravity="top|center_horizontal"
+            android:paddingTop="@dimen/dp_24"
             android:text="@string/middle_report"
             android:textColor="@color/white" />
 
@@ -182,8 +184,9 @@
             android:layout_height="@dimen/dp_100"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/drawable_yellow_corner_button"
-            android:gravity="center"
+            android:background="@mipmap/icon_report_bg"
+            android:gravity="top|center_horizontal"
+            android:paddingTop="@dimen/dp_24"
             android:text="@string/welcome_speech"
             android:textColor="@color/white" />
     </RelativeLayout>
@@ -199,15 +202,29 @@
             style="@style/split_line"
             android:layout_marginBottom="@dimen/dp_10" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingBottom="@dimen/dp_5"
+            android:layout_gravity="center_vertical"
             android:paddingEnd="@dimen/activity_horizontal_margin"
-            android:paddingStart="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/dp_5"
-            android:text="@string/sign_status" />
+            android:paddingStart="@dimen/activity_horizontal_margin">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/sign_logo"
+                android:layout_width="@dimen/dp_22"
+                android:layout_height="@dimen/dp_22"
+                android:scaleType="centerInside"
+                android:src="@mipmap/sign_yellow" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_10"
+                android:gravity="center_vertical"
+                android:text="@string/sign_status" />
+        </LinearLayout>
+
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/sign_per"
@@ -232,86 +249,102 @@
             android:layout_marginTop="@dimen/dp_10" />
     </LinearLayout>
 
+    <View style="@style/split_line" />
 
     <LinearLayout
         android:id="@+id/course_change"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin">
 
-        <View style="@style/split_line" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/course_logo"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
+            android:scaleType="centerInside"
+            android:src="@mipmap/class_seat_yellow" />
 
         <android.support.v7.widget.AppCompatTextView
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
             android:drawableEnd="@mipmap/arrow_right_gray"
-            android:drawableLeft="@mipmap/icon_convert_course"
-            android:drawablePadding="@dimen/dp_10"
             android:drawableRight="@mipmap/arrow_right_gray"
-            android:drawableStart="@mipmap/icon_convert_course"
             android:gravity="center_vertical"
-            android:paddingBottom="@dimen/dp_5"
-            android:paddingEnd="@dimen/dp_10"
-            android:paddingStart="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_5"
             android:text="@string/tiaoke" />
-
-        <View style="@style/split_line" />
     </LinearLayout>
+
+    <View style="@style/split_line" />
 
     <LinearLayout
         android:id="@+id/class_covert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin">
 
-        <View style="@style/split_line" />
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/class_logo"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
+            android:scaleType="centerInside"
+            android:src="@mipmap/convert_class_yellow" />
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
             android:drawableEnd="@mipmap/arrow_right_gray"
-            android:drawableLeft="@mipmap/icon_convert_class"
-            android:drawablePadding="@dimen/dp_10"
             android:drawableRight="@mipmap/arrow_right_gray"
-            android:drawableStart="@mipmap/icon_convert_class"
             android:gravity="center_vertical"
-            android:paddingBottom="@dimen/dp_5"
-            android:paddingEnd="@dimen/dp_10"
-            android:paddingStart="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_5"
             android:text="@string/zhuanban" />
-
-        <View style="@style/split_line" />
     </LinearLayout>
+
+    <View style="@style/split_line" />
 
     <LinearLayout
         android:id="@+id/class_seat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin">
 
-        <View style="@style/split_line" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/seat_logo"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
+            android:scaleType="centerInside"
+            android:src="@mipmap/class_seat_yellow" />
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
             android:drawableEnd="@mipmap/arrow_right_gray"
-            android:drawableLeft="@mipmap/icon_convert_class"
-            android:drawablePadding="@dimen/dp_10"
             android:drawableRight="@mipmap/arrow_right_gray"
-            android:drawableStart="@mipmap/icon_convert_class"
             android:gravity="center_vertical"
-            android:paddingBottom="@dimen/dp_5"
-            android:paddingEnd="@dimen/dp_10"
-            android:paddingStart="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_5"
             android:text="@string/seat_table" />
 
-        <View style="@style/split_line" />
+
     </LinearLayout>
+
+    <View style="@style/split_line" />
 </LinearLayout>
