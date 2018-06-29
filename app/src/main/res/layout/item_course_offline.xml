@@ -164,7 +164,7 @@
         <cn.com.zwwl.bayuwen.widget.roundview.RoundLinearLayout
             android:id="@+id/work"
             android:layout_width="0dp"
-            android:layout_height="@dimen/dp_40"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
             android:background="@drawable/drawable_yellow_corner_button"
             android:gravity="center"
@@ -190,7 +190,7 @@
         <cn.com.zwwl.bayuwen.widget.roundview.RoundLinearLayout
             android:id="@+id/trace"
             android:layout_width="0dp"
-            android:layout_height="@dimen/dp_40"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_10"
