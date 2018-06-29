@@ -112,15 +112,20 @@ public class MainFrag3 extends BasicFragment {
         report.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
         report.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R
                 .dimen.dp_5, OrientationHelper.HORIZONTAL));
+        report.setNestedScrollingEnabled(false);
         reportAdapter = new LatestReportAdapter(null);
         report.setAdapter(reportAdapter);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R
                 .dimen.dp_5, OrientationHelper.VERTICAL));
         adapter = new CompleteCourseAdapter(finishCourse);
         adapter.setEmptyView(R.layout.empty_view, (ViewGroup) recyclerView.getParent());
         recyclerView.setAdapter(adapter);
+
         studyCourse.setLayoutManager(new LinearLayoutManager(mContext));
+        studyCourse.setNestedScrollingEnabled(false);
         studyCourse.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R
                 .dimen.dp_5, OrientationHelper.VERTICAL));
         courseIndexAdapter = new CourseIndexAdapter(null);
