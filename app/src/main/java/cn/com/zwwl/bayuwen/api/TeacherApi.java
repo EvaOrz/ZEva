@@ -33,13 +33,14 @@ public class TeacherApi extends BaseApi {
      * 教师列表
      *
      * @param context
+     * @param type         1:教师 2:班主任
      * @param listListener
      */
-    public TeacherApi(Context context, FetchEntryListListener listListener) {
+    public TeacherApi(Context context, int type, FetchEntryListListener listListener) {
         super(context);
         mContext = context;
         this.listListener = listListener;
-        this.url = UrlUtil.getTeacherUrl(null);
+        this.url = UrlUtil.getTeacherUrl(null) + "?flag=" + type;
         get();
     }
 
@@ -50,14 +51,15 @@ public class TeacherApi extends BaseApi {
      * @param type         项目id串
      * @param users        年级串
      * @param keyword      搜索关键字
+     * @param flag         1:教师 2:班主任
      * @param listListener
      */
-    public TeacherApi(Context context, String type, String users, String keyword,
+    public TeacherApi(Context context, String type, String users, String keyword, int flag,
                       FetchEntryListListener listListener) {
         super(context);
         mContext = context;
         this.listListener = listListener;
-        this.url = UrlUtil.getTeacherUrl(null) + "/search?";
+        this.url = UrlUtil.getTeacherUrl(null) + "/search?flag=" + flag;
 
         if (!TextUtils.isEmpty(type)) {
             String and = url.endsWith("?") ? "" : "&";
@@ -102,12 +104,11 @@ public class TeacherApi extends BaseApi {
 
     @Override
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
-        if (errorMsg != null) {
-            if (listListener != null)
-                listListener.setError(errorMsg);
-            if (listener != null)
-                listener.setError(errorMsg);
-        }
+        if (listListener != null)
+            listListener.setError(errorMsg);
+        if (listener != null)
+            listener.setError(errorMsg);
+
         // 解析教师筛选接口数据
         if (!isNull(array)) {
             List<TeacherModel> ts = new ArrayList<>();
@@ -122,16 +123,16 @@ public class TeacherApi extends BaseApi {
             // 解析全部教师接口数据
             if (listListener != null) {
                 JSONArray adata = json.optJSONArray("teachers");
+                List<TeacherModel> ts = new ArrayList<>();
                 if (!isNull(adata)) {
-                    List<TeacherModel> ts = new ArrayList<>();
                     for (int i = 0; i < adata.length(); i++) {
                         TeacherModel t = new TeacherModel();
                         t.parseTeacherModel(adata.optJSONObject(i), t);
                         ts.add(t);
                     }
-                    listListener.setData(ts);
 
                 }
+                listListener.setData(ts);
             }
             // 解析教师详情接口数据
             if (listener != null) {
@@ -143,7 +144,7 @@ public class TeacherApi extends BaseApi {
                 if (!isNull(carray)) {
                     for (int i = 0; i < carray.length(); i++) {
                         Gson gs = new Gson();
-                        KeModel k  = gs.fromJson(carray.optString(i), KeModel.class);
+                        KeModel k = gs.fromJson(carray.optString(i), KeModel.class);
                         keModelList.add(k);
                     }
                     t.setKeModels(keModelList);

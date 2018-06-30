@@ -34,6 +34,7 @@ import cn.com.zwwl.bayuwen.api.ReportPushApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
+import cn.com.zwwl.bayuwen.fragment.DeleteMainFrag1;
 import cn.com.zwwl.bayuwen.fragment.MainFrag1;
 import cn.com.zwwl.bayuwen.fragment.MainFrag2;
 import cn.com.zwwl.bayuwen.fragment.MainFrag3;
@@ -351,7 +352,6 @@ public class MainActivity extends BaseActivity {
     protected void initData() {
         if (userModel == null) return;
         initLeftLayout();
-        mainFrag1.initData(userModel);
         mainFrag5.initData(userModel);
         initChildDta();
 //        getReport();

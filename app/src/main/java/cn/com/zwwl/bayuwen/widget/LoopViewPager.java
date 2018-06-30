@@ -8,13 +8,12 @@ import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 
-public class LoopViewPager extends LinearLayout {
+public class LoopViewPager extends RelativeLayout {
 
     private static final int MSG_LOOP = 1000;
     private static long LOOP_INTERVAL = 5000;
@@ -98,12 +97,14 @@ public class LoopViewPager extends LinearLayout {
     }
 
     private void init() {
-        setOrientation(LinearLayout.VERTICAL);
-        setGravity(Gravity.CENTER_HORIZONTAL);
         initViewPager();
         initLinearPosition();
         this.addView(mViewPager);
-        this.addView(mLinearPosition);
+        LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM ,RelativeLayout.TRUE);
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL ,RelativeLayout.TRUE);
+        this.addView(mLinearPosition, params);
     }
 
     private void initViewPager() {
@@ -153,8 +154,6 @@ public class LoopViewPager extends LinearLayout {
         mLinearPosition.setOrientation(LinearLayout.HORIZONTAL);
         mLinearPosition.setPadding(0, 20, 0,
                 20);
-        mLinearPosition.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams
-                .WRAP_CONTENT));
     }
 
     public void setAdapter(PagerAdapter adapter) {
