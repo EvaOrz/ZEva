@@ -40,11 +40,9 @@ import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
-import cn.com.zwwl.bayuwen.adapter.MainYixuanKeAdapter;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
 import cn.com.zwwl.bayuwen.api.Index1Api;
-import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ChildModel;
@@ -57,12 +55,9 @@ import cn.com.zwwl.bayuwen.model.Index1Model.CalendarCourseBean;
 import cn.com.zwwl.bayuwen.model.Index1Model.SelectedCourseBean;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
-import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
-import cn.com.zwwl.bayuwen.util.AddressTools;
 import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
-import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 import cn.com.zwwl.bayuwen.view.ChildMenuPopView;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.LoopViewPager;
@@ -84,8 +79,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private TextView notificationTv, childTxt;
     private CircleImageView childImg, parentImg;
     private View root;
-    private NoScrollListView yixuanKeListView;// 已选课程列表
-    private MainYixuanKeAdapter yixuanKeAdapter;
     private RelativeLayout toolbar;//
     private InfiniteViewPager pingPager;// 拼图列表
     private MyViewPagerAdapter pingAdapter;
@@ -106,8 +99,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private int paddingLeft, paddingRight, paddingTop, paddingBottom;
 
     public boolean isCityChanged = false;// 城市状态是否变化
-
-    private List<KeModel> yixuanDatas = new ArrayList<>();// 已选课程data
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -280,14 +271,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         notificationTv.setSelected(true);
         notificationTv.setFocusable(true);
         notificationTv.setFocusableInTouchMode(true);
-
-        yixuanKeListView = root.findViewById(R.id.main_yixuan);
-        yixuanKeAdapter = new MainYixuanKeAdapter(mActivity);
-        yixuanDatas.add(new KeModel());
-        yixuanDatas.add(new KeModel());
-        yixuanKeListView.setAdapter(yixuanKeAdapter);
-        yixuanKeAdapter.setData(yixuanDatas);
-        yixuanKeAdapter.notifyDataSetChanged();
 
         pingPager = root.findViewById(R.id.pingtu_pager);
         pingPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

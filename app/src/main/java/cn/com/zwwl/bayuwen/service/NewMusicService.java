@@ -1,5 +1,6 @@
 package cn.com.zwwl.bayuwen.service;
 
+import android.app.ActivityManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.IOException;
@@ -17,6 +19,8 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
+import cn.com.zwwl.bayuwen.activity.MainActivity;
+import cn.com.zwwl.bayuwen.activity.fm.AlbumDetailActivity;
 import cn.com.zwwl.bayuwen.api.ActionApi;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
@@ -118,9 +122,8 @@ public class NewMusicService extends Service {
 
                 @Override
                 public void onCompletion(MediaPlayer mp) {
-                    setPlayStatus(3);
-
-
+                    setPlayStatus(2);
+                    mp.reset();
                     // 最后一曲
                     if (currentPosition + 1 == albumModel.getFmModels().size()) {
                         Message msg = new Message();
@@ -165,7 +168,8 @@ public class NewMusicService extends Service {
     public void start() {
         if (mediaPlayer != null && !isPlaying()) {
             mediaPlayer.start();
-            MusicWindow.getInstance(this).showPopupWindow();
+            if (isNeedShowActivity())
+                MusicWindow.getInstance(this).showPopupWindow();
             setPlayStatus(1);
             // 开始播放向页面发送播放message
             Message m = new Message();
@@ -260,6 +264,22 @@ public class NewMusicService extends Service {
         }
     }
 
+    /**
+     * 判断全局播放器是否显示
+     */
+    private boolean isNeedShowActivity() {
+        ActivityManager activityManager = (ActivityManager) getSystemService(Context
+                .ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> runningTaskInfo = activityManager.getRunningTasks(1);
+        String activityName = (runningTaskInfo.get(0).topActivity).getClassName().toString();
+        if (TextUtils.isEmpty(activityName)) return false;
+        if (activityName.equals(MainActivity.class.getName()) || activityName.equals
+                (AlbumDetailActivity
+                .class.getName()))
+            return true;
+        return false;
+    }
+
     public void setIsChanging() {
         isReleased = true;
     }
@@ -268,7 +288,7 @@ public class NewMusicService extends Service {
      * 增加播放量
      */
     private void addPLay() {
-        new ActionApi(this, albumModel.getKid(), new FetchEntryListener() {
+        new ActionApi(this, currentFmModel.getId(), new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
                 // 播放量结果不需要监听

@@ -249,7 +249,7 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
                             price += Double.valueOf(data1List.get(i).getBuyPrice());
                         }
                     }
-                    totalPrice.setText("合计：￥" + price / 100);
+                    totalPrice.setText("合计：￥" + price);
                     break;
             }
         }

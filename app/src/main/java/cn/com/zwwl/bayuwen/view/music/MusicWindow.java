@@ -95,7 +95,6 @@ public class MusicWindow {
         mWindowManager.addView(mView, getPamas(0));
     }
 
-
     /**
      * 隐藏弹出框
      */
@@ -226,10 +225,12 @@ public class MusicWindow {
 
     public void setStart() {
         playBt.setImageResource(R.drawable.music_control_play);
+        closeBt.setVisibility(View.GONE);
     }
 
     public void setPause() {
         playBt.setImageResource(R.drawable.music_control_pause);
+        closeBt.setVisibility(View.VISIBLE);
     }
 
     /**

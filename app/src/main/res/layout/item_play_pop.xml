@@ -40,7 +40,14 @@
         <cn.com.zwwl.bayuwen.widget.GifView
             android:id="@+id/pop_gif"
             android:layout_width="15dp"
-            android:layout_height="15dp" />
+            android:layout_height="15dp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/pop_lock"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@mipmap/fm_lock" />
 
     </LinearLayout>
 

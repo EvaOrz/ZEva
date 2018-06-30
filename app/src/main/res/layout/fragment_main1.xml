@@ -288,36 +288,7 @@
                     android:orientation="horizontal" />
             </LinearLayout>
 
-            <!--已选课程-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:padding="10dp">
 
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@mipmap/icon_book"
-                    android:drawableStart="@mipmap/icon_book"
-                    android:gravity="center_vertical"
-                    android:text="@string/yixuankecheng"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_14" />
-
-                <cn.com.zwwl.bayuwen.widget.NoScrollListView
-                    android:id="@+id/main_yixuan"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@null"
-                    android:listSelector="@android:color/transparent" />
-
-
-            </LinearLayout>
             <!--所获勋章-->
             <LinearLayout
                 android:layout_width="match_parent"

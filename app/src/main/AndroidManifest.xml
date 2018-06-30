@@ -16,6 +16,8 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- 打电话 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!--获取当前活动页面任务栈-->
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <!-- 修改WiFi状态，发起WiFi扫描, 需要WiFi信息用于网络定位 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -413,8 +415,9 @@
         <activity android:name=".activity.CityActivity" />
         <activity android:name=".activity.OurFmActivity"></activity>
         <!--课程跟踪正在进行课程点击箭头进入该界面-->
-        <activity android:name=".activity.StudyingIndexActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".activity.StudyingIndexActivity"
+            android:launchMode="singleTask" />
         <!--课程跟踪点击“往次”，或已完成课程二级页面点击条目进入该页面-->
         <activity android:name=".activity.ReportIndexActivity" />
     </application>

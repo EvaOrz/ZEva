@@ -69,6 +69,7 @@ public class MusicPlayActivity extends BaseActivity {
         //添加过滤的Action值；
         intentFilter.addAction(ACTION_RESUME_PAUSE);
         intentFilter.addAction(ACTION_START_PLAY);
+        intentFilter.addAction(ACTION_SEEK_SEEKBAR);
         intentFilter.addAction(ACTION_MSG_COMPLETE);
         intentFilter.addAction(ACTION_CHANGE_TIME);
         intentFilter.addAction(ACTION_REFRESH_LIST);
@@ -97,10 +98,11 @@ public class MusicPlayActivity extends BaseActivity {
             if (Tools.listNotNull(albumModel.getTeachers())) {
                 tname = albumModel.getTeachers().get(0).getName();
             }
-            playListPopWindow = new PlayListPopWindow(this, fmModels, tname, new PlayListPopWindow
+            playListPopWindow = new PlayListPopWindow(this, tname, new PlayListPopWindow
                     .OnItemClickListener() {
                 @Override
                 public void choose(int position) {
+                    checkLoading(position);
                     changeMusic(position);
                 }
             });
@@ -111,6 +113,7 @@ public class MusicPlayActivity extends BaseActivity {
             }
             handler.sendEmptyMessage(0);
             checkPreNext();
+            checkCurrent();
         }
 
     }
@@ -131,10 +134,7 @@ public class MusicPlayActivity extends BaseActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar s) {
-                if (ifFromUser) {
-                    int curTime = s.getProgress();
-                    sendintent(ACTION_SEEK_SEEKBAR, curTime);
-                }
+
             }
 
             @Override
@@ -144,6 +144,10 @@ public class MusicPlayActivity extends BaseActivity {
             @Override
             public void onProgressChanged(SeekBar arg0, int progress, boolean fromUser) {
                 ifFromUser = fromUser;
+                if (fromUser) {
+                    int curTime = arg0.getProgress();
+                    sendintent(ACTION_SEEK_SEEKBAR, curTime);
+                }
             }
         });
 
@@ -255,9 +259,7 @@ public class MusicPlayActivity extends BaseActivity {
 
                 case MSG_START_PLAY: // ---------------－开始播放
                     playOrPause.setImageResource(R.drawable.player_play);
-                    handler.sendEmptyMessage(MSG_REFRESH_LIST);
-                    playListPopWindow.setCurrentPos(currentPos);
-                    Log.e("开始播放 currentPos", currentPos + currentFmModel.getTitle());
+                    checkCurrent();
                     break;
                 case MSG_CHANGE_TIME:// ----------------seekbar拖动
                     if (msg.arg1 > progress) {
@@ -268,25 +270,39 @@ public class MusicPlayActivity extends BaseActivity {
                     playTimebox.setText(CalendarTools.getTime(seekBar.getProgress()));
                     break;
                 case MSG_REFRESH_LIST:
-                    playListPopWindow.setCurrentPos(currentPos);
+                    playListPopWindow.setData(fmModels);
                     break;
 
                 case MSG_COMPLETE:// -------------------播放完成
-                    // 最后一曲
-                    if (currentPos + 1 == fmModels.size()) {
-                        playOrPause.setImageResource(R.drawable.player_play);
-                        handler.sendEmptyMessage(MSG_REFRESH_LIST);
-                    } else {// 开始下一曲
-                        currentPos++;
-                        checkPreNext();
-                        changeMusic(currentPos);
-                        handler.sendEmptyMessage(0);
-                    }
+                    playOrPause.setImageResource(R.drawable.player_pause);
                     break;
             }
         }
     };
 
+
+    private void checkCurrent() {
+        for (int i = 0; i < fmModels.size(); i++) {
+            if (MusicWindow.getInstance(this).currentFmModel != null && fmModels.get(i).getId()
+                    .equals(MusicWindow.getInstance(this).currentFmModel
+                            .getId())) {
+                currentPos = i;
+                fmModels.get(i).setGifSta(2);
+            } else
+                fmModels.get(i).setGifSta(0);
+        }
+        handler.sendEmptyMessage(MSG_REFRESH_LIST);
+    }
+
+    private void checkLoading(int pos) {
+        for (int i = 0; i < fmModels.size(); i++) {
+            if (i == pos) {
+                fmModels.get(i).setGifSta(1);
+            } else
+                fmModels.get(i).setGifSta(0);
+        }
+        handler.sendEmptyMessage(MSG_REFRESH_LIST);
+    }
 
     /**
      * 主动换歌
