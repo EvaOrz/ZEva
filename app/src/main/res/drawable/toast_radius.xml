@@ -7,7 +7,7 @@
         android:bottom="12dp"
         android:left="24dp"
         android:right="24dp"
-        android:top="16dp" />
+        android:top="12dp" />
     <!-- android:radius 弧形的半径 -->
     <corners android:radius="24dp" />
 

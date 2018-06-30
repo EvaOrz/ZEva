@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.com.zwwl.bayuwen">
+    package="cn.com.zwwl.bayuwen"
+    android:installLocation="preferExternal">
 
     <!-- 访问网络，某些位置信息需要从网络服务器获取 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -418,6 +419,7 @@
         <activity
             android:name=".activity.StudyingIndexActivity"
             android:launchMode="singleTask" />
+
         <!--课程跟踪点击“往次”，或已完成课程二级页面点击条目进入该页面-->
         <activity android:name=".activity.ReportIndexActivity" />
     </application>

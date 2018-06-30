@@ -17,6 +17,7 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
 
 /**
@@ -70,7 +71,7 @@ public class CourseApplyActivity extends BasicActivityWithTitle {
         date.setText(String.format("%s至%s", CalendarTools.format(keModel.getStartPtime(),
                 "yyyy-MM-dd"), CalendarTools.format(keModel.getEndPtime(),
                 "yyyy-MM-dd")));
-        time.setText(String.format("%s-%s", keModel.getClass_start_at(), keModel.getClass_end_at()));
+        time.setText(String.format("%s-%s", TimeUtil.parseToHm(keModel.getClass_start_at()), TimeUtil.parseToHm(keModel.getClass_end_at())));
         stock.setText(String.format("剩余名额: %s", mApplication.newKe.getNum()));
         price.setText(String.format("￥ %s", mApplication.newKe.getBuyPrice()));
     }

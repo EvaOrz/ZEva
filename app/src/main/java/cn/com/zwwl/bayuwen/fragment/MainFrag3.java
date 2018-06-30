@@ -48,6 +48,7 @@ import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.LessonReportModel;
 import cn.com.zwwl.bayuwen.model.MyCourseModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
 import static cn.com.zwwl.bayuwen.MyApplication.mContext;
@@ -74,6 +75,8 @@ public class MainFrag3 extends BasicFragment {
     TextView calendarYue;
     @BindView(R.id.calendar_kecheng_layout)
     LinearLayout calendarLayout;
+    @BindView(R.id.report_layout)
+    LinearLayout reportLayout;
     private CompleteCourseAdapter adapter;
     private List<KeModel> finishCourse = new ArrayList<>();
     MyCourseModel courseModel;
@@ -109,22 +112,33 @@ public class MainFrag3 extends BasicFragment {
         report.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
         report.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R
                 .dimen.dp_5, OrientationHelper.HORIZONTAL));
+        report.setNestedScrollingEnabled(false);
         reportAdapter = new LatestReportAdapter(null);
         report.setAdapter(reportAdapter);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R
                 .dimen.dp_5, OrientationHelper.VERTICAL));
         adapter = new CompleteCourseAdapter(finishCourse);
         adapter.setEmptyView(R.layout.empty_view, (ViewGroup) recyclerView.getParent());
         recyclerView.setAdapter(adapter);
+
         studyCourse.setLayoutManager(new LinearLayoutManager(mContext));
+        studyCourse.setNestedScrollingEnabled(false);
         studyCourse.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R
                 .dimen.dp_5, OrientationHelper.VERTICAL));
         courseIndexAdapter = new CourseIndexAdapter(null);
         courseIndexAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) studyCourse.getParent());
         studyCourse.setAdapter(courseIndexAdapter);
-        refresh.autoRefresh();
+//        refresh.autoRefresh();
         refresh.setEnableLoadMore(false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh.autoRefresh();
     }
 
     @Override
@@ -132,6 +146,7 @@ public class MainFrag3 extends BasicFragment {
     }
 
     private void bindView() {
+        if (reportModels == null || reportModels.size() == 0) reportLayout.setVisibility(View.GONE);
         reportAdapter.setNewData(reportModels);
         calendarLayout.removeAllViews();
         if (calendarCourseBean != null && calendarCourseBean.getCourses().size() > 0) {
@@ -142,8 +157,8 @@ public class MainFrag3 extends BasicFragment {
             for (Index1Model.CalendarCourseBean.CoursesBean coursesBean : calendarCourseBean
                     .getCourses()) {
                 TextView tip = new TextView(activity);
-                tip.setText(String.format("%s %s-%s", coursesBean.getTitle(), coursesBean
-                        .getClass_start_at(), coursesBean.getClass_end_at()));
+                tip.setText(String.format("%s %s-%s", coursesBean.getTitle(), TimeUtil.parseToHm(coursesBean
+                        .getClass_start_at()), TimeUtil.parseToHm(coursesBean.getClass_end_at())));
                 tip.setTextColor(getResources().getColor(R.color.gray_dark));
                 tip.setTextSize(14);
                 calendarLayout.addView(tip);
@@ -295,5 +310,6 @@ public class MainFrag3 extends BasicFragment {
                 break;
         }
     }
+
 }
   

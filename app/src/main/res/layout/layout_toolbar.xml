@@ -17,14 +17,12 @@
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/back"
-            android:layout_width="wrap_content"
+            android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             android:background="@drawable/drawable_back_bg"
-            android:paddingBottom="@dimen/dp_10"
-            android:paddingEnd="@dimen/activity_horizontal_margin"
-            android:paddingStart="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/dp_10"
-            android:scaleType="center"
+            android:paddingBottom="@dimen/dp_20"
+            android:paddingTop="@dimen/dp_20"
+            android:scaleType="centerInside"
             android:src="@mipmap/icon_back" />
 
         <android.support.v7.widget.AppCompatTextView

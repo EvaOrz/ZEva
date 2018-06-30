@@ -12,6 +12,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.util.TimeUtil;
 
 public class CourseTableAdapter extends BaseQuickAdapter<KeModel, BaseViewHolder> {
     public CourseTableAdapter(@Nullable List<KeModel> data) {
@@ -28,7 +29,7 @@ public class CourseTableAdapter extends BaseQuickAdapter<KeModel, BaseViewHolder
         helper.setText(R.id.date, CalendarTools.format(item.getStartPtime(),
                 "yyyy-MM-dd") + " 至 " + CalendarTools.format(item.getEndPtime(),
                 "yyyy-MM-dd"));
-        helper.setText(R.id.time, item.getClass_start_at() + "-" + item.getClass_end_at());
+        helper.setText(R.id.time, TimeUtil.parseToHm(item.getClass_start_at()) + "-" + TimeUtil.parseToHm(item.getClass_end_at()));
         ImageLoader.display(mContext, (AppCompatImageView) helper.getView(R.id.pic), item.getPic());
         helper.setVisible(R.id.hide_full, "0".equals(item.getStock()));
         helper.addOnClickListener(R.id.pic_layout);
