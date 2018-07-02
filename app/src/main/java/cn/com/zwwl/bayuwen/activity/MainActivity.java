@@ -34,7 +34,6 @@ import cn.com.zwwl.bayuwen.api.ReportPushApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
-import cn.com.zwwl.bayuwen.fragment.DeleteMainFrag1;
 import cn.com.zwwl.bayuwen.fragment.MainFrag1;
 import cn.com.zwwl.bayuwen.fragment.MainFrag2;
 import cn.com.zwwl.bayuwen.fragment.MainFrag3;
@@ -107,6 +106,7 @@ public class MainActivity extends BaseActivity {
                 break;
             case 3:
                 switchFragment(mainFrag3);
+                mainFrag3.refresh();
                 break;
             case 4:
                 switchFragment(mainFrag4);

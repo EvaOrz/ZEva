@@ -2,13 +2,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/dp_10"
     android:background="@color/white">
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/pic"
-        android:layout_width="@dimen/dp_100"
-        android:layout_height="@dimen/dp_100"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
         android:layout_marginEnd="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"

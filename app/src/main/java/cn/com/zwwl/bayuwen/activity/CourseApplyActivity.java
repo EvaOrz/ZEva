@@ -81,24 +81,35 @@ public class CourseApplyActivity extends BasicActivityWithTitle {
 
     }
 
-    @OnClick(R.id.submit)
+    @OnClick({R.id.submit, R.id.pic_layout})
     @Override
     public void onClick(View view) {
-        map.put("origin_kid", lessonModel.getKid());
-        map.put("origin_lecture", lessonModel.getId());
-        map.put("target_kid", keModel.getKid());
-        map.put("target_lecture", mApplication.newLesson.getId());
-        map.put("type", "2");
-        new AddCourseApi(this, map, new ResponseCallBack<CommonModel>() {
-            @Override
-            public void result(CommonModel commonModel, ErrorMsg errorMsg) {
-                if (errorMsg == null) {
-                    startActivity(new Intent(mActivity, ChangeResultActivity.class));
-                } else {
-                    ToastUtil.showShortToast(errorMsg.getDesc());
-                }
-            }
-        });
+        switch (view.getId()) {
+            case R.id.submit:
+                map.put("origin_kid", lessonModel.getKid());
+                map.put("origin_lecture", lessonModel.getId());
+                map.put("target_kid", keModel.getKid());
+                map.put("target_lecture", mApplication.newLesson.getId());
+                map.put("type", "2");
+                new AddCourseApi(this, map, new ResponseCallBack<CommonModel>() {
+                    @Override
+                    public void result(CommonModel commonModel, ErrorMsg errorMsg) {
+                        if (errorMsg == null) {
+                            startActivity(new Intent(mActivity, ChangeResultActivity.class));
+                        } else {
+                            ToastUtil.showShortToast(errorMsg.getDesc());
+                        }
+                    }
+                });
+                break;
+            default:
+                Intent intent = new Intent(mContext, VideoPlayActivity.class);
+                intent.putExtra("VideoPlayActivity_url", keModel.getVideo());
+                intent.putExtra("VideoPlayActivity_pic", keModel.getPic());
+                startActivity(intent);
+                break;
+        }
+
 
     }
 

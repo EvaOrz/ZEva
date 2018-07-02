@@ -28,12 +28,39 @@ public class LessonModel extends Entry {
     private String hours;
     private String class_end_at;
     private String class_start_at;
+    private long startClassTime;
+    private long endClassTime;
     private String substitute_tid;
     private Object substitute_tname;
     private Object class_id;
     private Object summarize;
     private String desc;
     private String report_url;
+    private String url;
+
+    public long getStartClassTime() {
+        return startClassTime;
+    }
+
+    public void setStartClassTime(long startClassTime) {
+        this.startClassTime = startClassTime;
+    }
+
+    public long getEndClassTime() {
+        return endClassTime;
+    }
+
+    public void setEndClassTime(long endClassTime) {
+        this.endClassTime = endClassTime;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getReport_url() {
         return report_url;

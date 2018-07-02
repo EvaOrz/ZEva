@@ -19,7 +19,7 @@ public class ChangeResultActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initView() {
-setDisplayShowTitleEnabled(false);
+        setDisplayShowTitleEnabled(false);
     }
 
     @Override
@@ -35,7 +35,9 @@ setDisplayShowTitleEnabled(false);
     @OnClick(R.id.submit)
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(this, MainActivity.class));
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("Main_frag_no", 3);
+        startActivity(intent);
     }
 
     @Override
