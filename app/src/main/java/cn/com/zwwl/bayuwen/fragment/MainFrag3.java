@@ -132,14 +132,8 @@ public class MainFrag3 extends BasicFragment {
         courseIndexAdapter = new CourseIndexAdapter(null);
         courseIndexAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) studyCourse.getParent());
         studyCourse.setAdapter(courseIndexAdapter);
-//        refresh.autoRefresh();
+        refresh();
         refresh.setEnableLoadMore(false);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        refresh.autoRefresh();
     }
 
     @Override
@@ -174,6 +168,10 @@ public class MainFrag3 extends BasicFragment {
         finishCourse = courseModel.getCompleted();
         courseIndexAdapter.setNewData(courseModel.getUnfinished());
         adapter.setNewData(finishCourse);
+    }
+
+    public void refresh() {
+        refresh.autoRefresh();
     }
 
     @Override
