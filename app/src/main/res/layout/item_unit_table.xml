@@ -9,23 +9,31 @@
     <LinearLayout
         android:id="@+id/name_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/logo"
-            android:layout_width="@dimen/dp_22"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
             android:src="@mipmap/icon_replay" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/course_name"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginStart="@dimen/dp_10"
-            android:drawableEnd="@mipmap/arrow_right_gray"
-            android:drawableRight="@mipmap/arrow_right_gray"
-            android:gravity="center_vertical" />
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:scaleType="centerInside"
+            android:src="@mipmap/arrow_right_gray" />
     </LinearLayout>
 
     <View

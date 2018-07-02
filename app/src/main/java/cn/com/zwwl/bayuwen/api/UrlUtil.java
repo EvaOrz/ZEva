@@ -509,5 +509,10 @@ public class UrlUtil {
     public static String traceClassDetail() {
         return HOST + "/course/userdetail";
     }
-
+    /**
+     * 课程跟踪-搜索
+     */
+    public static String traceSearch() {
+        return HOST + "/course/buylectures";
+    }
 }

@@ -422,6 +422,8 @@
 
         <!--课程跟踪点击“往次”，或已完成课程二级页面点击条目进入该页面-->
         <activity android:name=".activity.ReportIndexActivity" />
+        <!--课程跟踪首页搜索-->
+        <activity android:name=".activity.TraceSearchActivity" />
     </application>
 
 </manifest>
