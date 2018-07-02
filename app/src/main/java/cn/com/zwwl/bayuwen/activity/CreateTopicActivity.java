@@ -9,6 +9,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.security.cert.Certificate;
+
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
 
@@ -27,12 +29,14 @@ public class CreateTopicActivity extends AppCompatActivity implements View.OnCli
     CheckBox checkbox1;
    private  String topictile,topic_content;
    private  int is_anonymous =0;
+   public static CreateTopicActivity createTopicActivity;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_topic);
+        createTopicActivity =this;
         iniView();
     }
 

@@ -26,6 +26,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.AddressApi;
 import cn.com.zwwl.bayuwen.model.AddressModel;
@@ -53,7 +54,6 @@ public class AddressAddActivity extends BaseActivity {
     private DistModel distModel;
     private AddressModel addressModel;
     private boolean isModify = false;// 是否是修改页面
-
 
     private String[] needPermissions = new String[]{Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.READ_CONTACTS};

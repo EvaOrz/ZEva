@@ -48,6 +48,8 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
 
     // 当前选中日期下事件列表
     private List<CalendarEventModel> currentEvents = new ArrayList<>();
+    // 当前选中日期
+    private Calendar currentCalendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,6 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
         initView();
-
     }
 
     @Override
@@ -77,10 +78,11 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
         calendarView.setOnMonthChangeListener(this);
         calendarView.setOnDateSelectedListener(this);
         calendarView.setRange(CalendarTools.getMinYear(), 1, CalendarTools.getMaxYear(), 12);
-        setKeData(0, 0, 0);
         handler.sendEmptyMessageDelayed(0, 200);
         findViewById(R.id.calendar_back).setOnClickListener(this);
         findViewById(R.id.calendar_add).setOnClickListener(this);
+        Date date = new Date();
+        currentCalendar.setTime(date);
     }
 
     /**
@@ -128,11 +130,11 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
                     } catch (ParseException e) {
 
                     }
-                    Calendar calendar = Calendar.getInstance();
-                    Date date = new Date();
-                    calendar.setTime(date);
-                    setKeData(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar
-                            .get(Calendar.DATE));
+
+                    setKeData(currentCalendar.get(Calendar.YEAR), currentCalendar.get(Calendar
+                                    .MONTH) + 1,
+                            currentCalendar
+                                    .get(Calendar.DATE));
                     break;
             }
 
@@ -146,7 +148,7 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
      */
     public void doMonthSelect(Calendar calendar) {
         calendarView.scrollToCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) +
-                1, 1);
+                1, 0);
     }
 
     @Override
@@ -193,9 +195,8 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
 
     @Override
     public void onDateSelected(com.haibin.calendarview.Calendar calendar, boolean isClick) {
-
+        currentCalendar.set(calendar.getYear(), calendar.getMonth() - 1, calendar.getDay());
         setKeData(calendar.getYear(), calendar.getMonth(), calendar.getDay());
-
     }
 
     private void setKeData(int year, int month, int day) {

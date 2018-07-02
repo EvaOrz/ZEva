@@ -235,8 +235,8 @@ public class CalendarEventModel extends Entry {
         JSONArray array = jsonObject.optJSONArray("courseDates");
         List<CalendarEventModel> cs = new ArrayList<>();
         if (!isNull(array)) {
-            CalendarEventModel c = new CalendarEventModel();
             for (int i = 0; i < array.length(); i++) {
+                CalendarEventModel c = new CalendarEventModel();
                 JSONObject json = array.optJSONObject(i);
                 c.setId(json.optString("id"));
                 c.setCourseDate(json.optString("courseDate"));

@@ -58,7 +58,7 @@ public class GetTuiFeeListApi extends BaseApi {
                 JSONObject order = j.optJSONObject("order");
                 if (!isNull(order)){
                     o.setOid(order.optString("oid"));
-                    o.setReal_fee(order.optString("real_fee"));
+                    o.setReal_fee(order.optDouble("real_fee"));
                 }
                 JSONObject course = j.optJSONObject("course");
                 if (!isNull(course)){

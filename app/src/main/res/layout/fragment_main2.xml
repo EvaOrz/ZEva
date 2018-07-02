@@ -23,116 +23,45 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <cn.com.zwwl.bayuwen.widget.MostGridView
-                android:id="@+id/gridView"
+            <LinearLayout
+                android:id="@+id/frag2_contain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@android:color/white"
-                android:columnWidth="100dp"
-                android:gravity="center"
-                android:horizontalSpacing="10dp"
-                android:numColumns="4"
-                android:padding="10dp"
-                android:scrollbars="none"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="10dp" />
+                android:orientation="vertical" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@mipmap/icon_vote_black" />
+                android:paddingBottom="15dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/frag2_look_teacher"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="@string/top_txt"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/text_size_14" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="5dp"
-                    android:text="@string/top_txt1"
-                    android:textColor="@color/gold"
-                    android:textSize="@dimen/text_size_14" />
-
-                <cn.com.zwwl.bayuwen.widget.NoScrollListView
-                    android:id="@+id/jiaoshi_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@null"
-                    android:listSelector="@android:color/transparent"
-                    android:scrollbars="none" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="5dp"
-                    android:text="@string/top_txt2"
-                    android:textColor="@color/gold"
-                    android:textSize="@dimen/text_size_14" />
-
-                <cn.com.zwwl.bayuwen.widget.NoScrollListView
-                    android:id="@+id/guwen_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@null"
-                    android:listSelector="@android:color/transparent"
-                    android:scrollbars="none" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="5dp"
-                    android:text="@string/top_txt3"
-                    android:textColor="@color/gold"
-                    android:textSize="@dimen/text_size_14" />
-
-                <cn.com.zwwl.bayuwen.widget.NoScrollListView
-                    android:id="@+id/zhujiao_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@null"
-                    android:listSelector="@android:color/transparent"
-                    android:scrollbars="none" />
-
-                <TextView
-                    android:id="@+id/look_all_teacher"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_margin="10dp"
+                    android:layout_marginRight="@dimen/dp_5"
                     android:background="@drawable/gold_circle"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="查看全体教师"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_14" />
-            </LinearLayout>
+                    android:textSize="@dimen/text_size_12" />
 
+                <TextView
+                    android:id="@+id/frag2_look_ban"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:background="@drawable/gold_circle"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="查看全体班主任"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_12" />
+            </LinearLayout>
         </LinearLayout>
     </cn.com.zwwl.bayuwen.widget.observable.ObservableScrollView>
 

@@ -56,7 +56,7 @@
                         android:scaleType="centerCrop"
                         android:src="@mipmap/bg_teacher_detail" />
 
-                    <ImageView
+                    <cn.com.zwwl.bayuwen.widget.CircleImageView
                         android:id="@+id/iv_avatar"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
@@ -286,7 +286,6 @@
                             android:background="@color/oringe" />
 
 
-
                         <View
                             android:id="@+id/teacher_detail_line2"
                             android:layout_width="0dp"
@@ -298,7 +297,7 @@
                             android:visibility="invisible" />
 
                     </LinearLayout>
-                    </LinearLayout>
+                </LinearLayout>
 
 
                 <include layout="@layout/layout_line" />
@@ -306,6 +305,12 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 

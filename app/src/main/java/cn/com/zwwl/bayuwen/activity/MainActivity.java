@@ -34,6 +34,7 @@ import cn.com.zwwl.bayuwen.api.ReportPushApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
+import cn.com.zwwl.bayuwen.fragment.DeleteMainFrag1;
 import cn.com.zwwl.bayuwen.fragment.MainFrag1;
 import cn.com.zwwl.bayuwen.fragment.MainFrag2;
 import cn.com.zwwl.bayuwen.fragment.MainFrag3;
@@ -50,6 +51,7 @@ import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.model.ReportModel;
 import cn.com.zwwl.bayuwen.util.DialogUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.view.music.MusicWindow;
 import cn.com.zwwl.bayuwen.widget.MostGridView;
 
 /**
@@ -72,12 +74,15 @@ public class MainActivity extends BaseActivity {
 
     private MostGridView giftGridView;
     private GiftAdapter giftAdapter;
+    private View barLayout;
 
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
     private List<GiftAndJiangModel> giftModels = new ArrayList<>();// 礼物数据
     private boolean isCanSetDefaultChild = true;// 是否可以设置默认学员
     private FinalEvalDialog evalDialog;
     private ReportModel reportModel;
+
+    public boolean isGoAlbumActivity = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +92,29 @@ public class MainActivity extends BaseActivity {
         initView();
         userModel = UserDataHelper.getUserLoginInfo(mContext);
         initData();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        int flag = intent.getIntExtra("Main_frag_no", 0);
+        switch (flag) {
+            case 1:
+                switchFragment(mainFrag1);
+                break;
+            case 2:
+                switchFragment(mainFrag2);
+                break;
+            case 3:
+                switchFragment(mainFrag3);
+                break;
+            case 4:
+                switchFragment(mainFrag4);
+                break;
+            case 5:
+                switchFragment(mainFrag5);
+                break;
+        }
     }
 
     /**
@@ -112,13 +140,21 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
+        MusicWindow.getInstance(this).movetoController(getViewHeight(barLayout));
+        isGoAlbumActivity = false;
         super.onResume();
         if (MyApplication.loginStatusChange) {
             Log.e("********", "登录状态变化");
             initData();
             MyApplication.loginStatusChange = false;
         }
+    }
 
+    @Override
+    protected void onStop() {
+        if (!isGoAlbumActivity)
+            MusicWindow.getInstance(this).hidePopupWindow();
+        super.onStop();
     }
 
     /**
@@ -219,6 +255,7 @@ public class MainActivity extends BaseActivity {
         tabButton3 = findViewById(R.id.bottom_nav_3);
         tabButton4 = findViewById(R.id.bottom_nav_4);
         tabButton5 = findViewById(R.id.bottom_nav_5);
+        barLayout = findViewById(R.id.botoom_nav);
         tabButton1.setOnClickListener(this);
         tabButton2.setOnClickListener(this);
         tabButton3.setOnClickListener(this);
@@ -315,7 +352,6 @@ public class MainActivity extends BaseActivity {
     protected void initData() {
         if (userModel == null) return;
         initLeftLayout();
-        mainFrag1.initData(userModel);
         mainFrag5.initData(userModel);
         initChildDta();
 //        getReport();
@@ -452,7 +488,7 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * 切换四个tab
+     * 切换五个tab
      *
      * @param fragment
      */

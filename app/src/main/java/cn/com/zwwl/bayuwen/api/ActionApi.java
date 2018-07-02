@@ -70,11 +70,9 @@ public class ActionApi extends BaseApi {
         super(context);
         actionType = ActionType.ACTION_PLAY;
         mContext = context;
-        pamas.put("kid", kid);
-        pamas.put("lecture_id", "");
-        this.url = UrlUtil.addPlayUrl();
+        this.url = UrlUtil.addPlayUrl() + "?id=" + kid;
         this.listener = listener;
-        post();
+        get();
     }
 
     /**
@@ -137,7 +135,7 @@ public class ActionApi extends BaseApi {
         if (errorMsg != null)
             listener.setError(errorMsg);
         else listener.setError(null);
-        
+
         if (!isNull(json)) {
             AlbumModel e = new AlbumModel();
             e.setLikeNum(json.optInt("count"));

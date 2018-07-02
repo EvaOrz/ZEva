@@ -99,7 +99,8 @@ public class AddressManageActivity extends BaseActivity {
         new AddressApi(mContext, aid, 0, new AddressApi.FetchAddressListListener() {
             @Override
             public void setData(List<AddressModel> list) {
-                initData();
+                showLoadingDialog(false);
+                handler.sendEmptyMessage(1);
             }
 
             @Override
@@ -126,8 +127,8 @@ public class AddressManageActivity extends BaseActivity {
             @Override
             public void setError(ErrorMsg error) {
                 showLoadingDialog(false);
-                if (error != null) showToast(error.getDesc());else
-                {
+                if (error != null) showToast(error.getDesc());
+                else {
                     handler.sendEmptyMessage(1);
                 }
             }
@@ -147,7 +148,7 @@ public class AddressManageActivity extends BaseActivity {
                     break;
                 case 1:
                     initData();
-                     break;
+                    break;
             }
         }
     };

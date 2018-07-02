@@ -1,32 +1,28 @@
 package cn.com.zwwl.bayuwen.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.api.KeTagListApi.*;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
-import cn.com.zwwl.bayuwen.widget.CircleImageView;
+import cn.com.zwwl.bayuwen.model.Index2Model.TagCourseModel.ClassifyBean.*;
+import cn.com.zwwl.bayuwen.widget.RoundAngleImageView;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
- * Created by lousx on 2018/5/11.
+ * frag2 的三个item中grid的adapter
  */
-
 public class KeTagGridAdapter extends BaseAdapter {
     protected Context mContext;
-    protected List<TagCourseModel> mItemList = new ArrayList<>();
+    protected List<DetailsBean> mItemList = new ArrayList<>();
 
-    public KeTagGridAdapter(Context mContext, List<TagCourseModel> mItemList) {
+    public KeTagGridAdapter(Context mContext, List<DetailsBean> mItemList) {
         this.mContext = mContext;
         this.mItemList = mItemList;
     }
@@ -37,7 +33,7 @@ public class KeTagGridAdapter extends BaseAdapter {
     }
 
     @Override
-    public TagCourseModel getItem(int position) {
+    public DetailsBean getItem(int position) {
         return mItemList.get(position);
     }
 
@@ -48,17 +44,12 @@ public class KeTagGridAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final TagCourseModel item = getItem(position);
-
+        final DetailsBean item = getItem(position);
         ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_main_grid);
+        ImageView img = viewHolder.getView(R.id.index2_item_image);
 
-        TextView title = viewHolder.getView(R.id.item_tv);
-        CircleImageView img = viewHolder.getView(R.id.item_img);
-
-        title.setText(item.getName());
-        if (!TextUtils.isEmpty(item.getImg()))
-            ImageLoader.display(mContext, img, item.getImg(), R
-                    .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
+        ImageLoader.display(mContext, img, item.getImg(), R
+                .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
         return viewHolder.getConvertView();
     }
 

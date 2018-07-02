@@ -114,6 +114,11 @@ public class CourseDetailActivity extends BaseActivity {
         initView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void setUi() {
         title_tv.setText("确认课程详情");
         duihuan_tv.setVisibility(View.VISIBLE);
@@ -356,14 +361,13 @@ public class CourseDetailActivity extends BaseActivity {
             case R.id.adviserTv:// 拨打顾问电话
                 String number = "10086";
                 //用intent启动拨打电话
-                int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission
-                        .CALL_PHONE);
-
-                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                    startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + number)));
-                } else {
-                    askPermission(new String[]{Manifest.permission.CALL_PHONE}, 101);
+                try {
+                    if (askPermission(new String[]{Manifest.permission.CALL_PHONE}, 101)) {
+                        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + number)));
+                    }
+                } catch (SecurityException e) {
                 }
+
 
                 break;
             case R.id.explainTv:// 说明
@@ -507,8 +511,12 @@ public class CourseDetailActivity extends BaseActivity {
                 "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(keModel
                         .getEndPtime()),
                 "yyyy-MM-dd"));
-        time_tv.setText(keModel.getClass_start_at() + " - " + keModel.getClass_end_at
-                ());
+
+        String startTime = keModel.getClass_start_at();
+        String endtime = keModel.getClass_end_at();
+        time_tv.setText(startTime.substring(0, startTime.length() - 3) + " - " + endtime
+                .substring(0, endtime.length() - 3));
+
         priceTv2.setText("￥" + keModel.getBuyPrice());
 
         teacherLayout.removeAllViews();

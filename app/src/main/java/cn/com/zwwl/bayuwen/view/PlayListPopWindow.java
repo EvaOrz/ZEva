@@ -8,11 +8,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
@@ -33,13 +35,14 @@ public class PlayListPopWindow {
     private OnItemClickListener listener;
     private ListView listView;
     private PlayerListAdapter adapter;
-    private List<FmModel> fmModelList;
     private View view;
+    private String tname;
 
-    public PlayListPopWindow(Context context, List<FmModel> fmModelList, OnItemClickListener listener) {
+    public PlayListPopWindow(Context context, String tName,
+                             OnItemClickListener listener) {
         mContext = context;
         this.listener = listener;
-        this.fmModelList = fmModelList;
+        this.tname = tName;
         init();
     }
 
@@ -66,12 +69,11 @@ public class PlayListPopWindow {
         });
         adapter = new PlayerListAdapter(mContext);
         listView.setAdapter(adapter);
-        adapter.setData(fmModelList, 0);
 
     }
 
-    public void setCurrentPos(int pos) {
-        adapter.setData(fmModelList, pos);
+    public void setData(List<FmModel> fmModels) {
+        adapter.setData(fmModels);
     }
 
     public void show() {
@@ -87,17 +89,15 @@ public class PlayListPopWindow {
 
     public class PlayerListAdapter extends CheckScrollAdapter<FmModel> {
         protected Context mContext;
-        private int cuPosition = -1;
 
         public PlayerListAdapter(Context context) {
             super(context);
             mContext = context;
         }
 
-        public void setData(List<FmModel> mItemList, int cuPosition) {
+        public void setData(List<FmModel> mItemList) {
             clear();
             isScroll = false;
-            this.cuPosition = cuPosition;
             synchronized (mItemList) {
                 for (FmModel item : mItemList) {
                     add(item);
@@ -113,16 +113,27 @@ public class PlayListPopWindow {
             TextView title = viewHolder.getView(R.id.pop_title);
             TextView name = viewHolder.getView(R.id.pop_name);
             GifView gif = viewHolder.getView(R.id.pop_gif);
+            ImageView lock = viewHolder.getView(R.id.pop_lock);
             gif.setMovieResource(R.raw.gif_red);
 
-            if (position == cuPosition) {
-                gif.setVisibility(View.VISIBLE);
-
+            if (item.getGifSta() == 0) {
+                gif.setVisibility(View.GONE);
+                if (item.getStatus() == 0) {
+                    lock.setVisibility(View.GONE);
+                } else if (item.getStatus() == 1) {// lock
+                    lock.setVisibility(View.VISIBLE);
+                }
             } else {
-                gif.setVisibility(View.INVISIBLE);
+                lock.setVisibility(View.GONE);
+                gif.setVisibility(View.VISIBLE);
+                if (item.getGifSta() == 1) {//loading
+                    gif.setMovieResource(R.raw.fm_loading);
+                } else if (item.getGifSta() == 2) {
+                    gif.setMovieResource(R.raw.gif_red);
+                }
             }
             title.setText(item.getTitle());
-            name.setText("  -  " + "C君");
+            name.setText("  -  " + tname);
             return viewHolder.getConvertView();
         }
 

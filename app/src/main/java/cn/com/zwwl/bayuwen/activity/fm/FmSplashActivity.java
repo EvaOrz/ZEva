@@ -23,8 +23,8 @@ public class FmSplashActivity extends BaseActivity {
     public static int SPLASH_DELAY_TIME = 1000;
     private String[] needPermissions = new String[]{Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission
-            .WRITE_EXTERNAL_STORAGE, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission
-            .CAMERA, Manifest.permission.READ_CONTACTS};
+            .WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission
+            .SYSTEM_ALERT_WINDOW};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class FmSplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
         needCheckLogin = false;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            askPermission(needPermissions, 101);
+            if (askPermission(needPermissions, 101)) gotoMainActivity();
         } else {
             gotoMainActivity();
         }
@@ -61,8 +61,8 @@ public class FmSplashActivity extends BaseActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[]
+            grantResults) {
         switch (requestCode) {
             case 101:
                 for (int i = 0; i < permissions.length; i++) {
@@ -74,8 +74,6 @@ public class FmSplashActivity extends BaseActivity {
                     }
                 }
                 gotoMainActivity();
-
-
                 break;
         }
 

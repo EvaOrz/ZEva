@@ -55,7 +55,7 @@ public class TopicUserAnswerAdapter extends BaseAdapter {
       if (userCommentBeans.get(position).getUser_pic()!=null) {
           ImageLoader.display(mContext, mViewHolder.userIcon, userCommentBeans.get(position).getUser_pic());
       }else{
-          ImageLoader.display(mContext, mViewHolder.userIcon, R.mipmap.ic_launcher);
+          ImageLoader.display(mContext, mViewHolder.userIcon, R.mipmap.app_icon);
       }
         mViewHolder.userName.setText(userCommentBeans.get(position).getUser_name());
         mViewHolder.userContent.setText( userCommentBeans.get(position).getContent());

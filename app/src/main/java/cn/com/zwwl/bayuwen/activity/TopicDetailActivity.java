@@ -1,5 +1,6 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -85,7 +87,7 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
 
     @Override
     protected void initView() {
-        setCustomTitle("话题名称");
+        setCustomTitle("话题详情");
 
         params=new HashMap<>();
         comments=new HashMap<>();
@@ -108,10 +110,10 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
                     if (topicDetailModel.getUser_pic() != null)
                         ImageLoader.display(TopicDetailActivity.this, topicCircleimageviewId, topicDetailModel.getUser_pic());
                     else
-                        ImageLoader.display(TopicDetailActivity.this, topicCircleimageviewId, R.mipmap.ic_launcher);
+                        ImageLoader.display(TopicDetailActivity.this, topicCircleimageviewId, R.mipmap.app_icon);
 
 
-                    nameId.setText(topicDetailModel.getUser_relName());
+                    nameId.setText(topicDetailModel.getUser_name());
                     courceNameId.setText(topicDetailModel.getCourse_name());
                     dateId.setText(topicDetailModel.getTopic_create_at());
                     topicContentId.setText(topicDetailModel.getTopic_content());
@@ -194,13 +196,18 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
 //        int width = getResources().getDisplayMetrics().widthPixels;
 //        int height = getResources().getDisplayMetrics().heightPixels;
 
+
       final  PopupWindow popupWindow = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
        // popWindow.setAnimationStyle(R.style.AnimBottom);
         popupWindow.setFocusable(true);
+        popupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         popupWindow.setOutsideTouchable(true);// 设置同意在外点击消失
         popupWindow.setAnimationStyle(R.style.fetch_image_popup_anim);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.showAtLocation(this.getWindow().getDecorView(), Gravity.CENTER_HORIZONTAL, 30, 30);
+
+        showSoftInputFromWindow(this,comment);
 
         comment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -215,6 +222,15 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
             }
         });
 
+    }
+    /**
+     * EditText获取焦点并显示软键盘
+     */
+    public static void showSoftInputFromWindow(Activity activity, EditText editText) {
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 
     private void Httpcomment(String trim) {
@@ -246,10 +262,10 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
 
                 if (errorMsg==null){
                   if (flag==true) {
-                      ToastUtil.showShortToast("取消收藏");
+                      ToastUtil.showShortToast("取消点赞");
                       HttpData(topic_id); //取消收藏后
                   }else {
-                      ToastUtil.showShortToast("收藏成功");
+                      ToastUtil.showShortToast("点赞成功");
                       HttpData(topic_id);
                   }
                 } else {

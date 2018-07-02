@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,6 +36,7 @@ import cn.com.zwwl.bayuwen.api.order.CouponApi;
 import cn.com.zwwl.bayuwen.api.order.GetYueApi;
 import cn.com.zwwl.bayuwen.api.order.MakeOrderApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
+import cn.com.zwwl.bayuwen.dialog.AskDialog;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -64,6 +66,7 @@ public class PayActivity extends BaseActivity {
     private TextView dianNumTv, tuanCodeTv, yueTv, priceTv, couponTv;
     private EditText tuijianEv;
     private ImageView zhifubaoBt, weixinBt;
+    private CheckBox tuikuanCheckbox;
 
     private List<KeModel> keDatas = new ArrayList<>();
     private PromotionModel promotionModel; // 组合课购买场合、需要传入组合课model
@@ -71,7 +74,8 @@ public class PayActivity extends BaseActivity {
     private List<CouponModel> couponModels = new ArrayList<>();
     private String tuanCode;// 拼团码
     private CouponModel currentCoupon;// 优惠码
-    private String itemCode;// id组合码
+    private String itemCode = "";// id组合码，生成订单用
+    private String kidCode = "";// kid组合码，计算价格用
     private String yueTxt = "￥0.00";// 账户余额
     private AddressModel currentAddress;// 当前收货地址
     private OrderModel orderModel;// 订单model
@@ -124,17 +128,23 @@ public class PayActivity extends BaseActivity {
     private void initItemString() {
         if (type == 1) {// 垫付需要循环垫付数量
             KeModel keModel = keDatas.get(0);
+            kidCode = keModel.getKid();
             itemCode = keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
             for (int i = 0; i < keModel.getGroupbuy().getDiscount().getLimit_num() - 1; i++) {
-                itemCode += keModel.getKid() + "_1_" + "0";
+                itemCode += "," + keModel.getKid() + "_1_" + "0";
             }
-        } else if (type == 0 || type == 2) { // 单独购买||单独参团
+        } else if (type == 0 || type == 2) { //单独购买||单独参团
             KeModel keModel = keDatas.get(0);
+            kidCode = keModel.getKid();
             itemCode = keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
         } else if (type == 3) {// 购课单购买
             for (KeModel keModel : keDatas) {
-                itemCode += keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
+                kidCode += keModel.getKid() + ",";
+                itemCode += keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext)
+                        + ",";
             }
+            if (kidCode.length() > 0)
+                kidCode = kidCode.substring(0, kidCode.length() - 1);
         }
     }
 
@@ -156,7 +166,7 @@ public class PayActivity extends BaseActivity {
         tuanCodeTv = findViewById(R.id.tuan_code_tv);
         tuijianEv = findViewById(R.id.tuijian_ev);
         tuijianEv.clearFocus();
-
+        tuikuanCheckbox = findViewById(R.id.tuikuan_info_check);
         priceTv = findViewById(R.id.order_d_price);
         zhifubaoBt = findViewById(R.id.zhifubao_pay);
         weixinBt = findViewById(R.id.weixin_pay);
@@ -226,6 +236,23 @@ public class PayActivity extends BaseActivity {
                     break;
                 case 3:// 实时计算价格，之后更新最新价格
                     priceTv.setText("实付款：￥" + detailModel.getAmount() / 100);
+                    if (!TextUtils.isEmpty(detailModel.getWarn())) {
+                        new AskDialog(mContext, true, detailModel.getWarn(), new AskDialog
+                                .OnSurePickListener() {
+
+                            @Override
+                            public void onCancle() {
+                                currentCoupon = null;
+                                handler.sendEmptyMessage(5);
+                            }
+
+                            @Override
+                            public void onSure() {
+
+                            }
+                        });
+                    }
+
                     break;
 
                 case 4:// 显示可以使用的优惠券
@@ -319,6 +346,10 @@ public class PayActivity extends BaseActivity {
                 }
                 break;
             case R.id.order_d_commit:// 提交订单
+                if (!tuikuanCheckbox.isChecked()) {
+                    showToast("请阅读并同意退款方式须知");
+                    return;
+                }
                 if (promotionModel != null) {
                     commit(promotionModel.getId());
                 } else commit(null);
@@ -352,7 +383,8 @@ public class PayActivity extends BaseActivity {
     private void commit(String promoId) {
         String tuijianCode = tuijianEv.getText().toString();
         String couponCode = currentCoupon == null ? "" : currentCoupon.getCoupon_code();
-        new MakeOrderApi(mContext, payType + "", couponCode, currentAddress.getId(), tuijianCode,
+        String addressId = currentAddress == null ? "" : currentAddress.getId();
+        new MakeOrderApi(mContext, payType + "", couponCode, addressId, tuijianCode,
                 yueTxt, itemCode, tuanCode, promoId, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
@@ -436,9 +468,9 @@ public class PayActivity extends BaseActivity {
      * 实时计算金额
      */
     private void countPrice() {
-        String promoId = promotionModel == null ? "" : promotionModel.getId();
-        String couponCode = currentCoupon == null ? "" : currentCoupon.getCoupon_code();
-        new CountPriceApi(mContext, itemCode, couponCode, promoId, yueTxt, tuanCode, new
+        String promoId = promotionModel == null ? "0" : promotionModel.getId();
+        String couponCode = currentCoupon == null ? "0" : currentCoupon.getCoupon_code();
+        new CountPriceApi(mContext, kidCode, couponCode, promoId, yueTxt, new
                 FetchEntryListener() {
                     @Override
                     public void setData(Entry entry) {
@@ -450,7 +482,7 @@ public class PayActivity extends BaseActivity {
 
                     @Override
                     public void setError(ErrorMsg error) {
-
+                        if (error != null) showToast(error.getDesc());
                     }
                 });
     }
@@ -469,10 +501,8 @@ public class PayActivity extends BaseActivity {
                 tt = TuanPayResultActivity.PAY_SUCCESS;
                 desc = "报名付费成功";
             } else if (result.equals(BCPayResult.RESULT_CANCEL)) {
-//                tt = TuanPayResultActivity.PAY_CANCLE;
-//                desc = "取消支付";
-                goOrderDetail();
-                return;
+                tt = TuanPayResultActivity.PAY_CANCLE;
+                desc = "取消支付";
             } else if (result.equals(BCPayResult.RESULT_FAIL)) {
                 tt = TuanPayResultActivity.PAY_FAILD;
                 desc = "支付失败, 原因: " + bcPayResult.getErrCode() +
@@ -491,18 +521,13 @@ public class PayActivity extends BaseActivity {
         }
     };
 
-    private void goOrderDetail() {
-        Intent i = new Intent(mContext, OrderDetailActivity.class);
-        i.putExtra("OrderDetailActivity_data", orderModel.getBill_no());
-        i.putExtra("OrderDetailActivity_type", 1);
-        startActivity(i);
-    }
-
     private void goPayResult(int t, String desc) {
         Intent i = new Intent(mContext, TuanPayResultActivity.class);
         i.putExtra("TuanPayResultActivity_data", t);
+        i.putExtra("TuanPayResultActivity_oid", orderModel.getBill_no());
         i.putExtra("TuanPayResultActivity_desc", desc);
         startActivity(i);
+        finish();
     }
 
     private void doWeixinPay() {

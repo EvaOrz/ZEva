@@ -58,8 +58,8 @@ public class FmMyCollectFragment extends Fragment {
     }
 
     private void HttpData() {
-        String url= UrlUtil.getCollecturl();
-        new FmListApi(getActivity(),url, new ResponseCallBack<List<FmListhiistoryModel>>() {
+        String url = UrlUtil.getCollecturl();
+        new FmListApi(getActivity(), url, new ResponseCallBack<List<FmListhiistoryModel>>() {
             @Override
             public void result(List<FmListhiistoryModel> messageModel, ErrorMsg errorMsg) {
 
@@ -76,25 +76,32 @@ public class FmMyCollectFragment extends Fragment {
                         listView1.setAdapter(fmHositoryAdapter);
                         fmHositoryAdapter.notifyDataSetChanged();
                     }
-                }else {
+                } else {
 //                    ToastUtil.showShortToast("暂无数据");
                 }
             }
         });
     }
-    private void initView(View view) {
-        fmListhiistoryModels=new ArrayList<>();
 
-        fmHositoryAdapter=new FmHositoryAdapter(getActivity());
-        listView1=view.findViewById(R.id.listView_collection);
+    private void initView(View view) {
+        fmListhiistoryModels = new ArrayList<>();
+
+        fmHositoryAdapter = new FmHositoryAdapter(getActivity());
+        listView1 = view.findViewById(R.id.listView_collection);
         listView1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                ID=fmListhiistoryModels.get(position).getId();
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long
+                    id) {
+                ID = fmListhiistoryModels.get(position).getId();
                 new AskDialog(getActivity(), "取消收藏", new AskDialog.OnSurePickListener() {
                     @Override
                     public void onSure() {
                         CancelCollect(ID);
+                    }
+
+                    @Override
+                    public void onCancle() {
+
                     }
                 });
 
@@ -107,7 +114,7 @@ public class FmMyCollectFragment extends Fragment {
 
     private void CancelCollect(String id) {
 
-        new CancelCollectApi(getActivity(),id,new ResponseCallBack<String>() {
+        new CancelCollectApi(getActivity(), id, new ResponseCallBack<String>() {
             @Override
             public void result(String message, ErrorMsg errorMsg) {
 
@@ -115,7 +122,7 @@ public class FmMyCollectFragment extends Fragment {
 
                     ToastUtil.showShortToast("取消收藏成功");
                     fmHositoryAdapter.notifyDataSetChanged();
-                     HttpData();
+                    HttpData();
 
                 } else {
                     ToastUtil.showShortToast(errorMsg.getDesc());

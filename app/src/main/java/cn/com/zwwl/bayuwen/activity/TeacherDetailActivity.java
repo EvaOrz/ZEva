@@ -54,7 +54,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
 
     private TextView student_evaluate_tv,about_cource_tv;
     private View teacher_line1,teacher_line2;
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView ,recyclerView_xue;
     NestedScrollView nestScroll;
     private List<KeModel> keModels = new ArrayList<>();
     private List<TeacherDetailStuentevaluateModel.CommentsBean> commentsBeans=new ArrayList<>();
@@ -134,6 +134,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
         });
         curOrComm=1;
         getCommentList();
+//        getCourseList();
     }
 
     /**
@@ -151,7 +152,6 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
                     if (baseResponse.getCourse() != null && baseResponse.getCourse().size() > 0) {
                         keModels.clear();
                         keModels.addAll(baseResponse.getCourse());
-                        tCourseListAdapter = new TCourseListAdapter(mContext, keModels);
                         recyclerView.setAdapter(tCourseListAdapter);
                         tCourseListAdapter.notifyDataSetChanged();
                     }
@@ -177,8 +177,8 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
                     if (teacherDetailStuentevaluateModel.getComments() != null && teacherDetailStuentevaluateModel.getComments().size() > 0) {
                         commentsBeans.clear();
                         commentsBeans.addAll(teacherDetailStuentevaluateModel.getComments());
-                        tCommitListAdapter = new TCommitListAdapter(mContext, commentsBeans);
-                        recyclerView.setAdapter(tCommitListAdapter);
+//                        tCommitListAdapter = new TCommitListAdapter(mContext, commentsBeans);
+                        recyclerView_xue.setAdapter(tCommitListAdapter);
                         tCommitListAdapter.notifyDataSetChanged();
                     }
                     if (evpage == evtotalPage)
@@ -190,6 +190,14 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
     }
 
     private void initView() {
+        recyclerView_xue=findViewById(R.id.recyclerView1);
+        recyclerView_xue.setHasFixedSize(true);
+        recyclerView_xue.setNestedScrollingEnabled(false);
+        recyclerView_xue.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView_xue.addItemDecoration(new DividerItemDecoration(getResources(), R.color
+                .gray_line, R
+                .dimen.dp_1, OrientationHelper.VERTICAL));
+        tCommitListAdapter = new TCommitListAdapter(mContext, commentsBeans);
         student_evaluate_tv=findViewById(R.id.student_evaluate_tv);
         about_cource_tv=findViewById(R.id.about_cource_tv);
         student_evaluate_tv.setOnClickListener(this);
@@ -203,6 +211,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
         teaching_idea_tv = findViewById(R.id.teaching_idea_tv);
         iv_avatar = findViewById(R.id.iv_avatar);
         recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setVisibility(View.GONE);
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -228,7 +237,8 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
             case R.id.student_evaluate_tv:
                 student_evaluate_tv.setTextColor(getResources().getColor(R.color.oringe));
                 teacher_line1.setVisibility(View.VISIBLE);
-
+               recyclerView_xue.setVisibility(View.VISIBLE);
+               recyclerView.setVisibility(View.GONE);
               about_cource_tv.setTextColor(getResources().getColor(R.color.gray_dark));
                teacher_line2.setVisibility(View.INVISIBLE);
                curOrComm=1;
@@ -238,6 +248,8 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
             case R.id.about_cource_tv:
                 about_cource_tv.setTextColor(getResources().getColor(R.color.oringe));
                 teacher_line2.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.VISIBLE);
+                recyclerView_xue.setVisibility(View.GONE);
                 student_evaluate_tv.setTextColor(getResources().getColor(R.color.gray_dark));
                 teacher_line1.setVisibility(View.INVISIBLE);
                 curOrComm=2;

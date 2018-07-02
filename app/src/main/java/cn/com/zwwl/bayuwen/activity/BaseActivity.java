@@ -1,5 +1,6 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -30,9 +31,7 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.model.UserModel;
-import cn.com.zwwl.bayuwen.view.PlayController;
 
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 
 /**
@@ -46,7 +45,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      */
     protected String fromHtmlUri = "";
     public Context mContext;
-    public PlayController playController;// 音乐播放器
     private Dialog dialog;
 
     private RelativeLayout process_layout;//
@@ -54,8 +52,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     private ProgressBar loadingLayout;// loading页面
     private ImageView errorImg;// 加载错误图片
     private TextView errorTxt;// 加载错误提示
-
-    private MusicStatusReceiver musicStatusReceiver;
 
     // 因为必须要求登录，所以每个activity（除去登录、注册、忘记密码页面）都在Resume里面判断登录状态
     public UserModel userModel;
@@ -237,25 +233,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         }).start();
     }
 
-    /**
-     * 注册音乐播放器的监听receiver，用于接收音乐播放情况，更新UI
-     */
-    public void registerReceiver() {
-        //实例化过滤器；
-        IntentFilter intentFilter = new IntentFilter();
-        //添加过滤的Action值；
-        intentFilter.addAction(ACTION_RESUME_PAUSE);
-        intentFilter.addAction(ACTION_START_PLAY);
-        intentFilter.addAction(ACTION_MSG_COMPLETE);
-        intentFilter.addAction(ACTION_CHANGE_TIME);
-        intentFilter.addAction(ACTION_REFRESH_LIST);
-        intentFilter.addAction(ACTION_ALBUM_PRE);
-        intentFilter.addAction(ACTION_ALBUM_NEXT);
-        //实例化广播监听器；
-        musicStatusReceiver = new MusicStatusReceiver();
-        //将广播监听器和过滤器注册在一起；
-        registerReceiver(musicStatusReceiver, intentFilter);
-    }
 
     @Override
     protected void onDestroy() {
@@ -263,35 +240,12 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     }
 
-    /**
-     * 监听音乐播放Service的receiver
-     */
-    class MusicStatusReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // 开始播放、播放完成、更新时间
-            if (intent.getAction().equals(ACTION_START_PLAY) || intent.getAction().equals
-                    (ACTION_MSG_COMPLETE) || intent.getAction().equals(ACTION_CHANGE_TIME)) {
-                getMusicMsg((Message) intent.getParcelableExtra("music_service_message"));
-
-            }
-
-        }
-    }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (musicStatusReceiver != null)
-            unregisterReceiver(musicStatusReceiver);
-    }
-
-    // 播放完成
-    protected void getMusicMsg(Message ms) {
 
     }
-
 
     /**
      * 用于给子类继承点击事件
@@ -314,11 +268,12 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     public void hideJianpan() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context
                 .INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
 
     }
 
-    public void askPermission(String[] permissions, int requestCode) {
+    public boolean askPermission(String[] permissions, int requestCode) {
         List<String> ll = new ArrayList<>();
         for (int i = 0; i < permissions.length; i++) {
             int permissionCheck = ContextCompat.checkSelfPermission(this, permissions[i]);
@@ -327,9 +282,12 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                 ll.add(permissions[i]);
             }
         }
-        if (ll.size() > 0)
+        if (ll.size() > 0) {
             ActivityCompat.requestPermissions(this, (String[]) ll.toArray(new String[ll.size()]),
                     requestCode);
+            return false;
+        } else
+            return true;
     }
 
     /**
@@ -354,7 +312,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             grantResults) {
 
     }
-
 
 }
 
