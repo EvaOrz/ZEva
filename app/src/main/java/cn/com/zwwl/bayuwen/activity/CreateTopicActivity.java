@@ -71,7 +71,7 @@ public class CreateTopicActivity extends AppCompatActivity implements View.OnCli
                     intent.putExtra("topic_content", topic_content);
                     intent.putExtra("is_anonymous", is_anonymous);
                     startActivity(intent);
-                    finish();
+//                    finish();
                 }else{
                     ToastUtil.showShortToast("请填写话题标题或者内容");
                 }

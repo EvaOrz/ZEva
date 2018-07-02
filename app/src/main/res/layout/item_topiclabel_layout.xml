@@ -26,16 +26,19 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/dp_20"
-            android:text="dddd"
+            android:text=""
+            android:textStyle="bold"
             android:textColor="#242C3F" />
       </LinearLayout>
 
         <CheckBox
             android:id="@+id/check_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
             android:layout_alignParentRight="true"
              android:layout_centerInParent="true"
+            android:background="@drawable/selector_checkbox"
+            android:button="@null"
             android:layout_marginRight="@dimen/dp_10"/>
     </RelativeLayout>
 </LinearLayout>

@@ -36,7 +36,6 @@ public class LessonListApi extends BaseApi {
             listListener) {
         super(context);
         mContext = context;
-        isNeedJsonArray = true;
         this.listListener = listListener;
         this.url = UrlUtil.getLecturesUrl(cid, String.valueOf(page));
         get();

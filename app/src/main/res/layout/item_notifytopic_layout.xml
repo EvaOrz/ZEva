@@ -26,8 +26,8 @@
 
             <ImageView
                 android:id="@+id/image_viewId"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/album_dp_50"
+                android:layout_height="@dimen/album_dp_50"
                 android:src="@mipmap/ic_launcher" />
 
             <LinearLayout
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:paddingRight="5dp"
                     android:text=""
-                    android:textColor="@color/gray_dark"
+                    android:textColor="#A6A6A6"
                     android:textSize="@dimen/text_size_12" />
             </LinearLayout>
 
@@ -78,7 +78,7 @@
                 android:padding="10dp"
                 android:gravity="center_vertical"
                 android:text="查看详情"
-                android:textColor="@color/gray_dark"
+                android:textColor="#999999"
                 android:textSize="@dimen/text_size_14" />
 
             <ImageView

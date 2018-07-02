@@ -33,7 +33,6 @@ public class PinglunApi extends BaseApi {
     public PinglunApi(Context context, String kid, String cid, FetchEntryListListener listListener) {
         super(context);
         mContext = context;
-        isNeedJsonArray = true;
         this.listListener = listListener;
         this.kid = kid;
         this.cid = cid;

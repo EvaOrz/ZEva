@@ -46,7 +46,7 @@ public class CancelCollectApi extends BaseApi {
             @Override
             public void run() {
 
-                if (errorMsg != null||errorMsg.equals("")) {
+                if (errorMsg == null) {
                     callBack.result("ss",errorMsg);
                 }
 
