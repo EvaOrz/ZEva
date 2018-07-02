@@ -451,5 +451,6 @@
     <string name="sign_status">签到情况</string>
     <string name="lesson_report">课节报告</string>
     <string name="hint_search_course">搜索课程名称、老师</string>
+    <string name="hide_cancel">取消隐藏</string>
 
 </resources>
