@@ -31,6 +31,7 @@ import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.widget.decoration.GridItemDecoration;
 
 /**
  * 上传照片
@@ -57,6 +58,7 @@ public class UploadPicActivity extends BasicActivityWithTitle {
     protected void initView() {
         setCustomTitle("作业上传");
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerView.addItemDecoration(new GridItemDecoration(this));
     }
 
     @Override
