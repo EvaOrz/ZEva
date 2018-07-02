@@ -76,7 +76,13 @@ public class TopicCommitActivity extends AppCompatActivity implements View.OnCli
                 finish();
                 break;
             case R.id.feed_commit:
-                Httpcomment();
+                String etText=feedEv.getText().toString().trim();
+                if (etText.length()!=0){
+                    Httpcomment();
+                }else {
+                    ToastUtil.showShortToast("评论不能为空");
+                }
+
                 break;
         }
     }
