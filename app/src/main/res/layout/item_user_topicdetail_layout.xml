@@ -13,8 +13,8 @@
         android:orientation="horizontal">
     <cn.com.zwwl.bayuwen.widget.CircleImageView
         android:id="@+id/user_icon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/album_dp_50"
+        android:layout_height="@dimen/album_dp_50"
         android:src="@mipmap/ic_launcher"/>
 
         <LinearLayout

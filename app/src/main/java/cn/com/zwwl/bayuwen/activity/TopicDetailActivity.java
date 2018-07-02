@@ -100,6 +100,12 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
         topic_id = intent.getStringExtra("topicId");
         collectionIconId.setOnClickListener(this);
         commentTv.setOnClickListener(this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         HttpData(topic_id);
     }
 
@@ -200,7 +206,10 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
                 }
                 break;
             case R.id.comment_tv:
-                initPopWindow();   //弹出popwindow
+//                initPopWindow();   //弹出popwindow
+                Intent intent = new Intent(this,TopicCommitActivity.class);
+                intent.putExtra("topic_id",topic_id);
+                startActivity(intent);
                 break;
 
 
@@ -246,23 +255,7 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
 
 
     }
-    /**
-     * EditText获取焦点并显示软键盘
-     */
-    /**
-     * 显示软键盘
-     *
-     * @param context
-     * @param view
-     */
-    public static void showInputMethodForQuery(final Context context, final View view) {
 
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        if (imm != null) {
-            imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
-        }
-    }
 
     private void Httpcomment(String trim) {
         comments.put("topic_id", topic_id);

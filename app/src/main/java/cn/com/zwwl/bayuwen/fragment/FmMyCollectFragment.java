@@ -27,9 +27,7 @@ import cn.com.zwwl.bayuwen.dialog.AskDialog;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.FmListCollectModel;
-import cn.com.zwwl.bayuwen.model.FmListhiistoryModel;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
-import cn.com.zwwl.bayuwen.util.Tools;
 
 public class FmMyCollectFragment extends Fragment {
 
@@ -105,6 +103,11 @@ public class FmMyCollectFragment extends Fragment {
                     @Override
                     public void onSure() {
                         CancelCollect(ID);
+                    }
+
+                    @Override
+                    public void onCancle() {
+
                     }
                 });
 

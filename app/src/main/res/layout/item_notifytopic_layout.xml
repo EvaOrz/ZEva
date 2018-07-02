@@ -26,8 +26,8 @@
 
             <ImageView
                 android:id="@+id/image_viewId"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/album_dp_50"
+                android:layout_height="@dimen/album_dp_50"
                 android:src="@mipmap/ic_launcher" />
 
             <LinearLayout
