@@ -21,7 +21,7 @@ public class TraceSearchApi extends cn.com.zwwl.bayuwen.http.BaseApi {
     public TraceSearchApi(Activity context, String content, ResponseCallBack<List<LessonModel> >  callBack) {
         super(context);
         this.callBack = callBack;
-        url = UrlUtil.traceSearch() + "?content=" + content;
+        url = UrlUtil.traceSearch() + "?keyword=" + content;
         this.activity = context;
         get();
     }
@@ -43,7 +43,7 @@ public class TraceSearchApi extends cn.com.zwwl.bayuwen.http.BaseApi {
             public void run() {
                 List<LessonModel> model = null;
                 if (array != null)
-                    model = GsonUtil.parseJsonArray(LessonModel.class, json.toString());
+                    model = GsonUtil.parseJsonArray(LessonModel.class, array.toString());
                 callBack.result(model, errorMsg);
             }
         });
