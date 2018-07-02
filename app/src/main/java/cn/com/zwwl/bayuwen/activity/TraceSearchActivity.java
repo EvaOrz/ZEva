@@ -1,5 +1,6 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,7 @@ public class TraceSearchActivity extends BaseActivity {
     RecyclerView recyclerView;
     LessonReportAdapter adapter;
     List<LessonModel> reports;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
@@ -69,9 +73,19 @@ public class TraceSearchActivity extends BaseActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     search();
+                    hideJianpan();
                     return true;
                 }
                 return false;
+            }
+        });
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(TraceSearchActivity.this, WebActivity.class);
+                intent.putExtra("WebActivity_title", reports.get(position).getTitle());
+                intent.putExtra("WebActivity_data", reports.get(position).getUrl());
+                startActivity(intent);
             }
         });
     }
@@ -80,7 +94,7 @@ public class TraceSearchActivity extends BaseActivity {
         new TraceSearchApi(this, AppValue.getText(searchView), new ResponseCallBack<List<LessonModel>>() {
             @Override
             public void result(List<LessonModel> lessonModels, ErrorMsg errorMsg) {
-                reports=lessonModels;
+                reports = lessonModels;
                 adapter.setEmptyView(R.layout.empty_view, (ViewGroup) recyclerView.getParent());
                 adapter.setNewData(lessonModels);
             }
