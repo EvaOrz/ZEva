@@ -208,7 +208,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <cn.com.zwwl.bayuwen.widget.MostGridView
                         android:id="@+id/xunzhang_grid"
@@ -219,13 +219,13 @@
 
                     <TextView
                         android:id="@+id/xunzhang_tv"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="暂时没有获取任何成就"
-                        android:layout_gravity="center"
+                        android:gravity="center"
                         android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_12"
-                        android:visibility="gone" />
+                      />
                 </LinearLayout>
 
                 <TextView
