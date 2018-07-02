@@ -42,8 +42,7 @@ public class VideoPlayActivity extends BaseActivity {
                         finish();
                     }
                 });
-        ImageLoader.display(mContext, myVideoView.thumbImageView, picUrl, R.drawable
-                .avatar_placeholder, R.drawable.avatar_placeholder);
+        ImageLoader.display(mContext, myVideoView.thumbImageView, picUrl);
         myVideoView.fullscreenButton.setVisibility(View.GONE);// 禁止横竖屏切换
         myVideoView.startVideo();
 

@@ -22,7 +22,8 @@ public class TopicUserAnswerAdapter extends BaseAdapter {
     protected List<TopicDetailModel.UserCommentBean> userCommentBeans = new ArrayList<>();
 
 
-    public TopicUserAnswerAdapter(Activity mContext, List<TopicDetailModel.UserCommentBean> mItemList) {
+    public TopicUserAnswerAdapter(Activity mContext, List<TopicDetailModel.UserCommentBean>
+            mItemList) {
         this.mContext = mContext;
         this.userCommentBeans = mItemList;
     }
@@ -45,20 +46,22 @@ public class TopicUserAnswerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder mViewHolder;
-      //  if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_user_topicdetail_layout, null);
-            mViewHolder = new ViewHolder(convertView);
+        //  if (convertView == null) {
+        convertView = LayoutInflater.from(mContext).inflate(R.layout
+                .item_user_topicdetail_layout, null);
+        mViewHolder = new ViewHolder(convertView);
 
-       // } else {
-         //   mViewHolder = (ViewHolder) convertView.getTag();
-       // }
-      if (userCommentBeans.get(position).getUser_pic()!=null) {
-          ImageLoader.display(mContext, mViewHolder.userIcon, userCommentBeans.get(position).getUser_pic());
-      }else{
-          ImageLoader.display(mContext, mViewHolder.userIcon, R.mipmap.app_icon);
-      }
+        // } else {
+        //   mViewHolder = (ViewHolder) convertView.getTag();
+        // }
+        if (userCommentBeans.get(position).getUser_pic() != null) {
+            ImageLoader.display(mContext, mViewHolder.userIcon, userCommentBeans.get(position)
+                    .getUser_pic());
+        } else {
+            ImageLoader.display(mContext, mViewHolder.userIcon, R.mipmap.image_placeholder);
+        }
         mViewHolder.userName.setText(userCommentBeans.get(position).getUser_name());
-        mViewHolder.userContent.setText( userCommentBeans.get(position).getContent());
+        mViewHolder.userContent.setText(userCommentBeans.get(position).getContent());
 
 
         return convertView;

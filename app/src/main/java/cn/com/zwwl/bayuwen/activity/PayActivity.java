@@ -31,6 +31,7 @@ import cn.beecloud.entity.BCReqParams;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.AddressApi;
+import cn.com.zwwl.bayuwen.api.UrlUtil;
 import cn.com.zwwl.bayuwen.api.order.CountPriceApi;
 import cn.com.zwwl.bayuwen.api.order.CouponApi;
 import cn.com.zwwl.bayuwen.api.order.GetYueApi;
@@ -153,7 +154,6 @@ public class PayActivity extends BaseActivity {
         for (KeModel keModel : keDatas) {
             keLayout.addView(getKeView(keModel));
         }
-
     }
 
     private void initView() {
@@ -252,7 +252,6 @@ public class PayActivity extends BaseActivity {
                             }
                         });
                     }
-
                     break;
 
                 case 4:// 显示可以使用的优惠券
@@ -294,8 +293,7 @@ public class PayActivity extends BaseActivity {
         TextView time = view.findViewById(R.id.item_order_time);
         TextView xiaoqu = view.findViewById(R.id.item_order_xiaoqu);
         ImageView pic = view.findViewById(R.id.item_order_pic);
-        ImageLoader.display(mContext, pic, model.getPic(), R.drawable.avatar_placeholder, R
-                .drawable.avatar_placeholder);
+        ImageLoader.display(mContext, pic, model.getPic());
 
         tag.setImageResource(model.getTagImg());
         title.setText(model.getTitle());
@@ -416,7 +414,7 @@ public class PayActivity extends BaseActivity {
     public void goWeb() {
         Intent i = new Intent(mContext, WebActivity.class);
         i.putExtra("WebActivity_title", "退款须知");
-        i.putExtra("WebActivity_data", "");
+        i.putExtra("WebActivity_data", UrlUtil.notificationTuifee());
         startActivity(i);
     }
 

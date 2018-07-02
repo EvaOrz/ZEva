@@ -28,7 +28,7 @@
                 android:id="@+id/image_viewId"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@mipmap/app_icon" />
+                android:src="@mipmap/ic_launcher" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

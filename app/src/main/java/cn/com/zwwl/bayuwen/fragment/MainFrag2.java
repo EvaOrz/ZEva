@@ -96,9 +96,7 @@ public class MainFrag2 extends Fragment
                     for (RecommentModel recommentModel : bannerData) {
                         ImageView r = new ImageView(mActivity);
                         r.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                        ImageLoader.display(mActivity, r, recommentModel.getPic(), R.mipmap
-                                        .app_icon,
-                                R.mipmap.app_icon);
+                        ImageLoader.display(mActivity, r, recommentModel.getPic());
                         views.add(r);
                     }
                     bannerView.setViewList(views);

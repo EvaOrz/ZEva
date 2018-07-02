@@ -48,8 +48,7 @@ public class KeTagGridAdapter extends BaseAdapter {
         ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout.item_main_grid);
         ImageView img = viewHolder.getView(R.id.index2_item_image);
 
-        ImageLoader.display(mContext, img, item.getImg(), R
-                .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
+        ImageLoader.display(mContext, img, item.getImg());
         return viewHolder.getConvertView();
     }
 

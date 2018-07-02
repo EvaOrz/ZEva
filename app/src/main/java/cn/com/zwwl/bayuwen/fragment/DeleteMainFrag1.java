@@ -394,8 +394,7 @@ public class DeleteMainFrag1 extends Fragment implements View.OnClickListener {
                             }
                         });
                         RoundAngleImageView r = view.findViewById(R.id.banner_omg);
-                        ImageLoader.display(mActivity, r, advBean.getPic(), R.mipmap.app_icon,
-                                R.mipmap.app_icon);
+                        ImageLoader.display(mActivity, r, advBean.getPic());
                         views.add(view);
                     }
                     bannerView.setViewList(views);

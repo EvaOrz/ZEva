@@ -300,8 +300,7 @@ public class MyTuanActivity extends BaseActivity {
             if (model.getKeModel() != null) {
                 item_tuan_tag.setImageResource(model.getKeModel().getTagImg());
                 item_tuan_title.setText(model.getKeModel().getTitle());
-                ImageLoader.display(mContext, item_tuan_pic, model.getKeModel().getPic(), R.drawable
-                        .avatar_placeholder, R.drawable.avatar_placeholder);
+                ImageLoader.display(mContext, item_tuan_pic, model.getKeModel().getPic());
                 item_tuan_teacher.setText(model.getKeModel().getTname());
                 item_tuan_xiaoqu.setText(model.getKeModel().getSchool());
                 item_tuan_date.setText(CalendarTools.format(Long.valueOf(model.getKeModel()

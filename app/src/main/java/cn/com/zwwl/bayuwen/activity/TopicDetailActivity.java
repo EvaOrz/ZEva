@@ -110,7 +110,7 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
                     if (topicDetailModel.getUser_pic() != null)
                         ImageLoader.display(TopicDetailActivity.this, topicCircleimageviewId, topicDetailModel.getUser_pic());
                     else
-                        ImageLoader.display(TopicDetailActivity.this, topicCircleimageviewId, R.mipmap.app_icon);
+                        ImageLoader.display(TopicDetailActivity.this, topicCircleimageviewId, R.mipmap.image_placeholder);
 
 
                     nameId.setText(topicDetailModel.getUser_name());
