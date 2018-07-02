@@ -34,11 +34,9 @@ public class FmMyCollectFragment extends Fragment {
     ListView listView1;
     private View view;
     private List<FmListCollectModel.DataBean> dataBeans;
-    private List<FmListCollectModel.LinksBean> linksBeans;
     private FmMyCollectionAdapter fmMyCollectionAdapter;
     private String ID;
     private ImageView no_fm;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,19 +69,13 @@ public class FmMyCollectFragment extends Fragment {
                     dataBeans.clear();
                     no_fm.setVisibility(View.GONE);
                     dataBeans = messageModel.getData();
-//                    for (FmListCollectModel.DataBean aa : dataBeans) {
-//
-//                        dataBeans.add(aa);
-//
-//                    }
 
 
                     fmMyCollectionAdapter.setData(dataBeans);
                     listView1.setAdapter(fmMyCollectionAdapter);
                     fmMyCollectionAdapter.notifyDataSetChanged();
-//                    }
+
                 } else {
-//                ToastUtil.showShortToast("暂无数据");
                     no_fm.setVisibility(View.VISIBLE);
                 }
             }
