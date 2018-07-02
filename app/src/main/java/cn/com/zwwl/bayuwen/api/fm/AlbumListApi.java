@@ -38,7 +38,6 @@ public class AlbumListApi extends BaseApi {
     public AlbumListApi(Context context, String kid, int page, FetchAlbumListListener listener) {
         super(context);
         mContext = context;
-        isNeedJsonArray = true;
         this.url = UrlUtil.getAlbumListUrl(kid, page);
         this.listener = listener;
         get();
@@ -54,7 +53,6 @@ public class AlbumListApi extends BaseApi {
     public AlbumListApi(Context context, String search, FetchAlbumListListener listener) {
         super(context);
         mContext = context;
-        isNeedJsonArray = true;
         this.url = UrlUtil.getSearchUrl(search);
         this.listener = listener;
         get();
@@ -69,7 +67,6 @@ public class AlbumListApi extends BaseApi {
     public AlbumListApi(Context context, FetchAlbumListListener listener) {
         super(context);
         mContext = context;
-        isNeedJsonArray = true;
         this.url = UrlUtil.getHistoryurl();
         this.listener = listener;
         get();
@@ -85,7 +82,6 @@ public class AlbumListApi extends BaseApi {
     public AlbumListApi(Context context, int type, FetchAlbumListListener listener) {
         super(context);
         mContext = context;
-        isNeedJsonArray = true;
         isCollect = true;
         this.url = UrlUtil.getCollecturl() + "?type=" + type;
         this.listener = listener;

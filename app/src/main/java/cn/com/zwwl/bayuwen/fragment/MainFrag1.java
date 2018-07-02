@@ -40,12 +40,16 @@ import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
+import cn.com.zwwl.bayuwen.adapter.AchieveMainAdapter;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
+import cn.com.zwwl.bayuwen.api.AchievementApi;
 import cn.com.zwwl.bayuwen.api.Index1Api;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.AchievementModel;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.Entry;
@@ -61,6 +65,7 @@ import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.ChildMenuPopView;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.LoopViewPager;
+import cn.com.zwwl.bayuwen.widget.MostGridView;
 import cn.com.zwwl.bayuwen.widget.RoundAngleImageView;
 import cn.com.zwwl.bayuwen.widget.RoundAngleLayout;
 import cn.com.zwwl.bayuwen.widget.threed.GalleryTransformer;
@@ -81,10 +86,13 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private InfiniteViewPager pingPager;// 拼图列表
     private MyViewPagerAdapter pingAdapter;
     private LinearLayout pingtu_indicator;// 拼图指示器
+    private MostGridView achieveGrid;// 成就列表
+    private TextView achiTv;
 
     private List<AdvBean> advBeans = new ArrayList<>();// banner数据
     private List<View> pingtuData = new ArrayList<>();
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
+    private List<AchievementModel> achiveatas = new ArrayList<>();// 成就数据
     private UserModel userModel;
 
     private int pintuWid, pintuHei;// 拼图item的宽高
@@ -126,7 +134,32 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_main1, container, false);
         initView();
+        getAchieveData();
         return root;
+    }
+
+    /**
+     * 获取当前学员的成就
+     */
+    public void getAchieveData() {
+        new AchievementApi(mActivity, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+                achiveatas.clear();
+                if (Tools.listNotNull(list)) {
+                    for (int i = 0; i < list.size(); i++) {
+                        if (((AchievementModel) list.get(i)).getIs_get() == 1) {
+                            achiveatas.add((AchievementModel) list.get(i));
+                        }
+                    }
+                }
+                handler.sendEmptyMessage(2);
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+            }
+        });
     }
 
     /**
@@ -211,6 +244,8 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         childCoin = root.findViewById(R.id.frag1_coin);
         locationTv = root.findViewById(R.id.position);
         pingtu_indicator = root.findViewById(R.id.pingtu_indicator);
+        achieveGrid = root.findViewById(R.id.xunzhang_grid);
+        achiTv = root.findViewById(R.id.xunzhang_tv);
 
         pingPager = root.findViewById(R.id.pingtu_pager);
         pingPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -298,6 +333,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         this.childModels.clear();
         this.childModels.addAll(childModels);
         loadData();
+        getAchieveData();
         handler.sendEmptyMessage(0);
     }
 
@@ -338,6 +374,17 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                         RoundAngleImageView r = view.findViewById(R.id.banner_omg);
                         ImageLoader.display(mActivity, r, advBean.getPic());
                         views.add(view);
+                    }
+                    break;
+                case 2:// 显示当前学员获得的成就
+                    if (achiveatas.size() > 0) {
+                        achieveGrid.setVisibility(View.VISIBLE);
+                        achiTv.setVisibility(View.GONE);
+                        AchieveMainAdapter adapter = new AchieveMainAdapter(mActivity, achiveatas);
+                        achieveGrid.setAdapter(adapter);
+                    } else {
+                        achieveGrid.setVisibility(View.GONE);
+                        achiTv.setVisibility(View.VISIBLE);
                     }
                     break;
             }

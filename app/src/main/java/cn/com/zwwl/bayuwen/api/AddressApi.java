@@ -37,7 +37,6 @@ public class AddressApi extends BaseApi {
                       FetchAddressListListener listener) {
         super(context);
         mContext = context;
-        isNeedJsonArray = true;
         pamas.put("to_user", model.getTo_user());
         pamas.put("phone", model.getPhone());
         pamas.put("province", model.getProvince());
@@ -69,7 +68,6 @@ public class AddressApi extends BaseApi {
     public AddressApi(Context context, FetchAddressListListener listener) {
         super(context);
         mContext = context;
-        isNeedJsonArray = true;
         this.url = UrlUtil.addressUrl();
         this.listListener = listener;
         get();
@@ -86,7 +84,6 @@ public class AddressApi extends BaseApi {
     public AddressApi(Context context, String aId, int type, FetchAddressListListener listener) {
         super(context);
         mContext = context;
-        isNeedJsonArray = true;
         if (type == 0) {
             this.url = UrlUtil.addressUrl() + "/" + aId;
             delete();

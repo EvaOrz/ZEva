@@ -31,7 +31,6 @@ public class ActionApi extends BaseApi {
         ACTION_CHANGE_PWD,
         //添加评论
         ACTION_ADD_COMMENT,
-
     }
 
     /**

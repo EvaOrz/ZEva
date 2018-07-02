@@ -25,7 +25,6 @@ public class KeTagListApi extends BaseApi {
     public KeTagListApi(Context context, FetchEntryListener listener) {
         super(context);
         mContext = context;
-        isNeedJsonArray = true;
         this.listener = listener;
         get();
     }
