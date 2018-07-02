@@ -67,7 +67,11 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
         viewHolder.date.setText(CalendarTools.format(Long.valueOf(keModel.getStartPtime()),
                 "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(keModel.getEndPtime()),
                 "yyyy-MM-dd"));
-        viewHolder.time.setText(keModel.getClass_start_at() + " - " + keModel.getClass_end_at());
+        String startTime = keModel.getClass_start_at();
+        String endtime = keModel.getClass_end_at();
+        viewHolder.time.setText(startTime.substring(0, startTime.length() - 3) + " - " + endtime
+                .substring(0, endtime.length() - 3));
+//        viewHolder.time.setText(keModel.getClass_start_at() + " - " + keModel.getClass_end_at());
         viewHolder.course_frame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

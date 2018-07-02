@@ -98,8 +98,13 @@ public class CartAdapter extends CheckScrollAdapter<KeModel> {
                 "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(model
                         .getEndPtime()),
                 "yyyy-MM-dd"));
-        time.setText(model.getClass_start_at() + " - " + model.getClass_end_at
-                ());
+
+        String startTime = model.getClass_start_at();
+        String endtime = model.getClass_end_at();
+        time.setText(startTime.substring(0, startTime.length() - 3) + " - " + endtime
+                .substring(0, endtime.length() - 3));
+//        time.setText(model.getClass_start_at() + " - " + model.getClass_end_at
+//                ());
         xiaoqu.setText(model.getSchool());
         price.setText("￥" + model.getBuyPrice());
 
