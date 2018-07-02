@@ -36,7 +36,7 @@ import cn.com.zwwl.bayuwen.util.AddressTools;
 
 public class MyApplication extends Application {
 
-    public static NewMusicService newMusicService;// 全局电台播放Service
+//    public static NewMusicService newMusicService;// 全局电台播放Service
     private String UMENG_APPKEY = "5ad40381f29d987f490000be";// 友盟appkey
 
     public static int DEBUG = 1;

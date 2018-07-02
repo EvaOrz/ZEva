@@ -134,7 +134,7 @@ public class OrderTuifeeDetailActivity extends BaseActivity {
                     tuiDetailOp5.setText(tuifeeModel.getRefund_no());
 
                     if (tuifeeModel.getState() == 0) {// 待审核
-                        seekBarThumb1.setBackgroundResource(R.drawable.dot_gray);
+                        seekBarThumb1.setBackgroundResource(R.drawable.dot_gold);
                         seekBar.setProgressDrawable(getResources().getDrawable(R.drawable
                                 .seekbar_gray));
                         seekBar.setThumb(getResources().getDrawable(R.drawable

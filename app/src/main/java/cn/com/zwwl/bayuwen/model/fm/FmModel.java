@@ -21,6 +21,24 @@ public class FmModel extends Entry {
     private String audioDuration;
     private String audioSize;
 
+    private int status;// 0:id 1:lock
+    private int gifSta; // 0:没有 1:loading 2:play
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getGifSta() {
+        return gifSta;
+    }
+
+    public void setGifSta(int gifSta) {
+        this.gifSta = gifSta;
+    }
 
     public String getKid() {
         return kid;

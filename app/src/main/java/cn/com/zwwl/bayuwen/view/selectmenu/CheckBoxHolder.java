@@ -71,6 +71,7 @@ public class CheckBoxHolder extends BaseWidgetHolder<List<List<SelectTempModel>>
                         .getColor(R.color.gold));
                 mLeftRecordView = view;
 
+                mRightListRecord = null;
                 mRightAdapter.setDataList(mDataList.get(position + 1));
                 mRightAdapter.notifyDataSetChanged();
             }

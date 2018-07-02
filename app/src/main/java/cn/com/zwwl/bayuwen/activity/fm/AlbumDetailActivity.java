@@ -1,7 +1,10 @@
 package cn.com.zwwl.bayuwen.activity.fm;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,13 +28,16 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
+import cn.com.zwwl.bayuwen.activity.PayActivity;
 import cn.com.zwwl.bayuwen.adapter.FmAdapter;
 import cn.com.zwwl.bayuwen.adapter.PinglunAdapter;
 import cn.com.zwwl.bayuwen.api.ActionApi;
+import cn.com.zwwl.bayuwen.api.CourseApi;
 import cn.com.zwwl.bayuwen.api.fm.AlbumApi;
 import cn.com.zwwl.bayuwen.api.fm.CollectionApi;
 import cn.com.zwwl.bayuwen.api.fm.PinglunApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
+import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel.*;
 import cn.com.zwwl.bayuwen.model.fm.FmModel;
@@ -40,8 +46,8 @@ import cn.com.zwwl.bayuwen.service.NewMusicService;
 import cn.com.zwwl.bayuwen.util.AnimationTools;
 import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.view.music.MusicWindow;
 import cn.com.zwwl.bayuwen.widget.CommonWebView;
-import cn.com.zwwl.bayuwen.view.PlayController;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -63,17 +69,25 @@ public class AlbumDetailActivity extends BaseActivity {
     private FmAdapter fmAdapter;
     private PinglunAdapter pinglunAdapter;
     private ImageView imageView;
-    private TextView title, name, time, likeBtn, shoucangBtn, shareBtn;
+    private ImageView likeImg, collectImg;
+    private TextView likeTv;
+    private TextView title, name, time;
     private View viewPlay, viewPinglun, viewTeacher;
     private CommonWebView viewDetail;
     private LinearLayout contain, teacherContain;
     private TextView part1, part2, part3, part4;
     private View line1, line2, line3, line4;
-    private PlayController playController;
+    private MusicStatusReceiver musicStatusReceiver;
     private LinearLayout inputLayout;// 输入框
+    private TextView buyBt;
 
     private FmModel currentFmModel;// 当前正在播放的音频
     private int currentPosition = -1;// 当前正在播放的音频在列表中的位置
+    /**
+     * 拦截一种情况：从主页面来回主页面去
+     */
+    private boolean isFromMain = false, isGoMain = false;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,24 +97,25 @@ public class AlbumDetailActivity extends BaseActivity {
         if (getIntent().getSerializableExtra("AlbumDetailActivity_data") != null && getIntent()
                 .getSerializableExtra("AlbumDetailActivity_data") instanceof String)
             aId = getIntent().getStringExtra("AlbumDetailActivity_data");
+        isFromMain = getIntent().getBooleanExtra("is_from_main", false);
         initView();
         initErrorLayout();
         initData();
-
     }
 
     @Override
     public void initData() {
-        showLoading();
+        showLoadingDialog(true);
         new AlbumApi(this, aId, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
+                showLoadingDialog(false);
                 if (entry != null && entry instanceof AlbumModel) {
                     albumModel = (AlbumModel) entry;
                     handler.sendEmptyMessage(1);
                     fmModels.clear();
                     fmModels.addAll(albumModel.getFmModels());
-                    handler.sendEmptyMessage(0);
+                    checkCurrent();
                     teachers.clear();
                     teachers.addAll(albumModel.getTeachers());
                     handler.sendEmptyMessage(2);
@@ -113,6 +128,7 @@ public class AlbumDetailActivity extends BaseActivity {
 
             @Override
             public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
                 if (error != null)
                     handler.sendEmptyMessage(4);
             }
@@ -140,26 +156,50 @@ public class AlbumDetailActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        registerReceiver();//先恢复数据 再注册receiver
-        if (MyApplication.newMusicService == null || !MyApplication.newMusicService.isPlaying()) {
-            playController.setVisibility(View.GONE);
-        } else {
-            playController.setVisibility(View.VISIBLE);
-            currentFmModel = MyApplication.newMusicService.getCurrentModel();
-            for (int i = 0; i < fmModels.size(); i++) {
-                if (fmModels.get(i).getId().equals(currentFmModel.getId())) {
-                    currentPosition = i;
-                }
-            }
-            handler.sendEmptyMessage(0);
-            showPlayController();
-            playController.setData(currentFmModel);
 
+    private void checkCurrent() {
+        for (int i = 0; i < fmModels.size(); i++) {
+            if (MusicWindow.getInstance(this).currentFmModel != null && fmModels.get(i).getId()
+                    .equals(MusicWindow.getInstance(this).currentFmModel
+                            .getId())) {
+                currentPosition = i;
+                fmModels.get(i).setGifSta(2);
+            } else
+                fmModels.get(i).setGifSta(0);
         }
+        handler.sendEmptyMessage(MSG_REFRESH_LIST);
     }
+
+    private void checkLoading(int pos) {
+        for (int i = 0; i < fmModels.size(); i++) {
+            if (i == pos) {
+                fmModels.get(i).setGifSta(1);
+            } else
+                fmModels.get(i).setGifSta(0);
+        }
+        handler.sendEmptyMessage(MSG_REFRESH_LIST);
+    }
+
+    /**
+     * 注册音乐播放器的监听receiver，用于接收音乐播放情况，更新UI
+     */
+    public void registerReceiver() {
+        //实例化过滤器；
+        IntentFilter intentFilter = new IntentFilter();
+        //添加过滤的Action值；
+        intentFilter.addAction(ACTION_RESUME_PAUSE);
+        intentFilter.addAction(ACTION_START_PLAY);
+        intentFilter.addAction(ACTION_MSG_COMPLETE);
+        intentFilter.addAction(ACTION_CHANGE_TIME);
+        intentFilter.addAction(ACTION_REFRESH_LIST);
+        intentFilter.addAction(ACTION_ALBUM_PRE);
+        intentFilter.addAction(ACTION_ALBUM_NEXT);
+        //实例化广播监听器；
+        musicStatusReceiver = new MusicStatusReceiver();
+        //将广播监听器和过滤器注册在一起；
+        registerReceiver(musicStatusReceiver, intentFilter);
+    }
+
 
     private void initView() {
         findViewById(R.id.album_detail_back).setOnClickListener(this);
@@ -168,29 +208,14 @@ public class AlbumDetailActivity extends BaseActivity {
         title = findViewById(R.id.album_detail_t);
         name = findViewById(R.id.album_detail_name);
         time = findViewById(R.id.album_detail_time);
-        likeBtn = findViewById(R.id.album_detail_like);
-        shoucangBtn = findViewById(R.id.album_detail_shoucang);
-        shareBtn = findViewById(R.id.album_detail_share);
-        playController = findViewById(R.id.ablum_detail_playcontroller);
-        playController.setListener(new PlayController.PlayControlClickListener() {
-            @Override
-            public void onPlayOrPauseClick() {
-                // 没有播放，则启动
-                if (MyApplication.newMusicService == null) {
-                    sendintent(ACTION_START_PLAY, 0);
-                } else {
-                    sendintent(ACTION_RESUME_PAUSE, 0);
-                    handler.sendEmptyMessage(MSG_RESUME_PAUSE);
-                }
-            }
+        likeImg = findViewById(R.id.album_detail_like_img);
+        likeTv = findViewById(R.id.album_detail_like_tv);
+        collectImg = findViewById(R.id.album_detail_shoucang_img);
 
-            @Override
-            public void onCloseClick() {
-                playController.setVisibility(View.GONE);
-            }
-        });
         inputLayout = findViewById(R.id.album_detail_input);
         inputEdit = findViewById(R.id.album_detail_inputedit);
+        buyBt = findViewById(R.id.album_buy);
+        buyBt.setOnClickListener(this);
 
         part1 = findViewById(R.id.ablum_detail_part1);
         part2 = findViewById(R.id.ablum_detail_part2);
@@ -204,9 +229,9 @@ public class AlbumDetailActivity extends BaseActivity {
         part2.setOnClickListener(this);
         part3.setOnClickListener(this);
         part4.setOnClickListener(this);
-        likeBtn.setOnClickListener(this);
-        shoucangBtn.setOnClickListener(this);
-        shareBtn.setOnClickListener(this);
+        findViewById(R.id.album_detail_like).setOnClickListener(this);
+        findViewById(R.id.album_detail_shoucang).setOnClickListener(this);
+        findViewById(R.id.album_detail_share).setOnClickListener(this);
         findViewById(R.id.album_detail_inputsend).setOnClickListener(this);
 
         viewPlay = LayoutInflater.from(this).inflate(R.layout.view_album_detail_1, null);
@@ -237,13 +262,12 @@ public class AlbumDetailActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 currentPosition = position;
                 currentFmModel = fmModels.get(position);
-
-                sendintent(ACTION_START_PLAY, currentPosition);
+                checkLoading(position);
+                sendintent(ACTION_START_PLAY);
             }
         });
 
         fmAdapter = new FmAdapter(this);
-        fmAdapter.setData(fmModels, currentPosition);
         fmListView.setAdapter(fmAdapter);
         pinglunAdapter = new PinglunAdapter(this);
         pingListView.setAdapter(pinglunAdapter);
@@ -309,10 +333,6 @@ public class AlbumDetailActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case 0:// 初始化播放列表
-                    fmAdapter.setData(fmModels, currentPosition);
-                    break;
-
                 case 1:// 初始化专辑信息
                     disProcess();
                     if (!TextUtils.isEmpty(albumModel.getPic()))
@@ -322,8 +342,13 @@ public class AlbumDetailActivity extends BaseActivity {
                     title.setText(albumModel.getTitle());
                     name.setText(albumModel.getTname());
                     time.setText(albumModel.getUpdate_time());
-                    likeBtn.setText("喜欢(" + albumModel.getLikeNum() + ")");
+                    likeTv.setText("喜欢(" + albumModel.getLikeNum() + ")");
                     handler.sendEmptyMessage(7);
+
+                    if (albumModel.getBuyPrice() > 0 && !albumModel.isIs_buy()) {
+                        buyBt.setVisibility(View.VISIBLE);
+                        buyBt.setText("￥ " + albumModel.getBuyPrice() + "  立即购买");
+                    }
                     break;
                 case 2:// 初始化教师列表,专辑详情
                     viewDetail.loadData(albumModel.getContent(), "text/html", "UTF-8");
@@ -349,10 +374,8 @@ public class AlbumDetailActivity extends BaseActivity {
                     showError(R.mipmap.blank_no_fm, R.string.no_content);
                     break;
                 case 5:
-                    showPlayController();
                     break;
                 case 6:
-                    unshowPlayController();
                     break;
 
                 case 7:// 更新收藏、点赞状态
@@ -362,37 +385,14 @@ public class AlbumDetailActivity extends BaseActivity {
                     inputEdit.setText("");
                     break;
                 case MSG_START_PLAY: // ---------------－开始播放
-                    playController.setVisibility(View.VISIBLE);
-                    showPlayController();
-                    playController.setPlay();
-                    playController.setData(currentFmModel);
-
-                    handler.sendEmptyMessage(MSG_REFRESH_LIST);
+                    checkCurrent();
                     Log.e("开始播放 currentPos", currentPosition + currentFmModel.getTitle());
                     break;
-                case MSG_CHANGE_TIME:
-                    playController.setCurrentTime(msg.arg1);
-                    break;
                 case MSG_REFRESH_LIST:
-                    fmAdapter.setData(fmModels, currentPosition);// 更新gif播放
-                    break;
-
-                case MSG_RESUME_PAUSE:// 播放/暂停
-                    if (MyApplication.newMusicService.isPlaying()) {
-                        playController.setPause();
-                    } else {
-                        playController.setPlay();
-                    }
+                    fmAdapter.setData(fmModels);// 更新gif播放
                     break;
                 case MSG_COMPLETE:// -------------------播放完成
-                    // 最后一曲
-                    if (currentPosition + 1 == fmModels.size()) {
-                        playController.setPause();
-                        handler.sendEmptyMessage(MSG_REFRESH_LIST);
-                    } else {// 开始下一曲
-                        currentPosition++;
-                        changeMusic(currentPosition);
-                    }
+                    checkLoading(-1);
                     break;
             }
         }
@@ -405,19 +405,17 @@ public class AlbumDetailActivity extends BaseActivity {
         if (!Tools.listNotNull(fmModels)) return;
         currentPosition = p;
         currentFmModel = fmModels.get(p);
-        sendintent(ACTION_START_PLAY, 0);// 主动切歌
+        sendintent(ACTION_START_PLAY);// 主动切歌
     }
 
     /**
      * 绑定intent
      */
-    private void sendintent(String action, int curtime) {
+    private void sendintent(String action) {
         if (currentFmModel != null) {
             Intent intent = new Intent(this, NewMusicService.class);
             intent.setAction(action);
-            if (action.equals(ACTION_SEEK_SEEKBAR)) {
-                intent.putExtra("change_to", curtime);
-            } else if (action.equals(ACTION_START_PLAY)) {
+            if (action.equals(ACTION_START_PLAY)) {
                 intent.putExtra("play_model", albumModel);
                 intent.putExtra("play_model_position", currentPosition);
             }
@@ -428,33 +426,34 @@ public class AlbumDetailActivity extends BaseActivity {
 
     // 刷新点赞、收藏状态
     private void checkLikeCollect() {
-        likeBtn.setText("喜欢（" + albumModel.getLikeNum() + ")");
+        likeTv.setText("喜欢（" + albumModel.getLikeNum() + ")");
         if (albumModel.isLikeState()) {
-            Drawable aa = mContext.getResources().getDrawable(R.mipmap.like_a);
-            aa.setBounds(0, 0, aa.getMinimumWidth(), aa.getMinimumHeight());
-            likeBtn.setCompoundDrawables(null, aa, null, null);
+            likeImg.setImageResource(R.drawable.like_a);
         } else {
-            Drawable bb = mContext.getResources().getDrawable(R.mipmap.like_b);
-            bb.setBounds(0, 0, bb.getMinimumWidth(), bb.getMinimumHeight());
-            likeBtn.setCompoundDrawables(null, bb, null, null);
+            likeImg.setImageResource(R.drawable.like_b);
         }
 
         if (albumModel.getConllectId() == 0) {
-            Drawable cc = mContext.getResources().getDrawable(R.mipmap.shoucang_b);
-            cc.setBounds(0, 0, cc.getMinimumWidth(), cc.getMinimumHeight());
-            shoucangBtn.setCompoundDrawables(null, cc, null, null);
+            collectImg.setImageResource(R.drawable.shoucang_b);
         } else {
-            Drawable dd = mContext.getResources().getDrawable(R.mipmap.shoucang_a);
-            dd.setBounds(0, 0, dd.getMinimumWidth(), dd.getMinimumHeight());
-            shoucangBtn.setCompoundDrawables(null, dd, null, null);
+            collectImg.setImageResource(R.drawable.shoucang_a);
         }
     }
 
+    /**
+
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (isFromMain) isGoMain = true;
+    }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.album_detail_back:
+                if (isFromMain) isGoMain = true;
                 finish();
                 break;
             case R.id.ablum_detail_all://播放全部
@@ -491,7 +490,34 @@ public class AlbumDetailActivity extends BaseActivity {
                 if (!TextUtils.isEmpty(content))
                     sendComment(albumModel.getKid(), content);
                 break;
+            case R.id.album_buy:// 购买
+                getKeModel();
+                break;
         }
+    }
+
+    private void getKeModel() {
+        showLoadingDialog(true);
+        new CourseApi(mContext, albumModel.getKid(), new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+                showLoadingDialog(false);
+                if (entry != null && entry instanceof KeModel) {
+                    KeModel keModel = (KeModel) entry;
+                    Intent j = new Intent(mContext, PayActivity.class);
+                    j.putExtra("TuanPayActivity_type", 2);
+                    j.putExtra("TuanPayActivity_data", keModel);
+                    startActivity(j);
+                }
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+                if (error != null) showToast(error.getDesc());
+            }
+        });
     }
 
     /**
@@ -515,19 +541,6 @@ public class AlbumDetailActivity extends BaseActivity {
                 }
             }
         });
-    }
-
-    public void showPlayController() {
-        AnimationTools.with().bottomMoveToViewLocation(playController, 300);
-    }
-
-    public void unshowPlayController() {
-        AnimationTools.with().moveToViewBottom(playController, 300);
-    }
-
-    @Override
-    protected void getMusicMsg(Message ms) {
-        handler.sendMessage(ms);
     }
 
 
@@ -598,5 +611,40 @@ public class AlbumDetailActivity extends BaseActivity {
 
         }
 
+    }
+
+    /**
+     * 监听音乐播放Service的receiver
+     */
+    class MusicStatusReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // 开始播放、播放完成、更新时间
+            if (intent.getAction().equals(ACTION_START_PLAY) || intent.getAction().equals
+                    (ACTION_MSG_COMPLETE)) {
+                handler.sendMessage((Message) intent.getParcelableExtra("music_service_message"));
+
+            }
+        }
+    }
+
+    @Override
+    protected void onStop() {
+
+        super.onStop();
+        if (musicStatusReceiver != null)
+            unregisterReceiver(musicStatusReceiver);
+        if (isFromMain && isGoMain)
+            return;
+        MusicWindow.getInstance(this).hidePopupWindow();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MusicWindow.getInstance(this).movetoController(0);
+        registerReceiver();//先恢复数据 再注册receiver
+        checkCurrent();
     }
 }

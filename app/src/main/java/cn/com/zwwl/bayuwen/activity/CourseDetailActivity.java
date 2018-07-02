@@ -27,6 +27,7 @@ import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.api.CourseApi;
+import cn.com.zwwl.bayuwen.api.UrlUtil;
 import cn.com.zwwl.bayuwen.api.fm.CollectionApi;
 import cn.com.zwwl.bayuwen.api.fm.PinglunApi;
 import cn.com.zwwl.bayuwen.api.order.CartApi;
@@ -112,6 +113,11 @@ public class CourseDetailActivity extends BaseActivity {
         }
         getPinglunData();
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void setUi() {
@@ -356,18 +362,20 @@ public class CourseDetailActivity extends BaseActivity {
             case R.id.adviserTv:// 拨打顾问电话
                 String number = "10086";
                 //用intent启动拨打电话
-                int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission
-                        .CALL_PHONE);
-
-                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                    startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + number)));
-                } else {
-                    askPermission(new String[]{Manifest.permission.CALL_PHONE}, 101);
+                try {
+                    if (askPermission(new String[]{Manifest.permission.CALL_PHONE}, 101)) {
+                        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + number)));
+                    }
+                } catch (SecurityException e) {
                 }
+
 
                 break;
             case R.id.explainTv:// 说明
-                startActivity(new Intent(mContext, WebActivity.class));
+                Intent intent = new Intent(mContext, WebActivity.class);
+                intent.putExtra("WebActivity_title", "报课说明");
+                intent.putExtra("WebActivity_data", UrlUtil.notificationBaoke());
+                startActivity(intent);
                 break;
             case R.id.duihuan_footer:// 兑换
                 doKaitongBycode(code);
@@ -499,8 +507,7 @@ public class CourseDetailActivity extends BaseActivity {
         classno_tv.setText("班级编码：" + keModel.getModel());
         price_tv.setText("￥ " + keModel.getBuyPrice());
 
-        ImageLoader.display(mContext, course_iv, keModel.getPic(), R
-                .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
+        ImageLoader.display(mContext, course_iv, keModel.getPic());
         place_tv.setText(keModel.getSchool());
         teacher_tv.setText(keModel.getTname());
         date_tv.setText(CalendarTools.format(Long.valueOf(keModel.getStartPtime()),
@@ -508,9 +515,10 @@ public class CourseDetailActivity extends BaseActivity {
                         .getEndPtime()),
                 "yyyy-MM-dd"));
 
-        String startTime=keModel.getClass_start_at();
-        String endtime=keModel.getClass_end_at();
-        time_tv.setText(startTime.substring(0,startTime.length()-3) + " - " + endtime.substring(0,endtime.length()-3));
+        String startTime = keModel.getClass_start_at();
+        String endtime = keModel.getClass_end_at();
+        time_tv.setText(startTime.substring(0, startTime.length() - 3) + " - " + endtime
+                .substring(0, endtime.length() - 3));
 
         priceTv2.setText("￥" + keModel.getBuyPrice());
 

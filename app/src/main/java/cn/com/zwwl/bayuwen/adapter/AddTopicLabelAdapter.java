@@ -23,7 +23,7 @@ public class AddTopicLabelAdapter extends BaseAdapter {
     private Activity mActivity;
     private List<AddTopicLabelModel> addTopicLabelModels;
 
-    private int tempPosition =-1; //记录已经点击的CheckBox位置
+    private int tempPosition = -1; //记录已经点击的CheckBox位置
 
     public AddTopicLabelAdapter(Activity activity, List<AddTopicLabelModel> addTopicLabelModels) {
         this.mActivity = activity;
@@ -48,18 +48,20 @@ public class AddTopicLabelAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder mViewHolder;
-       // if (convertView == null) {
-            convertView = LayoutInflater.from(mActivity).inflate(R.layout.item_topiclabel_layout, null);
-            mViewHolder =new ViewHolder(convertView);
+        // if (convertView == null) {
+        convertView = LayoutInflater.from(mActivity).inflate(R.layout.item_topiclabel_layout, null);
+        mViewHolder = new ViewHolder(convertView);
 
-      //  }else {
+        //  }else {
         //    mViewHolder = (ViewHolder) convertView.getTag();
-      //  }
-      if (addTopicLabelModels.get(position).getUrl()!=null||addTopicLabelModels.get(position).getUrl()!="") {
-          ImageLoader.display(mActivity, mViewHolder.circle, addTopicLabelModels.get(position).getUrl());
-      }else {
-          ImageLoader.display(mActivity, mViewHolder.circle, R.mipmap.ic_launcher);
-      }
+        //  }
+        if (addTopicLabelModels.get(position).getUrl() != null || addTopicLabelModels.get
+                (position).getUrl() != "") {
+            ImageLoader.display(mActivity, mViewHolder.circle, addTopicLabelModels.get(position)
+                    .getUrl());
+        } else {
+            ImageLoader.display(mActivity, mViewHolder.circle, R.mipmap.image_placeholder);
+        }
 
         mViewHolder.labelName.setText(addTopicLabelModels.get(position).getName());
 
@@ -71,43 +73,45 @@ public class AddTopicLabelAdapter extends BaseAdapter {
 //        }false
         mViewHolder.checkId.setId(position);
 
-        mViewHolder.checkId.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mViewHolder.checkId.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener
+                () {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    if (tempPosition!=-1){
+                if (isChecked) {
+                    if (tempPosition != -1) {
                         //根据id找到上次点击的CheckBox，将它设置为False
-                        CheckBox tempCheckBox =mActivity.findViewById(tempPosition);
-                        if (tempCheckBox!=null){
+                        CheckBox tempCheckBox = mActivity.findViewById(tempPosition);
+                        if (tempCheckBox != null) {
                             tempCheckBox.setChecked(false);
                         }
                     }
-                    tempPosition=buttonView.getId();  //保存当前选中的CheckBox的id 值
-                }else {
-                    tempPosition =-1;
+                    tempPosition = buttonView.getId();  //保存当前选中的CheckBox的id 值
+                } else {
+                    tempPosition = -1;
                 }
             }
         });
-        if (position==tempPosition){ //比较位置是否一样
+        if (position == tempPosition) { //比较位置是否一样
             mViewHolder.checkId.setChecked(true);
-        }else {
+        } else {
             mViewHolder.checkId.setChecked(false);
         }
         return convertView;
     }
-     //返回当前CheckBox选中的位置，便于获取值
-    public  int getSelectPosition(){
-        return  tempPosition;
+
+    //返回当前CheckBox选中的位置，便于获取值
+    public int getSelectPosition() {
+        return tempPosition;
     }
 
 
     public static class ViewHolder {
         @BindView(R.id.circle)
-       public CircleImageView circle;
+        public CircleImageView circle;
         @BindView(R.id.label_name)
-      public   TextView labelName;
+        public TextView labelName;
         @BindView(R.id.check_id)
-      public   CheckBox checkId;
+        public CheckBox checkId;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

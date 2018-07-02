@@ -7,7 +7,7 @@
     <string name="main_tab2">选课</string>
     <string name="main_tab3">课程跟踪</string>
     <string name="main_tab4">FM</string>
-    <string name="nenglifenxi">能力分析</string>
+    <string name="nenglifenxi">我的拼图</string>
     <string name="yixuankecheng">已选课程</string>
     <string name="suohuoxunzhang">所获勋章</string>
     <string name="tuijian_code">推荐码</string>
@@ -322,7 +322,7 @@
     <string name="piao_option1">抬头类型</string>
     <string name="piao_option2">发票抬头</string>
     <string name="piao_option3">税号</string>
-    <string name="piao_option4">发票内容</string>
+    <string name="piao_option4">备注信息</string>
     <string name="piao_option5">发票金额</string>
 
 
@@ -449,5 +449,6 @@
     <string name="warning_no_mid_report">您还没有该报告~</string>
     <string name="welcome_speech">欢迎致辞</string>
     <string name="sign_status">签到情况</string>
+    <string name="lesson_report">课节报告</string>
 
 </resources>

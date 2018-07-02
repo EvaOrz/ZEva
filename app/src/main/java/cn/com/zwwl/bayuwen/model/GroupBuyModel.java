@@ -13,7 +13,7 @@ public class GroupBuyModel extends Entry {
      * 2:已生成订单并已生成订单并且已支付
      */
     private int state = 0;
-    private int oid;
+    private String oid;
     private String code = ""; // 开团码
 
     public DiscountBean getDiscount() {
@@ -32,11 +32,11 @@ public class GroupBuyModel extends Entry {
         this.state = state;
     }
 
-    public int getOid() {
+    public String getOid() {
         return oid;
     }
 
-    public void setOid(int oid) {
+    public void setOid(String oid) {
         this.oid = oid;
     }
 
@@ -93,6 +93,7 @@ public class GroupBuyModel extends Entry {
         public double getDiscount_price() {
             return discount_price;
         }
+
 
         public void setDiscount_price(double discount_price) {
             this.discount_price = discount_price;
@@ -194,4 +195,5 @@ public class GroupBuyModel extends Entry {
             this.total_price = total_price;
         }
     }
+
 }

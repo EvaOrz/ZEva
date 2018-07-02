@@ -41,7 +41,7 @@ public class CalendarKeAdapter extends RecyclerView.Adapter<CalendarKeAdapter.Vi
         TextView time;
         LinearLayout teacherLayout;
         LinearLayout calendar_item_bg;
-
+        ImageView arrow;
 
         public ViewHolder(View view) {
             super(view);
@@ -51,6 +51,7 @@ public class CalendarKeAdapter extends RecyclerView.Adapter<CalendarKeAdapter.Vi
             time = view.findViewById(R.id.calendar_item_time);
             teacherLayout = view.findViewById(R.id.calendar_item_child_layout);
             calendar_item_bg = view.findViewById(R.id.calendar_item_bg);
+            arrow = view.findViewById(R.id.calendar_item_child_arrow);
         }
     }
 
@@ -78,9 +79,11 @@ public class CalendarKeAdapter extends RecyclerView.Adapter<CalendarKeAdapter.Vi
 
             if (item.getIs_thirdorg() == 0) {
                 holder.calendar_item_bg.setBackgroundResource(R.drawable.gold_white_xiangkuang);
+                holder.arrow.setVisibility(View.GONE);
                 holder.xiaoqu.setText("校区：" + item.getSchool());
             } else {
                 holder.calendar_item_bg.setBackgroundResource(R.drawable.gray_white_xiankuang);
+                holder.arrow.setVisibility(View.VISIBLE);
                 holder.xiaoqu.setText("地址：" + item.getAddress());
             }
             if (Tools.listNotNull(item.getTeacher())) {
@@ -111,8 +114,7 @@ public class CalendarKeAdapter extends RecyclerView.Adapter<CalendarKeAdapter.Vi
         ImageView avat = view.findViewById(R.id.item_t_c_avatar);
         name.setText(teacherBean.getName());
         if (!TextUtils.isEmpty(teacherBean.getPic()))
-            ImageLoader.display(context, avat, teacherBean.getPic(), R.drawable
-                    .avatar_placeholder, R.drawable.avatar_placeholder);
+            ImageLoader.display(context, avat, teacherBean.getPic());
 
         view.setOnClickListener(new View
                 .OnClickListener() {

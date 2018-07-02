@@ -23,6 +23,15 @@ public class UrlUtil {
         }
     }
 
+    // 退费须知
+    public static String notificationTuifee(){
+        return "http://www.zhugexuetang.com/explain/refund.html";
+    }
+    // 报课说明
+    public static String notificationBaoke(){
+        return "http://www.zhugexuetang.com/explain/enroll.html";
+    }
+
     // 账号密码登录
     public static String LoginUrl() {
         return HOST + "/user/login";
@@ -123,6 +132,26 @@ public class UrlUtil {
     // 获取可开发票的课程列表
     public static String getPiaoKeListUrl() {
         return HOST + "/course/invoice";
+    }
+
+    // 获取开发票的历史列表
+    public static String getPiaoHistoryUrl() {
+        return HOST + "/order/past_invoice";
+    }
+
+    // 发票详情
+    public static String getPiaoDetail() {
+        return HOST + "/order/invoice_detail";
+    }
+
+    // 申请开发票
+    public static String kaiPiao() {
+        return HOST + "/order/invoice";
+    }
+
+    // 计算开票价格
+    public static String countPiaoPrice() {
+        return HOST + "/order/reinvoice_cont";
     }
 
     // 赞列表

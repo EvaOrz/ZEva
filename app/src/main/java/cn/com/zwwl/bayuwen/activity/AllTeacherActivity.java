@@ -54,6 +54,7 @@ public class AllTeacherActivity extends BaseActivity {
     private List<TeacherModel> teacherModels = new ArrayList<>();
     private TeacherTypeModel teacherTypeModel;
 
+    private int type = 1;// 1:老师 2:班主任
 
     @Override
     protected void initData() {
@@ -74,7 +75,7 @@ public class AllTeacherActivity extends BaseActivity {
         });
 
         // 获取全部教师
-        new TeacherApi(mContext, new FetchEntryListListener() {
+        new TeacherApi(mContext, type, new FetchEntryListListener() {
             @Override
             public void setData(List list) {
                 if (Tools.listNotNull(list)) {
@@ -111,6 +112,7 @@ public class AllTeacherActivity extends BaseActivity {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_teacher);
+        type = getIntent().getIntExtra("AllTeacherActivity_data", 1);
         initView();
         initData();
     }
@@ -171,7 +173,7 @@ public class AllTeacherActivity extends BaseActivity {
      */
     private void doSearch(String xiangmu, String grade, String keyword) {
         showLoadingDialog(true);
-        new TeacherApi(mContext, xiangmu, grade, keyword, new FetchEntryListListener() {
+        new TeacherApi(mContext, xiangmu, grade, keyword, type, new FetchEntryListListener() {
             @Override
             public void setData(List list) {
                 showLoadingDialog(false);

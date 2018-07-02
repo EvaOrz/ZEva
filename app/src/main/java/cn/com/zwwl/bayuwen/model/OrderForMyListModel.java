@@ -22,8 +22,8 @@ public class OrderForMyListModel extends Entry {
     private String oid = "";
     private String uid;
     private String title;
-    private String total_fee;
-    private String real_fee = "0";
+    private double total_fee;
+    private double real_fee ;
     private String state;
     private String pay_channel;
     private String pay_at;
@@ -82,19 +82,19 @@ public class OrderForMyListModel extends Entry {
         this.title = title;
     }
 
-    public String getTotal_fee() {
+    public double getTotal_fee() {
         return total_fee;
     }
 
-    public void setTotal_fee(String total_fee) {
+    public void setTotal_fee(double total_fee) {
         this.total_fee = total_fee;
     }
 
-    public String getReal_fee() {
+    public double getReal_fee() {
         return real_fee;
     }
 
-    public void setReal_fee(String real_fee) {
+    public void setReal_fee(double real_fee) {
         this.real_fee = real_fee;
     }
 
@@ -165,8 +165,8 @@ public class OrderForMyListModel extends Entry {
         orderForMyListModel.setOid(jsonObject.optString("oid"));
         orderForMyListModel.setUid(jsonObject.optString("uid"));
         orderForMyListModel.setTitle(jsonObject.optString("title"));
-        orderForMyListModel.setTotal_fee(jsonObject.optString("total_fee"));
-        orderForMyListModel.setReal_fee(jsonObject.optString("real_fee"));
+        orderForMyListModel.setTotal_fee(jsonObject.optDouble("total_fee"));
+        orderForMyListModel.setReal_fee(jsonObject.optDouble("real_fee"));
         orderForMyListModel.setState(jsonObject.optString("state"));
         orderForMyListModel.setPay_channel(jsonObject.optString("pay_channel"));
         orderForMyListModel.setPay_at(jsonObject.optString("pay_at"));
@@ -203,11 +203,11 @@ public class OrderForMyListModel extends Entry {
 
 
         JSONObject a = jsonObject.optJSONObject("address");
-        AddressModel addressModel = new AddressModel();
         if (!isNull(a)) {
+            AddressModel addressModel = new AddressModel();
             addressModel.parseAddressModel(a, addressModel);
+            orderForMyListModel.setAddressModel(addressModel);
         }
-        orderForMyListModel.setAddressModel(addressModel);
         return orderForMyListModel;
     }
 

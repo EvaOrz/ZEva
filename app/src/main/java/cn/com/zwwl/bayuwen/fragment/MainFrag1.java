@@ -40,7 +40,6 @@ import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
-import cn.com.zwwl.bayuwen.adapter.MainYixuanKeAdapter;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
 import cn.com.zwwl.bayuwen.api.Index1Api;
@@ -55,18 +54,13 @@ import cn.com.zwwl.bayuwen.model.Index1Model;
 import cn.com.zwwl.bayuwen.model.Index1Model.AdvBean;
 import cn.com.zwwl.bayuwen.model.Index1Model.CalendarCourseBean;
 import cn.com.zwwl.bayuwen.model.Index1Model.SelectedCourseBean;
-import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
-import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
-import cn.com.zwwl.bayuwen.util.AddressTools;
 import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
-import cn.com.zwwl.bayuwen.view.AddressPopWindow;
 import cn.com.zwwl.bayuwen.view.ChildMenuPopView;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.LoopViewPager;
-import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 import cn.com.zwwl.bayuwen.widget.RoundAngleImageView;
 import cn.com.zwwl.bayuwen.widget.RoundAngleLayout;
 import cn.com.zwwl.bayuwen.widget.threed.GalleryTransformer;
@@ -79,35 +73,25 @@ import cn.jzvd.JZUtils;
 public class MainFrag1 extends Fragment implements View.OnClickListener {
 
     private Activity mActivity;
-    private LoopViewPager bannerView;
-    private RoundAngleLayout studentLay, parentLay;// banner位的学生信息栏
-    private TextView notificationTv, childTxt;
-    private CircleImageView childImg, parentImg;
+    private TextView childTxt, childName, childGrade, childCoin;
+    private TextView locationTv;
+    private CircleImageView childImg;
     private View root;
-    private NoScrollListView yixuanKeListView;// 已选课程列表
-    private MainYixuanKeAdapter yixuanKeAdapter;
     private RelativeLayout toolbar;//
     private InfiniteViewPager pingPager;// 拼图列表
     private MyViewPagerAdapter pingAdapter;
-    private TextView calendarRi, calendarYue;
-    private LinearLayout calendarLayout;
     private LinearLayout pingtu_indicator;// 拼图指示器
 
     private List<AdvBean> advBeans = new ArrayList<>();// banner数据
-    private CalendarCourseBean calendarCourseBean;// calendar事件数据
-    private List<SelectedCourseBean> selectedCourses = new ArrayList<>();// 已选课程
     private List<View> pingtuData = new ArrayList<>();
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
     private UserModel userModel;
 
-    private int bannerWid, bannerHei;// 轮播位宽高
     private int pintuWid, pintuHei;// 拼图item的宽高
 
     private int paddingLeft, paddingRight, paddingTop, paddingBottom;
 
     public boolean isCityChanged = false;// 城市状态是否变化
-
-    private List<KeModel> yixuanDatas = new ArrayList<>();// 已选课程data
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -117,7 +101,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        bannerView.startLoop(true);
 
     }
 
@@ -153,77 +136,47 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
      * 需要动态设置studentLay高度
      */
     private void initSize() {
-        ViewTreeObserver vto = studentLay.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            public void onGlobalLayout() {
-                int width = studentLay.getWidth();
+        pintuWid = MyApplication.width - 300;
+        pintuHei = (MyApplication.width - 300) * 6 / 9;
+        paddingLeft = pintuWid * 50 / 1018;
+        paddingRight = pintuWid * 50 / 1018;
+        paddingTop = pintuHei * 72 / 676;
+        paddingBottom = pintuHei * 112 / 676;
 
-                bannerWid = MyApplication.width - width * 2 - JZUtils.dip2px(mActivity, 5) * 4;
-                bannerHei = bannerWid * 9 / 16;
-                // 成功调用一次后，移除 Hook 方法，防止被反复调用
-                // removeGlobalOnLayoutListener() 方法在 API 16 后不再使用
-                // 使用新方法 removeOnGlobalLayoutListener() 代替
-                studentLay.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout
-                        .LayoutParams.MATCH_PARENT, bannerHei);
-                bannerView.setSize(params);
+        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(pintuWid +
+                paddingLeft + paddingRight,
+                pintuHei +
+                        paddingTop + paddingBottom);
+        params1.setMargins(0, 16, 0, 16);
+        pingPager.setLayoutParams(params1);
 
-                studentLay.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
-                        .LayoutParams.WRAP_CONTENT, bannerHei));
-                parentLay.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams
-                        .WRAP_CONTENT, bannerHei));
-
-                pintuWid = MyApplication.width - 300;
-                pintuHei = (MyApplication.width - 300) * 6 / 9;
-                paddingLeft = pintuWid * 50 / 1018;
-                paddingRight = pintuWid * 50 / 1018;
-                paddingTop = pintuHei * 72 / 676;
-                paddingBottom = pintuHei * 112 / 676;
-
-                LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(pintuWid +
-                        paddingLeft + paddingRight,
-                        pintuHei +
-                                paddingTop + paddingBottom);
-                params1.setMargins(0, 16, 0, 16);
-                pingPager.setLayoutParams(params1);
-
-                initPingtudata();
-                pingAdapter = new MyViewPagerAdapter(pingtuData);
-                pingPager.setAdapter(pingAdapter);
-                pingPager.setOffscreenPageLimit(3);
-                pingPager.setPageTransformer(true, new GalleryTransformer());
-                pingtu_indicator.removeAllViews();
-                for (int i = 0; i < pingtuData.size(); i++) {
-                    ImageView img = new ImageView(getContext());
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
-                            (LinearLayout.LayoutParams.WRAP_CONTENT,
-                                    LinearLayout.LayoutParams
-                                            .WRAP_CONTENT);
-                    layoutParams.rightMargin = getResources().getDimensionPixelOffset(R.dimen
-                            .dp_5);
-                    img.setLayoutParams(layoutParams);
-                    img.setBackgroundResource(R.drawable.viewlooper_gray_status);
-                    pingtu_indicator.addView(img);
-                }
-                pingPager.setCurrentItem(2);
-
-            }
-        });
-
-    }
-
-    public void initData(UserModel userModel) {
-        this.userModel = userModel;
-        if (!TextUtils.isEmpty(userModel.getPic())) {
-            ImageLoader.display(mActivity, parentImg, userModel.getPic(), R
-                    .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
+        initPingtudata();
+        pingAdapter = new MyViewPagerAdapter(pingtuData);
+        pingPager.setAdapter(pingAdapter);
+        pingPager.setOffscreenPageLimit(3);
+        pingPager.setPageTransformer(true, new GalleryTransformer());
+        pingtu_indicator.removeAllViews();
+        for (int i = 0; i < pingtuData.size(); i++) {
+            ImageView img = new ImageView(getContext());
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
+                    (LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams
+                                    .WRAP_CONTENT);
+            layoutParams.rightMargin = getResources().getDimensionPixelOffset(R.dimen
+                    .dp_5);
+            img.setLayoutParams(layoutParams);
+            img.setBackgroundResource(R.drawable.viewlooper_gray_status);
+            pingtu_indicator.addView(img);
         }
+        pingPager.setCurrentItem(2);
+
     }
 
     /**
      * 城市信息变换之后，页面需要刷新数据
      */
     public void loadData() {
+        locationTv.setText(TempDataHelper.getCurrentCity(mActivity));
         new Index1Api(mActivity, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
@@ -232,12 +185,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                     Index1Model index1Model = (Index1Model) entry;
                     if (Tools.listNotNull(index1Model.getAdv())) {
                         advBeans.addAll(index1Model.getAdv());
-                    }
-                    calendarCourseBean = index1Model.getCalendarCourse();
-
-                    selectedCourses.clear();
-                    if (Tools.listNotNull(index1Model.getSelectedCourse())) {
-                        selectedCourses.addAll(index1Model.getSelectedCourse());
                     }
                     handler.sendEmptyMessage(1);
                     isCityChanged = false;
@@ -255,39 +202,15 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     }
 
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        bannerView.startLoop(false);
-    }
-
     private void initView() {
         toolbar = root.findViewById(R.id.toolbar);
-        studentLay = root.findViewById(R.id.layout_student);
-        parentLay = root.findViewById(R.id.layout_parent);
-        bannerView = root.findViewById(R.id.frag1_head);
         childTxt = root.findViewById(R.id.toolbar_title);
-        childImg = root.findViewById(R.id.frag1_child_avatar);
-        parentImg = root.findViewById(R.id.frag1_parent_avater);
+        childImg = root.findViewById(R.id.frag1_avatar);
+        childName = root.findViewById(R.id.frag1_name);
+        childGrade = root.findViewById(R.id.frag1_grade);
+        childCoin = root.findViewById(R.id.frag1_coin);
+        locationTv = root.findViewById(R.id.position);
         pingtu_indicator = root.findViewById(R.id.pingtu_indicator);
-
-        calendarRi = root.findViewById(R.id.calendar_ri);
-        calendarYue = root.findViewById(R.id.calendar_yue);
-        calendarLayout = root.findViewById(R.id.calendar_kecheng_layout);
-        notificationTv = root.findViewById(R.id.main_notification);
-        notificationTv.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        notificationTv.setSingleLine(true);
-        notificationTv.setSelected(true);
-        notificationTv.setFocusable(true);
-        notificationTv.setFocusableInTouchMode(true);
-
-        yixuanKeListView = root.findViewById(R.id.main_yixuan);
-        yixuanKeAdapter = new MainYixuanKeAdapter(mActivity);
-        yixuanDatas.add(new KeModel());
-        yixuanDatas.add(new KeModel());
-        yixuanKeListView.setAdapter(yixuanKeAdapter);
-        yixuanKeAdapter.setData(yixuanDatas);
-        yixuanKeAdapter.notifyDataSetChanged();
 
         pingPager = root.findViewById(R.id.pingtu_pager);
         pingPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -309,14 +232,11 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         });
         initSize();
 
-        studentLay.setOnClickListener(this);
-        parentLay.setOnClickListener(this);
         childTxt.setOnClickListener(this);
-        root.findViewById(R.id.go_calendar).setOnClickListener(this);
         root.findViewById(R.id.go_xunzhang).setOnClickListener(this);
         root.findViewById(R.id.toolbar_left).setOnClickListener(this);
         root.findViewById(R.id.toolbar_right).setOnClickListener(this);
-        root.findViewById(R.id.toolbar_city).setOnClickListener(this);
+        root.findViewById(R.id.menu_school).setOnClickListener(this);
     }
 
     /**
@@ -391,9 +311,12 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                 case 0:
                     for (ChildModel c : childModels) {
                         if (c.getIsdefault().equals("1")) {
+                            childName.setText(c.getName());
+                            childGrade.setText(c.getGrade());
                             childTxt.setText(c.getName() + "(" + c.getGrade() + ")");
                             if (!TextUtils.isEmpty(c.getPic()))
-                                Glide.with(mActivity).load(c.getPic()).into(childImg);
+                                ImageLoader.display(mActivity, childImg, c.getPic(), R.drawable
+                                        .avatar_placeholder, R.drawable.avatar_placeholder);
                         }
                     }
                     break;
@@ -413,34 +336,8 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                             }
                         });
                         RoundAngleImageView r = view.findViewById(R.id.banner_omg);
-                        ImageLoader.display(mActivity, r, advBean.getPic(), R.mipmap.app_icon,
-                                R.mipmap.app_icon);
+                        ImageLoader.display(mActivity, r, advBean.getPic());
                         views.add(view);
-                    }
-                    bannerView.setViewList(views);
-                    bannerView.startLoop(true);
-
-                    calendarLayout.removeAllViews();
-                    if (calendarCourseBean != null && calendarCourseBean.getCourses().size() > 0) {
-                        Calendar ss = CalendarTools.fromStringToca(calendarCourseBean.getDate());
-                        calendarRi.setText(ss.get(Calendar.DATE) + "");
-                        calendarYue.setText(ss.get(Calendar.MONTH) + "月");
-
-                        for (CalendarCourseBean.CoursesBean coursesBean : calendarCourseBean
-                                .getCourses()) {
-                            TextView tip = new TextView(mActivity);
-                            tip.setText(coursesBean.getTitle() + " " + coursesBean
-                                    .getClass_start_at() + "-" + coursesBean.getClass_end_at());
-                            tip.setTextColor(getResources().getColor(R.color.gray_dark));
-                            tip.setTextSize(14);
-                            calendarLayout.addView(tip);
-                        }
-                    } else {
-                        TextView tip = new TextView(mActivity);
-                        tip.setText("请添加课程日历");
-                        tip.setTextColor(getResources().getColor(R.color.gray_dark));
-                        tip.setTextSize(14);
-                        calendarLayout.addView(tip);
                     }
                     break;
             }
@@ -459,8 +356,8 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             case R.id.toolbar_left:// 打开抽屉
                 ((MainActivity) mActivity).openDrawer();
                 break;
-            case R.id.toolbar_city:// 选择城市
-                Intent intent =new Intent(getActivity(), CityActivity.class);
+            case R.id.menu_school:// 选择城市
+                Intent intent = new Intent(getActivity(), CityActivity.class);
                 startActivity(intent);
                 break;
             case R.id.toolbar_right:
@@ -503,9 +400,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
      * @return
      */
     public static MainFrag1 newInstance(String ss) {
-//        Bundle args = new Bundle();
         MainFrag1 fragment = new MainFrag1();
-//        fragment.setArguments(args);
         return fragment;
     }
 }

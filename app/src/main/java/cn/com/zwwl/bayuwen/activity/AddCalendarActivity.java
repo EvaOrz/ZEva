@@ -221,7 +221,7 @@ public class AddCalendarActivity extends BaseActivity {
                     break;
                 case 5:// 修改事件初始化
                     nameEv.setText(calendarEventModel.getName() + "");
-                    setStartAndEndDate();
+
                     weekCountTv.setText(calendarEventModel.getTotalWeeks() + "周");
                     shangkeTv.setText(calendarEventModel.getStartTime() + "");
                     xiangkeTv.setText(calendarEventModel.getEndTime() + "");
@@ -236,6 +236,7 @@ public class AddCalendarActivity extends BaseActivity {
                                 .getCourseDates().get(i).getCourseDate()).getTime());
 
                     }
+                    setStartAndEndDate();
                     break;
                 case 6:
                     setStartAndEndDate();
@@ -272,8 +273,6 @@ public class AddCalendarActivity extends BaseActivity {
             showToast("请填写课程名称");
         } else if (TextUtils.isEmpty(totalNumber)) {
             showToast("请填写课程次数");
-        } else if (TextUtils.isEmpty(teacher)) {
-            showToast("请填写授课老师");
         } else if (TextUtils.isEmpty(calendarEventModel.getOrgName())) {
             showToast("请填写机构名称");
         } else if (TextUtils.isEmpty(calendarEventModel.getStartTime())) {

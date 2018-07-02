@@ -203,7 +203,6 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(mActivity, TuanCodeUseActivity.class));
                 break;
             case R.id.frag5_invite:// 邀请好友加入大语文
-                startActivity(new Intent(mActivity, RegisterAddChildActivity.class));
                 break;
             case R.id.frag5_feedback:// 反馈
                 startActivity(new Intent(mActivity, FeedBackActivity.class));
