@@ -77,8 +77,8 @@ public class ImageLoader {
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
-                .placeholder(R.mipmap.app_icon)
-                .error(R.mipmap.app_icon)
+                .placeholder(R.mipmap.image_placeholder)
+                .error(R.mipmap.image_placeholder)
                 .into(imageView);
     }
 
@@ -100,8 +100,8 @@ public class ImageLoader {
         GlideApp.with(context)
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.app_icon)
-                .error(R.mipmap.app_icon)
+                .placeholder(R.mipmap.image_placeholder)
+                .error(R.mipmap.image_placeholder)
                 .centerCrop()
                 .thumbnail(sizeMultiplier)
                 .into(imageView);
@@ -141,8 +141,8 @@ public class ImageLoader {
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .transform(new GlideRoundTransform(context))
-                .placeholder(R.mipmap.app_icon)
-                .error(R.mipmap.app_icon)
+                .placeholder(R.mipmap.image_placeholder)
+                .error(R.mipmap.image_placeholder)
                 .into(imageView);
     }
 

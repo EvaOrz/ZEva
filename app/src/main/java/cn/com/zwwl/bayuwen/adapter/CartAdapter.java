@@ -64,8 +64,7 @@ public class CartAdapter extends CheckScrollAdapter<KeModel> {
         TextView xiaoqu = viewHolder.getView(R.id.item_order_xiaoqu);
         TextView price = viewHolder.getView(R.id.item_order_price);
         ImageView pic = viewHolder.getView(R.id.item_order_pic);
-        ImageLoader.display(mContext, pic, model.getPic(), R.drawable.avatar_placeholder, R
-                .drawable.avatar_placeholder);
+        ImageLoader.display(mContext, pic, model.getPic());
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

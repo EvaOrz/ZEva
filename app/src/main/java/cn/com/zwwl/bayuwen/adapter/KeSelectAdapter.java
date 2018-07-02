@@ -59,8 +59,7 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
         final ViewHolder viewHolder = (ViewHolder) holder;
         final KeModel keModel = list.get(position);
 
-        ImageLoader.display(mContext, viewHolder.img, keModel.getPic(), R
-                .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
+        ImageLoader.display(mContext, viewHolder.img, keModel.getPic());
         viewHolder.tag.setImageResource(keModel.getTagImg());
         viewHolder.title.setText(keModel.getTitle());
         viewHolder.teacher.setText(keModel.getTname());

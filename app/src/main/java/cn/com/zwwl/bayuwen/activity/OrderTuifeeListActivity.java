@@ -170,8 +170,7 @@ public class OrderTuifeeListActivity extends BaseActivity implements TuifeeReasi
             TextView time = viewHolder.getView(R.id.item_order_time);
             TextView xiaoqu = viewHolder.getView(R.id.item_order_xiaoqu);
             ImageView pic = viewHolder.getView(R.id.item_order_pic);
-            ImageLoader.display(mContext, pic, item.getPic(), R.drawable.avatar_placeholder, R
-                    .drawable.avatar_placeholder);
+            ImageLoader.display(mContext, pic, item.getPic());
 
             tag.setImageResource(item.getTagImg());
             title.setText(item.getTitle());

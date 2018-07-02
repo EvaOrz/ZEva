@@ -23,6 +23,15 @@ public class UrlUtil {
         }
     }
 
+    // 退费须知
+    public static String notificationTuifee(){
+        return "http://www.zhugexuetang.com/explain/refund.html";
+    }
+    // 报课说明
+    public static String notificationBaoke(){
+        return "http://www.zhugexuetang.com/explain/enroll.html";
+    }
+
     // 账号密码登录
     public static String LoginUrl() {
         return HOST + "/user/login";

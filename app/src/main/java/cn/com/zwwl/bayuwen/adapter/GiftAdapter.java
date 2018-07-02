@@ -50,8 +50,7 @@ public class GiftAdapter extends BaseAdapter {
         ImageView imageView = viewHolder.getView(R.id.cdetail_t_avatar);
         TextView textView = viewHolder.getView(R.id.cdetail_t_name);
 
-        ImageLoader.display(mContext, imageView, g.getPic(), R.drawable.avatar_placeholder, R
-                .drawable.avatar_placeholder);
+        ImageLoader.display(mContext, imageView, g.getPic());
         textView.setText(g.getTitle());
         return viewHolder.getConvertView();
     }
