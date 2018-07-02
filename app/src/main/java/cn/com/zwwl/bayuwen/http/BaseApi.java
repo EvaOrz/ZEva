@@ -21,7 +21,6 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 public abstract class BaseApi {
     protected Context mContext;
     protected HttpUtil httpUtil = null;
-    protected boolean isNeedJsonArray = false;// 返回的data数据是否是array格式
 
     public BaseApi(Context context) {
         httpUtil = HttpUtil.getInstance(context);
