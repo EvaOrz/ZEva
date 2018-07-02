@@ -5,31 +5,34 @@ import android.app.Activity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.FmListhiistoryModel;
+import cn.com.zwwl.bayuwen.model.FmMyCourceListModel;
+import cn.com.zwwl.bayuwen.util.GsonUtil;
 
+public class FmCourseListApi extends BaseApi {
 
-public class CancelCollectApi extends BaseApi {
-    private Activity activity;
-  private ResponseCallBack<String> callBack;
-    private String ID;
     private String url;
-    public CancelCollectApi(Activity context,String id , ResponseCallBack<String> callBack) {
+    private Activity activity;
+    ResponseCallBack<List<FmMyCourceListModel>> listener;
+    private String titlename;
+
+    public FmCourseListApi(Activity context , String url, ResponseCallBack<List<FmMyCourceListModel>> listener) {
         super(context);
         this.activity = context;
-        this.ID = id;
-        this.callBack = callBack;
-        this.url=UrlUtil.getCollecturl()+"/"+ID;
-        delete();
+        this.url =url;
+        this.listener =listener;
+        get();
     }
 
     @Override
     protected String getUrl() {
-
         return url;
     }
 
@@ -38,19 +41,20 @@ public class CancelCollectApi extends BaseApi {
         return null;
     }
 
-
-
     @Override
     protected void handler(final JSONObject json, final JSONArray array, final ErrorMsg errorMsg) {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                ArrayList<FmMyCourceListModel> model = null;
+                if (array != null) {
+                    model = GsonUtil.parseJsonArray(FmMyCourceListModel.class, array.toString());
 
-                if (errorMsg == null) {
-                    callBack.result("ss",errorMsg);
                 }
+                listener.result(model, errorMsg);
 
             }
         });
+
     }
 }
