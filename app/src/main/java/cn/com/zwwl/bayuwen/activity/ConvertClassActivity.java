@@ -58,7 +58,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
     private String url = UrlUtil.getCDetailUrl(null) + "/search";
     private List<KeModel> keModels;
     private List<KeModel> stockClass;
-    private int page = 1;
+    private int page = 1, hideType;
     AppCompatTextView emptyContent;
 
     @Override
@@ -228,7 +228,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                         if (!"0".equals(model.getStock())) stockClass.add(model);
                     }
                     if (keModels == null || keModels.size() == 0) emptyContent.setText("没有数据~");
-                    adapter.setNewData(keModels);
+                    adapter.setNewData(hideType == 0 ? keModels : stockClass);
                 }
             });
         }
@@ -246,6 +246,16 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
 
     @Override
     public void onMenuClick(int menuCode) {
-        adapter.setNewData(stockClass);
+
+        if (menuCode == R.id.action_hide_class) {
+            showMenu(MenuCode.HIDE_CANCEL);
+            adapter.setNewData(stockClass);
+            hideType = 1;
+        } else {
+            showMenu(MenuCode.HIDE_CLASS);
+            adapter.setNewData(keModels);
+            hideType = 0;
+        }
+        invalidateOptionsMenu();
     }
 }
