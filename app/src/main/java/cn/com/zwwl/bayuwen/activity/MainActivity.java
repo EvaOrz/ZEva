@@ -48,6 +48,7 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.model.ReportModel;
+import cn.com.zwwl.bayuwen.push.NewPushManager;
 import cn.com.zwwl.bayuwen.util.DialogUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.music.MusicWindow;
@@ -88,6 +89,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_core);
         mContext = this;
+        NewPushManager.getInstance(this).register();
         initView();
         userModel = UserDataHelper.getUserLoginInfo(mContext);
         initData();
@@ -140,7 +142,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
+        NewPushManager.getInstance(this).onresume(this);
         MusicWindow.getInstance(this).movetoController(getViewHeight(barLayout));
+
         isGoAlbumActivity = false;
         super.onResume();
         if (MyApplication.loginStatusChange) {

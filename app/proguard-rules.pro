@@ -122,3 +122,21 @@
 
 -dontwarn  org.eclipse.jdt.annotation.**
 -dontwarn  c.t.**
+
+-dontoptimize
+-dontpreverify
+
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+-keep class * extends cn.jpush.android.helpers.JPushMessageReceiver { *; }
+
+-dontwarn cn.jiguang.**
+-keep class cn.jiguang.** { *; }
+
+#==================gson==========================
+-dontwarn com.google.**
+-keep class com.google.gson.** {*;}
+
+#==================protobuf======================
+-dontwarn com.google.**
+-keep class com.google.protobuf.** {*;}
