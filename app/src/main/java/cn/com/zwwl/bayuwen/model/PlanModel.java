@@ -26,6 +26,15 @@ public class PlanModel {
     private String title;
     private boolean isOpen;
     private int is_submit_job;
+    private WorkDetailModel job;
+
+    public WorkDetailModel getJob() {
+        return job;
+    }
+
+    public void setJob(WorkDetailModel job) {
+        this.job = job;
+    }
 
     public int getIs_submit_job() {
         return is_submit_job;

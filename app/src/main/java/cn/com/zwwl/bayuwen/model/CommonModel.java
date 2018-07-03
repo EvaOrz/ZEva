@@ -18,6 +18,15 @@ public class CommonModel extends Entry {
     private String chapterId;
     private int totalScore;
     private int totalCount;
+    private String contentid;
+
+    public String getContentid() {
+        return contentid;
+    }
+
+    public void setContentid(String contentid) {
+        this.contentid = contentid;
+    }
 
     public String getSectionId() {
         return sectionId;
