@@ -33,6 +33,7 @@ public class UnitTableActivity extends BasicActivityWithTitle {
     UnitTableAdapter adapter;
     List<LessonModel> lessonModelList;
     private int operate_type;
+    private String projectType;
 
     @Override
     protected int setContentView() {
@@ -45,7 +46,7 @@ public class UnitTableActivity extends BasicActivityWithTitle {
         type.setText(res.getString(R.string.chose_change_course_unit_by_need));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new HSpacesItemDecoration(res,R.dimen.dp_5));
+        recyclerView.addItemDecoration(new HSpacesItemDecoration(res, R.dimen.dp_5));
         adapter = new UnitTableAdapter(null);
         recyclerView.setAdapter(adapter);
     }
@@ -53,10 +54,11 @@ public class UnitTableActivity extends BasicActivityWithTitle {
     @Override
     protected void initData() {
         int course_type = getIntent().getIntExtra("course_type", -1);
+        projectType = getIntent().getStringExtra("project_type");
         adapter.setType(course_type);
         operate_type = getIntent().getIntExtra("type", 0);
         String kid = getIntent().getStringExtra("kid");
-        new TransferLectureApi(this, kid,operate_type, new ResponseCallBack<List<LessonModel>>() {
+        new TransferLectureApi(this, kid, operate_type, new ResponseCallBack<List<LessonModel>>() {
             @Override
             public void result(List<LessonModel> lessonModels, ErrorMsg errorMsg) {
                 if (lessonModels != null) {
@@ -75,7 +77,9 @@ public class UnitTableActivity extends BasicActivityWithTitle {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (operate_type == 0) {
                     mApplication.oldLesson = lessonModelList.get(position);
-                    startActivity(new Intent(mActivity, ConvertClassActivity.class));
+                    Intent intent = new Intent(mActivity, ConvertClassActivity.class);
+                    intent.putExtra("project_type", projectType);
+                    startActivity(intent);
                 } else {
                     mApplication.newLesson = lessonModelList.get(position);
                     startActivity(new Intent(mActivity, CourseApplyActivity.class));

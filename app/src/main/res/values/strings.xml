@@ -453,5 +453,7 @@
     <string name="hint_search_course">搜索课程名称、老师</string>
     <string name="hide_cancel">取消隐藏</string>
     <string name="show_all">显示全部</string>
+    <string name="word_work">文字作业</string>
+    <string name="look_work">查看作业</string>
 
 </resources>
