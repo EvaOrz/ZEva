@@ -38,6 +38,7 @@ import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.KeTypeModel;
 import cn.com.zwwl.bayuwen.model.SearchModel;
 import cn.com.zwwl.bayuwen.util.AppValue;
+import cn.com.zwwl.bayuwen.util.ToastUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.selectmenu.SelectMenuView;
 import cn.com.zwwl.bayuwen.view.selectmenu.SelectTempModel;
@@ -200,9 +201,13 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                     intent.putExtra("course_type", 1);
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(mActivity, ClassDetailActivity.class);
-                    intent.putExtra("kid", keModels.get(position).getKid());
-                    startActivity(intent);
+                    if (keModels.get(position).getStock()>0) {
+                        Intent intent = new Intent(mActivity, ClassDetailActivity.class);
+                        intent.putExtra("kid", keModels.get(position).getKid());
+                        startActivity(intent);
+                    }else {
+                        ToastUtil.showShortToast("该班级已满班~");
+                    }
                 }
             }
         });

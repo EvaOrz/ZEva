@@ -68,6 +68,7 @@ public class ClassApplyActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initData() {
+        setCustomTitle("提交申请");
         newKe = mApplication.newKe;
         getDetail();
         bind(newKe, pic, courseName, teacherName, schoolName, date, time);
