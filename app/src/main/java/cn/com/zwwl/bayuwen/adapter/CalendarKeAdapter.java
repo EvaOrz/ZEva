@@ -74,7 +74,7 @@ public class CalendarKeAdapter extends RecyclerView.Adapter<CalendarKeAdapter.Vi
             final CalendarEventModel item = datas.get(position);
             holder.tag.setText(item.getOrgName());
             holder.title.setText(item.getName());
-            holder.time.setText("时间：" + item.getCourseDate() + " " + item.getStartTime() + "-" +
+            holder.time.setText("时间：每天" + item.getCourseDate() + " " + item.getStartTime() + "-" +
                     item.getEndTime());
 
             if (item.getIs_thirdorg() == 0) {

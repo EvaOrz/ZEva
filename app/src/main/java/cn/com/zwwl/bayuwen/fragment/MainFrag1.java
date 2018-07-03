@@ -16,18 +16,15 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
@@ -36,12 +33,12 @@ import cn.com.zwwl.bayuwen.activity.AllXunzhangActivity;
 import cn.com.zwwl.bayuwen.activity.CalendarActivity;
 import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
 import cn.com.zwwl.bayuwen.activity.CityActivity;
+import cn.com.zwwl.bayuwen.activity.FCourseIndexActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.AchieveMainAdapter;
-import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
 import cn.com.zwwl.bayuwen.api.AchievementApi;
 import cn.com.zwwl.bayuwen.api.Index1Api;
@@ -56,21 +53,16 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.Index1Model;
 import cn.com.zwwl.bayuwen.model.Index1Model.AdvBean;
-import cn.com.zwwl.bayuwen.model.Index1Model.CalendarCourseBean;
-import cn.com.zwwl.bayuwen.model.Index1Model.SelectedCourseBean;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.AppValue;
-import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.ChildMenuPopView;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
-import cn.com.zwwl.bayuwen.widget.LoopViewPager;
 import cn.com.zwwl.bayuwen.widget.MostGridView;
 import cn.com.zwwl.bayuwen.widget.RoundAngleImageView;
-import cn.com.zwwl.bayuwen.widget.RoundAngleLayout;
 import cn.com.zwwl.bayuwen.widget.threed.GalleryTransformer;
+import cn.com.zwwl.bayuwen.widget.threed.InfinitePagerAdapter;
 import cn.com.zwwl.bayuwen.widget.threed.InfiniteViewPager;
-import cn.jzvd.JZUtils;
 
 /**
  *
@@ -84,7 +76,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private View root;
     private RelativeLayout toolbar;//
     private InfiniteViewPager pingPager;// 拼图列表
-    private MyViewPagerAdapter pingAdapter;
+    private InfinitePagerAdapter pingAdapter;
     private LinearLayout pingtu_indicator;// 拼图指示器
     private MostGridView achieveGrid;// 成就列表
     private TextView achiTv;
@@ -184,7 +176,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         pingPager.setLayoutParams(params1);
 
         initPingtudata();
-        pingAdapter = new MyViewPagerAdapter(pingtuData);
+        pingAdapter = new InfinitePagerAdapter(pingtuData);
         pingPager.setAdapter(pingAdapter);
         pingPager.setOffscreenPageLimit(3);
         pingPager.setPageTransformer(true, new GalleryTransformer());
@@ -261,8 +253,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
+            public void onPageScrollStateChanged(int scrollState) {
             }
         });
         initSize();
@@ -301,11 +292,27 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                 pintuHei +
                         paddingTop + paddingBottom);
         for (int i = 0; i < 5; i++) {
-            View view = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu, null);
+            final View view = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu, null);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    goDati();
+                }
+            });
             view.setLayoutParams(params1);
             view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
             RecyclerView recyclerView = view.findViewById(R.id.radar_fragmain1);
             recyclerView.setLayoutParams(new LinearLayout.LayoutParams(pintuWid, pintuHei));
+
+            recyclerView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        view.performClick();  //模拟父控件的点击
+                    }
+                    return false;
+                }
+            });
 
             if (i == 2) {
                 view.setBackgroundResource(R.drawable.pintu_bg_wangzhe);
@@ -322,6 +329,13 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             pingtuData.add(view);
         }
+    }
+
+    private void goDati() {
+        Intent i = new Intent(mActivity, FCourseIndexActivity.class);
+        i.putExtra("kid", "7018");
+        i.putExtra("title", "测试");
+        startActivity(i);
     }
 
     /**
