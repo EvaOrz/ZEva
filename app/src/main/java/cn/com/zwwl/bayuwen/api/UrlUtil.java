@@ -319,6 +319,11 @@ public class UrlUtil {
         return HOST + "/my";
     }
 
+    // 获取所有拼图列表
+    public static String getPintu() {
+        return HOST + "/jigsaw";
+    }
+
     // 获取成就列表
     public static String getAchievement() {
         return HOST + "/achievement";
@@ -532,6 +537,7 @@ public class UrlUtil {
     public static String traceClassDetail() {
         return HOST + "/course/userdetail";
     }
+
     /**
      * 课程跟踪-搜索
      */

@@ -42,6 +42,7 @@ import cn.com.zwwl.bayuwen.adapter.AchieveMainAdapter;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
 import cn.com.zwwl.bayuwen.api.AchievementApi;
 import cn.com.zwwl.bayuwen.api.Index1Api;
+import cn.com.zwwl.bayuwen.api.PintuListApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
@@ -53,6 +54,7 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.Index1Model;
 import cn.com.zwwl.bayuwen.model.Index1Model.AdvBean;
+import cn.com.zwwl.bayuwen.model.PintuModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.Tools;
@@ -82,9 +84,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private TextView achiTv;
 
     private List<AdvBean> advBeans = new ArrayList<>();// banner数据
-    private List<View> pingtuData = new ArrayList<>();
+    private List<View> pingtuViews = new ArrayList<>();
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
     private List<AchievementModel> achiveatas = new ArrayList<>();// 成就数据
+    private List<PintuModel> pintuModels = new ArrayList<>();// 拼图数据
     private UserModel userModel;
 
     private int pintuWid, pintuHei;// 拼图item的宽高
@@ -127,7 +130,28 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         root = inflater.inflate(R.layout.fragment_main1, container, false);
         initView();
         getAchieveData();
+        getPintuData();
         return root;
+    }
+
+    /**
+     * 获取拼图数据
+     */
+    public void getPintuData() {
+        new PintuListApi(mActivity, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+                pintuModels.clear();
+                if (Tools.listNotNull(list)) pintuModels.addAll(list);
+                initPingtudata();
+                handler.sendEmptyMessage(3);
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
     }
 
     /**
@@ -174,26 +198,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                         paddingTop + paddingBottom);
         params1.setMargins(0, 16, 0, 16);
         pingPager.setLayoutParams(params1);
-
-        initPingtudata();
-        pingAdapter = new InfinitePagerAdapter(pingtuData);
-        pingPager.setAdapter(pingAdapter);
-        pingPager.setOffscreenPageLimit(3);
-        pingPager.setPageTransformer(true, new GalleryTransformer());
-        pingtu_indicator.removeAllViews();
-        for (int i = 0; i < pingtuData.size(); i++) {
-            ImageView img = new ImageView(getContext());
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
-                    (LinearLayout.LayoutParams.WRAP_CONTENT,
-                            LinearLayout.LayoutParams
-                                    .WRAP_CONTENT);
-            layoutParams.rightMargin = getResources().getDimensionPixelOffset(R.dimen
-                    .dp_5);
-            img.setLayoutParams(layoutParams);
-            img.setBackgroundResource(R.drawable.viewlooper_gray_status);
-            pingtu_indicator.addView(img);
-        }
-        pingPager.setCurrentItem(2);
 
     }
 
@@ -286,12 +290,12 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
      * 获取拼图列表数据
      */
     private void initPingtudata() {
-        pingtuData.clear();
+        pingtuViews.clear();
         LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(pintuWid +
                 paddingLeft + paddingRight,
                 pintuHei +
                         paddingTop + paddingBottom);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < pintuModels.size(); i++) {
             final View view = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu, null);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -317,17 +321,14 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             if (i == 2) {
                 view.setBackgroundResource(R.drawable.pintu_bg_wangzhe);
             }
-            List<CommonModel> models = new ArrayList<>();
-            for (int j = 0; j < 54; j++) {
-                CommonModel model = new CommonModel();
-                model.setContent("");
-                models.add(model);
+            List<PintuModel.LectureinfoBean.SectionListBean> models = new ArrayList<>();
+            if (models.size() == 54) {
+                RadarAdapter radarAdapter = new RadarAdapter(models, pintuWid);
+                recyclerView.setAdapter(radarAdapter);
+                recyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
             }
-            RadarAdapter radarAdapter = new RadarAdapter(models, pintuWid);
-            recyclerView.setAdapter(radarAdapter);
-            recyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
-            pingtuData.add(view);
+            pingtuViews.add(view);
         }
     }
 
@@ -400,6 +401,27 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                         achieveGrid.setVisibility(View.GONE);
                         achiTv.setVisibility(View.VISIBLE);
                     }
+                    break;
+
+                case 3:// load 拼图数据
+                    pingAdapter = new InfinitePagerAdapter(pingtuViews);
+                    pingPager.setAdapter(pingAdapter);
+                    pingPager.setOffscreenPageLimit(3);
+                    pingPager.setPageTransformer(true, new GalleryTransformer());
+                    pingtu_indicator.removeAllViews();
+                    for (int i = 0; i < pingtuViews.size(); i++) {
+                        ImageView img = new ImageView(getContext());
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
+                                (LinearLayout.LayoutParams.WRAP_CONTENT,
+                                        LinearLayout.LayoutParams
+                                                .WRAP_CONTENT);
+                        layoutParams.rightMargin = getResources().getDimensionPixelOffset(R.dimen
+                                .dp_5);
+                        img.setLayoutParams(layoutParams);
+                        img.setBackgroundResource(R.drawable.viewlooper_gray_status);
+                        pingtu_indicator.addView(img);
+                    }
+                    pingPager.setCurrentItem(2);
                     break;
             }
         }
