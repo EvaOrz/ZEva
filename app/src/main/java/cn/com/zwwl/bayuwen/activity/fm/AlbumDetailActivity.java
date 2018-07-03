@@ -426,7 +426,7 @@ public class AlbumDetailActivity extends BaseActivity {
 
     // 刷新点赞、收藏状态
     private void checkLikeCollect() {
-        likeTv.setText("喜欢（" + albumModel.getLikeNum() + ")");
+        likeTv.setText("喜欢(" + albumModel.getLikeNum() + ")");
         if (albumModel.isLikeState()) {
             likeImg.setImageResource(R.drawable.like_a);
         } else {
