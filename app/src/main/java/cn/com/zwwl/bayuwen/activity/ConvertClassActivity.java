@@ -225,7 +225,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                     }
                     stockClass.clear();
                     for (KeModel model : keModels) {
-                        if (!"0".equals(model.getStock())) stockClass.add(model);
+                        if (model.getStock() != 0) stockClass.add(model);
                     }
                     if (keModels == null || keModels.size() == 0) emptyContent.setText("没有数据~");
                     adapter.setNewData(hideType == 0 ? keModels : stockClass);
