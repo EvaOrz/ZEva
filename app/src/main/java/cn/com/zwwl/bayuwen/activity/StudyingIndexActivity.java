@@ -135,6 +135,7 @@ public class StudyingIndexActivity extends BasicActivityWithTitle {
                     return;
                 }
                 mApplication.operate_type = 0;
+                intent.putExtra("project_type", classModel.getCourse().getType());
                 intent.putExtra("kid", kid);
                 intent.putExtra("course_type", 1);
                 intent.setClass(this, UnitTableActivity.class);
@@ -146,6 +147,7 @@ public class StudyingIndexActivity extends BasicActivityWithTitle {
                     return;
                 }
                 mApplication.operate_type = 1;
+                intent.putExtra("project_type", classModel.getCourse().getType());
                 intent.setClass(this, ConvertClassActivity.class);
                 startActivity(intent);
                 break;

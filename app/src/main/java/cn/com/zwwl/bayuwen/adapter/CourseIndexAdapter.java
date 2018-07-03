@@ -41,6 +41,11 @@ public class CourseIndexAdapter extends BaseMultiItemQuickAdapter<MyCourseModel.
         helper.setText(R.id.current, String.valueOf(item.getPlan().getCurrent()));
         helper.setText(R.id.total_course, String.valueOf(item.getPlan().getCount()));
         helper.setText(R.id.time, String.format("下次上课时间:%s", TimeUtil.parseToHm(item.getPlan().getNextTime())));
+        if (item.getPlan().getIs_submit_job()==1&&item.getPlan().getJob()!=null){
+            helper.setText(R.id.work_title,R.string.look_work);
+        }else {
+            helper.setText(R.id.work_title,R.string.submit_homework);
+        }
         if (helper.getItemViewType() == 1) {
             helper.addOnClickListener(R.id.look_video);
         }

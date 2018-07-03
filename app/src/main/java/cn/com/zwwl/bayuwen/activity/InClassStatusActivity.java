@@ -1,5 +1,6 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,7 +11,6 @@ import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.InClassStatusAdapter;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
-import cn.com.zwwl.bayuwen.widget.decoration.HSpacesItemDecoration;
 
 /**
  * 浏览照片
@@ -27,9 +27,9 @@ public class InClassStatusActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initView() {
-        setDisplayShowTitleEnabled(false);
+        setCustomTitle("查看照片");
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new HSpacesItemDecoration(res,R.dimen.dp_5));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
     @Override
