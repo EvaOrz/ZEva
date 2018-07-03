@@ -12,8 +12,9 @@
         android:id="@+id/pic_layout"
         android:layout_width="@dimen/dp_80"
         android:layout_height="@dimen/dp_80"
-        android:paddingTop="@dimen/dp_5"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/pic"
@@ -37,8 +38,10 @@
         android:layout_marginStart="@dimen/dp_10"
         android:orientation="vertical"
         android:paddingTop="@dimen/dp_5"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/pic_layout">
+        app:layout_constraintStart_toEndOf="@id/pic_layout"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -57,6 +60,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_5"
                 android:layout_marginStart="@dimen/dp_5"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="@color/gray_dark"
                 android:textSize="@dimen/text_size_14" />
         </LinearLayout>
@@ -129,7 +134,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp_5">
 
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="12dp"
@@ -150,34 +156,44 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:gravity="end"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/hide_full"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:src="@mipmap/yimanban" />
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:scaleType="fitStart"
+            android:src="@mipmap/yimanban"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/stock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_3"
             android:textColor="@color/gray_light"
-            android:textSize="@dimen/sp_12" />
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_5"
             android:layout_marginLeft="@dimen/dp_5"
             android:layout_marginStart="@dimen/dp_5"
+            android:gravity="end"
             android:textColor="@color/gold"
-            android:textSize="@dimen/text_size_16" />
-    </LinearLayout>
+            android:textSize="@dimen/text_size_16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

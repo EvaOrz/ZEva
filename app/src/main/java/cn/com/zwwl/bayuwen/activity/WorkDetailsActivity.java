@@ -37,6 +37,7 @@ public class WorkDetailsActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initView() {
+        setCustomTitle("查看作业");
         homework.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         homework.setItemAnimator(new DefaultItemAnimator());
         workAdapter = new PicAdapter(null);
@@ -45,7 +46,7 @@ public class WorkDetailsActivity extends BasicActivityWithTitle {
 
     @Override
     protected void initData() {
-        model = (WorkDetailModel)getIntent().getSerializableExtra("model");
+        model = getIntent().getParcelableExtra("model");
         if (model != null) {
             workAdapter.setNewData(model.getC_img());
             if (!TextUtils.isEmpty(model.getC_desc()))

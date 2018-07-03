@@ -53,6 +53,7 @@
         android:supportsRtl="true"
         android:testOnly="false"
         android:theme="@style/BaseTheme">
+
         <activity
             android:name=".activity.fm.FmSplashActivity"
             android:label="@string/app_name"
@@ -422,7 +423,7 @@
 
         <!-- 课程跟踪点击“往次”，或已完成课程二级页面点击条目进入该页面 -->
         <activity android:name=".activity.ReportIndexActivity" />
-        <activity android:name=".activity.TopicCommitActivity"></activity>
+        <activity android:name=".activity.TopicCommitActivity"/>
         <!--课程跟踪首页搜索-->
         <activity android:name=".activity.TraceSearchActivity" />
     </application>

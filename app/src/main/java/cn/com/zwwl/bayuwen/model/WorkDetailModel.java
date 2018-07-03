@@ -8,17 +8,17 @@ import java.util.List;
 
 public class WorkDetailModel implements Parcelable {
 
-    private String c_desc;
+    private String job_desc;
     private TDescBean t_desc;
     private int state;
-    private List<CommonModel> c_img;
+    private List<CommonModel> job_img;
 
     public String getC_desc() {
-        return c_desc;
+        return job_desc;
     }
 
     public void setC_desc(String c_desc) {
-        this.c_desc = c_desc;
+        this.job_desc = c_desc;
     }
 
     public TDescBean getT_desc() {
@@ -38,11 +38,11 @@ public class WorkDetailModel implements Parcelable {
     }
 
     public List<CommonModel> getC_img() {
-        return c_img;
+        return job_img;
     }
 
     public void setC_img(List<CommonModel> c_img) {
-        this.c_img = c_img;
+        this.job_img = c_img;
     }
 
     public static class TDescBean implements Parcelable {
@@ -125,21 +125,21 @@ public class WorkDetailModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.c_desc);
+        dest.writeString(this.job_desc);
         dest.writeParcelable(this.t_desc, flags);
         dest.writeInt(this.state);
-        dest.writeList(this.c_img);
+        dest.writeList(this.job_img);
     }
 
     public WorkDetailModel() {
     }
 
     protected WorkDetailModel(Parcel in) {
-        this.c_desc = in.readString();
+        this.job_desc = in.readString();
         this.t_desc = in.readParcelable(TDescBean.class.getClassLoader());
         this.state = in.readInt();
-        this.c_img = new ArrayList<CommonModel>();
-        in.readList(this.c_img, CommonModel.class.getClassLoader());
+        this.job_img = new ArrayList<CommonModel>();
+        in.readList(this.job_img, CommonModel.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<WorkDetailModel> CREATOR = new Parcelable.Creator<WorkDetailModel>() {

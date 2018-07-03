@@ -29,6 +29,7 @@ import cn.com.zwwl.bayuwen.api.KeSelectTypeApi;
 import cn.com.zwwl.bayuwen.api.UrlUtil;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.base.MenuCode;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.Entry;
@@ -36,6 +37,8 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.KeTypeModel;
 import cn.com.zwwl.bayuwen.model.SearchModel;
+import cn.com.zwwl.bayuwen.util.AppValue;
+import cn.com.zwwl.bayuwen.util.ToastUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.selectmenu.SelectMenuView;
 import cn.com.zwwl.bayuwen.view.selectmenu.SelectTempModel;
@@ -58,8 +61,9 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
     private String url = UrlUtil.getCDetailUrl(null) + "/search";
     private List<KeModel> keModels;
     private List<KeModel> stockClass;
-    private int page = 1, hideType;
+    private int page = 1, hideType, grade;
     AppCompatTextView emptyContent;
+    private String projectType;
 
     @Override
     protected int setContentView() {
@@ -69,6 +73,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
     @Override
     protected void initView() {
         showMenu(MenuCode.HIDE_CLASS);
+        operate.setOffline();
         keModels = new ArrayList<>();
         stockClass = new ArrayList<>();
         if (mApplication.operate_type == 0) {
@@ -84,6 +89,14 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
         emptyContent.setText("努力记载中~");
         adapter.setEmptyView(emptyView);
         recyclerView.setAdapter(adapter);
+        grade = TempDataHelper.getCurrentChildGrade(mContext);
+        projectType = getIntent().getStringExtra("project_type");
+        if (grade > 0) {
+            map.put("users", String.valueOf(grade));
+        }
+        if (!TextUtils.isEmpty(projectType)) {
+            map.put("type", projectType);
+        }
         refresh.autoRefresh();
     }
 
@@ -101,7 +114,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                         @Override
                         public void run() {
                             typeModel = (KeTypeModel) entry;
-                            operate.setOfflineData(typeModel);
+                            operate.setOfflineData(typeModel, AppValue.getGradeStrings().get(grade - 1),projectType);
                         }
                     });
 
@@ -188,9 +201,13 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                     intent.putExtra("course_type", 1);
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(mActivity, ClassDetailActivity.class);
-                    intent.putExtra("kid", keModels.get(position).getKid());
-                    startActivity(intent);
+                    if (keModels.get(position).getStock()>0) {
+                        Intent intent = new Intent(mActivity, ClassDetailActivity.class);
+                        intent.putExtra("kid", keModels.get(position).getKid());
+                        startActivity(intent);
+                    }else {
+                        ToastUtil.showShortToast("该班级已满班~");
+                    }
                 }
             }
         });
@@ -225,7 +242,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                     }
                     stockClass.clear();
                     for (KeModel model : keModels) {
-                        if (!"0".equals(model.getStock())) stockClass.add(model);
+                        if (model.getStock() != 0) stockClass.add(model);
                     }
                     if (keModels == null || keModels.size() == 0) emptyContent.setText("没有数据~");
                     adapter.setNewData(hideType == 0 ? keModels : stockClass);

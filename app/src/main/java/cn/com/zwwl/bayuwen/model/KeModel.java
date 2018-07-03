@@ -81,7 +81,7 @@ public class KeModel extends Entry {
     private String discount_amount;
     private String discount_start_time;
     private String discount_end_time;
-    private String stock;
+    private int stock;
     private String origin_stock;
     private Object client_channel;
     private String onsale_time;
@@ -584,11 +584,11 @@ public class KeModel extends Entry {
         this.discount_end_time = discount_end_time;
     }
 
-    public String getStock() {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(String stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
 

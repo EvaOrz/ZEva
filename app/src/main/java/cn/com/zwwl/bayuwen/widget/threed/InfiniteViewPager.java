@@ -4,15 +4,18 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * A {@link ViewPager} that allows pseudo-infinite paging with a wrap-around effect. Should be used with an {@link
+ * A {@link ViewPager} that allows pseudo-infinite paging with a wrap-around effect. Should be
+ * used with an {@link
  * InfinitePagerAdapter}.
  */
 public class InfiniteViewPager extends ViewPager {
+
 
     private OnItemClickListener mOnItemClickListener;
 
@@ -31,22 +34,24 @@ public class InfiniteViewPager extends ViewPager {
     }
 
     private void setup() {
-        final GestureDetector tapGestureDetector = new GestureDetector(getContext(), new TapGestureListener());
-
-        setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                tapGestureDetector.onTouchEvent(event);
-                return false;
-            }
-        });
+//        final GestureDetector tapGestureDetector = new GestureDetector(getContext(), new
+//                TapGestureListener());
+//
+//        setOnTouchListener(new OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                Log.e("ssssss", "onTouch");
+//                tapGestureDetector.onTouchEvent(event);
+//                return false;
+//            }
+//        });
     }
 
     @Override
     public void setAdapter(PagerAdapter adapter) {
         super.setAdapter(adapter);
         // offset first element so that we can scroll to the left
-        setCurrentItem(0);
     }
 
     @Override
@@ -57,11 +62,7 @@ public class InfiniteViewPager extends ViewPager {
 
     @Override
     public void setCurrentItem(int item, boolean smoothScroll) {
-        if (getAdapter().getCount() == 0) {
-            super.setCurrentItem(item, smoothScroll);
-            return;
-        }
-        item = getOffsetAmount() + (item % getAdapter().getCount());
+
         super.setCurrentItem(item, smoothScroll);
     }
 
@@ -107,6 +108,7 @@ public class InfiniteViewPager extends ViewPager {
             return 0;
         }
     }
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
     }
@@ -114,11 +116,18 @@ public class InfiniteViewPager extends ViewPager {
     private class TapGestureListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            Log.e("sssssssss", "onSingleTapUp");
+            return super.onSingleTapUp(e);
+        }
+
+        @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
-            if(mOnItemClickListener != null) {
+            Log.e("sssssssss", "onSingleTapConfirmed");
+            if (mOnItemClickListener != null) {
                 mOnItemClickListener.onItemClick(getCurrentItem());
             }
-            return true;
+            return super.onSingleTapConfirmed(e);
         }
     }
 }
