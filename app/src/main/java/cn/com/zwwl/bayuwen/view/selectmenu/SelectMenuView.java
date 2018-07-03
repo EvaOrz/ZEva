@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.view.selectmenu;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,24 +112,47 @@ public class SelectMenuView extends LinearLayout {
         mTwoHolder5.refreshData(dataLists5, 0, -1);
     }
 
+    public void setOffline() {
+        mText3.setText("线下课");
+        mText3.setTextColor(ContextCompat.getColor(mContext, R.color.gray_light));
+        arrowImg3.setVisibility(INVISIBLE);
+        findViewById(R.id.layout3).setClickable(false);
+        findViewById(R.id.layout1).setVisibility(GONE);
+    }
+
     /**
      * 设置数据
      */
-    public void setOfflineData(KeTypeModel keTypeModel) {
+    public void setOfflineData(KeTypeModel keTypeModel,String grade,String project) {
         dataLists1.clear();
         dataLists1.addAll(SelectTempModel.parseGrades(keTypeModel.getGrades()));
-        mOneHolder1.refreshData(dataLists1, 0);
+        int gradeDe = -1;
+        for (int i = 0; i < dataLists1.size(); i++) {
+            if (dataLists1.get(i).getText().equals(grade)) {
+                gradeDe = i;
+                mText1.setText(grade);
+            }
+        }
+        mOneHolder1.refreshData(dataLists1, gradeDe);
+
         dataLists2.clear();
         dataLists2.addAll(SelectTempModel.parseCourse(keTypeModel.getCourseType()));
-        mTwoHolder2.refreshData(dataLists2, 0, -1);
-        mText3.setText("线下课");
-        findViewById(R.id.layout3).setClickable(false);
-//        dataLists3.clear();
-//        dataLists3.addAll(SelectTempModel.parseClass(keTypeModel.getClassType()));
-//        mOneHolder3.refreshData(dataLists3, 0);
+        int leftIndex = -1, rightIndex = -1;
+        for (int i = 0; i < dataLists2.get(0).size(); i++) {
+            for (int j = 0; j < dataLists2.get(i + 1).size(); j++) {
+                if (dataLists2.get(i + 1).get(j).getId().equals(project)) {
+                    leftIndex = i;
+                    rightIndex = j;
+                    mText2.setText(dataLists2.get(i + 1).get(j).getText());
+                }
+            }
+        }
+        mTwoHolder2.refreshData(dataLists2, leftIndex, rightIndex);
+
         dataLists4.clear();
         dataLists4.addAll(SelectTempModel.parseSchool(keTypeModel.getSchools()));
         mTwoHolder4.refreshData(dataLists4, 0, -1);
+
         dataLists5.clear();
         dataLists5.addAll(SelectTempModel.parseTimes(keTypeModel.getSchooltimes()));
         mTwoHolder5.refreshData(dataLists5, 0, -1);
