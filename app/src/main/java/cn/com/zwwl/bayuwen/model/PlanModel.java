@@ -25,6 +25,15 @@ public class PlanModel {
     private String playUrl;
     private String title;
     private boolean isOpen;
+    private int is_submit_job;
+
+    public int getIs_submit_job() {
+        return is_submit_job;
+    }
+
+    public void setIs_submit_job(int is_submit_job) {
+        this.is_submit_job = is_submit_job;
+    }
 
     public boolean isOpen() {
         return isOpen;

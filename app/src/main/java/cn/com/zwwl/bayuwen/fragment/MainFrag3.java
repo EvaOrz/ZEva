@@ -231,6 +231,8 @@ public class MainFrag3 extends BasicFragment {
                     case R.id.work:
                         if (!bean.getPlan().isOpen()) {
                             ToastUtil.showShortToast("该课程尚未开课~");
+                        } else if (bean.getPlan().getIs_submit_job() == 1) {
+                            ToastUtil.showShortToast("作业已存在，不能重复上传~");
                         } else {
                             intent.putExtra("kid", bean.getKid());
                             intent.putExtra("cid", bean.getPlan().getCurrentLectureId());
