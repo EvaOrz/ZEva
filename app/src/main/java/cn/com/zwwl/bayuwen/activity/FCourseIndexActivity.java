@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,7 +9,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
@@ -44,14 +48,16 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
     ProgressBar progress;
     @BindView(R.id.percent)
     AppCompatTextView percent;
-    @BindView(R.id.radar)
-    RecyclerView radar;
     @BindView(R.id.final_test)
     AppCompatTextView test;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     UnitTableAdapter unitTableAdapter;
     StudyingModel model;
+    @BindView(R.id.leida_layout)
+    LinearLayout leidaLayout;
+    @BindView(R.id.evaluate)
+    AppCompatTextView evaluate;
     private String kid;
     RadarAdapter radarAdapter;
     List<CommonModel> models;
@@ -68,8 +74,6 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new HSpacesItemDecoration(res, R.dimen.dp_5));
-        radar.setLayoutManager(new GridLayoutManager(this, 9));
-        radar.setItemAnimator(new DefaultItemAnimator());
     }
 
     @Override
@@ -77,19 +81,47 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
         kid = getIntent().getStringExtra("kid");
         setCustomTitle(getIntent().getStringExtra("title"));
         test.setText(getIntent().getStringExtra("title"));
-        models=new ArrayList<>();
-        for (int i = 0; i < 54; i++) {
-            CommonModel model = new CommonModel();
-            model.setContent("" + i);
-            models.add(model);
-        }
-        radarAdapter = new RadarAdapter(models, (int) (MyApplication.width * 0.9));
-        radar.setAdapter(radarAdapter);
+        models = new ArrayList<>();
+        initPintu();
         getData();
         unitTableAdapter = new UnitTableAdapter(null);
         unitTableAdapter.setType(getIntent().getIntExtra("course_type", -1));
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(unitTableAdapter);
+    }
+
+    private void initPintu() {
+        View view = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu, null);
+
+        int pintuWid = MyApplication.width * 1018 / (1018 + 50 * 2);
+        int pintuHei = pintuWid * 6 / 9;
+
+        int paddingLeft = pintuWid * 50 / 1018;
+        int paddingRight = pintuWid * 50 / 1018;
+        int paddingTop = pintuHei * 72 / 676;
+        int paddingBottom = pintuHei * 112 / 676;
+        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(pintuWid +
+                paddingLeft + paddingRight,
+                pintuHei +
+                        paddingTop + paddingBottom);
+        view.setLayoutParams(params1);
+        view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+        RecyclerView recyclerView = view.findViewById(R.id.radar_fragmain1);
+        recyclerView.setLayoutParams(new LinearLayout.LayoutParams(pintuWid, pintuHei));
+
+
+        List<CommonModel> models = new ArrayList<>();
+        for (int j = 0; j < 54; j++) {
+            CommonModel model = new CommonModel();
+            model.setContent("");
+            models.add(model);
+        }
+        radarAdapter = new RadarAdapter(models, pintuWid);
+        recyclerView.setAdapter(radarAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        leidaLayout.removeAllViews();
+        leidaLayout.addView(view);
     }
 
 
@@ -201,5 +233,12 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
     @Override
     public boolean setParentScrollable() {
         return true;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

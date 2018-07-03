@@ -231,7 +231,7 @@ public class AlbumDetailActivity extends BaseActivity {
         part4.setOnClickListener(this);
         findViewById(R.id.album_detail_like).setOnClickListener(this);
         findViewById(R.id.album_detail_shoucang).setOnClickListener(this);
-        findViewById(R.id.album_detail_share).setOnClickListener(this);
+//        findViewById(R.id.album_detail_share).setOnClickListener(this);
         findViewById(R.id.album_detail_inputsend).setOnClickListener(this);
 
         viewPlay = LayoutInflater.from(this).inflate(R.layout.view_album_detail_1, null);
