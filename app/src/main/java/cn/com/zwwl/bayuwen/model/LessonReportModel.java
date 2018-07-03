@@ -13,7 +13,7 @@ public class LessonReportModel {
     private String report_name;
     private String kid;
     private String lecture_id;
-    private String type;
+    private int type;
     private String url;
 
     public String getReport_name() {
@@ -40,11 +40,11 @@ public class LessonReportModel {
         this.lecture_id = lecture_id;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 

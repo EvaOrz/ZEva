@@ -1,6 +1,8 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
@@ -51,6 +53,14 @@ public class StudyingIndexActivity extends BasicActivityWithTitle {
     AppCompatImageView classLogo;
     @BindView(R.id.seat_logo)
     AppCompatImageView seatLogo;
+    @BindView(R.id.sign_title)
+    AppCompatTextView signTitle;
+    @BindView(R.id.course_title)
+    AppCompatTextView courseTitle;
+    @BindView(R.id.class_title)
+    AppCompatTextView classTitle;
+    @BindView(R.id.seat_title)
+    AppCompatTextView seatTitle;
     private String kid;
     private int online;
     private ClassModel classModel;
@@ -75,6 +85,10 @@ public class StudyingIndexActivity extends BasicActivityWithTitle {
         setCustomTitle(getIntent().getStringExtra("title"));
         online = getIntent().getIntExtra("online", -1);
         signLogo.setImageResource(online == 1 ? R.mipmap.sign_gray : R.mipmap.sign_yellow);
+        signTitle.setTextColor(online == 1 ? Color.parseColor("#BABDC2") : ContextCompat.getColor(this, R.color.text_color_default));
+        courseTitle.setTextColor(online == 1 ? Color.parseColor("#BABDC2") : ContextCompat.getColor(this, R.color.text_color_default));
+        classTitle.setTextColor(online == 1 ? Color.parseColor("#BABDC2") : ContextCompat.getColor(this, R.color.text_color_default));
+        seatTitle.setTextColor(online == 1 ? Color.parseColor("#BABDC2") : ContextCompat.getColor(this, R.color.text_color_default));
         courseLogo.setImageResource(online == 1 ? R.mipmap.convert_course_gray : R.mipmap.convert_course_yellow);
         classLogo.setImageResource(online == 1 ? R.mipmap.convert_class_gray : R.mipmap.convert_class_yellow);
         seatLogo.setImageResource(online == 1 ? R.mipmap.class_seat_gray : R.mipmap.class_seat_yellow);
@@ -179,6 +193,5 @@ public class StudyingIndexActivity extends BasicActivityWithTitle {
     public void close() {
         finish();
     }
-
 
 }

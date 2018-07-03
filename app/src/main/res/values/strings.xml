@@ -90,7 +90,7 @@
     <string name="un_login">未登录</string>
     <string name="my_info">个人资料</string>
     <string name="my_history">收听历史</string>
-    <string name="tianxie_code">填写团购验证码</string>
+    <string name="tianxie_code">兑换课程</string>
     <string name="about">关于大语文</string>
     <string name="logout">退出登录</string>
     <string name="my_follow">我关注的班级</string>
@@ -450,5 +450,7 @@
     <string name="welcome_speech">欢迎致辞</string>
     <string name="sign_status">签到情况</string>
     <string name="lesson_report">课节报告</string>
+    <string name="hint_search_course">搜索课程名称、老师</string>
+    <string name="hide_cancel">取消隐藏</string>
 
 </resources>

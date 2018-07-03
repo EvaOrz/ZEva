@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/dp_100"
-    android:layout_height="@dimen/dp_100"
+    android:layout_height="@dimen/dp_80"
     android:background="@mipmap/icon_report_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
     android:paddingEnd="@dimen/dp_16"
     android:paddingStart="@dimen/dp_16"
     android:paddingTop="@dimen/dp_5">
@@ -12,19 +13,15 @@
         android:id="@+id/report"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:ellipsize="end"
         android:maxLength="4"
-        android:text="科技报告"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_12" />
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="wrap_content"
+        android:id="@+id/type"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/report"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp_5"
         android:text="@string/lesson_report"
         android:textColor="@color/white" />
-</RelativeLayout>
+</LinearLayout>

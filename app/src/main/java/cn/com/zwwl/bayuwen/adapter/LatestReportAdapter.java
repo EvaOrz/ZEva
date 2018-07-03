@@ -17,6 +17,19 @@ public class LatestReportAdapter extends BaseQuickAdapter<LessonReportModel, Bas
 
     @Override
     protected void convert(BaseViewHolder helper, LessonReportModel item) {
-        helper.setText(R.id.report, item.getReport_name());
+
+
+        switch (item.getType()) {
+            case 1:
+                helper.setText(R.id.report, item.getReport_name());
+                helper.setText(R.id.type, R.string.lesson_report);
+                break;
+            case 2:
+                helper.setText(R.id.type, R.string.middle_report);
+                break;
+            case 3:
+                helper.setText(R.id.type, R.string.final_report);
+                break;
+        }
     }
 }

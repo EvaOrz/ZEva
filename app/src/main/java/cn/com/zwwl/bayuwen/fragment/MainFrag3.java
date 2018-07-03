@@ -31,8 +31,8 @@ import cn.com.zwwl.bayuwen.activity.FCourseListActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.ReportIndexActivity;
-import cn.com.zwwl.bayuwen.activity.SearchCourseActivity;
 import cn.com.zwwl.bayuwen.activity.StudyingIndexActivity;
+import cn.com.zwwl.bayuwen.activity.TraceSearchActivity;
 import cn.com.zwwl.bayuwen.activity.UploadPicActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.activity.WebActivity;
@@ -49,6 +49,7 @@ import cn.com.zwwl.bayuwen.model.LessonReportModel;
 import cn.com.zwwl.bayuwen.model.MyCourseModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.TimeUtil;
+import cn.com.zwwl.bayuwen.util.ToastUtil;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
 import static cn.com.zwwl.bayuwen.MyApplication.mContext;
@@ -127,18 +128,12 @@ public class MainFrag3 extends BasicFragment {
         studyCourse.setLayoutManager(new LinearLayoutManager(mContext));
         studyCourse.setNestedScrollingEnabled(false);
         studyCourse.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R
-                .dimen.dp_5, OrientationHelper.VERTICAL));
+                .dimen.dp_8, OrientationHelper.VERTICAL));
         courseIndexAdapter = new CourseIndexAdapter(null);
         courseIndexAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) studyCourse.getParent());
         studyCourse.setAdapter(courseIndexAdapter);
-//        refresh.autoRefresh();
+        refresh();
         refresh.setEnableLoadMore(false);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        refresh.autoRefresh();
     }
 
     @Override
@@ -173,6 +168,10 @@ public class MainFrag3 extends BasicFragment {
         finishCourse = courseModel.getCompleted();
         courseIndexAdapter.setNewData(courseModel.getUnfinished());
         adapter.setNewData(finishCourse);
+    }
+
+    public void refresh() {
+        refresh.autoRefresh();
     }
 
     @Override
@@ -220,47 +219,48 @@ public class MainFrag3 extends BasicFragment {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent();
                 MyCourseModel.UnfinishedBean bean = courseModel.getUnfinished().get(position);
-//                int type = Tools.getCourseType(bean.getPlan().getOnline(), bean.getPlan()
-//                        .getSource(), bean.getProducts().getEnd_at());
                 switch (view.getId()) {
                     case R.id.arrow:
                         application.oldKe = bean.getProducts();
                         intent.setClass(activity, StudyingIndexActivity.class);
                         intent.putExtra("kid", bean.getKid());
                         intent.putExtra("title", bean.getProducts().getTitle());
-                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
-                                .get(position).getProducts().getOnline()));
-//                        intent.setClass(activity, UnitIndexActivity.class);
-//                        intent.putExtra("course_type", type);
-//                        intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
-//                        intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan
-//                                ().getCurrentLectureId());
-//                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
-//                                .get(position).getProducts().getOnline()));
-//                        intent.putExtra("video", 0);
+                        intent.putExtra("online", Integer.parseInt(bean.getProducts().getOnline()));
+                        startActivity(intent);
                         break;
                     case R.id.work:
-                        intent.putExtra("kid", bean.getKid());
-                        intent.putExtra("cid", bean.getPlan().getCurrentLectureId());
-                        intent.setClass(activity, UploadPicActivity.class);
+                        if (!bean.getPlan().isOpen()) {
+                            ToastUtil.showShortToast("该课程尚未开课~");
+                        } else if (bean.getPlan().getIs_submit_job() == 1) {
+                            ToastUtil.showShortToast("作业已存在，不能重复上传~");
+                        } else {
+                            intent.putExtra("kid", bean.getKid());
+                            intent.putExtra("cid", bean.getPlan().getCurrentLectureId());
+                            intent.setClass(activity, UploadPicActivity.class);
+                            startActivity(intent);
+                        }
                         break;
                     case R.id.look_video:
-                        intent.setClass(activity, VideoPlayActivity.class);
-                        intent.putExtra("VideoPlayActivity_url", courseModel.getUnfinished().get
-                                (position).getPlan().getPlayUrl());
+                        if (!bean.getPlan().isOpen()) {
+                            ToastUtil.showShortToast("该课程尚未开课~");
+                        } else {
+                            intent.setClass(activity, VideoPlayActivity.class);
+                            intent.putExtra("VideoPlayActivity_url", bean.getPlan().getPlayUrl());
+                            startActivity(intent);
+                        }
                         break;
                     case R.id.trace:
-                        intent.setClass(activity, ReportIndexActivity.class);
-                        intent.putExtra("kid", bean.getKid());
-                        intent.putExtra("title", bean.getProducts().getTitle());
-//                        application.oldKe = bean.getProducts();
-//                        intent.putExtra("course_type", type);
-//                        intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
-//                                .get(position).getProducts().getOnline()));
-//                        intent.setClass(activity, StudyingCourseActivity.class);
+                        if (!bean.getPlan().isOpen()) {
+                            ToastUtil.showShortToast("该课程尚未开课~");
+                        } else {
+                            intent.setClass(activity, ReportIndexActivity.class);
+                            intent.putExtra("kid", bean.getKid());
+                            intent.putExtra("title", bean.getProducts().getTitle());
+                            startActivity(intent);
+                        }
                         break;
                 }
-                startActivity(intent);
+
             }
         });
         courseIndexAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -272,10 +272,6 @@ public class MainFrag3 extends BasicFragment {
                 intent.putExtra("title", courseModel.getUnfinished().get(position).getProducts().getTitle());
                 intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
                         .get(position).getProducts().getOnline()));
-//                Intent intent = new Intent(activity, UnitIndexActivity.class);
-//                intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
-//                intent.putExtra("cid", courseModel.getUnfinished().get(position).getPlan()
-//                        .getCurrentLectureId());
                 startActivity(intent);
             }
         });
@@ -306,7 +302,7 @@ public class MainFrag3 extends BasicFragment {
                 startActivity(intent);
                 break;
             case R.id.menu_search:
-                startActivity(new Intent(activity, SearchCourseActivity.class));
+                startActivity(new Intent(activity, TraceSearchActivity.class));
                 break;
         }
     }

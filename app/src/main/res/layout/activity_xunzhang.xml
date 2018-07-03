@@ -28,11 +28,82 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/radar"
+
+    <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipChildren="false" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/xunzhang_bt1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:padding="10dp"
+            android:text="全部"
+            android:textColor="@drawable/gold_text_checked"
+            android:textSize="@dimen/text_size_14" />
+
+        <RadioButton
+            android:id="@+id/xunzhang_bt2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:padding="10dp"
+            android:text="尚未获得"
+            android:textColor="@drawable/gold_text_checked"
+            android:textSize="@dimen/text_size_14" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/xunzhang_line1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@color/gold" />
+
+        <View
+            android:id="@+id/xunzhang_line2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@color/transparent" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/line" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/xunzhang_viewpager"
+        android:layout_width="match_parent"
+        android:background="@color/body_gray"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 
 </LinearLayout>

@@ -75,7 +75,6 @@ public class ChildInfoApi extends BaseApi {
     public ChildInfoApi(Context context, FetchEntryListListener listener) {
         super(context);
         mContext = context;
-        isNeedJsonArray = true;
         this.listListener = listener;
         this.url = UrlUtil.childUrl();
         get();
@@ -127,8 +126,7 @@ public class ChildInfoApi extends BaseApi {
             if (listener != null)
                 listener.setData(new ChildModel());
         }
-
-        if (isNeedJsonArray) {// 获取列表
+        if (listListener != null) {
             if (!isNull(array)) {
                 List<ChildModel> childModels = new ArrayList<>();
                 boolean hasDefault = false;

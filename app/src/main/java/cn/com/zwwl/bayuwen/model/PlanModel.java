@@ -22,8 +22,26 @@ public class PlanModel {
     private int next;
     private String nextTime;
     private int source;
-private String playUrl;
-private String title;
+    private String playUrl;
+    private String title;
+    private boolean isOpen;
+    private int is_submit_job;
+
+    public int getIs_submit_job() {
+        return is_submit_job;
+    }
+
+    public void setIs_submit_job(int is_submit_job) {
+        this.is_submit_job = is_submit_job;
+    }
+
+    public boolean isOpen() {
+        return isOpen;
+    }
+
+    public void setOpen(boolean open) {
+        isOpen = open;
+    }
 
     public String getTitle() {
         return title;

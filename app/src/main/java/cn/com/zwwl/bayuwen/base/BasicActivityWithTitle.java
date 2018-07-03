@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -20,8 +19,8 @@ import cn.com.zwwl.bayuwen.R;
 
 
 /**
- *  带标题的基类activity
- *  Created by zhumangmang at 2018/5/30 11:28
+ * 带标题的基类activity
+ * Created by zhumangmang at 2018/5/30 11:28
  */
 
 public abstract class BasicActivityWithTitle extends AppCompatActivity {
@@ -75,7 +74,6 @@ public abstract class BasicActivityWithTitle extends AppCompatActivity {
         mViewCode.showMenu(mMenuCode);
         return true;
     }
-
 
     /**
      * 设置显示自定居中的title
@@ -160,11 +158,6 @@ public abstract class BasicActivityWithTitle extends AppCompatActivity {
         super.onResume();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        mViewCode.onMenuItemClick(item);
-        return super.onOptionsItemSelected(item);
-    }
     /**
      * 隐藏软键盘
      */
@@ -173,6 +166,7 @@ public abstract class BasicActivityWithTitle extends AppCompatActivity {
                 .INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
     }
+
     protected abstract int setContentView();
 
     protected abstract void initView();

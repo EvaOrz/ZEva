@@ -22,7 +22,7 @@ import cn.com.zwwl.bayuwen.R;
  * created at 2017/6/7 16:37
  */
 
-public class IActivityImpl implements IActivity {
+public class IActivityImpl implements IActivity, Toolbar.OnMenuItemClickListener {
     private BasicActivityWithTitle mContext;
 
 
@@ -42,6 +42,7 @@ public class IActivityImpl implements IActivity {
         mToolbar = mContext.findViewById(R.id.toolbar);
         back = mContext.findViewById(R.id.back);
         mContext.setSupportActionBar(mToolbar);
+        mToolbar.setOnMenuItemClickListener(this);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,6 +135,9 @@ public class IActivityImpl implements IActivity {
     @Override
     public void showMenu(int menuCode) {
         Menu menu = mToolbar.getMenu();
+        for (int i = 0; i < menu.size(); i++) {
+            menu.getItem(i).setVisible(false);
+        }
         switch (menuCode) {
             case MenuCode.SUBMIT:
                 MenuItem submit = menu.findItem(R.id.action_submit);
@@ -143,32 +147,27 @@ public class IActivityImpl implements IActivity {
                 MenuItem hide = menu.findItem(R.id.action_hide_class);
                 hide.setVisible(true);
                 break;
-
+            case MenuCode.HIDE_CANCEL:
+                MenuItem cancelHide = menu.findItem(R.id.action_hide_cancel);
+                cancelHide.setVisible(true);
+                break;
             case MenuCode.SIGN:
                 final MenuItem sign = menu.findItem(R.id.action_sign);
                 sign.setVisible(true);
                 sign.getActionView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mContext.onOptionsItemSelected(sign);
+                        onMenuItemClick(sign);
                     }
                 });
                 break;
         }
     }
 
-    public void onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == R.id.action_share) {
-            mContext.onMenuClick(R.id.action_share);
-        } else if (item.getItemId() == R.id.action_submit) {
-            mContext.onMenuClick(R.id.action_submit);
-        } else if (item.getItemId() == R.id.action_settings) {
-            mContext.onMenuClick(R.id.action_settings);
-        } else if (item.getItemId() == R.id.action_sign) {
-            mContext.onMenuClick(R.id.action_sign);
-        } else if (item.getItemId() == R.id.action_hide_class) {
-            mContext.onMenuClick(R.id.action_hide_class);
-        }
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        mContext.onMenuClick(item.getItemId());
+        return true;
     }
 }
 
