@@ -233,7 +233,6 @@ public class MainFrag3 extends BasicFragment {
                         if (!bean.getPlan().isOpen()) {
                             ToastUtil.showShortToast("该课程尚未开课~");
                         } else if (bean.getPlan().getJob() != null && bean.getPlan().getIs_submit_job() == 1) {
-                            ToastUtil.showShortToast("作业已存在，不能重复上传~");
                             intent.setClass(activity, WorkDetailsActivity.class);
                             intent.putExtra("model", bean.getPlan().getJob());
                             startActivity(intent);
