@@ -11,12 +11,13 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.model.CommonModel;
+import cn.com.zwwl.bayuwen.model.PintuModel;
 
 /**
  *
  */
-public class RadarAdapter extends BaseQuickAdapter<CommonModel, BaseViewHolder> {
+public class RadarAdapter extends BaseQuickAdapter<PintuModel.LectureinfoBean.SectionListBean,
+        BaseViewHolder> {
     private int colunms = 9;// 每行的拼图个数
     private int totalWidth = MyApplication.width;// 拼图控件的总宽度
 
@@ -26,18 +27,19 @@ public class RadarAdapter extends BaseQuickAdapter<CommonModel, BaseViewHolder> 
 //    private static int tuPadding = 10;// 拼图的缝隙宽度
 
 
-    public RadarAdapter(@Nullable List<CommonModel> data) {
+    public RadarAdapter(@Nullable List<PintuModel.LectureinfoBean.SectionListBean> data) {
         super(R.layout.item_radar, data);
     }
 
-    public RadarAdapter(@Nullable List<CommonModel> data, int totalWidth) {
+    public RadarAdapter(@Nullable List<PintuModel.LectureinfoBean.SectionListBean> data, int
+            totalWidth) {
         super(R.layout.item_radar, data);
         this.totalWidth = totalWidth;
 //        tuPadding = 10 * totalWidth / MyApplication.width;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, CommonModel item) {
+    protected void convert(BaseViewHolder helper, PintuModel.LectureinfoBean.SectionListBean item) {
         AppCompatImageView imageView = helper.getView(R.id.pic);
         LinearLayout layout = helper.getView(R.id.layout);
 
