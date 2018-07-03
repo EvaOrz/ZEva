@@ -5,6 +5,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -57,6 +58,7 @@ public class ClassDetailActivity extends BasicActivityWithTitle {
             submit.setText("选择转班");
         }
         teacherIntroduce.setLayoutManager(new LinearLayoutManager(this));
+        teacherIntroduce.setNestedScrollingEnabled(false);
         teacherIntroduce.setItemAnimator(new DefaultItemAnimator());
     }
 
@@ -67,13 +69,16 @@ public class ClassDetailActivity extends BasicActivityWithTitle {
             public void result(ClassModel classModel, ErrorMsg errorMsg) {
                 if (classModel != null) {
                     className.setText(classModel.getCourse().getTitle());
-                    currentStu.setText(classModel.getNum().getNow_num()==null?"0":classModel.getNum().getNow_num());
+                    currentStu.setText(classModel.getNum().getNow_num() == null ? "0" : classModel.getNum().getNow_num());
                     totalStu.setText(classModel.getNum().getFull_num());
                     courseProgress.setMax(classModel.getPlan().getCount());
                     courseProgress.setProgress(classModel.getPlan().getCurrent());
                     currentCourse.setText(String.valueOf(classModel.getPlan().getCurrent()));
                     totalCourse.setText(String.valueOf(classModel.getPlan().getCount()));
-                    classIntroduce.setText(classModel.getCourse().getDesc());
+                    if (TextUtils.isEmpty(classModel.getCourse().getDesc())) {
+                        classIntroduce.setText("暂无描述");
+                    } else
+                        classIntroduce.setText(classModel.getCourse().getDesc());
                     ClassDetailAdapter adapter = new ClassDetailAdapter(classModel.getTeacher());
                     teacherIntroduce.setAdapter(adapter);
                 } else {
@@ -86,6 +91,11 @@ public class ClassDetailActivity extends BasicActivityWithTitle {
     @Override
     protected void setListener() {
 
+    }
+
+    @Override
+    public boolean setParentScrollable() {
+        return false;
     }
 
     @OnClick(R.id.submit)

@@ -377,6 +377,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_light"
+                android:layout_marginBottom="12dip"
                 android:textSize="@dimen/sp_12" />
 
             <android.support.v7.widget.AppCompatTextView
