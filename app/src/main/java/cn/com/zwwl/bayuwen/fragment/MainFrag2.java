@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.KeTagGridAdapter;
 import cn.com.zwwl.bayuwen.api.KeTagListApi;
 import cn.com.zwwl.bayuwen.api.fm.RecommentApi;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
@@ -62,6 +64,7 @@ public class MainFrag2 extends Fragment
     private RelativeLayout mToolbarView;
     private ObservableScrollView mScrollView;
     private LinearLayout contain;
+    private TextView cityTv;
 
     private int mParallaxImageHeight;
     private TagCourseModel part1Model, part2Model, part3Model;
@@ -168,10 +171,7 @@ public class MainFrag2 extends Fragment
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            if (isCityChanged) {// 切换城市之后 要重新获取课程tag list,点赞排行不必重新获取
-                getEleCourseList();
-            }
-        } else {
+            checkCityChange();
         }
     }
 
@@ -185,6 +185,17 @@ public class MainFrag2 extends Fragment
     public void onResume() {
         super.onResume();
         bannerView.startLoop(true);
+        checkCityChange();
+        cityTv.setText(TempDataHelper.getCurrentCity(mActivity));
+    }
+
+    private void checkCityChange() {
+        if (isCityChanged) {
+            cityTv.setText(TempDataHelper.getCurrentCity(mActivity));
+            getEleCourseList();
+            getBannerList();
+            isCityChanged = false;
+        }
 
     }
 
@@ -257,6 +268,7 @@ public class MainFrag2 extends Fragment
         mScrollView.setZoomView(bannerView);
         contain = root.findViewById(R.id.frag2_contain);
 
+        cityTv = mToolbarView.findViewById(R.id.position);
         mToolbarView.findViewById(R.id.menu_more).setOnClickListener(this);
         mToolbarView.findViewById(R.id.menu_news).setOnClickListener(this);
         mToolbarView.findViewById(R.id.menu_school).setOnClickListener(this);

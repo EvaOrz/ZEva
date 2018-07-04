@@ -15,6 +15,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -83,12 +84,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private MostGridView achieveGrid;// 成就列表
     private TextView achiTv;
 
-    private List<AdvBean> advBeans = new ArrayList<>();// banner数据
     private List<View> pingtuViews = new ArrayList<>();
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
     private List<AchievementModel> achiveatas = new ArrayList<>();// 成就数据
     private List<PintuModel> pintuModels = new ArrayList<>();// 拼图数据
-    private UserModel userModel;
 
     private int pintuWid, pintuHei;// 拼图item的宽高
 
@@ -104,6 +103,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        if (isCityChanged) {
+            getPintuData();
+            handler.sendEmptyMessage(1);
+        }
 
     }
 
@@ -116,9 +119,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            if (isCityChanged)
-                loadData();
-        } else {
+            if (isCityChanged) {
+                getPintuData();
+                handler.sendEmptyMessage(1);
+            }
         }
     }
 
@@ -129,8 +133,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_main1, container, false);
         initView();
-        getAchieveData();
-        getPintuData();
         return root;
     }
 
@@ -199,35 +201,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         params1.setMargins(0, 16, 0, 16);
         pingPager.setLayoutParams(params1);
 
-    }
-
-    /**
-     * 城市信息变换之后，页面需要刷新数据
-     */
-    public void loadData() {
-        locationTv.setText(TempDataHelper.getCurrentCity(mActivity));
-        new Index1Api(mActivity, new FetchEntryListener() {
-            @Override
-            public void setData(Entry entry) {
-                if (entry != null && entry instanceof Index1Model) {
-                    advBeans.clear();
-                    Index1Model index1Model = (Index1Model) entry;
-                    if (Tools.listNotNull(index1Model.getAdv())) {
-                        advBeans.addAll(index1Model.getAdv());
-                    }
-                    handler.sendEmptyMessage(1);
-                    isCityChanged = false;
-                }
-
-            }
-
-            @Override
-            public void setError(ErrorMsg error) {
-                if (error != null) {
-                    AppValue.showToast(mActivity, error.getDesc());
-                }
-            }
-        });
     }
 
 
@@ -324,7 +297,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             if (Tools.listNotNull(pintuModels.get(i).getLectureinfo())) {
                 List<PintuModel.LectureinfoBean.SectionListBean> models = pintuModels.get(i)
                         .getLectureinfo().get(0).getSectionList();
-                if (Tools.listNotNull(models) &&models.size() == 54) {
+                if (Tools.listNotNull(models) && models.size() == 54) {
                     RadarAdapter radarAdapter = new RadarAdapter(models, pintuWid);
                     recyclerView.setAdapter(radarAdapter);
                     recyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
@@ -350,9 +323,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     public void loadChild(List<ChildModel> childModels) {
         this.childModels.clear();
         this.childModels.addAll(childModels);
-        loadData();
         getAchieveData();
+        getPintuData();
         handler.sendEmptyMessage(0);
+        handler.sendEmptyMessage(1);
     }
 
 
@@ -374,25 +348,9 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                         }
                     }
                     break;
-                case 1:// 初始化页面数据
-                    List<View> views = new ArrayList<>();
-                    for (int i = 0; i < advBeans.size(); i++) {
-                        final AdvBean advBean = advBeans.get(i);
-                        View view = LayoutInflater.from(mActivity).inflate(R.layout
-                                .item_frag1_banner, null);
-                        view.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent i = new Intent(mActivity, VideoPlayActivity.class);
-                                i.putExtra("VideoPlayActivity_url", advBean.getLink());
-                                i.putExtra("VideoPlayActivity_pic", advBean.getPic());
-                                startActivity(i);
-                            }
-                        });
-                        RoundAngleImageView r = view.findViewById(R.id.banner_omg);
-                        ImageLoader.display(mActivity, r, advBean.getPic());
-                        views.add(view);
-                    }
+                case 1:// 显示当前城市
+                    locationTv.setText(TempDataHelper.getCurrentCity(mActivity));
+                    isCityChanged = false;
                     break;
                 case 2:// 显示当前学员获得的成就
                     if (achiveatas.size() > 0) {

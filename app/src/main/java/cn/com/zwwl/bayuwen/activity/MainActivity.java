@@ -152,6 +152,16 @@ public class MainActivity extends BaseActivity {
             initData();
             MyApplication.loginStatusChange = false;
         }
+        if (MyApplication.userStatusChange) {
+            Log.e("********", "用户和学员信息变化");
+            initData();
+            MyApplication.userStatusChange = false;
+        }
+        if (MyApplication.cityStatusChange) {
+            mainFrag1.isCityChanged = true;
+            mainFrag2.isCityChanged = true;
+            MyApplication.cityStatusChange = false;
+        }
     }
 
     @Override
@@ -339,17 +349,6 @@ public class MainActivity extends BaseActivity {
             }
         });
         return view;
-    }
-
-
-    /**
-     * frag1 ,frag2,frag3切换城市
-     * 标记其他tab的状态
-     */
-    public void changeCity(int i) {
-        mainFrag1.isCityChanged = i == 0 ? false : true;
-        mainFrag2.isCityChanged = i == 1 ? false : true;
-        mainFrag3.isCityChanged = i == 2 ? false : true;
     }
 
     @Override

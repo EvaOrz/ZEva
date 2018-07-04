@@ -113,8 +113,7 @@ public class KeModel extends Entry {
     private GroupBuyModel groupbuy = new GroupBuyModel();
     private List<PromotionModel> promotionModels = new ArrayList<>();
     private int collection_state;//0-未关注 1-已关注
-
-    private DiscountBean discount;
+    private int discount;
 
     public String getId() {
         return id;
@@ -869,165 +868,13 @@ public class KeModel extends Entry {
         this.collectionId = collectionId;
     }
 
-    public DiscountBean getDiscount() {
+    public int getDiscount() {
         return discount;
     }
 
-    public void setDiscount(DiscountBean discount) {
+    public void setDiscount(int discount) {
         this.discount = discount;
     }
 
 
-    public static class DiscountBean {
-        @SerializedName("id")
-        private int idX;
-        @SerializedName("title")
-        private String titleX;
-        private int item_id;
-        private int discount;
-        private int unit;
-        private String start_time;
-        private String end_time;
-        private int quantity;
-        private ConditionBean condition;
-        @SerializedName("state")
-        private int stateX;
-        private int isdelete;
-        private String created_at;
-        private String updated_at;
-        private String operator;
-
-        public int getIdX() {
-            return idX;
-        }
-
-        public void setIdX(int idX) {
-            this.idX = idX;
-        }
-
-        public String getTitleX() {
-            return titleX;
-        }
-
-        public void setTitleX(String titleX) {
-            this.titleX = titleX;
-        }
-
-        public int getItem_id() {
-            return item_id;
-        }
-
-        public void setItem_id(int item_id) {
-            this.item_id = item_id;
-        }
-
-        public int getDiscount() {
-            return discount;
-        }
-
-        public void setDiscount(int discount) {
-            this.discount = discount;
-        }
-
-        public int getUnit() {
-            return unit;
-        }
-
-        public void setUnit(int unit) {
-            this.unit = unit;
-        }
-
-        public String getStart_time() {
-            return start_time;
-        }
-
-        public void setStart_time(String start_time) {
-            this.start_time = start_time;
-        }
-
-        public String getEnd_time() {
-            return end_time;
-        }
-
-        public void setEnd_time(String end_time) {
-            this.end_time = end_time;
-        }
-
-        public int getQuantity() {
-            return quantity;
-        }
-
-        public void setQuantity(int quantity) {
-            this.quantity = quantity;
-        }
-
-        public ConditionBean getCondition() {
-            return condition;
-        }
-
-        public void setCondition(ConditionBean condition) {
-            this.condition = condition;
-        }
-
-        public int getStateX() {
-            return stateX;
-        }
-
-        public void setStateX(int stateX) {
-            this.stateX = stateX;
-        }
-
-        public int getIsdelete() {
-            return isdelete;
-        }
-
-        public void setIsdelete(int isdelete) {
-            this.isdelete = isdelete;
-        }
-
-        public String getCreated_at() {
-            return created_at;
-        }
-
-        public void setCreated_at(String created_at) {
-            this.created_at = created_at;
-        }
-
-        public String getUpdated_at() {
-            return updated_at;
-        }
-
-        public void setUpdated_at(String updated_at) {
-            this.updated_at = updated_at;
-        }
-
-        public String getOperator() {
-            return operator;
-        }
-
-        public void setOperator(String operator) {
-            this.operator = operator;
-        }
-
-        public static class ConditionBean {
-            private int amount;
-            private String course;
-
-            public int getAmount() {
-                return amount;
-            }
-
-            public void setAmount(int amount) {
-                this.amount = amount;
-            }
-
-            public String getCourse() {
-                return course;
-            }
-
-            public void setCourse(String course) {
-                this.course = course;
-            }
-        }
-    }
 }

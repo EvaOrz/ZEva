@@ -511,7 +511,7 @@ public class CourseDetailActivity extends BaseActivity {
         if (keModel.getIs_discount() == 0) {
             price_tv.setText("￥ " + keModel.getBuyPrice());
         } else {
-            price_tv.setText("￥ " + keModel.getDiscount().getDiscount());
+            price_tv.setText("￥ " + keModel.getDiscount());
             price_tv1.setText("￥" + keModel.getBuyPrice());
             price_tv1.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
             // 设置中划线并加清晰
@@ -531,7 +531,7 @@ public class CourseDetailActivity extends BaseActivity {
                 .substring(0, endtime.length() - 3));
 
         if (keModel.getIs_discount() == 1) {
-            priceTv2.setText("￥" + keModel.getDiscount().getDiscount());
+            priceTv2.setText("￥" + keModel.getDiscount());
         } else {
             priceTv2.setText("￥" + keModel.getBuyPrice());
         }

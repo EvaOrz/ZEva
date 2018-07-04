@@ -148,15 +148,19 @@ public class CityActivity extends BasicActivityWithTitle {
 
     private void initGPS() {
 
-         if (ActivityCompat.checkSelfPermission(CityActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(CityActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(CityActivity.this, Manifest.permission
+                .ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
+                (CityActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager
+                .PERMISSION_GRANTED) {
 
-               ActivityCompat.requestPermissions(CityActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
-                            MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+            ActivityCompat.requestPermissions(CityActivity.this, new String[]{Manifest.permission
+                            .ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_READ_CONTACTS);
 
-               }else {
-                  LocationGPS();
-         }
+        } else {
+            LocationGPS();
+        }
 
 
     }
@@ -188,7 +192,6 @@ public class CityActivity extends BasicActivityWithTitle {
     }
 
 
-
     @Override
     protected void initData() {
         new CityListApi(this, CityListUrl, new ResponseCallBack<CitySortModel>() {
@@ -214,7 +217,8 @@ public class CityActivity extends BasicActivityWithTitle {
 
                     hotcityBeans = citySortModel.getHotcity();
 
-                    cityAdapter = new CityAdapter(CityActivity.this, locationCity, cityBeans, countryLvcountry, hotcityBeans);
+                    cityAdapter = new CityAdapter(CityActivity.this, locationCity, cityBeans,
+                            countryLvcountry, hotcityBeans);
                     countryLvcountry.setAdapter(cityAdapter);
 
                 } else {
@@ -250,7 +254,8 @@ public class CityActivity extends BasicActivityWithTitle {
 
                     hotcityBeans = citySortModel.getHotcity();
 
-                    cityAdapter = new CityAdapter(CityActivity.this, locationCity, cityBeans, countryLvcountry, hotcityBeans);
+                    cityAdapter = new CityAdapter(CityActivity.this, locationCity, cityBeans,
+                            countryLvcountry, hotcityBeans);
                     countryLvcountry.setAdapter(cityAdapter);
 
                 } else {
@@ -281,14 +286,19 @@ public class CityActivity extends BasicActivityWithTitle {
 
     //权限回调
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[]
+            grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_CONTACTS:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager
+                        .PERMISSION_GRANTED && grantResults[1] == PackageManager
+                        .PERMISSION_GRANTED) {
                     LocationGPS();
-                    }
+
                 }
+                break;
+        }
 
     }
 

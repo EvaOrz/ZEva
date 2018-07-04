@@ -36,7 +36,7 @@ import cn.com.zwwl.bayuwen.util.AddressTools;
 
 public class MyApplication extends Application {
 
-//    public static NewMusicService newMusicService;// 全局电台播放Service
+    //    public static NewMusicService newMusicService;// 全局电台播放Service
     private String UMENG_APPKEY = "5ad40381f29d987f490000be";// 友盟appkey
 
     public static int DEBUG = 1;
@@ -68,16 +68,19 @@ public class MyApplication extends Application {
     public static AddressTools addressTools;
 
     /**
-     * 登录状态是否改变
+     * 数据刷新状态标识符
      * <p>
-     * 初始化main页面时需要加载数据
+     * 0：没变化
+     * 1：登录状态变化
+     * 2：所在城市变化
+     * 3：切换学员
+     * 4：当前用户信息变化
+     * 5：学员资料变化
      */
-    public static boolean loginStatusChange = true;
+    public static boolean loginStatusChange = false;
+    public static boolean userStatusChange = false;
+    public static boolean cityStatusChange = false;
 
-    /**
-     * 音乐是否在播放
-     */
-    public static boolean isPlaying = false;
     /**
      * 渠道
      */
@@ -86,9 +89,10 @@ public class MyApplication extends Application {
      * 课程跟踪
      */
     public int operate_type;
-    public LessonModel oldLesson,newLesson;
-    public KeModel oldKe,newKe;
+    public LessonModel oldLesson, newLesson;
+    public KeModel oldKe, newKe;
     private static MyApplication instance;
+
     @Override
     public void onCreate() {
         WEIXIN_APP_ID = "wx22ea2fa3b35cb13f";
@@ -101,7 +105,7 @@ public class MyApplication extends Application {
         QQ_SECRET = "SClqzj0HjnAx2ATM";
 
         mContext = this;
-        instance=this;
+        instance = this;
         super.onCreate();
         initScreenInfo();
         initChannel();
