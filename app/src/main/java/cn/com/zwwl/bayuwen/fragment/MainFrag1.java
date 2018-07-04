@@ -321,12 +321,15 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             if (i == 2) {
                 view.setBackgroundResource(R.drawable.pintu_bg_wangzhe);
             }
-            List<PintuModel.LectureinfoBean.SectionListBean> models = new ArrayList<>();
-            if (models.size() == 54) {
-                RadarAdapter radarAdapter = new RadarAdapter(models, pintuWid);
-                recyclerView.setAdapter(radarAdapter);
-                recyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
+            if (Tools.listNotNull(pintuModels.get(i).getLectureinfo())) {
+                List<PintuModel.LectureinfoBean.SectionListBean> models = pintuModels.get(i)
+                        .getLectureinfo().get(0).getSectionList();
+                if (Tools.listNotNull(models) &&models.size() == 54) {
+                    RadarAdapter radarAdapter = new RadarAdapter(models, pintuWid);
+                    recyclerView.setAdapter(radarAdapter);
+                    recyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                }
             }
             pingtuViews.add(view);
         }

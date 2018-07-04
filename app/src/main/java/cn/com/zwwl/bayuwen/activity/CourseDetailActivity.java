@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -59,7 +60,7 @@ import cn.com.zwwl.bayuwen.widget.CustomViewPager;
 public class CourseDetailActivity extends BaseActivity {
     private TextView course_tv;
     private TextView classno_tv;
-    private TextView price_tv;
+    private TextView price_tv, price_tv1;
     private ImageView course_iv;
     private TextView place_tv;
     private TextView teacher_tv;
@@ -176,6 +177,7 @@ public class CourseDetailActivity extends BaseActivity {
         classno_tv = findViewById(R.id.classno_tv);
         youhuiBt = findViewById(R.id.youhui_layout);
         price_tv = findViewById(R.id.price_tv);
+        price_tv1 = findViewById(R.id.price_tv1);
         course_iv = findViewById(R.id.course_iv);
         place_tv = findViewById(R.id.place_tv);
         teacher_tv = findViewById(R.id.teacher_tv);
@@ -505,7 +507,15 @@ public class CourseDetailActivity extends BaseActivity {
     private void setkeData() {
         course_tv.setText(keModel.getTitle());
         classno_tv.setText("班级编码：" + keModel.getModel());
-        price_tv.setText("￥ " + keModel.getBuyPrice());
+
+        if (keModel.getIs_discount() == 0) {
+            price_tv.setText("￥ " + keModel.getBuyPrice());
+        } else {
+            price_tv.setText("￥ " + keModel.getDiscount().getDiscount());
+            price_tv1.setText("￥" + keModel.getBuyPrice());
+            price_tv1.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+            // 设置中划线并加清晰
+        }
 
         ImageLoader.display(mContext, course_iv, keModel.getPic());
         place_tv.setText(keModel.getSchool());
@@ -520,7 +530,12 @@ public class CourseDetailActivity extends BaseActivity {
         time_tv.setText(startTime.substring(0, startTime.length() - 3) + " - " + endtime
                 .substring(0, endtime.length() - 3));
 
-        priceTv2.setText("￥" + keModel.getBuyPrice());
+        if (keModel.getIs_discount() == 1) {
+            priceTv2.setText("￥" + keModel.getDiscount().getDiscount());
+        } else {
+            priceTv2.setText("￥" + keModel.getBuyPrice());
+        }
+
 
         teacherLayout.removeAllViews();
         for (TeacherModel t : keModel.getTeacherModels())

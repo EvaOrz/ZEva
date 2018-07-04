@@ -14,7 +14,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.PintuModel;
 
 /**
- *
+ * 拼图色块适配器
  */
 public class RadarAdapter extends BaseQuickAdapter<PintuModel.LectureinfoBean.SectionListBean,
         BaseViewHolder> {
@@ -25,6 +25,21 @@ public class RadarAdapter extends BaseQuickAdapter<PintuModel.LectureinfoBean.Se
     private static int tuMidWidth = 72;// 每个拼图的中间部分宽度
 
 //    private static int tuPadding = 10;// 拼图的缝隙宽度
+
+    private int[] suoImgsVip = new int[]{R.drawable.tu1, R.drawable.tu2, R.drawable.tu3, R.drawable
+            .tu4, R.drawable.tu5, R.drawable.tu6, R.drawable.tu7, R.drawable.tu8, R.drawable.tu9};
+    private int[] tongImgsVip = new int[]{R.drawable.tu28, R.drawable.tu29, R.drawable.tu30, R
+            .drawable
+            .tu31, R.drawable.tu32, R.drawable.tu33, R.drawable.tu34, R.drawable.tu35, R.drawable
+            .tu36};
+    private int[] yinImgsVip = new int[]{R.drawable.tu19, R.drawable.tu20, R.drawable.tu21, R
+            .drawable.tu22, R.drawable.tu23, R.drawable.tu24, R.drawable.tu25, R.drawable.tu26, R
+            .drawable
+            .tu27};
+    private int[] jinImgsVip = new int[]{R.drawable.tu10, R.drawable.tu11, R.drawable.tu12, R
+            .drawable
+            .tu13, R.drawable.tu14, R.drawable.tu15, R.drawable.tu16, R.drawable.tu17, R.drawable
+            .tu18};
 
 
     public RadarAdapter(@Nullable List<PintuModel.LectureinfoBean.SectionListBean> data) {
@@ -40,34 +55,128 @@ public class RadarAdapter extends BaseQuickAdapter<PintuModel.LectureinfoBean.Se
 
     @Override
     protected void convert(BaseViewHolder helper, PintuModel.LectureinfoBean.SectionListBean item) {
+
         AppCompatImageView imageView = helper.getView(R.id.pic);
         LinearLayout layout = helper.getView(R.id.layout);
-
         int layoutWid = totalWidth / colunms;
         layout.setLayoutParams(new LinearLayout.LayoutParams(layoutWid, layoutWid));
         int wid = layoutWid + layoutWid * tuSideWidth / tuMidWidth;
         imageView.setLayoutParams(new LinearLayout.LayoutParams(wid, wid));
 
-        if (helper.getLayoutPosition() == 0) {
-            imageView.setImageResource(R.drawable.tu1);
-        } else if (helper.getLayoutPosition() > 0 && helper.getLayoutPosition() < 8) {
-            imageView.setImageResource(R.drawable.tu2);
-        } else if (helper.getLayoutPosition() == 8) {
-            imageView.setImageResource(R.drawable.tu3);
-        } else if (helper.getLayoutPosition() == 9 || helper.getLayoutPosition() == 18 || helper
-                .getLayoutPosition() == 27 || helper.getLayoutPosition() == 36) {
-            imageView.setImageResource(R.drawable.tu4);
-        } else if (helper.getLayoutPosition() == 17 || helper.getLayoutPosition() == 26 || helper
-                .getLayoutPosition() == 35 || helper.getLayoutPosition() == 44) {
-            imageView.setImageResource(R.drawable.tu6);
-        } else if (helper.getLayoutPosition() == 45) {
-            imageView.setImageResource(R.drawable.tu7);
-        } else if (helper.getLayoutPosition() > 45 && helper.getLayoutPosition() < 53) {
-            imageView.setImageResource(R.drawable.tu8);
-        } else if (helper.getLayoutPosition() == 53) {
-            imageView.setImageResource(R.drawable.tu9);
-        } else {
-            imageView.setImageResource(R.drawable.tu5);
+        int status = checkLevel(item);
+        if (status == 0) {
+            if (helper.getLayoutPosition() == 0) {
+                imageView.setImageResource(suoImgsVip[0]);
+            } else if (helper.getLayoutPosition() > 0 && helper.getLayoutPosition() < 8) {
+                imageView.setImageResource(suoImgsVip[1]);
+            } else if (helper.getLayoutPosition() == 8) {
+                imageView.setImageResource(suoImgsVip[2]);
+            } else if (helper.getLayoutPosition() == 9 || helper.getLayoutPosition() == 18 || helper
+                    .getLayoutPosition() == 27 || helper.getLayoutPosition() == 36) {
+                imageView.setImageResource(suoImgsVip[3]);
+            } else if (helper.getLayoutPosition() == 17 || helper.getLayoutPosition() == 26 ||
+                    helper
+                            .getLayoutPosition() == 35 || helper.getLayoutPosition() == 44) {
+                imageView.setImageResource(suoImgsVip[5]);
+            } else if (helper.getLayoutPosition() == 45) {
+                imageView.setImageResource(suoImgsVip[6]);
+            } else if (helper.getLayoutPosition() > 45 && helper.getLayoutPosition() < 53) {
+                imageView.setImageResource(suoImgsVip[7]);
+            } else if (helper.getLayoutPosition() == 53) {
+                imageView.setImageResource(suoImgsVip[8]);
+            } else {
+                imageView.setImageResource(suoImgsVip[4]);
+            }
+        } else if (status == 1) {
+            if (helper.getLayoutPosition() == 0) {
+                imageView.setImageResource(tongImgsVip[0]);
+            } else if (helper.getLayoutPosition() > 0 && helper.getLayoutPosition() < 8) {
+                imageView.setImageResource(tongImgsVip[1]);
+            } else if (helper.getLayoutPosition() == 8) {
+                imageView.setImageResource(tongImgsVip[2]);
+            } else if (helper.getLayoutPosition() == 9 || helper.getLayoutPosition() == 18 || helper
+                    .getLayoutPosition() == 27 || helper.getLayoutPosition() == 36) {
+                imageView.setImageResource(tongImgsVip[3]);
+            } else if (helper.getLayoutPosition() == 17 || helper.getLayoutPosition() == 26 ||
+                    helper
+                            .getLayoutPosition() == 35 || helper.getLayoutPosition() == 44) {
+                imageView.setImageResource(tongImgsVip[5]);
+            } else if (helper.getLayoutPosition() == 45) {
+                imageView.setImageResource(tongImgsVip[6]);
+            } else if (helper.getLayoutPosition() > 45 && helper.getLayoutPosition() < 53) {
+                imageView.setImageResource(tongImgsVip[7]);
+            } else if (helper.getLayoutPosition() == 53) {
+                imageView.setImageResource(tongImgsVip[8]);
+            } else {
+                imageView.setImageResource(tongImgsVip[4]);
+            }
+        } else if (status == 2) {
+            if (helper.getLayoutPosition() == 0) {
+                imageView.setImageResource(yinImgsVip[0]);
+            } else if (helper.getLayoutPosition() > 0 && helper.getLayoutPosition() < 8) {
+                imageView.setImageResource(yinImgsVip[1]);
+            } else if (helper.getLayoutPosition() == 8) {
+                imageView.setImageResource(yinImgsVip[2]);
+            } else if (helper.getLayoutPosition() == 9 || helper.getLayoutPosition() == 18 || helper
+                    .getLayoutPosition() == 27 || helper.getLayoutPosition() == 36) {
+                imageView.setImageResource(yinImgsVip[3]);
+            } else if (helper.getLayoutPosition() == 17 || helper.getLayoutPosition() == 26 ||
+                    helper
+                            .getLayoutPosition() == 35 || helper.getLayoutPosition() == 44) {
+                imageView.setImageResource(yinImgsVip[5]);
+            } else if (helper.getLayoutPosition() == 45) {
+                imageView.setImageResource(yinImgsVip[6]);
+            } else if (helper.getLayoutPosition() > 45 && helper.getLayoutPosition() < 53) {
+                imageView.setImageResource(yinImgsVip[7]);
+            } else if (helper.getLayoutPosition() == 53) {
+                imageView.setImageResource(yinImgsVip[8]);
+            } else {
+                imageView.setImageResource(yinImgsVip[4]);
+            }
+        } else if (status == 3) {
+            if (helper.getLayoutPosition() == 0) {
+                imageView.setImageResource(jinImgsVip[0]);
+            } else if (helper.getLayoutPosition() > 0 && helper.getLayoutPosition() < 8) {
+                imageView.setImageResource(jinImgsVip[1]);
+            } else if (helper.getLayoutPosition() == 8) {
+                imageView.setImageResource(jinImgsVip[2]);
+            } else if (helper.getLayoutPosition() == 9 || helper.getLayoutPosition() == 18 || helper
+                    .getLayoutPosition() == 27 || helper.getLayoutPosition() == 36) {
+                imageView.setImageResource(jinImgsVip[3]);
+            } else if (helper.getLayoutPosition() == 17 || helper.getLayoutPosition() == 26 ||
+                    helper
+                            .getLayoutPosition() == 35 || helper.getLayoutPosition() == 44) {
+                imageView.setImageResource(jinImgsVip[5]);
+            } else if (helper.getLayoutPosition() == 45) {
+                imageView.setImageResource(jinImgsVip[6]);
+            } else if (helper.getLayoutPosition() > 45 && helper.getLayoutPosition() < 53) {
+                imageView.setImageResource(jinImgsVip[7]);
+            } else if (helper.getLayoutPosition() == 53) {
+                imageView.setImageResource(jinImgsVip[8]);
+            } else {
+                imageView.setImageResource(jinImgsVip[4]);
+            }
         }
+
+
+    }
+
+    /**
+     * 拼图颜色值规则：(int)(答对数量/总题数)*100
+     * 0 未答题、总题数为空 锁住
+     * [0-60) 青铜
+     * [60-80) 白银
+     * [80-100) 黄金
+     *
+     * @return
+     */
+    private int checkLevel(PintuModel.LectureinfoBean.SectionListBean sectionListBean) {
+        if (sectionListBean.getQuestionNum() == 0) return 0;
+        int scoal = sectionListBean.getRightNum() / sectionListBean.getQuestionNum() * 100;
+        if (scoal > 0 && scoal < 60) return 1;
+        else if (scoal > 60 && scoal < 80) return 2;
+        else if (scoal > 80 && scoal < 100) return 3;
+        return 0;
+
     }
 }
