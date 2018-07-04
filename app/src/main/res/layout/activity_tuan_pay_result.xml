@@ -30,8 +30,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -39,7 +38,7 @@
             android:layout_width="120dp"
             android:layout_height="80dp"
             android:layout_marginTop="50dp"
-           android:src="@mipmap/apply_logo" />
+            android:src="@mipmap/group_success_logo" />
 
         <TextView
             android:id="@+id/pay_status"
@@ -52,6 +51,55 @@
             android:textSize="@dimen/text_size_16" />
 
     </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/tuanma_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="invisible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <include layout="@layout/layout_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/icon_scan_label" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="您团友的课程码"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_14" />
+
+                <cn.com.zwwl.bayuwen.widget.NoScrollListView
+                    android:id="@+id/tuanma_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@null"
+                    android:listSelector="@android:color/transparent"
+                    android:scrollbars="none" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
 
     <TextView
         android:id="@+id/tuan_kai_pay"

@@ -406,7 +406,10 @@ public class CourseDetailActivity extends BaseActivity {
             public void setError(ErrorMsg error) {
                 showLoadingDialog(false);
                 if (error == null) {// 没有错误信息，则操作成功
-                    startActivity(new Intent(mContext, TuanPayResultActivity.class));
+                    Intent i = new Intent(mContext, TuanPayResultActivity.class);
+                    i.putExtra("TuanPayResultActivity_data",  TuanPayResultActivity.PAY_SUCCESS);
+                    i.putExtra("TuanPayResultActivity_desc", "开通课程成功");
+                    startActivity(i);
                     finish();
                 } else {
                     showToast(error.getDesc());
