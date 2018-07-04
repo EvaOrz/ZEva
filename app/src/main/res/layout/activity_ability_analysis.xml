@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEEE"
+    android:orientation="vertical"
+    tools:context=".activity.AbilityAnalysisActivity">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_course_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/white"
+        app:tabBackground="@color/white"
+        app:tabGravity="center"
+        app:tabIndicatorColor="@color/gold"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@color/gold"
+        app:tabTextColor="@color/gray_dark">
+
+    </android.support.design.widget.TabLayout>
+    <include layout="@layout/layout_line" />
+
+    <RadioGroup
+        android:id="@+id/course_d_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/album_dp_200"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/course_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:padding="8dp"
+            android:textColor="@drawable/gold_text_checked"
+            android:textSize="@dimen/text_size_14" />
+
+        <RadioButton
+            android:id="@+id/student_condition"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textColor="@drawable/gold_text_checked"
+            android:textSize="@dimen/text_size_14" />
+
+        <RadioButton
+            android:id="@+id/system_introduction"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textColor="@drawable/gold_text_checked"
+            android:textSize="@dimen/text_size_14" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/course_d_line1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@color/gold" />
+
+        <View
+            android:id="@+id/course_d_line2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@color/gold"
+            android:visibility="invisible" />
+
+        <View
+            android:id="@+id/course_d_line3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@color/gold"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/album_dp_20"
+            android:background="@color/white"
+            android:textColor="#52596C"
+            android:textSize="@dimen/dp_16"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/student_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/album_dp_20"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/questionNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="总题目数：0"
+                android:textColor="#52596C"
+                android:textSize="@dimen/dp_16" />
+
+            <TextView
+                android:id="@+id/rightNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="答对题数：0"
+                android:textColor="#52596C"
+                android:textSize="@dimen/dp_16" />
+
+            <TextView
+                android:id="@+id/errorNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="答错题数：0"
+                android:textColor="#52596C"
+                android:textSize="@dimen/dp_16" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

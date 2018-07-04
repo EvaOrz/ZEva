@@ -24,16 +24,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.AbilityAnalysisActivity;
 import cn.com.zwwl.bayuwen.activity.AllXunzhangActivity;
 import cn.com.zwwl.bayuwen.activity.CalendarActivity;
 import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
 import cn.com.zwwl.bayuwen.activity.CityActivity;
-import cn.com.zwwl.bayuwen.activity.FCourseIndexActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
@@ -49,7 +50,6 @@ import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.AchievementModel;
 import cn.com.zwwl.bayuwen.model.ChildModel;
-import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.Index1Model;
@@ -87,7 +87,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private List<View> pingtuViews = new ArrayList<>();
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
     private List<AchievementModel> achiveatas = new ArrayList<>();// 成就数据
-    private List<PintuModel> pintuModels = new ArrayList<>();// 拼图数据
+    private ArrayList<PintuModel> pintuModels = new ArrayList<>();// 拼图数据
     private UserModel userModel;
 
     private int pintuWid, pintuHei;// 拼图item的宽高
@@ -333,9 +333,12 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     }
 
     private void goDati() {
-        Intent i = new Intent(mActivity, FCourseIndexActivity.class);
-        i.putExtra("kid", "7018");
-        i.putExtra("title", "测试");
+//        Intent i = new Intent(mActivity, FCourseIndexActivity.class);
+        Intent i = new Intent(mActivity, AbilityAnalysisActivity.class);
+//        i.putExtra("pintuModels",(Serializable) pintuModels);
+//        Bundle args = new Bundle();
+//        args.putSerializable("pintuModels",(Serializable)pintuModels);
+        i.putExtra("pintuModels",(Serializable)pintuModels);
         startActivity(i);
     }
 

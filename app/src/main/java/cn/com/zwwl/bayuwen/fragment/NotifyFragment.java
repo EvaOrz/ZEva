@@ -86,7 +86,7 @@ public class NotifyFragment extends BasicFragment {
         all_message_list.setAdapter(notifyMessageAdapter);
         refreshLayout.setRefreshContent(all_message_list);
         refreshLayout.autoRefresh();
-        refreshLayout.finishLoadMore(false);
+        refreshLayout.setEnableLoadMore(true);
     }
 
     @Override
