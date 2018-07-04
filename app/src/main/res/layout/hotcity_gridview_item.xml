@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="昌平区"
-        android:background="@drawable/city_tv_bg"
-        android:textColor="@color/hotcityColor" />
+        android:background="@mipmap/hot_city"
+        android:textColor="@color/citygold" />
 
 
 </LinearLayout>

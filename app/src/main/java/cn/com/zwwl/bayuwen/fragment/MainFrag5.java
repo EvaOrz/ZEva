@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
 import cn.com.zwwl.bayuwen.activity.FeedBackActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
@@ -41,7 +42,9 @@ import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.view.SharePopWindow;
 
 /**
  * 我的 tab
@@ -237,6 +240,9 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(mActivity, TuanCodeUseActivity.class));
                 break;
             case R.id.frag5_invite:// 邀请好友加入大语文
+//                SharePopWindow sharePopWindow=new SharePopWindow(getActivity(),"AAA");
+                ShareTools.doShareWeb((BaseActivity) getActivity(),"","","","https://www.baidu.com");
+
                 break;
             case R.id.frag5_feedback:// 反馈
                 startActivity(new Intent(mActivity, FeedBackActivity.class));

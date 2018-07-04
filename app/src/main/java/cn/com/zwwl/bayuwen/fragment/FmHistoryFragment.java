@@ -1,17 +1,21 @@
 package cn.com.zwwl.bayuwen.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.fm.AlbumDetailActivity;
 import cn.com.zwwl.bayuwen.adapter.FmHositoryAdapter;
 import cn.com.zwwl.bayuwen.api.FmListApi;
 import cn.com.zwwl.bayuwen.api.UrlUtil;
@@ -26,6 +30,7 @@ import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 
 public class FmHistoryFragment extends Fragment {
     private View view;
+    private ImageView fm_no;
     private NoScrollListView history_listviewtoday,history_listviewpre;
     private TextView today, yesterday;
     private FmHositoryAdapter adapter1, adapter2;
@@ -67,7 +72,7 @@ public class FmHistoryFragment extends Fragment {
                     if (Tools.listNotNull(fmListhiistoryModels)) {
                         today.setVisibility(View.VISIBLE);
                         history_listviewtoday.setVisibility(View.VISIBLE);
-
+                        today.setVisibility(View.VISIBLE);
                         adapter1.setData(fmListhiistoryModels);
                         history_listviewtoday.setAdapter(adapter1);
                         adapter1.notifyDataSetChanged();
@@ -78,7 +83,6 @@ public class FmHistoryFragment extends Fragment {
                     if (Tools.listNotNull(fmListhiistoryModels2)) {
                         yesterday.setVisibility(View.VISIBLE);
                         history_listviewpre.setVisibility(View.VISIBLE);
-
                         adapter2.setData(fmListhiistoryModels2);
                         history_listviewpre.setAdapter(adapter2);
                         adapter2.notifyDataSetChanged();
@@ -90,6 +94,7 @@ public class FmHistoryFragment extends Fragment {
 
                 } else {
 //                    ToastUtil.showShortToast("暂无数据");
+                    fm_no.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -102,8 +107,29 @@ public class FmHistoryFragment extends Fragment {
         history_listviewpre=view.findViewById(R.id.history_listview2);
         today =view.findViewById(R.id.history__1);
         yesterday =view.findViewById(R.id.history__2);
+        fm_no=view.findViewById(R.id.fm_no);
         adapter1 = new FmHositoryAdapter(getActivity());
         adapter2 = new FmHositoryAdapter(getActivity());
+
+        history_listviewtoday.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String sId=fmListhiistoryModels.get(position).getKid();
+                Intent intent =new Intent(getActivity(), AlbumDetailActivity.class);
+                intent.putExtra("AlbumDetailActivity_data",sId);
+                startActivity(intent);
+            }
+        });
+
+        history_listviewpre.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String sId=fmListhiistoryModels2.get(position).getKid();
+                Intent intent =new Intent(getActivity(), AlbumDetailActivity.class);
+                intent.putExtra("AlbumDetailActivity_data",sId);
+                startActivity(intent);
+            }
+        });
     }
 
 

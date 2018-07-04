@@ -1,5 +1,6 @@
 package cn.com.zwwl.bayuwen.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.fm.AlbumDetailActivity;
 import cn.com.zwwl.bayuwen.adapter.FmHositoryAdapter;
 import cn.com.zwwl.bayuwen.adapter.FmMyCollectionAdapter;
 import cn.com.zwwl.bayuwen.api.AddCommentApi;
@@ -87,6 +89,7 @@ public class FmMyCollectFragment extends Fragment {
         no_fm = view.findViewById(R.id.fm_no);
         fmMyCollectionAdapter = new FmMyCollectionAdapter(getActivity());
         listView1 = view.findViewById(R.id.listView_collection);
+        //长按取消收藏
         listView1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -105,6 +108,16 @@ public class FmMyCollectFragment extends Fragment {
 
 
                 return false;
+            }
+        });
+        //点击事件
+        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String sId=dataBeans.get(position).getKid();
+                Intent intent =new Intent(getActivity(), AlbumDetailActivity.class);
+                intent.putExtra("AlbumDetailActivity_data",sId);
+                startActivity(intent);
             }
         });
 

@@ -1,11 +1,12 @@
 package cn.com.zwwl.bayuwen.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 拼图model
  */
-public class PintuModel extends Entry {
+public class PintuModel extends Entry implements Serializable{
 
     private String id;
     private String name;
@@ -116,7 +117,7 @@ public class PintuModel extends Entry {
         this.lectureinfo = lectureinfo;
     }
 
-    public static class ContentBean {
+    public static class ContentBean implements Serializable{
         /**
          * title : 课程内容
          * content :
@@ -142,7 +143,7 @@ public class PintuModel extends Entry {
         }
     }
 
-    public static class CurriculaBean {
+    public static class CurriculaBean implements Serializable{
         /**
          * title : 体系介绍
          * content :
@@ -168,7 +169,7 @@ public class PintuModel extends Entry {
         }
     }
 
-    public static class StudentInfoBean {
+    public static class StudentInfoBean implements Serializable{
         /**
          * title : 学生情况
          * content :
@@ -194,7 +195,7 @@ public class PintuModel extends Entry {
         }
     }
 
-    public static class LectureinfoBean {
+    public static class LectureinfoBean implements Serializable{
         private int puzzleId;
         private int questionNum;
         private int rightNum;
@@ -259,7 +260,7 @@ public class PintuModel extends Entry {
             this.sectionList = sectionList;
         }
 
-        public static class SectionListBean {
+        public static class SectionListBean implements Serializable{
             /**
              * sectionId : 3133
              * questionNum : 0

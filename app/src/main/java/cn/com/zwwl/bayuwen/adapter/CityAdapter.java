@@ -242,6 +242,9 @@ public class CityAdapter extends BaseAdapter {
      * 根据ListView的当前位置获取分类的首字母的Char ascii值
      */
     public int getSectionForPosition(int position) {
+        if (cityBeans==null){
+            return 0;
+        }else
         return cityBeans.get(position).getInitial().charAt(0);
     }
 
