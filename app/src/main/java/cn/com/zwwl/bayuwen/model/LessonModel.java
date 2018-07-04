@@ -36,7 +36,16 @@ public class LessonModel extends Entry {
     private Object summarize;
     private String desc;
     private String report_url;
+    private String play_url;
     private String url;
+
+    public String getPlay_url() {
+        return play_url;
+    }
+
+    public void setPlay_url(String play_url) {
+        this.play_url = play_url;
+    }
 
     public long getStartClassTime() {
         return startClassTime;

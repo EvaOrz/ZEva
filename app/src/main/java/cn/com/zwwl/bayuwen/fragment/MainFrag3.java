@@ -30,6 +30,7 @@ import cn.com.zwwl.bayuwen.activity.CityActivity;
 import cn.com.zwwl.bayuwen.activity.FCourseListActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
+import cn.com.zwwl.bayuwen.activity.ReplayListActivity;
 import cn.com.zwwl.bayuwen.activity.ReportIndexActivity;
 import cn.com.zwwl.bayuwen.activity.StudyingIndexActivity;
 import cn.com.zwwl.bayuwen.activity.TraceSearchActivity;
@@ -223,10 +224,14 @@ public class MainFrag3 extends BasicFragment {
                 switch (view.getId()) {
                     case R.id.arrow:
                         application.oldKe = bean.getProducts();
-                        intent.setClass(activity, StudyingIndexActivity.class);
                         intent.putExtra("kid", bean.getKid());
                         intent.putExtra("title", bean.getProducts().getTitle());
-                        intent.putExtra("online", Integer.parseInt(bean.getProducts().getOnline()));
+                        if ("1".equals(bean.getProducts().getOnline())) {
+                            intent.setClass(activity, ReplayListActivity.class);
+                        } else {
+                            intent.setClass(activity, StudyingIndexActivity.class);
+                        }
+//                        intent.putExtra("online", Integer.parseInt(bean.getProducts().getOnline()));
                         startActivity(intent);
                         break;
                     case R.id.work:
@@ -270,11 +275,17 @@ public class MainFrag3 extends BasicFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 application.oldKe = courseModel.getUnfinished().get(position).getProducts();
-                Intent intent = new Intent(activity, StudyingIndexActivity.class);
+                Intent intent = new Intent();
+                if ("1".equals(courseModel.getUnfinished()
+                        .get(position).getProducts().getOnline())) {
+                    intent.setClass(activity, ReplayListActivity.class);
+                } else {
+                    intent.setClass(activity, StudyingIndexActivity.class);
+                }
                 intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
                 intent.putExtra("title", courseModel.getUnfinished().get(position).getProducts().getTitle());
-                intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
-                        .get(position).getProducts().getOnline()));
+//                intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
+//                        .get(position).getProducts().getOnline()));
                 startActivity(intent);
             }
         });

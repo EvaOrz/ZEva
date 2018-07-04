@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.UploadPicAdapter;
 import cn.com.zwwl.bayuwen.api.UploadPicApi;
@@ -57,6 +59,9 @@ public class UploadPicActivity extends BasicActivityWithTitle {
     @Override
     protected void initView() {
         setCustomTitle("作业上传");
+        ConstraintLayout.LayoutParams linearParams =(ConstraintLayout.LayoutParams) content.getLayoutParams();
+        linearParams.height = MyApplication.height/2;
+        content.setLayoutParams(linearParams);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.addItemDecoration(new GridItemDecoration(this));
     }
@@ -198,6 +203,11 @@ public class UploadPicActivity extends BasicActivityWithTitle {
     @Override
     public void close() {
         finish();
+    }
+
+    @Override
+    public boolean setParentScrollable() {
+        return true;
     }
 
     @Override

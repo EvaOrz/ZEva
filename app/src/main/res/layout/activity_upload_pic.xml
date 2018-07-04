@@ -16,7 +16,6 @@
         android:background="@drawable/draw_gray_line_bg"
         android:gravity="start|top"
         android:hint="点击输入文字！"
-        android:minHeight="@dimen/dp_100"
         android:padding="@dimen/dp_10"
         android:textSize="@dimen/sp_14"
         android:textColorHint="@color/gray_light" />
