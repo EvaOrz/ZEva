@@ -161,6 +161,10 @@ public class IActivityImpl implements IActivity, Toolbar.OnMenuItemClickListener
                     }
                 });
                 break;
+            case MenuCode.REPLAY:
+                MenuItem replay = menu.findItem(R.id.action_replay);
+                replay.setVisible(true);
+                break;
         }
     }
 

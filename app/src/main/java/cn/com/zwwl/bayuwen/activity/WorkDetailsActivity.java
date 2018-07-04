@@ -21,13 +21,14 @@ import cn.com.zwwl.bayuwen.model.WorkDetailModel;
  */
 public class WorkDetailsActivity extends BasicActivityWithTitle {
 
-    PicAdapter workAdapter;
+
     @BindView(R.id.homework)
     RecyclerView homework;
     @BindView(R.id.text_work)
     AppCompatTextView textWork;
     @BindView(R.id.teacher_eval)
     AppCompatTextView teacherEval;
+    PicAdapter workAdapter;
     private WorkDetailModel model;
 
     @Override
@@ -55,8 +56,9 @@ public class WorkDetailsActivity extends BasicActivityWithTitle {
                 textWork.setText("无");
             if (model.getT_desc() != null)
                 teacherEval.setText(model.getT_desc().getContent());
-            else
+            else {
                 teacherEval.setText("暂无点评");
+            }
         }
     }
 
@@ -81,7 +83,7 @@ public class WorkDetailsActivity extends BasicActivityWithTitle {
 
     @Override
     public boolean setParentScrollable() {
-        return false;
+        return true;
     }
 
     @Override
