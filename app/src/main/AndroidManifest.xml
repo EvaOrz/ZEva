@@ -13,11 +13,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- 通过网络得到粗略位置 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!--显示悬浮窗-->
+    <!-- 显示悬浮窗 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- 打电话 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <!--获取当前活动页面任务栈-->
+    <!-- 获取当前活动页面任务栈 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <!-- 修改WiFi状态，发起WiFi扫描, 需要WiFi信息用于网络定位 -->
@@ -47,12 +47,13 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/app_icon"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/app_icon"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:testOnly="false"
         android:theme="@style/BaseTheme">
+
         <activity
             android:name=".activity.fm.FmSplashActivity"
             android:label="@string/app_name"
@@ -414,14 +415,15 @@
         <activity android:name=".activity.TopicLabelActivity" />
         <activity android:name=".activity.TopicDetailActivity" />
         <activity android:name=".activity.CityActivity" />
-        <activity android:name=".activity.OurFmActivity"/>
-        <!--课程跟踪正在进行课程(线下课)点击箭头进入该界面-->
+        <activity android:name=".activity.OurFmActivity" />
+        <!-- 课程跟踪正在进行课程点击箭头进入该界面 -->
         <activity
             android:name=".activity.StudyingIndexActivity"
             android:launchMode="singleTask" />
 
-        <!--课程跟踪点击“往次”，或已完成课程二级页面点击条目进入该页面-->
+        <!-- 课程跟踪点击“往次”，或已完成课程二级页面点击条目进入该页面 -->
         <activity android:name=".activity.ReportIndexActivity" />
+        <activity android:name=".activity.TopicCommitActivity"/>
         <!--课程跟踪首页搜索-->
         <activity android:name=".activity.TraceSearchActivity" />
         <!-- 课程跟踪正在进行课程(线上课)点击箭头进入该界面-->

@@ -177,7 +177,7 @@ public class CalendarTools {
     /**
      * 格式化日期
      *
-     * @param time    时间（毫秒）
+     * @param time    时间（秒）
      * @param pattern 日期格式
      * @return
      */

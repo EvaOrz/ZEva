@@ -248,8 +248,7 @@ public class OrderDetailActivity extends BaseActivity {
         TextView time = view.findViewById(R.id.item_order_time);
         TextView xiaoqu = view.findViewById(R.id.item_order_xiaoqu);
         ImageView pic = view.findViewById(R.id.item_order_pic);
-        ImageLoader.display(mContext, pic, model.getPic(), R.drawable.avatar_placeholder, R
-                .drawable.avatar_placeholder);
+        ImageLoader.display(mContext, pic, model.getPic());
 
         tag.setImageResource(model.getTagImg());
         title.setText(model.getTitle());

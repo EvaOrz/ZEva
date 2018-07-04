@@ -108,8 +108,7 @@ public class MyOrderAdapter extends CheckScrollAdapter<OrderForMyListModel> {
         TextView xiaoqu = view.findViewById(R.id.item_oder_xiaoqu);
 
         ImageView pic = view.findViewById(R.id.item_oder_pic);
-        ImageLoader.display(mContext, pic, keModel.getPic(), R.drawable.avatar_placeholder, R
-                .drawable.avatar_placeholder);
+        ImageLoader.display(mContext, pic, keModel.getPic());
         tag.setImageResource(keModel.getTagImg());
         title.setText(keModel.getTitle());
         teacher.setText(keModel.getTname());

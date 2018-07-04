@@ -74,7 +74,7 @@ public class CalendarKeAdapter extends RecyclerView.Adapter<CalendarKeAdapter.Vi
             final CalendarEventModel item = datas.get(position);
             holder.tag.setText(item.getOrgName());
             holder.title.setText(item.getName());
-            holder.time.setText("时间：" + item.getCourseDate() + " " + item.getStartTime() + "-" +
+            holder.time.setText("时间：每天" + item.getCourseDate() + " " + item.getStartTime() + "-" +
                     item.getEndTime());
 
             if (item.getIs_thirdorg() == 0) {
@@ -114,8 +114,7 @@ public class CalendarKeAdapter extends RecyclerView.Adapter<CalendarKeAdapter.Vi
         ImageView avat = view.findViewById(R.id.item_t_c_avatar);
         name.setText(teacherBean.getName());
         if (!TextUtils.isEmpty(teacherBean.getPic()))
-            ImageLoader.display(context, avat, teacherBean.getPic(), R.drawable
-                    .avatar_placeholder, R.drawable.avatar_placeholder);
+            ImageLoader.display(context, avat, teacherBean.getPic());
 
         view.setOnClickListener(new View
                 .OnClickListener() {

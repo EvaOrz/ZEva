@@ -32,12 +32,14 @@ import cn.com.zwwl.bayuwen.activity.MyCollectionActivity;
 import cn.com.zwwl.bayuwen.activity.MyOrderActivity;
 import cn.com.zwwl.bayuwen.activity.MyTuanActivity;
 import cn.com.zwwl.bayuwen.activity.OurFmActivity;
-import cn.com.zwwl.bayuwen.activity.RegisterAddChildActivity;
 import cn.com.zwwl.bayuwen.activity.SettingActivity;
 import cn.com.zwwl.bayuwen.activity.TuanCodeUseActivity;
-import cn.com.zwwl.bayuwen.activity.fm.FmHistoryActivity;
+import cn.com.zwwl.bayuwen.api.order.OrderCancleNumApi;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ChildModel;
+import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.Tools;
 
@@ -51,6 +53,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
     private LinearLayout frag5ChildLayout;
     private TextView frag5Code;
     private TextView frag5Level;
+    private TextView cart_num;
 
     private Activity mActivity;
     private View root;
@@ -76,7 +79,31 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        checkCartNum();
         handler.sendEmptyMessage(0);
+    }
+
+    /**
+     * 检查购课单数量
+     */
+    private void checkCartNum() {
+        new OrderCancleNumApi(mActivity, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+                if (entry != null && entry instanceof ErrorMsg) {
+                    Message message = new Message();
+                    message.what = 1;
+                    message.arg1 = ((ErrorMsg) entry).getNo();
+                    handler.sendMessage(message);
+                }
+
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
     }
 
     private void initView() {
@@ -92,6 +119,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
         root.findViewById(R.id.frag5_tuan_code).setOnClickListener(this);
         root.findViewById(R.id.frag5_invite).setOnClickListener(this);
         root.findViewById(R.id.frag5_feedback).setOnClickListener(this);
+        cart_num = root.findViewById(R.id.cart_num);
         frag5Avatar = root.findViewById(R.id.frag5_avatar);
         frag5Name = root.findViewById(R.id.frag5_name);
         frag5ChildLayout = root.findViewById(R.id.frag5_child_layout);
@@ -129,6 +157,12 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                             frag5ChildLayout.addView(getChildView(childModels.get(i)), params);
                         }
                     }
+                    break;
+                case 1:// 显示购课单数量
+                    if (msg.arg1 > 0) {
+                        cart_num.setVisibility(View.VISIBLE);
+                        cart_num.setText(msg.what);
+                    } else cart_num.setVisibility(View.GONE);
                     break;
             }
         }
@@ -170,7 +204,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            Log.e("ssssssss", "frag5 hidde");
+            checkCartNum();
             handler.sendEmptyMessage(0);
         }
     }

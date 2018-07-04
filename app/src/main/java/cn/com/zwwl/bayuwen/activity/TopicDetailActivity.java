@@ -1,15 +1,19 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatEditText;
+import android.text.InputType;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -33,10 +37,11 @@ import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.TopicDetailModel;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
+import cn.com.zwwl.bayuwen.view.MultiLineEditText;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 
-public class TopicDetailActivity extends BasicActivityWithTitle implements View.OnClickListener{
+public class TopicDetailActivity extends BasicActivityWithTitle implements View.OnClickListener {
 
     @BindView(R.id.topic_title_name_id)
     TextView topicTitleNameId;
@@ -64,9 +69,11 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
     TextView collectNumber;
     @BindView(R.id.comment_tv)
     TextView commentTv;
-    private  boolean flag=false;
-    private HashMap<String ,String> params;
-    private HashMap<String ,String> comments;
+    @BindView(R.id.feed_ev)
+    EditText feedEv;
+    private boolean flag = false;
+    private HashMap<String, String> params;
+    private HashMap<String, String> comments;
 
 
     private String topic_id;    // 话题ID
@@ -78,8 +85,6 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
     private TopicUserAnswerAdapter topicUserAnswerAdapter;//家长回复
 
 
-
-
     @Override
     protected int setContentView() {
         return R.layout.activity_topic_detail;
@@ -89,12 +94,18 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
     protected void initView() {
         setCustomTitle("话题详情");
 
-        params=new HashMap<>();
-        comments=new HashMap<>();
+        params = new HashMap<>();
+        comments = new HashMap<>();
         Intent intent = getIntent();
         topic_id = intent.getStringExtra("topicId");
         collectionIconId.setOnClickListener(this);
         commentTv.setOnClickListener(this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         HttpData(topic_id);
     }
 
@@ -110,7 +121,7 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
                     if (topicDetailModel.getUser_pic() != null)
                         ImageLoader.display(TopicDetailActivity.this, topicCircleimageviewId, topicDetailModel.getUser_pic());
                     else
-                        ImageLoader.display(TopicDetailActivity.this, topicCircleimageviewId, R.mipmap.app_icon);
+                        ImageLoader.display(TopicDetailActivity.this, topicCircleimageviewId, R.mipmap.image_placeholder);
 
 
                     nameId.setText(topicDetailModel.getUser_name());
@@ -119,17 +130,17 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
                     topicContentId.setText(topicDetailModel.getTopic_content());
                     collectNumber.setText(topicDetailModel.getVote_num()); //点赞数
 
-                    if (topicDetailModel.getIs_vote()==1){
+                    if (topicDetailModel.getIs_vote() == 1) {
                         collectionIconId.setBackgroundResource(R.mipmap.collection_icon);
-                        flag=true;
-                    }else {
+                        flag = true;
+                    } else {
                         collectionIconId.setBackgroundResource(R.mipmap.no_collection_icon);
-                        flag=false;
+                        flag = false;
                     }
                     teacherCommentBeans = topicDetailModel.getTeacher_comment();
                     userCommentBeans = topicDetailModel.getUser_comment();
 
-                    if (teacherCommentBeans.size() != 0&&teacherCommentBeans!=null) {   //教师回复绑定
+                    if (teacherCommentBeans.size() != 0 && teacherCommentBeans != null) {   //教师回复绑定
                         jiaoshihuifu.setVisibility(View.VISIBLE);
                         teacherAskedId.setVisibility(View.VISIBLE);
                         teacherAnswerAdapter = new TeacherAnswerAdapter(TopicDetailActivity.this, teacherCommentBeans, topicDetailModel.getTopic_name());
@@ -139,7 +150,7 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
                         teacherAskedId.setVisibility(View.GONE);
                     }
 
-                    if (userCommentBeans.size() != 0&&userCommentBeans!=null) {
+                    if (userCommentBeans.size() != 0 && userCommentBeans != null) {
                         jiazhanghuifu.setVisibility(View.VISIBLE);
                         userAskedId.setVisibility(View.VISIBLE);
                         topicUserAnswerAdapter = new TopicUserAnswerAdapter(TopicDetailActivity.this, userCommentBeans);
@@ -161,6 +172,18 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
 
     @Override
     protected void initData() {
+        feedEv.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+                    Httpcomment(v.getText().toString().trim());
+                    feedEv.setVisibility(View.GONE);
+                    return true;
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -168,51 +191,59 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
     protected void setListener() {
 
     }
+
     @Override
     public void onClick(View view) {
-       switch (view.getId()){
-           case R.id.collection_icon_id:
-                params.put("topic_id",topic_id);
-               if (flag==true){
-                  cancelData(flag);
+        switch (view.getId()) {
+            case R.id.collection_icon_id:
+                params.put("topic_id", topic_id);
+                if (flag == true) {
+                    cancelData(flag);
 
-               }else {
-                   cancelData(flag);
+                } else {
+                    cancelData(flag);
 
-               }
-               break;
-           case R.id.comment_tv:
-               initPopWindow();   //弹出popwindow
-               break;
-               
+                }
+                break;
+            case R.id.comment_tv:
+//                initPopWindow();   //弹出popwindow
+                Intent intent = new Intent(this,TopicCommitActivity.class);
+                intent.putExtra("topic_id",topic_id);
+                startActivity(intent);
+                break;
 
-       }
+
+        }
     }
+
 
     private void initPopWindow() {   //评论的popwindow
         View popView = View.inflate(this, R.layout.pop_comment_topic_layout, null);
 
-        EditText comment = popView.findViewById(R.id.feed_ev);
-//        int width = getResources().getDisplayMetrics().widthPixels;
-//        int height = getResources().getDisplayMetrics().heightPixels;
+        MultiLineEditText comment = popView.findViewById(R.id.feed_ev);
 
-
-      final  PopupWindow popupWindow = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-       // popWindow.setAnimationStyle(R.style.AnimBottom);
+        final PopupWindow popupWindow = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, false);
         popupWindow.setFocusable(true);
         popupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         popupWindow.setOutsideTouchable(true);// 设置同意在外点击消失
         popupWindow.setAnimationStyle(R.style.fetch_image_popup_anim);
+        comment.setFocusable(true);
+        comment.setFocusableInTouchMode(true);
+        comment.requestFocus();
+       //调出软键盘
+        InputMethodManager imm = (InputMethodManager) TopicDetailActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.showAtLocation(this.getWindow().getDecorView(), Gravity.CENTER_HORIZONTAL, 30, 30);
 
-        showSoftInputFromWindow(this,comment);
 
         comment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+                if (actionId==EditorInfo.IME_ACTION_SEND ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
 
                     Httpcomment(v.getText().toString().trim());
                     popupWindow.dismiss();
@@ -222,21 +253,14 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
             }
         });
 
-    }
-    /**
-     * EditText获取焦点并显示软键盘
-     */
-    public static void showSoftInputFromWindow(Activity activity, EditText editText) {
-        editText.setFocusable(true);
-        editText.setFocusableInTouchMode(true);
-        editText.requestFocus();
-        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+
     }
 
+
     private void Httpcomment(String trim) {
-        comments.put("topic_id",topic_id);
-        comments.put("content",trim);
-        new AddCommentApi(this,comments,new ResponseCallBack<String>() {
+        comments.put("topic_id", topic_id);
+        comments.put("content", trim);
+        new AddCommentApi(this, comments, new ResponseCallBack<String>() {
             @Override
             public void result(String message, ErrorMsg errorMsg) {
 
@@ -253,21 +277,21 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
         });
 
 
-}
+    }
 
     private void cancelData(final boolean flag) {   //取消收藏的方法
-        new CancelVoteApi(this,params,new ResponseCallBack<String>() {
+        new CancelVoteApi(this, params, new ResponseCallBack<String>() {
             @Override
             public void result(String message, ErrorMsg errorMsg) {
 
-                if (errorMsg==null){
-                  if (flag==true) {
-                      ToastUtil.showShortToast("取消点赞");
-                      HttpData(topic_id); //取消收藏后
-                  }else {
-                      ToastUtil.showShortToast("点赞成功");
-                      HttpData(topic_id);
-                  }
+                if (errorMsg == null) {
+                    if (flag == true) {
+                        ToastUtil.showShortToast("取消点赞");
+                        HttpData(topic_id); //取消收藏后
+                    } else {
+                        ToastUtil.showShortToast("点赞成功");
+                        HttpData(topic_id);
+                    }
                 } else {
                     ToastUtil.showShortToast(errorMsg.getDesc());
                 }

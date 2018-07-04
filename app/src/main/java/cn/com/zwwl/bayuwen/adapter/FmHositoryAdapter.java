@@ -47,9 +47,12 @@ public class FmHositoryAdapter extends CheckScrollAdapter<FmListhiistoryModel> {
             TextView desc = viewHolder.getView(R.id.his_desc);
             ImageView img = viewHolder.getView(R.id.his_img);
             TextView time = viewHolder.getView(R.id.his_time);
-
-            title.setText(item.getKeInfo().getTitle());
-            desc.setText(item.getLectureInfo().getTitle());
+            if (item.getKeInfo().getTitle()!=null&&item.getKeInfo().getTitle()!="") {
+                title.setText(item.getKeInfo().getTitle());
+            }
+            if (item.getLectureInfo().getTitle()!=null) {
+                desc.setText(item.getLectureInfo().getTitle());
+            }
             time.setText(CalendarTools.getTime(Long.valueOf(item.getLectureInfo().getDuration())));
             if (!TextUtils.isEmpty(item.getKeInfo().getPic()))
                 Glide.with(mContext)

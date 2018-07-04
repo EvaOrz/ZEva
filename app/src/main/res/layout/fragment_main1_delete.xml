@@ -310,34 +310,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_14" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
 
-
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_weight="1"
-                        android:src="@mipmap/medal_gold" />
-
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_weight="1"
-                        android:src="@mipmap/medal_silver" />
-
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_weight="1"
-                        android:src="@mipmap/medal_copper" />
-
-
-                </LinearLayout>
 
                 <TextView
                     android:id="@+id/go_xunzhang"

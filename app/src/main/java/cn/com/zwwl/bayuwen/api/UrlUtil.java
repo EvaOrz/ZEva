@@ -23,6 +23,16 @@ public class UrlUtil {
         }
     }
 
+    // 退费须知
+    public static String notificationTuifee() {
+        return "http://www.zhugexuetang.com/explain/refund.html";
+    }
+
+    // 报课说明
+    public static String notificationBaoke() {
+        return "http://www.zhugexuetang.com/explain/enroll.html";
+    }
+
     // 账号密码登录
     public static String LoginUrl() {
         return HOST + "/user/login";
@@ -204,6 +214,11 @@ public class UrlUtil {
         return HOST + "/order/get";
     }
 
+    // 获取未付款订单数量
+    public static String getOrderNum() {
+        return HOST + "/order/num";
+    }
+
     // 取消订单
     public static String cancleOrder() {
         return HOST + "/order/";
@@ -302,6 +317,16 @@ public class UrlUtil {
     // 获取首页第一个frag的数据
     public static String getIndex() {
         return HOST + "/my";
+    }
+
+    // 获取所有拼图列表
+    public static String getPintu() {
+        return HOST + "/jigsaw";
+    }
+
+    // 获取成就列表
+    public static String getAchievement() {
+        return HOST + "/achievement";
     }
 
     /**
@@ -491,24 +516,28 @@ public class UrlUtil {
     public static String puzzle() {
         return HOST + "/jigsaw/list";
     }
+
     /**
      * 获取答题详情
      */
     public static String answerDetail() {
         return HOST + "/jigsaw/questiondetail";
     }
+
     /**
      * 我的FM我的课程列表
      */
     public static String myFmCourse() {
         return HOST + "/fm/buylist";
     }
+
     /**
      * 课程跟踪-用户班级信息
      */
     public static String traceClassDetail() {
         return HOST + "/course/userdetail";
     }
+
     /**
      * 课程跟踪-搜索
      */

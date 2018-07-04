@@ -53,6 +53,7 @@ import cn.com.zwwl.bayuwen.model.Index1Model;
 import cn.com.zwwl.bayuwen.model.Index1Model.AdvBean;
 import cn.com.zwwl.bayuwen.model.Index1Model.CalendarCourseBean;
 import cn.com.zwwl.bayuwen.model.Index1Model.SelectedCourseBean;
+import cn.com.zwwl.bayuwen.model.PintuModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
@@ -336,10 +337,10 @@ public class DeleteMainFrag1 extends Fragment implements View.OnClickListener {
             if (i == 2) {
                 view.setBackgroundResource(R.drawable.pintu_bg_wangzhe);
             }
-            List<CommonModel> models = new ArrayList<>();
+            List<PintuModel.LectureinfoBean.SectionListBean> models = new ArrayList<>();
             for (int j = 0; j < 54; j++) {
-                CommonModel model = new CommonModel();
-                model.setContent("");
+                PintuModel.LectureinfoBean.SectionListBean model = new PintuModel.LectureinfoBean.SectionListBean();
+
                 models.add(model);
             }
             RadarAdapter radarAdapter = new RadarAdapter(models, pintuWid);
@@ -394,8 +395,7 @@ public class DeleteMainFrag1 extends Fragment implements View.OnClickListener {
                             }
                         });
                         RoundAngleImageView r = view.findViewById(R.id.banner_omg);
-                        ImageLoader.display(mActivity, r, advBean.getPic(), R.mipmap.app_icon,
-                                R.mipmap.app_icon);
+                        ImageLoader.display(mActivity, r, advBean.getPic());
                         views.add(view);
                     }
                     bannerView.setViewList(views);

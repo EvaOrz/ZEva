@@ -111,8 +111,8 @@ public class TopicFragment extends BasicFragment {
                                     for(int j=i+1; j<messageModels.size();j++){
                                         ParsePosition pos1 = new ParsePosition(0);
                                        ParsePosition pos2 = new ParsePosition(0);
-                                      d1 = sdf.parse(messageModels.get(i).getCreate_at(), pos1);
-                                     d2 = sdf.parse(messageModels.get(j).getCreate_at(), pos2);
+                                      d1 = sdf.parse(messageModels.get(i).getUpdate_at(), pos1);
+                                     d2 = sdf.parse(messageModels.get(j).getUpdate_at(), pos2);
                                           if(d1.before(d2)){//如果队前日期靠前，调换顺序//
                                            topicMessageModel=messageModels.get(i);
                                             messageModels.set(i, messageModels.get(j));

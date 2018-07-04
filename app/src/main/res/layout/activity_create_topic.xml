@@ -102,7 +102,10 @@
                 android:checked="false"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/entry_topic_content"
+                android:drawableLeft="@drawable/selector_checkbox"
                 android:text="匿名"
+                android:button="@null"
+                android:textSize="@dimen/dp_14"
                 android:textColor="@color/gray_dark" />
 
         </RelativeLayout>

@@ -197,10 +197,27 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <RelativeLayout
                         android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@mipmap/icon_not_pay" />
+                        android:layout_height="50dp">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@mipmap/icon_not_pay" />
+
+                        <TextView
+                            android:id="@+id/cart_num"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_alignParentRight="true"
+                            android:background="@drawable/draw_redrounds"
+                            android:gravity="center"
+                            android:text="2"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                    </RelativeLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -284,6 +301,31 @@
             </LinearLayout>
 
             <include layout="@layout/layout_line" />
+            <LinearLayout
+                android:id="@+id/frag5_my_fm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/fm_img" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="我的FM"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_14" />
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_line" />
 
             <LinearLayout
                 android:id="@+id/frag5_tuangou"
@@ -297,39 +339,13 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@mipmap/tuangou" />
+                    android:src="@mipmap/my_fm" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:text="@string/my_tuan"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="@dimen/text_size_14" />
-
-            </LinearLayout>
-
-            <include layout="@layout/layout_line" />
-
-            <LinearLayout
-                android:id="@+id/frag5_my_fm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@mipmap/tuangou" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="我的FM"
                     android:textColor="@color/gray_dark"
                     android:textSize="@dimen/text_size_14" />
 

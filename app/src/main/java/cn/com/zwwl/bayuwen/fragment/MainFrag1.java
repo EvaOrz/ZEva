@@ -15,19 +15,17 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.MyApplication;
@@ -36,36 +34,38 @@ import cn.com.zwwl.bayuwen.activity.AllXunzhangActivity;
 import cn.com.zwwl.bayuwen.activity.CalendarActivity;
 import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
 import cn.com.zwwl.bayuwen.activity.CityActivity;
+import cn.com.zwwl.bayuwen.activity.FCourseIndexActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
-import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
+import cn.com.zwwl.bayuwen.adapter.AchieveMainAdapter;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
+import cn.com.zwwl.bayuwen.api.AchievementApi;
 import cn.com.zwwl.bayuwen.api.Index1Api;
+import cn.com.zwwl.bayuwen.api.PintuListApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.AchievementModel;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.Index1Model;
 import cn.com.zwwl.bayuwen.model.Index1Model.AdvBean;
-import cn.com.zwwl.bayuwen.model.Index1Model.CalendarCourseBean;
-import cn.com.zwwl.bayuwen.model.Index1Model.SelectedCourseBean;
+import cn.com.zwwl.bayuwen.model.PintuModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.AppValue;
-import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.ChildMenuPopView;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
-import cn.com.zwwl.bayuwen.widget.LoopViewPager;
+import cn.com.zwwl.bayuwen.widget.MostGridView;
 import cn.com.zwwl.bayuwen.widget.RoundAngleImageView;
-import cn.com.zwwl.bayuwen.widget.RoundAngleLayout;
 import cn.com.zwwl.bayuwen.widget.threed.GalleryTransformer;
+import cn.com.zwwl.bayuwen.widget.threed.InfinitePagerAdapter;
 import cn.com.zwwl.bayuwen.widget.threed.InfiniteViewPager;
-import cn.jzvd.JZUtils;
 
 /**
  *
@@ -79,13 +79,15 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private View root;
     private RelativeLayout toolbar;//
     private InfiniteViewPager pingPager;// 拼图列表
-    private MyViewPagerAdapter pingAdapter;
+    private InfinitePagerAdapter pingAdapter;
     private LinearLayout pingtu_indicator;// 拼图指示器
+    private MostGridView achieveGrid;// 成就列表
+    private TextView achiTv;
 
-    private List<AdvBean> advBeans = new ArrayList<>();// banner数据
-    private List<View> pingtuData = new ArrayList<>();
+    private List<View> pingtuViews = new ArrayList<>();
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
-    private UserModel userModel;
+    private List<AchievementModel> achiveatas = new ArrayList<>();// 成就数据
+    private List<PintuModel> pintuModels = new ArrayList<>();// 拼图数据
 
     private int pintuWid, pintuHei;// 拼图item的宽高
 
@@ -101,6 +103,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        if (isCityChanged) {
+            getPintuData();
+            handler.sendEmptyMessage(1);
+        }
 
     }
 
@@ -113,9 +119,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            if (isCityChanged)
-                loadData();
-        } else {
+            if (isCityChanged) {
+                getPintuData();
+                handler.sendEmptyMessage(1);
+            }
         }
     }
 
@@ -127,6 +134,50 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         root = inflater.inflate(R.layout.fragment_main1, container, false);
         initView();
         return root;
+    }
+
+    /**
+     * 获取拼图数据
+     */
+    public void getPintuData() {
+        new PintuListApi(mActivity, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+                pintuModels.clear();
+                if (Tools.listNotNull(list)) pintuModels.addAll(list);
+                initPingtudata();
+                handler.sendEmptyMessage(3);
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
+    }
+
+    /**
+     * 获取当前学员的成就
+     */
+    public void getAchieveData() {
+        new AchievementApi(mActivity, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+                achiveatas.clear();
+                if (Tools.listNotNull(list)) {
+                    for (int i = 0; i < list.size(); i++) {
+                        if (((AchievementModel) list.get(i)).getIs_get() == 1) {
+                            achiveatas.add((AchievementModel) list.get(i));
+                        }
+                    }
+                }
+                handler.sendEmptyMessage(2);
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+            }
+        });
     }
 
     /**
@@ -150,55 +201,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         params1.setMargins(0, 16, 0, 16);
         pingPager.setLayoutParams(params1);
 
-        initPingtudata();
-        pingAdapter = new MyViewPagerAdapter(pingtuData);
-        pingPager.setAdapter(pingAdapter);
-        pingPager.setOffscreenPageLimit(3);
-        pingPager.setPageTransformer(true, new GalleryTransformer());
-        pingtu_indicator.removeAllViews();
-        for (int i = 0; i < pingtuData.size(); i++) {
-            ImageView img = new ImageView(getContext());
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
-                    (LinearLayout.LayoutParams.WRAP_CONTENT,
-                            LinearLayout.LayoutParams
-                                    .WRAP_CONTENT);
-            layoutParams.rightMargin = getResources().getDimensionPixelOffset(R.dimen
-                    .dp_5);
-            img.setLayoutParams(layoutParams);
-            img.setBackgroundResource(R.drawable.viewlooper_gray_status);
-            pingtu_indicator.addView(img);
-        }
-        pingPager.setCurrentItem(2);
-
-    }
-
-    /**
-     * 城市信息变换之后，页面需要刷新数据
-     */
-    public void loadData() {
-        locationTv.setText(TempDataHelper.getCurrentCity(mActivity));
-        new Index1Api(mActivity, new FetchEntryListener() {
-            @Override
-            public void setData(Entry entry) {
-                if (entry != null && entry instanceof Index1Model) {
-                    advBeans.clear();
-                    Index1Model index1Model = (Index1Model) entry;
-                    if (Tools.listNotNull(index1Model.getAdv())) {
-                        advBeans.addAll(index1Model.getAdv());
-                    }
-                    handler.sendEmptyMessage(1);
-                    isCityChanged = false;
-                }
-
-            }
-
-            @Override
-            public void setError(ErrorMsg error) {
-                if (error != null) {
-                    AppValue.showToast(mActivity, error.getDesc());
-                }
-            }
-        });
     }
 
 
@@ -211,6 +213,8 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         childCoin = root.findViewById(R.id.frag1_coin);
         locationTv = root.findViewById(R.id.position);
         pingtu_indicator = root.findViewById(R.id.pingtu_indicator);
+        achieveGrid = root.findViewById(R.id.xunzhang_grid);
+        achiTv = root.findViewById(R.id.xunzhang_tv);
 
         pingPager = root.findViewById(R.id.pingtu_pager);
         pingPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -226,8 +230,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
+            public void onPageScrollStateChanged(int scrollState) {
             }
         });
         initSize();
@@ -260,33 +263,56 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
      * 获取拼图列表数据
      */
     private void initPingtudata() {
-        pingtuData.clear();
+        pingtuViews.clear();
         LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(pintuWid +
                 paddingLeft + paddingRight,
                 pintuHei +
                         paddingTop + paddingBottom);
-        for (int i = 0; i < 5; i++) {
-            View view = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu, null);
+        for (int i = 0; i < pintuModels.size(); i++) {
+            final View view = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu, null);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    goDati();
+                }
+            });
             view.setLayoutParams(params1);
             view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
             RecyclerView recyclerView = view.findViewById(R.id.radar_fragmain1);
             recyclerView.setLayoutParams(new LinearLayout.LayoutParams(pintuWid, pintuHei));
 
+            recyclerView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        view.performClick();  //模拟父控件的点击
+                    }
+                    return false;
+                }
+            });
+
             if (i == 2) {
                 view.setBackgroundResource(R.drawable.pintu_bg_wangzhe);
             }
-            List<CommonModel> models = new ArrayList<>();
-            for (int j = 0; j < 54; j++) {
-                CommonModel model = new CommonModel();
-                model.setContent("");
-                models.add(model);
+            if (Tools.listNotNull(pintuModels.get(i).getLectureinfo())) {
+                List<PintuModel.LectureinfoBean.SectionListBean> models = pintuModels.get(i)
+                        .getLectureinfo().get(0).getSectionList();
+                if (Tools.listNotNull(models) && models.size() == 54) {
+                    RadarAdapter radarAdapter = new RadarAdapter(models, pintuWid);
+                    recyclerView.setAdapter(radarAdapter);
+                    recyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                }
             }
-            RadarAdapter radarAdapter = new RadarAdapter(models, pintuWid);
-            recyclerView.setAdapter(radarAdapter);
-            recyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
-            pingtuData.add(view);
+            pingtuViews.add(view);
         }
+    }
+
+    private void goDati() {
+        Intent i = new Intent(mActivity, FCourseIndexActivity.class);
+        i.putExtra("kid", "7018");
+        i.putExtra("title", "测试");
+        startActivity(i);
     }
 
     /**
@@ -297,8 +323,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     public void loadChild(List<ChildModel> childModels) {
         this.childModels.clear();
         this.childModels.addAll(childModels);
-        loadData();
+        getAchieveData();
+        getPintuData();
         handler.sendEmptyMessage(0);
+        handler.sendEmptyMessage(1);
     }
 
 
@@ -320,26 +348,41 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                         }
                     }
                     break;
-                case 1:// 初始化页面数据
-                    List<View> views = new ArrayList<>();
-                    for (int i = 0; i < advBeans.size(); i++) {
-                        final AdvBean advBean = advBeans.get(i);
-                        View view = LayoutInflater.from(mActivity).inflate(R.layout
-                                .item_frag1_banner, null);
-                        view.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent i = new Intent(mActivity, VideoPlayActivity.class);
-                                i.putExtra("VideoPlayActivity_url", advBean.getLink());
-                                i.putExtra("VideoPlayActivity_pic", advBean.getPic());
-                                startActivity(i);
-                            }
-                        });
-                        RoundAngleImageView r = view.findViewById(R.id.banner_omg);
-                        ImageLoader.display(mActivity, r, advBean.getPic(), R.mipmap.app_icon,
-                                R.mipmap.app_icon);
-                        views.add(view);
+                case 1:// 显示当前城市
+                    locationTv.setText(TempDataHelper.getCurrentCity(mActivity));
+                    isCityChanged = false;
+                    break;
+                case 2:// 显示当前学员获得的成就
+                    if (achiveatas.size() > 0) {
+                        achieveGrid.setVisibility(View.VISIBLE);
+                        achiTv.setVisibility(View.GONE);
+                        AchieveMainAdapter adapter = new AchieveMainAdapter(mActivity, achiveatas);
+                        achieveGrid.setAdapter(adapter);
+                    } else {
+                        achieveGrid.setVisibility(View.GONE);
+                        achiTv.setVisibility(View.VISIBLE);
                     }
+                    break;
+
+                case 3:// load 拼图数据
+                    pingAdapter = new InfinitePagerAdapter(pingtuViews);
+                    pingPager.setAdapter(pingAdapter);
+                    pingPager.setOffscreenPageLimit(3);
+                    pingPager.setPageTransformer(true, new GalleryTransformer());
+                    pingtu_indicator.removeAllViews();
+                    for (int i = 0; i < pingtuViews.size(); i++) {
+                        ImageView img = new ImageView(getContext());
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
+                                (LinearLayout.LayoutParams.WRAP_CONTENT,
+                                        LinearLayout.LayoutParams
+                                                .WRAP_CONTENT);
+                        layoutParams.rightMargin = getResources().getDimensionPixelOffset(R.dimen
+                                .dp_5);
+                        img.setLayoutParams(layoutParams);
+                        img.setBackgroundResource(R.drawable.viewlooper_gray_status);
+                        pingtu_indicator.addView(img);
+                    }
+                    pingPager.setCurrentItem(2);
                     break;
             }
         }

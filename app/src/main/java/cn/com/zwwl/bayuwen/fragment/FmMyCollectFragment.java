@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 
@@ -16,25 +17,26 @@ import java.util.Map;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.FmHositoryAdapter;
+import cn.com.zwwl.bayuwen.adapter.FmMyCollectionAdapter;
 import cn.com.zwwl.bayuwen.api.AddCommentApi;
 import cn.com.zwwl.bayuwen.api.CancelCollectApi;
+import cn.com.zwwl.bayuwen.api.FmCollectListApi;
 import cn.com.zwwl.bayuwen.api.FmListApi;
 import cn.com.zwwl.bayuwen.api.UrlUtil;
 import cn.com.zwwl.bayuwen.dialog.AskDialog;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.FmListhiistoryModel;
+import cn.com.zwwl.bayuwen.model.FmListCollectModel;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
-import cn.com.zwwl.bayuwen.util.Tools;
 
 public class FmMyCollectFragment extends Fragment {
 
     ListView listView1;
     private View view;
-    private List<FmListhiistoryModel> fmListhiistoryModels;
-    private FmHositoryAdapter fmHositoryAdapter;
+    private List<FmListCollectModel.DataBean> dataBeans;
+    private FmMyCollectionAdapter fmMyCollectionAdapter;
     private String ID;
-
+    private ImageView no_fm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,40 +61,36 @@ public class FmMyCollectFragment extends Fragment {
 
     private void HttpData() {
         String url = UrlUtil.getCollecturl();
-        new FmListApi(getActivity(), url, new ResponseCallBack<List<FmListhiistoryModel>>() {
+        new FmCollectListApi(getActivity(), url, new ResponseCallBack<FmListCollectModel>() {
             @Override
-            public void result(List<FmListhiistoryModel> messageModel, ErrorMsg errorMsg) {
+            public void result(FmListCollectModel messageModel, ErrorMsg errorMsg) {
 
-                if (messageModel != null && messageModel.size() > 0) {
-                    fmListhiistoryModels.clear();
-                    for (FmListhiistoryModel aa : messageModel) {
+                if (messageModel != null) {
+                    dataBeans.clear();
+                    no_fm.setVisibility(View.GONE);
+                    dataBeans = messageModel.getData();
 
-                        fmListhiistoryModels.add(aa);
 
-                    }
-                    if (Tools.listNotNull(fmListhiistoryModels)) {
+                    fmMyCollectionAdapter.setData(dataBeans);
+                    listView1.setAdapter(fmMyCollectionAdapter);
+                    fmMyCollectionAdapter.notifyDataSetChanged();
 
-                        fmHositoryAdapter.setData(fmListhiistoryModels);
-                        listView1.setAdapter(fmHositoryAdapter);
-                        fmHositoryAdapter.notifyDataSetChanged();
-                    }
                 } else {
-//                    ToastUtil.showShortToast("暂无数据");
+                    no_fm.setVisibility(View.VISIBLE);
                 }
             }
         });
     }
 
     private void initView(View view) {
-        fmListhiistoryModels = new ArrayList<>();
-
-        fmHositoryAdapter = new FmHositoryAdapter(getActivity());
+        dataBeans = new ArrayList<>();
+        no_fm = view.findViewById(R.id.fm_no);
+        fmMyCollectionAdapter = new FmMyCollectionAdapter(getActivity());
         listView1 = view.findViewById(R.id.listView_collection);
         listView1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long
-                    id) {
-                ID = fmListhiistoryModels.get(position).getId();
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                ID = dataBeans.get(position).getId();
                 new AskDialog(getActivity(), "取消收藏", new AskDialog.OnSurePickListener() {
                     @Override
                     public void onSure() {
@@ -118,10 +116,10 @@ public class FmMyCollectFragment extends Fragment {
             @Override
             public void result(String message, ErrorMsg errorMsg) {
 
-                if (errorMsg != null) {
+                if (errorMsg == null) {
 
                     ToastUtil.showShortToast("取消收藏成功");
-                    fmHositoryAdapter.notifyDataSetChanged();
+                    fmMyCollectionAdapter.notifyDataSetChanged();
                     HttpData();
 
                 } else {

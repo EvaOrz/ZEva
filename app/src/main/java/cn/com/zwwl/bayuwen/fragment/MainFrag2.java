@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.KeTagGridAdapter;
 import cn.com.zwwl.bayuwen.api.KeTagListApi;
 import cn.com.zwwl.bayuwen.api.fm.RecommentApi;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
@@ -62,6 +64,7 @@ public class MainFrag2 extends Fragment
     private RelativeLayout mToolbarView;
     private ObservableScrollView mScrollView;
     private LinearLayout contain;
+    private TextView cityTv;
 
     private int mParallaxImageHeight;
     private TagCourseModel part1Model, part2Model, part3Model;
@@ -78,13 +81,13 @@ public class MainFrag2 extends Fragment
                 case 0:
                     contain.removeAllViews();
                     if (part1Model != null) {
-                        contain.addView(getIndex2View(part1Model));
+                        contain.addView(getIndex2View(part1Model, 0));
                     }
                     if (part2Model != null) {
-                        contain.addView(getIndex2View(part2Model));
+                        contain.addView(getIndex2View(part2Model, 1));
                     }
                     if (part3Model != null) {
-                        contain.addView(getIndex2View(part3Model));
+                        contain.addView(getIndex2View(part3Model, 2));
                     }
                     break;
                 case 2:
@@ -96,9 +99,7 @@ public class MainFrag2 extends Fragment
                     for (RecommentModel recommentModel : bannerData) {
                         ImageView r = new ImageView(mActivity);
                         r.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                        ImageLoader.display(mActivity, r, recommentModel.getPic(), R.mipmap
-                                        .app_icon,
-                                R.mipmap.app_icon);
+                        ImageLoader.display(mActivity, r, recommentModel.getPic());
                         views.add(r);
                     }
                     bannerView.setViewList(views);
@@ -108,14 +109,15 @@ public class MainFrag2 extends Fragment
         }
     };
 
-    private View getIndex2View(final TagCourseModel model) {
+    private View getIndex2View(final TagCourseModel model, int type) {
         View itemView = LayoutInflater.from(mActivity).inflate(R.layout.item_index2, null);
         MostGridView grid = itemView.findViewById(R.id.index2_grid);
         TextView title = itemView.findViewById(R.id.index2_title);
         LinearLayout con = itemView.findViewById(R.id.index2_contain);
 
-        KeTagGridAdapter adapter = new KeTagGridAdapter(mActivity, model.getClassify().getDetails
-                ());
+        KeTagGridAdapter adapter = new KeTagGridAdapter(mActivity, type, model.getClassify()
+                .getDetails
+                        ());
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -131,7 +133,7 @@ public class MainFrag2 extends Fragment
         int width = (MyApplication.width - 60 - 40 * 3) / 3;
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, width * 9 / 16);
         params.setMargins(20, 0, 20, 0);
-        RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(80, 80);
+        RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(100, 100);
         params1.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
         for (final DetailsBeanX detailsBean : model.getVideo().getDetails()) {
 
@@ -141,8 +143,6 @@ public class MainFrag2 extends Fragment
             imageView.setLayoutParams(params);
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             imageView.setBackgroundColor(mActivity.getResources().getColor(R.color.gray_light));
-//            ImageLoader.display(mActivity, imageView, detailsBean.getImg(), R.mipmap.app_icon, R
-//                    .mipmap.app_icon);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -171,10 +171,7 @@ public class MainFrag2 extends Fragment
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            if (isCityChanged) {// 切换城市之后 要重新获取课程tag list,点赞排行不必重新获取
-                getEleCourseList();
-            }
-        } else {
+            checkCityChange();
         }
     }
 
@@ -188,6 +185,17 @@ public class MainFrag2 extends Fragment
     public void onResume() {
         super.onResume();
         bannerView.startLoop(true);
+        checkCityChange();
+        cityTv.setText(TempDataHelper.getCurrentCity(mActivity));
+    }
+
+    private void checkCityChange() {
+        if (isCityChanged) {
+            cityTv.setText(TempDataHelper.getCurrentCity(mActivity));
+            getEleCourseList();
+            getBannerList();
+            isCityChanged = false;
+        }
 
     }
 
@@ -255,12 +263,12 @@ public class MainFrag2 extends Fragment
         mToolbarView.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, getResources().getColor
                 (R.color.transparent)));
 
-
         mScrollView = root.findViewById(R.id.scroll);
         mScrollView.setScrollViewCallbacks(this);
         mScrollView.setZoomView(bannerView);
         contain = root.findViewById(R.id.frag2_contain);
 
+        cityTv = mToolbarView.findViewById(R.id.position);
         mToolbarView.findViewById(R.id.menu_more).setOnClickListener(this);
         mToolbarView.findViewById(R.id.menu_news).setOnClickListener(this);
         mToolbarView.findViewById(R.id.menu_school).setOnClickListener(this);

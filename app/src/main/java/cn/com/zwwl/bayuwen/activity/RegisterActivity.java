@@ -19,6 +19,8 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.RequestMobileCodeCallback;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
+import com.tencent.map.geolocation.TencentLocationManager;
+import com.tencent.map.geolocation.TencentLocationRequest;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
@@ -45,12 +47,14 @@ public class RegisterActivity extends BaseActivity implements TencentLocationLis
     private boolean canGetVerify = true;// 是否可获取验证码
     private boolean isShowPassword = false;// 是否显示密码
     private String curCity;
+    private TencentLocationManager mLocationManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_register);
+        registerTencentLocation();
         initView();
         needCheckLogin = false;
     }
@@ -59,6 +63,29 @@ public class RegisterActivity extends BaseActivity implements TencentLocationLis
     protected void initData() {
 
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopLocation();
+    }
+
+    private void registerTencentLocation() {
+        mLocationManager = TencentLocationManager.getInstance(this);
+        // 设置坐标系为 gcj-02, 缺省坐标为 gcj-02, 所以通常不必进行如下调用
+        mLocationManager.setCoordinateType(TencentLocationManager.COORDINATE_TYPE_GCJ02);
+        // 创建定位请求
+        TencentLocationRequest request = TencentLocationRequest.create()
+                .setInterval(60 * 1000) // 设置定位周期
+                .setAllowGPS(true)  //当为false时，设置不启动GPS。默认启动
+                .setQQ("10001")
+                .setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_ADMIN_AREA); // 设置定位level
+
+        // 开始定位
+        mLocationManager.requestLocationUpdates(request, this, getMainLooper());
+
+    }
+
 
     private void initView() {
         accountEdit = findViewById(R.id.register_account_edit);
@@ -83,6 +110,9 @@ public class RegisterActivity extends BaseActivity implements TencentLocationLis
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
+                    if (TextUtils.isEmpty(curCity)) {
+                        curCity = TempDataHelper.getCurrentCity(mContext);
+                    }
                     cityTv.setText(curCity);
                     break;
             }
@@ -205,13 +235,25 @@ public class RegisterActivity extends BaseActivity implements TencentLocationLis
         }
     }
 
+    // 响应点击"停止"
+    public void stopLocation() {
+        mLocationManager.removeUpdates(this);
+        Log.e("tencent location", "停止定位");
+    }
 
     @Override
-    public void onLocationChanged(TencentLocation tencentLocation, int i, String s) {
-        Log.e("sssssss", s + " __ " + tencentLocation.getCity());
-        if (TextUtils.isEmpty(TempDataHelper.getCurrentCity(this))) {
-            TempDataHelper.setCurrentCity(mContext, tencentLocation.getCity());
+    public void onLocationChanged(TencentLocation tencentLocation, int error, String s) {
+        // 定位成功
+        if (error == TencentLocation.ERROR_OK) {
+            if (TextUtils.isEmpty(TempDataHelper.getCurrentCity(this))) {
+                curCity = tencentLocation.getCity();
+            }
+        } else {// 定位失败
+            if (TextUtils.isEmpty(TempDataHelper.getCurrentCity(this))) {
+                curCity = "北京市";
+            }
         }
+        handler.sendEmptyMessage(0);
     }
 
     @Override

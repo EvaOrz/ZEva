@@ -48,6 +48,7 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.model.ReportModel;
+import cn.com.zwwl.bayuwen.push.NewPushManager;
 import cn.com.zwwl.bayuwen.util.DialogUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.music.MusicWindow;
@@ -88,6 +89,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_core);
         mContext = this;
+        NewPushManager.getInstance(this).register();
         initView();
         userModel = UserDataHelper.getUserLoginInfo(mContext);
         initData();
@@ -140,13 +142,25 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
+        NewPushManager.getInstance(this).onresume(this);
         MusicWindow.getInstance(this).movetoController(getViewHeight(barLayout));
+
         isGoAlbumActivity = false;
         super.onResume();
         if (MyApplication.loginStatusChange) {
             Log.e("********", "登录状态变化");
             initData();
             MyApplication.loginStatusChange = false;
+        }
+        if (MyApplication.userStatusChange) {
+            Log.e("********", "用户和学员信息变化");
+            initData();
+            MyApplication.userStatusChange = false;
+        }
+        if (MyApplication.cityStatusChange) {
+            mainFrag1.isCityChanged = true;
+            mainFrag2.isCityChanged = true;
+            MyApplication.cityStatusChange = false;
         }
     }
 
@@ -335,17 +349,6 @@ public class MainActivity extends BaseActivity {
             }
         });
         return view;
-    }
-
-
-    /**
-     * frag1 ,frag2,frag3切换城市
-     * 标记其他tab的状态
-     */
-    public void changeCity(int i) {
-        mainFrag1.isCityChanged = i == 0 ? false : true;
-        mainFrag2.isCityChanged = i == 1 ? false : true;
-        mainFrag3.isCityChanged = i == 2 ? false : true;
     }
 
     @Override

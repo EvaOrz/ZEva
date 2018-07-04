@@ -60,7 +60,7 @@ public class AddTopicLabelAdapter extends BaseAdapter {
             ImageLoader.display(mActivity, mViewHolder.circle, addTopicLabelModels.get(position)
                     .getUrl());
         } else {
-            ImageLoader.display(mActivity, mViewHolder.circle, R.mipmap.app_icon);
+            ImageLoader.display(mActivity, mViewHolder.circle, R.mipmap.image_placeholder);
         }
 
         mViewHolder.labelName.setText(addTopicLabelModels.get(position).getName());

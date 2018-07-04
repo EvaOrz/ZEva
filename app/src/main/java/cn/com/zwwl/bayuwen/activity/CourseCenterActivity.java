@@ -253,7 +253,11 @@ public class CourseCenterActivity extends BaseActivity {
                 case 1:
                     String gra = "";
                     if (gradeTxt > 0) gra = AppValue.getGradeStrings().get(gradeTxt - 1);
-                    selectMenuView.setData(keTypeModel, gra, tagId);
+                    boolean isWangke = false;
+                    if (!TextUtils.isEmpty(tagId) && tagId.equals("100")){
+                        isWangke = true;
+                    }
+                    selectMenuView.setData(keTypeModel, gra, tagId, isWangke);
                     int height = getViewHeight(selectMenuView);
                     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams
                             (RelativeLayout

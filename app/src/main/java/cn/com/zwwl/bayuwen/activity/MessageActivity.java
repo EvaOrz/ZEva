@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -24,7 +25,7 @@ public class MessageActivity extends BaseActivity {
     private RadioButton notification, topic;
     private FrameLayout fg_view;
     private Fragment[] mFragments;
-    private TextView message_add;
+    private ImageView message_add;
     private int mIndex;
 
 
