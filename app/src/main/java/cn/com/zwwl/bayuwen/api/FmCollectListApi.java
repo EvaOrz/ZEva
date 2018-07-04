@@ -20,13 +20,15 @@ public class FmCollectListApi extends BaseApi {
 
     private String url;
     private Activity activity;
+    private String type;
     ResponseCallBack<FmListCollectModel> listener;
     private String titlename;
 
     public FmCollectListApi(Activity context , String url, ResponseCallBack<FmListCollectModel> listener) {
         super(context);
         this.activity = context;
-        this.url =url;
+        this.type="2";
+        this.url =url+"?type="+this.type;
         this.listener =listener;
         get();
     }
