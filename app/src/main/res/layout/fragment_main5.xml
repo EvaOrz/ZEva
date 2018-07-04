@@ -301,6 +301,7 @@
             </LinearLayout>
 
             <include layout="@layout/layout_line" />
+
             <LinearLayout
                 android:id="@+id/frag5_my_fm"
                 android:layout_width="match_parent"
@@ -339,7 +340,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@mipmap/my_fm" />
+                    android:src="@mipmap/tuangou" />
 
                 <TextView
                     android:layout_width="wrap_content"

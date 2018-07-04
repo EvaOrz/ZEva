@@ -9,7 +9,12 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.List;
+
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.api.order.GetTuanDiancodesApi;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
 /**
  * 团购付费结果页面
@@ -35,6 +40,8 @@ public class TuanPayResultActivity extends BaseActivity {
         desc = getIntent().getStringExtra("TuanPayResultActivity_desc");
         oid = getIntent().getStringExtra("TuanPayResultActivity_oid");
         initView();
+
+        initData();
     }
 
     private void initView() {
@@ -98,7 +105,17 @@ public class TuanPayResultActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        new GetTuanDiancodesApi(mContext, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
 
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
     }
 
 

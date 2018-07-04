@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.order.TuifeeApi;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -121,6 +122,7 @@ public class OrderTuifeeDetailActivity extends BaseActivity {
                     itemOrderTag.setImageResource(model.getTagImg());
                     itemOrderTitle.setText(model.getTitle());
                     itemOrderTeacher.setText(model.getTname());
+                    ImageLoader.display(mContext, itemOrderPic, model.getPic());
                     itemOrderDate.setText(CalendarTools.format(Long.valueOf(model.getStartPtime()),
                             "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(model
                                     .getEndPtime()),

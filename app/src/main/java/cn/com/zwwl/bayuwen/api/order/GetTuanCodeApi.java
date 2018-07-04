@@ -20,6 +20,8 @@ import cn.com.zwwl.bayuwen.model.GroupBuyModel;
  * 发起拼团（获取我自己的拼团码）
  * <p>
  * 我要垫付（获取我自己的拼团码）
+ *
+ *
  */
 public class GetTuanCodeApi extends BaseApi {
     private FetchEntryListener listener;

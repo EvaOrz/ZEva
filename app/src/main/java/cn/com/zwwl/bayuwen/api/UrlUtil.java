@@ -189,6 +189,11 @@ public class UrlUtil {
         return HOST + "/grouppurchase";
     }
 
+    // 获取垫付之后的码列表
+    public static String getTuanCodes() {
+        return HOST + "/grouppurchase/code";
+    }
+
     // 根据课程兑换码获取课程详情
     public static String getKemodelByCode() {
         return HOST + "/grouppurchase/course";

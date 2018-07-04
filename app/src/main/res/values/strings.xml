@@ -199,7 +199,7 @@
     <string name="woyaokaituan">我要开团</string>
     <string name="pingtuan_hint">请输入您收到的拼团码</string>
     <string name="pingtuan_hint1">请输入您收到的课程码</string>
-    <string name="dian_option1">垫付数量</string>
+    <string name="dian_option1">垫付数量（含自己）</string>
     <string name="dian_option3">课程总价格</string>
     <string name="dian_option4">教材价格</string>
     <string name="dian_option5">团购优惠价</string>
