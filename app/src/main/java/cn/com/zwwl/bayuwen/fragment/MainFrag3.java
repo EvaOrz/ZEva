@@ -43,6 +43,7 @@ import cn.com.zwwl.bayuwen.adapter.CourseIndexAdapter;
 import cn.com.zwwl.bayuwen.adapter.LatestReportAdapter;
 import cn.com.zwwl.bayuwen.api.MyCourseApi;
 import cn.com.zwwl.bayuwen.base.BasicFragment;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.Index1Model;
@@ -74,6 +75,8 @@ public class MainFrag3 extends BasicFragment {
     RecyclerView report;
     @BindView(R.id.calendar_ri)
     TextView calendarRi;
+    @BindView(R.id.position)
+    TextView position;
     @BindView(R.id.calendar_yue)
     TextView calendarYue;
     @BindView(R.id.calendar_kecheng_layout)
@@ -86,7 +89,6 @@ public class MainFrag3 extends BasicFragment {
     CourseIndexAdapter courseIndexAdapter;
     LatestReportAdapter reportAdapter;
     private Index1Model.CalendarCourseBean calendarCourseBean;// calendar事件数据
-    public boolean isCityChanged = false;// 城市状态是否变化
     private List<LessonReportModel> reportModels;
 
     @Override
@@ -104,10 +106,16 @@ public class MainFrag3 extends BasicFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            if (isCityChanged) {// 切换城市之后 要重新获取课程tag list,点赞排行不必重新获取
-                refresh.autoRefresh();
-            }
+            refresh.autoRefresh();// 该tab被切换时一律刷新数据
+            position.setText(TempDataHelper.getCurrentCity(mContext));
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh.autoRefresh();// 该tab恢复时一律刷新数据
+        position.setText(TempDataHelper.getCurrentCity(mContext));
     }
 
     @Override
@@ -154,8 +162,10 @@ public class MainFrag3 extends BasicFragment {
             for (Index1Model.CalendarCourseBean.CoursesBean coursesBean : calendarCourseBean
                     .getCourses()) {
                 TextView tip = new TextView(activity);
-                tip.setText(String.format("%s %s-%s", coursesBean.getTitle(), TimeUtil.parseToHm(coursesBean
-                        .getClass_start_at()), TimeUtil.parseToHm(coursesBean.getClass_end_at())));
+                tip.setText(String.format("%s %s-%s", coursesBean.getTitle(), TimeUtil.parseToHm
+                        (coursesBean
+                                .getClass_start_at()), TimeUtil.parseToHm(coursesBean
+                        .getClass_end_at())));
                 tip.setTextColor(getResources().getColor(R.color.gray_dark));
                 tip.setTextSize(14);
                 calendarLayout.addView(tip);
@@ -237,7 +247,8 @@ public class MainFrag3 extends BasicFragment {
                     case R.id.work:
                         if (!bean.getPlan().isOpen()) {
                             ToastUtil.showShortToast("该课程尚未开课~");
-                        } else if (bean.getPlan().getJob() != null && bean.getPlan().getIs_submit_job() == 1) {
+                        } else if (bean.getPlan().getJob() != null && bean.getPlan()
+                                .getIs_submit_job() == 1) {
                             intent.setClass(activity, WorkDetailsActivity.class);
                             intent.putExtra("model", bean.getPlan().getJob());
                             startActivity(intent);
@@ -286,6 +297,7 @@ public class MainFrag3 extends BasicFragment {
                 intent.putExtra("title", courseModel.getUnfinished().get(position).getProducts().getTitle());
 //                intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
 //                        .get(position).getProducts().getOnline()));
+
                 startActivity(intent);
             }
         });

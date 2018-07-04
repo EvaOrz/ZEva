@@ -33,6 +33,7 @@ import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.PintuModel;
 import cn.com.zwwl.bayuwen.model.ReportModel;
 import cn.com.zwwl.bayuwen.model.StudyingModel;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
@@ -110,10 +111,11 @@ public class FCourseIndexActivity extends BasicActivityWithTitle {
         recyclerView.setLayoutParams(new LinearLayout.LayoutParams(pintuWid, pintuHei));
 
 
-        List<CommonModel> models = new ArrayList<>();
+        List<PintuModel.LectureinfoBean.SectionListBean> models = new ArrayList<>();
         for (int j = 0; j < 54; j++) {
-            CommonModel model = new CommonModel();
-            model.setContent("");
+            PintuModel.LectureinfoBean.SectionListBean model = new PintuModel.LectureinfoBean
+                    .SectionListBean();
+
             models.add(model);
         }
         radarAdapter = new RadarAdapter(models, pintuWid);

@@ -47,8 +47,8 @@
             android:gravity="center_vertical">
 
             <android.support.v7.widget.AppCompatImageView
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:contentDescription="@null"
                 android:scaleType="centerInside"
                 android:src="@mipmap/yellow_map" />

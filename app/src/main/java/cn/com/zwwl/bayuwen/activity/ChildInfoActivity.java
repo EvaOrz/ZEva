@@ -356,7 +356,7 @@ public class ChildInfoActivity extends BaseActivity {
             public void setData(Entry entry) {
                 showLoadingDialog(false);
                 if (entry != null && entry instanceof ChildModel) {
-                    MyApplication.loginStatusChange = true;
+                    MyApplication.userStatusChange = true;
                     finish();
                 }
             }
