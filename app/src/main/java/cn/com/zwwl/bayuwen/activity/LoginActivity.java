@@ -206,7 +206,6 @@ public class LoginActivity extends BaseActivity implements TencentLocationListen
                 TempDataHelper.setCurrentCity(mContext, "北京市");
                 showToast("定位失败，设置当前默认城市为北京市");
             }
-
         }
 
 

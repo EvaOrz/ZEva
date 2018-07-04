@@ -160,7 +160,7 @@ public class ParentInfoActivity extends BaseActivity {
             public void setData(Entry entry) {
                 showLoadingDialog(false);
                 if (entry != null && entry instanceof UserModel) {
-                    MyApplication.loginStatusChange = true;
+                    MyApplication.userStatusChange = true;
                     finish();
                 }
             }

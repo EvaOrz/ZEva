@@ -33,15 +33,11 @@ import cn.com.zwwl.bayuwen.activity.MyCollectionActivity;
 import cn.com.zwwl.bayuwen.activity.MyOrderActivity;
 import cn.com.zwwl.bayuwen.activity.MyTuanActivity;
 import cn.com.zwwl.bayuwen.activity.OurFmActivity;
-import cn.com.zwwl.bayuwen.activity.RegisterAddChildActivity;
 import cn.com.zwwl.bayuwen.activity.SettingActivity;
 import cn.com.zwwl.bayuwen.activity.TuanCodeUseActivity;
-import cn.com.zwwl.bayuwen.activity.fm.FmHistoryActivity;
 import cn.com.zwwl.bayuwen.api.order.OrderCancleNumApi;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
-import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
-import cn.com.zwwl.bayuwen.model.AchievementModel;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -86,6 +82,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        checkCartNum();
         handler.sendEmptyMessage(0);
     }
 

@@ -11,6 +11,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.util.ShareTools;
 
 
 /**
@@ -32,7 +33,8 @@ public class SharePopWindow extends PopupWindow {
                 window.dismiss();
             }
         });
-        window = new PopupWindow(conentView, RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        window = new PopupWindow(conentView, RelativeLayout.LayoutParams.FILL_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
         window.setFocusable(true);
         window.setOutsideTouchable(true);
         window.setAnimationStyle(R.style.fetch_image_popup_anim);
@@ -69,7 +71,7 @@ public class SharePopWindow extends PopupWindow {
      *
      * @param context
      */
-    public SharePopWindow(final Context context, final String content) {
+    public SharePopWindow(final Context context, final String content, String url) {
         mContext = context;
         this.content = content;
         init();
@@ -82,7 +84,8 @@ public class SharePopWindow extends PopupWindow {
                 window.dismiss();
             }
         });
-        conentView.findViewById(R.id.share_pengyouquan).setOnClickListener(new View.OnClickListener() {
+        conentView.findViewById(R.id.share_pengyouquan).setOnClickListener(new View
+                .OnClickListener() {
             @Override
             public void onClick(View view) {
                 type = 3;
