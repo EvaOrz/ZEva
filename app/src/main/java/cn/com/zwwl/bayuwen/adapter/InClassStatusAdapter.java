@@ -1,5 +1,7 @@
 package cn.com.zwwl.bayuwen.adapter;
 
+import android.support.v7.widget.AppCompatImageView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -7,7 +9,6 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
-import cn.com.zwwl.bayuwen.widget.CircleImageView;
 
 public class InClassStatusAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     public InClassStatusAdapter(List<String> data) {
@@ -16,6 +17,6 @@ public class InClassStatusAdapter extends BaseQuickAdapter<String, BaseViewHolde
 
     @Override
     protected void convert(BaseViewHolder helper, String item) {
-        ImageLoader.display(mContext, (CircleImageView) helper.getView(R.id.pic), item);
+        ImageLoader.display(mContext, (AppCompatImageView) helper.getView(R.id.pic), item);
     }
 }
