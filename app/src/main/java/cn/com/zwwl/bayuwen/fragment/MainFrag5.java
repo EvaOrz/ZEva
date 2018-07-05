@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.umeng.socialize.UMShareAPI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -241,7 +242,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 break;
             case R.id.frag5_invite:// 邀请好友加入大语文
 //                SharePopWindow sharePopWindow=new SharePopWindow(getActivity(),"AAA");
-                ShareTools.doShareWeb((BaseActivity) getActivity(),"","","","https://www.baidu.com");
+                ShareTools.doShareWeb((BaseActivity) getActivity(),"大语文","大运问的","http://dev.umeng.com/images/tab2_1.png","https://www.baidu.com");
 
                 break;
             case R.id.frag5_feedback:// 反馈
@@ -287,5 +288,9 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
         super.onDestroyView();
     }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(getActivity()).onActivityResult(requestCode, resultCode, data);
+    }
 }

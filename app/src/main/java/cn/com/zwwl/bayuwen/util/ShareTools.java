@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.util;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
@@ -45,6 +46,8 @@ public class ShareTools {
                     @Override
                     public void onResult(SHARE_MEDIA share_media) {
                         context.showToast(R.string.share_success);
+
+
                     }
 
                     /**
@@ -54,7 +57,11 @@ public class ShareTools {
                      */
                     @Override
                     public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-                        context.showToast(R.string.share_faile);
+
+                         context.showToast(R.string.share_faile);
+
+
+
                     }
 
                     /**

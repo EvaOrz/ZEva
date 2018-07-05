@@ -10,7 +10,11 @@ import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.util.ShareTools;
 
 
@@ -49,7 +53,6 @@ public class SharePopWindow extends PopupWindow {
 
                         break;
                     case 2:
-
                         break;
                     case 3:
                         break;
