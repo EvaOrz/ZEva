@@ -86,9 +86,9 @@
         <android.support.v7.widget.AppCompatImageView
             android:layout_width="@dimen/dp_16"
             android:layout_height="@dimen/dp_16"
-
             android:scaleType="centerInside"
-            android:src="@mipmap/arrow_right_gray" />
+            android:src="@mipmap/arrow_right_gray"
+            android:visibility="gone" />
     </LinearLayout>
 
     <View style="@style/split_line" />
@@ -137,7 +137,8 @@
             android:layout_width="@dimen/dp_16"
             android:layout_height="@dimen/dp_16"
             android:scaleType="centerInside"
-            android:src="@mipmap/arrow_right_gray" />
+            android:src="@mipmap/arrow_right_gray"
+            android:visibility="gone" />
     </LinearLayout>
 
     <View style="@style/split_line" />
