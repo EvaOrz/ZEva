@@ -65,7 +65,6 @@ public class TuanPayResultActivity extends BaseActivity {
         oid = getIntent().getStringExtra("TuanPayResultActivity_oid");
         isDianFu = getIntent().getBooleanExtra("is_dianfu", false);
         initView();
-
     }
 
     private void initView() {
@@ -87,7 +86,6 @@ public class TuanPayResultActivity extends BaseActivity {
         } else if (type == PAY_CANCLE) {
             tuan_kai_pay.setVisibility(View.GONE);
         }
-
     }
 
     @SuppressLint("HandlerLeak")
@@ -127,7 +125,6 @@ public class TuanPayResultActivity extends BaseActivity {
         }
     }
 
-
     @Override
     public void onClick(View view) {
         super.onClick(view);
@@ -135,14 +132,12 @@ public class TuanPayResultActivity extends BaseActivity {
             case R.id.tuan_result_back:
                 finish();
                 break;
-
             case R.id.tuan_kai_pay:
                 Intent i = new Intent(mContext, MainActivity.class);
                 i.putExtra("Main_frag_no", 3);
                 startActivity(i);
                 return;
         }
-
     }
 
     @Override
@@ -178,7 +173,6 @@ public class TuanPayResultActivity extends BaseActivity {
             }
         });
     }
-
 
     public class TuanmaAdapter extends CheckScrollAdapter<TuanDianModel> {
         protected Context mContext;
@@ -225,6 +219,4 @@ public class TuanPayResultActivity extends BaseActivity {
         }
 
     }
-
-
 }

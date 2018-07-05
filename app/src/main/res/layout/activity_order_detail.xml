@@ -106,7 +106,7 @@
                     <ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:src="@drawable/video_link" />
+                        android:src="@mipmap/icon_map" />
 
                     <TextView
                         android:id="@+id/address_name"
@@ -153,6 +153,33 @@
                     android:layout_height="10dp"
                     android:background="@color/body_bg" />
 
+                <LinearLayout
+                    android:id="@+id/dianfu_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="垫付数量（含自己）："
+                        android:textColor="@color/gray_dark"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <TextView
+                        android:id="@+id/dianfu_no"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/gray_light"
+                        android:textSize="@dimen/text_size_12" />
+
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

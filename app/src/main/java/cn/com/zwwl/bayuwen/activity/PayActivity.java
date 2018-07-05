@@ -524,6 +524,9 @@ public class PayActivity extends BaseActivity {
         i.putExtra("TuanPayResultActivity_data", t);
         i.putExtra("TuanPayResultActivity_oid", orderModel.getBill_no());
         i.putExtra("TuanPayResultActivity_desc", desc);
+        if (type == 1) {
+            i.putExtra("is_dianfu", true);
+        }
         startActivity(i);
         finish();
     }

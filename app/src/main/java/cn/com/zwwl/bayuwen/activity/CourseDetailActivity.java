@@ -428,7 +428,6 @@ public class CourseDetailActivity extends BaseActivity {
      * 添加、取消关注
      */
     private void doFollow() {
-        showLoadingDialog(true);
         if (keModel.getCollection_state() == 1) {
             new CollectionApi(mContext, keModel.getCollectionId(), new FetchEntryListener() {
                 @Override
@@ -438,11 +437,11 @@ public class CourseDetailActivity extends BaseActivity {
 
                 @Override
                 public void setError(ErrorMsg error) {
-                    showLoadingDialog(false);
                     if (error != null)
                         showToast(error.getDesc());
                     else {
                         keModel.setCollection_state(0);
+                        showToast("取消关注成功");
                         handler.sendEmptyMessage(3);
                     }
 
@@ -452,17 +451,17 @@ public class CourseDetailActivity extends BaseActivity {
             new CollectionApi(mContext, keModel.getKid(), 1, new FetchEntryListener() {
                 @Override
                 public void setData(Entry entry) {
-                    showLoadingDialog(false);
-                    if (entry != null && entry instanceof ErrorMsg) {
-                        ErrorMsg errorMsg = (ErrorMsg) entry;
-                        keModel.setCollection_state(errorMsg.getNo());
+                    if (entry != null && entry instanceof KeModel) {
+
+                        keModel.setCollection_state(((KeModel) entry).getCollection_state());
+                        keModel.setCollectionId(((KeModel) entry).getCollectionId());
+                        showToast("关注成功");
                         handler.sendEmptyMessage(3);
                     }
                 }
 
                 @Override
                 public void setError(ErrorMsg error) {
-                    showLoadingDialog(false);
                     if (error != null)
                         showToast(error.getDesc());
                 }
@@ -514,7 +513,7 @@ public class CourseDetailActivity extends BaseActivity {
         if (keModel.getIs_discount() == 0) {
             price_tv.setText("￥ " + keModel.getBuyPrice());
         } else {
-            price_tv.setText("￥ " + keModel.getDiscount());
+            price_tv.setText("￥ " + keModel.getDiscount()/100);
             price_tv1.setText("￥" + keModel.getBuyPrice());
             price_tv1.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
             // 设置中划线并加清晰
@@ -534,7 +533,7 @@ public class CourseDetailActivity extends BaseActivity {
                 .substring(0, endtime.length() - 3));
 
         if (keModel.getIs_discount() == 1) {
-            priceTv2.setText("￥" + keModel.getDiscount());
+            priceTv2.setText("￥" + keModel.getDiscount()/100);
         } else {
             priceTv2.setText("￥" + keModel.getBuyPrice());
         }
@@ -545,7 +544,7 @@ public class CourseDetailActivity extends BaseActivity {
             teacherLayout.addView(getTeacherView(t));
 
         // 已报满的班显示灰色
-        int leftNo = Integer.valueOf(keModel.getNum());
+        int leftNo = keModel.getStock();
         if (leftNo == 0) {
             add_tv.setVisibility(View.GONE);
             groupLayout.setVisibility(View.INVISIBLE);

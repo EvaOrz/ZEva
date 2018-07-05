@@ -82,7 +82,10 @@ public class OrderDetailActivity extends BaseActivity {
     TextView orderDBt2;
     @BindView(R.id.address_part)
     LinearLayout addressPart;
-
+    @BindView(R.id.dianfu_no)
+    TextView dianfuNo;
+    @BindView(R.id.dianfu_layout)
+    LinearLayout dianfuLayout;
 
     private Timer timer = new Timer();// 初始化定时器
     private int type;// 1：未完成、2：已完成
@@ -130,9 +133,7 @@ public class OrderDetailActivity extends BaseActivity {
             orderDComplate1.setVisibility(View.VISIBLE);
             orderDBt1.setText(R.string.tuifei);
             orderDBt2.setVisibility(View.GONE);
-
         }
-
     }
 
     @SuppressLint("HandlerLeak")
@@ -178,17 +179,21 @@ public class OrderDetailActivity extends BaseActivity {
                                 + addressModel.getDistrict() + addressModel.getAddress());
                     }
 
-
                     keLayout.removeAllViews();
                     for (KeModel keModel : orderForMyListModel.getKeModels()) {
                         keLayout.addView(getKeView(keModel));
                     }
 
+                    if (orderForMyListModel.getGroupBuyModel() != null && orderForMyListModel
+                            .getGroupBuyModel().getType().equals("2")) {
+                        dianfuLayout.setVisibility(View.VISIBLE);
+                        dianfuNo.setText(orderForMyListModel.getGroupBuyModel().getDiscount()
+                                .getLimit_num() + "");
+                    }
                     break;
                 case 1:// 更新倒计时
                     if ((int) (leftTimeString / 1000) == 0)
                         stopTimer();
-
                     leftTime.setText("剩余：" + CalendarTools.getTimeLeft(leftTimeString / 1000));
                     break;
             }
@@ -228,7 +233,6 @@ public class OrderDetailActivity extends BaseActivity {
 
             @Override
             public void setError(ErrorMsg error) {
-
             }
         });
     }
@@ -296,7 +300,7 @@ public class OrderDetailActivity extends BaseActivity {
 
                         @Override
                         public void onCancle() {
-                            
+
                         }
                     });
                 } else if (type == 2) {
@@ -320,9 +324,7 @@ public class OrderDetailActivity extends BaseActivity {
                     } else {
                         doAliPay();
                     }
-
                 }
-
                 break;
         }
     }

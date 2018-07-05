@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/body_bg"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <LinearLayout
@@ -37,6 +38,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <cn.com.zwwl.bayuwen.widget.BannerView
@@ -197,17 +199,13 @@
                     android:paddingRight="10dp"
                     android:src="@mipmap/home_header_more" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/line_height"
-                    android:layout_alignBottom="@id/fm_album_list_title"
-                    android:background="@color/gray_line" />
             </RelativeLayout>
 
             <cn.com.zwwl.bayuwen.widget.NoScrollListView
                 android:id="@+id/fm_hot_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:focusable="false" />
         </LinearLayout>
     </cn.com.zwwl.bayuwen.widget.CallScrollView>
 </LinearLayout>

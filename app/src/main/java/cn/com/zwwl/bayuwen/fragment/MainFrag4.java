@@ -20,7 +20,6 @@ import cn.com.zwwl.bayuwen.widget.BannerView;
 public class MainFrag4 extends Fragment {
 
     private Activity mActivity;
-    private BannerView bannerView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

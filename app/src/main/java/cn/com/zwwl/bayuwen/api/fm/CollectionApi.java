@@ -78,8 +78,9 @@ public class CollectionApi extends BaseApi {
                 keModel.setCollection_state(json.optInt("state"));
                 listener.setData(keModel);
             } else if (type == 2) {
-//                AlbumModel albumModel = new AlbumModel();
-//                albumModel.setConllectId(json.optInt("id"));
+                AlbumModel albumModel = new AlbumModel();
+                albumModel.setConllectId(json.optInt("id"));
+                listener.setData(albumModel);
             }
 
         }

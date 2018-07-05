@@ -84,7 +84,7 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
         if (type == 1) {
             viewHolder.left.setVisibility(View.GONE);
         } else {
-            int nop = Integer.valueOf(keModel.getNum());
+            int nop = keModel.getStock();
             if (nop == 0) {
                 viewHolder.manban_status.setVisibility(View.VISIBLE);
                 viewHolder.left.setText("剩余名额：0");
