@@ -8,12 +8,15 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.PicAdapter;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.model.WorkDetailModel;
+import cn.com.zwwl.bayuwen.widget.photoview.PhotoActivity;
 
 /**
  * 查看作业
@@ -64,20 +67,33 @@ public class WorkDetailsActivity extends BasicActivityWithTitle {
 
     @Override
     protected void setListener() {
-
+        workAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (model.getC_img() != null && model.getC_img().size() > 0) {
+                    Intent intent = new Intent(mActivity, PhotoActivity.class);
+                    String[] urls = new String[model.getC_img().size()];
+                    for (int i = 0; i < model.getC_img().size(); i++)
+                        urls[i] = model.getC_img().get(i).getUrl();
+                    intent.putExtra("images", urls);
+                    intent.putExtra("position", position);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @OnClick(R.id.work)
     @Override
     public void onClick(View view) {
-        if (model.getC_img() != null && model.getC_img().size() > 0) {
-            Intent intent = new Intent(this, InClassStatusActivity.class);
-            String[] urls = new String[model.getC_img().size()];
-            for (int i = 0; i < model.getC_img().size(); i++)
-                urls[i] = model.getC_img().get(i).getUrl();
-            intent.putExtra("urls", urls);
-            startActivity(intent);
-        }
+//        if (model.getC_img() != null && model.getC_img().size() > 0) {
+//            Intent intent = new Intent(this, InClassStatusActivity.class);
+//            String[] urls = new String[model.getC_img().size()];
+//            for (int i = 0; i < model.getC_img().size(); i++)
+//                urls[i] = model.getC_img().get(i).getUrl();
+//            intent.putExtra("urls", urls);
+//            startActivity(intent);
+//        }
 
     }
 

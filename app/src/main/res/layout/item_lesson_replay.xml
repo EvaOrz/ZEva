@@ -10,17 +10,32 @@
     android:paddingStart="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/dp_10">
 
-
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/course_name"
+    <LinearLayout
+        android:id="@+id/course_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ellipsize="end"
-        android:maxLines="1"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toStartOf="@id/arrow"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:scaleType="centerInside"
+            android:src="@mipmap/icon_replay" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/course_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/arrow"
@@ -32,20 +47,19 @@
         android:src="@mipmap/arrow_right_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/course_name"
+        app:layout_constraintStart_toEndOf="@id/course_layout"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_5"
         android:textColor="@color/gray_light"
         android:textSize="@dimen/sp_12"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/arrow"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/course_name" />
+        app:layout_constraintTop_toBottomOf="@id/course_layout" />
 
 
 </android.support.constraint.ConstraintLayout>

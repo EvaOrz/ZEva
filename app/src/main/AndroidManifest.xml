@@ -428,6 +428,8 @@
         <activity android:name=".activity.TraceSearchActivity" />
         <!-- 课程跟踪正在进行课程(线上课)点击箭头进入该界面-->
         <activity android:name=".activity.ReplayListActivity" />
+        <!--  查看图片，可缩放，滑动切换-->
+        <activity android:name=".widget.photoview.PhotoActivity" />
     </application>
 
 </manifest>
