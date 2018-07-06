@@ -319,6 +319,26 @@ public class AddCalendarActivity extends BaseActivity {
         }
     }
 
+    private void doModify() {
+        showLoadingDialog(true);
+        new CalendarEActionApi(mContext, calendarEventModel.getId(), transPeriod(), 0, new
+                FetchEntryListener() {
+
+                    @Override
+                    public void setData(Entry entry) {
+
+                    }
+
+                    @Override
+                    public void setError(ErrorMsg error) {
+                        showLoadingDialog(false);
+                        if (error != null) {
+                            showToast(error.getDesc());
+                        }
+                    }
+                });
+    }
+
     private String transPeriod() {
         String strs = "";
         SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
@@ -333,7 +353,10 @@ public class AddCalendarActivity extends BaseActivity {
         super.onClick(view);
         switch (view.getId()) {
             case R.id.add_calendar_save:// 保存
-                doSave();
+                if (isCanSave) {
+                    doSave();
+                } else
+                    doModify();
                 break;
             case R.id.add_calendar_back:
                 finish();
@@ -375,6 +398,7 @@ public class AddCalendarActivity extends BaseActivity {
             case R.id.add_kechengjigou:// 课程机构
                 if (!isCanSave) return;
                 hideJianpan();
+                String defuJigou = calendarEventModel.getOrgName();
                 new CalendarOptionPopWindow(mContext, jigouModels, new CalendarOptionPopWindow
                         .MyJigouChooseListener() {
                     @Override
@@ -383,7 +407,7 @@ public class AddCalendarActivity extends BaseActivity {
                         calendarEventModel.setOutOrgId(model.getId());
                         handler.sendEmptyMessage(2);
                     }
-                }, 3);
+                }, defuJigou, 3);
                 break;
 
             case R.id.add_period:// 课程时间段选择器

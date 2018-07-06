@@ -234,7 +234,7 @@ public class PayActivity extends BaseActivity {
                 case 3:// 实时计算价格，之后更新最新价格
                     priceTv.setText("实付款：￥" + Tools.getTwoDecimal(detailModel.getAmount() / 100));
                     if (!TextUtils.isEmpty(detailModel.getWarn())) {
-                        new AskDialog(mContext, true, detailModel.getWarn(), new AskDialog
+                        new AskDialog(mContext, "使用", "不使用", detailModel.getWarn(), new AskDialog
                                 .OnSurePickListener() {
 
                             @Override

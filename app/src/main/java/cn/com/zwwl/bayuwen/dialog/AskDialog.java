@@ -17,23 +17,27 @@ public class AskDialog implements View.OnClickListener {
     private Context mContext;
     private Dialog mDialog;
     private Window window;
+    private String sureTxt, cancleTxt;
     private OnSurePickListener onSurePickListener;
 
     public AskDialog(Context context, String content, OnSurePickListener
             onSurePickListener) {
         this.mContext = context;
         this.onSurePickListener = onSurePickListener;
-        init(false, content);
+        init(content);
     }
 
-    public AskDialog(Context context, boolean payWarnFlag, String content, OnSurePickListener
-            onSurePickListener) {
+    public AskDialog(Context context, String sureText, String cacleText, String content,
+                     OnSurePickListener
+                             onSurePickListener) {
         this.mContext = context;
         this.onSurePickListener = onSurePickListener;
-        init(payWarnFlag, content);
+        sureTxt = sureText;
+        cancleTxt = cacleText;
+        init(content);
     }
 
-    private void init(boolean payWarnFlag, String cString) {
+    private void init(String cString) {
         mDialog = new Dialog(mContext, R.style.CustomDialog);
         mDialog.show();
         mDialog.setCancelable(true);
@@ -47,9 +51,9 @@ public class AskDialog implements View.OnClickListener {
         TextView title = window.findViewById(R.id.motify_sign_title);
         TextView sureBt = window.findViewById(R.id.motify_sign_sure);
         TextView cancleBt = window.findViewById(R.id.motify_sign_cancle);
-        if (payWarnFlag) {
-            sureBt.setText("使用");
-            cancleBt.setText("不使用");
+        if (!TextUtils.isEmpty(sureTxt) && !TextUtils.isEmpty(cancleTxt)) {
+            sureBt.setText(sureTxt);
+            cancleBt.setText(cancleTxt);
         }
         TextView content = window.findViewById(R.id.motify_sign_content);
         content.setText(cString);

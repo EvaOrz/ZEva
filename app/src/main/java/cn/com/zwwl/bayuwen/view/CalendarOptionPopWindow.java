@@ -2,12 +2,16 @@ package cn.com.zwwl.bayuwen.view;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -45,6 +49,7 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
     private MyPeriodPickListener myPeriodPickListener;
     private MyWeekChooseListener myWeekChooseListener;
     private GridView gridView;
+    private EditText jigouEv;
     private CalendarGridAdapter gridAdapter;
     private List<CheckStatusModel> jigouDatas = new ArrayList<>();
     private List<CheckStatusModel> weekDatas = new ArrayList<>();
@@ -56,10 +61,11 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
      * @param wtype   1:上课时间 2:下课时间 3:课程机构 4:日期选择 5:周次选择
      */
     public CalendarOptionPopWindow(Context context, List<CalendarJigouModel> calendarJigouModels,
-                                   MyJigouChooseListener myJigouChooseListener, int wtype) {
+                                   MyJigouChooseListener myJigouChooseListener, String
+                                           defaultJigou, int wtype) {
         mContext = context;
         this.myJigouChooseListener = myJigouChooseListener;
-        initJigou(calendarJigouModels);
+        initJigou(calendarJigouModels, defaultJigou);
         this.type = wtype;
         init();
     }
@@ -107,9 +113,12 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
     }
 
 
-    private void initJigou(List<CalendarJigouModel> calendarJigouModels) {
+    private void initJigou(List<CalendarJigouModel> calendarJigouModels, String defaultJigou) {
         for (CalendarJigouModel c : calendarJigouModels) {
-            jigouDatas.add(new CheckStatusModel(c));
+            CheckStatusModel checkStatusModel = new CheckStatusModel(c);
+            if (!TextUtils.isEmpty(defaultJigou) && c.getName().equals(defaultJigou))
+                checkStatusModel.setCheckStatus(true);
+            jigouDatas.add(checkStatusModel);
         }
     }
 
@@ -124,6 +133,7 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
         timePicker = view.findViewById(R.id.pop_calendar_timepicker);
         gridView = view.findViewById(R.id.pop_calendar_grid);
         mnCalendarVertical = view.findViewById(R.id.mnCalendarVertical);
+        jigouEv = view.findViewById(R.id.jigou_input);
 
         timePicker.setVisibility(View.GONE);
         gridView.setVisibility(View.GONE);
@@ -143,10 +153,10 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    boolean ss = (boolean) view.getTag();
+                    boolean ss = jigouDatas.get(position).isCheckStatus();
                     for (int i = 0; i < jigouDatas.size(); i++) {
                         if (i == position) {
-                            jigouDatas.get(position).setCheckStatus(true);
+                            jigouDatas.get(position).setCheckStatus(!ss);
                         } else {
                             jigouDatas.get(i).setCheckStatus(false);
                         }
@@ -155,8 +165,30 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
 
                 }
             });
+            jigouEv.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (!TextUtils.isEmpty(s.toString())) {
+                        for (int i = 0; i < jigouDatas.size(); i++) {
+                            jigouDatas.get(i).setCheckStatus(false);
+                        }
+                        gridAdapter.notifyDataSetChanged();
+                    }
+                }
+            });
             gridView.setNumColumns(2);
             gridView.setVisibility(View.VISIBLE);
+            jigouEv.setVisibility(View.VISIBLE);
         }
         if (type == 4) {
             title.setText("选择日期");
@@ -269,13 +301,19 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
                 } else if (type == 2) {
                     myTimePickListener.onTimePick(timePicker.getHour(), timePicker.getMinute());
                 } else if (type == 3) {
-                    for (CheckStatusModel checkStatusModel : jigouDatas) {
-                        if (checkStatusModel.isCheckStatus()) {
-                            myJigouChooseListener.onJigouChoose(checkStatusModel
-                                    .getCalendarJigouModel());
+                    String jigou = jigouEv.getText().toString();
+                    if (!TextUtils.isEmpty(jigou)) {
+                        CalendarJigouModel jigouModel = new CalendarJigouModel();
+                        jigouModel.setName(jigou);
+                        myJigouChooseListener.onJigouChoose(jigouModel);
+                    } else {
+                        for (CheckStatusModel checkStatusModel : jigouDatas) {
+                            if (checkStatusModel.isCheckStatus()) {
+                                myJigouChooseListener.onJigouChoose(checkStatusModel
+                                        .getCalendarJigouModel());
+                            }
                         }
                     }
-
 
                 } else if (type == 4) {
                     myPeriodPickListener.onPeriodPick(startDate, endDate);

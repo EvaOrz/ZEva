@@ -99,6 +99,11 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      */
     public static final String ACTION_SEEK_SEEKBAR = "action_seek_seekbar";
 
+    /**
+     * reset播放
+     */
+    public static final String ACTION_RESET = "action_reset";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
