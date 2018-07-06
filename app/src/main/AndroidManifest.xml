@@ -401,7 +401,7 @@
         <activity android:name=".activity.LookPPTActivity" />
         <!-- 上传上课照片 -->
         <activity android:name=".activity.InClassStatusActivity" />
-        <!-- 正在进行课程 -->
+        <!-- 正在进行课程(废弃) -->
         <activity
             android:name=".activity.StudyingCourseActivity"
             android:launchMode="singleTask" />
@@ -420,17 +420,17 @@
         <activity android:name=".activity.ClassApplyActivity" />
         <!-- 课程跟踪记录 -->
         <activity android:name=".activity.FCourseListActivity" />
-        <!-- 已完成课程条目点击进入 -->
+        <!-- 已完成课程条目点击进入(废弃) -->
         <activity
             android:name=".activity.FCourseIndexActivity"
             android:launchMode="singleTask" />
-        <!-- 期末考试详情 -->
+        <!-- 期末考试详情(废弃) -->
         <activity android:name=".activity.ExamDetailsActivity" />
-        <!-- 具体课次首页 -->
+        <!-- 具体课次首页(废弃) -->
         <activity android:name=".activity.UnitIndexActivity" />
         <!-- 上传照片 -->
         <activity android:name=".activity.UploadPicActivity" />
-        <!-- 教学总结 -->
+        <!-- 教学总结 (废弃)-->
         <activity android:name=".activity.TeacherSummaryActivity" />
         <!-- 查看作业 -->
         <activity android:name=".activity.WorkDetailsActivity" />
