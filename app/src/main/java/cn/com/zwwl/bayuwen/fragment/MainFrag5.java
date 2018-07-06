@@ -240,6 +240,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 break;
             case R.id.frag5_invite:// 邀请好友加入大语文
 //                SharePopWindow sharePopWindow=new SharePopWindow(getActivity(),"AAA");
+
                 ShareTools.doShareWeb((BaseActivity) getActivity(),"大语文","大运问的","http://dev.umeng.com/images/tab2_1.png","https://www.baidu.com");
 
 
