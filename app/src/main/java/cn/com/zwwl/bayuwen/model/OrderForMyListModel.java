@@ -23,7 +23,7 @@ public class OrderForMyListModel extends Entry {
     private String uid;
     private String title;
     private double total_fee;
-    private double real_fee ;
+    private double real_fee;
     private String state;
     private String pay_channel;
     private String pay_at;
@@ -33,6 +33,15 @@ public class OrderForMyListModel extends Entry {
     private String expire_at;
     private List<KeModel> keModels = new ArrayList<>();
     private AddressModel addressModel;
+    private GroupBuyModel groupBuyModel;
+
+    public GroupBuyModel getGroupBuyModel() {
+        return groupBuyModel;
+    }
+
+    public void setGroupBuyModel(GroupBuyModel groupBuyModel) {
+        this.groupBuyModel = groupBuyModel;
+    }
 
     public List<KeModel> getKeModels() {
         return keModels;
@@ -201,12 +210,16 @@ public class OrderForMyListModel extends Entry {
             orderForMyListModel.setKeModels(keModelList);
         }
 
-
         JSONObject a = jsonObject.optJSONObject("address");
         if (!isNull(a)) {
             AddressModel addressModel = new AddressModel();
             addressModel.parseAddressModel(a, addressModel);
             orderForMyListModel.setAddressModel(addressModel);
+        }
+        JSONObject g = jsonObject.optJSONObject("group_discount");
+        if (!isNull(g)) {
+            GroupBuyModel groupBuyModel = gson.fromJson(g.toString(), GroupBuyModel.class);
+            orderForMyListModel.setGroupBuyModel(groupBuyModel);
         }
         return orderForMyListModel;
     }

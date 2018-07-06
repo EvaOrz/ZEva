@@ -205,33 +205,34 @@ public class FmView implements View.OnClickListener {
                 context.startActivity(new Intent(context, AlbumListActivity.class));
                 break;
             case R.id.fm_bt_1://了就读书
-                goAlbumList("1000");
+                goAlbumList("1000", "了就读书");
                 break;
             case R.id.fm_bt_2://干货
-                goAlbumList("1001");
+                goAlbumList("1001", "干货");
                 break;
             case R.id.fm_bt_3://统编教材
-                goAlbumList("1002");
+                goAlbumList("1002", "统编教材");
                 break;
             case R.id.fm_bt_4://窦神归来
-                goAlbumList("1003");
+                goAlbumList("1003", "窦神归来");
                 break;
             case R.id.fm_bt_5://蒋故事
-                goAlbumList("1004");
+                goAlbumList("1004", "蒋故事");
                 break;
             case R.id.fm_bt_6://爪学
-                goAlbumList("1005");
+                goAlbumList("1005", "爪学");
                 break;
             case R.id.fm_bt_7://低幼儿童
-                goAlbumList("1006");
+                goAlbumList("1006", "低幼儿童");
                 break;
 
 
         }
     }
 
-    private void goAlbumList(String aid) {
+    private void goAlbumList(String aid, String title) {
         Intent i = new Intent(context, AlbumListActivity.class);
+        i.putExtra("AlbumListActivity_title", title);
         i.putExtra("AlbumListActivity_data", aid);
         context.startActivity(i);
     }

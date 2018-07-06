@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.api;
 
 import android.text.TextUtils;
+import android.widget.TextView;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 
@@ -60,6 +61,8 @@ public class UrlUtil {
 
     // 获取课程的专辑列表
     public static String getAlbumListUrl(String kid, int page) {
+        if (TextUtils.isEmpty(kid))
+            return HOST + "/fm/list?page=" + page;
         return HOST + "/fm/list?type=" + kid + "&page=" + page;
     }
 
@@ -187,6 +190,11 @@ public class UrlUtil {
     // 发起拼团||我要垫付（获取拼团码）
     public static String faqiTuan() {
         return HOST + "/grouppurchase";
+    }
+
+    // 获取垫付之后的码列表
+    public static String getTuanCodes() {
+        return HOST + "/grouppurchase/code";
     }
 
     // 根据课程兑换码获取课程详情

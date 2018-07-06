@@ -147,12 +147,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <!-- 修改个人信息页面 -->
-        <!-- 播放历史 -->
-        <activity
-            android:name=".activity.fm.FmHistoryActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-
+        `
         <!-- 内部浏览器页面 -->
         <activity
             android:name=".activity.WebActivity"
@@ -468,6 +463,11 @@
         <activity android:name=".activity.TopicCommitActivity"/>
         <!--课程跟踪首页搜索-->
         <activity android:name=".activity.TraceSearchActivity" />
+        <!-- 课程跟踪正在进行课程(线上课)点击箭头进入该界面-->
+        <activity android:name=".activity.ReplayListActivity" />
+        <!--  查看图片，可缩放，滑动切换-->
+        <activity android:name=".widget.photoview.PhotoActivity" />
+        <activity android:name=".activity.AbilityAnalysisActivity"/>
     </application>
 
 </manifest>

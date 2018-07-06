@@ -69,7 +69,7 @@ public class MyOrderAdapter extends CheckScrollAdapter<OrderForMyListModel> {
         if (type == 2) {// 待付款
             waitPay.setVisibility(View.VISIBLE);
             wancheng_status.setVisibility(View.GONE);
-            price.setText("需付款：" + model.getTotal_fee() / 100 + "");
+            price.setText("需付款：" + Tools.getTwoDecimal(model.getTotal_fee() / 100));
             bt.setBackground(mContext.getResources().getDrawable(R.drawable
                     .gold_white_xiangkuang));
             bt.setText(R.string.go_pay);
@@ -77,7 +77,7 @@ public class MyOrderAdapter extends CheckScrollAdapter<OrderForMyListModel> {
         } else if (type == 3) {// 已付款
             waitPay.setVisibility(View.GONE);
             wancheng_status.setVisibility(View.VISIBLE);
-            price.setText("实付款：" + model.getReal_fee() / 100 + "");
+            price.setText("实付款：" + Tools.getTwoDecimal(model.getReal_fee() / 100));
             bt.setBackground(mContext.getResources().getDrawable(R.drawable
                     .gray_white_xiankuang));
             bt.setTextColor(mContext.getResources().getColor(R.color.gray_light));
@@ -85,7 +85,7 @@ public class MyOrderAdapter extends CheckScrollAdapter<OrderForMyListModel> {
         } else if (type == 4) {// 退款/售后
             waitPay.setVisibility(View.GONE);
             wancheng_status.setVisibility(View.GONE);
-            price.setText("实付款：" + model.getReal_fee() / 100 + "");
+            price.setText("实付款：" + Tools.getTwoDecimal(model.getReal_fee() / 100));
             bt.setBackground(mContext.getResources().getDrawable(R.drawable
                     .gold_white_xiangkuang));
             bt.setText(R.string.look_detail);

@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.umeng.socialize.UMShareAPI;
 
 import java.util.ArrayList;
@@ -45,7 +43,6 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
-import cn.com.zwwl.bayuwen.view.SharePopWindow;
 
 /**
  * 我的 tab
@@ -148,6 +145,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                                 .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
                         frag5Code.setText(userModel.getSignCode());
                         frag5Name.setText(userModel.getName());
+                        frag5Level.setText(userModel.getLevel() + "");
                     }
                     if (Tools.listNotNull(childModels)) {
                         frag5ChildLayout.removeAllViews();

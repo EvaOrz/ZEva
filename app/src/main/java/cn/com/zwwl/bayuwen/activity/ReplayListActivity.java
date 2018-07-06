@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -16,7 +14,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.adapter.LessonReportAdapter;
+import cn.com.zwwl.bayuwen.adapter.LessonReplayAdapter;
 import cn.com.zwwl.bayuwen.api.StudyingCourseApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
@@ -27,7 +25,6 @@ import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.model.StudyingModel;
 import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
-import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 import cn.com.zwwl.bayuwen.widget.roundview.RoundLinearLayout;
 
 /**
@@ -57,10 +54,10 @@ public class ReplayListActivity extends BasicActivityWithTitle {
     RecyclerView recyclerView;
     @BindView(R.id.look_replay)
     AppCompatTextView lookReplay;
-    LessonReportAdapter adapter;
+    LessonReplayAdapter adapter;
     List<LessonModel> reports;
     StudyingModel model;
-
+    AppCompatTextView emptyTv;
 
     @Override
     protected int setContentView() {
@@ -70,11 +67,12 @@ public class ReplayListActivity extends BasicActivityWithTitle {
     @Override
     protected void initView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R
-                .dimen.dp_5, OrientationHelper.VERTICAL));
         reports = new ArrayList<>();
-        adapter = new LessonReportAdapter(reports);
-        adapter.setEmptyView(R.layout.empty_view, (ViewGroup) recyclerView.getParent());
+        adapter = new LessonReplayAdapter(reports);
+        View view = getLayoutInflater().inflate(R.layout.empty_view, null);
+        emptyTv = view.findViewById(R.id.empty_content);
+        emptyTv.setText("正在加载视频列表");
+        adapter.setEmptyView(view);
         recyclerView.setAdapter(adapter);
     }
 
@@ -87,7 +85,7 @@ public class ReplayListActivity extends BasicActivityWithTitle {
             lookReplay.setVisibility(View.GONE);
         } else
             setCustomTitle(getIntent().getStringExtra("title"));
-        new StudyingCourseApi(this,"8391", new ResponseCallBack<StudyingModel>() {
+        new StudyingCourseApi(this, "8391", new ResponseCallBack<StudyingModel>() {
             @Override
             public void result(StudyingModel studyingModel, ErrorMsg errorMsg) {
                 if (studyingModel != null) {
@@ -124,9 +122,11 @@ public class ReplayListActivity extends BasicActivityWithTitle {
             ImageLoader.display(this, logo, keModel.getPic());
         }
         if (model.getCompleteClass() != null) {
-            reports =model.getCompleteClass();
-            adapter.setNewData(reports);
+            reports = model.getCompleteClass();
+        } else {
+            emptyTv.setText("暂无视频~");
         }
+        adapter.setNewData(reports);
     }
 
     @Override

@@ -15,6 +15,7 @@ import cn.com.zwwl.bayuwen.dialog.AskDialog;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
@@ -80,7 +81,7 @@ public class CartAdapter extends CheckScrollAdapter<KeModel> {
 
                         @Override
                         public void onCancle() {
-                            
+
                         }
                     });
                 } else
@@ -106,7 +107,8 @@ public class CartAdapter extends CheckScrollAdapter<KeModel> {
 //        time.setText(model.getClass_start_at() + " - " + model.getClass_end_at
 //                ());
         xiaoqu.setText(model.getSchool());
-        price.setText("￥" + model.getBuyPrice());
+        double aa = Double.valueOf(model.getBuyPrice());
+        price.setText("￥" + Tools.getTwoDecimal(aa));
 
         return viewHolder.getConvertView();
     }

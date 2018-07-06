@@ -8,12 +8,14 @@ public class GroupBuyModel extends Entry {
 
     private DiscountBean discount = new DiscountBean();
     /**
-     * 0:未发起团购或已发起团购没生成订单
+     * 0:未发起团购
      * 1:已生成订单并已生成订单但未支付
      * 2:已生成订单并已生成订单并且已支付
+     * 3:已发起团购没生成订单
      */
     private int state = 0;
     private String oid;
+    private String type = "";// 1：单独参团 2：垫付
     private String code = ""; // 开团码
 
     public DiscountBean getDiscount() {
@@ -46,6 +48,14 @@ public class GroupBuyModel extends Entry {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public static class DiscountBean extends Entry {

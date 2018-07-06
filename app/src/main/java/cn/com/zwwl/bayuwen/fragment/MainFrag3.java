@@ -83,6 +83,8 @@ public class MainFrag3 extends BasicFragment {
     LinearLayout calendarLayout;
     @BindView(R.id.report_layout)
     LinearLayout reportLayout;
+	 @BindView(R.id.report_divider)
+    View reportDivider;
     private CompleteCourseAdapter adapter;
     private List<KeModel> finishCourse = new ArrayList<>();
     MyCourseModel courseModel;
@@ -151,7 +153,11 @@ public class MainFrag3 extends BasicFragment {
     }
 
     private void bindView() {
-        if (reportModels == null || reportModels.size() == 0) reportLayout.setVisibility(View.GONE);
+        if (reportModels == null || reportModels.size() == 0)
+		{			
+			reportLayout.setVisibility(View.GONE);
+			reportDivider.setVisibility(View.GONE);
+		}
         reportAdapter.setNewData(reportModels);
         calendarLayout.removeAllViews();
         if (calendarCourseBean != null && calendarCourseBean.getCourses().size() > 0) {

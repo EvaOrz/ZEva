@@ -523,7 +523,7 @@ public class MainActivity extends BaseActivity {
         if (!TextUtils.isEmpty(userModel.getPic()))
             Glide.with(mContext).load(userModel.getPic()).into(avatar);
         yaoqing.setText("我的邀请码：" + userModel.getSignCode());
-//        gongxun.setText();
+        gongxun.setText("功勋等级：" + userModel.getLevel());
 
         // 获取礼物数据
         new HonorListApi(mContext, 2, TempDataHelper.getCurrentChildNo(mContext), new

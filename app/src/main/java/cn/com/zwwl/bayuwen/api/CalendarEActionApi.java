@@ -2,6 +2,7 @@ package cn.com.zwwl.bayuwen.api;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -43,11 +44,13 @@ public class CalendarEActionApi extends BaseApi {
         pamas.put("userId", UserDataHelper.getUid(mContext));
         pamas.put("name", calendarEventModel.getName());// 课程名称
         pamas.put("orgName", calendarEventModel.getOrgName());
-        pamas.put("startTime", calendarEventModel.getStartTime());
-        pamas.put("endTime", calendarEventModel.getEndTime());
+        pamas.put("startTime", calendarEventModel.getStartTime() + ":00");
+        pamas.put("endTime", calendarEventModel.getEndTime() + ":00");
         pamas.put("totalWeeks", calendarEventModel.getTotalWeeks() + "");
-        pamas.put("teacher", calendarEventModel.getTeacherName());
-        pamas.put("address", calendarEventModel.getAddress());
+        if (!TextUtils.isEmpty(calendarEventModel.getTeacherName()))
+            pamas.put("teacher", calendarEventModel.getTeacherName());
+        if (!TextUtils.isEmpty(calendarEventModel.getAddress()))
+            pamas.put("address", calendarEventModel.getAddress());
         pamas.put("orgId", calendarEventModel.getOutOrgId());
         pamas.put("totalNumber", calendarEventModel.getTotalNumber() + "");
         pamas.put("courseDates", courseDate);
