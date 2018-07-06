@@ -34,6 +34,7 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.OrderForMyListModel;
+import cn.com.zwwl.bayuwen.util.Tools;
 
 /**
  * 我的订单页面
@@ -249,7 +250,7 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
                             price += Double.valueOf(data1List.get(i).getBuyPrice());
                         }
                     }
-                    totalPrice.setText("合计：￥" + price);
+                    totalPrice.setText("合计：￥" + Tools.getTwoDecimal(price));
                     break;
             }
         }

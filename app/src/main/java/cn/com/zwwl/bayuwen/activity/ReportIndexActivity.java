@@ -31,6 +31,8 @@ import cn.com.zwwl.bayuwen.util.ToastUtil;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
+import static cn.com.zwwl.bayuwen.base.MenuCode.REPLAY;
+
 /**
  * 课程跟踪点击“往次”，或已完成课程二级页面点击条目进入该页面
  * Created by zhumangmang at 2018/6/27 14:28
@@ -75,6 +77,9 @@ public class ReportIndexActivity extends BasicActivityWithTitle {
     @Override
     protected void initData() {
         setCustomTitle(getIntent().getStringExtra("title"));
+        if ("1".equals(getIntent().getStringExtra("online"))) {
+            showMenu(REPLAY);
+        }
         new StudyingCourseApi(this, getIntent().getStringExtra("kid"), new ResponseCallBack<StudyingModel>() {
             @Override
             public void result(StudyingModel studyingModel, ErrorMsg errorMsg) {
@@ -165,5 +170,16 @@ public class ReportIndexActivity extends BasicActivityWithTitle {
     @Override
     public void close() {
         finish();
+    }
+
+    @Override
+    public void onMenuClick(int menuCode) {
+        if (model!=null) {
+            Intent intent = new Intent(this, ReplayListActivity.class);
+            intent.putExtra("kid", model.getCourse().getKid());
+            intent.putExtra("title", model.getCourse().getTitle());
+            intent.putExtra("type", 1);
+            startActivity(intent);
+        }
     }
 }

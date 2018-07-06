@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_10"
         android:background="@color/body_bg" />
+
     <LinearLayout
         android:id="@+id/work"
         android:layout_width="match_parent"
@@ -40,7 +41,8 @@
             android:layout_width="@dimen/dp_16"
             android:layout_height="@dimen/dp_16"
             android:scaleType="centerInside"
-            android:src="@mipmap/arrow_right_gray" />
+            android:src="@mipmap/arrow_right_gray"
+            android:visibility="gone" />
     </LinearLayout>
 
     <View style="@style/split_line" />
@@ -85,7 +87,8 @@
             android:layout_width="@dimen/dp_16"
             android:layout_height="@dimen/dp_16"
             android:scaleType="centerInside"
-            android:src="@mipmap/arrow_right_gray" />
+            android:src="@mipmap/arrow_right_gray"
+            android:visibility="gone" />
     </LinearLayout>
 
     <View style="@style/split_line" />
@@ -134,7 +137,8 @@
             android:layout_width="@dimen/dp_16"
             android:layout_height="@dimen/dp_16"
             android:scaleType="centerInside"
-            android:src="@mipmap/arrow_right_gray" />
+            android:src="@mipmap/arrow_right_gray"
+            android:visibility="gone" />
     </LinearLayout>
 
     <View style="@style/split_line" />

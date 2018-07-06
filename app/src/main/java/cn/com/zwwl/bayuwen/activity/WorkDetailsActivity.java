@@ -8,12 +8,15 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.PicAdapter;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.model.WorkDetailModel;
+import cn.com.zwwl.bayuwen.widget.photoview.PhotoActivity;
 
 /**
  * 查看作业
@@ -21,13 +24,14 @@ import cn.com.zwwl.bayuwen.model.WorkDetailModel;
  */
 public class WorkDetailsActivity extends BasicActivityWithTitle {
 
-    PicAdapter workAdapter;
+
     @BindView(R.id.homework)
     RecyclerView homework;
     @BindView(R.id.text_work)
     AppCompatTextView textWork;
     @BindView(R.id.teacher_eval)
     AppCompatTextView teacherEval;
+    PicAdapter workAdapter;
     private WorkDetailModel model;
 
     @Override
@@ -55,33 +59,47 @@ public class WorkDetailsActivity extends BasicActivityWithTitle {
                 textWork.setText("无");
             if (model.getT_desc() != null)
                 teacherEval.setText(model.getT_desc().getContent());
-            else
+            else {
                 teacherEval.setText("暂无点评");
+            }
         }
     }
 
     @Override
     protected void setListener() {
-
+        workAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (model.getC_img() != null && model.getC_img().size() > 0) {
+                    Intent intent = new Intent(mActivity, PhotoActivity.class);
+                    String[] urls = new String[model.getC_img().size()];
+                    for (int i = 0; i < model.getC_img().size(); i++)
+                        urls[i] = model.getC_img().get(i).getUrl();
+                    intent.putExtra("images", urls);
+                    intent.putExtra("position", position);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @OnClick(R.id.work)
     @Override
     public void onClick(View view) {
-        if (model.getC_img() != null && model.getC_img().size() > 0) {
-            Intent intent = new Intent(this, InClassStatusActivity.class);
-            String[] urls = new String[model.getC_img().size()];
-            for (int i = 0; i < model.getC_img().size(); i++)
-                urls[i] = model.getC_img().get(i).getUrl();
-            intent.putExtra("urls", urls);
-            startActivity(intent);
-        }
+//        if (model.getC_img() != null && model.getC_img().size() > 0) {
+//            Intent intent = new Intent(this, InClassStatusActivity.class);
+//            String[] urls = new String[model.getC_img().size()];
+//            for (int i = 0; i < model.getC_img().size(); i++)
+//                urls[i] = model.getC_img().get(i).getUrl();
+//            intent.putExtra("urls", urls);
+//            startActivity(intent);
+//        }
 
     }
 
     @Override
     public boolean setParentScrollable() {
-        return false;
+        return true;
     }
 
     @Override

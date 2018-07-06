@@ -92,13 +92,30 @@
                         android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_12" />
 
-                    <TextView
-                        android:id="@+id/price_tv"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:textColor="@color/gold"
-                        android:textSize="@dimen/text_size_16" />
+                        android:gravity="bottom"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/price_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/gold"
+                            android:textSize="@dimen/text_size_16" />
+
+                        <TextView
+                            android:id="@+id/price_tv1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/gray_dark"
+                            android:textSize="@dimen/text_size_14" />
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
                 <FrameLayout
@@ -507,61 +524,83 @@
                 android:textSize="@dimen/text_size_12" />
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/group_purchase_bt1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
+            android:visibility="invisible"
             android:background="@drawable/gold_white_circle"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
             android:paddingBottom="3dp"
             android:paddingTop="3dp">
 
             <TextView
                 android:id="@+id/group_purchase_price1"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:textColor="@color/gold"
                 android:textSize="@dimen/text_size_12" />
 
             <TextView
                 android:id="@+id/group_purchase_price4"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/group_purchase_price1"
+                android:layout_centerHorizontal="true"
                 android:text="@string/tuangou_baoming"
                 android:textColor="@color/gold"
                 android:textSize="@dimen/text_size_12" />
-        </LinearLayout>
+
+            <TextView
+                android:id="@+id/group_purchase_yican"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="已参团"
+                android:textColor="@color/gold"
+                android:textSize="@dimen/text_size_12" />
+        </RelativeLayout>
 
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/group_purchase_bt2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:background="@drawable/gold_circle"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
             android:paddingBottom="3dp"
             android:paddingTop="3dp">
 
             <TextView
                 android:id="@+id/group_purchase_price2"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:textColor="@color/white"
+                android:layout_centerHorizontal="true"
                 android:textSize="@dimen/text_size_12" />
 
             <TextView
                 android:id="@+id/group_purchase_price3"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/group_purchase_price2"
                 android:text="@string/dandu_baoming"
+                android:layout_centerHorizontal="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_12" />
-        </LinearLayout>
+            <TextView
+                android:id="@+id/group_purchase_yiman"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:layout_centerInParent="true"
+                android:text="已满班"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12" />
+
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

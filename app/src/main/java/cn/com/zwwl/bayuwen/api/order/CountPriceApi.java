@@ -29,34 +29,20 @@ public class CountPriceApi extends BaseApi {
      * @param coupon_code 优惠券码
      * @param promotion   组合优惠id
      * @param assets      余额
-     *                    //     * @param groupbuy    团购码
+     * @param groupbuy    团购码
      * @param listener
      */
     public CountPriceApi(Context context, String item, String coupon_code, String promotion,
-                         String assets, FetchEntryListener
+                         String assets, String groupbuy, FetchEntryListener
                                  listener) {
         super(context);
         mContext = context;
         this.listener = listener;
-        baseUrl += "?item=" + item + "&coupon_code=" + coupon_code + "&promotion=" +
-                promotion + "&assets=" + assets;
+        baseUrl += "?item=" + item + "&assets=" + assets ;
 
-//        baseUrl += "?item=" + item;
-//        if (!TextUtils.isEmpty(coupon_code)) {
-//            baseUrl += "&coupon_code=" + coupon_code;
-//        }
-//        if (!TextUtils.isEmpty(promotion)) {
-//            String and = baseUrl.endsWith("?") ? "" : "&";
-//            baseUrl += and + "promotion=" + promotion;
-//        }
-//        if (!TextUtils.isEmpty(assets)) {
-//            String and = baseUrl.endsWith("?") ? "" : "&";
-//            baseUrl += and + "assets=" + assets;
-//        }
-//        if (!TextUtils.isEmpty(groupbuy)) {
-//            String and = baseUrl.endsWith("?") ? "" : "&";
-//            baseUrl += and + "groupbuy=" + groupbuy;
-//        }
+        if (!TextUtils.isEmpty(coupon_code)) baseUrl += "&coupon_code=" + coupon_code;
+        if (!TextUtils.isEmpty(promotion)) baseUrl += "&promotion=" + promotion;
+        if (!TextUtils.isEmpty(groupbuy)) baseUrl += "&groupbuy=" + groupbuy;
         get();
     }
 

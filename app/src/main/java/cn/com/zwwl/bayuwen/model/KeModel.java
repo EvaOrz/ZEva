@@ -1,5 +1,7 @@
 package cn.com.zwwl.bayuwen.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -111,6 +113,7 @@ public class KeModel extends Entry {
     private GroupBuyModel groupbuy = new GroupBuyModel();
     private List<PromotionModel> promotionModels = new ArrayList<>();
     private int collection_state;//0-未关注 1-已关注
+    private int discount;
 
     public String getId() {
         return id;
@@ -864,5 +867,14 @@ public class KeModel extends Entry {
     public void setCollectionId(int collectionId) {
         this.collectionId = collectionId;
     }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
 
 }

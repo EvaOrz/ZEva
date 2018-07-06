@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,8 +19,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +62,7 @@ import cn.com.zwwl.bayuwen.widget.CustomViewPager;
 public class CourseDetailActivity extends BaseActivity {
     private TextView course_tv;
     private TextView classno_tv;
-    private TextView price_tv;
+    private TextView price_tv, price_tv1;
     private ImageView course_iv;
     private TextView place_tv;
     private TextView teacher_tv;
@@ -67,6 +70,7 @@ public class CourseDetailActivity extends BaseActivity {
     private TextView date_tv;
     private TextView priceTv1;
     private TextView priceTv2;
+    private TextView yicanStatus, yimanStatus;
     private TextView cantuan_tv;
     private TextView baoman_tv;
     private TextView youhuiBt;
@@ -78,7 +82,8 @@ public class CourseDetailActivity extends BaseActivity {
     private LinearLayout nomalFooter;
     private LinearLayout promotionLayout, promotionContain;
 
-    private LinearLayout teacherLayout, groupLayout, buyLayout;
+    private LinearLayout teacherLayout;
+    private RelativeLayout groupLayout, buyLayout;
 
     private List<View> keDetailViews = new ArrayList<>();
     private CustomViewPager mViewPager;
@@ -176,11 +181,14 @@ public class CourseDetailActivity extends BaseActivity {
         classno_tv = findViewById(R.id.classno_tv);
         youhuiBt = findViewById(R.id.youhui_layout);
         price_tv = findViewById(R.id.price_tv);
+        price_tv1 = findViewById(R.id.price_tv1);
         course_iv = findViewById(R.id.course_iv);
         place_tv = findViewById(R.id.place_tv);
         teacher_tv = findViewById(R.id.teacher_tv);
         time_tv = findViewById(R.id.time_tv);
         date_tv = findViewById(R.id.date_tv);
+        yicanStatus = findViewById(R.id.group_purchase_yican);
+        yimanStatus = findViewById(R.id.group_purchase_yiman);
         priceTv1 = findViewById(R.id.group_purchase_price1);
         priceTv2 = findViewById(R.id.group_purchase_price2);
         cantuan_tv = findViewById(R.id.group_purchase_price4);
@@ -404,7 +412,10 @@ public class CourseDetailActivity extends BaseActivity {
             public void setError(ErrorMsg error) {
                 showLoadingDialog(false);
                 if (error == null) {// 没有错误信息，则操作成功
-                    startActivity(new Intent(mContext, TuanPayResultActivity.class));
+                    Intent i = new Intent(mContext, TuanPayResultActivity.class);
+                    i.putExtra("TuanPayResultActivity_data", TuanPayResultActivity.PAY_SUCCESS);
+                    i.putExtra("TuanPayResultActivity_desc", "开通课程成功");
+                    startActivity(i);
                     finish();
                 } else {
                     showToast(error.getDesc());
@@ -423,7 +434,6 @@ public class CourseDetailActivity extends BaseActivity {
      * 添加、取消关注
      */
     private void doFollow() {
-        showLoadingDialog(true);
         if (keModel.getCollection_state() == 1) {
             new CollectionApi(mContext, keModel.getCollectionId(), new FetchEntryListener() {
                 @Override
@@ -433,11 +443,11 @@ public class CourseDetailActivity extends BaseActivity {
 
                 @Override
                 public void setError(ErrorMsg error) {
-                    showLoadingDialog(false);
                     if (error != null)
                         showToast(error.getDesc());
                     else {
                         keModel.setCollection_state(0);
+                        showToast("取消关注成功");
                         handler.sendEmptyMessage(3);
                     }
 
@@ -447,17 +457,17 @@ public class CourseDetailActivity extends BaseActivity {
             new CollectionApi(mContext, keModel.getKid(), 1, new FetchEntryListener() {
                 @Override
                 public void setData(Entry entry) {
-                    showLoadingDialog(false);
-                    if (entry != null && entry instanceof ErrorMsg) {
-                        ErrorMsg errorMsg = (ErrorMsg) entry;
-                        keModel.setCollection_state(errorMsg.getNo());
+                    if (entry != null && entry instanceof KeModel) {
+
+                        keModel.setCollection_state(((KeModel) entry).getCollection_state());
+                        keModel.setCollectionId(((KeModel) entry).getCollectionId());
+                        showToast("关注成功");
                         handler.sendEmptyMessage(3);
                     }
                 }
 
                 @Override
                 public void setError(ErrorMsg error) {
-                    showLoadingDialog(false);
                     if (error != null)
                         showToast(error.getDesc());
                 }
@@ -505,7 +515,16 @@ public class CourseDetailActivity extends BaseActivity {
     private void setkeData() {
         course_tv.setText(keModel.getTitle());
         classno_tv.setText("班级编码：" + keModel.getModel());
-        price_tv.setText("￥ " + keModel.getBuyPrice());
+        double aa = Double.parseDouble(keModel.getBuyPrice());
+        if (keModel.getIs_discount() == 0) {
+            price_tv.setText("￥ " + Tools.getTwoDecimal(aa));
+        } else {
+            price_tv.setText("￥ " + Tools.getTwoDecimal(Double.valueOf(keModel.getDiscount()) /
+                    100));
+            price_tv1.setText("￥" + String.valueOf(Tools.getTwoDecimal(aa)) + "");
+            price_tv1.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+            // 设置中划线并加清晰
+        }
 
         ImageLoader.display(mContext, course_iv, keModel.getPic());
         place_tv.setText(keModel.getSchool());
@@ -520,32 +539,42 @@ public class CourseDetailActivity extends BaseActivity {
         time_tv.setText(startTime.substring(0, startTime.length() - 3) + " - " + endtime
                 .substring(0, endtime.length() - 3));
 
-        priceTv2.setText("￥" + keModel.getBuyPrice());
+        if (keModel.getIs_discount() == 1) {
+            priceTv2.setText("￥" + Tools.getTwoDecimal(Double.valueOf(keModel.getDiscount()) /
+                    100));
+        } else {
+            priceTv2.setText("￥" + Tools.getTwoDecimal(aa));
+        }
+
 
         teacherLayout.removeAllViews();
         for (TeacherModel t : keModel.getTeacherModels())
             teacherLayout.addView(getTeacherView(t));
 
         // 已报满的班显示灰色
-        int leftNo = Integer.valueOf(keModel.getNum());
+        int leftNo = keModel.getStock();
         if (leftNo == 0) {
             add_tv.setVisibility(View.GONE);
             groupLayout.setVisibility(View.INVISIBLE);
             buyLayout.setBackgroundResource(R.drawable.gray_circle);
-            priceTv2.setVisibility(View.GONE);
-            baoman_tv.setText("已报满");
+            priceTv2.setVisibility(View.INVISIBLE);
+            baoman_tv.setVisibility(View.INVISIBLE);
+            yimanStatus.setVisibility(View.VISIBLE);
         }
 
         // 已参团的情况
         if (keModel.getGroupbuy() != null) {
             groupLayout.setVisibility(View.VISIBLE);
             if (keModel.getGroupbuy().getState() == 1 || keModel.getGroupbuy().getState() == 2) {
-                priceTv1.setVisibility(View.GONE);
-                cantuan_tv.setText("已参团");
+                priceTv1.setVisibility(View.INVISIBLE);
+                cantuan_tv.setVisibility(View.INVISIBLE);
+                yicanStatus.setVisibility(View.VISIBLE);
             } else {
                 priceTv1.setVisibility(View.VISIBLE);
-                cantuan_tv.setText("团购报名");
-                priceTv1.setText("￥" + keModel.getGroupbuy().getDiscount().getDiscount_price());
+                cantuan_tv.setVisibility(View.VISIBLE);
+                yicanStatus.setVisibility(View.INVISIBLE);
+                priceTv1.setText("￥" + Tools.getTwoDecimal(keModel.getGroupbuy().getDiscount()
+                        .getDiscount_price()));
             }
         } else {
             groupLayout.setVisibility(View.INVISIBLE);
@@ -654,6 +683,5 @@ public class CourseDetailActivity extends BaseActivity {
                 }
                 break;
         }
-
     }
 }

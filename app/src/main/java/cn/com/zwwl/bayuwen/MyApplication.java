@@ -13,6 +13,9 @@ import android.widget.ImageView;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UmengTool;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumConfig;
 import com.yanzhenjie.album.AlbumFile;
@@ -36,7 +39,7 @@ import cn.com.zwwl.bayuwen.util.AddressTools;
 
 public class MyApplication extends Application {
 
-//    public static NewMusicService newMusicService;// 全局电台播放Service
+    //    public static NewMusicService newMusicService;// 全局电台播放Service
     private String UMENG_APPKEY = "5ad40381f29d987f490000be";// 友盟appkey
 
     public static int DEBUG = 1;
@@ -68,16 +71,19 @@ public class MyApplication extends Application {
     public static AddressTools addressTools;
 
     /**
-     * 登录状态是否改变
+     * 数据刷新状态标识符
      * <p>
-     * 初始化main页面时需要加载数据
+     * 0：没变化
+     * 1：登录状态变化
+     * 2：所在城市变化
+     * 3：切换学员
+     * 4：当前用户信息变化
+     * 5：学员资料变化
      */
-    public static boolean loginStatusChange = true;
+    public static boolean loginStatusChange = false;
+    public static boolean userStatusChange = false;
+    public static boolean cityStatusChange = false;
 
-    /**
-     * 音乐是否在播放
-     */
-    public static boolean isPlaying = false;
     /**
      * 渠道
      */
@@ -86,9 +92,10 @@ public class MyApplication extends Application {
      * 课程跟踪
      */
     public int operate_type;
-    public LessonModel oldLesson,newLesson;
-    public KeModel oldKe,newKe;
+    public LessonModel oldLesson, newLesson;
+    public KeModel oldKe, newKe;
     private static MyApplication instance;
+
     @Override
     public void onCreate() {
         WEIXIN_APP_ID = "wx22ea2fa3b35cb13f";
@@ -101,8 +108,14 @@ public class MyApplication extends Application {
         QQ_SECRET = "SClqzj0HjnAx2ATM";
 
         mContext = this;
-        instance=this;
+        instance = this;
         super.onCreate();
+
+        //对分享的各个平台的key进行配置
+        PlatformConfig.setWeixin("wx22ea2fa3b35cb13f", "e117d862971d54e940247349a8778276");
+        PlatformConfig.setQQZone("1105723648", "SClqzj0HjnAx2ATM");
+        PlatformConfig.setSinaWeibo("3041420061", "be08435126fd7c6908b6398985c71d83", "http://open.weibo.com/apps/3041420061/privilege/oauth");
+
         initScreenInfo();
         initChannel();
         initLeanCloud();

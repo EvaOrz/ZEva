@@ -152,6 +152,16 @@ public class MainActivity extends BaseActivity {
             initData();
             MyApplication.loginStatusChange = false;
         }
+        if (MyApplication.userStatusChange) {
+            Log.e("********", "用户和学员信息变化");
+            initData();
+            MyApplication.userStatusChange = false;
+        }
+        if (MyApplication.cityStatusChange) {
+            mainFrag1.isCityChanged = true;
+            mainFrag2.isCityChanged = true;
+            MyApplication.cityStatusChange = false;
+        }
     }
 
     @Override
@@ -341,17 +351,6 @@ public class MainActivity extends BaseActivity {
         return view;
     }
 
-
-    /**
-     * frag1 ,frag2,frag3切换城市
-     * 标记其他tab的状态
-     */
-    public void changeCity(int i) {
-        mainFrag1.isCityChanged = i == 0 ? false : true;
-        mainFrag2.isCityChanged = i == 1 ? false : true;
-        mainFrag3.isCityChanged = i == 2 ? false : true;
-    }
-
     @Override
     protected void initData() {
         if (userModel == null) return;
@@ -524,7 +523,7 @@ public class MainActivity extends BaseActivity {
         if (!TextUtils.isEmpty(userModel.getPic()))
             Glide.with(mContext).load(userModel.getPic()).into(avatar);
         yaoqing.setText("我的邀请码：" + userModel.getSignCode());
-//        gongxun.setText();
+        gongxun.setText("功勋等级：" + userModel.getLevel());
 
         // 获取礼物数据
         new HonorListApi(mContext, 2, TempDataHelper.getCurrentChildNo(mContext), new

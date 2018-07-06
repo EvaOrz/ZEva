@@ -18,7 +18,6 @@
         android:layout_weight="1"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textSize="@dimen/sp_16"
         app:layout_constraintEnd_toStartOf="@id/arrow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

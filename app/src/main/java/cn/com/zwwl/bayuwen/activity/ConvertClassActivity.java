@@ -182,6 +182,7 @@ public class ConvertClassActivity extends BasicActivityWithTitle {
                         break;
                 }
                 page = 1;
+                refresh.setNoMoreData(false);
                 getCourseData();
             }
 

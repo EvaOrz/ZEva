@@ -12,6 +12,15 @@ public class TuifeeModel extends Entry {
     private String created_at;
     private String refund_no;
     private KeModel keModel;
+    private String tel;
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
 
     public int getType() {
         return type;

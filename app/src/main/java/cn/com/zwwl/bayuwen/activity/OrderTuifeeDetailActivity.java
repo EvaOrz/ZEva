@@ -15,12 +15,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.order.TuifeeApi;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.TuifeeModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.util.Tools;
 
 /**
  * 退费的详情页面
@@ -114,13 +116,16 @@ public class OrderTuifeeDetailActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    tuiDetailOp1.setText("￥" + Double.valueOf(tuifeeModel.getRefund_fee()) / 100);
-                    tuiDetailPrice.setText("￥" + Double.valueOf(tuifeeModel.getRefund_fee()) / 100);
+                    double aa = Double.valueOf(tuifeeModel.getRefund_fee()) / 100;
+                    String tuifee = Tools.getTwoDecimal(aa);
+                    tuiDetailOp1.setText("￥" + tuifee);
+                    tuiDetailPrice.setText("￥" + tuifee);
                     tui_type.setText(tuifeeModel.getType() == 1 ? "原路退回" : "账户退回");
                     KeModel model = tuifeeModel.getKeModel();
                     itemOrderTag.setImageResource(model.getTagImg());
                     itemOrderTitle.setText(model.getTitle());
                     itemOrderTeacher.setText(model.getTname());
+                    ImageLoader.display(mContext, itemOrderPic, model.getPic());
                     itemOrderDate.setText(CalendarTools.format(Long.valueOf(model.getStartPtime()),
                             "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(model
                                     .getEndPtime()),
@@ -129,7 +134,8 @@ public class OrderTuifeeDetailActivity extends BaseActivity {
                             ());
                     itemOrderXiaoqu.setText(model.getSchool());
                     tuiDetailOp2.setText(tuifeeModel.getReason());
-                    tuiDetailOp3.setText("￥" + Double.valueOf(tuifeeModel.getRefund_fee()) / 100);
+
+                    tuiDetailOp3.setText("￥" + tuifee);
                     tuiDetailOp4.setText(tuifeeModel.getCreated_at());
                     tuiDetailOp5.setText(tuifeeModel.getRefund_no());
 

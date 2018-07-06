@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.umeng.socialize.UMShareAPI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,22 +32,17 @@ import cn.com.zwwl.bayuwen.activity.MyCollectionActivity;
 import cn.com.zwwl.bayuwen.activity.MyOrderActivity;
 import cn.com.zwwl.bayuwen.activity.MyTuanActivity;
 import cn.com.zwwl.bayuwen.activity.OurFmActivity;
-import cn.com.zwwl.bayuwen.activity.RegisterAddChildActivity;
 import cn.com.zwwl.bayuwen.activity.SettingActivity;
 import cn.com.zwwl.bayuwen.activity.TuanCodeUseActivity;
-import cn.com.zwwl.bayuwen.activity.fm.FmHistoryActivity;
 import cn.com.zwwl.bayuwen.api.order.OrderCancleNumApi;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
-import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
-import cn.com.zwwl.bayuwen.model.AchievementModel;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
-import cn.com.zwwl.bayuwen.view.SharePopWindow;
 
 /**
  * 我的 tab
@@ -86,6 +80,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        checkCartNum();
         handler.sendEmptyMessage(0);
     }
 
@@ -150,6 +145,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                                 .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
                         frag5Code.setText(userModel.getSignCode());
                         frag5Name.setText(userModel.getName());
+                        frag5Level.setText(userModel.getLevel() + "");
                     }
                     if (Tools.listNotNull(childModels)) {
                         frag5ChildLayout.removeAllViews();
@@ -244,7 +240,9 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 break;
             case R.id.frag5_invite:// 邀请好友加入大语文
 //                SharePopWindow sharePopWindow=new SharePopWindow(getActivity(),"AAA");
-                ShareTools.doShareWeb((BaseActivity) getActivity(),"","","","https://www.baidu.com");
+
+                ShareTools.doShareWeb((BaseActivity) getActivity(),"大语文","大运问的","http://dev.umeng.com/images/tab2_1.png","https://www.baidu.com");
+
 
                 break;
             case R.id.frag5_feedback:// 反馈
@@ -290,5 +288,9 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
         super.onDestroyView();
     }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(getActivity()).onActivityResult(requestCode, resultCode, data);
+    }
 }

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/body_bg"
     android:orientation="vertical">
     <!--tabbar-->
     <RelativeLayout
@@ -47,8 +48,8 @@
             android:gravity="center_vertical">
 
             <android.support.v7.widget.AppCompatImageView
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:contentDescription="@null"
                 android:scaleType="centerInside"
                 android:src="@mipmap/yellow_map" />
@@ -72,7 +73,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/body_bg"
             android:orientation="vertical">
 
             <LinearLayout

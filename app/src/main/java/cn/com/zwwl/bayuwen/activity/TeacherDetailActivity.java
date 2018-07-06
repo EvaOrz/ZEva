@@ -150,7 +150,6 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
                     if (baseResponse.getTotal_count() % baseResponse.getPagesize() > 0)
                         totalPage += 1;
                     if (baseResponse.getCourse() != null && baseResponse.getCourse().size() > 0) {
-                        keModels.clear();
                         keModels.addAll(baseResponse.getCourse());
                         recyclerView.setAdapter(tCourseListAdapter);
                         tCourseListAdapter.notifyDataSetChanged();

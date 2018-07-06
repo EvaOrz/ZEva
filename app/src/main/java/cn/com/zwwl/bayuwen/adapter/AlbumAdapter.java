@@ -50,7 +50,8 @@ public class AlbumAdapter extends CheckScrollAdapter<AlbumModel> {
 
         title.setText(item.getTitle());
         desc.setText(item.getDesc());
-        learn.setText(item.getLikeNum() + "");
+        learn.setText(item.getPlayNum() + "");
+        per.setText(item.getNum() + "");
         if (!TextUtils.isEmpty(item.getPic()))
             Glide.with(mContext)
                     .load(item.getPic())

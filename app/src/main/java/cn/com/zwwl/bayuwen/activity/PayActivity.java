@@ -76,8 +76,7 @@ public class PayActivity extends BaseActivity {
     private String tuanCode;// 拼团码
     private CouponModel currentCoupon;// 优惠码
     private String itemCode = "";// id组合码，生成订单用
-    private String kidCode = "";// kid组合码，计算价格用
-    private String yueTxt = "￥0.00";// 账户余额
+    private String yueTxt = "0.00";// 账户余额
     private AddressModel currentAddress;// 当前收货地址
     private OrderModel orderModel;// 订单model
     private OrderModel.OrderDetailModel detailModel; // 订单详情model
@@ -129,24 +128,21 @@ public class PayActivity extends BaseActivity {
     private void initItemString() {
         if (type == 1) {// 垫付需要循环垫付数量
             KeModel keModel = keDatas.get(0);
-            kidCode = keModel.getKid();
             itemCode = keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
             for (int i = 0; i < keModel.getGroupbuy().getDiscount().getLimit_num() - 1; i++) {
                 itemCode += "," + keModel.getKid() + "_1_" + "0";
             }
         } else if (type == 0 || type == 2) { //单独购买||单独参团
             KeModel keModel = keDatas.get(0);
-            kidCode = keModel.getKid();
             itemCode = keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
         } else if (type == 3) {// 购课单购买
             for (KeModel keModel : keDatas) {
-                kidCode += keModel.getKid() + ",";
                 itemCode += keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext)
                         + ",";
             }
-            if (kidCode.length() > 0)
-                kidCode = kidCode.substring(0, kidCode.length() - 1);
         }
+        if (itemCode.length() > 0 && itemCode.endsWith(","))
+            itemCode = itemCode.substring(0, itemCode.length() - 1);
     }
 
     private void setGoodsInfo() {
@@ -232,10 +228,11 @@ public class PayActivity extends BaseActivity {
                     addTv.setVisibility(View.VISIBLE);
                     break;
                 case 2:// 更新账户余额
-                    yueTv.setText(yueTxt);
+                    double aa = Double.valueOf(yueTxt) / 100;
+                    yueTv.setText(Tools.getTwoDecimal(aa));
                     break;
                 case 3:// 实时计算价格，之后更新最新价格
-                    priceTv.setText("实付款：￥" + detailModel.getAmount() / 100);
+                    priceTv.setText("实付款：￥" + Tools.getTwoDecimal(detailModel.getAmount() / 100));
                     if (!TextUtils.isEmpty(detailModel.getWarn())) {
                         new AskDialog(mContext, true, detailModel.getWarn(), new AskDialog
                                 .OnSurePickListener() {
@@ -466,9 +463,9 @@ public class PayActivity extends BaseActivity {
      * 实时计算金额
      */
     private void countPrice() {
-        String promoId = promotionModel == null ? "0" : promotionModel.getId();
-        String couponCode = currentCoupon == null ? "0" : currentCoupon.getCoupon_code();
-        new CountPriceApi(mContext, kidCode, couponCode, promoId, yueTxt, new
+        String promoId = promotionModel == null ? "" : promotionModel.getId();
+        String couponCode = currentCoupon == null ? "" : currentCoupon.getCoupon_code();
+        new CountPriceApi(mContext, itemCode, couponCode, promoId, yueTxt, tuanCode, new
                 FetchEntryListener() {
                     @Override
                     public void setData(Entry entry) {
@@ -524,6 +521,9 @@ public class PayActivity extends BaseActivity {
         i.putExtra("TuanPayResultActivity_data", t);
         i.putExtra("TuanPayResultActivity_oid", orderModel.getBill_no());
         i.putExtra("TuanPayResultActivity_desc", desc);
+        if (type == 1) {
+            i.putExtra("is_dianfu", true);
+        }
         startActivity(i);
         finish();
     }
