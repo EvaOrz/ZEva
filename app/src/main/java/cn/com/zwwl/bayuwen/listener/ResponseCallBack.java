@@ -1,6 +1,10 @@
 package cn.com.zwwl.bayuwen.listener;
 
 
+import android.widget.ListView;
+
+import java.util.List;
+
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
 /**
@@ -8,5 +12,4 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
  */
 public interface ResponseCallBack<T> {
     void result(T t,ErrorMsg errorMsg);
-
 }

@@ -21,13 +21,20 @@
         app:tabTextColor="@color/gray_dark">
 
     </android.support.design.widget.TabLayout>
+
     <include layout="@layout/layout_line" />
+
+    <LinearLayout
+        android:id="@+id/pintu_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" />
 
     <RadioGroup
         android:id="@+id/course_d_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/album_dp_200"
         android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal">

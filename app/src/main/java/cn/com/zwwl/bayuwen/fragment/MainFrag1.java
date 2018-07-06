@@ -84,6 +84,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private MostGridView achieveGrid;// 成就列表
     private TextView achiTv;
 
+    private List<AdvBean> advBeans = new ArrayList<>();// banner数据
     private List<View> pingtuViews = new ArrayList<>();
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
     private List<AchievementModel> achiveatas = new ArrayList<>();// 成就数据
@@ -91,7 +92,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private UserModel userModel;
 
     private int pintuWid, pintuHei;// 拼图item的宽高
-
     private int paddingLeft, paddingRight, paddingTop, paddingBottom;
 
     public boolean isCityChanged = false;// 城市状态是否变化

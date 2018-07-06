@@ -13,6 +13,9 @@ import android.widget.ImageView;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UmengTool;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumConfig;
 import com.yanzhenjie.album.AlbumFile;
@@ -107,6 +110,12 @@ public class MyApplication extends Application {
         mContext = this;
         instance = this;
         super.onCreate();
+
+        //对分享的各个平台的key进行配置
+        PlatformConfig.setWeixin("wx22ea2fa3b35cb13f", "e117d862971d54e940247349a8778276");
+        PlatformConfig.setQQZone("1105723648", "SClqzj0HjnAx2ATM");
+        PlatformConfig.setSinaWeibo("3041420061", "be08435126fd7c6908b6398985c71d83", "http://open.weibo.com/apps/3041420061/privilege/oauth");
+
         initScreenInfo();
         initChannel();
         initLeanCloud();

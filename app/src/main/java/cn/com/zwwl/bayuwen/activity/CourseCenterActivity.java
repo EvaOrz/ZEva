@@ -65,8 +65,6 @@ public class CourseCenterActivity extends BaseActivity {
     protected HashMap<String, String> para;
     private int page = 1;
     private String baseUrl = UrlUtil.getCDetailUrl(null) + "/search";
-    // 筛选参数
-    private String pama1 = "", pama2 = "", pama3 = "", pama4 = "", pama5 = "";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -254,7 +252,7 @@ public class CourseCenterActivity extends BaseActivity {
                     String gra = "";
                     if (gradeTxt > 0) gra = AppValue.getGradeStrings().get(gradeTxt - 1);
                     boolean isWangke = false;
-                    if (!TextUtils.isEmpty(tagId) && tagId.equals("100")){
+                    if (!TextUtils.isEmpty(tagId) && tagId.equals("100")) {
                         isWangke = true;
                     }
                     selectMenuView.setData(keTypeModel, gra, tagId, isWangke);

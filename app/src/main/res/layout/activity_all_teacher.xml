@@ -42,14 +42,22 @@
 
     </LinearLayout>
 
-    <GridView
-        android:id="@+id/all_t_grid"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:numColumns="4"
-        android:scrollbars="none" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/select_ke_menu">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/all_t_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:numColumns="4"
+            android:scrollbars="none" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <cn.com.zwwl.bayuwen.view.selectmenu.TeacherMenuView
         android:id="@+id/all_t_menu"

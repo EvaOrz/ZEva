@@ -43,6 +43,8 @@
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+    <!--友盟分享登录需要权限-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 
     <application
         android:name=".MyApplication"
@@ -53,6 +55,7 @@
         android:supportsRtl="true"
         android:testOnly="false"
         android:theme="@style/BaseTheme">
+
         <activity
             android:name=".activity.fm.FmSplashActivity"
             android:label="@string/app_name"
@@ -64,6 +67,46 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--微信-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+        <!--新浪微博-->
+        <activity
+            android:name=".wxapi.WBShareActivity"
+            android:configChanges="keyboardHidden|orientation"
+            >
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <!--//qq-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1105723648" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        //友盟的appkey
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5ad40381f29d987f490000be" />
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
@@ -353,7 +396,7 @@
         <activity android:name=".activity.LookPPTActivity" />
         <!-- 上传上课照片 -->
         <activity android:name=".activity.InClassStatusActivity" />
-        <!-- 正在进行课程 -->
+        <!-- 正在进行课程(废弃) -->
         <activity
             android:name=".activity.StudyingCourseActivity"
             android:launchMode="singleTask" />
@@ -372,17 +415,13 @@
         <activity android:name=".activity.ClassApplyActivity" />
         <!-- 课程跟踪记录 -->
         <activity android:name=".activity.FCourseListActivity" />
-        <!-- 已完成课程条目点击进入 -->
-        <activity
-            android:name=".activity.FCourseIndexActivity"
-            android:launchMode="singleTask" />
-        <!-- 期末考试详情 -->
+        <!-- 期末考试详情(废弃) -->
         <activity android:name=".activity.ExamDetailsActivity" />
-        <!-- 具体课次首页 -->
+        <!-- 具体课次首页(废弃) -->
         <activity android:name=".activity.UnitIndexActivity" />
         <!-- 上传照片 -->
         <activity android:name=".activity.UploadPicActivity" />
-        <!-- 教学总结 -->
+        <!-- 教学总结 (废弃)-->
         <activity android:name=".activity.TeacherSummaryActivity" />
         <!-- 查看作业 -->
         <activity android:name=".activity.WorkDetailsActivity" />
@@ -399,16 +438,25 @@
         <meta-data
             android:name="cn.com.zwwl.bayuwen.glide.TGlideModule"
             android:value="GlideModule" />
-
+       <!--系统消息-->
         <activity android:name=".activity.SysMessageActivity" />
+        <!--互动消息-->
         <activity android:name=".activity.InteractActivity" />
+        <!--课程消息-->
         <activity android:name=".activity.CourseMessageActivity" />
+        <!--其他消息-->
         <activity android:name=".activity.OtherMessageActivity" />
+        <!--消息详情-->
         <activity android:name=".activity.MessageDetailActivity" />
+        <!--添加话题-->
         <activity android:name=".activity.CreateTopicActivity" />
+        <!--话题标签-->
         <activity android:name=".activity.TopicLabelActivity" />
+        <!--话题详情-->
         <activity android:name=".activity.TopicDetailActivity" />
+        <!--城市列表-->
         <activity android:name=".activity.CityActivity" />
+        <!--我的Fm-->
         <activity android:name=".activity.OurFmActivity" />
         <!-- 课程跟踪正在进行课程点击箭头进入该界面 -->
         <activity
@@ -417,9 +465,11 @@
 
         <!-- 课程跟踪点击“往次”，或已完成课程二级页面点击条目进入该页面 -->
         <activity android:name=".activity.ReportIndexActivity" />
-        <activity android:name=".activity.TopicCommitActivity" />
-        <!-- 课程跟踪首页搜索 -->
+        <!--话题详情里面的评论-->
+        <activity android:name=".activity.TopicCommitActivity"/>
+        <!--课程跟踪首页搜索-->
         <activity android:name=".activity.TraceSearchActivity" />
+
         <!-- 课程跟踪正在进行课程(线上课)点击箭头进入该界面-->
         <activity android:name=".activity.ReplayListActivity" />
         <!--  查看图片，可缩放，滑动切换-->
