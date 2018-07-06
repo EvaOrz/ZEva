@@ -272,10 +272,11 @@ public class NewMusicService extends Service {
                 .ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> runningTaskInfo = activityManager.getRunningTasks(1);
         String activityName = (runningTaskInfo.get(0).topActivity).getClassName().toString();
+        Log.e("*************", activityName);
         if (TextUtils.isEmpty(activityName)) return false;
         if (activityName.equals(MainActivity.class.getName()) || activityName.equals
                 (AlbumDetailActivity
-                .class.getName()))
+                        .class.getName()))
             return true;
         return false;
     }

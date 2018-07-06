@@ -49,6 +49,7 @@ public class FmAdapter extends CheckScrollAdapter<FmModel> {
         TextView title = viewHolder.getView(R.id.fm_title);
         TextView play = viewHolder.getView(R.id.fm_play);
         TextView pinglun = viewHolder.getView(R.id.fm_pinglun);
+        TextView date = viewHolder.getView(R.id.fm_date);
         TextView time = viewHolder.getView(R.id.fm_time);
         GifView gif = viewHolder.getView(R.id.fm_gif);
         ImageView lock = viewHolder.getView(R.id.fm_lock);
@@ -77,6 +78,9 @@ public class FmAdapter extends CheckScrollAdapter<FmModel> {
         title.setText(item.getTitle());
         play.setText(item.getPlay_num() + "");
         pinglun.setText("0");
+        date.setText(CalendarTools.format(CalendarTools.fromStringTotime(item.getCreated_at()) /
+                        1000,
+                "yyyy-MM"));
         time.setText(CalendarTools.getTime(Long.valueOf(item.getAudioDuration())));
         return viewHolder.getConvertView();
     }

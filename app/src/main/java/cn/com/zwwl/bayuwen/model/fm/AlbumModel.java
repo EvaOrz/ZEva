@@ -20,6 +20,8 @@ public class AlbumModel extends Entry {
     private String tid = "";
     private String tname = "";
     private int likeNum;
+    private int playNum;
+    private int num;
     private boolean likeState = false;
     private double buyPrice;
     private String type = "";
@@ -29,6 +31,22 @@ public class AlbumModel extends Entry {
     private List<Teacher> teachers = new ArrayList<>();
     private int conllectId;
     private boolean is_buy = false;
+
+    public int getPlayNum() {
+        return playNum;
+    }
+
+    public void setPlayNum(int playNum) {
+        this.playNum = playNum;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
 
     public String getKid() {
         return kid;
@@ -223,10 +241,17 @@ public class AlbumModel extends Entry {
         albumModel.setLikeState(keinfo.optBoolean("likeState", false));
         albumModel.setUpdate_time(keinfo.optString("update_time"));
         albumModel.setIs_buy(keinfo.optBoolean("is_buy"));
+        albumModel.setPlayNum(keinfo.optInt("playNum"));
+        albumModel.setNum(keinfo.optInt("num"));
 
         JSONObject collect = keinfo.optJSONObject("collection");
         if (!isNull(collect)) {
             albumModel.setConllectId(collect.optInt("id"));
+        }
+
+        JSONObject type = keinfo.optJSONObject("type");
+        if (!isNull(type)) {
+            albumModel.setType(type.optString("name"));
         }
         return albumModel;
     }

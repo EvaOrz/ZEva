@@ -26,7 +26,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,6 +38,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import okhttp3.Headers;
 
 /**
@@ -48,7 +53,8 @@ public class Tools {
 
 
     public static void transforCircleBitmap(Context context, int resId, ImageView imageView) {
-        transforCircleBitmap(BitmapFactory.decodeResource(context.getResources(), resId), imageView);
+        transforCircleBitmap(BitmapFactory.decodeResource(context.getResources(), resId),
+                imageView);
     }
 
     /**
@@ -168,11 +174,14 @@ public class Tools {
 
 
     public static boolean isAppBackground(Context context) {
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context
+                .ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager
+                .getRunningAppProcesses();
         for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
             if (appProcess.processName.equals(context.getPackageName())) {
-                if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_BACKGROUND) {
+                if (appProcess.importance == ActivityManager.RunningAppProcessInfo
+                        .IMPORTANCE_BACKGROUND) {
                     Log.e("后台运行", appProcess.processName);
                     return true;
                 } else {
@@ -211,7 +220,8 @@ public class Tools {
     public static String getAppVersion(Context context) {
         PackageManager packageManager = context.getPackageManager();
         try {
-            final PackageInfo info = packageManager.getPackageInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            final PackageInfo info = packageManager.getPackageInfo(context.getPackageName(),
+                    PackageManager.GET_META_DATA);
             return info.versionName;
         } catch (PackageManager.NameNotFoundException ignored) {
         }
@@ -235,15 +245,31 @@ public class Tools {
      *
      * @return
      */
-    public static HashMap<String, String> getRequastHeaderMap(Context context) {
+    public static HashMap<String, String> getRequastHeaderMap(Context mContext) {
         HashMap<String, String> headerMap = new HashMap<String, String>();
-        headerMap.put("X-SLATE-DEVICEID", getDeviceId(context));
-        headerMap.put("X-SLATE-UUID", getMyUUID(context));
-        headerMap.put("X-SLATE-ANDROIDTOKEN", Tools.getDeviceToken(context));
-        headerMap.put("X-SLATE-CLIENTVERSION", Tools.getAppVersionName(context));
-        headerMap.put("X-SLATE-DEVICETYPE", android.os.Build.MODEL);//设备信息
-        // 未root:10  已root:11
-        headerMap.put("X-SLATE-JAILBROKEN", isRooted() ? "11" : "10");//是否root（如果可以获取就获取）
+        try {
+            String authorization = UserDataHelper.getUserToken(mContext);
+            if (!TextUtils.isEmpty(authorization))
+                headerMap.put("Authorization", "Bearer " + authorization);
+            else
+                headerMap.put("Authorization", "");
+            String city = "";
+            if (TextUtils.isEmpty(TempDataHelper.getCurrentCity(mContext)))
+                city = URLEncoder.encode("北京市", "UTF-8");
+            else city = URLEncoder.encode(TempDataHelper.getCurrentCity(mContext), "UTF-8");
+            headerMap.put("City", city);
+            headerMap.put("Device", "android");
+            int grade = TempDataHelper.getCurrentChildGrade(mContext);
+            if (grade != 0)
+                headerMap.put("Grade", grade + "");
+            String no = TempDataHelper.getCurrentChildNo(mContext);
+            if (!TextUtils.isEmpty(no)) headerMap.put("StudentNo", no + "");
+            String accessToken = TempDataHelper.getAccessToken(mContext);
+            if (!TextUtils.isEmpty(accessToken))
+                headerMap.put("Access-Token", accessToken);
+        } catch (UnsupportedEncodingException e) {
+
+        }
 
         return headerMap;
     }
@@ -259,63 +285,12 @@ public class Tools {
      * @return
      */
     public static boolean checkNetWork(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService
+                (Context.CONNECTIVITY_SERVICE);
         /* 网络连接状态 */
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
-    /**
-     * 获取设备ID
-     *
-     * @param context
-     * @return
-     */
-    public static String getDeviceId(Context context) {
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        return telephonyManager.getDeviceId();
-    }
-
-
-    /**
-     * 获取设备网卡mac地址
-     *
-     * @param context
-     * @return
-     */
-    public static String getNetMacAdress(Context context) {
-        WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-
-        WifiInfo info = wifi.getConnectionInfo();
-
-        return info.getMacAddress();
-    }
-
-
-    /**
-     * 返回手机唯一标识
-     *
-     * @return
-     */
-    public static String getMyUUID(Context mContext) {
-        final TelephonyManager tm = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
-        String imie = "" + tm.getDeviceId();
-        String tmSerial = "" + tm.getSimSerialNumber();
-
-
-        UUID deviceUuid = new UUID(getDeviceToken(mContext).hashCode(), ((long) imie.hashCode() << 32) | tmSerial.hashCode());
-        return MD5.MD5Encode(deviceUuid.toString());
-    }
-
-    /**
-     * The Android ID
-     * 通常被认为不可信，因为它有时为null。开发文档中说明了：这个ID会改变如果进行了出厂设置。并且，如果某个Andorid手机被Root过的话，这个ID也可以被任意改变
-     *
-     * @return
-     */
-    public static String getDeviceToken(Context mContext) {
-        return "" + android.provider.Settings.Secure.getString(mContext.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
     }
 
     /**
@@ -324,7 +299,8 @@ public class Tools {
     public static String getAppVersionName(Context context) {
         try {
             PackageManager packageManager = context.getPackageManager();
-            PackageInfo info = packageManager.getPackageInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            PackageInfo info = packageManager.getPackageInfo(context.getPackageName(),
+                    PackageManager.GET_META_DATA);
             return info.versionName;
         } catch (Exception e) {
             e.printStackTrace();
@@ -332,13 +308,14 @@ public class Tools {
         return "";
     }
 
+
     /**
-     * 将小数转换成百分数
+     * 将数据保留两位小数
      */
-    public static String parseDecimal(double data) {
-        DecimalFormat nt = new DecimalFormat("0%");
-        nt.setRoundingMode(RoundingMode.DOWN);
-        return nt.format(data);
+    public static String getTwoDecimal(double num) {
+        BigDecimal b = new BigDecimal(num);
+        if (num == 0) return "0.00";
+        return b.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
     }
 
     public static String getText(TextView t) {
@@ -353,10 +330,11 @@ public class Tools {
             return 3;//直播
         return 4;//回放
     }
+
     public static Pair<Integer, Integer> getUiPixels(View view) {
-        int w = View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
-        int h = View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
+        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         view.measure(w, h);
-        return new Pair<>(view.getMeasuredHeight(),view.getMeasuredWidth());
+        return new Pair<>(view.getMeasuredHeight(), view.getMeasuredWidth());
     }
 }

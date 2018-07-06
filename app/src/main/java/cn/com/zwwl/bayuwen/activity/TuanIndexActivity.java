@@ -278,16 +278,16 @@ public class TuanIndexActivity extends BaseActivity {
                 });
     }
 
-
     @Override
     protected void initData() {
-        dianNum.setText(keModel.getGroupbuy().getDiscount().getLimit_num() + "");
-        dianJiao.setText(keModel.getGroupbuy().getDiscount().getMaterial_price() + "");
-        dianKe.setText(keModel.getGroupbuy().getDiscount().getDiscount_price() - keModel
-                .getGroupbuy().getDiscount()
-                .getMaterial_price() + "");
-        dianTotal.setText(keModel.getGroupbuy().getDiscount().getDiscount_price() + "");
-        payTotal.setText(keModel.getGroupbuy().getDiscount().getTotal_price() + "");
+        int num = keModel.getGroupbuy().getDiscount().getLimit_num();
+        double totalPrice = keModel.getGroupbuy().getDiscount().getTotal_price();
+        dianNum.setText(num + "");
+        dianJiao.setText(keModel.getGroupbuy().getDiscount().getMaterial_price() * num + "");
+        dianKe.setText(totalPrice - keModel.getGroupbuy().getDiscount().getMaterial_price() * num
+                + "");
+        dianTotal.setText(totalPrice + "");
+        payTotal.setText(totalPrice + "");
     }
 
 }

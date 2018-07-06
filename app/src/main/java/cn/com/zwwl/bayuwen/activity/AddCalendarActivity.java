@@ -55,6 +55,7 @@ import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
 public class AddCalendarActivity extends BaseActivity {
     private TextView shangkeTv, xiangkeTv, jigouTv, kaiTv1, kaiTv2, jieTv1, jieTv2, weekCountTv;
     private EditText nameEv, cishuEv, addressEv, teacherEv, codeEv;
+    private TextView add_calendar_title;
 
     private CalendarEventModel calendarEventModel;// 当前日历事件
     private boolean isCanSave = true;// 日历事件不可以修改，只可以增减日期
@@ -119,6 +120,7 @@ public class AddCalendarActivity extends BaseActivity {
         findViewById(R.id.add_kechengjigou).setOnClickListener(this);
         findViewById(R.id.add_period).setOnClickListener(this);
 
+        add_calendar_title = findViewById(R.id.add_calendar_title);
         shangkeTv = findViewById(R.id.content_shangkeshijian);
         xiangkeTv = findViewById(R.id.content_xiakeshijian);
         jigouTv = findViewById(R.id.content_jigou);
@@ -133,6 +135,7 @@ public class AddCalendarActivity extends BaseActivity {
         teacherEv = findViewById(R.id.content_teacher);
         codeEv = findViewById(R.id.content_code);
         if (!isCanSave) {
+            add_calendar_title.setText("修改课程");
             nameEv.setFocusable(false);
             cishuEv.setFocusable(false);
             addressEv.setFocusable(false);
@@ -143,6 +146,11 @@ public class AddCalendarActivity extends BaseActivity {
             addressEv.setEnabled(false);
             teacherEv.setEnabled(false);
             codeEv.setEnabled(false);
+            nameEv.setHint("");
+            cishuEv.setHint("");
+            addressEv.setHint("");
+            teacherEv.setHint("");
+            codeEv.setHint("");
         }
     }
 
@@ -303,6 +311,9 @@ public class AddCalendarActivity extends BaseActivity {
                 @Override
                 public void setError(ErrorMsg error) {
                     showLoadingDialog(false);
+                    if (error != null) {
+                        showToast(error.getDesc());
+                    }
                 }
             });
         }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/body_bg"
@@ -20,6 +20,7 @@
                 android:background="@color/white"
                 android:padding="15dp"
                 android:text="@string/today"
+                android:visibility="gone"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_14" />
 
@@ -41,6 +42,7 @@
                 android:background="@color/white"
                 android:padding="15dp"
                 android:text="@string/yesterday"
+                android:visibility="invisible"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_14" />
 
@@ -59,5 +61,14 @@
         </RelativeLayout>
 
     </ScrollView>
+    <ImageView
+        android:id="@+id/fm_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@mipmap/blank_no_fm"
+        android:visibility="gone"
+         />
 
-</LinearLayout>
+</RelativeLayout>

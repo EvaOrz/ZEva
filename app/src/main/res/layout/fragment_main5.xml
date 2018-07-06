@@ -113,11 +113,11 @@
                         android:id="@+id/frag5_level_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
+                        android:layout_marginLeft="5dp"
                         android:lines="1"
                         android:text="@string/look_gongxun_guize"
-                        android:textColor="@color/gray_light"
-                        android:textSize="@dimen/text_size_14" />
+                        android:textColor="@color/gray_line"
+                        android:textSize="@dimen/text_size_12" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -288,7 +288,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@mipmap/icon_follow" />
+                    android:src="@mipmap/my_follow" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -301,6 +301,7 @@
             </LinearLayout>
 
             <include layout="@layout/layout_line" />
+
             <LinearLayout
                 android:id="@+id/frag5_my_fm"
                 android:layout_width="match_parent"
@@ -339,7 +340,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@mipmap/my_fm" />
+                    android:src="@mipmap/tuangou" />
 
                 <TextView
                     android:layout_width="wrap_content"

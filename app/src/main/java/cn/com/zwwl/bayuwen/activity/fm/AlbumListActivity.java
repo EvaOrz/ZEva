@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -20,18 +21,19 @@ import cn.com.zwwl.bayuwen.adapter.AlbumAdapter;
 import cn.com.zwwl.bayuwen.api.fm.AlbumListApi;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.util.Tools;
 
 /**
  * 专辑列表页面
  */
 public class AlbumListActivity extends BaseActivity {
-    private int type = 0;// 0：带kid的专辑列表；1：我的收藏
     private ListView listView;
-    private TextView title;
+    private TextView titleTv;
     private AlbumAdapter albumAdapter;
     private List<AlbumModel> albumModels = new ArrayList<>();
     private String kId;
     private int page = 1;
+    private String title;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,19 +41,17 @@ public class AlbumListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album_list);
         kId = getIntent().getStringExtra("AlbumListActivity_data");
-        type = getIntent().getIntExtra("AlbumListActivity_type", 0);
+        title = getIntent().getStringExtra("AlbumListActivity_title");
         initView();
         initErrorLayout();
         initData();
     }
 
     private void initView() {
-        title = findViewById(R.id.album_list_title);
-        if (type == 0) {
-            title.setText(R.string.album_list);
-        } else if (type == 1) {
-            title.setText(R.string.gerenshoucang);
-        }
+        titleTv = findViewById(R.id.album_list_title);
+        if (!TextUtils.isEmpty(title)) titleTv.setText(title);
+        else
+            titleTv.setText(R.string.album_list);
         listView = findViewById(R.id.album_list_listview);
         findViewById(R.id.album_list_back).setOnClickListener(this);
         albumAdapter = new AlbumAdapter(this);
@@ -70,46 +70,26 @@ public class AlbumListActivity extends BaseActivity {
     @Override
     public void initData() {
         showLoading();
-        if (type == 0)
-            new AlbumListApi(this, kId, page, new AlbumListApi.FetchAlbumListListener() {
-                @Override
-                public void setData(List<AlbumModel> data) {
-                    if (data != null && data.size() > 0) {
+        new AlbumListApi(this, kId, page, new AlbumListApi.FetchAlbumListListener() {
+            @Override
+            public void setData(List<AlbumModel> data) {
+                if (Tools.listNotNull(data)) {
 
-                        albumModels.clear();
-                        albumModels.addAll(data);
-                        handler.sendEmptyMessage(0);
-                    } else
-                        handler.sendEmptyMessage(1);
-
-                }
-
-
-                @Override
-                public void setError(ErrorMsg error) {
+                    albumModels.clear();
+                    albumModels.addAll(data);
+                    handler.sendEmptyMessage(0);
+                } else
                     handler.sendEmptyMessage(1);
-                }
-            });
-        else if (type == 1) {
-            new AlbumListApi(this, 1, new AlbumListApi.FetchAlbumListListener() {
-                @Override
-                public void setData(List<AlbumModel> data) {
-                    if (data != null && data.size() > 0) {
-                        albumModels.clear();
-                        albumModels.addAll(data);
-                        handler.sendEmptyMessage(0);
-                    } else
-                        handler.sendEmptyMessage(1);
 
-                }
+            }
 
 
-                @Override
-                public void setError(ErrorMsg error) {
-                    handler.sendEmptyMessage(1);
-                }
-            });
-        }
+            @Override
+            public void setError(ErrorMsg error) {
+                handler.sendEmptyMessage(1);
+            }
+        });
+
     }
 
     @SuppressLint("HandlerLeak")

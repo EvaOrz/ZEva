@@ -16,6 +16,7 @@ import java.util.HashMap;
 import butterknife.ButterKnife;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.util.MyActivityManager;
 
 
 /**
@@ -37,6 +38,7 @@ public abstract class BasicActivityWithTitle extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MyActivityManager.getInstance().addActivity(this);
         init();
         initView();
         initData();

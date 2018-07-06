@@ -28,7 +28,7 @@ public class AboutActivity extends BaseActivity {
         version = findViewById(R.id.about_version);
         version.setText(getResources().getString(R.string.app_name) + " " + Tools
                 .getAppVersionName(mContext) + " (" + CalendarTools.format(System
-                .currentTimeMillis() / 1000, "MM-dd") + ")");
+                .currentTimeMillis() / 1000, "MM-dd HH:mm") + ")");
         findViewById(R.id.about_back).setOnClickListener(this);
     }
 

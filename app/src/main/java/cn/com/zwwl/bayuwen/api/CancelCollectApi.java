@@ -18,7 +18,7 @@ public class CancelCollectApi extends BaseApi {
   private ResponseCallBack<String> callBack;
     private String ID;
     private String url;
-    public CancelCollectApi(Activity context,String id , ResponseCallBack<String> callBack) {
+    public  CancelCollectApi(Activity context,String id , ResponseCallBack<String> callBack) {
         super(context);
         this.activity = context;
         this.ID = id;

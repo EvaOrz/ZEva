@@ -58,36 +58,6 @@ public class AlbumListApi extends BaseApi {
         get();
     }
 
-    /**
-     * 获取播放历史
-     *
-     * @param context
-     * @param listener
-     */
-    public AlbumListApi(Context context, FetchAlbumListListener listener) {
-        super(context);
-        mContext = context;
-        this.url = UrlUtil.getHistoryurl();
-        this.listener = listener;
-        get();
-    }
-
-    /**
-     * 获取收藏列表
-     *
-     * @param context
-     * @param type
-     * @param listener
-     */
-    public AlbumListApi(Context context, int type, FetchAlbumListListener listener) {
-        super(context);
-        mContext = context;
-        isCollect = true;
-        this.url = UrlUtil.getCollecturl() + "?type=" + type;
-        this.listener = listener;
-        get();
-    }
-
     @Override
     protected Map<String, String> getPostParams() {
         return null;

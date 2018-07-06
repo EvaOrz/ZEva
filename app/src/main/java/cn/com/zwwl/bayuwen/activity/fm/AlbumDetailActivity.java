@@ -80,6 +80,7 @@ public class AlbumDetailActivity extends BaseActivity {
     private MusicStatusReceiver musicStatusReceiver;
     private LinearLayout inputLayout;// 输入框
     private TextView buyBt;
+    private TextView tagTv;
 
     private FmModel currentFmModel;// 当前正在播放的音频
     private int currentPosition = -1;// 当前正在播放的音频在列表中的位置
@@ -211,6 +212,7 @@ public class AlbumDetailActivity extends BaseActivity {
         likeImg = findViewById(R.id.album_detail_like_img);
         likeTv = findViewById(R.id.album_detail_like_tv);
         collectImg = findViewById(R.id.album_detail_shoucang_img);
+        tagTv = findViewById(R.id.album_detail_tag);
 
         inputLayout = findViewById(R.id.album_detail_input);
         inputEdit = findViewById(R.id.album_detail_inputedit);
@@ -341,7 +343,8 @@ public class AlbumDetailActivity extends BaseActivity {
                                 .into(imageView);
                     title.setText(albumModel.getTitle());
                     name.setText(albumModel.getTname());
-                    time.setText(albumModel.getUpdate_time());
+                    time.setText("更新时间：" + albumModel.getUpdate_time());
+                    tagTv.setText(albumModel.getType());
                     likeTv.setText("喜欢(" + albumModel.getLikeNum() + ")");
                     handler.sendEmptyMessage(7);
 
@@ -426,7 +429,7 @@ public class AlbumDetailActivity extends BaseActivity {
 
     // 刷新点赞、收藏状态
     private void checkLikeCollect() {
-        likeTv.setText("喜欢（" + albumModel.getLikeNum() + ")");
+        likeTv.setText("喜欢(" + albumModel.getLikeNum() + ")");
         if (albumModel.isLikeState()) {
             likeImg.setImageResource(R.drawable.like_a);
         } else {
@@ -577,22 +580,25 @@ public class AlbumDetailActivity extends BaseActivity {
      */
     private void doCollect() {
         if (albumModel.getConllectId() == 0) {// 添加
-            new CollectionApi(this, albumModel.getKid(), 2, new FetchEntryListener() {
+
+            new CollectionApi(mContext, albumModel.getKid(), 2, new FetchEntryListener() {
                 @Override
                 public void setData(Entry entry) {
-                    if (((ErrorMsg) entry).getNo() > 0) {// 返回了收藏id
-                        albumModel.setConllectId(((ErrorMsg) entry).getNo());
+                    showLoadingDialog(false);
+                    if (entry != null && entry instanceof AlbumModel) {
+                        albumModel.setConllectId(((AlbumModel) entry).getConllectId());
                         handler.sendEmptyMessage(7);
+                        showToast("收藏成功");
                     }
                 }
 
                 @Override
                 public void setError(ErrorMsg error) {
+                    showLoadingDialog(false);
                     if (error != null)
-                        showToast(R.string.collect_faild);
+                        showToast(error.getDesc());
                 }
             });
-
         } else {
             new CollectionApi(this, albumModel.getConllectId(), new FetchEntryListener() {
                 @Override
@@ -604,6 +610,7 @@ public class AlbumDetailActivity extends BaseActivity {
                     if (error == null) {
                         albumModel.setConllectId(0);
                         handler.sendEmptyMessage(7);
+                        showToast("取消收藏成功");
                     }
 
                 }

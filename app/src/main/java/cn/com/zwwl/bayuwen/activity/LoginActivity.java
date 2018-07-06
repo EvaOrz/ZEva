@@ -13,7 +13,6 @@ import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
 import com.tencent.map.geolocation.TencentLocationRequest;
-import com.tencent.map.geolocation.TencentPoi;
 
 import java.util.List;
 
@@ -28,6 +27,7 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.AppValue;
+import cn.com.zwwl.bayuwen.util.MyActivityManager;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.LoginProblemPopWindow;
 
@@ -98,7 +98,7 @@ public class LoginActivity extends BaseActivity implements TencentLocationListen
         super.onClick(view);
         switch (view.getId()) {
             case R.id.login_back:
-                finish();
+                MyActivityManager.getInstance().exit();
                 break;
             case R.id.login_register:
                 startActivity(new Intent(mContext, RegisterActivity.class));

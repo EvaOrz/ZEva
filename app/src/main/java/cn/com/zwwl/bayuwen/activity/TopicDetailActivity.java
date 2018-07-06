@@ -126,7 +126,8 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
 
                     nameId.setText(topicDetailModel.getUser_name());
                     courceNameId.setText(topicDetailModel.getCourse_name());
-                    dateId.setText(topicDetailModel.getTopic_create_at());
+                    String timeaa = topicDetailModel.getTopic_create_at();
+                    dateId.setText(timeaa.substring(0, timeaa.length() - 3));
                     topicContentId.setText(topicDetailModel.getTopic_content());
                     collectNumber.setText(topicDetailModel.getVote_num()); //点赞数
 
@@ -207,8 +208,8 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
                 break;
             case R.id.comment_tv:
 //                initPopWindow();   //弹出popwindow
-                Intent intent = new Intent(this,TopicCommitActivity.class);
-                intent.putExtra("topic_id",topic_id);
+                Intent intent = new Intent(this, TopicCommitActivity.class);
+                intent.putExtra("topic_id", topic_id);
                 startActivity(intent);
                 break;
 
@@ -231,7 +232,7 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
         comment.setFocusable(true);
         comment.setFocusableInTouchMode(true);
         comment.requestFocus();
-       //调出软键盘
+        //调出软键盘
         InputMethodManager imm = (InputMethodManager) TopicDetailActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
 
@@ -243,7 +244,7 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-                if (actionId==EditorInfo.IME_ACTION_SEND ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
+                if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
 
                     Httpcomment(v.getText().toString().trim());
                     popupWindow.dismiss();

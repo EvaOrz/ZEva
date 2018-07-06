@@ -17,6 +17,7 @@ import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.util.Tools;
 
 /**
  * 选课页面课程列表adapter
@@ -67,7 +68,11 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
         viewHolder.date.setText(CalendarTools.format(Long.valueOf(keModel.getStartPtime()),
                 "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(keModel.getEndPtime()),
                 "yyyy-MM-dd"));
-        viewHolder.time.setText(keModel.getClass_start_at() + " - " + keModel.getClass_end_at());
+        String startTime = keModel.getClass_start_at();
+        String endtime = keModel.getClass_end_at();
+        viewHolder.time.setText(startTime.substring(0, startTime.length() - 3) + " - " + endtime
+                .substring(0, endtime.length() - 3));
+//        viewHolder.time.setText(keModel.getClass_start_at() + " - " + keModel.getClass_end_at());
         viewHolder.course_frame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +85,7 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
         if (type == 1) {
             viewHolder.left.setVisibility(View.GONE);
         } else {
-            int nop = Integer.valueOf(keModel.getNum());
+            int nop = keModel.getStock();
             if (nop == 0) {
                 viewHolder.manban_status.setVisibility(View.VISIBLE);
                 viewHolder.left.setText("剩余名额：0");
@@ -92,7 +97,8 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
                 viewHolder.manban_status.setVisibility(View.GONE);
             }
         }
-        viewHolder.price.setText("￥" + keModel.getBuyPrice());
+        double aa = Double.valueOf(keModel.getBuyPrice());
+        viewHolder.price.setText("￥" + Tools.getTwoDecimal(aa));
         setItemClickView(holder.itemView, position);
     }
 

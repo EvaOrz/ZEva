@@ -18,6 +18,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.model.OrderModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.util.Tools;
 
 /**
  * 显示支付明细的dialog
@@ -54,13 +55,13 @@ public class PayDetailDialog {
         price5 = window.findViewById(R.id.pay_d_price5);
         price6 = window.findViewById(R.id.pay_d_price6);
         price7 = window.findViewById(R.id.pay_d_price7);
-        price1.setText("￥" + orderDetailModel.getOriginPrice() / 100);
-        price2.setText("-￥" + orderDetailModel.getLimitDiscount() / 100);
-        price3.setText("-￥" + orderDetailModel.getCouponDiscount() / 100);
-        price4.setText("-￥" + orderDetailModel.getPromotionDiscount() / 100);
-        price5.setText("-￥" + orderDetailModel.getGroupBuyDiscount() / 100);
-        price6.setText("-￥" + orderDetailModel.getAssets() / 100);
-        price7.setText("需支付：￥" + orderDetailModel.getAmount() / 100);
+        price1.setText("￥" + Tools.getTwoDecimal(orderDetailModel.getOriginPrice() / 100));
+        price2.setText("-￥" + Tools.getTwoDecimal(orderDetailModel.getLimitDiscount() / 100));
+        price3.setText("-￥" + Tools.getTwoDecimal(orderDetailModel.getCouponDiscount() / 100));
+        price4.setText("-￥" + Tools.getTwoDecimal(orderDetailModel.getPromotionDiscount() / 100));
+        price5.setText("-￥" + Tools.getTwoDecimal(orderDetailModel.getGroupBuyDiscount() / 100));
+        price6.setText("-￥" + Tools.getTwoDecimal(orderDetailModel.getAssets() / 100));
+        price7.setText("需支付：￥" + Tools.getTwoDecimal(orderDetailModel.getAmount() / 100));
         window.findViewById(R.id.pay_d_close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
