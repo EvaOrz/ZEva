@@ -88,6 +88,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private List<View> pingtuViews = new ArrayList<>();
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
     private List<AchievementModel> achiveatas = new ArrayList<>();// 成就数据
+
     private ArrayList<PintuModel> pintuModels = new ArrayList<>();// 拼图数据
 
     private UserModel userModel;

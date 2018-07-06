@@ -242,6 +242,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
 //                SharePopWindow sharePopWindow=new SharePopWindow(getActivity(),"AAA");
                 ShareTools.doShareWeb((BaseActivity) getActivity(),"大语文","大运问的","http://dev.umeng.com/images/tab2_1.png","https://www.baidu.com");
 
+
                 break;
             case R.id.frag5_feedback:// 反馈
                 startActivity(new Intent(mActivity, FeedBackActivity.class));
