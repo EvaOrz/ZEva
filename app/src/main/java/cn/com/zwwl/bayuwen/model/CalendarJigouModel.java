@@ -5,7 +5,7 @@ package cn.com.zwwl.bayuwen.model;
  */
 public class CalendarJigouModel extends Entry {
 
-    private String id;
+    private String id = "";
     private String name;
     private String is_delete;
     private String create_at;

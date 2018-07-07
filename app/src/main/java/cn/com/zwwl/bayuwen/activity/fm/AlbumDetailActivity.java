@@ -1,14 +1,18 @@
 package cn.com.zwwl.bayuwen.activity.fm;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -36,6 +40,7 @@ import cn.com.zwwl.bayuwen.api.CourseApi;
 import cn.com.zwwl.bayuwen.api.fm.AlbumApi;
 import cn.com.zwwl.bayuwen.api.fm.CollectionApi;
 import cn.com.zwwl.bayuwen.api.fm.PinglunApi;
+import cn.com.zwwl.bayuwen.dialog.AskDialog;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
@@ -95,6 +100,7 @@ public class AlbumDetailActivity extends BaseActivity {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album_detail);
+        requestDrawOverLays();
         if (getIntent().getSerializableExtra("AlbumDetailActivity_data") != null && getIntent()
                 .getSerializableExtra("AlbumDetailActivity_data") instanceof String)
             aId = getIntent().getStringExtra("AlbumDetailActivity_data");
@@ -653,5 +659,41 @@ public class AlbumDetailActivity extends BaseActivity {
         MusicWindow.getInstance(this).movetoController(0);
         registerReceiver();//先恢复数据 再注册receiver
         checkCurrent();
+    }
+
+    public static int OVERLAY_PERMISSION_REQ_CODE = 1234;
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public void requestDrawOverLays() {
+        if (!Settings.canDrawOverlays(this)) {
+            new AskDialog(mContext, "去开启", "不需要", "音乐播放器", new AskDialog.OnSurePickListener() {
+                @Override
+                public void onSure() {
+                    Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse
+                            ("package:" + AlbumDetailActivity.this.getPackageName()));
+                    startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
+                }
+
+                @Override
+                public void onCancle() {
+
+                }
+            });
+
+        } else {
+            // Already hold the SYSTEM_ALERT_WINDOW permission, do addview or something.
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == OVERLAY_PERMISSION_REQ_CODE) {
+            if (!Settings.canDrawOverlays(this)) {
+                // SYSTEM_ALERT_WINDOW permission not granted...
+            } else {
+                // Already hold the SYSTEM_ALERT_WINDOW permission, do addview or something.
+            }
+        }
     }
 }

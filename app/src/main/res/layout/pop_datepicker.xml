@@ -11,7 +11,7 @@
         android:layout_marginLeft="10dp"
 
         android:layout_marginRight="10dp"
-        android:background="@drawable/gray_bodybg_circle_xiankuang"
+        android:background="@drawable/popwindow_xiankuang"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 

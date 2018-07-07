@@ -51,7 +51,8 @@ public class CalendarEActionApi extends BaseApi {
             pamas.put("teacher", calendarEventModel.getTeacherName());
         if (!TextUtils.isEmpty(calendarEventModel.getAddress()))
             pamas.put("address", calendarEventModel.getAddress());
-        pamas.put("orgId", calendarEventModel.getOutOrgId());
+        if (!TextUtils.isEmpty(calendarEventModel.getOutOrgId()))
+            pamas.put("orgId", calendarEventModel.getOutOrgId());
         pamas.put("totalNumber", calendarEventModel.getTotalNumber() + "");
         pamas.put("courseDates", courseDate);
         pamas.put("jPushAlias", UserDataHelper.getPushAlias(mContext));

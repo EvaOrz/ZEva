@@ -163,7 +163,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 case 1:// 显示购课单数量
                     if (msg.arg1 > 0) {
                         cart_num.setVisibility(View.VISIBLE);
-                        cart_num.setText(msg.what);
+                        cart_num.setText(msg.arg1 + "");
                     } else cart_num.setVisibility(View.GONE);
                     break;
             }
@@ -240,10 +240,8 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 break;
             case R.id.frag5_invite:// 邀请好友加入大语文
 //                SharePopWindow sharePopWindow=new SharePopWindow(getActivity(),"AAA");
-
-                ShareTools.doShareWeb((BaseActivity) getActivity(),"大语文","大运问的","http://dev.umeng.com/images/tab2_1.png","https://www.baidu.com");
-
-
+                ShareTools.doShareWeb((BaseActivity) getActivity(), "大语文", "大运问的", "http://dev" +
+                        ".umeng.com/images/tab2_1.png", "https://www.baidu.com");
                 break;
             case R.id.frag5_feedback:// 反馈
                 startActivity(new Intent(mActivity, FeedBackActivity.class));

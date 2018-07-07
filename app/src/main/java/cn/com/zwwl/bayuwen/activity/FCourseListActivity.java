@@ -81,12 +81,10 @@ public class FCourseListActivity extends BasicActivityWithTitle {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                Intent intent=new Intent(mActivity,FCourseIndexActivity.class);
                 Intent intent = new Intent(mActivity, ReportIndexActivity.class);
                 intent.putExtra("kid", lessonModels.get(position).getProducts().getKid());
                 intent.putExtra("title", lessonModels.get(position).getProducts().getTitle());
                 intent.putExtra("online",lessonModels.get(position).getProducts().getOnline());
-//                intent.putExtra("course_type", Tools.getCourseType(Integer.parseInt(lessonModels.get(position).getProducts().getOnline()), Integer.parseInt(lessonModels.get(position).getProducts().getSource()), lessonModels.get(position).getProducts().getEnd_at()));
                 startActivity(intent);
             }
         });

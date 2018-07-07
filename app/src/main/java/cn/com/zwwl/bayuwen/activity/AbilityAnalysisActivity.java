@@ -3,21 +3,33 @@ package cn.com.zwwl.bayuwen.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.model.PintuModel;
+import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.view.DatiPopWindow;
 
-public class AbilityAnalysisActivity extends BasicActivityWithTitle implements View.OnClickListener {
+public class AbilityAnalysisActivity extends BasicActivityWithTitle implements View
+        .OnClickListener {
 
     @BindView(R.id.tab_course_name)
     TabLayout tabCourseName;
@@ -45,8 +57,16 @@ public class AbilityAnalysisActivity extends BasicActivityWithTitle implements V
     TextView errorNum;
     @BindView(R.id.student_content)
     LinearLayout studentContent;
+    @BindView(R.id.pintu_layout)
+    LinearLayout pintuLayout;
     private ArrayList<PintuModel> pintuModels = new ArrayList<>();// 拼图数据
     private PintuModel pintuModel;
+
+    private int pintuWid, pintuHei;// 拼图item的宽高
+    private int paddingLeft, paddingRight, paddingTop, paddingBottom;
+    private View pintuView;
+    private RecyclerView pintuRecyclerView;
+    private RadarAdapter radarAdapter;
 
     @Override
     protected int setContentView() {
@@ -56,6 +76,24 @@ public class AbilityAnalysisActivity extends BasicActivityWithTitle implements V
     @Override
     protected void initView() {
         setCustomTitle("能力分析拼图");
+        pintuWid = MyApplication.width - 200;
+        pintuHei = (MyApplication.width - 200) * 6 / 9;
+        paddingLeft = pintuWid * 50 / 1018;
+        paddingRight = pintuWid * 50 / 1018;
+        paddingTop = pintuHei * 72 / 676;
+        paddingBottom = pintuHei * 112 / 676;
+        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(pintuWid +
+                paddingLeft + paddingRight,
+                pintuHei +
+                        paddingTop + paddingBottom);
+
+        pintuView = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu, null);
+        pintuView.setLayoutParams(params1);
+        pintuView.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+        pintuRecyclerView = pintuView.findViewById(R.id.radar_fragmain1);
+        pintuRecyclerView.setLayoutParams(new LinearLayout.LayoutParams(pintuWid, pintuHei));
+        pintuLayout.removeAllViews();
+        pintuLayout.addView(pintuView);
 
     }
 
@@ -69,9 +107,31 @@ public class AbilityAnalysisActivity extends BasicActivityWithTitle implements V
 
         pintuModel = pintuModels.get(0);
         content.setText(pintuModel.getContent().getContent());
+        initPintu();
         initAddData();
 
     }
+
+    private void initPintu() {
+        pintuView.setBackgroundResource(R.drawable.pintu_bg_wangzhe);
+        if (Tools.listNotNull(pintuModel.getLectureinfo())) {
+            List<PintuModel.LectureinfoBean.SectionListBean> models = pintuModel
+                    .getLectureinfo().get(0).getSectionList();
+            if (Tools.listNotNull(models) && models.size() == 54) {
+                radarAdapter = new RadarAdapter(models, pintuWid);
+                pintuRecyclerView.setAdapter(radarAdapter);
+                pintuRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
+                pintuRecyclerView.setItemAnimator(new DefaultItemAnimator());
+            }
+            radarAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    new DatiPopWindow(AbilityAnalysisActivity.this, pintuModel);
+                }
+            });
+        }
+    }
+
 
     @Override
     protected void setListener() {
@@ -82,6 +142,7 @@ public class AbilityAnalysisActivity extends BasicActivityWithTitle implements V
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 pintuModel = pintuModels.get(tab.getPosition());
+                initPintu();
                 initAddData();
 
             }
@@ -121,8 +182,10 @@ public class AbilityAnalysisActivity extends BasicActivityWithTitle implements V
                 courseDLine3.setVisibility(View.INVISIBLE);
                 content.setVisibility(View.GONE);
                 studentContent.setVisibility(View.VISIBLE);
-                if (pintuModel.getLectureinfo()!=null&&pintuModel.getLectureinfo().size()!=0) {
-                    questionNum.setText("总题目数：" + pintuModel.getLectureinfo().get(0).getQuestionNum());
+                if (pintuModel.getLectureinfo() != null && pintuModel.getLectureinfo().size() !=
+                        0) {
+                    questionNum.setText("总题目数：" + pintuModel.getLectureinfo().get(0)
+                            .getQuestionNum());
                     rightNum.setText("答对题数：" + pintuModel.getLectureinfo().get(0).getRightNum());
                     errorNum.setText("答错题数：" + pintuModel.getLectureinfo().get(0).getErrorNum());
                 }

@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.activity.fm.MusicPlayActivity;
 import cn.com.zwwl.bayuwen.http.HttpUtil;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
@@ -175,7 +176,7 @@ public class MusicWindow {
                     playBt.setImageResource(R.drawable.music_control_play);
                     closeBt.setVisibility(View.GONE);
                 }
-                sendintent(ACTION_RESUME_PAUSE);
+                sendintent(BaseActivity.ACTION_RESUME_PAUSE);
             }
         });
         closeBt = view.findViewById(R.id.control_play_close);
@@ -183,6 +184,7 @@ public class MusicWindow {
             @Override
             public void onClick(View v) {
 //                isClosedByUser = true;
+                sendintent(BaseActivity.ACTION_RESET);
                 MusicWindow.hidePopupWindow();
             }
         });

@@ -215,7 +215,8 @@
                             android:gravity="center"
                             android:text="2"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_10" />
+                            android:textSize="@dimen/text_size_10"
+                            android:visibility="invisible" />
 
                     </RelativeLayout>
 

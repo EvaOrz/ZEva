@@ -19,9 +19,10 @@ public class TuanForMyListModel extends Entry {
     private int dianfu;
     private Object detail;
     /**
-     * 0:未发起团购或已发起团购没生成订单
+     * 0:未发起团购
      * 1:已生成订单并已生成订单但未支付
      * 2:已生成订单并已生成订单并且已支付
+     * 3:已发起团购没生成订单
      */
     private int state;
     private String oid;

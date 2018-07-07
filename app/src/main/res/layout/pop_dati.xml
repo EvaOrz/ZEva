@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/translucent_black"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/white_10radius_corner_bg"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:id="@+id/chuangguan_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/text_size_16" />
+
+            <ImageView
+                android:id="@+id/chuangguan_close"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_close_yellow" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/chuangguan_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/text_size_12" />
+
+
+        <TextView
+            android:id="@+id/chuangguan_bt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/gold_circle"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="开始闯关"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

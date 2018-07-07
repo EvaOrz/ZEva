@@ -88,13 +88,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private List<View> pingtuViews = new ArrayList<>();
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
     private List<AchievementModel> achiveatas = new ArrayList<>();// 成就数据
-
-    private ArrayList<PintuModel> pintuModels = new ArrayList<>();// 拼图数据
-
+    private List<PintuModel> pintuModels = new ArrayList<>();// 拼图数据
     private UserModel userModel;
 
     private int pintuWid, pintuHei;// 拼图item的宽高
-
     private int paddingLeft, paddingRight, paddingTop, paddingBottom;
 
     public boolean isCityChanged = false;// 城市状态是否变化

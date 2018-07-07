@@ -415,10 +415,6 @@
         <activity android:name=".activity.ClassApplyActivity" />
         <!-- 课程跟踪记录 -->
         <activity android:name=".activity.FCourseListActivity" />
-        <!-- 已完成课程条目点击进入(废弃) -->
-        <activity
-            android:name=".activity.FCourseIndexActivity"
-            android:launchMode="singleTask" />
         <!-- 期末考试详情(废弃) -->
         <activity android:name=".activity.ExamDetailsActivity" />
         <!-- 具体课次首页(废弃) -->

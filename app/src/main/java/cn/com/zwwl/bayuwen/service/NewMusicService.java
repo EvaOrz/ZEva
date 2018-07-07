@@ -2,7 +2,6 @@ package cn.com.zwwl.bayuwen.service;
 
 import android.app.ActivityManager;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -17,7 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.fm.AlbumDetailActivity;
@@ -41,6 +39,7 @@ public class NewMusicService extends Service {
     public AlbumModel albumModel;
     public FmModel currentFmModel;
     private int currentPosition = -1;// 当前正在播放的音频在列表中的位置
+
 
     @Override
     public void onCreate() {
@@ -75,6 +74,8 @@ public class NewMusicService extends Service {
         } else if (intent.getAction().equals(BaseActivity.ACTION_SEEK_SEEKBAR)) {
             int pp = intent.getIntExtra("change_to", 0);
             changeProgress(pp);
+        } else if (intent.getAction().equals(BaseActivity.ACTION_RESET)) {
+            stop();
         }
         return super.onStartCommand(intent, flags, startId);
     }
@@ -97,7 +98,6 @@ public class NewMusicService extends Service {
             currentFmModel = datas.get(currentPosition);
             prepare(currentFmModel.getAudioUrl());
         }
-
     }
 
     public void prepare(String path) {
@@ -205,6 +205,9 @@ public class NewMusicService extends Service {
         if (mediaPlayer != null) {
             mediaPlayer.release();
             isReleased = true;
+            albumModel = null;
+            currentFmModel = null;
+            currentPosition = -1;
             mediaPlayer = null;
             setPlayStatus(0);
         }

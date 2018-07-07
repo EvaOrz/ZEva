@@ -200,7 +200,7 @@ public class MyTuanActivity extends BaseActivity {
                     i.putExtra("TuanPayActivity_type", 0);// 单独参团
                     startActivity(i);
                 } else {
-                    showToast("拼团码无效");
+                    showToast(error.getDesc());
                 }
             }
         });

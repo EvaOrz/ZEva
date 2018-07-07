@@ -144,7 +144,7 @@ public class AnswerResultActivity extends BasicActivityWithTitle {
     @OnClick({R.id.save, R.id.back_home})
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(this, FCourseIndexActivity.class));
+        finish();
     }
 
     @Override

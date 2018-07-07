@@ -93,9 +93,6 @@ public class SelectCalendarActivity extends BaseActivity {
                     @Override
                     public void onDatePick(int year, int month, int day) {
                         String dateString = year + "-" + month + "-" + day;
-                        if (isDelete) {
-                            doAdd(dateString);
-                        }
                         datas.add(CalendarTools.fromStringToca(dateString).getTime());
                         selectDateAdapter.setData(datas);
                     }
@@ -105,26 +102,6 @@ public class SelectCalendarActivity extends BaseActivity {
                 finish();
                 break;
         }
-    }
-
-    private void doAdd(String courseDate) {
-        showLoadingDialog(true);
-        new CalendarEActionApi(mContext, calendarEventModel.getId(), courseDate, 0, new
-                FetchEntryListener() {
-
-                    @Override
-                    public void setData(Entry entry) {
-
-                    }
-
-                    @Override
-                    public void setError(ErrorMsg error) {
-                        showLoadingDialog(false);
-                        if (error != null) {
-                            showToast(error.getDesc());
-                        }
-                    }
-                });
     }
 
     public class SelectDateAdapter extends CheckScrollAdapter<Date> {
