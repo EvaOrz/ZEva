@@ -28,6 +28,7 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
+import cn.com.zwwl.bayuwen.view.OvalImageview;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 
 /**
@@ -36,7 +37,7 @@ import cn.com.zwwl.bayuwen.widget.CircleImageView;
  */
 public class StudyingIndexActivity extends BaseActivity {
     @BindView(R.id.logo)
-    CircleImageView logo;
+    OvalImageview logo;
     @BindView(R.id.course_name)
     AppCompatTextView courseName;
     @BindView(R.id.course_code)
@@ -47,8 +48,6 @@ public class StudyingIndexActivity extends BaseActivity {
     AppCompatTextView schoolName;
     @BindView(R.id.date)
     AppCompatTextView date;
-    @BindView(R.id.time)
-    AppCompatTextView time;
     @BindView(R.id.sign_per)
     AppCompatTextView signPer;
     @BindView(R.id.no_sign)
@@ -126,10 +125,11 @@ public class StudyingIndexActivity extends BaseActivity {
             KeModel keModel = classModel.getCourse();
             courseName.setText(keModel.getTitle());
             courseCode.setText(String.format("班级编码: %s", keModel.getModel()));
-            teacherName.setText(String.format("授课老师: %s", keModel.getTname()));
-            schoolName.setText(String.format("上课地点: %s", keModel.getSchool()));
-            date.setText(String.format("上课日期: %s-%s", TimeUtil.parseTime(keModel.getStartPtime() * 1000, "yyyy年MM月dd日"), TimeUtil.parseTime(keModel.getEndPtime() * 1000, "yyyy年MM月dd日")));
-            time.setText(String.format("上课时间: %s%s-%s", keModel.getWeekday(), TimeUtil.parseToHm(keModel.getClass_start_at()), TimeUtil.parseToHm(keModel.getClass_end_at())));
+            teacherName.setText(String.format("%s", keModel.getTname()));
+            schoolName.setText(String.format("%s", keModel.getSchool()));
+            date.setText(String.format("%s-%s", TimeUtil.parseTime(keModel.getStartPtime() * 1000, "yyyy年MM月dd日"),
+                    TimeUtil.parseTime(keModel.getEndPtime() * 1000, "yyyy年MM月dd日"))+" "+
+            String.format("%s%s-%s", keModel.getWeekday(), TimeUtil.parseToHm(keModel.getClass_start_at()), TimeUtil.parseToHm(keModel.getClass_end_at())));
             ImageLoader.display(this, logo, keModel.getPic());
         }
         signPer.setText(String.format("签到率: %s%s", classModel.getSignInRate(), "%"));

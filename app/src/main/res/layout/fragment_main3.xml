@@ -66,7 +66,7 @@
                         android:layout_marginTop="@dimen/dp_5"
                         android:gravity="center_vertical"
                         android:text="@string/new_class_report"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray_dark"
                         android:textSize="@dimen/dp_14" />
                     <!--</LinearLayout>-->
 
@@ -160,7 +160,7 @@
                         android:layout_marginStart="@dimen/dp_5"
                         android:gravity="center_vertical|start"
                         android:text="@string/studying_course"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray_dark"
                         android:textSize="@dimen/dp_14" />
 
 
@@ -196,7 +196,7 @@
                         android:layout_marginStart="@dimen/dp_5"
                         android:gravity="center_vertical"
                         android:text="@string/finish_course"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray_dark"
                         android:textSize="@dimen/dp_14" />
                     <!--</LinearLayout>-->
 

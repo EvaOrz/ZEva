@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:textColor="@color/citygold"
+                android:textColor="@color/lisichen"
                 android:textSize="@dimen/text_size_16"
                 android:text="当前城市:" />
 
@@ -57,7 +57,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:text=""
-                android:textColor="@color/citygold"
+                android:textColor="@color/lisichen"
                 android:textSize="@dimen/text_size_16" />
 
             <ImageView
