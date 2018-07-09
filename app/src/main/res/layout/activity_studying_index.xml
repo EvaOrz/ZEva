@@ -155,6 +155,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"
+        android:background="@color/white"
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/dp_10">
@@ -187,7 +188,6 @@
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_80"
             android:layout_alignParentEnd="true"
-
             android:layout_alignParentRight="true"
             android:background="@mipmap/icon_report_bg"
             android:gravity="top|center_horizontal"
@@ -196,22 +196,22 @@
             android:textColor="@color/white" />
     </RelativeLayout>
 
-    <View
-        style="@style/split_line"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10"
-        android:background="@color/white" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
+        android:background="@drawable/gray_white_xiankuang"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"
         android:paddingTop="@dimen/dp_10">
 
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:paddingEnd="@dimen/activity_horizontal_margin"
@@ -226,7 +226,7 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/sign_title"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginStart="@dimen/dp_10"
@@ -237,28 +237,26 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/sign_per"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_12" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/no_sign"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/sp_12" />
     </LinearLayout>
 
-    <View
-        style="@style/split_line"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10"
-        android:background="@color/white" />
+
 
 
     <LinearLayout
@@ -267,6 +265,10 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:background="@drawable/gray_white_xiankuang"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
@@ -292,19 +294,16 @@
             android:text="@string/tiaoke" />
     </LinearLayout>
 
-    <View
-        style="@style/split_line"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10"
-        android:background="@color/white" />
-
-
     <LinearLayout
         android:id="@+id/class_covert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:background="@drawable/gray_white_xiankuang"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
@@ -329,11 +328,6 @@
             android:text="@string/zhuanban" />
     </LinearLayout>
 
-    <View
-        style="@style/split_line"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10"
-        android:background="@color/white" />
 
     <LinearLayout
         android:id="@+id/class_seat"
@@ -341,6 +335,10 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:background="@drawable/gray_white_xiankuang"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
@@ -368,9 +366,5 @@
 
     </LinearLayout>
 
-    <View
-        style="@style/split_line"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white" />
+
 </LinearLayout>

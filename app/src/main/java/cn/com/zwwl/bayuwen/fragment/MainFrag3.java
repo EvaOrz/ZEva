@@ -83,8 +83,8 @@ public class MainFrag3 extends BasicFragment {
     LinearLayout calendarLayout;
     @BindView(R.id.report_layout)
     LinearLayout reportLayout;
-	 @BindView(R.id.report_divider)
-    View reportDivider;
+//	 @BindView(R.id.report_divider)
+//    View reportDivider;
     private CompleteCourseAdapter adapter;
     private List<KeModel> finishCourse = new ArrayList<>();
     MyCourseModel courseModel;
@@ -156,7 +156,7 @@ public class MainFrag3 extends BasicFragment {
         if (reportModels == null || reportModels.size() == 0)
 		{			
 			reportLayout.setVisibility(View.GONE);
-			reportDivider.setVisibility(View.GONE);
+//			reportDivider.setVisibility(View.GONE);
 		}
         reportAdapter.setNewData(reportModels);
         calendarLayout.removeAllViews();
@@ -238,7 +238,7 @@ public class MainFrag3 extends BasicFragment {
                 Intent intent = new Intent();
                 MyCourseModel.UnfinishedBean bean = courseModel.getUnfinished().get(position);
                 switch (view.getId()) {
-                    case R.id.arrow:
+                    case R.id.linear_bg:
                         application.oldKe = bean.getProducts();
                         intent.putExtra("kid", bean.getKid());
                         intent.putExtra("title", bean.getProducts().getTitle());
@@ -250,7 +250,7 @@ public class MainFrag3 extends BasicFragment {
 //                        intent.putExtra("online", Integer.parseInt(bean.getProducts().getOnline()));
                         startActivity(intent);
                         break;
-                    case R.id.work:
+                    case R.id.work_title:
                         if (!bean.getPlan().isOpen()) {
                             ToastUtil.showShortToast("该课程尚未开课~");
                         } else if (bean.getPlan().getJob() != null && bean.getPlan()
@@ -265,7 +265,7 @@ public class MainFrag3 extends BasicFragment {
                             startActivity(intent);
                         }
                         break;
-                    case R.id.look_video:
+                    case R.id.course_cover:
                         if (!bean.getPlan().isOpen()) {
                             ToastUtil.showShortToast("该课程尚未开课~");
                         } else {
@@ -274,7 +274,7 @@ public class MainFrag3 extends BasicFragment {
                             startActivity(intent);
                         }
                         break;
-                    case R.id.trace:
+                    case R.id.trace_title:
                         if (!bean.getPlan().isOpen()) {
                             ToastUtil.showShortToast("该课程尚未开课~");
                         } else {
