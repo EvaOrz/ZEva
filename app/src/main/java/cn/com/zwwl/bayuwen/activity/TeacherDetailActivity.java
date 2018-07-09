@@ -234,7 +234,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
                 finish();
                 break;
             case R.id.student_evaluate_tv:
-                student_evaluate_tv.setTextColor(getResources().getColor(R.color.oringe));
+                student_evaluate_tv.setTextColor(getResources().getColor(R.color.lisichen));
                 teacher_line1.setVisibility(View.VISIBLE);
                recyclerView_xue.setVisibility(View.VISIBLE);
                recyclerView.setVisibility(View.GONE);
@@ -245,7 +245,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
                break;
 
             case R.id.about_cource_tv:
-                about_cource_tv.setTextColor(getResources().getColor(R.color.oringe));
+                about_cource_tv.setTextColor(getResources().getColor(R.color.lisichen));
                 teacher_line2.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.VISIBLE);
                 recyclerView_xue.setVisibility(View.GONE);

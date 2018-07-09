@@ -187,8 +187,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/drawable_trace_gradient">
+                android:background="@drawable/drawable_trace_gradient"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="5dp">
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:text="第6课"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_12" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:text="课程题目：孔子与论语的前世今生"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_14" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/oval_gray"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/kaishi_chuangguan"
+                        android:textColor="@color/lisichen"
+                        android:textSize="@dimen/text_size_12" />
+                </LinearLayout>
 
             </LinearLayout>
 

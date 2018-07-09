@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/bar_height"
-        android:background="@color/body_gray"
+        android:background="@color/lisichen"
         android:padding="10dp">
 
         <ImageView
@@ -32,7 +32,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:text="@string/delete"
-            android:textColor="@color/oringe"
+            android:textColor="@color/text_red"
             android:textSize="@dimen/text_size_14"
             android:visibility="gone" />
     </RelativeLayout>

@@ -277,8 +277,8 @@ public class AlbumModel extends Entry {
                 FmModel f = new FmModel();
                 f.parseFmModel(o, f);
                 if (albumModel.getBuyPrice() > 0 && !albumModel.isIs_buy()) {
-                    if (!fmModels.get(i).getFree().equals("1")) {
-                        fmModels.get(i).setStatus(1);
+                    if (!f.getFree().equals("1")) {
+                        f.setStatus(1);
                     }
                 }
                 fmModels.add(f);

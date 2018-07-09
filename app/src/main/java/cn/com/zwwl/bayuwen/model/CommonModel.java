@@ -20,6 +20,12 @@ public class CommonModel extends Entry {
     private int totalCount;
     private String contentid;
 
+    public CommonModel(String title, String id, int res) {
+        this.name = title;
+        this.id = id;
+        this.state = res;
+    }
+
     public String getContentid() {
         return contentid;
     }

@@ -268,10 +268,15 @@ public class AlbumDetailActivity extends BaseActivity {
         fmListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                currentPosition = position;
-                currentFmModel = fmModels.get(position);
-                checkLoading(position);
-                sendintent(ACTION_START_PLAY);
+                if (fmModels.get(position).getStatus() == 1) {
+                    getKeModel();
+                }else {
+                    currentPosition = position;
+                    currentFmModel = fmModels.get(position);
+                    checkLoading(position);
+                    sendintent(ACTION_START_PLAY);
+                }
+
             }
         });
 
@@ -284,28 +289,28 @@ public class AlbumDetailActivity extends BaseActivity {
 
     private void changeTab(int type) {
         if (type == 1) {
-            part1.setTextColor(getResources().getColor(R.color.oringe));
+            part1.setTextColor(getResources().getColor(R.color.lisichen));
             line1.setVisibility(View.VISIBLE);
         } else {
             part1.setTextColor(getResources().getColor(R.color.gray_dark));
             line1.setVisibility(View.INVISIBLE);
         }
         if (type == 2) {
-            part2.setTextColor(getResources().getColor(R.color.oringe));
+            part2.setTextColor(getResources().getColor(R.color.lisichen));
             line2.setVisibility(View.VISIBLE);
         } else {
             part2.setTextColor(getResources().getColor(R.color.gray_dark));
             line2.setVisibility(View.INVISIBLE);
         }
         if (type == 3) {
-            part3.setTextColor(getResources().getColor(R.color.oringe));
+            part3.setTextColor(getResources().getColor(R.color.lisichen));
             line3.setVisibility(View.VISIBLE);
         } else {
             part3.setTextColor(getResources().getColor(R.color.gray_dark));
             line3.setVisibility(View.INVISIBLE);
         }
         if (type == 4) {
-            part4.setTextColor(getResources().getColor(R.color.oringe));
+            part4.setTextColor(getResources().getColor(R.color.lisichen));
             line4.setVisibility(View.VISIBLE);
         } else {
             part4.setTextColor(getResources().getColor(R.color.gray_dark));

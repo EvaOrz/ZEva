@@ -8,7 +8,7 @@
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/body_gray"
+        android:background="@color/lisichen"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 

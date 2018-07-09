@@ -1,42 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/body_bg"
-    android:orientation="vertical"
-    android:scrollbars="none">
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <cn.com.zwwl.bayuwen.widget.observable.ObservableScrollView
-        android:id="@+id/scroll"
+    <include layout="@layout/layout_gray_titlebar" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <cn.com.zwwl.bayuwen.widget.LoopViewPager
-                android:id="@+id/frag2_head"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
             <LinearLayout
-                android:id="@+id/frag2_contain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:clipChildren="false"
+                android:gravity="center_horizontal"
+                android:layerType="software"
+                android:orientation="vertical">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/frag2_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false" />
+
+                <LinearLayout
+                    android:id="@+id/frag2_viewpager_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal" />
+
+                <LinearLayout
+                    android:id="@+id/frag2_tags"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal" />
+            </LinearLayout>
+
+            <include layout="@layout/layout_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/body_bg"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/ganshou_ketang"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_14" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/ganshou_ketang1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" />
+                </HorizontalScrollView>
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_line" />
+
+
+            <LinearLayout
+                android:id="@+id/frag2_tags_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+            <include layout="@layout/layout_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/body_bg"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/ganshou_ketang"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_14" />
+
+
+                <LinearLayout
+                    android:id="@+id/ganshou_ketang2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical" />
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_line" />
+
+            <LinearLayout
+                android:id="@+id/frag2_tags_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+            <include layout="@layout/layout_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/body_bg"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/ganshou_ketang"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_14" />
+
+
+                <LinearLayout
+                    android:id="@+id/ganshou_ketang3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal" />
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
-                android:paddingBottom="15dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:padding="15dp">
 
                 <ImageView
                     android:id="@+id/frag2_look_teacher"
@@ -51,13 +170,14 @@
                     android:id="@+id/frag2_look_ban"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:scaleType="centerInside"
                     android:layout_weight="1"
+                    android:scaleType="centerInside"
                     android:src="@mipmap/banzhuren" />
             </LinearLayout>
+
+
         </LinearLayout>
-    </cn.com.zwwl.bayuwen.widget.observable.ObservableScrollView>
+    </ScrollView>
 
-    <include layout="@layout/layout_gray_titlebar" />
 
-</FrameLayout>
+</LinearLayout>

@@ -36,7 +36,7 @@
                     android:id="@+id/left_head_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/body_gray"
+                    android:background="@color/lisichen"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="15dp"

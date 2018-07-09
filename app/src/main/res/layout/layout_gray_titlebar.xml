@@ -2,16 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main2_toolbar"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="@color/colorPrimary">
+    android:layout_height="?attr/actionBarSize">
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/menu_more"
         android:layout_width="@dimen/dp_30"
         android:layout_height="@dimen/dp_30"
         android:layout_centerVertical="true"
-        android:contentDescription="@null"
         android:background="@drawable/drawable_back_bg"
+        android:contentDescription="@null"
         android:scaleType="centerInside"
         android:src="@mipmap/icon_menu_more" />
 
@@ -52,8 +51,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="北京"
-            android:textSize="@dimen/text_size_14"
-            android:textColor="@color/gold" />
+            android:textColor="@color/gold"
+            android:textSize="@dimen/text_size_14" />
     </LinearLayout>
 
 
@@ -66,7 +65,7 @@
         android:layout_toLeftOf="@id/menu_school"
         android:layout_toRightOf="@id/menu_more"
         android:layout_toStartOf="@id/menu_school"
-        android:background="@drawable/white_btn_bg"
+        android:background="@drawable/search_main_bg"
         android:gravity="center">
 
         <android.support.v7.widget.AppCompatImageView
@@ -81,8 +80,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/search"
-            android:textSize="@dimen/text_size_14"
-            android:textColor="@color/gray_light" />
+            android:textColor="@color/gray_light"
+            android:textSize="@dimen/text_size_14" />
     </LinearLayout>
 
 </RelativeLayout>

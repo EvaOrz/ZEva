@@ -9,7 +9,7 @@
         android:id="@+id/search_head_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bar_height"
-        android:background="@color/body_gray"
+        android:background="@color/lisichen"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingBottom="5dp"

@@ -91,7 +91,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="40dp"
-            android:background="@color/oringe"
+            android:background="@color/lisichen"
 
             android:gravity="center"
             android:text="@string/forget_pwd_next"
@@ -148,7 +148,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/oringe"
+                android:background="@color/lisichen"
                 android:gravity="center"
                 android:text="@string/get_verifycode"
                 android:textColor="@color/white"
@@ -193,7 +193,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:background="@color/oringe"
+            android:background="@color/lisichen"
 
             android:gravity="center"
             android:text="@string/commit"

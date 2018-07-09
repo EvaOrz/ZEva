@@ -34,7 +34,7 @@ public class RoundViewDelegate {
     private boolean isRadiusHalfHeight;
     private boolean isWidthHeightEqual;
     private boolean isRippleEnable;
-    private float[] radiusArr = new float[8];
+    private float[] radiusArr = new float[9];
 
     public RoundViewDelegate(View view, Context context, AttributeSet attrs) {
         this.view = view;

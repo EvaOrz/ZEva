@@ -84,6 +84,8 @@
     <string name="send">发送</string>
     <string name="play_list">播放列表</string>
     <string name="collect_faild">收藏失败</string>
+    <string name="kaishi_chuangguan">开始\n闯关</string>
+    <string name="ganshou_ketang">感受课堂</string>
 
     <!--user center-->
     <string name="wode">我的</string>

@@ -283,7 +283,7 @@
                             android:layout_marginLeft="30dp"
                             android:layout_marginRight="30dp"
                             android:layout_weight="1"
-                            android:background="@color/oringe" />
+                            android:background="@color/lisichen" />
 
 
                         <View
@@ -293,7 +293,7 @@
                             android:layout_marginLeft="30dp"
                             android:layout_marginRight="30dp"
                             android:layout_weight="1"
-                            android:background="@color/oringe"
+                            android:background="@color/lisichen"
                             android:visibility="invisible" />
 
                     </LinearLayout>

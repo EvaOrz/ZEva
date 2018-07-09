@@ -113,15 +113,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <!-- 注册 -->
-        <activity
-            android:name=".activity.fm.FmRegisterActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <!-- 登录 -->
-        <activity
-            android:name=".activity.fm.FmLoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <!-- 忘记密码 -->
         <activity

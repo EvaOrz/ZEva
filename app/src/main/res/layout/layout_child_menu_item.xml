@@ -21,7 +21,7 @@
             android:focusable="false"
             android:gravity="center"
             android:padding="10dp"
-            android:textColor="@color/body_gray"
+            android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_size_14" />
 
         <!--<CheckBox-->
