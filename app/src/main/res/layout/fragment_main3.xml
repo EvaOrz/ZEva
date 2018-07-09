@@ -65,7 +65,7 @@
                         android:layout_marginTop="@dimen/dp_5"
                         android:gravity="center_vertical"
                         android:text="@string/new_class_report"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray_dark"
                         android:textSize="@dimen/dp_14" />
                     <!--</LinearLayout>-->
 
@@ -94,35 +94,35 @@
                     android:padding="5dp"
                     app:layout_constraintTop_toBottomOf="@id/report_layout">
 
+
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_5"
-                        android:layout_marginStart="@dimen/dp_5"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/calendar_ri"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="sdddddddddddd"
+                            android:text=""
                             android:textColor="@color/gray_dark"
-                            android:textSize="@dimen/text_size_22"
+                            android:textSize="@dimen/text_size_16"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/calendar_yue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_5"
                             android:textColor="@color/gray_dark"
-                            android:textSize="@dimen/text_size_14" />
+                            android:textSize="@dimen/text_size_12" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/calendar_kecheng_layout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -160,7 +160,7 @@
                         android:layout_marginStart="@dimen/dp_5"
                         android:gravity="center_vertical|start"
                         android:text="@string/studying_course"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray_dark"
                         android:textSize="@dimen/dp_14" />
 
 
@@ -196,7 +196,7 @@
                         android:layout_marginStart="@dimen/dp_5"
                         android:gravity="center_vertical"
                         android:text="@string/finish_course"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray_dark"
                         android:textSize="@dimen/dp_14" />
                     <!--</LinearLayout>-->
 

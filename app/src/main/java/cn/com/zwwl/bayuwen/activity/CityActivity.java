@@ -82,31 +82,7 @@ public class CityActivity extends BasicActivityWithTitle {
     private double longitude = 0;
     private String locationCity;
     private Location location;
-//    //调用系统Api取到当前城市
-//    private Handler handler = new Handler() {
-//        public void handleMessage(android.os.Message msg) {
-//            double[] data = (double[]) msg.obj;
-////            showJW.setText("经度：" + data[0] + "\t纬度:" + data[1]);
-//
-//            List<Address> addList = null;
-//            Geocoder ge = new Geocoder(getApplicationContext());
-//            try {
-//                addList = ge.getFromLocation(data[0], data[1], 1);
-//            } catch (IOException e) {
-//                // TODO Auto-generated catch block
-//                e.printStackTrace();
-//            }
-//            if (addList != null && addList.size() > 0) {
-//                for (int i = 0; i < addList.size(); i++) {
-//                    Address ad = addList.get(i);
-//                    locationCity = ad.getLocality();
-//                }
-//            }
-//
-////            nowCity.setText(latLongString);
-//        }
-//
-//    };
+
 
 
     @Override
@@ -189,11 +165,16 @@ public class CityActivity extends BasicActivityWithTitle {
                 }
             }
         }
+        HttpDate();
     }
 
 
     @Override
     protected void initData() {
+
+    }
+
+    private void HttpDate() {
         new CityListApi(this, CityListUrl, new ResponseCallBack<CitySortModel>() {
             @Override
             public void result(CitySortModel ScitySortModel, ErrorMsg errorMsg) {
@@ -207,53 +188,18 @@ public class CityActivity extends BasicActivityWithTitle {
                         if (s.matches("[A-Z]")) {
                             citySortModel.getCity().get(i).setInitial(s.toUpperCase());
                         } else {
-                            // sortModel.setSortLetters("热门城市");
+//                           citySortModel.getCity().get(i).setInitial("热门城市");
                         }
                     }
                     cityBeans = citySortModel.getCity();
+
                     // // 根据a-z进行排序源数据
                     Collections.sort(cityBeans,
                             pinyinComparator);
 
                     hotcityBeans = citySortModel.getHotcity();
-
-                    cityAdapter = new CityAdapter(CityActivity.this, locationCity, cityBeans,
-                            countryLvcountry, hotcityBeans);
-                    countryLvcountry.setAdapter(cityAdapter);
-
-                } else {
-                    ToastUtil.showShortToast("暂无数据");
-                }
-            }
-
-        });
-
-    }
-
-    private void HttpDate(String a) {
-        new CityListApi(this, CityListUrl, a, new ResponseCallBack<CitySortModel>() {
-            @Override
-            public void result(CitySortModel ScitySortModel, ErrorMsg errorMsg) {
-                if (ScitySortModel != null) {
-                    citySortModel = ScitySortModel;
-                    //   cityBeans =citySortModel.getCity();
-                    // 汉字转换成拼音
-                    for (int i = 0; i < citySortModel.getCity().size(); i++) {
-                        String s = citySortModel.getCity().get(i).getInitial().toUpperCase();
-
-                        if (s.matches("[A-Z]")) {
-                            citySortModel.getCity().get(i).setInitial(s.toUpperCase());
-                        } else {
-                            // sortModel.setSortLetters("热门城市");
-                        }
-                    }
-                    cityBeans = citySortModel.getCity();
-                    // // 根据a-z进行排序源数据
-                    Collections.sort(cityBeans,
-                            pinyinComparator);
-
-                    hotcityBeans = citySortModel.getHotcity();
-
+                    View headerView = getLayoutInflater().inflate(R.layout.item_city1, null);
+                    countryLvcountry.addHeaderView(headerView);
                     cityAdapter = new CityAdapter(CityActivity.this, locationCity, cityBeans,
                             countryLvcountry, hotcityBeans);
                     countryLvcountry.setAdapter(cityAdapter);
@@ -292,8 +238,7 @@ public class CityActivity extends BasicActivityWithTitle {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_CONTACTS:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager
-                        .PERMISSION_GRANTED && grantResults[1] == PackageManager
-                        .PERMISSION_GRANTED) {
+                        .PERMISSION_GRANTED ) {
                     LocationGPS();
 
                 }

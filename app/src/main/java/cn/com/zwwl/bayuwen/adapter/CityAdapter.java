@@ -92,7 +92,7 @@ public class CityAdapter extends BaseAdapter {
     }
 
     public long getItemId(int position) {
-        return position + 1;
+        return position ;
     }
 
     public View getView(final int position, View view, ViewGroup arg2) {

@@ -446,10 +446,10 @@
     <string name="past_lesson_report">往次课节报告</string>
     <string name="student_attain">学员成就</string>
     <string name="student_evaluate">学员评价</string>
-    <string name="final_report">期末报告</string>
-    <string name="middle_report">期中报告</string>
+    <string name="final_report">期末\n报告</string>
+    <string name="middle_report">期中\n报告</string>
     <string name="warning_no_mid_report">您还没有该报告~</string>
-    <string name="welcome_speech">欢迎致辞</string>
+    <string name="welcome_speech">欢迎\n致辞</string>
     <string name="sign_status">签到情况</string>
     <string name="lesson_report">课节报告</string>
     <string name="hint_search_course">搜索课程名称、老师</string>
