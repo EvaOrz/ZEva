@@ -105,17 +105,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/gray_dark"
-                            android:textSize="@dimen/text_size_22"
-                            android:text="sdddddddddddd"
+                            android:textSize="@dimen/text_size_16"
+                            android:text=""
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/calendar_yue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_3"
                             android:textColor="@color/gray_dark"
-                            android:textSize="@dimen/text_size_14" />
+                            android:textSize="@dimen/text_size_12" />
                      </LinearLayout>
 
                         <LinearLayout
@@ -125,7 +124,9 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
+                            android:layout_gravity="center"
                             android:orientation="vertical" />
+
 
 
                         <ImageView
