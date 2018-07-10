@@ -167,11 +167,11 @@ public class TuanIndexActivity extends BaseActivity {
     private void changeRadio(int position) {
         viewPager.setCurrentItem(position);
         if (position == 0) {
-            line1.setBackgroundColor(getResources().getColor(R.color.gold));
+            line1.setBackgroundColor(getResources().getColor(R.color.text_red));
             line2.setBackgroundColor(getResources().getColor(R.color.transparent));
         } else if (position == 1) {
             line1.setBackgroundColor(getResources().getColor(R.color.transparent));
-            line2.setBackgroundColor(getResources().getColor(R.color.gold));
+            line2.setBackgroundColor(getResources().getColor(R.color.text_red));
         }
 
     }
@@ -185,7 +185,6 @@ public class TuanIndexActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tuan_index_intro:// 团购说明
-                goWeb();
                 break;
             case R.id.sure_dian:// 确认垫付
                 getKaiTuanCode(2);
@@ -202,12 +201,7 @@ public class TuanIndexActivity extends BaseActivity {
         }
     }
 
-    public void goWeb() {
-        Intent i = new Intent(mContext, WebActivity.class);
-        i.putExtra("WebActivity_title", "团购说明");
-        i.putExtra("WebActivity_data", "");
-        startActivity(i);
-    }
+
 
     /**
      * 根据拼团码检查是否可以参团

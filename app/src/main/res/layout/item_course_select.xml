@@ -175,7 +175,7 @@
             android:layout_gravity="right"
             android:layout_marginLeft="5dp"
             android:gravity="right"
-            android:textColor="@color/gold"
+            android:textColor="@color/text_red"
             android:textSize="@dimen/text_size_16" />
     </LinearLayout>
 </RelativeLayout>

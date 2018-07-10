@@ -60,7 +60,7 @@
             android:id="@+id/tuan_index_kaituan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/gold_circle"
+            android:background="@drawable/red_text_circle"
             android:paddingBottom="10dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"

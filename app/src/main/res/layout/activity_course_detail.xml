@@ -103,7 +103,7 @@
                             android:id="@+id/price_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_red"
                             android:textSize="@dimen/text_size_16" />
 
                         <TextView
@@ -540,7 +540,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/gold"
+                android:textColor="@color/text_red"
                 android:textSize="@dimen/text_size_12" />
 
             <TextView
@@ -550,7 +550,7 @@
                 android:layout_below="@id/group_purchase_price1"
                 android:layout_centerHorizontal="true"
                 android:text="@string/tuangou_baoming"
-                android:textColor="@color/gold"
+                android:textColor="@color/text_red"
                 android:textSize="@dimen/text_size_12" />
 
             <TextView
@@ -559,7 +559,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="已参团"
-                android:textColor="@color/gold"
+                android:textColor="@color/text_red"
                 android:textSize="@dimen/text_size_12" />
         </RelativeLayout>
 
@@ -570,7 +570,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:background="@drawable/gold_circle"
+            android:background="@drawable/red_text_circle"
             android:paddingBottom="3dp"
             android:paddingTop="3dp">
 

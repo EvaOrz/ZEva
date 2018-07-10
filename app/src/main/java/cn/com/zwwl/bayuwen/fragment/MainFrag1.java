@@ -108,7 +108,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             getPintuData();
             handler.sendEmptyMessage(1);
         }
-
     }
 
     /**

@@ -31,6 +31,7 @@ import cn.com.zwwl.bayuwen.adapter.GiftAdapter;
 import cn.com.zwwl.bayuwen.api.ChildInfoApi;
 import cn.com.zwwl.bayuwen.api.HonorListApi;
 import cn.com.zwwl.bayuwen.api.ReportPushApi;
+import cn.com.zwwl.bayuwen.api.WebUrlApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
@@ -49,6 +50,7 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.model.ReportModel;
 import cn.com.zwwl.bayuwen.push.NewPushManager;
+import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.DialogUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.music.MusicWindow;
@@ -93,7 +95,9 @@ public class MainActivity extends BaseActivity {
         initView();
         userModel = UserDataHelper.getUserLoginInfo(mContext);
         initData();
+        getWebUrl();
     }
+
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -425,8 +429,7 @@ public class MainActivity extends BaseActivity {
      */
     public void goWeb() {
         Intent i = new Intent(mContext, WebActivity.class);
-        i.putExtra("WebActivity_title", "等级规则");
-        i.putExtra("WebActivity_data", "");
+        i.putExtra("WebActivity_data", AppValue.gongxunUrl);
         startActivity(i);
     }
 
@@ -542,7 +545,11 @@ public class MainActivity extends BaseActivity {
 
                     }
                 });
+    }
 
+    // 获取说明weburl
+    private void getWebUrl() {
+        new WebUrlApi(mContext);
     }
 
     @Override

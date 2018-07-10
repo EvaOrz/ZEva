@@ -29,10 +29,6 @@ public class UrlUtil {
         return "http://www.zhugexuetang.com/explain/refund.html";
     }
 
-    // 报课说明
-    public static String notificationBaoke() {
-        return "http://www.zhugexuetang.com/explain/enroll.html";
-    }
 
     // 账号密码登录
     public static String LoginUrl() {
@@ -106,6 +102,11 @@ public class UrlUtil {
         if (TextUtils.isEmpty(kid))
             return HOST + "/comment";
         return HOST + "/comment?kid=" + kid;
+    }
+
+    //app协议url
+    public static String getWebUrl() {
+        return HOST + "/common/caption";
     }
 
     // 上传文件

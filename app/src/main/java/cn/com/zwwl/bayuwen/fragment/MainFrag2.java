@@ -110,10 +110,9 @@ public class MainFrag2 extends Fragment
                             final DetailsBean detailsBean = part2Model.getClassify().getDetails()
                                     .get(i);
                             LinearLayout.LayoutParams tag2Params = new LinearLayout.LayoutParams
-                                    (nomalItemWidth, 120);
+                                    (nomalItemWidth, nomalItemWidth / 2);
                             RoundAngleImageView imageView = new RoundAngleImageView(mActivity);
-                            imageView.setBackgroundColor(mActivity.getResources().getColor(R
-                                    .color.gray_light));
+                            ImageLoader.display(mActivity, imageView, detailsBean.getImg());
                             if (i == 1) {
                                 tag2Params.setMargins(videoLayoutPadding, 0, videoLayoutPadding, 0);
                             }
@@ -167,11 +166,23 @@ public class MainFrag2 extends Fragment
                                     .get(i);
                             LinearLayout.LayoutParams tag3Params = new LinearLayout.LayoutParams
                                     (nomalItemWidth, nomalItemWidth);
-                            RoundAngleImageView imageView = new RoundAngleImageView(mActivity);
-                            imageView.setBackgroundColor(mActivity.getResources().getColor(R
-                                    .color.gray_light));
-                            if (i == 1) {
+                            View view = LayoutInflater.from(mActivity).inflate(R.layout
+                                            .item_xuanke_tagbg,
+                                    null);
+                            TextView title = view.findViewById(R.id.xuanke_title);
+                            ImageView imageView = view.findViewById(R.id.xuanke_img);
+                            ImageLoader.display(mActivity, imageView, detailsBean.getImg());
+                            title.setText(detailsBean.getName());
+                            if (i == 0) {
+                                view.setBackground(mActivity.getResources().getDrawable(R
+                                        .drawable.xuanke_bg1));
+                            } else if (i == 1) {
+                                view.setBackground(mActivity.getResources().getDrawable(R
+                                        .drawable.xuanke_bg2));
                                 tag3Params.setMargins(videoLayoutPadding, 0, videoLayoutPadding, 0);
+                            } else if (i == 2) {
+                                view.setBackground(mActivity.getResources().getDrawable(R
+                                        .drawable.xuanke_bg3));
                             }
                             imageView.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -179,7 +190,7 @@ public class MainFrag2 extends Fragment
                                     goTagIndex(detailsBean);
                                 }
                             });
-                            tagView3.addView(imageView, tag3Params);
+                            tagView3.addView(view, tag3Params);
                         }
                         videoLayout3.removeAllViews();
                         videoLayout3.setPadding(videoLayoutPadding, 0, 0, videoLayoutPadding);

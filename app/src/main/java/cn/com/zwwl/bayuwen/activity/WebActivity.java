@@ -1,9 +1,12 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,6 +49,18 @@ public class WebActivity extends BaseActivity {
             title.setText(titleString);
         findViewById(R.id.id_back).setOnClickListener(this);
         commonWebView = findViewById(R.id.web_webview);
+
+        commonWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(final WebView view, String url) {
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        title.setText(view.getTitle());
+                    }
+                });
+            }
+        });
         if (!TextUtils.isEmpty(url)) {
             commonWebView.loadUrl(url);
         }

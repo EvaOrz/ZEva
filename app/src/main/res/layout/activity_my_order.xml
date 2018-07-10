@@ -177,7 +177,7 @@
             android:gravity="right"
             android:paddingRight="10dp"
             android:text="合计：￥0"
-            android:textColor="@color/gold"
+            android:textColor="@color/text_red"
             android:textSize="@dimen/text_size_14" />
 
         <TextView
@@ -185,7 +185,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/pay_gold_circle"
+            android:background="@drawable/pay_bt_bg"
             android:gravity="center"
             android:text="@string/lijibaoming"
             android:textColor="@color/white"

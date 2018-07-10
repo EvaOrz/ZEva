@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="套餐合计：￥7200"
-                android:textColor="@color/gold"
+                android:textColor="@color/text_red"
                 android:textSize="@dimen/text_size_14" />
 
             <TextView
@@ -86,7 +86,7 @@
             android:id="@+id/promotion_buy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/gold_circle"
+            android:background="@drawable/red_text_circle"
             android:paddingBottom="5dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"

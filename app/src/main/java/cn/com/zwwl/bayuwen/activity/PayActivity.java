@@ -48,6 +48,7 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.OrderModel;
 import cn.com.zwwl.bayuwen.model.PromotionModel;
+import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.dialog.PayDetailDialog;
@@ -408,8 +409,7 @@ public class PayActivity extends BaseActivity {
 
     public void goWeb() {
         Intent i = new Intent(mContext, WebActivity.class);
-        i.putExtra("WebActivity_title", "退款须知");
-        i.putExtra("WebActivity_data", UrlUtil.notificationTuifee());
+        i.putExtra("WebActivity_data", AppValue.refundUrl);
         startActivity(i);
     }
 

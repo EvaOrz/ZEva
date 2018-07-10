@@ -43,7 +43,7 @@
                 android:layout_marginTop="5dp"
                 android:lines="1"
                 android:text="￥7000"
-                android:textColor="@color/gold"
+                android:textColor="@color/text_red"
                 android:textSize="@dimen/text_size_12" />
         </LinearLayout>
 
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:background="@drawable/gold_circle"
+            android:background="@drawable/red_text_circle"
             android:gravity="center"
             android:padding="3dp"
             android:text="购买组合"

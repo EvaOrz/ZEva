@@ -46,6 +46,7 @@ import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.PromotionModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
 import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
+import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.KeDetailView1;
@@ -381,8 +382,7 @@ public class CourseDetailActivity extends BaseActivity {
                 break;
             case R.id.explainTv:// 说明
                 Intent intent = new Intent(mContext, WebActivity.class);
-                intent.putExtra("WebActivity_title", "报课说明");
-                intent.putExtra("WebActivity_data", UrlUtil.notificationBaoke());
+                intent.putExtra("WebActivity_data", AppValue.enrollUrl);
                 startActivity(intent);
                 break;
             case R.id.duihuan_footer:// 兑换

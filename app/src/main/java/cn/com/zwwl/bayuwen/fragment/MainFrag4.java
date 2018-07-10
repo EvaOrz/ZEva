@@ -39,6 +39,7 @@ import cn.com.zwwl.bayuwen.activity.fm.FmSearchActivity;
 import cn.com.zwwl.bayuwen.adapter.AlbumAdapter;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.api.fm.RecommentApi;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.CommentModel;
 import cn.com.zwwl.bayuwen.model.CommonModel;
@@ -63,6 +64,7 @@ public class MainFrag4 extends Fragment implements View.OnClickListener {
     private MostGridView mostGridView;
     private MostGridView hotsGridView;
     private CainiAdapter cainiAdapter;
+    private TextView locationTv;
 
     //data
     private List<AlbumModel> albumDatas = new ArrayList<>();
@@ -84,7 +86,21 @@ public class MainFrag4 extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initData();
+        handler.sendEmptyMessage(0);
     }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        handler.sendEmptyMessage(0);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        handler.sendEmptyMessage(0);
+    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -125,7 +141,8 @@ public class MainFrag4 extends Fragment implements View.OnClickListener {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case 0:
+                case 0:// 显示当前城市
+                    locationTv.setText(TempDataHelper.getCurrentCity(mActivity));
                     break;
                 case 1:
                     cainiAdapter.notifyDataSetChanged();
@@ -172,6 +189,7 @@ public class MainFrag4 extends Fragment implements View.OnClickListener {
         mToolbarView = root.findViewById(R.id.main2_toolbar);
         mostGridView = root.findViewById(R.id.frag4_tags);
         hotsGridView = root.findViewById(R.id.frag4_hots);
+        locationTv = root.findViewById(R.id.position);
 
         tagDatas.add(new CommonModel("了就读书", "1000", R.mipmap.home_1));
         tagDatas.add(new CommonModel("干货", "1001", R.mipmap.home_2));

@@ -18,13 +18,21 @@ import cn.com.zwwl.bayuwen.activity.BaseActivity;
  */
 public class AppValue extends Tools {
 
+    public static String enrollUrl = "";//报名须知
+    public static String refundUrl = "";//退款须知
+    public static String inviteUrl = "";//邀请好友加入大语文
+    public static String aboutUrl = "";//关于
+    public static String versionUrl = "";//版本须知
+    public static String helpUrl = "";//帮助须知
+    public static String gongxunUrl = "";//功勋等级说明
+
+
     /**
      * 判断密码 ，不能少于6位
      *
      * @param str
      * @return
      */
-
     public static boolean checkPwd(Context c, String str) {
         if (TextUtils.isEmpty(str) || str.length() < 6) {
             showToast(c, R.string.password_length_error);
