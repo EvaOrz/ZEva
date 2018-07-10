@@ -190,7 +190,7 @@
                 android:id="@+id/item_tuan_price1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="原价：￥3400"
+                android:text="原价："
                 android:textColor="@color/gray_dark"
                 android:textSize="@dimen/text_size_14" />
 
@@ -199,8 +199,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:text="团购价：￥3400"
-                android:textColor="@color/gold"
+                android:text="团购价："
+                android:textColor="@color/gray_dark"
                 android:textSize="@dimen/text_size_14" />
         </LinearLayout>
 
@@ -210,8 +210,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:gravity="right"
-            android:text="垫付价格：￥13400"
-            android:textColor="@color/gold"
+            android:text="垫付价格："
+            android:textColor="@color/lisichen"
             android:textSize="@dimen/text_size_14" />
     </LinearLayout>
 

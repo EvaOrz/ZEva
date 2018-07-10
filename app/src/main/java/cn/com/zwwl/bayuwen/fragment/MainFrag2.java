@@ -143,7 +143,7 @@ public class MainFrag2 extends Fragment
                             LinearLayout layout = view.findViewById(R.id.frag2_video_layout);
                             layout.addView(getVideoItemView(detailsBean), new LinearLayout
                                     .LayoutParams(nomalItemWidth, nomalItemWidth / 2));
-
+//                            title.setText(detailsBean.);
                             videoLayout2.addView(view);
                             // 不是最后一个，加diliver
                             if (i < part2Model.getVideo().getDetails().size() - 1) {

@@ -1,10 +1,12 @@
 package cn.com.zwwl.bayuwen.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.fm.AlbumDetailActivity;
 import cn.com.zwwl.bayuwen.adapter.FmHositoryAdapter;
 import cn.com.zwwl.bayuwen.adapter.FmMyCourseAdapter;
 import cn.com.zwwl.bayuwen.api.FmCourseListApi;
@@ -91,6 +94,17 @@ public class FmMyCourseFragment extends Fragment {
         listView1 = view.findViewById(R.id.listView_cource);
         no_fm = view.findViewById(R.id.fm_no);
         fmMyCourseAdapter = new FmMyCourseAdapter(getActivity());
+        //点击事件
+        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String sId = fmMyCourceListModels.get(position).getKid();
+                Intent intent = new Intent(getActivity(), AlbumDetailActivity.class);
+                intent.putExtra("AlbumDetailActivity_data", sId);
+                startActivity(intent);
+            }
+        });
+
     }
 
 

@@ -191,13 +191,13 @@ public class MainFrag4 extends Fragment implements View.OnClickListener {
         hotsGridView = root.findViewById(R.id.frag4_hots);
         locationTv = root.findViewById(R.id.position);
 
-        tagDatas.add(new CommonModel("了就读书", "1000", R.mipmap.home_1));
-        tagDatas.add(new CommonModel("干货", "1001", R.mipmap.home_2));
-        tagDatas.add(new CommonModel("统编教材", "1002", R.mipmap.home_3));
-        tagDatas.add(new CommonModel("窦神归来", "1003", R.mipmap.home_4));
-        tagDatas.add(new CommonModel("蒋故事", "1004", R.mipmap.home_5));
-        tagDatas.add(new CommonModel("爪学", "1005", R.mipmap.home_6));
-        tagDatas.add(new CommonModel("低幼儿童", "1006", R.mipmap.home_7));
+        tagDatas.add(new CommonModel("了就读书", "1000", R.mipmap.home_fm_1));
+        tagDatas.add(new CommonModel("干货|讲座", "1001", R.mipmap.home_fm_2));
+        tagDatas.add(new CommonModel("统编教材", "1002", R.mipmap.home_fm_3));
+        tagDatas.add(new CommonModel("每日窦神", "1003", R.mipmap.home_fm_4));
+        tagDatas.add(new CommonModel("名师精粹", "1004", R.mipmap.home_fm_5));
+        tagDatas.add(new CommonModel("精品课程", "1005", R.mipmap.home_fm_6));
+        tagDatas.add(new CommonModel("有声读物", "1006", R.mipmap.home_fm_7));
         Frag4Adapter adapter = new Frag4Adapter(mActivity, tagDatas);
         mostGridView.setAdapter(adapter);
         mostGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -338,6 +338,7 @@ public class MainFrag4 extends Fragment implements View.OnClickListener {
             ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout
                     .item_frag2_tag);
             CircleImageView imageView = viewHolder.getView(R.id.cdetail_t_avatar);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(130, 130));
             TextView textView = viewHolder.getView(R.id.cdetail_t_name);
 
             imageView.setImageResource(commonModels.get(position).getState());

@@ -1,6 +1,5 @@
 package cn.com.zwwl.bayuwen.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -21,10 +20,12 @@ import cn.com.zwwl.bayuwen.fragment.FmHistoryFragment;
 import cn.com.zwwl.bayuwen.fragment.FmMyCollectFragment;
 import cn.com.zwwl.bayuwen.fragment.FmMyCourseFragment;
 
-public class OurFmActivity extends AppCompatActivity implements View.OnClickListener{
+/**
+ * 我的FM页面
+ */
+public class OurFmActivity extends AppCompatActivity implements View.OnClickListener {
 
-
-  private   ImageView myTuanBack;
+    private ImageView myTuanBack;
     @BindView(R.id.tab_title)
     TabLayout tabTitle;
     @BindView(R.id.viewpager)
@@ -38,7 +39,7 @@ public class OurFmActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_our_fm);
         ButterKnife.bind(this);
-        myTuanBack=findViewById(R.id.my_tuan_back);
+        myTuanBack = findViewById(R.id.my_tuan_back);
         myTuanBack.setOnClickListener(this);
         init();
     }
@@ -66,13 +67,12 @@ public class OurFmActivity extends AppCompatActivity implements View.OnClickList
         tabTitle.getTabAt(2).setText("我的收藏");
 
 
-
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case   R.id.my_tuan_back:
+            case R.id.my_tuan_back:
                 finish();
                 break;
         }
