@@ -17,15 +17,10 @@ import cn.com.zwwl.bayuwen.util.ToastUtil;
 public class CreateTopicActivity extends AppCompatActivity implements View.OnClickListener{
 
 
-//    @BindView(R.id.cancel_id)
      TextView cancelId;
-//    @BindView(R.id.keep_id)
      TextView keepId;
-//    @BindView(R.id.entry_ev)
      EditText entryEv;
-//    @BindView(R.id.entry_topic_content)
      EditText entryTopicContent;
-//    @BindView(R.id.checkbox1)
     CheckBox checkbox1;
    private  String topictile,topic_content;
    private  int is_anonymous =0;

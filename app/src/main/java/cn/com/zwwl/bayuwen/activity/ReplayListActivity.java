@@ -1,11 +1,14 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -13,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.LessonReplayAdapter;
 import cn.com.zwwl.bayuwen.api.StudyingCourseApi;
@@ -24,16 +28,16 @@ import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.model.StudyingModel;
 import cn.com.zwwl.bayuwen.util.TimeUtil;
-import cn.com.zwwl.bayuwen.widget.CircleImageView;
+import cn.com.zwwl.bayuwen.view.OvalImageview;
 import cn.com.zwwl.bayuwen.widget.roundview.RoundLinearLayout;
 
 /**
  * 课程跟踪视频回访列表
  * Created by zhumangmang at 2018/7/4 15:26
  */
-public class ReplayListActivity extends BasicActivityWithTitle {
+public class ReplayListActivity extends BaseActivity {
     @BindView(R.id.logo)
-    CircleImageView logo;
+    OvalImageview logo;
     @BindView(R.id.course_name)
     AppCompatTextView courseName;
     @BindView(R.id.course_code)
@@ -46,8 +50,8 @@ public class ReplayListActivity extends BasicActivityWithTitle {
     AppCompatTextView schoolName;
     @BindView(R.id.date)
     AppCompatTextView date;
-    @BindView(R.id.time)
-    AppCompatTextView time;
+    //    @BindView(R.id.time)
+//    AppCompatTextView time;
     @BindView(R.id.class_info)
     RoundLinearLayout classInfo;
     @BindView(R.id.recyclerView)
@@ -58,14 +62,31 @@ public class ReplayListActivity extends BasicActivityWithTitle {
     List<LessonModel> reports;
     StudyingModel model;
     AppCompatTextView emptyTv;
+    @BindView(R.id.id_back)
+    ImageView idBack;
+    @BindView(R.id.title_name)
+    TextView titleName;
+    private ReplayListActivity mActivity;
 
     @Override
-    protected int setContentView() {
-        return R.layout.activity_replay_list;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_replay_list);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+        mActivity =this;
+        initView1();
+        SetData();
+        setListener1();
     }
 
     @Override
-    protected void initView() {
+    protected void initData() {
+
+    }
+
+
+    protected void initView1() {
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         reports = new ArrayList<>();
         adapter = new LessonReplayAdapter(reports);
@@ -76,16 +97,17 @@ public class ReplayListActivity extends BasicActivityWithTitle {
         recyclerView.setAdapter(adapter);
     }
 
-    @Override
-    protected void initData() {
+
+    protected void SetData() {
         if (getIntent().getIntExtra("type", 0) == 1) {
-            setCustomTitle(R.string.look_replay);
+            titleName.setText(R.string.look_replay);
             classInfo.setVisibility(View.GONE);
             lookReplay.setText(null);
             lookReplay.setVisibility(View.GONE);
         } else
-            setCustomTitle(getIntent().getStringExtra("title"));
-        new StudyingCourseApi(this, "8391", new ResponseCallBack<StudyingModel>() {
+          titleName.setText(getIntent().getStringExtra("title"));
+           String kid =getIntent().getStringExtra("kid");
+        new StudyingCourseApi(this, kid, new ResponseCallBack<StudyingModel>() {
             @Override
             public void result(StudyingModel studyingModel, ErrorMsg errorMsg) {
                 if (studyingModel != null) {
@@ -96,8 +118,8 @@ public class ReplayListActivity extends BasicActivityWithTitle {
         });
     }
 
-    @Override
-    protected void setListener() {
+
+    protected void setListener1() {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -107,6 +129,12 @@ public class ReplayListActivity extends BasicActivityWithTitle {
                 startActivity(intent);
             }
         });
+        idBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void bindData() {
@@ -114,11 +142,12 @@ public class ReplayListActivity extends BasicActivityWithTitle {
             KeModel keModel = model.getCourse();
             courseName.setText(keModel.getTitle());
             courseCode.setText(String.format("班级编码: %s", keModel.getModel()));
-            teacherName.setText(String.format("授课老师: %s", keModel.getTname()));
-            schoolName.setText(String.format("上课地点: %s", keModel.getSchool()));
-            date.setText(String.format("上课日期: %s-%s", TimeUtil.parseTime(keModel.getStartPtime() * 1000, "yyyy年MM月dd日"), TimeUtil.parseTime(keModel.getEndPtime() * 1000, "yyyy年MM月dd日")));
-            time.setText(String.format("上课时间: %s%s-%s", keModel.getWeekday(),
-                    TimeUtil.parseToHm(keModel.getClass_start_at()), TimeUtil.parseToHm(keModel.getClass_end_at())));
+            teacherName.setText(String.format("%s", keModel.getTname()));
+            schoolName.setText(String.format("%s", keModel.getSchool()));
+            date.setText(String.format("%s-%s", TimeUtil.parseTime(keModel.getStartPtime() * 1000,
+                    "yyyy年MM月dd日"), TimeUtil.parseTime(keModel.getEndPtime() * 1000, "yyyy年MM月dd日")) +
+                    String.format("%s%s-%s", keModel.getWeekday(),
+                            TimeUtil.parseToHm(keModel.getClass_start_at()), TimeUtil.parseToHm(keModel.getClass_end_at())));
             ImageLoader.display(this, logo, keModel.getPic());
         }
         if (model.getCompleteClass() != null) {
@@ -129,19 +158,5 @@ public class ReplayListActivity extends BasicActivityWithTitle {
         adapter.setNewData(reports);
     }
 
-    @Override
-    public boolean setParentScrollable() {
-        return true;
-    }
-
-
-    @Override
-    public void onClick(View view) {
-    }
-
-    @Override
-    public void close() {
-        finish();
-    }
 
 }
