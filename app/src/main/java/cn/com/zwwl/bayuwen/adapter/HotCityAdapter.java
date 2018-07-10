@@ -16,12 +16,13 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.CitySortModel;
+
 public class HotCityAdapter extends BaseAdapter {
 
     private List<CitySortModel.HotcityBean> cityEntities;
     private LayoutInflater inflater;
 
-    HotCityAdapter(Context mContext, List<CitySortModel.HotcityBean> cityEntities) {
+    public HotCityAdapter(Context mContext, List<CitySortModel.HotcityBean> cityEntities) {
         this.cityEntities = cityEntities;
         inflater = LayoutInflater.from(mContext);
     }
@@ -47,7 +48,7 @@ public class HotCityAdapter extends BaseAdapter {
         if (null == convertView) {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.hotcity_gridview_item, null);
-             holder.hotcityName=convertView.findViewById(R.id.hotcity_name);
+            holder.hotcityName = convertView.findViewById(R.id.hotcity_name);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -58,7 +59,7 @@ public class HotCityAdapter extends BaseAdapter {
         return convertView;
     }
 
-   class ViewHolder {
+    class ViewHolder {
 
         TextView hotcityName;
 

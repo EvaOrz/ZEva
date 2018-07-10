@@ -1,47 +1,36 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CityAdapter;
+import cn.com.zwwl.bayuwen.adapter.HotCityAdapter;
 import cn.com.zwwl.bayuwen.api.CityListApi;
 import cn.com.zwwl.bayuwen.api.UrlUtil;
-import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.CitySortModel;
@@ -49,9 +38,9 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
 import cn.com.zwwl.bayuwen.view.PinyinComparator;
 import cn.com.zwwl.bayuwen.view.SideBar;
-import cn.jiguang.net.HttpResponse;
+import cn.com.zwwl.bayuwen.widget.NoScrollGridView;
 
-public class CityActivity extends BasicActivityWithTitle {
+public class CityActivity extends BaseActivity {
 
 
     @BindView(R.id.now_city)
@@ -67,6 +56,10 @@ public class CityActivity extends BasicActivityWithTitle {
     LinearLayout llLayout;
     @BindView(R.id.search_view)
     EditText searchView;
+    @BindView(R.id.id_back)
+    ImageView idBack;
+    @BindView(R.id.title_name)
+    TextView titleName;
     private String CityListUrl;
     private CitySortModel citySortModel;
     private List<CitySortModel.CityBean> cityBeans;
@@ -84,22 +77,36 @@ public class CityActivity extends BasicActivityWithTitle {
     private Location location;
 
 
+    private View headerView;
+    private TextView city_name;
+    private NoScrollGridView no_scroll_gridview;
+    private HotCityAdapter hotCityAdapter;
+
 
     @Override
-    protected int setContentView() {
-        return R.layout.activity_city;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        setContentView(R.layout.activity_city);
+        ButterKnife.bind(this);
+        setView();
     }
 
-    @Override
-    protected void initView() {
+    protected void setView() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        setCustomTitle("选择城市");
+        titleName.setText("选择城市");
         nowCity.setText(TempDataHelper.getCurrentCity(this));
 
         CityListUrl = UrlUtil.getCityList();
         cityBeans = new ArrayList<CitySortModel.CityBean>();
         hotcityBeans = new ArrayList<CitySortModel.HotcityBean>();
         pinyinComparator = new PinyinComparator();
+        //listview加载头部文件
+        headerView = getLayoutInflater().inflate(R.layout.item_city1, null);
+        city_name = headerView.findViewById(R.id.city_name);
+        no_scroll_gridview = headerView.findViewById(R.id.no_scroll_gridview);
+
+        setListener();
 
 
         sidrbar.setTextView(dialog);
@@ -147,9 +154,6 @@ public class CityActivity extends BasicActivityWithTitle {
             latitude = location.getLatitude(); // 经度
             longitude = location.getLongitude(); // 纬度
             double[] data = {latitude, longitude};
-//                        Message msg = handler.obtainMessage();
-//                        msg.obj = data;
-//                        handler.sendMessage(msg);
             List<Address> addList = null;
             Geocoder ge = new Geocoder(getApplicationContext());
             try {
@@ -162,9 +166,11 @@ public class CityActivity extends BasicActivityWithTitle {
                 for (int i = 0; i < addList.size(); i++) {
                     Address ad = addList.get(i);
                     locationCity = ad.getLocality();
+
                 }
             }
         }
+        city_name.setText(locationCity);
         HttpDate();
     }
 
@@ -196,12 +202,14 @@ public class CityActivity extends BasicActivityWithTitle {
                     // // 根据a-z进行排序源数据
                     Collections.sort(cityBeans,
                             pinyinComparator);
-
+                    //listview加载头文件
                     hotcityBeans = citySortModel.getHotcity();
-                    View headerView = getLayoutInflater().inflate(R.layout.item_city1, null);
+                    hotCityAdapter = new HotCityAdapter(CityActivity.this, hotcityBeans);
+                    no_scroll_gridview.setAdapter(hotCityAdapter);
+
                     countryLvcountry.addHeaderView(headerView);
-                    cityAdapter = new CityAdapter(CityActivity.this, locationCity, cityBeans,
-                            countryLvcountry, hotcityBeans);
+                    cityAdapter = new CityAdapter(CityActivity.this, cityBeans,
+                            countryLvcountry);
                     countryLvcountry.setAdapter(cityAdapter);
 
                 } else {
@@ -213,20 +221,31 @@ public class CityActivity extends BasicActivityWithTitle {
     }
 
 
-    @Override
     protected void setListener() {
-//        searchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//
-//                   // HttpDate(v.getText().toString().trim());
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
-
+        no_scroll_gridview.setOnItemClickListener(new AdapterView
+                .OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long
+                    id) {
+                TempDataHelper.setCurrentCity(mContext, hotcityBeans.get(position).getName());
+                MyApplication.cityStatusChange = true;
+                finish();
+            }
+        });
+        city_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TempDataHelper.setCurrentCity(mContext, locationCity);
+                MyApplication.cityStatusChange = true;
+                finish();
+            }
+        });
+        idBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 
@@ -238,7 +257,7 @@ public class CityActivity extends BasicActivityWithTitle {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_CONTACTS:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager
-                        .PERMISSION_GRANTED ) {
+                        .PERMISSION_GRANTED) {
                     LocationGPS();
 
                 }
@@ -247,21 +266,6 @@ public class CityActivity extends BasicActivityWithTitle {
 
     }
 
-    @Override
-    public void onClick(View view) {
 
-    }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-
-    @Override
-    public void close() {
-        super.close();
-        finish();
-    }
 }

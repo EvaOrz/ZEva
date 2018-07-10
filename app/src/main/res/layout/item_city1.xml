@@ -31,9 +31,44 @@
             android:gravity="center"
             android:text="昌平区"
             android:textSize="@dimen/dp_16"
+            android:textStyle="bold"
             android:background="@drawable/city_tv_bg"
             android:textColor="@color/hotcityColor" />
 
+
+        <View
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:layout_alignParentBottom="true"
+            android:background="#EEEEEE" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/catalog1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EEEEEE"
+        android:paddingBottom="5dip"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dip"
+        android:text="热门城市"
+        android:textColor="@color/gray" />
+
+    <RelativeLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:background="@android:color/white">
+
+        <cn.com.zwwl.bayuwen.widget.NoScrollGridView
+            android:id="@+id/no_scroll_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="4"
+            >
+        </cn.com.zwwl.bayuwen.widget.NoScrollGridView>
 
         <View
             android:layout_marginTop="2dp"
