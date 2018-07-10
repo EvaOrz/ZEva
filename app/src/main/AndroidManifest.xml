@@ -73,16 +73,15 @@
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
 
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!--新浪微博-->
         <activity
             android:name=".wxapi.WBShareActivity"
-            android:configChanges="keyboardHidden|orientation"
-            >
+            android:configChanges="keyboardHidden|orientation">
             <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <!--//qq-->
@@ -112,14 +111,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <!-- 注册 -->
-        <!-- 登录 -->
-
         <!-- 忘记密码 -->
-        <activity
-            android:name=".activity.fm.FmForgetPwdActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <!-- 专辑列表 -->
         <activity
@@ -430,7 +422,7 @@
         <meta-data
             android:name="cn.com.zwwl.bayuwen.glide.TGlideModule"
             android:value="GlideModule" />
-       <!--系统消息-->
+        <!--系统消息-->
         <activity android:name=".activity.SysMessageActivity" />
         <!--互动消息-->
         <activity android:name=".activity.InteractActivity" />
@@ -458,7 +450,7 @@
         <!-- 课程跟踪点击“往次”，或已完成课程二级页面点击条目进入该页面 -->
         <activity android:name=".activity.ReportIndexActivity" />
         <!--话题详情里面的评论-->
-        <activity android:name=".activity.TopicCommitActivity"/>
+        <activity android:name=".activity.TopicCommitActivity" />
         <!--课程跟踪首页搜索-->
         <activity android:name=".activity.TraceSearchActivity" />
 

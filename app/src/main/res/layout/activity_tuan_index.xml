@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/bar_height"
-        android:background="@color/body_gray"
+        android:background="@color/lisichen"
         android:padding="10dp">
 
         <ImageView
@@ -32,7 +32,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="@string/pingtuan_intro"
-            android:textColor="@color/gold"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_size_14" />
     </RelativeLayout>
 

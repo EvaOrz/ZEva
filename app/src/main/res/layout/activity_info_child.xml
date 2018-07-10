@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/bar_height"
-        android:background="@color/body_gray"
+        android:background="@color/lisichen"
         android:padding="10dp">
 
         <ImageView
@@ -34,8 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="@string/save"
-            android:textColor="@color/gold"
-            android:textSize="@dimen/text_size_16" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14" />
     </RelativeLayout>
 
     <ScrollView

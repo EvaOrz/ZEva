@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="@string/add_gouwuche"
-            android:textColor="@color/gold"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_size_14" />
 
     </RelativeLayout>

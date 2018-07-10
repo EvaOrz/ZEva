@@ -35,8 +35,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="+"
-            android:textColor="@color/gold"
-            android:textSize="@dimen/text_size_20" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_22" />
     </RelativeLayout>
 
     <!--月份选择器-->

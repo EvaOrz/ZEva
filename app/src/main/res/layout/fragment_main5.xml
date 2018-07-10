@@ -85,7 +85,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lines="1"
-                        android:textColor="@color/gold"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/text_size_14" />
                 </LinearLayout>
 
@@ -106,7 +106,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lines="1"
-                        android:textColor="@color/gold"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/text_size_14" />
 
                     <TextView

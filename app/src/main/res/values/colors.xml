@@ -8,7 +8,6 @@
     <color name="white">#ffffffff</color>
     <color name="translucent_white">#7fffffff</color>
     <color name="black">#ff000000</color>
-    <color name="gray_line">#EDEDEE</color>
 
     <color name="transparent">#00000000</color>
     <color name="translucent_black">#80000000</color>
@@ -18,6 +17,7 @@
     <!--字体颜色-->
     <color name="gray_light">#FFC0C0C0</color>
     <color name="gray_dark">#ff4b4b4b</color>
+    <color name="gray_line">#EDEDEE</color>
 
     <color name="title_bar">#FFFAFAFA</color>
     <color name="dot_active_color">#ffffffff</color>
@@ -36,6 +36,9 @@
     <color name="seek_bar_before_thumb">#dcaa40</color>
     <color name="seek_bar_after_thumb">#cdcdcd</color>
     <color name="seek_bar_thumb_center">#dcaa40</color>
+    <color name="yellow_light_default">#FDF3E1</color>
+    <color name="yellow_light_pressed">#F4E5CD</color>
+
 
     <color name="mainColor">#dca540</color>
     //主橙色按钮背景
@@ -47,22 +50,9 @@
     <color name="text_red">#f08301</color>
     <color name="body_gray">#242c3f</color>
     <color name="body_gray_light">#343C50</color>
-
-    <!--lousx-->
-    <color name="item_bgColor">#faf9f9</color>
-    <color name="item_grayColor">#999999</color>
-    <color name="money_color">#e99529</color>
-    <color name="search_tv_color">#bcbcbc</color>
-    <color name="cirle_line_color">#d7d7d7</color>
-    <color name="tab_text_color">#5e6678</color>
     <color name="text_color_default">#ff4b4b4b</color>
-    <color name="yellow_light_default">#FDF3E1</color>
-    <color name="yellow_light_pressed">#F4E5CD</color>
-
 
     <!--lmj -->
-    <color name="createTopicTitle">#242C3F</color>
-    <color name="cancelcolor">#BA9240</color>
     <color name="pink">#EF9F9F</color>
     <color name="greendd">#96D689</color>
     <color name="gray">#C3C3C3</color>

@@ -32,7 +32,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="发布"
-            android:textColor="@color/gold"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_size_14" />
 
     </RelativeLayout>

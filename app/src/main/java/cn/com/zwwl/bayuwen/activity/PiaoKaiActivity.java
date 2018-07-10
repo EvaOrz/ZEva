@@ -32,7 +32,6 @@ import cn.com.zwwl.bayuwen.util.Tools;
  */
 public class PiaoKaiActivity extends BaseActivity {
 
-    private List<AddressModel> addressDatas = new ArrayList<>();
     private AddressModel currentAddress;// 当前收货地址
     private String oid_item;
 
@@ -66,11 +65,6 @@ public class PiaoKaiActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!isShowDetail) initData();
-    }
 
     private void initView() {
         nameTv = findViewById(R.id.tuan_pay_name);
@@ -111,7 +105,7 @@ public class PiaoKaiActivity extends BaseActivity {
             markEv.setEnabled(false);
             amountTv.setText("￥" + faPiaoModel.getInvo_amount());
             sureBu.setVisibility(View.GONE);
-        }
+        } else initData();
     }
 
     @Override
@@ -123,7 +117,9 @@ public class PiaoKaiActivity extends BaseActivity {
                 break;
             case R.id.go_add_manage:
                 if (isShowDetail) return;
-                startActivity(new Intent(mContext, AddressManageActivity.class));
+                Intent i = new Intent(mContext, AddressManageActivity.class);
+                i.putExtra("AddressManageActivity_type", true);
+                startActivityForResult(i, 1001);
                 break;
             case R.id.piao_qiye:
                 if (isShowDetail) return;
@@ -204,17 +200,14 @@ public class PiaoKaiActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    for (AddressModel addressModel : addressDatas) {
-                        if (addressModel.getIs_default().equals("1")) {
-                            currentAddress = addressModel;// 赋值当前收货地址
-                            adresslayout.setVisibility(View.VISIBLE);
-                            addressTv.setVisibility(View.VISIBLE);
-                            addTv.setVisibility(View.GONE);
-                            nameTv.setText(addressModel.getTo_user());
-                            phoneTv.setText(addressModel.getPhone());
-                            addressTv.setText(addressModel.getProvince() + addressModel.getCity()
-                                    + addressModel.getDistrict() + addressModel.getAddress());
-                        }
+                    if (currentAddress != null) {
+                        adresslayout.setVisibility(View.VISIBLE);
+                        addressTv.setVisibility(View.VISIBLE);
+                        addTv.setVisibility(View.GONE);
+                        nameTv.setText(currentAddress.getTo_user());
+                        phoneTv.setText(currentAddress.getPhone());
+                        addressTv.setText(currentAddress.getProvince() + currentAddress.getCity()
+                                + currentAddress.getDistrict() + currentAddress.getAddress());
                     }
                     break;
                 case 1:// 没有收货地址显示添加
@@ -252,6 +245,15 @@ public class PiaoKaiActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1001 && resultCode == 1000 && data.getSerializableExtra
+                ("address_pick") != null) {
+            currentAddress = (AddressModel) data.getSerializableExtra("address_pick");
+            handler.sendEmptyMessage(0);
+        }
+    }
 
     @Override
     protected void initData() {
@@ -260,8 +262,11 @@ public class PiaoKaiActivity extends BaseActivity {
             @Override
             public void setData(List<AddressModel> list) {
                 if (Tools.listNotNull(list)) {
-                    addressDatas.clear();
-                    addressDatas.addAll(list);
+                    for (AddressModel addressModel : list) {
+                        if (addressModel.getIs_default().equals("1")) {
+                            currentAddress = addressModel;
+                        }
+                    }
                     handler.sendEmptyMessage(0);
                 } else {
                     handler.sendEmptyMessage(1);

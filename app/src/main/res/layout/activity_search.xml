@@ -36,7 +36,6 @@
                 android:id="@+id/search_img"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-
                 android:src="@drawable/search_tag" />
 
 
@@ -71,7 +70,7 @@
             android:layout_centerVertical="true"
             android:text="@string/search"
 
-            android:textColor="@color/gray_dark" />
+            android:textColor="@color/white" />
 
 
     </LinearLayout>

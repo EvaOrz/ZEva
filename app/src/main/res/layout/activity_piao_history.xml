@@ -33,7 +33,7 @@
             android:layout_centerVertical="true"
             android:text="@string/piao_shenqing"
             android:textColor="@color/gold"
-            android:textSize="@dimen/text_size_14" />
+            android:textSize="@dimen/text_size_16" />
 
     </RelativeLayout>
 

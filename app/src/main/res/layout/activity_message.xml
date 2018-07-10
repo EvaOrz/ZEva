@@ -9,8 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/bar_height"
-        android:background="@color/lisichen"
-        >
+        android:background="@color/lisichen">
 
         <ImageView
             android:id="@+id/message_back"
@@ -38,7 +37,7 @@
                 android:paddingRight="15dp"
                 android:paddingTop="3dp"
                 android:text="@string/tongzhi"
-                android:textColor="@drawable/gold_text_checked"
+                android:textColor="@drawable/topic_text_checked"
                 android:textSize="@dimen/text_size_12" />
 
             <RadioButton
@@ -52,7 +51,7 @@
                 android:paddingRight="15dp"
                 android:paddingTop="3dp"
                 android:text="@string/topic"
-                android:textColor="@drawable/gold_text_checked"
+                android:textColor="@drawable/topic_text_checked"
                 android:textSize="@dimen/text_size_12" />
         </RadioGroup>
 
@@ -62,17 +61,15 @@
             android:layout_height="@dimen/dp_20"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-           android:background="@mipmap/topic_add"
             android:layout_margin="10dp"
-
-            android:textSize="@dimen/text_size_20" />
+            android:background="@mipmap/topic_add" />
     </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/fg_view"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
 
 </LinearLayout>

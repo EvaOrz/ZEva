@@ -8,13 +8,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/bar_height"
-        android:background="@color/lisichen"
-        android:padding="10dp">
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:background="@color/lisichen">
 
         <ImageView
             android:id="@+id/select_calendar_back"
             android:layout_width="@dimen/back_size"
             android:layout_height="@dimen/back_size"
+            android:layout_centerVertical="true"
             android:src="@mipmap/icon_back" />
 
         <TextView
@@ -32,8 +34,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="+"
-            android:textColor="@color/gold"
-            android:textSize="@dimen/text_size_20" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_22" />
     </RelativeLayout>
 
     <LinearLayout

@@ -34,7 +34,7 @@
                 android:paddingBottom="2dp"
                 android:paddingTop="2dp"
                 android:text="@string/main_tab3"
-                android:textColor="@drawable/oringe_text_checked"
+                android:textColor="@drawable/main_text_checked"
                 android:textSize="@dimen/text_size_10" />
 
 
@@ -50,7 +50,7 @@
                 android:paddingBottom="2dp"
                 android:paddingTop="2dp"
                 android:text="@string/main_tab2"
-                android:textColor="@drawable/oringe_text_checked"
+                android:textColor="@drawable/main_text_checked"
                 android:textSize="@dimen/text_size_10" />
 
 
@@ -68,7 +68,7 @@
                 android:paddingBottom="2dp"
                 android:paddingTop="2dp"
                 android:text="@string/student_attain"
-                android:textColor="@drawable/oringe_text_checked"
+                android:textColor="@drawable/main_text_checked"
                 android:textSize="@dimen/text_size_10" />
 
             <RadioButton
@@ -83,7 +83,7 @@
                 android:paddingBottom="2dp"
                 android:paddingTop="2dp"
                 android:text="@string/main_tab4"
-                android:textColor="@drawable/oringe_text_checked"
+                android:textColor="@drawable/main_text_checked"
                 android:textSize="@dimen/text_size_10" />
 
             <RadioButton
@@ -98,7 +98,7 @@
                 android:paddingBottom="2dp"
                 android:paddingTop="2dp"
                 android:text="@string/wode"
-                android:textColor="@drawable/oringe_text_checked"
+                android:textColor="@drawable/main_text_checked"
                 android:textSize="@dimen/text_size_10" />
         </RadioGroup>
 

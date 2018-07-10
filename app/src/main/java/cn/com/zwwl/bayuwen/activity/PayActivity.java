@@ -58,7 +58,6 @@ import cn.com.zwwl.bayuwen.view.YouHuiJuanPopWindow;
  */
 public class PayActivity extends BaseActivity {
 
-    private List<AddressModel> addressDatas = new ArrayList<>();
     private LinearLayout adresslayout;
     private int type; // 0：单独参团 1：垫付参团 2：单独购买 3:购课单多选购买 4:组合课购买
     private LinearLayout pinLayout, dianLayout, youhuiLayout;
@@ -209,20 +208,17 @@ public class PayActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    for (AddressModel addressModel : addressDatas) {
-                        if (addressModel.getIs_default().equals("1")) {
-                            currentAddress = addressModel;// 赋值当前收货地址
-                            adresslayout.setVisibility(View.VISIBLE);
-                            addressTv.setVisibility(View.VISIBLE);
-                            addTv.setVisibility(View.GONE);
-                            nameTv.setText(addressModel.getTo_user());
-                            phoneTv.setText(addressModel.getPhone());
-                            addressTv.setText(addressModel.getProvince() + addressModel.getCity()
-                                    + addressModel.getDistrict() + addressModel.getAddress());
-                        }
+                    if (currentAddress != null) {
+                        adresslayout.setVisibility(View.VISIBLE);
+                        addressTv.setVisibility(View.VISIBLE);
+                        addTv.setVisibility(View.GONE);
+                        nameTv.setText(currentAddress.getTo_user());
+                        phoneTv.setText(currentAddress.getPhone());
+                        addressTv.setText(currentAddress.getProvince() + currentAddress.getCity()
+                                + currentAddress.getDistrict() + currentAddress.getAddress());
                     }
                     break;
-                case 1:// 没有收货地址显示添加
+                case 1:// 默认不选择地址
                     adresslayout.setVisibility(View.GONE);
                     addressTv.setVisibility(View.GONE);
                     addTv.setVisibility(View.VISIBLE);
@@ -314,7 +310,9 @@ public class PayActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.go_add_manage:
-                startActivity(new Intent(mContext, AddressManageActivity.class));
+                Intent i = new Intent(mContext, AddressManageActivity.class);
+                i.putExtra("AddressManageActivity_type", true);
+                startActivityForResult(i, 1001);
                 break;
             case R.id.tuikuan_info:// 退款须知
                 goWeb();
@@ -417,29 +415,7 @@ public class PayActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        // 获取地址列表
-        new AddressApi(mContext, new AddressApi.FetchAddressListListener() {
-            @Override
-            public void setData(List<AddressModel> list) {
-                showLoadingDialog(false);
-                if (Tools.listNotNull(list)) {
-                    addressDatas.clear();
-                    addressDatas.addAll(list);
-                    handler.sendEmptyMessage(0);
-                } else {
-                    handler.sendEmptyMessage(1);
-                }
-            }
-
-            @Override
-            public void setError(ErrorMsg error) {
-                showLoadingDialog(false);
-                if (error != null) {
-                    showToast(error.getDesc());
-                }
-
-            }
-        });
+        handler.sendEmptyMessage(1);
         // 获取账户余额
         new GetYueApi(mContext, new FetchEntryListener() {
             @Override
@@ -575,6 +551,16 @@ public class PayActivity extends BaseActivity {
 
         //清理当前的activity引用
         BCPay.clear();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1001 && resultCode == 1000 && data.getSerializableExtra
+                ("address_pick") != null) {
+            currentAddress = (AddressModel) data.getSerializableExtra("address_pick");
+            handler.sendEmptyMessage(0);
+        }
     }
 
     /**

@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -36,12 +37,14 @@ public class AddressManageActivity extends BaseActivity {
     private ListView listView;
     private AddressAdapter addressAdapter;
     private List<AddressModel> datas = new ArrayList<>();
+    private boolean isNeedResult = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_manage);
+        isNeedResult = getIntent().getBooleanExtra("AddressManageActivity_type", false);
         initView();
 
     }
@@ -158,6 +161,16 @@ public class AddressManageActivity extends BaseActivity {
         findViewById(R.id.add_manage_back).setOnClickListener(this);
         findViewById(R.id.add_manage_bt).setOnClickListener(this);
         listView = findViewById(R.id.add_manage_list);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!isNeedResult) return;
+                Intent i = new Intent();
+                i.putExtra("address_pick", datas.get(position));
+                setResult(1000, i);
+                finish();
+            }
+        });
         addressAdapter = new AddressAdapter(mContext);
         listView.setAdapter(addressAdapter);
     }
