@@ -91,7 +91,7 @@ public class CityAdapter extends BaseAdapter {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                afterPick(cityBeans.get(position).getName());
+                afterPick(cityBeans.get(position-1).getName());
             }
         });
         return convertView;

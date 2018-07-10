@@ -85,8 +85,8 @@ public class StudyingIndexActivity extends BaseActivity {
         setContentView(R.layout.activity_studying_index);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-        mApplication= (MyApplication) getApplication();
-        mActivity=this;
+        mApplication = (MyApplication) getApplication();
+        mActivity = this;
         initView();
     }
 
@@ -98,7 +98,7 @@ public class StudyingIndexActivity extends BaseActivity {
     protected void initView() {
 
         kid = getIntent().getStringExtra("kid");
-      titleName.setText(getIntent().getStringExtra("title"));
+        titleName.setText(getIntent().getStringExtra("title"));
 //        setCustomTitle(getIntent().getStringExtra("title"));
         online = getIntent().getIntExtra("online", -1);
         signLogo.setImageResource(online == 1 ? R.mipmap.sign_gray : R.mipmap.sign_yellow);
@@ -128,8 +128,8 @@ public class StudyingIndexActivity extends BaseActivity {
             teacherName.setText(String.format("%s", keModel.getTname()));
             schoolName.setText(String.format("%s", keModel.getSchool()));
             date.setText(String.format("%s-%s", TimeUtil.parseTime(keModel.getStartPtime() * 1000, "yyyy年MM月dd日"),
-                    TimeUtil.parseTime(keModel.getEndPtime() * 1000, "yyyy年MM月dd日"))+" "+
-            String.format("%s%s-%s", keModel.getWeekday(), TimeUtil.parseToHm(keModel.getClass_start_at()), TimeUtil.parseToHm(keModel.getClass_end_at())));
+                    TimeUtil.parseTime(keModel.getEndPtime() * 1000, "yyyy年MM月dd日")) + " " +
+                    String.format("%s%s-%s", keModel.getWeekday(), TimeUtil.parseToHm(keModel.getClass_start_at()), TimeUtil.parseToHm(keModel.getClass_end_at())));
             ImageLoader.display(this, logo, keModel.getPic());
         }
         signPer.setText(String.format("签到率: %s%s", classModel.getSignInRate(), "%"));
@@ -137,8 +137,7 @@ public class StudyingIndexActivity extends BaseActivity {
     }
 
 
-
-    @OnClick({R.id.id_back,R.id.course_change, R.id.class_covert, R.id.class_seat, R.id.middle_report, R.id.final_report, R.id.welcome})
+    @OnClick({R.id.id_back, R.id.course_change, R.id.class_covert, R.id.class_seat, R.id.middle_report, R.id.final_report, R.id.welcome})
     @Override
     public void onClick(View view) {
         if (classModel == null) return;
@@ -208,8 +207,6 @@ public class StudyingIndexActivity extends BaseActivity {
                 break;
         }
     }
-
-
 
 
 }
