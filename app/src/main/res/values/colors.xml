@@ -63,4 +63,6 @@
     <color name="user_asked_color">#3E3E3E</color>
     <color name="course_prepara_line">#E9C192</color>
     <color name="course_prepara_offline">#0DC0C3</color>
+    <color name="apply_submit">#F1880B</color>
+    <color name="course_detail_bg">#F5F5F5</color>
 </resources>
