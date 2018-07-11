@@ -353,6 +353,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
+        <!-- 我的账户 -->
+        <activity
+            android:name=".activity.MyAccountActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
         <!-- weixin pay -->
         <activity
             android:name=".activity.AboutActivity"
