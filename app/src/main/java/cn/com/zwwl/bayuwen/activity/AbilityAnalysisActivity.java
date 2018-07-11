@@ -1,5 +1,6 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -20,16 +22,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
-import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.model.PintuModel;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.DatiPopWindow;
 
-public class AbilityAnalysisActivity extends BasicActivityWithTitle implements View
-        .OnClickListener {
+public class AbilityAnalysisActivity extends BaseActivity {
 
     @BindView(R.id.tab_course_name)
     TabLayout tabCourseName;
@@ -59,6 +60,10 @@ public class AbilityAnalysisActivity extends BasicActivityWithTitle implements V
     LinearLayout studentContent;
     @BindView(R.id.pintu_layout)
     LinearLayout pintuLayout;
+    @BindView(R.id.id_back)
+    ImageView idBack;
+    @BindView(R.id.title_name)
+    TextView titleName;
     private ArrayList<PintuModel> pintuModels = new ArrayList<>();// 拼图数据
     private PintuModel pintuModel;
 
@@ -67,15 +72,26 @@ public class AbilityAnalysisActivity extends BasicActivityWithTitle implements V
     private View pintuView;
     private RecyclerView pintuRecyclerView;
     private RadarAdapter radarAdapter;
+    private Activity mActivity;
 
     @Override
-    protected int setContentView() {
-        return R.layout.activity_ability_analysis;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ability_analysis);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+        mActivity = this;
+        initView1();
     }
 
     @Override
-    protected void initView() {
-        setCustomTitle("能力分析拼图");
+    protected void initData() {
+
+    }
+
+
+    protected void initView1() {
+        titleName.setText("能力分析拼图");
         pintuWid = MyApplication.width - 200;
         pintuHei = (MyApplication.width - 200) * 6 / 9;
         paddingLeft = pintuWid * 50 / 1018;
@@ -94,11 +110,13 @@ public class AbilityAnalysisActivity extends BasicActivityWithTitle implements V
         pintuRecyclerView.setLayoutParams(new LinearLayout.LayoutParams(pintuWid, pintuHei));
         pintuLayout.removeAllViews();
         pintuLayout.addView(pintuView);
+        setListener();
+        initData1();
 
     }
 
-    @Override
-    protected void initData() {
+
+    protected void initData1() {
         Intent intent = getIntent();
         pintuModels = (ArrayList<PintuModel>) intent.getSerializableExtra("pintuModels");
         for (int i = 0; i < pintuModels.size(); i++) {
@@ -133,11 +151,8 @@ public class AbilityAnalysisActivity extends BasicActivityWithTitle implements V
     }
 
 
-    @Override
     protected void setListener() {
-        courseContent.setOnClickListener(this);
-        systemIntroduction.setOnClickListener(this);
-        studentCondition.setOnClickListener(this);
+
         tabCourseName.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -165,6 +180,7 @@ public class AbilityAnalysisActivity extends BasicActivityWithTitle implements V
         systemIntroduction.setText(pintuModel.getCurricula().getTitle());
     }
 
+    @OnClick({R.id.course_content, R.id.system_introduction, R.id.student_condition, R.id.id_back})
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -198,20 +214,12 @@ public class AbilityAnalysisActivity extends BasicActivityWithTitle implements V
                 studentContent.setVisibility(View.GONE);
                 content.setText(pintuModel.getCurricula().getContent());
                 break;
+            case R.id.id_back:
+                finish();
+                break;
         }
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
-    @Override
-    public void close() {
-        super.close();
-        finish();
-    }
 }

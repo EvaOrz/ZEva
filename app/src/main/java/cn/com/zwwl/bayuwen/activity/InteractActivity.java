@@ -1,12 +1,15 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -18,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.NotifyMessageAdapter;
 import cn.com.zwwl.bayuwen.api.ChildMessageApi;
@@ -28,32 +33,43 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.MessageModel;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
 
-public class InteractActivity extends BasicActivityWithTitle {
+public class InteractActivity extends BaseActivity {
     @BindView(R.id.recyclerview_id)
     RecyclerView recyclerView;
     @BindView(R.id.refresh)
     SmartRefreshLayout smartRefreshLayout;
-    private int page=1;
-    private int pageSize=10;
-    private String type="INTERACTIVE";
+    @BindView(R.id.id_back)
+    ImageView idBack;
+    @BindView(R.id.title_name)
+    TextView titleName;
+    private int page = 1;
+    private int pageSize = 10;
+    private String type = "INTERACTIVE";
     private String url = UrlUtil.getNotifyMessage();
     private List<MessageModel.ListBean> messageModels;
     private NotifyMessageAdapter notifyMessageAdapter;
 
-    @Override
-    protected int setContentView() {
-        return R.layout.activity_interact;
-    }
 
     @Override
-    protected void initView() {
-        setCustomTitle("互动消息");
-        setDisplayShowTitleEnabled(false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_interact);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+
+        initView1();
+        setListener1();
     }
 
     @Override
     protected void initData() {
-        messageModels= new ArrayList<>();
+
+    }
+
+
+    protected void initView1() {
+        titleName.setText("互动消息");
+        messageModels = new ArrayList<>();
         HttpData();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -68,14 +84,14 @@ public class InteractActivity extends BasicActivityWithTitle {
     }
 
     private void HttpData() {
-        new ChildMessageApi(this,type,page,pageSize,url,new ResponseCallBack<MessageModel>() {
+        new ChildMessageApi(this, type, page, pageSize, url, new ResponseCallBack<MessageModel>() {
             @Override
             public void result(MessageModel messageModel, ErrorMsg errorMsg) {
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.finishLoadMore();
-                if (messageModel!=null) {
-                    messageModels=messageModel.getList();
-                        notifyMessageAdapter.setNewData(messageModels);
+                if (messageModel != null) {
+                    messageModels = messageModel.getList();
+                    notifyMessageAdapter.setNewData(messageModels);
 
                 } else {
                     ToastUtil.showShortToast(errorMsg.getDesc());
@@ -86,8 +102,8 @@ public class InteractActivity extends BasicActivityWithTitle {
         });
     }
 
-    @Override
-    protected void setListener() {
+
+    protected void setListener1() {
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshlayout) {
@@ -119,14 +135,11 @@ public class InteractActivity extends BasicActivityWithTitle {
         });
     }
 
+    @OnClick({R.id.id_back})
     @Override
     public void onClick(View view) {
-
-    }
-
-    @Override
-    public void close() {
-        super.close();
         finish();
     }
+
+
 }

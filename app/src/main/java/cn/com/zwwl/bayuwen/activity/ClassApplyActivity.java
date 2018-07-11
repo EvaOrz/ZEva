@@ -1,12 +1,22 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.AddCourseApi;
 import cn.com.zwwl.bayuwen.api.ClassDetailApi;
@@ -25,7 +35,7 @@ import cn.com.zwwl.bayuwen.util.ToastUtil;
  * 转班申请提交
  * Created by zhumangmang at 2018/5/28 17:30
  */
-public class ClassApplyActivity extends BasicActivityWithTitle {
+public class ClassApplyActivity extends BaseActivity{
     @BindView(R.id.o_pic)
     AppCompatImageView oPic;
     @BindView(R.id.o_course_name)
@@ -55,20 +65,37 @@ public class ClassApplyActivity extends BasicActivityWithTitle {
     @BindView(R.id.price)
     AppCompatTextView price;
     KeModel oldKe, newKe;
+    @BindView(R.id.id_back)
+    ImageView idBack;
+    @BindView(R.id.title_name)
+    TextView titleName;
+
+    private MyApplication mApplication;
+    private HashMap<String,String> map;
+    protected Activity mActivity;
+
+
 
     @Override
-    protected int setContentView() {
-        return R.layout.activity_class_apply;
-    }
-
-    @Override
-    protected void initView() {
-        setDisplayShowTitleEnabled(false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_class_apply);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+        mApplication = (MyApplication) getApplication();
+        map=new HashMap<>();
+        mActivity=this;
+        initData1();
     }
 
     @Override
     protected void initData() {
-        setCustomTitle("提交申请");
+
+    }
+
+
+    protected void initData1() {
+        titleName.setText("提交申请");
         newKe = mApplication.newKe;
         getDetail();
         bind(newKe, pic, courseName, teacherName, schoolName, date, time);
@@ -102,12 +129,9 @@ public class ClassApplyActivity extends BasicActivityWithTitle {
         time.setText(String.format("%s-%s", TimeUtil.parseToHm(keModel.getClass_start_at()), TimeUtil.parseToHm(keModel.getClass_end_at())));
     }
 
-    @Override
-    protected void setListener() {
 
-    }
 
-    @OnClick({R.id.submit, R.id.o_pic_layout, R.id.pic_layout})
+    @OnClick({R.id.submit, R.id.o_pic_layout, R.id.pic_layout,R.id.id_back})
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -138,13 +162,13 @@ public class ClassApplyActivity extends BasicActivityWithTitle {
                 intent.putExtra("VideoPlayActivity_pic", newKe.getPic());
                 startActivity(intent);
                 break;
-
+            case R.id.id_back:
+                finish();
+                break;
         }
 
     }
 
-    @Override
-    public void close() {
-        finish();
-    }
+
+
 }

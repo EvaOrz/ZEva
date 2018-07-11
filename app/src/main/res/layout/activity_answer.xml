@@ -3,9 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:paddingEnd="@dimen/activity_horizontal_margin"
-    android:paddingStart="@dimen/activity_horizontal_margin">
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/top_linear"
+        layout="@layout/top_layout"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/progress_layout"
@@ -14,7 +17,9 @@
         android:layout_marginTop="@dimen/dp_8"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        app:layout_constraintTop_toBottomOf="@+id/top_linear">
 
         <SeekBar
             android:id="@+id/progress"
@@ -71,6 +76,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_20"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
         android:textSize="@dimen/text_size_18"
         app:layout_constraintTop_toBottomOf="@id/progress_layout" />
 
@@ -79,5 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_36"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
         app:layout_constraintTop_toBottomOf="@id/question" />
 </android.support.constraint.ConstraintLayout>

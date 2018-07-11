@@ -1,13 +1,17 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -19,11 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.OptionsAdapter;
 import cn.com.zwwl.bayuwen.api.QuestionListApi;
 import cn.com.zwwl.bayuwen.api.SubmitAnswerApi;
-import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.dialog.AnswerDialog;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
@@ -40,7 +45,7 @@ import static cn.com.zwwl.bayuwen.util.TimeUtil.FORMATTER_DEFAULT;
  * 闯关答题
  * Created by zhumangmang at 2018/6/14 18:34
  */
-public class AnswerActivity extends BasicActivityWithTitle {
+public class AnswerActivity extends BaseActivity {
     @BindView(R.id.progress)
     SeekBar progress;
     @BindView(R.id.current)
@@ -57,15 +62,32 @@ public class AnswerActivity extends BasicActivityWithTitle {
     List<OptionModel> choiceBeans;
     List<OptionModel> answerBeans;
     int index = 1;
+    @BindView(R.id.id_back)
+    ImageView idBack;
+    @BindView(R.id.title_name)
+    TextView titleName;
     private String sectionId;
+    private Activity mActivity;
+
 
     @Override
-    protected int setContentView() {
-        return R.layout.activity_answer;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_answer);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+        mActivity = this;
+        initView1();
+        initData1();
+        setListener1();
     }
 
     @Override
-    protected void initView() {
+    protected void initData() {
+
+    }
+
+    protected void initView1() {
         progress.setEnabled(false);
         dialog = new AnswerDialog(this);
         adapter = new OptionsAdapter(null);
@@ -74,16 +96,16 @@ public class AnswerActivity extends BasicActivityWithTitle {
         recyclerView.setAdapter(adapter);
     }
 
-    @Override
-    protected void initData() {
-        sectionId=getIntent().getStringExtra("sectionId");
+
+    protected void initData1() {
+        sectionId = getIntent().getStringExtra("sectionId");
         new QuestionListApi(this, sectionId, new ResponseCallBack<QuestionModel>() {
             @Override
             public void result(QuestionModel questionModel, ErrorMsg errorMsg) {
                 if (questionModel != null && questionModel.getQuestion() != null) {
                     model = questionModel;
                     answerBeans = new ArrayList<>();
-                    setCustomTitle(model.getSectionName());
+                    titleName.setText(model.getSectionName());
                     choiceBeans = model.getQuestion().getChoice();
                     if (choiceBeans != null && choiceBeans.size() > 0) {
                         progress.setMax(choiceBeans.size());
@@ -102,13 +124,9 @@ public class AnswerActivity extends BasicActivityWithTitle {
         adapter.setOptions(choiceBeans.get(index - 1).getSelect(), choiceBeans.get(index - 1).getAnswer());
     }
 
-    @Override
-    public boolean setParentScrollable() {
-        return true;
-    }
 
-    @Override
-    protected void setListener() {
+
+    protected void setListener1() {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter quickAdapter, View view, int position) {
@@ -171,8 +189,9 @@ public class AnswerActivity extends BasicActivityWithTitle {
                 public void result(CommonModel commonModel, ErrorMsg errorMsg) {
                     Intent intent = new Intent(mActivity, AnswerResultActivity.class);
                     intent.putExtra("total", choiceBeans.size());
-                    intent.putExtra("sectionId",sectionId);
+                    intent.putExtra("sectionId", sectionId);
                     startActivity(intent);
+
                     if (errorMsg == null) {
                         ToastUtil.showShortToast("上传成功");
                         startActivity(intent);
@@ -185,14 +204,15 @@ public class AnswerActivity extends BasicActivityWithTitle {
             e.printStackTrace();
         }
     }
-
+    @OnClick({R.id.id_back})
     @Override
     public void onClick(View view) {
-
+      switch (view.getId()){
+          case R.id.id_back:
+              finish();
+              break;
+      }
     }
 
-    @Override
-    public void close() {
-        finish();
-    }
+
 }

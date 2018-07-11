@@ -1,11 +1,15 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.rd.PageIndicatorView;
 
@@ -13,11 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.AnswerResultAdapter;
 import cn.com.zwwl.bayuwen.api.AnswerDetailApi;
-import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.OptionModel;
@@ -26,7 +30,7 @@ import cn.com.zwwl.bayuwen.model.OptionModel;
  * 闯关结果
  * Created by zhumangmang at 2018/6/15 11:16
  */
-public class AnswerResultActivity extends BasicActivityWithTitle {
+public class AnswerResultActivity extends BaseActivity {
     @BindView(R.id.answer_result)
     AppCompatTextView answerResult;
     @BindView(R.id.view_pager)
@@ -43,32 +47,49 @@ public class AnswerResultActivity extends BasicActivityWithTitle {
     RelativeLayout topLayout;
     AnswerResultAdapter adapter;
     int total;
-    List<OptionModel>all;
-    List<OptionModel>error;
+    List<OptionModel> all;
+    List<OptionModel> error;
+    @BindView(R.id.id_back)
+    ImageView idBack;
+    @BindView(R.id.title_name)
+    TextView titleName;
+
 
 
     @Override
-    protected int setContentView() {
-        return R.layout.activity_answer_result;
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_answer_result);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
 
-    @Override
-    protected void initView() {
-        total = getIntent().getIntExtra("total", 0);
-        pagerIndicator.setViewPager(viewPager);
+        initView1();
+        initData1();
     }
 
     @Override
     protected void initData() {
+
+    }
+
+
+    protected void initView1() {
+        total = getIntent().getIntExtra("total", 0);
+        titleName.setText("答题结束");
+        pagerIndicator.setViewPager(viewPager);
+    }
+
+
+    protected void initData1() {
         new AnswerDetailApi(this, getIntent().getStringExtra("sectionId"), new ResponseCallBack<List<OptionModel>>() {
             @Override
             public void result(List<OptionModel> optionModels, ErrorMsg errorMsg) {
-                if (optionModels!=null){
-                    all=new ArrayList<>();
-                    error=new ArrayList<>();
-                    for (OptionModel model:optionModels){
+                if (optionModels != null) {
+                    all = new ArrayList<>();
+                    error = new ArrayList<>();
+                    for (OptionModel model : optionModels) {
                         all.add(model);
-                        if (!model.getAnswer().equals(model.getStudentAnswer()))error.add(model);
+                        if (!model.getAnswer().equals(model.getStudentAnswer())) error.add(model);
                     }
                     double i = (double) (all.size() - error.size()) / all.size();
                     if (i < 0.2) {
@@ -136,20 +157,20 @@ public class AnswerResultActivity extends BasicActivityWithTitle {
 //        });
     }
 
-    @Override
-    protected void setListener() {
 
-    }
-
-    @OnClick({R.id.save, R.id.back_home})
+    @OnClick({R.id.save, R.id.back_home,R.id.id_back})
     @Override
     public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.id_back:
+                finish();
+                break;
+            case R.id.back_home:
+                startActivity(new Intent(this,AbilityAnalysisActivity.class));
+                break;
+        }
         finish();
     }
 
-    @Override
-    public void close() {
-        finish();
-    }
 
 }

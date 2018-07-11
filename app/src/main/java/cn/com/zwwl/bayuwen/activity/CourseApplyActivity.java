@@ -1,15 +1,22 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.AddCourseApi;
-import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.CommonModel;
@@ -24,7 +31,7 @@ import cn.com.zwwl.bayuwen.util.ToastUtil;
  * 调课申请提交
  * Created by zhumangmang at 2018/5/28 17:30
  */
-public class CourseApplyActivity extends BasicActivityWithTitle {
+public class CourseApplyActivity extends BaseActivity {
     @BindView(R.id.unit_name)
     AppCompatTextView unitName;
     @BindView(R.id.description)
@@ -47,19 +54,35 @@ public class CourseApplyActivity extends BasicActivityWithTitle {
     AppCompatTextView stock;
     @BindView(R.id.price)
     AppCompatTextView price;
+    @BindView(R.id.id_back)
+    ImageView idBack;
+    @BindView(R.id.title_name)
+    TextView titleName;
+    private HashMap<String, String> map;
+    private MyApplication mApplication;
+    private Activity mActivity;
+
 
     @Override
-    protected int setContentView() {
-        return R.layout.activity_course_apply;
-    }
-
-    @Override
-    protected void initView() {
-        setDisplayShowTitleEnabled(false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_course_apply);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+        mApplication = (MyApplication) getApplication();
+        map = new HashMap<>();
+        mActivity = this;
+        initView();
     }
 
     @Override
     protected void initData() {
+
+    }
+
+
+    protected void initView() {
+        titleName.setText("提交申请");
         lessonModel = mApplication.oldLesson;
         keModel = mApplication.newKe;
         unitName.setText(lessonModel.getTitle());
@@ -76,12 +99,8 @@ public class CourseApplyActivity extends BasicActivityWithTitle {
         price.setText(String.format("￥ %s", mApplication.newKe.getBuyPrice()));
     }
 
-    @Override
-    protected void setListener() {
 
-    }
-
-    @OnClick({R.id.submit, R.id.pic_layout})
+    @OnClick({R.id.submit, R.id.pic_layout, R.id.id_back})
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -102,6 +121,9 @@ public class CourseApplyActivity extends BasicActivityWithTitle {
                     }
                 });
                 break;
+            case R.id.id_back:
+                finish();
+                break;
             default:
                 Intent intent = new Intent(mContext, VideoPlayActivity.class);
                 intent.putExtra("VideoPlayActivity_url", keModel.getVideo());
@@ -113,9 +135,5 @@ public class CourseApplyActivity extends BasicActivityWithTitle {
 
     }
 
-    @Override
-    public void close() {
-        finish();
-    }
 
 }
