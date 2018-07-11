@@ -27,13 +27,12 @@ import cn.com.zwwl.bayuwen.widget.ViewHolder;
 public class AchievementAdapter extends BaseAdapter {
     protected Context mContext;
     protected List<AchievementModel> mItemList = new ArrayList<>();
-    private RelativeLayout.LayoutParams params;
 
     public AchievementAdapter(Context mContext, List<AchievementModel> mItemList) {
         this.mContext = mContext;
         this.mItemList = mItemList;
-        params = new RelativeLayout.LayoutParams(MyApplication.width / 3 - 12, (MyApplication
-                .width / 3 - 12) * 154 / 110);
+//        params = new RelativeLayout.LayoutParams(MyApplication.width / 3 - 60, (MyApplication
+//                .width / 3 - 12) * 154 / 110);
     }
 
     @Override
@@ -61,8 +60,8 @@ public class AchievementAdapter extends BaseAdapter {
         TextView title = viewHolder.getView(R.id.achieve_title);
         TextView time = viewHolder.getView(R.id.achieve_time);
 
-        bg.setLayoutParams(params);
-        bg1.setLayoutParams(params);
+        bg1.setLayoutParams(new RelativeLayout.LayoutParams(
+                100, 200));
         if (item.getIs_get() == 0) {
             bg1.setVisibility(View.VISIBLE);
         } else bg1.setVisibility(View.GONE);

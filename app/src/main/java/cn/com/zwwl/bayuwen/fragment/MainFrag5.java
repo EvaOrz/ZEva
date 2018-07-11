@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.umeng.socialize.UMShareAPI;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
 import cn.com.zwwl.bayuwen.activity.FeedBackActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
+import cn.com.zwwl.bayuwen.activity.MyAccountActivity;
 import cn.com.zwwl.bayuwen.activity.MyCollectionActivity;
 import cn.com.zwwl.bayuwen.activity.MyOrderActivity;
 import cn.com.zwwl.bayuwen.activity.MyTuanActivity;
@@ -53,7 +55,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
     private TextView frag5Name;
     private LinearLayout frag5ChildLayout;
     private TextView frag5Code;
-    private TextView frag5Level;
+    private ImageView frag5Level;
     private TextView cart_num;
 
     private Activity mActivity;
@@ -120,6 +122,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
         root.findViewById(R.id.frag5_tuan_code).setOnClickListener(this);
         root.findViewById(R.id.frag5_invite).setOnClickListener(this);
         root.findViewById(R.id.frag5_feedback).setOnClickListener(this);
+        root.findViewById(R.id.frag5_account).setOnClickListener(this);
         cart_num = root.findViewById(R.id.cart_num);
         frag5Avatar = root.findViewById(R.id.frag5_avatar);
         frag5Name = root.findViewById(R.id.frag5_name);
@@ -145,7 +148,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                                 .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
                         frag5Code.setText(userModel.getSignCode());
                         frag5Name.setText(userModel.getName());
-                        frag5Level.setText(userModel.getLevel() + "");
+//                        frag5Level.setText(userModel.getLevel() + "");
                     }
                     if (Tools.listNotNull(childModels)) {
                         frag5ChildLayout.removeAllViews();
@@ -180,15 +183,15 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
             ImageLoader.display(mActivity, avat, childModel.getPic(), R.drawable
                     .avatar_placeholder, R.drawable.avatar_placeholder);
 
-        view.setOnClickListener(new View
-                .OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(mActivity, ChildInfoActivity.class);
-                i.putExtra("ChildInfoActivity_data", childModel);
-                startActivity(i);
-            }
-        });
+//        view.setOnClickListener(new View
+//                .OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(mActivity, ChildInfoActivity.class);
+//                i.putExtra("ChildInfoActivity_data", childModel);
+//                startActivity(i);
+//            }
+//        });
         return view;
     }
 
@@ -251,6 +254,10 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 break;
             case R.id.frag5_my_fm:
                 startActivity(new Intent(mActivity, OurFmActivity.class));
+                break;
+            case R.id.frag5_account:// 我的账户
+                Intent i = new Intent(mActivity, MyAccountActivity.class);
+                startActivity(i);
                 break;
         }
     }
