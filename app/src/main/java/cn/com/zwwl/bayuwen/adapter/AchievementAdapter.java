@@ -1,6 +1,8 @@
 package cn.com.zwwl.bayuwen.adapter;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -27,12 +29,18 @@ import cn.com.zwwl.bayuwen.widget.ViewHolder;
 public class AchievementAdapter extends BaseAdapter {
     protected Context mContext;
     protected List<AchievementModel> mItemList = new ArrayList<>();
+    private int w, h;
 
     public AchievementAdapter(Context mContext, List<AchievementModel> mItemList) {
         this.mContext = mContext;
         this.mItemList = mItemList;
-//        params = new RelativeLayout.LayoutParams(MyApplication.width / 3 - 60, (MyApplication
-//                .width / 3 - 12) * 154 / 110);
+
+    }
+
+    public void setHeight(int w, int h) {
+        this.w = w;
+        this.h = h;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -60,16 +68,19 @@ public class AchievementAdapter extends BaseAdapter {
         TextView title = viewHolder.getView(R.id.achieve_title);
         TextView time = viewHolder.getView(R.id.achieve_time);
 
-        bg1.setLayoutParams(new RelativeLayout.LayoutParams(
-                100, 200));
-        if (item.getIs_get() == 0) {
-            bg1.setVisibility(View.VISIBLE);
-        } else bg1.setVisibility(View.GONE);
+
 //        ImageLoader.display(mContext, img, item.getPic());
         title.setText(item.getTitle());
         time.setText(CalendarTools.format(CalendarTools.fromStringTotime(item.getCreated_at()) /
                         1000,
                 "yyyy.MM.dd") + "获得");
+
+        bg1.setLayoutParams(new RelativeLayout.LayoutParams(
+                w, h));
+        if (item.getIs_get() == 0) {
+            bg1.setVisibility(View.VISIBLE);
+        } else bg1.setVisibility(View.GONE);
+
         return viewHolder.getConvertView();
     }
 

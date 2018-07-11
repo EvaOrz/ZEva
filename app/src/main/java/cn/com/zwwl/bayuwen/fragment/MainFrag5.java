@@ -11,11 +11,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.umeng.socialize.UMShareAPI;
@@ -24,6 +26,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
@@ -130,6 +133,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
         frag5Code = root.findViewById(R.id.frag5_code);
         frag5Level = root.findViewById(R.id.frag5_level);
 
+
     }
 
     public void initData(UserModel userModel) {
@@ -162,6 +166,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                             frag5ChildLayout.addView(getChildView(childModels.get(i)), params);
                         }
                     }
+
                     break;
                 case 1:// 显示购课单数量
                     if (msg.arg1 > 0) {
