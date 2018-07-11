@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.GridView;
@@ -77,6 +78,16 @@ public class AllXunzhangActivity extends BaseActivity {
                     view1.setAdapter(adapter1);
                     adapter2 = new AchievementAdapter(mContext, datas);
                     view2.setAdapter(adapter2);
+                    if (datas.size() > 0) {
+                        int width, height;
+                        View view = adapter1.getView(0, null, view1);
+                        view.measure(0, 0);
+                        width = view.getMeasuredWidth();
+                        height = view.getMeasuredHeight();
+                        adapter1.setHeight(width, height);
+                        adapter2.setHeight(width, height);
+                    }
+
                     break;
             }
         }
@@ -90,6 +101,7 @@ public class AllXunzhangActivity extends BaseActivity {
         setContentView(R.layout.activity_xunzhang);
         initView();
         initData();
+
     }
 
     private void initView() {

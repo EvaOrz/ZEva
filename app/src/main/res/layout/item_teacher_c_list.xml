@@ -89,7 +89,7 @@
         android:id="@+id/price_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/gold"
+        android:textColor="@color/text_red"
         android:textSize="@dimen/text_size_14" />
 
 </LinearLayout>

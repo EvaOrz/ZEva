@@ -1,121 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/body_bg"
-    android:orientation="vertical">
+    android:background="@color/body_bg">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/lisichen"
-        android:orientation="vertical"
-        android:padding="15dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/drawable_transwhite_corner"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <RelativeLayout
-                android:layout_width="60dp"
-                android:layout_height="60dp">
-
-                <cn.com.zwwl.bayuwen.widget.CircleImageView
-                    android:id="@+id/frag5_avatar"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/avatar_placeholder" />
-
-                <ImageView
-                    android:id="@+id/frag5_level"
-                    android:layout_width="20dp"
-                    android:layout_height="10dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginBottom="5dp"
-                    android:background="@color/gray_light" />
-            </RelativeLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/frag5_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:lines="1"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_18"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:id="@+id/frag5_account"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:id="@+id/frag5_child_layout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_height="20dp"
-                        android:src="@mipmap/icon_arrow_gray" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/frag5_level_info"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/look_gongxun_guize"
-                        android:textColor="@color/yellow"
-                        android:textSize="@dimen/text_size_14" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="@string/wodecode"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_size_14" />
-
-                    <TextView
-                        android:id="@+id/frag5_code"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:lines="1"
-                        android:textColor="@color/citygold"
-                        android:textSize="@dimen/text_size_14" />
-                </LinearLayout>
-
-
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
 
     <ScrollView
-        android:id="@+id/main_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -124,6 +14,126 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
+            <LinearLayout
+                android:id="@+id/bg_img_contain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/lisichen"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="@drawable/drawable_transwhite_corner"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="60dp"
+                        android:layout_height="60dp">
+
+                        <cn.com.zwwl.bayuwen.widget.CircleImageView
+                            android:id="@+id/frag5_avatar"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/avatar_placeholder" />
+
+                        <ImageView
+                            android:id="@+id/frag5_level"
+                            android:layout_width="20dp"
+                            android:layout_height="10dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginBottom="5dp"
+                            android:background="@color/gray_light" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/frag5_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lines="1"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_18"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:id="@+id/frag5_account"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/frag5_child_layout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:src="@mipmap/icon_arrow_gray" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/frag5_level_info"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/look_gongxun_guize"
+                                android:textColor="@color/yellow"
+                                android:textSize="@dimen/text_size_14" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="@string/wodecode"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_size_14" />
+
+                            <TextView
+                                android:id="@+id/frag5_code"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:lines="1"
+                                android:textColor="@color/citygold"
+                                android:textSize="@dimen/text_size_14" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/user_center_top_1" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -242,6 +252,7 @@
 
             </LinearLayout>
 
+
             <LinearLayout
                 android:id="@+id/frag5_banji"
                 android:layout_width="match_parent"
@@ -297,7 +308,6 @@
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:id="@+id/frag5_tuangou"
                 android:layout_width="match_parent"
@@ -325,7 +335,6 @@
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:id="@+id/frag5_tuan_code"
                 android:layout_width="match_parent"
@@ -352,7 +361,6 @@
                     android:textSize="@dimen/text_size_14" />
 
             </LinearLayout>
-
 
             <LinearLayout
                 android:id="@+id/frag5_invite"
@@ -409,7 +417,6 @@
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:id="@+id/frag5_setting"
                 android:layout_width="match_parent"
@@ -437,8 +444,9 @@
 
             </LinearLayout>
 
+
         </LinearLayout>
     </ScrollView>
 
 
-</LinearLayout>
+</RelativeLayout>

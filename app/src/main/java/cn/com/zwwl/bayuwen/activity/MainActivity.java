@@ -282,7 +282,6 @@ public class MainActivity extends BaseActivity {
         avatar.setOnClickListener(this);
         findViewById(R.id.tianxie_code).setOnClickListener(this);
         findViewById(R.id.invite).setOnClickListener(this);
-        findViewById(R.id.setting).setOnClickListener(this);
         findViewById(R.id.main_gongxun_rule).setOnClickListener(this);
         childAddBt.setOnClickListener(this);
     }
@@ -480,9 +479,6 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(this, TuanCodeUseActivity.class));
                 break;
             case R.id.invite:// 邀请好友加入大语文
-                break;
-            case R.id.setting:
-                startActivity(new Intent(mContext, SettingActivity.class));
                 break;
             case R.id.child_add:// 添加孩子
                 startActivity(new Intent(mContext, ChildInfoActivity.class));

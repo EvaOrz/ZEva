@@ -15,10 +15,10 @@
 
 
     <LinearLayout
-        android:layout_width="250dp"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/body_bg"
+        android:background="@drawable/user_center_bg"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
@@ -36,7 +36,6 @@
                     android:id="@+id/left_head_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/lisichen"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="15dp"
@@ -44,25 +43,25 @@
                     android:paddingTop="50dp"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="60dp"
+                        android:layout_height="60dp">
 
                         <cn.com.zwwl.bayuwen.widget.CircleImageView
                             android:id="@+id/main_avatar"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:paddingTop="@dimen/nav_header_vertical_spacing"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:src="@drawable/avatar_placeholder" />
 
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_medal_p" />
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/main_gongxun"
+                            android:layout_width="20dp"
+                            android:layout_height="10dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginBottom="5dp"
+                            android:background="@color/gray_light" />
+                    </RelativeLayout>
 
 
                     <LinearLayout
@@ -89,20 +88,11 @@
                             android:textSize="@dimen/text_size_12" />
 
                         <TextView
-                            android:id="@+id/main_gongxun"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="功勋等级"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_12" />
-
-                        <TextView
                             android:id="@+id/main_gongxun_rule"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="查看等级规则>>"
-                            android:textColor="@color/white"
+                            android:textColor="@color/yellow"
                             android:textSize="@dimen/text_size_12" />
                     </LinearLayout>
 
@@ -131,7 +121,7 @@
                         android:layout_marginLeft="5dp"
                         android:gravity="center_vertical"
                         android:text="@string/qiehuanxuehseng"
-                        android:textColor="@color/gray_dark"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/text_size_14"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -186,7 +176,7 @@
                         android:layout_marginLeft="5dp"
                         android:gravity="center_vertical"
                         android:text="@string/tianxie_code"
-                        android:textColor="@color/gray_dark"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/text_size_14"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -214,7 +204,7 @@
                         android:layout_marginLeft="5dp"
                         android:gravity="center_vertical"
                         android:text="@string/invite"
-                        android:textColor="@color/gray_dark"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/text_size_14"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -241,7 +231,7 @@
                         android:layout_marginLeft="5dp"
                         android:gravity="center_vertical"
                         android:text="@string/my_gifts"
-                        android:textColor="@color/gray_dark"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/text_size_14"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -254,36 +244,6 @@
             </LinearLayout>
         </ScrollView>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line_height"
-            android:background="@color/gray_line" />
-
-        <LinearLayout
-            android:id="@+id/setting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/dp_5">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:contentDescription="@null"
-                android:src="@mipmap/icon_setting" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:gravity="center_vertical"
-                android:text="@string/settings"
-                android:textColor="@color/gray_dark"
-                android:textSize="@dimen/text_size_14"
-                android:textStyle="bold" />
-        </LinearLayout>
 
     </LinearLayout>
 

@@ -390,9 +390,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.go_calendar:
-                startActivity(new Intent(mActivity, CalendarActivity.class));
-                break;
             case R.id.go_xunzhang:
                 startActivity(new Intent(mActivity, AllXunzhangActivity.class));
                 break;
