@@ -1,12 +1,15 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -15,45 +18,58 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.NotifyMessageAdapter;
 import cn.com.zwwl.bayuwen.api.ChildMessageApi;
 import cn.com.zwwl.bayuwen.api.UrlUtil;
-import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.MessageModel;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
 
-public class SysMessageActivity extends BasicActivityWithTitle {
+public class SysMessageActivity extends BaseActivity {
     @BindView(R.id.recyclerview_id)
     RecyclerView recyclerView;
     @BindView(R.id.refresh)
     SmartRefreshLayout smartRefreshLayout;
-    private int page=1;
-    private int pageSize=10;
-    private String type="SYSTEM";
+    @BindView(R.id.id_back)
+    ImageView idBack;
+    @BindView(R.id.title_name)
+    TextView titleName;
+    private int page = 1;
+    private int pageSize = 10;
+    private String type = "SYSTEM";
     private String url = UrlUtil.getNotifyMessage();
     private List<MessageModel.ListBean> messageModels;
     private NotifyMessageAdapter notifyMessageAdapter;
 
     @Override
-    protected int setContentView() {
-        return R.layout.activity_sys_message;
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sys_message);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
 
-    @Override
-    protected void initView() {
-        setCustomTitle("系统消息");
-        setDisplayShowTitleEnabled(false);
+        initView1();
+        setListener1();
     }
 
     @Override
     protected void initData() {
-        messageModels= new ArrayList<>();
+
+    }
+
+
+    protected void initView1() {
+        titleName.setText("系统消息");
+        messageModels = new ArrayList<>();
         HttpData();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -68,14 +84,14 @@ public class SysMessageActivity extends BasicActivityWithTitle {
     }
 
     private void HttpData() {
-        new ChildMessageApi(this,type,page,pageSize,url,new ResponseCallBack<MessageModel>() {
+        new ChildMessageApi(this, type, page, pageSize, url, new ResponseCallBack<MessageModel>() {
             @Override
             public void result(MessageModel messageModel, ErrorMsg errorMsg) {
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.finishLoadMore();
                 if (messageModel != null) {
-                    messageModels=messageModel.getList();
-                      notifyMessageAdapter.setNewData(messageModels);
+                    messageModels = messageModel.getList();
+                    notifyMessageAdapter.setNewData(messageModels);
 
                 } else {
                     ToastUtil.showShortToast(errorMsg.getDesc());
@@ -86,8 +102,7 @@ public class SysMessageActivity extends BasicActivityWithTitle {
         });
     }
 
-    @Override
-    protected void setListener() {
+    protected void setListener1() {
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshlayout) {
@@ -119,14 +134,11 @@ public class SysMessageActivity extends BasicActivityWithTitle {
         });
     }
 
+    @OnClick({R.id.id_back})
     @Override
     public void onClick(View view) {
-
-    }
-
-    @Override
-    public void close() {
-        super.close();
         finish();
     }
+
+
 }

@@ -18,6 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.UnitTableAdapter;
@@ -67,7 +68,6 @@ public class UnitTableActivity extends BaseActivity {
     protected void initView1() {
         titleName.setText(res.getString(R.string.no_study_unit));
         type.setText(res.getString(R.string.chose_change_course_unit_by_need));
-        idBack.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new HSpacesItemDecoration(res, R.dimen.dp_5));
@@ -110,7 +110,7 @@ public class UnitTableActivity extends BaseActivity {
             }
         });
     }
-
+    @OnClick({R.id.id_back})
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

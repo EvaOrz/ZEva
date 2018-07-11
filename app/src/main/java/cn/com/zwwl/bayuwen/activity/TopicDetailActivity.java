@@ -1,12 +1,9 @@
 package cn.com.zwwl.bayuwen.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatEditText;
-import android.text.InputType;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -24,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.TeacherAnswerAdapter;
 import cn.com.zwwl.bayuwen.adapter.TopicUserAnswerAdapter;
@@ -41,7 +39,7 @@ import cn.com.zwwl.bayuwen.view.MultiLineEditText;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 
-public class TopicDetailActivity extends BasicActivityWithTitle implements View.OnClickListener {
+public class TopicDetailActivity extends BaseActivity {
 
     @BindView(R.id.topic_title_name_id)
     TextView topicTitleNameId;
@@ -69,8 +67,10 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
     TextView collectNumber;
     @BindView(R.id.comment_tv)
     TextView commentTv;
-    @BindView(R.id.feed_ev)
-    EditText feedEv;
+    @BindView(R.id.id_back)
+    ImageView idBack;
+    @BindView(R.id.title_name)
+    TextView titleName;
     private boolean flag = false;
     private HashMap<String, String> params;
     private HashMap<String, String> comments;
@@ -84,15 +84,19 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
     private TeacherAnswerAdapter teacherAnswerAdapter; //教师回复的adapter
     private TopicUserAnswerAdapter topicUserAnswerAdapter;//家长回复
 
-
     @Override
-    protected int setContentView() {
-        return R.layout.activity_topic_detail;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_topic_detail);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+
+        initView1();
     }
 
-    @Override
-    protected void initView() {
-        setCustomTitle("话题详情");
+
+    protected void initView1() {
+        titleName.setText("话题详情");
 
         params = new HashMap<>();
         comments = new HashMap<>();
@@ -107,6 +111,11 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
     protected void onResume() {
         super.onResume();
         HttpData(topic_id);
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
     private void HttpData(final String topic_id) {
@@ -171,28 +180,7 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
 
     }
 
-    @Override
-    protected void initData() {
-        feedEv.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-
-                    Httpcomment(v.getText().toString().trim());
-                    feedEv.setVisibility(View.GONE);
-                    return true;
-                }
-                return false;
-            }
-        });
-
-    }
-
-    @Override
-    protected void setListener() {
-
-    }
-
+    @OnClick({R.id.collection_icon_id, R.id.comment_tv, R.id.id_back})
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -211,6 +199,9 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
                 Intent intent = new Intent(this, TopicCommitActivity.class);
                 intent.putExtra("topic_id", topic_id);
                 startActivity(intent);
+                break;
+            case R.id.id_back:
+                finish();
                 break;
 
 
@@ -246,7 +237,7 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
 
                 if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
 
-                    Httpcomment(v.getText().toString().trim());
+                    //  Httpcomment(v.getText().toString().trim());
                     popupWindow.dismiss();
                     return true;
                 }
@@ -302,16 +293,5 @@ public class TopicDetailActivity extends BasicActivityWithTitle implements View.
         });
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
-    @Override
-    public void close() {
-        super.close();
-        finish();
-    }
 }
