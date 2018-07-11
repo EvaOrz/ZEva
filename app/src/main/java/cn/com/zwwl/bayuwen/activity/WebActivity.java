@@ -44,10 +44,10 @@ public class WebActivity extends BaseActivity {
     }
 
     private void initView() {
-        title = findViewById(R.id.title_name);
+        title = findViewById(R.id.web_title);
         if (!TextUtils.isEmpty(titleString))
             title.setText(titleString);
-        findViewById(R.id.id_back).setOnClickListener(this);
+        findViewById(R.id.web_back).setOnClickListener(this);
         commonWebView = findViewById(R.id.web_webview);
 
         commonWebView.setWebViewClient(new WebViewClient() {
@@ -70,7 +70,7 @@ public class WebActivity extends BaseActivity {
     public void onClick(View view) {
         super.onClick(view);
         switch (view.getId()) {
-            case R.id.id_back:
+            case R.id.web_back:
                 finish();
                 break;
 
