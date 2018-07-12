@@ -53,14 +53,20 @@
                             android:layout_height="60dp"
                             android:src="@drawable/avatar_placeholder" />
 
+
                         <TextView
                             android:id="@+id/main_gongxun"
-                            android:layout_width="20dp"
+                            android:layout_width="24dp"
                             android:layout_height="10dp"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:layout_marginBottom="5dp"
-                            android:background="@color/gray_light" />
+                            android:background="@mipmap/user_level"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="13dp"
+                            android:text="20"
+                            android:textColor="@color/white"
+                            android:textSize="8sp" />
                     </RelativeLayout>
 
 
@@ -131,25 +137,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp" />
+                    android:paddingLeft="50dp"
+                    android:paddingRight="30dp" />
 
                 <LinearLayout
                     android:id="@+id/child_add"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/white_10radius_corner_bg"
-                    android:gravity="center_horizontal"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/drawable_transwhite_corner"
+                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="5dp"
-                    android:visibility="gone">
+                    android:padding="5dp">
 
                     <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:background="@color/gold" />
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@mipmap/jiaren" />
                 </LinearLayout>
 
 
@@ -168,7 +173,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:contentDescription="@null"
-                        android:src="@mipmap/icon_verify" />
+                        android:src="@mipmap/duihuan_blue" />
 
                     <TextView
                         android:layout_width="match_parent"

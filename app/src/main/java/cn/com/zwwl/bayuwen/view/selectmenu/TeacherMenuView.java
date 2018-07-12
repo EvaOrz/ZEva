@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.view.selectmenu;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,12 +107,29 @@ public class TeacherMenuView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 if (mTabRecorder == 1) {
-                    if (Tools.listNotNull(mTwoHolder1.getCheckedData()))
+                    if (Tools.listNotNull(mTwoHolder1.getCheckedData())) {
+                        String gtxt = "";
+                        for (SelectTempModel selectTempModel : mTwoHolder1.getCheckedData()) {
+                            if (selectTempModel.isCheck())
+                                gtxt += selectTempModel.getText() + ",";
+                        }
+                        if (!TextUtils.isEmpty(gtxt))
+                            mText1.setText(gtxt.substring(0, gtxt.length() - 1));
                         onSureClickListener.onClick(mTwoHolder1.getCheckedData(), 1);
+                    }
 
                 } else if (mTabRecorder == 2) {
-                    if (Tools.listNotNull(mTwoHolder2.getCheckedData()))
+                    if (Tools.listNotNull(mTwoHolder2.getCheckedData())){
+                        String gtxt = "";
+                        for (SelectTempModel selectTempModel : mTwoHolder2.getCheckedData()) {
+                            if (selectTempModel.isCheck())
+                                gtxt += selectTempModel.getText() + ",";
+                        }
+                        if (!TextUtils.isEmpty(gtxt))
+                            mText2.setText(gtxt.substring(0, gtxt.length() - 1));
                         onSureClickListener.onClick(mTwoHolder2.getCheckedData(), 2);
+                    }
+
                 }
                 dismissPopupWindow();
             }
@@ -176,10 +194,10 @@ public class TeacherMenuView extends LinearLayout {
 
     private void setTabExtend(int tab) {
         if (tab == 1) {
-            mText1.setTextColor(getResources().getColor(R.color.gold));
+            mText1.setTextColor(getResources().getColor(R.color.gray_dark));
             arrowImg1.setImageResource(R.mipmap.ic_up_blue);
         } else if (tab == 2) {
-            mText2.setTextColor(getResources().getColor(R.color.gold));
+            mText2.setTextColor(getResources().getColor(R.color.gray_dark));
             arrowImg2.setImageResource(R.mipmap.ic_up_blue);
         }
     }

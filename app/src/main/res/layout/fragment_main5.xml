@@ -44,14 +44,19 @@
                             android:layout_height="60dp"
                             android:src="@drawable/avatar_placeholder" />
 
-                        <ImageView
+                        <TextView
                             android:id="@+id/frag5_level"
-                            android:layout_width="20dp"
+                            android:layout_width="24dp"
                             android:layout_height="10dp"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:layout_marginBottom="5dp"
-                            android:background="@color/gray_light" />
+                            android:paddingLeft="13dp"
+                            android:gravity="center_vertical"
+                            android:text="20"
+                            android:textColor="@color/white"
+                            android:textSize="8sp"
+                            android:background="@mipmap/user_level" />
                     </RelativeLayout>
 
                     <LinearLayout
@@ -152,8 +157,8 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:src="@mipmap/icon_buy_car" />
 
                     <TextView
@@ -174,12 +179,12 @@
                     android:orientation="vertical">
 
                     <RelativeLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp">
+                        android:layout_width="35dp"
+                        android:layout_height="35dp">
 
                         <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
                             android:src="@mipmap/icon_not_pay" />
 
                         <TextView
@@ -214,8 +219,8 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:src="@mipmap/icon_yet_pay" />
 
                     <TextView
@@ -236,8 +241,8 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:src="@mipmap/icon_after_sale" />
 
                     <TextView
@@ -296,7 +301,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@mipmap/fm_img" />
+                    android:src="@mipmap/my_fm" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -377,7 +382,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@mipmap/icon_invite" />
+                    android:src="@mipmap/icon_change_gray" />
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -91,6 +91,8 @@ public class CheckBoxHolder extends BaseWidgetHolder<List<List<SelectTempModel>>
         mRightAdapter = new RightAdapter(data.get(1));
         mLeftListView.setAdapter(mLeftAdapter);
         mRightListView.setAdapter(mRightAdapter);
+        mLeftSelectedIndex = -1;
+        mRightListRecord.clear();
     }
 
     /**
@@ -196,8 +198,17 @@ public class CheckBoxHolder extends BaseWidgetHolder<List<List<SelectTempModel>>
             } else {
                 holder = (RightViewHolder) convertView.getTag();
             }
+            SelectTempModel selectTempModel = mRightDataList.get(position);
+            holder.rightText.setText(selectTempModel.getText());
+            for (int i = 0; i < mRightListRecord.size(); i++) {
+                if (selectTempModel.getId().equals(mRightListRecord.get(i).getId())) {
+                    holder.rightText.setTextColor(context.getResources().getColor(R.color
+                            .gold));
+                } else
+                    holder.rightText.setTextColor(context.getResources().getColor(R.color
+                            .gray_dark));
+            }
 
-            holder.rightText.setText(mRightDataList.get(position).getText());
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

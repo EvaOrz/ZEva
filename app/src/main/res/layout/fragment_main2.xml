@@ -157,22 +157,34 @@
                 android:orientation="horizontal"
                 android:padding="15dp">
 
-                <ImageView
+                <TextView
                     android:id="@+id/frag2_look_teacher"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:scaleType="centerInside"
-                    android:src="@mipmap/jiaoshi" />
+                    android:padding="10dp"
+                    android:background="@drawable/gold_circle"
+                    android:gravity="center"
+                    android:text="全部教师"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_14" />
 
-
-                <ImageView
+                <TextView
                     android:id="@+id/frag2_look_ban"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:scaleType="centerInside"
-                    android:src="@mipmap/banzhuren" />
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/gold_circle"
+                    android:gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:text="全部班主任"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_14" />
+
             </LinearLayout>
 
 

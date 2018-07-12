@@ -403,12 +403,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             case R.id.toolbar_right:
                 startActivity(new Intent(mActivity, MessageActivity.class));
                 break;
-            case R.id.layout_student:
-                startActivity(new Intent(mActivity, ChildInfoActivity.class));
-                break;
-            case R.id.layout_parent:
-                startActivity(new Intent(mActivity, ParentInfoActivity.class));
-                break;
             case R.id.toolbar_title:// 切换学生
                 if (Tools.listNotNull(childModels)) {
                     ChildMenuPopView childMenuPopView = new ChildMenuPopView(mActivity,

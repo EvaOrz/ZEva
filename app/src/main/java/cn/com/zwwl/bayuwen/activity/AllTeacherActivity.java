@@ -100,13 +100,13 @@ public class AllTeacherActivity extends BaseActivity {
                 refresh.finishRefresh();
                 refresh.finishLoadMore();
                 if (searchTModel != null) {
-                    if (Tools.listNotNull(searchTModel.getData())){
-                        if (page == 1)
-                            teacherModels.clear();
+                    if (page == 1)
+                        teacherModels.clear();
+                    if (Tools.listNotNull(searchTModel.getData())) {
                         teacherModels.addAll(searchTModel.getData());
-                        teacherAdapter.notifyDataSetChanged();
-                    }else
+                    } else
                         refresh.finishLoadMoreWithNoMoreData();
+                    handler.sendEmptyMessage(0);
 
                 }
             }
@@ -120,10 +120,23 @@ public class AllTeacherActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    teacherAdapter.notifyDataSetChanged();
+                    teacherAdapter = new TeacherAdapter(teacherModels);
+                    gridView.setAdapter(teacherAdapter);
+                    teacherAdapter.setOnItemClickListener(new BaseQuickAdapter
+                            .OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            Intent i = new Intent(mContext, TeacherDetailActivity.class);
+                            i.putExtra("tid", teacherModels.get(position).getTid());
+                            startActivity(i);
+                        }
+                    });
                     break;
                 case 1:
                     menuView.setData(teacherTypeModel);
+                    break;
+                case 2:
+
                     break;
             }
         }
@@ -171,16 +184,18 @@ public class AllTeacherActivity extends BaseActivity {
                     String gtxt = "";
                     for (SelectTempModel selectTempModel : checkedList) {
                         if (selectTempModel.isCheck())
-                            gtxt += selectTempModel.getId() + ",";
+                            gtxt += selectTempModel.getText() + ",";
                     }
-                    para.put("users", gtxt);
+                    if (!TextUtils.isEmpty(gtxt))
+                        para.put("users", gtxt.substring(0, gtxt.length() - 1));
                 } else if (type == 2) {
                     String xtxt = "";
                     for (SelectTempModel selectTempModel : checkedList) {
                         if (selectTempModel.isCheck())
                             xtxt += selectTempModel.getText() + ",";
                     }
-                    para.put("type", xtxt);
+                    if (!TextUtils.isEmpty(xtxt))
+                        para.put("type", xtxt.substring(0, xtxt.length() - 1));
                 }
                 page = 1;
                 getListData();
@@ -197,18 +212,11 @@ public class AllTeacherActivity extends BaseActivity {
         refresh.setLayoutParams(layoutParams);
         refresh.setRefreshContent(gridView);
         refresh.autoRefresh();
-        teacherAdapter = new TeacherAdapter(teacherModels);
+
         GridLayoutManager mgr = new GridLayoutManager(mContext, 4);
         gridView.setLayoutManager(mgr);
-        gridView.setAdapter(teacherAdapter);
-        teacherAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent i = new Intent(mContext, TeacherDetailActivity.class);
-                i.putExtra("tid", teacherModels.get(position).getTid());
-                startActivity(i);
-            }
-        });
+
+
     }
 
 
