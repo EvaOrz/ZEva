@@ -23,12 +23,15 @@ public class LatestReportAdapter extends BaseQuickAdapter<LessonReportModel, Bas
             case 1:
                 helper.setText(R.id.report, item.getReport_name());
                 helper.setText(R.id.type, R.string.lesson_report);
+                helper.setBackgroundRes(R.id.report_layout, R.mipmap.kejiebaogao_bg);
                 break;
             case 2:
-                helper.setText(R.id.type, R.string.middle_report);
+                helper.setText(R.id.type, "期中报告");
+                helper.setBackgroundRes(R.id.report_layout, R.mipmap.qizhongbaogao_bg);
                 break;
             case 3:
-                helper.setText(R.id.type, R.string.final_report);
+                helper.setText(R.id.type, "期末报告");
+                helper.setBackgroundRes(R.id.report_layout, R.mipmap.qimobaogao_bg);
                 break;
         }
     }

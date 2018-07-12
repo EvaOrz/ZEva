@@ -26,6 +26,7 @@ import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
+import cn.com.zwwl.bayuwen.widget.CircleImageView;
 
 /**
  * 调课申请提交
@@ -37,7 +38,7 @@ public class CourseApplyActivity extends BaseActivity {
     @BindView(R.id.description)
     AppCompatTextView description;
     @BindView(R.id.pic)
-    AppCompatImageView pic;
+    CircleImageView pic;
     @BindView(R.id.course_name)
     AppCompatTextView courseName;
     @BindView(R.id.teacher_name)

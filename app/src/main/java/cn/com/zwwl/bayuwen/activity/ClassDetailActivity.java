@@ -71,7 +71,6 @@ public class ClassDetailActivity extends BaseActivity {
 
     }
 
-
     protected void initView1() {
         titleName.setText("课程详情");
         if (mApplication.operate_type == 0) {
