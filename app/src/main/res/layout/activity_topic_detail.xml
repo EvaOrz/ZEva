@@ -68,10 +68,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp_5"
-                            android:background="#F9D7D6"
+                            android:background="#FFF5EC"
                             android:paddingLeft="@dimen/dp_4"
                             android:paddingRight="@dimen/dp_4"
-                            android:textColor="#ED6868"
+                            android:textColor="#DF9648"
                             android:textSize="@dimen/dp_14" />
 
                     </LinearLayout>

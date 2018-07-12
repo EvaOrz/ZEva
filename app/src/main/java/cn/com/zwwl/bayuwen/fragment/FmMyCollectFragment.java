@@ -107,7 +107,7 @@ public class FmMyCollectFragment extends Fragment {
                 });
 
 
-                return false;
+                return true;
             }
         });
         //点击事件

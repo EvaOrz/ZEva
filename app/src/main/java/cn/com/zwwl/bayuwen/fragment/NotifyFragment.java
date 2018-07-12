@@ -82,7 +82,7 @@ public class NotifyFragment extends BasicFragment {
         all_message_list.setLayoutManager(new LinearLayoutManager(getActivity()));
         all_message_list.setItemAnimator(new DefaultItemAnimator());
         notifyMessageAdapter = new NotifyMessageAdapter(null);
-        notifyMessageAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) all_message_list.getParent());
+        notifyMessageAdapter.setEmptyView(R.layout.empty_message_view, (ViewGroup) all_message_list.getParent());
         all_message_list.setAdapter(notifyMessageAdapter);
         refreshLayout.setRefreshContent(all_message_list);
         refreshLayout.autoRefresh();
