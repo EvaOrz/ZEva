@@ -131,9 +131,7 @@ public class ActionApi extends BaseApi {
 
     @Override
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
-        if (errorMsg != null)
-            listener.setError(errorMsg);
-        else listener.setError(null);
+        listener.setError(errorMsg);
 
         if (!isNull(json)) {
             AlbumModel e = new AlbumModel();

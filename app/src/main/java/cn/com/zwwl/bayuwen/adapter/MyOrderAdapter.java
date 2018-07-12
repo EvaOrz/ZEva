@@ -69,7 +69,7 @@ public class MyOrderAdapter extends CheckScrollAdapter<OrderForMyListModel> {
         if (type == 2) {// 待付款
             waitPay.setVisibility(View.VISIBLE);
             wancheng_status.setVisibility(View.GONE);
-            price.setText("需付款：" + Tools.getTwoDecimal(model.getReal_fee() / 100));
+            price.setText("需付款：" + Tools.getTwoDecimal(model.getTrade_fee() / 100));
             bt.setBackground(mContext.getResources().getDrawable(R.drawable
                     .gold_white_xiangkuang));
             bt.setText(R.string.go_pay);

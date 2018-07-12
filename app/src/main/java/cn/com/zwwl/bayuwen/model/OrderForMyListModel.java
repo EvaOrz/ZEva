@@ -24,6 +24,7 @@ public class OrderForMyListModel extends Entry {
     private String title;
     private double total_fee;
     private double real_fee;
+    private double trade_fee;
     private String state;
     private String pay_channel;
     private String pay_at;
@@ -163,6 +164,14 @@ public class OrderForMyListModel extends Entry {
         this.expire_at = expire_at;
     }
 
+    public double getTrade_fee() {
+        return trade_fee;
+    }
+
+    public void setTrade_fee(double trade_fee) {
+        this.trade_fee = trade_fee;
+    }
+
     /**
      * @param jsonObject
      * @param orderForMyListModel
@@ -175,6 +184,7 @@ public class OrderForMyListModel extends Entry {
         orderForMyListModel.setUid(jsonObject.optString("uid"));
         orderForMyListModel.setTitle(jsonObject.optString("title"));
         orderForMyListModel.setTotal_fee(jsonObject.optDouble("total_fee"));
+        orderForMyListModel.setTrade_fee(jsonObject.optDouble("trade_fee"));
         orderForMyListModel.setReal_fee(jsonObject.optDouble("real_fee"));
         orderForMyListModel.setState(jsonObject.optString("state"));
         orderForMyListModel.setPay_channel(jsonObject.optString("pay_channel"));

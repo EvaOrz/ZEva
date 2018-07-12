@@ -270,7 +270,7 @@ public class AlbumDetailActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (fmModels.get(position).getStatus() == 1) {
                     getKeModel();
-                }else {
+                } else {
                     currentPosition = position;
                     currentFmModel = fmModels.get(position);
                     checkLoading(position);
@@ -552,7 +552,8 @@ public class AlbumDetailActivity extends BaseActivity {
                 if (error == null) {
                     getPinglunData(kid, "");
                     handler.sendEmptyMessage(8);
-                }
+                } else
+                    showToast(error.getDesc());
             }
         });
     }

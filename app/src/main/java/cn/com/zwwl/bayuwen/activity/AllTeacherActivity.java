@@ -10,7 +10,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +32,7 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.KeSelectTypeApi;
 import cn.com.zwwl.bayuwen.api.TeacherApi;
+import cn.com.zwwl.bayuwen.api.TeacherListApi;
 import cn.com.zwwl.bayuwen.api.UrlUtil;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -51,6 +55,9 @@ public class AllTeacherActivity extends BaseActivity {
     private TeacherMenuView menuView;
     private EditText searchEv;
     private RecyclerView gridView;
+    private static String PAMAS_SEARCHKEY = "keyword";
+    private static String PAMAS_USERS = "users";
+    private static String PAMAS_TYPES = "type";
 
     private TeacherAdapter teacherAdapter;
     private List<TeacherModel> teacherModels = new ArrayList<>();
@@ -60,7 +67,7 @@ public class AllTeacherActivity extends BaseActivity {
     private int page = 1;
     private int type = 1;// 1:老师 2:班主任
     protected HashMap<String, String> para = new HashMap<>();
-    private String baseUrl = UrlUtil.getTeacherUrl(null) + "/search?flag=";
+
 
     @Override
     protected void initData() {
@@ -82,19 +89,23 @@ public class AllTeacherActivity extends BaseActivity {
     }
 
     private void getListData() {
-
-        StringBuilder builder = new StringBuilder(baseUrl);
+        String url = "";
+        if (para.containsKey(PAMAS_SEARCHKEY) || para.containsKey(PAMAS_USERS) || para
+                .containsKey(PAMAS_TYPES)) {
+            url += UrlUtil.getTeacherUrl(null) + "/search?flag=" + type;
+        } else {
+            url += UrlUtil.getTeacherUrl(null) + "?flag=" + type;
+        }
+        StringBuilder builder = new StringBuilder(url);
         para.put("page", String.valueOf(page));
         para.put("pagesize", "32");
-        if (para.size() > 0) {
-            for (String key : para.keySet()) {
-                if (!TextUtils.isEmpty(para.get(key))) {
-                    builder.append("&").append(key).append("=").append(para.get(key));
-                }
+        for (String key : para.keySet()) {
+            if (!TextUtils.isEmpty(para.get(key))) {
+                builder.append("&").append(key).append("=").append(para.get(key));
             }
         }
         // 获取全部教师
-        new TeacherApi(this, builder.toString(), new ResponseCallBack<SearchTModel>() {
+        new TeacherListApi(this, builder.toString(), new ResponseCallBack<SearchTModel>() {
             @Override
             public void result(SearchTModel searchTModel, ErrorMsg errorMsg) {
                 refresh.finishRefresh();
@@ -148,7 +159,7 @@ public class AllTeacherActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_teacher);
         type = getIntent().getIntExtra("AllTeacherActivity_data", 1);
-        baseUrl += type;
+
         initView();
         initData();
     }
@@ -172,6 +183,22 @@ public class AllTeacherActivity extends BaseActivity {
             }
         });
         searchEv = findViewById(R.id.search_view);
+        searchEv.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String search = Tools.getText(v);
+                    if (!TextUtils.isEmpty(search)) {
+                        para.put(PAMAS_SEARCHKEY, search);
+                        page = 1;
+                        getListData();
+                    }
+                    hideJianpan();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         menuView = findViewById(R.id.all_t_menu);
         menuView.setOnSureClickListener(new TeacherMenuView.OnSureClickListener() {
@@ -179,23 +206,25 @@ public class AllTeacherActivity extends BaseActivity {
             public void onClick(List<SelectTempModel> checkedList, int type) {
                 String stxt = searchEv.getText().toString();
                 if (!TextUtils.isEmpty(stxt))
-                    para.put("keyword", stxt);
-                if (type == 1) {
-                    String gtxt = "";
-                    for (SelectTempModel selectTempModel : checkedList) {
-                        if (selectTempModel.isCheck())
-                            gtxt += selectTempModel.getText() + ",";
+                    para.put(PAMAS_SEARCHKEY, stxt);
+                if (Tools.listNotNull(checkedList)) {
+                    if (type == 1) {
+                        String gtxt = "";
+                        for (SelectTempModel selectTempModel : checkedList) {
+                            if (selectTempModel.isCheck())
+                                gtxt += selectTempModel.getText() + ",";
+                        }
+                        if (!TextUtils.isEmpty(gtxt))
+                            para.put(PAMAS_USERS, gtxt.substring(0, gtxt.length() - 1));
+                    } else if (type == 2) {
+                        String xtxt = "";
+                        for (SelectTempModel selectTempModel : checkedList) {
+                            if (selectTempModel.isCheck())
+                                xtxt += selectTempModel.getText() + ",";
+                        }
+                        if (!TextUtils.isEmpty(xtxt))
+                            para.put(PAMAS_TYPES, xtxt.substring(0, xtxt.length() - 1));
                     }
-                    if (!TextUtils.isEmpty(gtxt))
-                        para.put("users", gtxt.substring(0, gtxt.length() - 1));
-                } else if (type == 2) {
-                    String xtxt = "";
-                    for (SelectTempModel selectTempModel : checkedList) {
-                        if (selectTempModel.isCheck())
-                            xtxt += selectTempModel.getText() + ",";
-                    }
-                    if (!TextUtils.isEmpty(xtxt))
-                        para.put("type", xtxt.substring(0, xtxt.length() - 1));
                 }
                 page = 1;
                 getListData();

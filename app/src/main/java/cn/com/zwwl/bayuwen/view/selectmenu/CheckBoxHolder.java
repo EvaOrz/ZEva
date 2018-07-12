@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.view.selectmenu;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.util.Tools;
 
 /**
  * 科目
@@ -30,7 +32,7 @@ public class CheckBoxHolder extends BaseWidgetHolder<List<List<SelectTempModel>>
     private RightAdapter mRightAdapter;
 
     private int mLeftSelectedIndex = 0;
-    private List<SelectTempModel> mRightListRecord = new ArrayList<>();// 记录右边list的数据
+    private List<SelectTempModel> mCheckedRecord = new ArrayList<>();// 记录右边选中的所有item
 
     /**
      * 记录左侧条目背景位置
@@ -47,7 +49,7 @@ public class CheckBoxHolder extends BaseWidgetHolder<List<List<SelectTempModel>>
     }
 
     public List<SelectTempModel> getCheckedData() {
-        return mRightListRecord;
+        return mCheckedRecord;
     }
 
     @Override
@@ -71,9 +73,15 @@ public class CheckBoxHolder extends BaseWidgetHolder<List<List<SelectTempModel>>
                         .getColor(R.color.gold));
                 mLeftRecordView = view;
 
-                mRightListRecord = null;
+                if (mDataList.get(0).get(position).getText().equals("全部")) {// 如果点击全部，直接返回
+                    mCheckedRecord.clear();
+                    SelectTempModel s = mDataList.get(0).get(position);
+                    s.setCheck(true);
+                    mCheckedRecord.add(s);
+                }
                 mRightAdapter.setDataList(mDataList.get(position + 1));
                 mRightAdapter.notifyDataSetChanged();
+
             }
         });
 
@@ -92,7 +100,11 @@ public class CheckBoxHolder extends BaseWidgetHolder<List<List<SelectTempModel>>
         mLeftListView.setAdapter(mLeftAdapter);
         mRightListView.setAdapter(mRightAdapter);
         mLeftSelectedIndex = -1;
-        mRightListRecord.clear();
+        mCheckedRecord.clear();
+        // 全部的二级选项全部置空....我的天哪...我还要处理多少异常数据
+        if (mDataList.get(0).get(0).getText().equals("全部")) {
+            mDataList.get(1).clear();
+        }
     }
 
     /**
@@ -161,12 +173,11 @@ public class CheckBoxHolder extends BaseWidgetHolder<List<List<SelectTempModel>>
 
         public RightAdapter(List<SelectTempModel> list) {
             this.mRightDataList = list;
-            mRightListRecord = list;
+
         }
 
         public void setDataList(List<SelectTempModel> list) {
             this.mRightDataList = list;
-            mRightListRecord = list;
         }
 
         @Override
@@ -188,45 +199,51 @@ public class CheckBoxHolder extends BaseWidgetHolder<List<List<SelectTempModel>>
         public View getView(final int position, View convertView, ViewGroup parent) {
 
             final RightViewHolder holder;
-            if (convertView == null) {
-                holder = new RightViewHolder();
-                convertView = View.inflate(mContext, R.layout.layout_child_menu_item, null);
-//                holder.checkBox = convertView.findViewById(R.id.child_checkbox);
-//                holder.checkBox.setVisibility(View.VISIBLE);
-                holder.rightText = convertView.findViewById(R.id.child_textView);
-                convertView.setTag(holder);
-            } else {
-                holder = (RightViewHolder) convertView.getTag();
-            }
-            SelectTempModel selectTempModel = mRightDataList.get(position);
+            holder = new RightViewHolder();
+            convertView = View.inflate(mContext, R.layout.layout_child_menu_item, null);
+            holder.rightText = convertView.findViewById(R.id.child_textView);
+            convertView.setTag(holder);
+
+            final SelectTempModel selectTempModel = mRightDataList.get(position);
             holder.rightText.setText(selectTempModel.getText());
-            for (int i = 0; i < mRightListRecord.size(); i++) {
-                if (selectTempModel.getId().equals(mRightListRecord.get(i).getId())) {
-                    holder.rightText.setTextColor(context.getResources().getColor(R.color
-                            .gold));
-                } else
-                    holder.rightText.setTextColor(context.getResources().getColor(R.color
-                            .gray_dark));
+            for (int i = 0; i < mCheckedRecord.size(); i++) {
+                if (mCheckedRecord.get(i).getId().equals
+                        (selectTempModel.getId())) {
+                    if (mCheckedRecord.get(i).isCheck())
+                        holder.rightText.setTextColor(context.getResources().getColor(R.color
+                                .gold));
+                    else {
+                        holder.rightText.setTextColor(context.getResources().getColor(R.color
+                                .gray_dark));
+                    }
+                }
             }
 
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    boolean originCheck = mRightListRecord.get(position).isCheck();
+                    // 操作的是当前记录的list，就不需要替换记录
+                    if (Tools.listNotNull(mCheckedRecord) && mCheckedRecord.get(0).getId().equals
+                            (mRightDataList.get(0).getId())) {
+
+                    } else {
+                        mCheckedRecord.clear();
+                        mCheckedRecord.addAll(mRightDataList);
+                    }
+                    boolean originCheck = mCheckedRecord.get(position).isCheck();
                     setCheck(holder, !originCheck, position);
                 }
             });
-
             return convertView;
         }
 
         private void setCheck(RightViewHolder holder, boolean ischeck, int position) {
-            mRightListRecord.get(position).setCheck(ischeck);// 更新记录数据
             if (ischeck) {
                 holder.rightText.setTextColor(context.getResources().getColor(R.color.gold));
             } else {
                 holder.rightText.setTextColor(context.getResources().getColor(R.color.gray_dark));
             }
+            mCheckedRecord.get(position).setCheck(ischeck);// 更新记录数据
 
         }
 

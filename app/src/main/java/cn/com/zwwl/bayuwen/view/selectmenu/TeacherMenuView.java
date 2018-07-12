@@ -113,8 +113,14 @@ public class TeacherMenuView extends LinearLayout {
                             if (selectTempModel.isCheck())
                                 gtxt += selectTempModel.getText() + ",";
                         }
-                        if (!TextUtils.isEmpty(gtxt))
+                        if (!TextUtils.isEmpty(gtxt)){
                             mText1.setText(gtxt.substring(0, gtxt.length() - 1));
+                            if (gtxt.substring(0, gtxt.length() - 1).equals("全部")){// 选择全部 = 没有选择条件
+                                onSureClickListener.onClick(null, 1);
+                                dismissPopupWindow();
+                                return;
+                            }
+                        }
                         onSureClickListener.onClick(mTwoHolder1.getCheckedData(), 1);
                     }
 
@@ -125,8 +131,15 @@ public class TeacherMenuView extends LinearLayout {
                             if (selectTempModel.isCheck())
                                 gtxt += selectTempModel.getText() + ",";
                         }
-                        if (!TextUtils.isEmpty(gtxt))
+                        if (!TextUtils.isEmpty(gtxt)){
                             mText2.setText(gtxt.substring(0, gtxt.length() - 1));
+                            if (gtxt.substring(0, gtxt.length() - 1).equals("全部")){// 选择全部 = 没有选择条件
+                                onSureClickListener.onClick(null, 2);
+                                dismissPopupWindow();
+                                return;
+                            }
+                        }
+
                         onSureClickListener.onClick(mTwoHolder2.getCheckedData(), 2);
                     }
 

@@ -58,7 +58,6 @@ import cn.com.zwwl.bayuwen.widget.CustomViewPager;
 
 /**
  * 课程详情页面
- * Created by lousx on 2018/5/16.
  */
 public class CourseDetailActivity extends BaseActivity {
     private TextView course_tv;
@@ -92,6 +91,7 @@ public class CourseDetailActivity extends BaseActivity {
 
     private KeModel keModel;
     private String cid;
+    private int collectionId;// 收藏id，从关注列表进入需要
     private String code; // 兑换的课程码
     private KeDetailView1 cDetailTabFrag1;
     private KeDetailView2 cDetailTabFrag2;
@@ -115,6 +115,7 @@ public class CourseDetailActivity extends BaseActivity {
             setkeData();
         } else {// nomal情况课程详情
             cid = getIntent().getStringExtra("CourseDetailActivity_id");
+            collectionId = getIntent().getIntExtra("CourseDetailActivity_collectid", 0);
             initData();
         }
         getPinglunData();
@@ -163,6 +164,8 @@ public class CourseDetailActivity extends BaseActivity {
             public void setData(Entry entry) {
                 if (entry != null && entry instanceof KeModel) {
                     keModel = (KeModel) entry;
+                    if (collectionId > 0)
+                        keModel.setCollectionId(collectionId);
                     handler.sendEmptyMessage(0);
                 }
 
@@ -545,7 +548,6 @@ public class CourseDetailActivity extends BaseActivity {
         } else {
             priceTv2.setText("￥" + Tools.getTwoDecimal(aa));
         }
-
 
         teacherLayout.removeAllViews();
         for (TeacherModel t : keModel.getTeacherModels())

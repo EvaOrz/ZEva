@@ -59,6 +59,7 @@ public class CollectionListApi extends BaseApi {
                         JSONObject k = j.optJSONObject("course");
                         if (!isNull(k)) {
                             KeModel keModel = gson.fromJson(k.toString(), KeModel.class);
+                            keModel.setCollectionId(j.optInt("id"));// 解析收藏id
                             keModelList.add(keModel);
                         }
                     }
