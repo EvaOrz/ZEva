@@ -410,7 +410,7 @@ public class MainFrag2 extends Fragment
         cityTv = mToolbarView.findViewById(R.id.position);
         mToolbarView.findViewById(R.id.menu_more).setOnClickListener(this);
         mToolbarView.findViewById(R.id.menu_news).setOnClickListener(this);
-        mToolbarView.findViewById(R.id.menu_school).setOnClickListener(this);
+        cityTv.setOnClickListener(this);
         mToolbarView.findViewById(R.id.menu_search).setOnClickListener(this);
         root.findViewById(R.id.frag2_look_teacher).setOnClickListener(this);
         root.findViewById(R.id.frag2_look_ban).setOnClickListener(this);
@@ -455,7 +455,7 @@ public class MainFrag2 extends Fragment
             case R.id.menu_more:
                 ((MainActivity) mActivity).openDrawer();
                 break;
-            case R.id.menu_school:
+            case R.id.position:
                 Intent intent = new Intent(getActivity(), CityActivity.class);
                 startActivity(intent);
                 break;

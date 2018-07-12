@@ -61,7 +61,6 @@ public class KeSelectTypeApi extends BaseApi {
                 listener.setData(keTypeModel);
 
             } else if (search_type == 2) {
-
                 TeacherTypeModel teacherTypeModel = new TeacherTypeModel();
                 JSONArray courseType = json.optJSONArray("courseType");
                 List<CourseTypeBean> cs = new ArrayList<>();

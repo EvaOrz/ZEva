@@ -113,7 +113,7 @@ public class KeModel extends Entry {
     private GroupBuyModel groupbuy = new GroupBuyModel();
     private List<PromotionModel> promotionModels = new ArrayList<>();
     private int collection_state;//0-未关注 1-已关注
-    private int discount;
+    private double discount;
 
     public String getId() {
         return id;
@@ -868,11 +868,11 @@ public class KeModel extends Entry {
         this.collectionId = collectionId;
     }
 
-    public int getDiscount() {
+    public double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(int discount) {
+    public void setDiscount(double discount) {
         this.discount = discount;
     }
 

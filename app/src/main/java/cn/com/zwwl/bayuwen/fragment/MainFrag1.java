@@ -239,7 +239,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         root.findViewById(R.id.go_xunzhang).setOnClickListener(this);
         root.findViewById(R.id.toolbar_left).setOnClickListener(this);
         root.findViewById(R.id.toolbar_right).setOnClickListener(this);
-        root.findViewById(R.id.menu_school).setOnClickListener(this);
+        locationTv.setOnClickListener(this);
     }
 
     /**
@@ -396,7 +396,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             case R.id.toolbar_left:// 打开抽屉
                 ((MainActivity) mActivity).openDrawer();
                 break;
-            case R.id.menu_school:// 选择城市
+            case R.id.position:// 选择城市
                 Intent intent = new Intent(getActivity(), CityActivity.class);
                 startActivity(intent);
                 break;

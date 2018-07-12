@@ -157,7 +157,8 @@ public class OrderDetailActivity extends BaseActivity {
                     orderPayTime.setText(orderForMyListModel.getPay_at());
                     if (type == 1) {
                         needPrice2.setText("需付款：￥" + Tools.getTwoDecimal(orderForMyListModel
-                                .getTotal_fee() / 100));
+                                .getReal_fee() / 100));
+                        if (timer == null) timer = new Timer();
                         // 待支付启动倒计时器
                         timer.schedule(new TimerTask() {
 
