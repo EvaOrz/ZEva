@@ -14,14 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
-        android:weightSum="3"
         android:orientation="horizontal">
         <LinearLayout
             android:id="@+id/system_notific_id"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/dp_10"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
@@ -38,9 +37,10 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/interact_message_id"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
@@ -57,9 +57,10 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/course_message_id"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
@@ -76,10 +77,10 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/other_message_id"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginRight="@dimen/dp_10"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView

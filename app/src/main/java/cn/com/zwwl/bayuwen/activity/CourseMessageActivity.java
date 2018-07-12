@@ -75,7 +75,7 @@ public class CourseMessageActivity extends BaseActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         notifyMessageAdapter = new NotifyMessageAdapter(messageModels);
-        notifyMessageAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) recyclerView.getParent());
+        notifyMessageAdapter.setEmptyView(R.layout.empty_message_view, (ViewGroup) recyclerView.getParent());
         recyclerView.setAdapter(notifyMessageAdapter);
         smartRefreshLayout.setRefreshContent(recyclerView);
         smartRefreshLayout.autoRefresh();

@@ -1,16 +1,23 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.PicAdapter;
@@ -22,7 +29,7 @@ import cn.com.zwwl.bayuwen.widget.photoview.PhotoActivity;
  * 查看作业
  * Created by zhumangmang at 2018/6/2 13:48
  */
-public class WorkDetailsActivity extends BasicActivityWithTitle {
+public class WorkDetailsActivity extends BaseActivity {
 
 
     @BindView(R.id.homework)
@@ -32,24 +39,41 @@ public class WorkDetailsActivity extends BasicActivityWithTitle {
     @BindView(R.id.teacher_eval)
     AppCompatTextView teacherEval;
     PicAdapter workAdapter;
+    @BindView(R.id.id_back)
+    ImageView idBack;
+    @BindView(R.id.title_name)
+    TextView titleName;
     private WorkDetailModel model;
+    private Activity mActivity;
 
     @Override
-    protected int setContentView() {
-        return R.layout.activity_work_detail;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_work_detail);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+
+        mActivity = this;
+        initView1();
+        initData1();
+        setListener1();
     }
 
     @Override
-    protected void initView() {
-        setCustomTitle("查看作业");
+    protected void initData() {
+
+    }
+
+
+    protected void initView1() {
+        titleName.setText("查看作业");
         homework.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         homework.setItemAnimator(new DefaultItemAnimator());
         workAdapter = new PicAdapter(null);
         homework.setAdapter(workAdapter);
     }
 
-    @Override
-    protected void initData() {
+    protected void initData1() {
         model = getIntent().getParcelableExtra("model");
         if (model != null) {
             workAdapter.setNewData(model.getC_img());
@@ -65,8 +89,7 @@ public class WorkDetailsActivity extends BasicActivityWithTitle {
         }
     }
 
-    @Override
-    protected void setListener() {
+    protected void setListener1() {
         workAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -83,7 +106,7 @@ public class WorkDetailsActivity extends BasicActivityWithTitle {
         });
     }
 
-    @OnClick(R.id.work)
+    @OnClick(R.id.id_back)
     @Override
     public void onClick(View view) {
 //        if (model.getC_img() != null && model.getC_img().size() > 0) {
@@ -94,17 +117,9 @@ public class WorkDetailsActivity extends BasicActivityWithTitle {
 //            intent.putExtra("urls", urls);
 //            startActivity(intent);
 //        }
-
+      finish();
     }
 
-    @Override
-    public boolean setParentScrollable() {
-        return true;
-    }
 
-    @Override
-    public void close() {
-        finish();
-    }
 
 }

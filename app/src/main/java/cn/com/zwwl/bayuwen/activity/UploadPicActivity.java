@@ -1,5 +1,7 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.app.Activity;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
@@ -8,6 +10,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yanzhenjie.album.Action;
@@ -17,15 +21,17 @@ import com.yanzhenjie.album.api.widget.Widget;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.UploadPicAdapter;
 import cn.com.zwwl.bayuwen.api.UploadPicApi;
 import cn.com.zwwl.bayuwen.api.UploadWorkApi;
-import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.base.MenuCode;
 import cn.com.zwwl.bayuwen.dialog.LoadingDialog;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
@@ -39,7 +45,7 @@ import cn.com.zwwl.bayuwen.widget.decoration.GridItemDecoration;
  * 上传照片
  * Created by zhumangmang at 2018/5/30 13:52
  */
-public class UploadPicActivity extends BasicActivityWithTitle {
+public class UploadPicActivity extends BaseActivity {
     @BindView(R.id.content)
     AppCompatEditText content;
     @BindView(R.id.recyclerView)
@@ -50,24 +56,46 @@ public class UploadPicActivity extends BasicActivityWithTitle {
     String kid, cid;
     StringBuilder urls;
     LoadingDialog loadingDialog;
+    @BindView(R.id.id_back)
+    ImageView idBack;
+    @BindView(R.id.title_name)
+    TextView titleName;
+    @BindView(R.id.right_title)
+    TextView rightTitle;
+    private HashMap<String, String> map;
+    private Activity mActivity;
 
     @Override
-    protected int setContentView() {
-        return R.layout.activity_upload_pic;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_upload_pic);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+        map = new HashMap<>();
+        mActivity = this;
+        initView1();
+        initData1();
+        setListener1();
     }
 
     @Override
-    protected void initView() {
-        setCustomTitle("作业上传");
-        ConstraintLayout.LayoutParams linearParams =(ConstraintLayout.LayoutParams) content.getLayoutParams();
-        linearParams.height = MyApplication.height/2;
+    protected void initData() {
+
+    }
+
+
+    protected void initView1() {
+        titleName.setText("作业上传");
+        rightTitle.setVisibility(View.VISIBLE);
+        rightTitle.setText("提交");
+        ConstraintLayout.LayoutParams linearParams = (ConstraintLayout.LayoutParams) content.getLayoutParams();
+        linearParams.height = MyApplication.height / 2;
         content.setLayoutParams(linearParams);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.addItemDecoration(new GridItemDecoration(this));
     }
 
-    @Override
-    protected void initData() {
+    protected void initData1() {
         loadingDialog = new LoadingDialog(this);
         loadingDialog.setContent("正在上传");
         urls = new StringBuilder();
@@ -79,11 +107,10 @@ public class UploadPicActivity extends BasicActivityWithTitle {
         albumFiles.add(file);
         uploadPicAdapter = new UploadPicAdapter(albumFiles);
         recyclerView.setAdapter(uploadPicAdapter);
-        showMenu(MenuCode.SUBMIT);
+//        showMenu(MenuCode.SUBMIT);
     }
 
-    @Override
-    protected void setListener() {
+    protected void setListener1() {
 
         uploadPicAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -136,46 +163,55 @@ public class UploadPicActivity extends BasicActivityWithTitle {
                 .start();
     }
 
+    @OnClick({R.id.right_title, R.id.id_back})
     @Override
     public void onClick(View view) {
-
-    }
-
-    @Override
-    public void onMenuClick(int menuCode) {
-        if ((albumFiles == null || albumFiles.size() == 1) && TextUtils.isEmpty(Tools.getText(content))) {
-            ToastUtil.showShortToast("请先输入文字作业或上传作业图片");
-            return;
-        }
-        if (albumFiles != null && albumFiles.size() > 0) {
-            List<File> files = new ArrayList<>();
-            for (AlbumFile albumFile : albumFiles) {
-                File f = new File(albumFile.getPath());
-                files.add(f);
-            }
-            loadingDialog.show();
-            new UploadPicApi(this, files, new ResponseCallBack<List<CommonModel>>() {
-                @Override
-                public void result(List<CommonModel> commonModels, ErrorMsg errorMsg) {
-                    if (commonModels != null && commonModels.size() > 0) {
-                        urls.setLength(0);
-                        for (CommonModel c : commonModels) {
-                            urls.append(c.getUrl()).append(",");
-                        }
-                        uploadWork();
-                    } else {
-                        loadingDialog.dismiss();
-                        ToastUtil.showShortToast("上传失败");
-                    }
+        switch (view.getId()) {
+            case R.id.right_title:
+                if ((albumFiles == null || albumFiles.size() == 1) && TextUtils.isEmpty(Tools.getText(content))) {
+                    ToastUtil.showShortToast("请先输入文字作业或上传作业图片");
+                    return;
                 }
-            });
-        } else {
-            urls.setLength(0);
-            loadingDialog.show();
-            uploadWork();
+                if (albumFiles != null && albumFiles.size() > 0) {
+                    List<File> files = new ArrayList<>();
+                    for (AlbumFile albumFile : albumFiles) {
+                        File f = new File(albumFile.getPath());
+                        files.add(f);
+                    }
+                    loadingDialog.show();
+                    new UploadPicApi(this, files, new ResponseCallBack<List<CommonModel>>() {
+                        @Override
+                        public void result(List<CommonModel> commonModels, ErrorMsg errorMsg) {
+                            if (commonModels != null && commonModels.size() > 0) {
+                                urls.setLength(0);
+                                for (CommonModel c : commonModels) {
+                                    urls.append(c.getUrl()).append(",");
+                                }
+                                uploadWork();
+                            } else {
+                                loadingDialog.dismiss();
+                                ToastUtil.showShortToast("上传失败");
+                            }
+                        }
+                    });
+                } else {
+                    urls.setLength(0);
+                    loadingDialog.show();
+                    uploadWork();
+                }
+                break;
+            case R.id.id_back:
+                finish();
+                break;
         }
 
     }
+
+//    @Override
+//    public void onMenuClick(int menuCode) {
+//
+//
+//    }
 
     private void uploadWork() {
         map.clear();
@@ -200,15 +236,12 @@ public class UploadPicActivity extends BasicActivityWithTitle {
         });
     }
 
-    @Override
-    public void close() {
-        finish();
-    }
 
-    @Override
-    public boolean setParentScrollable() {
-        return true;
-    }
+//
+//    @Override
+//    public boolean setParentScrollable() {
+//        return true;
+//    }
 
     @Override
     protected void onDestroy() {
