@@ -217,7 +217,7 @@ public class MainFrag4 extends Fragment implements View.OnClickListener {
 
         mToolbarView.findViewById(R.id.menu_more).setOnClickListener(this);
         mToolbarView.findViewById(R.id.menu_news).setOnClickListener(this);
-        mToolbarView.findViewById(R.id.menu_school).setOnClickListener(this);
+        locationTv.setOnClickListener(this);
         mToolbarView.findViewById(R.id.menu_search).setOnClickListener(this);
         root.findViewById(R.id.fm_album_list).setOnClickListener(this);
 
@@ -275,7 +275,7 @@ public class MainFrag4 extends Fragment implements View.OnClickListener {
             case R.id.menu_more:
                 ((MainActivity) mActivity).openDrawer();
                 break;
-            case R.id.menu_school:
+            case R.id.position:
                 Intent intent = new Intent(getActivity(), CityActivity.class);
                 startActivity(intent);
                 break;

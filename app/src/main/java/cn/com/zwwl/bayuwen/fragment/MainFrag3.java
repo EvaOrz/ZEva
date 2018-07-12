@@ -316,7 +316,7 @@ public class MainFrag3 extends BasicFragment {
         return new MainFrag3();
     }
 
-    @OnClick({R.id.menu_more, R.id.menu_news, R.id.menu_school, R.id.menu_search, R.id.go_calendar})
+    @OnClick({R.id.menu_more, R.id.menu_news, R.id.position,R.id.menu_search, R.id.go_calendar})
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -329,7 +329,7 @@ public class MainFrag3 extends BasicFragment {
             case R.id.menu_more:
                 ((MainActivity) activity).openDrawer();
                 break;
-            case R.id.menu_school:
+            case R.id.position:
                 Intent intent = new Intent(getActivity(), CityActivity.class);
                 startActivity(intent);
                 break;
