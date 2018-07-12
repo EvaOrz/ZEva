@@ -45,7 +45,7 @@ public class GiftAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout
-                .item_cdetail_teacher);
+                .item_gift);
         GiftAndJiangModel g = datas.get(position);
         ImageView imageView = viewHolder.getView(R.id.cdetail_t_avatar);
         TextView textView = viewHolder.getView(R.id.cdetail_t_name);

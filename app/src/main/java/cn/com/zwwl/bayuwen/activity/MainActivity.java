@@ -330,10 +330,10 @@ public class MainActivity extends BaseActivity {
             ImageLoader.display(mContext, avat, childModel.getPic(), R.drawable
                     .avatar_placeholder, R.drawable.avatar_placeholder);
         if (childModel.getIsdefault().equals("1")) {
-            bg.setBackgroundResource(R.drawable.gold_white_xiangkuang);
+            bg.setBackgroundResource(R.drawable.red_white_circle);
 
         } else {
-            bg.setBackgroundResource(R.drawable.gray_white_xiankuang);
+            bg.setBackgroundResource(R.drawable.white_btn_bg);
         }
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -522,7 +522,7 @@ public class MainActivity extends BaseActivity {
         if (!TextUtils.isEmpty(userModel.getPic()))
             Glide.with(mContext).load(userModel.getPic()).into(avatar);
         yaoqing.setText("我的邀请码：" + userModel.getSignCode());
-        gongxun.setText("功勋等级：" + userModel.getLevel());
+        gongxun.setText( userModel.getLevel()+"");
 
         // 获取礼物数据
         new HonorListApi(mContext, 2, TempDataHelper.getCurrentChildNo(mContext), new

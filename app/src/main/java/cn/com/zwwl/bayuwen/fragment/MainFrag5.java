@@ -58,7 +58,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
     private TextView frag5Name;
     private LinearLayout frag5ChildLayout;
     private TextView frag5Code;
-    private ImageView frag5Level;
+    private TextView frag5Level;
     private TextView cart_num;
 
     private Activity mActivity;
@@ -152,7 +152,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                                 .drawable.avatar_placeholder, R.drawable.avatar_placeholder);
                         frag5Code.setText(userModel.getSignCode());
                         frag5Name.setText(userModel.getName());
-//                        frag5Level.setText(userModel.getLevel() + "");
+                        frag5Level.setText(userModel.getLevel() + "");
                     }
                     if (Tools.listNotNull(childModels)) {
                         frag5ChildLayout.removeAllViews();

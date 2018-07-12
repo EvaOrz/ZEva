@@ -3,7 +3,7 @@
     android:id="@+id/item_child_bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/gold_white_xiangkuang"
+    android:background="@drawable/white_btn_bg"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="5dp">

@@ -101,23 +101,30 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/text_size_14" />
+                        android:textSize="@dimen/text_size_18" />
 
                     <TextView
                         android:id="@+id/frag1_grade"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/text_size_14" />
+                        android:textSize="@dimen/text_size_12" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="1dp"
+                        android:paddingBottom="1dp"
+                        android:layout_marginTop="2dp"
+                        android:gravity="center_vertical"
+                        android:paddingRight="10dp"
+                        android:background="@drawable/red_text_circle"
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
                             android:src="@mipmap/icon_leaf" />
 
                         <TextView
@@ -127,7 +134,7 @@
                             android:layout_marginLeft="5dp"
                             android:text="学员积分：0"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_14" />
+                            android:textSize="@dimen/text_size_12" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -156,8 +163,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@mipmap/icon_analyze"
-                        android:drawableStart="@mipmap/icon_analyze"
                         android:gravity="center_vertical"
                         android:text="@string/nenglifenxi"
                         android:textColor="@color/black"
@@ -250,10 +255,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@mipmap/icon_medal"
-                    android:drawableStart="@mipmap/icon_medal"
                     android:gravity="center_vertical"
-                    android:text="@string/suohuoxunzhang"
+                    android:text="我的成就"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_14" />
 
