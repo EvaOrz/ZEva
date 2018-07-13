@@ -13,27 +13,15 @@
         android:background="@drawable/white_10radius_corner_bg"
         android:orientation="vertical">
 
-        <RelativeLayout
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/order_option8"
-                android:textColor="@color/gray_dark"
-                android:textSize="@dimen/text_size_14" />
-
-            <ImageView
-                android:id="@+id/pay_d_close"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-               android:src="@mipmap/icon_close_yellow" />
-        </RelativeLayout>
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/order_option8"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/text_size_14" />
 
         <View
             android:layout_width="match_parent"
@@ -216,5 +204,11 @@
             android:textSize="@dimen/text_size_14" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/pay_d_close"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@mipmap/close" />
 
 </LinearLayout>

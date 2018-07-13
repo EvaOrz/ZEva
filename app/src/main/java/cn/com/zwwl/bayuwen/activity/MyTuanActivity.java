@@ -170,7 +170,7 @@ public class MyTuanActivity extends BaseActivity {
             i.putExtra("OrderDetailActivity_data", tuan.getOid());
             i.putExtra("OrderDetailActivity_type", tuan.getState());
             startActivity(i);
-        } else if (tuan.getState() == 0) {
+        } else if (tuan.getState() == 0 || tuan.getState() == 3) {
             checkCanTuan(tuan.getPurchase_code(), tuan.getKeModel());
         }
 

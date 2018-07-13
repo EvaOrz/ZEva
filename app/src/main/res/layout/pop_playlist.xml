@@ -30,13 +30,15 @@
                 android:textColor="@color/gray_dark"
                 android:textSize="@dimen/text_size_14" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/play_cancle"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/icon_close_yellow" />
+                android:text="关闭"
+                android:textColor="@color/lisichen"
+                android:textSize="@dimen/text_size_14" />
         </RelativeLayout>
 
         <ListView

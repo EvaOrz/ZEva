@@ -442,15 +442,15 @@ public class AlbumDetailActivity extends BaseActivity {
     private void checkLikeCollect() {
         likeTv.setText("喜欢(" + albumModel.getLikeNum() + ")");
         if (albumModel.isLikeState()) {
-            likeImg.setImageResource(R.drawable.like_a);
+            likeImg.setImageResource(R.mipmap.like_a);
         } else {
-            likeImg.setImageResource(R.drawable.like_b);
+            likeImg.setImageResource(R.mipmap.like_b);
         }
 
         if (albumModel.getConllectId() == 0) {
-            collectImg.setImageResource(R.drawable.shoucang_b);
+            collectImg.setImageResource(R.mipmap.shoucang_b);
         } else {
-            collectImg.setImageResource(R.drawable.shoucang_a);
+            collectImg.setImageResource(R.mipmap.shoucang_a);
         }
     }
 

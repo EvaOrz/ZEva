@@ -178,12 +178,12 @@ public class MusicPlayActivity extends BaseActivity {
 
     private void checkPreNext() {
         if (currentPos == 0) {
-            preBtn.setImageResource(R.drawable.player_previous_dis);
+            preBtn.setImageResource(R.mipmap.player_previous_dis);
         } else if (currentPos + 1 == fmModels.size()) {
-            nextBtn.setImageResource(R.drawable.player_next_dis);
+            nextBtn.setImageResource(R.mipmap.player_next_dis);
         } else {
-            preBtn.setImageResource(R.drawable.player_previous);
-            nextBtn.setImageResource(R.drawable.player_next);
+            preBtn.setImageResource(R.mipmap.player_previous);
+            nextBtn.setImageResource(R.mipmap.player_next);
         }
     }
 
@@ -206,9 +206,9 @@ public class MusicPlayActivity extends BaseActivity {
             case R.id.fm_play:
                 sendintent(ACTION_RESUME_PAUSE, 0);
                 if (MusicWindow.isPlaying) {
-                    playOrPause.setImageResource(R.drawable.player_pause);
+                    playOrPause.setImageResource(R.mipmap.player_pause);
                 } else {
-                    playOrPause.setImageResource(R.drawable.player_play);
+                    playOrPause.setImageResource(R.mipmap.player_play);
                 }
 
                 break;
@@ -251,14 +251,14 @@ public class MusicPlayActivity extends BaseActivity {
                     seekBar.setProgress(0);
                     playTimebox.setText("00:00");
                     if (MusicWindow.getInstance(mContext).isPlaying) {
-                        playOrPause.setImageResource(R.drawable.player_play);
+                        playOrPause.setImageResource(R.mipmap.player_play);
                     } else {
-                        playOrPause.setImageResource(R.drawable.player_pause);
+                        playOrPause.setImageResource(R.mipmap.player_pause);
                     }
                     break;
 
                 case MSG_START_PLAY: // ---------------－开始播放
-                    playOrPause.setImageResource(R.drawable.player_play);
+                    playOrPause.setImageResource(R.mipmap.player_play);
                     checkCurrent();
                     break;
                 case MSG_CHANGE_TIME:// ----------------seekbar拖动
@@ -274,7 +274,7 @@ public class MusicPlayActivity extends BaseActivity {
                     break;
 
                 case MSG_COMPLETE:// -------------------播放完成
-                    playOrPause.setImageResource(R.drawable.player_pause);
+                    playOrPause.setImageResource(R.mipmap.player_pause);
                     break;
             }
         }

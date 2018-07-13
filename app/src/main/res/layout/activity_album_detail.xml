@@ -233,7 +233,7 @@
                                     android:id="@+id/album_detail_like_img"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/like_b" />
+                                    android:src="@mipmap/like_b" />
 
                                 <TextView
                                     android:id="@+id/album_detail_like_tv"
@@ -257,7 +257,7 @@
                                     android:id="@+id/album_detail_shoucang_img"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/shoucang_b" />
+                                    android:src="@mipmap/shoucang_b" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
