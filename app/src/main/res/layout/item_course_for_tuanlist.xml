@@ -26,8 +26,8 @@
             <ImageView
                 android:id="@+id/item_tuan_tag"
                 android:layout_width="25dp"
-                android:src="@mipmap/icon_face_teach"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_face_teach" />
 
             <TextView
                 android:id="@+id/item_tuan_title"
@@ -41,25 +41,16 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+
+        <TextView
+            android:id="@+id/item_tuan_code"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:text="hhhhhhh2992uh"
+            android:textColor="@color/gray_light"
+            android:textSize="@dimen/text_size_12" />
 
-
-
-
-            <TextView
-                android:id="@+id/item_tuan_code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="hhhhhhh2992uh"
-                android:textColor="@color/gray_light"
-                android:textSize="@dimen/text_size_12" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -174,40 +165,67 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical|right"
-            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/item_tuan_price1"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/item_tuan_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="原价："
-                android:textColor="@color/gray_dark"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/item_tuan_price1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="原价："
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/item_tuan_price2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="团购价："
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/item_tuan_price3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/item_tuan_price"
+                android:layout_marginTop="5dp"
+                android:gravity="right"
+                android:text="垫付价格："
+                android:textColor="@color/lisichen"
                 android:textSize="@dimen/text_size_14" />
 
             <TextView
-                android:id="@+id/item_tuan_price2"
+                android:id="@+id/item_tuan_duihuan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="团购价："
-                android:textColor="@color/gray_dark"
-                android:textSize="@dimen/text_size_14" />
-        </LinearLayout>
+                android:layout_centerVertical="true"
+                android:background="@drawable/red_white_circle"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="3dp"
+                android:text="课程兑换码"
+                android:textColor="@color/text_red"
+                android:textSize="@dimen/text_size_12"
+                android:visibility="gone" />
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/item_tuan_price3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="right"
-            android:text="垫付价格："
-            android:textColor="@color/lisichen"
-            android:textSize="@dimen/text_size_14" />
+
     </LinearLayout>
 
 </LinearLayout>

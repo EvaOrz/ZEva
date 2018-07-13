@@ -86,12 +86,22 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/album_buy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/gold"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_14"
+        android:visibility="gone" />
 
     <cn.com.zwwl.bayuwen.widget.CallScrollView
         android:id="@+id/album_detail_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/album_detail_input"
+        android:layout_above="@id/album_buy"
         android:layout_below="@id/album_detail_head">
 
         <LinearLayout
@@ -417,14 +427,5 @@
 
     </cn.com.zwwl.bayuwen.widget.CallScrollView>
 
-    <TextView
-        android:id="@+id/album_buy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/gold"
-        android:padding="10dp"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_14"
-        android:visibility="gone" />
+
 </RelativeLayout>

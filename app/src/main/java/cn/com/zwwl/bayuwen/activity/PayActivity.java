@@ -369,23 +369,27 @@ public class PayActivity extends BaseActivity {
                 payType = 2;
                 break;
             case R.id.pay_yue:// 使用余额
-                new AskDialog(mContext, "使用余额", "不使用", "您当前余额为" + yueTxt + "，是否使用余额", new
-                        AskDialog.OnSurePickListener() {
+                double aa = Double.valueOf(yueTxt) / 100;
+                if (aa > 0) {
+                    new AskDialog(mContext, "使用余额", "不使用", "您当前余额为" + aa + "，是否使用余额", new
+                            AskDialog.OnSurePickListener() {
 
-                            @Override
-                            public void onSure() {
-                                isUseYue = true;
-                                handler.sendEmptyMessage(2);
-                                countPrice();
-                            }
+                                @Override
+                                public void onSure() {
+                                    isUseYue = true;
+                                    handler.sendEmptyMessage(2);
+                                    countPrice();
+                                }
 
-                            @Override
-                            public void onCancle() {
-                                isUseYue = false;
-                                handler.sendEmptyMessage(2);
-                                countPrice();
-                            }
-                        });
+                                @Override
+                                public void onCancle() {
+                                    isUseYue = false;
+                                    handler.sendEmptyMessage(2);
+                                    countPrice();
+                                }
+                            });
+                } else showToast("您当前余额为0");
+
                 break;
         }
 

@@ -30,8 +30,11 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.api.order.CheckCanTuanApi;
+import cn.com.zwwl.bayuwen.api.order.GetTuanDiancodesApi;
 import cn.com.zwwl.bayuwen.api.order.MyTuanApi;
+import cn.com.zwwl.bayuwen.dialog.DuihuanCodeListDialog;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.AddressModel;
 import cn.com.zwwl.bayuwen.model.Entry;
@@ -39,6 +42,7 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.GroupBuyModel;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.OrderForMyListModel;
+import cn.com.zwwl.bayuwen.model.TuanDianModel;
 import cn.com.zwwl.bayuwen.model.TuanForMyListModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
@@ -56,7 +60,7 @@ public class MyTuanActivity extends BaseActivity {
     private MyViewPagerAdapter adapter;
     private MyTuanAdapter adapter1, adapter2;
     private List<TuanForMyListModel> data1 = new ArrayList<>(), data2 = new ArrayList<>();
-
+    private List<TuanDianModel> tuanDianModelList = new ArrayList<>();// 团购码列表
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,6 +87,9 @@ public class MyTuanActivity extends BaseActivity {
                     adapter1.notifyDataSetChanged();
                     adapter2.setData(data2);
                     adapter2.notifyDataSetChanged();
+                    break;
+                case 1:
+                    new DuihuanCodeListDialog(mContext, tuanDianModelList);
                     break;
             }
         }
@@ -277,7 +284,7 @@ public class MyTuanActivity extends BaseActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout
                     .item_course_for_tuanlist);
-            TuanForMyListModel model = getItem(position);
+            final TuanForMyListModel model = getItem(position);
             ImageView item_tuan_tag = viewHolder.getView(R.id.item_tuan_tag);
             TextView item_tuan_title = viewHolder.getView(R.id.item_tuan_title);
             TextView item_tuan_code = viewHolder.getView(R.id.item_tuan_code);
@@ -286,6 +293,7 @@ public class MyTuanActivity extends BaseActivity {
             TextView item_tuan_xiaoqu = viewHolder.getView(R.id.item_tuan_xiaoqu);
             TextView item_tuan_date = viewHolder.getView(R.id.item_tuan_date);
             TextView item_tuan_time = viewHolder.getView(R.id.item_tuan_time);
+            TextView item_tuan_duihuan = viewHolder.getView(R.id.item_tuan_duihuan);
 
             TextView yuanjia = viewHolder.getView(R.id.item_tuan_price1);
             TextView tuanjia = viewHolder.getView(R.id.item_tuan_price2);
@@ -308,14 +316,22 @@ public class MyTuanActivity extends BaseActivity {
             }
             if (model.getType().equals("1")) {
                 item_tuan_code.setText("拼团码：" + model.getPurchase_code());
-            } else item_tuan_code.setText("垫付的团购");
-
+                item_tuan_duihuan.setVisibility(View.GONE);
+            } else {
+                item_tuan_duihuan.setVisibility(View.VISIBLE);
+                item_tuan_code.setText("垫付的团购");
+            }
             if (model.getDiscount() != null) {
                 tuanjia.setText("团购价：￥" + model.getDiscount().getDiscount_price());
                 dianjia.setText("垫付金额：￥" + model.getDiscount().getDiscount_price() * model
                         .getDianfu());
             }
-
+            item_tuan_duihuan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getDuihuanCodes(model.getKeModel().getKid(), model.getPurchase_code());
+                }
+            });
 
             return viewHolder.getConvertView();
         }
@@ -323,7 +339,31 @@ public class MyTuanActivity extends BaseActivity {
         public boolean isScroll() {
             return isScroll;
         }
+    }
 
+    private void getDuihuanCodes(String kid, String tuanCode) {
+        showLoadingDialog(true);
+        new GetTuanDiancodesApi(mContext, kid, tuanCode, new FetchEntryListListener() {
+            @Override
+            public void setData(List list) {
+                showLoadingDialog(false);
+                tuanDianModelList.clear();
+                if (Tools.listNotNull(list)) {
+                    tuanDianModelList.addAll(list);
+                    handler.sendEmptyMessage(1);
+                } else {
+                    showToast("兑换码列表为空");
+                }
 
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                showLoadingDialog(false);
+                if (error != null)
+                    showToast(error.getDesc());
+
+            }
+        });
     }
 }

@@ -23,6 +23,7 @@ import java.util.TimerTask;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
+import cn.com.zwwl.bayuwen.adapter.TuanmaAdapter;
 import cn.com.zwwl.bayuwen.api.order.GetTuanDiancodesApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -103,7 +104,7 @@ public class TuanPayResultActivity extends BaseActivity {
             switch (msg.what) {
                 case 0:
                     if (Tools.listNotNull(tuanDianModels)) {
-                        adapter = new TuanmaAdapter(mContext);
+                        adapter = new TuanmaAdapter(mContext, 0);
                         listView.setAdapter(adapter);
                         adapter.setData(tuanDianModels);
                         stopTimer();
@@ -181,49 +182,4 @@ public class TuanPayResultActivity extends BaseActivity {
         });
     }
 
-    public class TuanmaAdapter extends CheckScrollAdapter<TuanDianModel> {
-        protected Context mContext;
-
-        public TuanmaAdapter(Context context) {
-            super(context);
-            mContext = context;
-        }
-
-        public void setData(List<TuanDianModel> mItemList) {
-            clear();
-            isScroll = false;
-            synchronized (mItemList) {
-                for (TuanDianModel item : mItemList) {
-                    add(item);
-                }
-            }
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            final TuanDianModel item = getItem(position);
-            ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout
-                    .item_tuan_dianma);
-
-            TextView title = viewHolder.getView(R.id.tuanma_code);
-            TextView desc = viewHolder.getView(R.id.tuanma_copy);
-            title.setText(item.getPurchase_code());
-            desc.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ClipboardManager cm = (ClipboardManager) getSystemService(Context
-                            .CLIPBOARD_SERVICE);
-                    cm.setText(item.getPurchase_code());
-                    showToast("已复制到剪切板");
-                }
-            });
-
-            return viewHolder.getConvertView();
-        }
-
-        public boolean isScroll() {
-            return isScroll;
-        }
-
-    }
 }

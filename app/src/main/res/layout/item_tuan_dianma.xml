@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
+    android:paddingBottom="5dp"
     android:paddingTop="10dp">
 
     <TextView
@@ -26,4 +27,13 @@
         android:text="复制团购码"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_12" />
+
+    <TextView
+        android:id="@+id/tuanma_nouser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="未使用"
+        android:textColor="@color/gray_light"
+        android:textSize="@dimen/text_size_12"
+        android:visibility="gone" />
 </LinearLayout>
