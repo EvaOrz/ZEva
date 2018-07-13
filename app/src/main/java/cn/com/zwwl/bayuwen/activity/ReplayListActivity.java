@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -29,6 +30,7 @@ import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.model.StudyingModel;
 import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.view.OvalImageview;
+import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.roundview.RoundLinearLayout;
 
 /**
@@ -37,13 +39,13 @@ import cn.com.zwwl.bayuwen.widget.roundview.RoundLinearLayout;
  */
 public class ReplayListActivity extends BaseActivity {
     @BindView(R.id.logo)
-    OvalImageview logo;
+    CircleImageView logo;
     @BindView(R.id.course_name)
     AppCompatTextView courseName;
     @BindView(R.id.course_code)
     AppCompatTextView courseCode;
     @BindView(R.id.top_layout)
-    ConstraintLayout topLayout;
+    LinearLayout topLayout;
     @BindView(R.id.teacher_name)
     AppCompatTextView teacherName;
     @BindView(R.id.school_name)
@@ -101,9 +103,9 @@ public class ReplayListActivity extends BaseActivity {
     protected void SetData() {
         if (getIntent().getIntExtra("type", 0) == 1) {
             titleName.setText(R.string.look_replay);
-            classInfo.setVisibility(View.GONE);
-            lookReplay.setText(null);
-            lookReplay.setVisibility(View.GONE);
+//            classInfo.setVisibility(View.GONE);
+//            lookReplay.setText(null);
+//            lookReplay.setVisibility(View.GONE);
         } else
           titleName.setText(getIntent().getStringExtra("title"));
            String kid =getIntent().getStringExtra("kid");

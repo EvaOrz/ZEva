@@ -65,4 +65,5 @@
     <color name="course_prepara_offline">#0DC0C3</color>
     <color name="apply_submit">#F1880B</color>
     <color name="course_detail_bg">#F5F5F5</color>
+    <color name="course_repaly">#F2F2F2</color>
 </resources>

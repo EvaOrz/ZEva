@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dp_10"
+    android:background="@drawable/gray_white_xiankuang"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/course_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="dddddd"
+        android:textColor="@color/gray_dark"
+        android:textSize="@dimen/dp_16" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:orientation="horizontal">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_add"/>
+
+        <TextView
+            android:id="@+id/course_child_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:textColor="@color/gray_light"
+            android:text="AAA"
+            android:textSize="@dimen/sp_12"
+            android:gravity="center_vertical"
+            />
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/gray_line"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_5"
+        >
+       <android.support.v7.widget.AppCompatTextView
+           android:id="@+id/date_time"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="ssss"
+           android:textSize="@dimen/sp_12"
+           android:textColor="@color/gray_light"
+           />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/submit_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_10"
+            android:text="ssss"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/dp_14"
+            android:textColor="@color/gray_light"
+            />
+    </RelativeLayout>
+</LinearLayout>

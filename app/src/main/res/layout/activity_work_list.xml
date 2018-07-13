@@ -14,11 +14,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <cn.com.zwwl.bayuwen.widget.roundview.RoundLinearLayout
-                android:id="@+id/class_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
@@ -29,32 +28,15 @@
                 app:rv_backgroundColor="@color/white"
                 app:rv_cornerRadius="@dimen/dp_10">
 
-                <LinearLayout
+                <android.support.constraint.ConstraintLayout
                     android:id="@+id/top_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content">
 
-                    <cn.com.zwwl.bayuwen.widget.CircleImageView
-                        android:id="@+id/logo"
-                        android:layout_width="100dp"
-                        android:layout_height="@dimen/dp_80"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/avatar_placeholder"
-                        app:borderRadius="@dimen/dp_5"
-                        app:isEdge="true"
-                        app:type="1"
-                       />
-                 <LinearLayout
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:layout_marginLeft="@dimen/dp_10"
-                     android:orientation="vertical">
+
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/course_name"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_10"
                         android:ellipsize="end"
@@ -62,19 +44,22 @@
                         android:maxLines="1"
                         android:paddingLeft="@dimen/dp_10"
                         android:textColor="@color/text_color_default"
-                        android:textSize="@dimen/sp_16"/>
+                        android:textSize="@dimen/sp_16"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/logo" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/course_code"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_5"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/dp_10"
                         android:textColor="@color/gray_light"
-                        android:textSize="@dimen/sp_12" />
-                </LinearLayout>
-                </LinearLayout>
+                        android:textSize="@dimen/sp_12"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/course_name" />
+                </android.support.constraint.ConstraintLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -174,31 +159,26 @@
 
             </cn.com.zwwl.bayuwen.widget.roundview.RoundLinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/dp_16"
+                android:text="我的作业"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:layout_marginTop="@dimen/dp_5"
-        android:orientation="vertical">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_15"
+                android:background="@color/white"
+                android:layout_marginTop="@dimen/dp_10" />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/look_replay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_10"
-            android:text="@string/look_replay" />
-
-        <View style="@style/split_line" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-     </LinearLayout>
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
 
 </LinearLayout>
