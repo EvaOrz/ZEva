@@ -49,11 +49,11 @@
             android:textSize="@dimen/text_size_14" />
 
         <TextView
+            android:id="@+id/account_user"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="15910725520"
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_size_14" />
 

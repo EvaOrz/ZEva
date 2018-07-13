@@ -126,7 +126,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         }
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
