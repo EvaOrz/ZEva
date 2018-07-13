@@ -17,7 +17,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
-            android:src="@mipmap/icon_menu_more" />
+            android:src="@mipmap/icon_menu_more_white" />
 
         <TextView
             android:id="@+id/toolbar_title"
@@ -35,7 +35,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:src="@mipmap/icon_news" />
+            android:src="@mipmap/icon_news_white" />
 
 
         <android.support.v7.widget.AppCompatTextView

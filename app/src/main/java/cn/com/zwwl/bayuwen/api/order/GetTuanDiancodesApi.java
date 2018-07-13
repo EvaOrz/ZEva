@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,23 +26,28 @@ import cn.com.zwwl.bayuwen.model.TuanDianModel;
 public class GetTuanDiancodesApi extends BaseApi {
 
     private FetchEntryListListener listener;
+    private Map<String, String> pamas = new HashMap<>();
+    private String kid, code;
 
-    public GetTuanDiancodesApi(Context context, FetchEntryListListener listener) {
+    public GetTuanDiancodesApi(Context context, String kid, String code, FetchEntryListListener
+            listener) {
         super(context);
         mContext = context;
         this.listener = listener;
+        this.kid = kid;
+        this.code = code;
         get();
     }
 
 
     @Override
     protected String getUrl() {
-        return UrlUtil.getTuanCodes();
+        return UrlUtil.getTuanCodes() + "?kid=" + kid + "&code=" + code;
     }
 
     @Override
     protected Map<String, String> getPostParams() {
-        return null;
+        return pamas;
     }
 
     @Override

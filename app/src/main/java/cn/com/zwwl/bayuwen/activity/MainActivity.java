@@ -103,6 +103,7 @@ public class MainActivity extends BaseActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         int flag = intent.getIntExtra("Main_frag_no", 0);
+        changeTab(flag);
         switch (flag) {
             case 1:
                 switchFragment(mainFrag1);
@@ -112,7 +113,6 @@ public class MainActivity extends BaseActivity {
                 break;
             case 3:
                 switchFragment(mainFrag3);
-                mainFrag3.refresh();
                 break;
             case 4:
                 switchFragment(mainFrag4);
@@ -121,6 +121,24 @@ public class MainActivity extends BaseActivity {
                 switchFragment(mainFrag5);
                 break;
         }
+    }
+
+    private void changeTab(int flag) {
+        if (flag == 1) {
+            tabButton1.setChecked(true);
+        } else tabButton1.setChecked(false);
+        if (flag == 2) {
+            tabButton2.setChecked(true);
+        } else tabButton2.setChecked(false);
+        if (flag == 3) {
+            tabButton3.setChecked(true);
+        } else tabButton3.setChecked(false);
+        if (flag == 4) {
+            tabButton4.setChecked(true);
+        } else tabButton4.setChecked(false);
+        if (flag == 5) {
+            tabButton5.setChecked(true);
+        } else tabButton5.setChecked(false);
     }
 
     /**
@@ -306,6 +324,8 @@ public class MainActivity extends BaseActivity {
                     } else childAddBt.setVisibility(View.GONE);
                     // 初始化侧边栏学员列表之后，同步fragment1\同步fragment5中学员信息
                     mainFrag1.loadChild(childModels);
+                    if (mainFrag3.isAdded() && !mainFrag3.isHidden())
+                        mainFrag3.refresh();
                     mainFrag5.loadChild(childModels);
                     break;
                 case 1:// 更新礼物数据
@@ -522,7 +542,7 @@ public class MainActivity extends BaseActivity {
         if (!TextUtils.isEmpty(userModel.getPic()))
             Glide.with(mContext).load(userModel.getPic()).into(avatar);
         yaoqing.setText("我的邀请码：" + userModel.getSignCode());
-        gongxun.setText( userModel.getLevel()+"");
+        gongxun.setText(userModel.getLevel() + "");
 
         // 获取礼物数据
         new HonorListApi(mContext, 2, TempDataHelper.getCurrentChildNo(mContext), new

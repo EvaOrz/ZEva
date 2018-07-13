@@ -53,6 +53,8 @@ public class TuanPayResultActivity extends BaseActivity {
     private List<TuanDianModel> tuanDianModels = new ArrayList<>();
 
     private String oid = "";
+    private String kid = "";
+    private String tuanCode = "";
     private boolean isDianFu = false;// 是否是垫付
 
     @Override
@@ -63,7 +65,12 @@ public class TuanPayResultActivity extends BaseActivity {
         type = getIntent().getIntExtra("TuanPayResultActivity_data", PAY_UNKNOWN);
         desc = getIntent().getStringExtra("TuanPayResultActivity_desc");
         oid = getIntent().getStringExtra("TuanPayResultActivity_oid");
+        /**
+         * 垫付的数据
+         */
         isDianFu = getIntent().getBooleanExtra("is_dianfu", false);
+        kid = getIntent().getStringExtra("TuanPayResultActivity_kid");
+        tuanCode = getIntent().getStringExtra("TuanPayResultActivity_code");
         initView();
     }
 
@@ -155,7 +162,7 @@ public class TuanPayResultActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        new GetTuanDiancodesApi(mContext, new FetchEntryListListener() {
+        new GetTuanDiancodesApi(mContext, kid, tuanCode, new FetchEntryListListener() {
             @Override
             public void setData(List list) {
                 tuanDianModels.clear();

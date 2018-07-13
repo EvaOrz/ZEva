@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -165,46 +166,39 @@ public class MyTuanActivity extends BaseActivity {
      * type 1:未完成 2:已完成
      */
     private void goOrderDetail(TuanForMyListModel tuan) {
-        if (tuan.getState() == 1 || tuan.getState() == 2) {
+        if (TextUtils.isEmpty(tuan.getValid()) || tuan.getValid().equals("0")) {
+            showToast("无效的团购码");
+            return;
+        }
+        if (tuan.getState() == 0 && !TextUtils.isEmpty(tuan.getPurchase_code())) {
+            if (tuan.getType().equals("1")) {// 拼团
+                goPay(tuan.getKeModel(), tuan.getPurchase_code(), 0);
+            } else if (tuan.getType().equals("2")) {//垫付
+                goPay(tuan.getKeModel(), tuan.getPurchase_code(), 1);
+            }
+        } else if ((tuan.getState() == 1 || tuan.getState() == 2) && !TextUtils.isEmpty(tuan
+                .getOid())) {
             Intent i = new Intent(mContext, OrderDetailActivity.class);
             i.putExtra("OrderDetailActivity_data", tuan.getOid());
             i.putExtra("OrderDetailActivity_type", tuan.getState());
             startActivity(i);
-        } else if (tuan.getState() == 0 || tuan.getState() == 3) {
-            checkCanTuan(tuan.getPurchase_code(), tuan.getKeModel());
         }
-
     }
 
     /**
-     * 根据拼团码检查是否可以参团
-     *
-     * @param code
+     * @param keModel
+     * @param pcode
+     * @param type    0:单独参团 1：垫付参团
      */
-    private void checkCanTuan(final String code, final KeModel keModel) {
-        showLoadingDialog(true);
-        new CheckCanTuanApi(mContext, code, new FetchEntryListener() {
-            @Override
-            public void setData(Entry entry) {
-
-            }
-
-            @Override
-            public void setError(ErrorMsg error) {
-                showLoadingDialog(false);
-                if (error == null) {// 可以参团
-                    Intent i = new Intent();
-                    i.setClass(mContext, PayActivity.class);
-                    i.putExtra("TuanPayActivity_data", keModel);
-                    i.putExtra("TuanPayActivity_code", code);
-                    i.putExtra("TuanPayActivity_type", 0);// 单独参团
-                    startActivity(i);
-                } else {
-                    showToast(error.getDesc());
-                }
-            }
-        });
+    private void goPay(KeModel keModel, String pcode, int type) {
+        Intent i = new Intent();
+        i.setClass(mContext, PayActivity.class);
+        i.putExtra("TuanPayActivity_data", keModel);
+        i.putExtra("TuanPayActivity_code", pcode);
+        i.putExtra("TuanPayActivity_type", type);
+        startActivity(i);
     }
+
 
     private void changeRadio(int position) {
         viewPager.setCurrentItem(position);
@@ -312,7 +306,10 @@ public class MyTuanActivity extends BaseActivity {
                         .getKeModel().getClass_end_at());
                 yuanjia.setText("原价：￥" + model.getKeModel().getBuyPrice());
             }
-            item_tuan_code.setText(model.getPurchase_code());
+            if (model.getType().equals("1")) {
+                item_tuan_code.setText("拼团码：" + model.getPurchase_code());
+            } else item_tuan_code.setText("垫付的团购");
+
             if (model.getDiscount() != null) {
                 tuanjia.setText("团购价：￥" + model.getDiscount().getDiscount_price());
                 dianjia.setText("垫付金额：￥" + model.getDiscount().getDiscount_price() * model
