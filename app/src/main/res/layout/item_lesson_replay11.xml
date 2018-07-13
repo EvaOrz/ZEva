@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/replay_linear"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_60"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/frag1_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
+        >
+
+        <ImageView
+            android:id="@+id/grade_tv"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:background="@color/gray_line" />
+
+        <ImageView
+            android:id="@+id/frag1_grade"
+            android:layout_width="@dimen/dp_5"
+            android:layout_height="@dimen/dp_5"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/circle_dot" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/course_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginRight="@dimen/album_dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_toLeftOf="@+id/arrow"
+        android:layout_toRightOf="@+id/frag1_avatar"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:textColor="@color/gray_light"
+            android:textSize="@dimen/sp_12" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/course_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/arrow"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginRight="@dimen/dp_10"
+        android:src="@mipmap/arrow_right_gray" />
+
+
+</RelativeLayout>

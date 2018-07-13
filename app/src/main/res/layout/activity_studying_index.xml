@@ -177,22 +177,22 @@
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/final_report"
-                    android:layout_width="@dimen/dp_100"
+                    android:layout_width="@dimen/dp_80"
                     android:layout_height="@dimen/dp_80"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:background="@mipmap/icon_report_bg"
-                    android:gravity="top|center_horizontal"
+                    android:background="@drawable/qimobaogao_circle"
+                    android:gravity="center_horizontal"
                     android:paddingTop="@dimen/dp_20"
                     android:text="@string/final_report"
                     android:textColor="@color/white" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/middle_report"
-                    android:layout_width="@dimen/dp_100"
+                    android:layout_width="@dimen/dp_80"
                     android:layout_height="@dimen/dp_80"
                     android:layout_centerInParent="true"
-                    android:background="@mipmap/icon_report_bg"
+                    android:background="@drawable/qizhongbaogao_circle"
                     android:gravity="center_horizontal"
                     android:paddingTop="@dimen/dp_20"
                     android:text="@string/middle_report"
@@ -200,11 +200,11 @@
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/welcome"
-                    android:layout_width="@dimen/dp_100"
+                    android:layout_width="@dimen/dp_80"
                     android:layout_height="@dimen/dp_80"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:background="@mipmap/icon_report_bg"
+                    android:background="@drawable/welcome_speech_circle"
                     android:gravity="center_horizontal"
                     android:paddingTop="@dimen/dp_20"
                     android:text="@string/welcome_speech"

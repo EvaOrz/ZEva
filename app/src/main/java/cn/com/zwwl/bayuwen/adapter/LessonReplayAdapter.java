@@ -14,7 +14,7 @@ import cn.com.zwwl.bayuwen.util.TimeUtil;
 
 public class LessonReplayAdapter extends BaseQuickAdapter<LessonModel, BaseViewHolder> {
     public LessonReplayAdapter(@Nullable List<LessonModel> data) {
-        super(R.layout.item_lesson_replay, data);
+        super(R.layout.item_lesson_replay11, data);
     }
 
     @Override
@@ -25,6 +25,11 @@ public class LessonReplayAdapter extends BaseQuickAdapter<LessonModel, BaseViewH
         else if (item.getStartClassTime() != 0) {
             helper.setText(R.id.time, String.format("上课时间: %s",
                     TimeUtil.parseTime(item.getStartClassTime() * 1000, "yyyy年MM月dd日")));
+        }
+        if (helper.getLayoutPosition()%2==1){
+            helper.setBackgroundRes(R.id.replay_linear, R.color.course_repaly);
+        }else{
+            helper.setBackgroundRes(R.id.replay_linear, R.color.white);
         }
     }
 }
