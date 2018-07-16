@@ -72,18 +72,22 @@ public class SelectMenuView extends LinearLayout {
      * 设置数据
      *
      * @param keTypeModel
-     * @param gradeIndex  默认年级
-     * @param tagIdIndex  默认typeid
+     * @param gradeIndex     默认年级
+     * @param tagIdIndex     默认typeid
+     * @param isXianshangKe  是否是线上课
+     * @param isXiaoShengChu 是否需要默认年级
      */
     public void setData(KeTypeModel keTypeModel, String gradeIndex, String tagIdIndex, boolean
-            isXianshangKe) {
+            isXianshangKe, boolean isXiaoShengChu) {
         dataLists1.clear();
         dataLists1.addAll(SelectTempModel.parseGrades(keTypeModel.getGrades()));
         int gradeDe = -1;
-        for (int i = 0; i < dataLists1.size(); i++) {
-            if (dataLists1.get(i).getText().equals(gradeIndex)) {
-                gradeDe = i;
-                mText1.setText(gradeIndex);
+        if (!isXiaoShengChu) {
+            for (int i = 0; i < dataLists1.size(); i++) {
+                if (dataLists1.get(i).getText().equals(gradeIndex)) {
+                    gradeDe = i;
+                    mText1.setText(gradeIndex);
+                }
             }
         }
         mOneHolder1.refreshData(dataLists1, gradeDe);
@@ -135,7 +139,7 @@ public class SelectMenuView extends LinearLayout {
     /**
      * 设置数据
      */
-    public void setOfflineData(KeTypeModel keTypeModel,String grade,String project) {
+    public void setOfflineData(KeTypeModel keTypeModel, String grade, String project) {
         dataLists1.clear();
         dataLists1.addAll(SelectTempModel.parseGrades(keTypeModel.getGrades()));
         int gradeDe = -1;

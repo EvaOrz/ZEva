@@ -16,7 +16,7 @@ public class TuanForMyListModel extends Entry {
     private String created_at;
     private GroupBuyModel.DiscountBean discount;
     private KeModel keModel;
-    private int dianfu;
+    private double dianfu;
     private Object detail;
     /**
      * 0:未发起团购
@@ -115,11 +115,11 @@ public class TuanForMyListModel extends Entry {
         this.discount = discount;
     }
 
-    public int getDianfu() {
+    public double getDianfu() {
         return dianfu;
     }
 
-    public void setDianfu(int dianfu) {
+    public void setDianfu(double dianfu) {
         this.dianfu = dianfu;
     }
 

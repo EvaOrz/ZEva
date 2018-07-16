@@ -255,7 +255,12 @@ public class CourseCenterActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(tagId) && tagId.equals("100")) {
                         isWangke = true;
                     }
-                    selectMenuView.setData(keTypeModel, gra, tagId, isWangke);
+                    boolean isXiaoShengchu = false;
+                    if (!TextUtils.isEmpty(tagId) && (tagId.equals("35") || tagId.equals("36") ||
+                            tagId.equals("37"))) {
+                        isXiaoShengchu = true;
+                    }
+                    selectMenuView.setData(keTypeModel, gra, tagId, isWangke, isXiaoShengchu);
                     int height = getViewHeight(selectMenuView);
                     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams
                             (RelativeLayout
