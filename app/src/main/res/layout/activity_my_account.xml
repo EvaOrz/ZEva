@@ -16,7 +16,7 @@
             android:id="@+id/account_back"
             android:layout_width="@dimen/back_size"
             android:layout_height="@dimen/back_size"
-            android:src="@mipmap/icon_back" />
+            android:src="@mipmap/icon_back_blue" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -49,11 +49,11 @@
             android:textSize="@dimen/text_size_14" />
 
         <TextView
+            android:id="@+id/account_user"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="15910725520"
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_size_14" />
 

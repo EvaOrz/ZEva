@@ -97,7 +97,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/player_pause" />
+            android:background="@mipmap/player_pause" />
 
         <ImageView
             android:id="@+id/fm_previous"
@@ -106,7 +106,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="25dp"
             android:layout_toLeftOf="@id/fm_play"
-            android:src="@drawable/player_previous_dis" />
+            android:src="@mipmap/player_previous_dis" />
 
 
         <ImageView
@@ -116,7 +116,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="25dp"
             android:layout_toRightOf="@id/fm_play"
-            android:src="@drawable/player_next" />
+            android:src="@mipmap/player_next" />
 
         <TextView
             android:id="@+id/fm_list"

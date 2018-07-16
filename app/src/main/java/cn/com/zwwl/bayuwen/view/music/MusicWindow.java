@@ -9,38 +9,24 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
-import android.content.Context;
-import android.graphics.PixelFormat;
-import android.graphics.Rect;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnKeyListener;
-import android.view.WindowManager.LayoutParams;
-import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.activity.fm.MusicPlayActivity;
-import cn.com.zwwl.bayuwen.http.HttpUtil;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.model.fm.FmModel;
 import cn.com.zwwl.bayuwen.service.NewMusicService;
-import cn.com.zwwl.bayuwen.util.AnimationTools;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 
-import static android.view.WindowManager.LayoutParams.TYPE_APPLICATION_PANEL;
-import static cn.com.zwwl.bayuwen.activity.BaseActivity.ACTION_RESUME_PAUSE;
-
-
+/**
+ * 音乐播放悬浮窗
+ */
 public class MusicWindow {
     private static final byte[] LOCKER = new byte[0];
     private static View mView = null;
@@ -48,7 +34,7 @@ public class MusicWindow {
     private static Context mContext = null;
     public static Boolean isShown = false;
     private static TextView titleTv, timeTv;
-    private static ImageView playBt, closeBt;
+    private static ImageView playBt, closeBt, image;
 
     public static AlbumModel currentAlModel;// 当前显示的播放数据
     public static FmModel currentFmModel;// 当前显示的播放数据
@@ -189,6 +175,7 @@ public class MusicWindow {
             }
         });
 
+        image = view.findViewById(R.id.control_image);
         titleTv = view.findViewById(R.id.control_title);
         timeTv = view.findViewById(R.id.control_time);
 
@@ -216,6 +203,7 @@ public class MusicWindow {
     public void setFmData(AlbumModel albumModel, FmModel fmModel) {
         currentAlModel = albumModel;
         currentFmModel = fmModel;
+        ImageLoader.display(mContext, image, albumModel.getPic());
         titleTv.setText(fmModel.getTitle());
         timeTv.setText("00:00/" + CalendarTools.getTime(Long.valueOf(fmModel.getAudioDuration())));
     }

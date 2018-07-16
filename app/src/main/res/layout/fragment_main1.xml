@@ -17,16 +17,19 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
-            android:src="@mipmap/icon_menu_more" />
+            android:src="@mipmap/icon_menu_more_white" />
 
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
+            android:drawablePadding="3dp"
+            android:drawableRight="@mipmap/sanjiao_white"
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_14" />
+
 
         <ImageView
             android:id="@+id/toolbar_right"
@@ -35,7 +38,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:src="@mipmap/icon_news" />
+            android:src="@mipmap/icon_news_white" />
 
 
         <android.support.v7.widget.AppCompatTextView
@@ -43,9 +46,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/toolbar_right"
+            android:drawablePadding="3dp"
+            android:drawableRight="@mipmap/sanjiao_white"
+            android:gravity="center_vertical"
             android:text="北京"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_14" />

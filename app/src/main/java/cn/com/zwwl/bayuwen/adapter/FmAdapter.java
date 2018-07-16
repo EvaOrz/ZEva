@@ -88,7 +88,7 @@ public class FmAdapter extends CheckScrollAdapter<FmModel> {
     public File inputstreamtofile(String fileName) {
         File file = new File(fileName);
         try {
-            InputStream ins = mContext.getResources().openRawResource(R.raw.gif_blue);
+            InputStream ins = mContext.getResources().openRawResource(R.raw.gif_red);
             OutputStream os = new FileOutputStream(file);
             int bytesRead = 0;
             byte[] buffer = new byte[8192];

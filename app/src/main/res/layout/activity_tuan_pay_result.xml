@@ -73,17 +73,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@mipmap/icon_scan_label" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:drawableLeft="@mipmap/icon_scan_label"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
                     android:text="您团友的课程码"
                     android:textColor="@color/gray_dark"
                     android:textSize="@dimen/text_size_14" />

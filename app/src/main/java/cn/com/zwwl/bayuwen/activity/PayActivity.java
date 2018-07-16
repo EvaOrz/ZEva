@@ -77,6 +77,7 @@ public class PayActivity extends BaseActivity {
     private CouponModel currentCoupon;// 优惠码
     private String itemCode = "";// id组合码，生成订单用
     private String yueTxt = "0.00";// 账户余额
+    private boolean isUseYue = true;// 是否使用余额
     private AddressModel currentAddress;// 当前收货地址
     private OrderModel orderModel;// 订单model
     private OrderModel.OrderDetailModel detailModel; // 订单详情model
@@ -182,6 +183,7 @@ public class PayActivity extends BaseActivity {
         findViewById(R.id.tuikuan_info).setOnClickListener(this);
         findViewById(R.id.tuan_code_copy).setOnClickListener(this);
         findViewById(R.id.pay_detail).setOnClickListener(this);
+        findViewById(R.id.pay_yue).setOnClickListener(this);
         youhuiLayout.setOnClickListener(this);
         if (type == 0) {
             pinLayout.setVisibility(View.VISIBLE);
@@ -225,8 +227,11 @@ public class PayActivity extends BaseActivity {
                     addTv.setVisibility(View.VISIBLE);
                     break;
                 case 2:// 更新账户余额
-                    double aa = Double.valueOf(yueTxt) / 100;
-                    yueTv.setText(Tools.getTwoDecimal(aa));
+                    if (isUseYue) {
+                        double aa = Double.valueOf(yueTxt) / 100;
+                        yueTv.setText(Tools.getTwoDecimal(aa));
+                    } else
+                        yueTv.setText("不使用");
                     break;
                 case 3:// 实时计算价格，之后更新最新价格
                     priceTv.setText("实付款：￥" + Tools.getTwoDecimal(detailModel.getAmount() / 100));
@@ -352,9 +357,7 @@ public class PayActivity extends BaseActivity {
                 if (detailModel != null) {
                     new PayDetailDialog(mContext, detailModel);
                 }
-
                 break;
-
             case R.id.zhifubao_pay:// 支付宝
                 zhifubaoBt.setImageResource(R.drawable.radio_checked);
                 weixinBt.setImageResource(R.drawable.radio_default);
@@ -364,6 +367,29 @@ public class PayActivity extends BaseActivity {
                 zhifubaoBt.setImageResource(R.drawable.radio_default);
                 weixinBt.setImageResource(R.drawable.radio_checked);
                 payType = 2;
+                break;
+            case R.id.pay_yue:// 使用余额
+                double aa = Double.valueOf(yueTxt) / 100;
+                if (aa > 0) {
+                    new AskDialog(mContext, "使用余额", "不使用", "您当前余额为" + aa + "，是否使用余额", new
+                            AskDialog.OnSurePickListener() {
+
+                                @Override
+                                public void onSure() {
+                                    isUseYue = true;
+                                    handler.sendEmptyMessage(2);
+                                    countPrice();
+                                }
+
+                                @Override
+                                public void onCancle() {
+                                    isUseYue = false;
+                                    handler.sendEmptyMessage(2);
+                                    countPrice();
+                                }
+                            });
+                } else showToast("您当前余额为0");
+
                 break;
         }
 
@@ -441,7 +467,8 @@ public class PayActivity extends BaseActivity {
     private void countPrice() {
         String promoId = promotionModel == null ? "" : promotionModel.getId();
         String couponCode = currentCoupon == null ? "" : currentCoupon.getCoupon_code();
-        new CountPriceApi(mContext, itemCode, couponCode, promoId, yueTxt, tuanCode, new
+        String yue = isUseYue ? yueTxt : "0";
+        new CountPriceApi(mContext, itemCode, couponCode, promoId, yue, tuanCode, new
                 FetchEntryListener() {
                     @Override
                     public void setData(Entry entry) {
@@ -499,6 +526,8 @@ public class PayActivity extends BaseActivity {
         i.putExtra("TuanPayResultActivity_desc", desc);
         if (type == 1) {
             i.putExtra("is_dianfu", true);
+            i.putExtra("TuanPayResultActivity_kid", keDatas.get(0).getKid());// 垫付只有一个课，不存在多个课垫付的情况
+            i.putExtra("TuanPayResultActivity_code", tuanCode);
         }
         startActivity(i);
         finish();

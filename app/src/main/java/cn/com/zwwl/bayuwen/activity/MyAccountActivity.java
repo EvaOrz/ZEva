@@ -17,6 +17,7 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.ChildInfoApi;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.model.ChildModel;
@@ -31,6 +32,7 @@ import cn.com.zwwl.bayuwen.widget.RoundAngleLayout;
 public class MyAccountActivity extends BaseActivity {
 
     private LinearLayout contain;
+    private TextView account_user;
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
 
     @Override
@@ -49,6 +51,8 @@ public class MyAccountActivity extends BaseActivity {
 
     private void initView() {
         findViewById(R.id.account_back).setOnClickListener(this);
+        account_user = findViewById(R.id.account_user);
+        account_user.setText(UserDataHelper.getUserLoginInfo(mContext).getTel());
         contain = findViewById(R.id.account_container);
 
     }

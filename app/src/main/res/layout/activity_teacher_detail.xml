@@ -233,19 +233,6 @@
                     android:orientation="vertical"
                     android:paddingTop="10dp">
 
-                    <!--<ImageView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:src="@mipmap/icon_course_relative" />-->
-
-                    <!--<TextView-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:gravity="center_vertical"-->
-                    <!--android:text="相关课程"-->
-                    <!--android:textColor="@color/gray_dark"-->
-                    <!--android:textSize="@dimen/text_size_14" />-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

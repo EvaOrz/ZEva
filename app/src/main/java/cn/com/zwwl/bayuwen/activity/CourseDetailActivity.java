@@ -348,7 +348,6 @@ public class CourseDetailActivity extends BaseActivity {
                     Intent j = new Intent(mContext, PayActivity.class);
                     j.putExtra("TuanPayActivity_type", 2);
                     j.putExtra("TuanPayActivity_data", keModel);
-                    j.putExtra("TuanPayActivity_code", "");
                     startActivity(j);
                 }
                 break;

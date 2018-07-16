@@ -107,6 +107,7 @@ public class OrderTuifeeListActivity extends BaseActivity implements TuifeeReasi
             public void setError(ErrorMsg error) {
                 showLoadingDialog(false);
                 if (error == null) {
+                    showToast("申请退费成功");
                     finish();
                 } else showToast(error.getDesc());
 
