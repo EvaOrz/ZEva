@@ -27,8 +27,10 @@ import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.listener.FetchDataListener;
+import cn.com.zwwl.bayuwen.util.Tools;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -434,7 +436,7 @@ public class HttpUtil {
             String accessToken = TempDataHelper.getAccessToken(mContext);
             if (!TextUtils.isEmpty(accessToken))
                 requestBuilder.addHeader("Access-Token", accessToken);
-
+            requestBuilder.addHeader("app_version", Tools.getAppVersion(mContext));
             request = requestBuilder.build();
         } catch (UnsupportedEncodingException e) {
 

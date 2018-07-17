@@ -48,6 +48,7 @@ import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.model.fm.RecommentModel;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.util.UriParse;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.MostGridView;
 import cn.com.zwwl.bayuwen.widget.RoundAngleImageView;
@@ -155,9 +156,15 @@ public class MainFrag4 extends Fragment implements View.OnClickListener {
 
                     mLinearPosition.removeAllViews();
                     List<View> views = new ArrayList<>();
-                    for (RecommentModel recommentModel : bannerData) {
+                    for (final RecommentModel recommentModel : bannerData) {
                         RoundAngleImageView r = new RoundAngleImageView(mActivity);
                         r.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        r.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                UriParse.clickZwwl(mActivity, recommentModel.getLink());
+                            }
+                        });
                         ImageLoader.display(mActivity, r, recommentModel.getPic());
                         views.add(r);
 

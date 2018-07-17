@@ -22,8 +22,8 @@ public class UserDataHelper {
     public static final String PHONE = "phone";
     public static final String SEX = "sex";
     public static final String NAME = "name";
+    public static final String LEVEL = "level";
     public static final String SIGNCODE = "sign_code";
-
 
     private static SharedPreferences mPref;
 
@@ -79,6 +79,7 @@ public class UserDataHelper {
 //        editor.putString(TOKEN, user.getToken());
         editor.putString(PHONE, user.getTel());
         editor.putString(PIC, user.getPic());
+        editor.putInt(LEVEL,user.getLevel());
         editor.putString(NAME, user.getName());
         editor.putInt(SEX, user.getSex());
         editor.putString(SIGNCODE, user.getSignCode());
@@ -98,6 +99,7 @@ public class UserDataHelper {
         user.setTel(getPref(context).getString(PHONE, ""));
         user.setPic(getPref(context).getString(PIC, ""));
         user.setSex(getPref(context).getInt(SEX, 0));
+        user.setLevel(getPref(context).getInt(LEVEL,0));
         user.setName(getPref(context).getString(NAME, ""));
         user.setSignCode(getPref(context).getString(SIGNCODE, ""));
         if (TextUtils.isEmpty(getPref(context).getString(TOKEN, ""))) return null;
@@ -117,6 +119,7 @@ public class UserDataHelper {
         editor.putString(PIC, "");
         editor.putInt(SEX, 0);
         editor.putString(NAME, "");
+        editor.putInt(LEVEL,0);
         editor.putString(SIGNCODE, "");
         editor.commit();
     }

@@ -206,7 +206,7 @@
                 android:layout_marginTop="5dp"
                 android:gravity="right"
                 android:text="垫付价格："
-                android:textColor="@color/lisichen"
+                android:textColor="@color/text_red"
                 android:textSize="@dimen/text_size_14" />
 
             <TextView
