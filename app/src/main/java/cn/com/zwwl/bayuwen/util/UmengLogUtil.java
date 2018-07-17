@@ -10,10 +10,49 @@ public class UmengLogUtil {
 
     /**
      * 选课首页各项目点击
+     *
+     * @param mContext
      */
     public static void logTagClick(Context mContext) {
         onEvnet(mContext, "gxmdj");
     }
+
+    /**
+     * 各项目视频点击统计
+     *
+     * @param mContext
+     */
+    public static void logTagVideoClick(Context mContext) {
+        onEvnet(mContext, "gxmspdj");
+    }
+
+    /**
+     * "查看全部老师"点击统计
+     *
+     * @param mContext
+     */
+    public static void logAllTeacherClick(Context mContext) {
+        onEvnet(mContext, "ckqtls");
+    }
+
+    /**
+     * "查看全部班主任"点击统计
+     *
+     * @param mContext
+     */
+    public static void logAllBanzhurenClick(Context mContext) {
+        onEvnet(mContext, "ckqtbzr");
+    }
+
+    /**
+     * 课程列表中 点击课程视频播放
+     *
+     * @param mContext
+     */
+    public static void logKeListVideoPlay(Context mContext) {
+        onEvnet(mContext, "kecheng_spbf");
+    }
+
 
     /**
      * 计数事件

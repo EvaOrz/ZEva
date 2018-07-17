@@ -79,6 +79,7 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
                 Intent i = new Intent(mContext, VideoPlayActivity.class);
                 i.putExtra("VideoPlayActivity_url", keModel.getVideo());
                 i.putExtra("VideoPlayActivity_pic", keModel.getPic());
+
                 mContext.startActivity(i);
             }
         });
