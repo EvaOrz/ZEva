@@ -35,6 +35,7 @@ import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.model.StudyingModel;
 import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.OvalImageview;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
@@ -178,6 +179,7 @@ public class ReportIndexActivity extends BaseActivity {
                 if (TextUtils.isEmpty(model.getMidterm_report())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
+                    UmengLogUtil.QiZhongReportClick(mActivity);
                     Intent intent = new Intent(mActivity, WebActivity.class);
                     intent.putExtra("WebActivity_title", model.getCourse().getTitle());
                     intent.putExtra("WebActivity_data", model.getMidterm_report());
@@ -188,6 +190,7 @@ public class ReportIndexActivity extends BaseActivity {
                 if (TextUtils.isEmpty(model.getMidterm_report())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
+                    UmengLogUtil.QiMoReportClick(mActivity);
                     Intent intent = new Intent(mActivity, WebActivity.class);
                     intent.putExtra("WebActivity_title", model.getCourse().getTitle());
                     intent.putExtra("WebActivity_data", model.getEnd_term_report());
@@ -198,6 +201,7 @@ public class ReportIndexActivity extends BaseActivity {
                 if (TextUtils.isEmpty(model.getWelcome_speech())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
+                    UmengLogUtil.WelReportClick(mActivity);
                     Intent intent = new Intent(mActivity, WebActivity.class);
                     intent.putExtra("WebActivity_title", model.getCourse().getTitle());
                     intent.putExtra("WebActivity_data", model.getWelcome_speech());

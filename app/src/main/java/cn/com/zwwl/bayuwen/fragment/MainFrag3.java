@@ -215,6 +215,13 @@ public class MainFrag3 extends BasicFragment {
         reportAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if(reportModels.get(position).getType()==1) {
+                    UmengLogUtil.courseReportClick(activity);
+                }else if (reportModels.get(position).getType()==2){
+                    UmengLogUtil.QiZhongReportClick(activity);
+                }else if (reportModels.get(position).getType()==3){
+                    UmengLogUtil.QiMoReportClick(activity);
+                }
                 Intent intent = new Intent(activity, WebActivity.class);
                 intent.putExtra("WebActivity_title", reportModels.get(position).getReport_name());
                 intent.putExtra("WebActivity_data", reportModels.get(position).getUrl());
@@ -243,6 +250,7 @@ public class MainFrag3 extends BasicFragment {
                         intent.putExtra("kid", bean.getKid());
                         intent.putExtra("title", bean.getProducts().getTitle());
                         if ("1".equals(bean.getProducts().getOnline())) {
+                            UmengLogUtil.PlayBackClick(activity);
                             intent.setClass(activity, ReplayListActivity.class);
                         } else {
                             intent.setClass(activity, StudyingIndexActivity.class);
@@ -252,6 +260,7 @@ public class MainFrag3 extends BasicFragment {
                         startActivity(intent);
                         break;
                     case R.id.work_title:
+                        UmengLogUtil.CourseWorkClick(activity);
                         if (!bean.getPlan().isOpen()) {
                             ToastUtil.showShortToast("该课程尚未开课~");
                         } else if (bean.getPlan().getJob() != null && bean.getPlan()
@@ -276,6 +285,7 @@ public class MainFrag3 extends BasicFragment {
                         }
                         break;
                     case R.id.trace_title:
+                        UmengLogUtil.AgoCourseReportClick(activity);
                         if (!bean.getPlan().isOpen()) {
                             ToastUtil.showShortToast("该课程尚未开课~");
                         } else {
@@ -284,6 +294,17 @@ public class MainFrag3 extends BasicFragment {
                             intent.putExtra("title", bean.getProducts().getTitle());
                             startActivity(intent);
                         }
+                        break;
+                    case R.id.playback_title:
+                        UmengLogUtil.PlayBackClick(activity);
+                        application.oldKe = bean.getProducts();
+                        intent.putExtra("kid", bean.getKid());
+                        intent.putExtra("title", bean.getProducts().getTitle());
+
+                        intent.setClass(activity, ReplayListActivity.class);
+
+                        startActivity(intent);
+
                         break;
                 }
 

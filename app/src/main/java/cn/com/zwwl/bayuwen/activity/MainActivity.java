@@ -114,6 +114,7 @@ public class MainActivity extends BaseActivity {
                 switchFragment(mainFrag2);
                 break;
             case 3:
+                UmengLogUtil.courseTrackClick(mContext);
                 switchFragment(mainFrag3);
                 break;
             case 4:
@@ -486,6 +487,7 @@ public class MainActivity extends BaseActivity {
                 switchFragment(mainFrag2);
                 break;
             case R.id.bottom_nav_3:
+                UmengLogUtil.courseTrackClick(mContext);
                 switchFragment(mainFrag3);
                 break;
             case R.id.bottom_nav_4:

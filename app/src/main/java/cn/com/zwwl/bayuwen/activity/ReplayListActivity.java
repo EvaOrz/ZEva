@@ -29,6 +29,7 @@ import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.model.StudyingModel;
 import cn.com.zwwl.bayuwen.util.TimeUtil;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.OvalImageview;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.roundview.RoundLinearLayout;
@@ -125,6 +126,7 @@ public class ReplayListActivity extends BaseActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                UmengLogUtil.LivePlayBackClick(mActivity);
                 Intent intent = new Intent(mActivity, VideoPlayActivity.class);
                 intent.putExtra("VideoPlayActivity_url", reports.get(position).getPlay_url());
                 startActivity(intent);

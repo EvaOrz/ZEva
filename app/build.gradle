@@ -72,8 +72,9 @@ dependencies {
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.4'
     // umeng
     implementation files('libs/SecurityEnvSDK-release-1.1.0.jar')
-    implementation 'com.umeng.sdk:analytics:7.5.0'
+
     implementation files('libs/umeng-common-1.5.3.jar')
+    implementation 'com.umeng.sdk:analytics:7.5.0'
     implementation files('libs/umeng-share-core-6.9.2.jar')
     implementation files('libs/umeng-share-QQ-simplify-6.9.2.jar')
     implementation files('libs/umeng-share-wechat-full-6.9.2.jar')
