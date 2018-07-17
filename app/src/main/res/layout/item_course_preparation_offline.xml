@@ -65,7 +65,7 @@
             android:layout_weight="1"
             android:singleLine="true"
             android:ellipsize="end"
-            android:text="ssssssssssss"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="@dimen/dp_10" />
 
@@ -77,7 +77,7 @@
             android:singleLine="true"
             android:ellipsize="end"
             android:textColor="@color/white"
-            android:text="sssssssssssss"
+            android:text=""
             android:textSize="@dimen/dp_10" />
 
         <LinearLayout
@@ -94,7 +94,7 @@
             android:gravity="center"
             android:paddingLeft="@dimen/dp_5"
             android:paddingRight="@dimen/dp_5"
-            android:text="作业上传"
+            android:text="作业"
             android:textColor="@color/course_prepara_offline"
             android:textSize="@dimen/dp_10" />
 
@@ -107,7 +107,7 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:paddingLeft="@dimen/dp_5"
                 android:paddingRight="@dimen/dp_5"
-                android:text="往次课程跟踪"
+                android:text="课节报告"
                 android:textColor="@color/course_prepara_offline"
                 android:textSize="@dimen/dp_10" />
     </LinearLayout>

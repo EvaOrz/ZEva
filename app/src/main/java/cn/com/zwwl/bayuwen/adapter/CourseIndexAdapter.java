@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.adapter;
 
 
+import android.view.View;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
@@ -50,7 +51,17 @@ public class CourseIndexAdapter extends BaseMultiItemQuickAdapter<MyCourseModel.
             helper.setText(R.id.work_title,R.string.submit_homework);
         }
         if (helper.getItemViewType() == 1) {
+            if ((item.getProducts().getType()=="9001")||(item.getProducts().getType()=="22")){
+                helper.getView(R.id.playback_title).setVisibility(View.INVISIBLE);
+                helper.getView(R.id.work_title).setVisibility(View.INVISIBLE);
+                helper.getView(R.id.trace_title).setVisibility(View.INVISIBLE);
+            }else {
+                helper.getView(R.id.playback_title).setVisibility(View.VISIBLE);
+                helper.getView(R.id.work_title).setVisibility(View.VISIBLE);
+                helper.getView(R.id.trace_title).setVisibility(View.VISIBLE);
+            }
             helper.addOnClickListener(R.id.course_cover);
+            helper.addOnClickListener(R.id.playback_title);
         }
     }
 }

@@ -53,6 +53,7 @@ import cn.com.zwwl.bayuwen.push.NewPushManager;
 import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.DialogUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.music.MusicWindow;
 import cn.com.zwwl.bayuwen.widget.MostGridView;
 
@@ -112,6 +113,7 @@ public class MainActivity extends BaseActivity {
                 switchFragment(mainFrag2);
                 break;
             case 3:
+                UmengLogUtil.courseTrackClick(mContext);
                 switchFragment(mainFrag3);
                 break;
             case 4:
@@ -484,6 +486,7 @@ public class MainActivity extends BaseActivity {
                 switchFragment(mainFrag2);
                 break;
             case R.id.bottom_nav_3:
+                UmengLogUtil.courseTrackClick(mContext);
                 switchFragment(mainFrag3);
                 break;
             case R.id.bottom_nav_4:

@@ -109,7 +109,7 @@
                 android:gravity="center"
                 android:paddingLeft="@dimen/dp_5"
                 android:paddingRight="@dimen/dp_5"
-                android:text="作业上传"
+                android:text="作业"
                 android:textColor="@color/course_prepara_line"
                 android:textSize="@dimen/dp_10" />
 
@@ -122,7 +122,20 @@
                 android:gravity="center"
                 android:paddingLeft="@dimen/dp_5"
                 android:paddingRight="@dimen/dp_5"
-                android:text="往次课程跟踪"
+                android:text="课节报告"
+                android:textColor="@color/course_prepara_line"
+                android:textSize="@dimen/dp_10" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/playback_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@drawable/prepar_course_bg"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp_5"
+                android:paddingRight="@dimen/dp_5"
+                android:text="回放"
                 android:textColor="@color/course_prepara_line"
                 android:textSize="@dimen/dp_10" />
         </LinearLayout>

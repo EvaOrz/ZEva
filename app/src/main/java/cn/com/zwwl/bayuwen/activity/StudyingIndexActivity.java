@@ -28,6 +28,7 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.OvalImageview;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 
@@ -147,6 +148,7 @@ public class StudyingIndexActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.course_change:
+                UmengLogUtil.ChangeCourceClick(mActivity);
                 if (online == 1) {
                     ToastUtil.showShortToast("线上课不支持该功能");
                     return;
@@ -159,6 +161,7 @@ public class StudyingIndexActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.class_covert:
+                UmengLogUtil.ConverClassClick(mActivity);
                 if (online == 1) {
                     ToastUtil.showShortToast("线上课不支持该功能");
                     return;
@@ -176,9 +179,11 @@ public class StudyingIndexActivity extends BaseActivity {
                 ToastUtil.showShortToast("敬请期待");
                 break;
             case R.id.middle_report:
+                 UmengLogUtil.QiZhongReportClick(mActivity);
                 if (TextUtils.isEmpty(classModel.getMidterm_report())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
+
                     intent.setClass(mActivity, WebActivity.class);
                     intent.putExtra("WebActivity_title", classModel.getCourse().getTitle());
                     intent.putExtra("WebActivity_data", classModel.getMidterm_report());
@@ -186,9 +191,11 @@ public class StudyingIndexActivity extends BaseActivity {
                 }
                 break;
             case R.id.final_report:
+                UmengLogUtil.QiMoReportClick(mActivity);
                 if (TextUtils.isEmpty(classModel.getMidterm_report())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
+
                     intent.setClass(mActivity, WebActivity.class);
                     intent.putExtra("WebActivity_title", classModel.getCourse().getTitle());
                     intent.putExtra("WebActivity_data", classModel.getEnd_term_report());
@@ -196,9 +203,11 @@ public class StudyingIndexActivity extends BaseActivity {
                 }
                 break;
             default:
+                UmengLogUtil.WelReportClick(mActivity);
                 if (TextUtils.isEmpty(classModel.getWelcome_speech())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
+
                     intent.setClass(mActivity, WebActivity.class);
                     intent.putExtra("WebActivity_title", classModel.getCourse().getTitle());
                     intent.putExtra("WebActivity_data", classModel.getWelcome_speech());
