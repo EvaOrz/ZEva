@@ -30,6 +30,7 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.GroupBuyModel;
 import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 
 /**
  * 我要参团页面
@@ -190,6 +191,7 @@ public class TuanIndexActivity extends BaseActivity {
                 getKaiTuanCode(2);
                 break;
             case R.id.tuan_index_kaituan:// 我要开团
+                UmengLogUtil.logFaqiTianClick(mContext);
                 getKaiTuanCode(1);
                 break;
             case R.id.tuan_index_code_bt:// 检查可否参团
@@ -200,7 +202,6 @@ public class TuanIndexActivity extends BaseActivity {
 
         }
     }
-
 
 
     /**

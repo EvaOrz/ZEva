@@ -46,8 +46,10 @@ import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 
 /**
  * 我的 tab
@@ -247,11 +249,12 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(mActivity, TuanCodeUseActivity.class));
                 break;
             case R.id.frag5_invite:// 邀请好友加入大语文
-//                SharePopWindow sharePopWindow=new SharePopWindow(getActivity(),"AAA");
-                ShareTools.doShareWeb((BaseActivity) getActivity(), "大语文", "大运问的", "http://dev" +
-                        ".umeng.com/images/tab2_1.png", "https://www.baidu.com");
+                UmengLogUtil.logInviteClick(mActivity);
+                ShareTools.doShareWeb((BaseActivity) getActivity(), "大语文", "大语文", "http://dev" +
+                        ".umeng.com/images/tab2_1.png", AppValue.inviteUrl);
                 break;
             case R.id.frag5_feedback:// 反馈
+                UmengLogUtil.logFeedBackClick(mActivity);
                 startActivity(new Intent(mActivity, FeedBackActivity.class));
                 break;
             case R.id.frag5_tuangou:// 我的团购
@@ -269,6 +272,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
 
 
     private void goMyOrder(int type) {
+        UmengLogUtil.logOrderBtnClick(mActivity, type);
         Intent i = new Intent(mActivity, MyOrderActivity.class);
         i.putExtra("MyOrderActivity_data", type);
         startActivity(i);

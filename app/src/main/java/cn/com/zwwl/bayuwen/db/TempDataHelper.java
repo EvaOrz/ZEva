@@ -10,6 +10,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.AppValue;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 
 /**
  * 存储用户信息
@@ -68,6 +69,7 @@ public class TempDataHelper {
      * @param city
      */
     public static void setCurrentCity(Context context, String city) {
+        UmengLogUtil.logChangeCity(context);
         Editor editor = getPref(context).edit();
         editor.putString(CITY, city);
         editor.commit();

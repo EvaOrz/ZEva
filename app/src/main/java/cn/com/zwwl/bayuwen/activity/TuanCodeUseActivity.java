@@ -20,6 +20,7 @@ import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 
 /**
  * 团购码兑换课程页面
@@ -33,6 +34,7 @@ public class TuanCodeUseActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
+        UmengLogUtil.logDuihuanClick(mContext);
         setContentView(R.layout.activity_tuan_code_user);
         initView();
     }

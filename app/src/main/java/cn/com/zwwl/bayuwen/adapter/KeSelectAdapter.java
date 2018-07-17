@@ -18,6 +18,7 @@ import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 
 /**
  * 选课页面课程列表adapter
@@ -79,7 +80,7 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
                 Intent i = new Intent(mContext, VideoPlayActivity.class);
                 i.putExtra("VideoPlayActivity_url", keModel.getVideo());
                 i.putExtra("VideoPlayActivity_pic", keModel.getPic());
-
+                UmengLogUtil.logKeListVideoPlay(mContext);
                 mContext.startActivity(i);
             }
         });

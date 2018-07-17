@@ -59,6 +59,7 @@ import cn.com.zwwl.bayuwen.model.PintuModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.ChildMenuPopView;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.MostGridView;
@@ -308,6 +309,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     }
 
     private void goDati() {
+        UmengLogUtil.logPintuClick(mActivity);
         Intent i = new Intent(mActivity, AbilityAnalysisActivity.class);
         i.putExtra("pintuModels", (Serializable) pintuModels);
         startActivity(i);
@@ -390,6 +392,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.go_xunzhang:
+                UmengLogUtil.logAllChengjiuClick(mActivity);
                 startActivity(new Intent(mActivity, AllXunzhangActivity.class));
                 break;
             case R.id.toolbar_left:// 打开抽屉

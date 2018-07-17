@@ -52,7 +52,9 @@ import cn.com.zwwl.bayuwen.model.ReportModel;
 import cn.com.zwwl.bayuwen.push.NewPushManager;
 import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.DialogUtil;
+import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.music.MusicWindow;
 import cn.com.zwwl.bayuwen.widget.MostGridView;
 
@@ -499,6 +501,9 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(this, TuanCodeUseActivity.class));
                 break;
             case R.id.invite:// 邀请好友加入大语文
+                UmengLogUtil.logInviteClick(mContext);
+                ShareTools.doShareWeb(this, "大语文", "大语文", "http://dev" +
+                        ".umeng.com/images/tab2_1.png", AppValue.inviteUrl);
                 break;
             case R.id.child_add:// 添加孩子
                 startActivity(new Intent(mContext, ChildInfoActivity.class));

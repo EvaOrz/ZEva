@@ -29,6 +29,7 @@ import cn.com.zwwl.bayuwen.model.CalendarEventModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.CalendarMonthSelectView;
 
 /**
@@ -181,6 +182,7 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
                 finish();
                 break;
             case R.id.calendar_add:
+                UmengLogUtil.logRiliAddClick(mContext);
                 startActivity(new Intent(mContext, AddCalendarActivity.class));
                 break;
         }

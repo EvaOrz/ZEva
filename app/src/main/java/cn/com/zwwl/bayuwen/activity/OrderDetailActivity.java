@@ -38,6 +38,7 @@ import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.OrderForMyListModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 
 /**
  * 订单详情页面
@@ -307,6 +308,7 @@ public class OrderDetailActivity extends BaseActivity {
                         }
                     });
                 } else if (type == 2) {
+                    UmengLogUtil.logSqTuifee(mContext);
                     for (KeModel k : orderForMyListModel.getKeModels()) {
                         if (k.getRefund().equals("3")) {// 有正在退费的课程
                             showToast("订单中有正在退费的课程，请完成退费后重试");

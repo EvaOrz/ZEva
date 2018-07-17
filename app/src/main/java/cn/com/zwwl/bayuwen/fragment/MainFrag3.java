@@ -53,6 +53,7 @@ import cn.com.zwwl.bayuwen.model.MyCourseModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
 import static cn.com.zwwl.bayuwen.MyApplication.mContext;
@@ -83,7 +84,7 @@ public class MainFrag3 extends BasicFragment {
     LinearLayout calendarLayout;
     @BindView(R.id.report_layout)
     LinearLayout reportLayout;
-//	 @BindView(R.id.report_divider)
+    //	 @BindView(R.id.report_divider)
 //    View reportDivider;
     private CompleteCourseAdapter adapter;
     private List<KeModel> finishCourse = new ArrayList<>();
@@ -153,11 +154,10 @@ public class MainFrag3 extends BasicFragment {
     }
 
     private void bindView() {
-        if (reportModels == null || reportModels.size() == 0)
-		{			
-			reportLayout.setVisibility(View.GONE);
+        if (reportModels == null || reportModels.size() == 0) {
+            reportLayout.setVisibility(View.GONE);
 //			reportDivider.setVisibility(View.GONE);
-		}
+        }
         reportAdapter.setNewData(reportModels);
         calendarLayout.removeAllViews();
         if (calendarCourseBean != null && calendarCourseBean.getCourses().size() > 0) {
@@ -247,7 +247,8 @@ public class MainFrag3 extends BasicFragment {
                         } else {
                             intent.setClass(activity, StudyingIndexActivity.class);
                         }
-//                        intent.putExtra("online", Integer.parseInt(bean.getProducts().getOnline()));
+//                        intent.putExtra("online", Integer.parseInt(bean.getProducts().getOnline
+// ()));
                         startActivity(intent);
                         break;
                     case R.id.work_title:
@@ -300,7 +301,8 @@ public class MainFrag3 extends BasicFragment {
                     intent.setClass(activity, StudyingIndexActivity.class);
                 }
                 intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
-                intent.putExtra("title", courseModel.getUnfinished().get(position).getProducts().getTitle());
+                intent.putExtra("title", courseModel.getUnfinished().get(position).getProducts()
+                        .getTitle());
 //                intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
 //                        .get(position).getProducts().getOnline()));
 
@@ -316,11 +318,12 @@ public class MainFrag3 extends BasicFragment {
         return new MainFrag3();
     }
 
-    @OnClick({R.id.menu_more, R.id.menu_news, R.id.position,R.id.menu_search, R.id.go_calendar})
+    @OnClick({R.id.menu_more, R.id.menu_news, R.id.position, R.id.menu_search, R.id.go_calendar})
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.go_calendar:
+                UmengLogUtil.logRiliClick(mContext);
                 startActivity(new Intent(activity, CalendarActivity.class));
                 break;
             case R.id.menu_news:
