@@ -41,9 +41,7 @@ public class KeTagListApi extends BaseApi {
 
     @Override
     protected void handler(JSONObject json, JSONArray jsonArray, ErrorMsg errorMsg) {
-        if (errorMsg != null) {
-            listener.setError(errorMsg);
-        }
+        listener.setError(errorMsg);
         if (!isNull(json)) {
             Gson gson = new Gson();
             JSONObject j1 = json.optJSONObject("partOne");

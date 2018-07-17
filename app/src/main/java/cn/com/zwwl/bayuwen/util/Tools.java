@@ -267,6 +267,7 @@ public class Tools {
             String accessToken = TempDataHelper.getAccessToken(mContext);
             if (!TextUtils.isEmpty(accessToken))
                 headerMap.put("Access-Token", accessToken);
+            headerMap.put("app_version", Tools.getAppVersion(mContext));
         } catch (UnsupportedEncodingException e) {
 
         }

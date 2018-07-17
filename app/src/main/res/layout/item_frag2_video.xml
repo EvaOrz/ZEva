@@ -12,6 +12,7 @@
         android:layout_marginRight="10dp"
         android:layout_weight="1"
         android:ellipsize="end"
+        android:maxLines="3"
         android:text="按照中国义务教育政策与相关法律法规，小学升入初中就读是不需要升学考试的"
         android:textColor="@color/gray_light"
         android:textSize="@dimen/text_size_12" />
@@ -19,7 +20,7 @@
     <LinearLayout
         android:id="@+id/frag2_video_layout"
         android:layout_width="wrap_content"
-        android:orientation="vertical"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
 
 </LinearLayout>

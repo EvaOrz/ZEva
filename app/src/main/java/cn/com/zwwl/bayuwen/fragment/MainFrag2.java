@@ -47,6 +47,8 @@ import cn.com.zwwl.bayuwen.model.Index2Model.TagCourseModel.ClassifyBean.*;
 import cn.com.zwwl.bayuwen.model.Index2Model.TagCourseModel.VideoBean.*;
 import cn.com.zwwl.bayuwen.model.fm.RecommentModel;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
+import cn.com.zwwl.bayuwen.util.UriParse;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.RoundAngleImageView;
 
@@ -143,7 +145,7 @@ public class MainFrag2 extends Fragment
                             LinearLayout layout = view.findViewById(R.id.frag2_video_layout);
                             layout.addView(getVideoItemView(detailsBean), new LinearLayout
                                     .LayoutParams(nomalItemWidth, nomalItemWidth / 2));
-//                            title.setText(detailsBean.);
+                            title.setText(detailsBean.getDesc());
                             videoLayout2.addView(view);
                             // 不是最后一个，加diliver
                             if (i < part2Model.getVideo().getDetails().size() - 1) {
@@ -212,10 +214,16 @@ public class MainFrag2 extends Fragment
 
                     mLinearPosition.removeAllViews();
                     List<View> views = new ArrayList<>();
-                    for (RecommentModel recommentModel : bannerData) {
+                    for (final RecommentModel recommentModel : bannerData) {
                         RoundAngleImageView r = new RoundAngleImageView(mActivity);
                         r.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         ImageLoader.display(mActivity, r, recommentModel.getPic());
+                        r.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                UriParse.clickZwwl(mActivity, recommentModel.getLink());
+                            }
+                        });
                         views.add(r);
 
                         ImageView img = new ImageView(getContext());
@@ -296,6 +304,7 @@ public class MainFrag2 extends Fragment
         Intent intent = new Intent();
         intent.putExtra("SearchCourseActivity_id", detailsBean.getId() + "");
         intent.setClass(mActivity, CourseCenterActivity.class);
+        UmengLogUtil.logTagClick(mActivity);
         startActivity(intent);
     }
 
@@ -366,7 +375,7 @@ public class MainFrag2 extends Fragment
                 if (Tools.listNotNull(list)) {
                     bannerData.clear();
                     for (RecommentModel r : list) {
-                        if (r.getParent().equals("19")) {
+                        if (r.getParent().equals("31")) {
                             bannerData.add(r);
                         }
                     }

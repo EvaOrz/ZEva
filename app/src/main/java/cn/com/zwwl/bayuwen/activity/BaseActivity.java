@@ -29,6 +29,8 @@ import cn.com.zwwl.bayuwen.util.MyActivityManager;
 
 import android.support.v7.app.AppCompatActivity;
 
+import com.umeng.analytics.MobclickAgent;
+
 /**
  * Created by Eva. on 17/3/17.
  */
@@ -104,17 +106,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         mContext = this;
         MyActivityManager.getInstance().addActivity(this);
 
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        userModel = UserDataHelper.getUserLoginInfo(mContext);
-        if (needCheckLogin && userModel == null) {
-            startActivity(new Intent(mContext, LoginActivity.class));
-        }
-        analycisUri();
     }
 
     protected abstract void initData();
@@ -241,7 +232,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         super.onDestroy();
 
     }
-
 
     @Override
     protected void onStop() {

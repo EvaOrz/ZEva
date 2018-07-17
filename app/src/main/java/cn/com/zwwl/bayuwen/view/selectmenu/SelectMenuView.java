@@ -75,14 +75,14 @@ public class SelectMenuView extends LinearLayout {
      * @param gradeIndex     默认年级
      * @param tagIdIndex     默认typeid
      * @param isXianshangKe  是否是线上课
-     * @param isXiaoShengChu 是否需要默认年级
+     * @param isNeedDefaultGrade 是否需要默认年级
      */
     public void setData(KeTypeModel keTypeModel, String gradeIndex, String tagIdIndex, boolean
-            isXianshangKe, boolean isXiaoShengChu) {
+            isXianshangKe, boolean isNeedDefaultGrade) {
         dataLists1.clear();
         dataLists1.addAll(SelectTempModel.parseGrades(keTypeModel.getGrades()));
         int gradeDe = -1;
-        if (!isXiaoShengChu) {
+        if (isNeedDefaultGrade) {
             for (int i = 0; i < dataLists1.size(); i++) {
                 if (dataLists1.get(i).getText().equals(gradeIndex)) {
                     gradeDe = i;

@@ -3,6 +3,7 @@ package cn.com.zwwl.bayuwen.base;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -11,10 +12,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.umeng.analytics.MobclickAgent;
+
 import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import cn.com.zwwl.bayuwen.MyApplication;
+import cn.com.zwwl.bayuwen.activity.LoginActivity;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.util.MyActivityManager;
 
 
@@ -68,6 +73,13 @@ public abstract class BasicActivity extends AppCompatActivity {
     protected void onResume() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onResume();
+        MobclickAgent.onResume(this); //统计时长
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     protected abstract int setContentView();

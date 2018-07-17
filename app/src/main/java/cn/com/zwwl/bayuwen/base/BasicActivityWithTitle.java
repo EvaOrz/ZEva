@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.umeng.analytics.MobclickAgent;
+
 import java.util.HashMap;
 
 import butterknife.ButterKnife;
@@ -48,7 +50,8 @@ public abstract class BasicActivityWithTitle extends AppCompatActivity {
     void init() {
         mViewCode = new IActivityImpl(this);
         setContentView(setContentView());
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager
+// .LayoutParams.FLAG_FULLSCREEN);
         //默认显示返回箭头
         setDisplayHomeAsUpEnabled(true);
         map = new HashMap<>();
@@ -158,6 +161,13 @@ public abstract class BasicActivityWithTitle extends AppCompatActivity {
     protected void onResume() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onResume();
+        MobclickAgent.onResume(this); //统计时长
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     /**

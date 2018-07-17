@@ -49,7 +49,6 @@ public class RecommentApi extends BaseApi {
      */
     @Override
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
-        if (errorMsg != null)
             listener.setError(errorMsg);
 
         if (!isNull(json)) {
@@ -66,6 +65,15 @@ public class RecommentApi extends BaseApi {
             if (!isNull(a20)) {
                 for (int i = 0; i < a20.length(); i++) {
                     JSONObject o = a20.optJSONObject(i);
+                    RecommentModel f = new RecommentModel();
+                    f.parseRecommentModel(o, f);
+                    recommentModels.add(f);
+                }
+            }
+            JSONArray a31 = json.optJSONArray("31");
+            if (!isNull(a31)) {
+                for (int i = 0; i < a31.length(); i++) {
+                    JSONObject o = a31.optJSONObject(i);
                     RecommentModel f = new RecommentModel();
                     f.parseRecommentModel(o, f);
                     recommentModels.add(f);

@@ -61,6 +61,7 @@ public class CourseCenterActivity extends BaseActivity {
     private String tagId;// 首页传来的tag_id
     private String searchKey; // 搜索页面传来的关键词
     private int gradeTxt = -1;// 初始化 学员年级
+    private boolean isNeedDefaultGrade = true;// 是否需要选中默认年级
 
     protected HashMap<String, String> para;
     private int page = 1;
@@ -73,6 +74,7 @@ public class CourseCenterActivity extends BaseActivity {
         setContentView(R.layout.activity_course_center);
         tagId = getIntent().getStringExtra("SearchCourseActivity_id");
         searchKey = getIntent().getStringExtra("SearchCourseActivity_key");
+        isNeedDefaultGrade = getIntent().getBooleanExtra("SearchCourseActivity_grade", true);
         initView();
         initData();
         para = new HashMap<>();
@@ -125,7 +127,6 @@ public class CourseCenterActivity extends BaseActivity {
                 }
                 page = 1;
                 initListData();
-
             }
 
             @Override
@@ -255,12 +256,8 @@ public class CourseCenterActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(tagId) && tagId.equals("100")) {
                         isWangke = true;
                     }
-                    boolean isXiaoShengchu = false;
-                    if (!TextUtils.isEmpty(tagId) && (tagId.equals("35") || tagId.equals("36") ||
-                            tagId.equals("37"))) {
-                        isXiaoShengchu = true;
-                    }
-                    selectMenuView.setData(keTypeModel, gra, tagId, isWangke, isXiaoShengchu);
+
+                    selectMenuView.setData(keTypeModel, gra, tagId, isWangke, isNeedDefaultGrade);
                     int height = getViewHeight(selectMenuView);
                     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams
                             (RelativeLayout
@@ -269,7 +266,6 @@ public class CourseCenterActivity extends BaseActivity {
                     layoutParams.setMargins(0, height, 0, 0);
                     layoutParams.addRule(RelativeLayout.BELOW, R.id.search_head_layout);
                     refresh.setLayoutParams(layoutParams);
-
                     break;
             }
 

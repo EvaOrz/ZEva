@@ -430,7 +430,7 @@
                     android:layout_marginTop="10dp"
                     android:gravity="right"
                     android:text="需付款：￥0.0"
-                    android:textColor="@color/gold"
+                    android:textColor="@color/text_red"
                     android:textSize="@dimen/text_size_14" />
 
             </LinearLayout>

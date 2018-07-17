@@ -87,6 +87,7 @@ public class Index2Model extends Entry {
                 private String name;
                 private String desc;
                 private String img;
+                private int filterGrade;
 
                 public int getId() {
                     return id;
@@ -119,6 +120,14 @@ public class Index2Model extends Entry {
                 public void setImg(String img) {
                     this.img = img;
                 }
+
+                public int getFilterGrade() {
+                    return filterGrade;
+                }
+
+                public void setFilterGrade(int filterGrade) {
+                    this.filterGrade = filterGrade;
+                }
             }
         }
 
@@ -147,6 +156,7 @@ public class Index2Model extends Entry {
             public static class DetailsBeanX {
 
                 private String url;
+                private String desc;
                 private String img;
 
                 public String getUrl() {
@@ -163,6 +173,14 @@ public class Index2Model extends Entry {
 
                 public void setImg(String img) {
                     this.img = img;
+                }
+
+                public String getDesc() {
+                    return desc;
+                }
+
+                public void setDesc(String desc) {
+                    this.desc = desc;
                 }
             }
         }
