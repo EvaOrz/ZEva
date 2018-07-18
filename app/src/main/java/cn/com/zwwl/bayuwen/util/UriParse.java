@@ -13,6 +13,8 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.activity.AllXunzhangActivity;
 import cn.com.zwwl.bayuwen.activity.CalendarActivity;
 import cn.com.zwwl.bayuwen.activity.CourseDetailActivity;
+import cn.com.zwwl.bayuwen.activity.MessageActivity;
+import cn.com.zwwl.bayuwen.activity.MessageDetailActivity;
 import cn.com.zwwl.bayuwen.activity.TeacherDetailActivity;
 import cn.com.zwwl.bayuwen.activity.WebActivity;
 import cn.com.zwwl.bayuwen.activity.fm.AlbumDetailActivity;
@@ -60,6 +62,8 @@ public class UriParse {
      * @param mid
      */
     private static void goMessage(Context context, String mid) {
+        Intent intent =new Intent(context, MessageActivity.class);
+        context.startActivity(intent);
 
     }
 
@@ -101,8 +105,11 @@ public class UriParse {
      * @param context
      * @param kid
      */
-    private static void goKeReport(Context context, String kid) {
-
+    private static void goKeReport(Context context, String link) {
+        Intent intent = new Intent(context, WebActivity.class);
+        intent.putExtra("WebActivity_title", "");
+        intent.putExtra("WebActivity_data", link);
+        context.startActivity(intent);
     }
 
     /**

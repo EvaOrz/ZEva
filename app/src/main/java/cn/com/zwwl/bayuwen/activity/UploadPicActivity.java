@@ -3,14 +3,15 @@ package cn.com.zwwl.bayuwen.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -32,7 +33,6 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.UploadPicAdapter;
 import cn.com.zwwl.bayuwen.api.UploadPicApi;
 import cn.com.zwwl.bayuwen.api.UploadWorkApi;
-import cn.com.zwwl.bayuwen.base.MenuCode;
 import cn.com.zwwl.bayuwen.dialog.LoadingDialog;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.CommonModel;
@@ -53,7 +53,7 @@ public class UploadPicActivity extends BaseActivity {
     ArrayList<AlbumFile> albumFiles;
     UploadPicAdapter uploadPicAdapter;
     AlbumFile file;
-    String kid, cid;
+    String kid, cid, titleName1, courseName1;
     StringBuilder urls;
     LoadingDialog loadingDialog;
     @BindView(R.id.id_back)
@@ -62,6 +62,10 @@ public class UploadPicActivity extends BaseActivity {
     TextView titleName;
     @BindView(R.id.right_title)
     TextView rightTitle;
+    @BindView(R.id.titlecourse_name)
+    TextView titlecourseName;
+    @BindView(R.id.course_name)
+    AppCompatTextView courseName;
     private HashMap<String, String> map;
     private Activity mActivity;
 
@@ -88,8 +92,8 @@ public class UploadPicActivity extends BaseActivity {
         titleName.setText("作业上传");
         rightTitle.setVisibility(View.VISIBLE);
         rightTitle.setText("提交");
-        ConstraintLayout.LayoutParams linearParams = (ConstraintLayout.LayoutParams) content.getLayoutParams();
-        linearParams.height = MyApplication.height / 2;
+        LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) content.getLayoutParams();
+        linearParams.height = MyApplication.height / 3;
         content.setLayoutParams(linearParams);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.addItemDecoration(new GridItemDecoration(this));
@@ -101,6 +105,11 @@ public class UploadPicActivity extends BaseActivity {
         urls = new StringBuilder();
         kid = getIntent().getStringExtra("kid");
         cid = getIntent().getStringExtra("cid");
+        titleName1 = getIntent().getStringExtra("titleName");
+        courseName1 = getIntent().getStringExtra("courseName");
+        titlecourseName.setText(titleName1);
+        courseName.setText(courseName1);
+
         albumFiles = new ArrayList<>();
         file = new AlbumFile();
         file.setPath("");
