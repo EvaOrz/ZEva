@@ -109,7 +109,7 @@ public class WorkListActivity extends BaseActivity {
         courseName.setText(bigClassInfoBean.getTitle());
         courseCode.setText(bigClassInfoBean.getModel());
         schoolName.setText(bigClassInfoBean.getSchool());
-        date.setText(bigClassInfoBean.getClass_start_at());
+        date.setText(bigClassInfoBean.getStart_at());
 //        schoolName.setText(bigClassInfoBean.getSchool());
 
         if (Tools.listNotNull(bigClassInfoBean.getTeacherInfo())) {

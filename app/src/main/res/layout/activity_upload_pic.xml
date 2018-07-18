@@ -48,7 +48,7 @@
                         android:paddingTop="@dimen/dp_10"
                         android:text=""
                         android:textColor="@color/gray_dark"
-                        android:textSize="@dimen/dp_16" />
+                        android:textSize="@dimen/sp_14" />
 
 
                     <ImageView
