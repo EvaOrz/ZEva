@@ -101,7 +101,7 @@ public class UriParse {
      * 课程报告页面
      *
      * @param context
-     * @param kid
+     * @param link
      */
     private static void goKeReport(Context context, String link) {
         Intent intent = new Intent(context, WebActivity.class);
