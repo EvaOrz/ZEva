@@ -38,6 +38,8 @@ import cn.com.zwwl.bayuwen.activity.MyCollectionActivity;
 import cn.com.zwwl.bayuwen.activity.MyOrderActivity;
 import cn.com.zwwl.bayuwen.activity.MyTuanActivity;
 import cn.com.zwwl.bayuwen.activity.OurFmActivity;
+import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
+import cn.com.zwwl.bayuwen.activity.RegisterAddChildActivity;
 import cn.com.zwwl.bayuwen.activity.SettingActivity;
 import cn.com.zwwl.bayuwen.activity.TuanCodeUseActivity;
 import cn.com.zwwl.bayuwen.api.order.OrderCancleNumApi;
@@ -134,12 +136,11 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
         root.findViewById(R.id.frag5_account).setOnClickListener(this);
         cart_num = root.findViewById(R.id.cart_num);
         frag5Avatar = root.findViewById(R.id.frag5_avatar);
+        frag5Avatar.setOnClickListener(this);
         frag5Name = root.findViewById(R.id.frag5_name);
         frag5ChildLayout = root.findViewById(R.id.frag5_child_layout);
         frag5Code = root.findViewById(R.id.frag5_code);
         frag5Level = root.findViewById(R.id.frag5_level);
-
-
     }
 
     public void initData(UserModel userModel) {
@@ -271,6 +272,10 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 Intent i = new Intent(mActivity, MyAccountActivity.class);
                 startActivity(i);
                 break;
+            case R.id.frag5_avatar:
+                startActivity(new Intent(mActivity, ParentInfoActivity.class));
+                break;
+
         }
     }
 

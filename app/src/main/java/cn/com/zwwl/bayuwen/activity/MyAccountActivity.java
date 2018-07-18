@@ -51,6 +51,7 @@ public class MyAccountActivity extends BaseActivity {
 
     private void initView() {
         findViewById(R.id.account_back).setOnClickListener(this);
+        findViewById(R.id.account_user_layout).setOnClickListener(this);
         account_user = findViewById(R.id.account_user);
         account_user.setText(UserDataHelper.getUserLoginInfo(mContext).getTel());
         contain = findViewById(R.id.account_container);
@@ -63,6 +64,9 @@ public class MyAccountActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.account_back:
                 finish();
+                break;
+            case R.id.account_user_layout:
+                startActivity(new Intent(mContext, ParentInfoActivity.class));
                 break;
         }
     }
@@ -133,7 +137,7 @@ public class MyAccountActivity extends BaseActivity {
         name.setText(childModel.getName());
         grade.setText(childModel.getGrade());
         no.setText("NO：" + childModel.getNo());
-        location.setText(childModel.getCity());
+        location.setText(childModel.getSchool());
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

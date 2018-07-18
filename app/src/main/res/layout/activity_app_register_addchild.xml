@@ -106,6 +106,7 @@
                 android:layout_weight="1"
                 android:button="@drawable/selector_radio_round"
                 android:checked="true"
+                android:padding="5dp"
                 android:text="@string/male"
                 android:textColor="@color/gray_dark"
                 android:textSize="@dimen/text_size_14" />
@@ -117,6 +118,7 @@
                 android:layout_weight="1"
                 android:button="@drawable/selector_radio_round"
                 android:checked="false"
+                android:padding="5dp"
                 android:text="@string/female"
                 android:textColor="@color/gray_dark"
                 android:textSize="@dimen/text_size_14" />
@@ -135,9 +137,8 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="2018年9月，您的孩子将"
                 android:textColor="@color/gray_light"
@@ -146,9 +147,10 @@
 
             <TextView
                 android:id="@+id/register_add_nianji"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
                 android:padding="5dp"
                 android:text="一年级"
                 android:textColor="@color/gray_dark"

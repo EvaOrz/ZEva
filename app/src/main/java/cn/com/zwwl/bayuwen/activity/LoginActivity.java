@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,6 +41,7 @@ public class LoginActivity extends BaseActivity implements TencentLocationListen
     private boolean isShowPassword = false;// 是否显示密码
     public static int LOGIN_SUCCESS = 0;
     public static int LOGIN_CANCLE = 1;
+    private long lastClickTime = 0;
 
     private TencentLocationManager mLocationManager;
 
@@ -208,7 +210,19 @@ public class LoginActivity extends BaseActivity implements TencentLocationListen
             }
         }
 
-
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            long clickTime = System.currentTimeMillis() / 1000;
+            if (clickTime - lastClickTime >= 3) {
+                lastClickTime = clickTime;
+                showToast(R.string.exit_app);
+                return true;
+            }
+        }
+        MyActivityManager.getInstance().exit();
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

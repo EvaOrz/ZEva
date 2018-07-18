@@ -30,6 +30,7 @@ import cn.com.zwwl.bayuwen.api.ChildInfoApi;
 import cn.com.zwwl.bayuwen.api.HonorActionApi;
 import cn.com.zwwl.bayuwen.api.HonorListApi;
 import cn.com.zwwl.bayuwen.api.UploadPicApi;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ChildModel;
@@ -375,15 +376,19 @@ public class ChildInfoActivity extends BaseActivity {
     @Override
     protected void initData() {
         if (!TextUtils.isEmpty(childModel.getPic()))
-            Glide.with(this).load(childModel.getPic()).into(aImg);
+            ImageLoader.display(mContext, aImg, childModel.getPic(), R.drawable
+                    .avatar_placeholder, R.drawable.avatar_placeholder);
         nameEv.setText(childModel.getName());
         genderTv.setText(childModel.getSexTxt(childModel.getGender()));
         phoneEv.setText(childModel.getTel());
-        birthTv.setText(childModel.getBirthday());
-        ruxueTv.setText(childModel.getAdmission_time());
+        if (!TextUtils.isEmpty(childModel.getBirthday()))
+            birthTv.setText(childModel.getBirthday());
+        if (!TextUtils.isEmpty(childModel.getAdmission_time()))
+            ruxueTv.setText(childModel.getAdmission_time());
         nianjiTv.setText(childModel.getGrade());
         noTv.setText(childModel.getNo());
-        schoolEv.setText(childModel.getSchool());
+        if (!TextUtils.isEmpty(childModel.getSchool()))
+            schoolEv.setText(childModel.getSchool());
         titleTv.setText(childModel.getName());
     }
 

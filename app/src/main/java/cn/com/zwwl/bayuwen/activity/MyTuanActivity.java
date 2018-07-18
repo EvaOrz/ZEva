@@ -245,7 +245,7 @@ public class MyTuanActivity extends BaseActivity {
                     data1.addAll(sponsor);
                 }
                 if (Tools.listNotNull(join)) {
-                    data2.addAll(sponsor);
+                    data2.addAll(join);
                 }
                 handler.sendEmptyMessage(0);
             }
@@ -315,7 +315,8 @@ public class MyTuanActivity extends BaseActivity {
                 yuanjia.setText("原价：￥" + Tools.getTwoDecimal(Double.valueOf(model.getKeModel()
                         .getBuyPrice())));
             }
-            if (model.getType().equals("1")) {
+            String type = model.getType();// 1：拼团 0：垫付
+            if (type.equals("1")) {
                 item_tuan_code.setText("拼团码：" + model.getPurchase_code());
                 item_tuan_duihuan.setVisibility(View.GONE);
             } else {
@@ -323,10 +324,17 @@ public class MyTuanActivity extends BaseActivity {
                 item_tuan_code.setText("垫付的团购");
             }
             if (model.getDiscount() != null) {
-                tuanjia.setText("团购价：￥" + Tools.getTwoDecimal(model.getDiscount()
-                        .getDiscount_price()));
-                dianjia.setText("垫付金额：￥" + Tools.getTwoDecimal(model
-                        .getDianfu()));
+                if (type.equals("1")) {
+                    tuanjia.setVisibility(View.GONE);
+                    dianjia.setText("团购价：￥" + Tools.getTwoDecimal(model.getDiscount()
+                            .getDiscount_price()));
+                } else {
+                    tuanjia.setText("团购价：￥" + Tools.getTwoDecimal(model.getDiscount()
+                            .getDiscount_price()));
+                    dianjia.setText("垫付金额：￥" + Tools.getTwoDecimal(model
+                            .getDianfu()));
+                }
+
             }
             item_tuan_duihuan.setOnClickListener(new View.OnClickListener() {
                 @Override
