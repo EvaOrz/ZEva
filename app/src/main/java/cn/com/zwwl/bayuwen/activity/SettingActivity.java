@@ -27,7 +27,6 @@ public class SettingActivity extends BaseActivity {
         findViewById(R.id.setting_option1).setOnClickListener(this);
         findViewById(R.id.setting_option2).setOnClickListener(this);
         findViewById(R.id.setting_option3).setOnClickListener(this);
-        findViewById(R.id.setting_option4).setOnClickListener(this);
         findViewById(R.id.setting_logout).setOnClickListener(this);
 
     }
@@ -45,8 +44,6 @@ public class SettingActivity extends BaseActivity {
             case R.id.setting_option2:
                 break;
             case R.id.setting_option3:
-                break;
-            case R.id.setting_option4:
                 startActivity(new Intent(mContext, AboutActivity.class));
                 break;
             case R.id.setting_logout:

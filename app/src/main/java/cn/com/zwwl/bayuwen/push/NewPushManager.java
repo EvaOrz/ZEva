@@ -40,7 +40,6 @@ public class NewPushManager {
      * 注册推送
      */
     public void register() {
-
         Log.e("注册极光推送", "注册极光推送");
         registerJPush();
 //        DataHelper.setPushServiceEnable(mContext, true);
@@ -153,19 +152,6 @@ public class NewPushManager {
             }
         }
         return false;
-    }
-
-    /**
-     * 获取推送文章url
-     *
-     * @param jsonString
-     * @return
-     */
-    private String newParseArticleUrl(String jsonString) {
-        String url = "";
-
-        Log.e("push ariticle url", jsonString);
-        return url;
     }
 
 }

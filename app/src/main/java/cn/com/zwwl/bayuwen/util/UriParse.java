@@ -1,6 +1,5 @@
 package cn.com.zwwl.bayuwen.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -30,7 +29,6 @@ import cn.com.zwwl.bayuwen.activity.fm.AlbumDetailActivity;
  * 我的课程详情界面 (结课后，进入)：         zwwl://course/my/{{课程id}}
  */
 public class UriParse {
-
 
     private static ArrayList<String> parser(String uri) {
         ArrayList<String> list = new ArrayList<>();
@@ -115,7 +113,6 @@ public class UriParse {
     private static void goCalendar(Context context, String studentNo, String date) {
         Intent i = new Intent(context, CalendarActivity.class);
         context.startActivity(i);
-
     }
 
     /**

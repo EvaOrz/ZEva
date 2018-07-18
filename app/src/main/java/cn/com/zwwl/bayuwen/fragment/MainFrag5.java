@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -66,6 +67,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
     private Activity mActivity;
     private View root;
     private UserModel userModel;
+    private TextView lookLevelInfo;
 
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
 
@@ -116,7 +118,9 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
 
     private void initView() {
         root.findViewById(R.id.frag5_setting).setOnClickListener(this);
-        root.findViewById(R.id.frag5_level_info).setOnClickListener(this);
+        lookLevelInfo = root.findViewById(R.id.frag5_level_info);
+        lookLevelInfo.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        lookLevelInfo.setOnClickListener(this);
         root.findViewById(R.id.frag5_order1).setOnClickListener(this);
         root.findViewById(R.id.frag5_order2).setOnClickListener(this);
         root.findViewById(R.id.frag5_order3).setOnClickListener(this);

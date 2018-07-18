@@ -68,8 +68,10 @@ public class CalendarMonthSelectView extends HorizontalScrollView {
             textView.setTextSize(16);
             textView.setPadding(10, 10, 10, 10);
             textView.setTag(calendars.get(i));
-            textView.setText(CalendarTools.format(calendars.get(i).getTimeInMillis()/1000, "yyyy年MM月"));
-            textView.setLayoutParams(new ViewGroup.LayoutParams(MyApplication.width / 3, ViewGroup.LayoutParams.WRAP_CONTENT));
+            textView.setText(CalendarTools.format(calendars.get(i).getTimeInMillis() / 1000,
+                    "yyyy年MM月"));
+            textView.setLayoutParams(new ViewGroup.LayoutParams(MyApplication.width / 3,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
             textView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -123,16 +125,18 @@ public class CalendarMonthSelectView extends HorizontalScrollView {
             TextView child = (TextView) layout.getChildAt(i);
 
             // 选中状态
-            if (current.get(Calendar.YEAR) == ((Calendar) child.getTag()).get(Calendar.YEAR) && current.get(Calendar.MONTH) == ((Calendar) child.getTag()).get(Calendar.MONTH)) {
+            if (current.get(Calendar.YEAR) == ((Calendar) child.getTag()).get(Calendar.YEAR) &&
+                    current.get(Calendar.MONTH) == ((Calendar) child.getTag()).get(Calendar
+                            .MONTH)) {
                 selectPosition = i;
-                child.setTextColor(mContext.getResources().getColor(R.color.gold));
+                child.setTextColor(mContext.getResources().getColor(R.color.white));
                 int scrollX = this.getScrollX();
                 int left = child.getLeft();
                 int right = child.getRight();
                 int leftScreen = left - scrollX + (right - left) / 2;
                 smoothScrollBy((leftScreen - screenHalf), 0);
             } else {
-                child.setTextColor(mContext.getResources().getColor(R.color.gray_dark));
+                child.setTextColor(mContext.getResources().getColor(R.color.gray_light));
 
             }
         }

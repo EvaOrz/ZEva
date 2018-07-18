@@ -19,6 +19,7 @@ public class CommonWebView extends WebView {
 
     public CommonWebView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
+        this.context = context;
     }
 
     @Override

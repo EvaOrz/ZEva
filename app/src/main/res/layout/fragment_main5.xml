@@ -21,14 +21,13 @@
                 android:layout_height="wrap_content"
                 android:background="@color/lisichen"
                 android:orientation="vertical"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:paddingTop="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:background="@drawable/drawable_transwhite_corner"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
@@ -38,10 +37,16 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/drawable_transwhite_corner" />
+
                         <cn.com.zwwl.bayuwen.widget.CircleImageView
                             android:id="@+id/frag5_avatar"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerInParent="true"
                             android:src="@drawable/avatar_placeholder" />
 
                         <TextView
@@ -51,12 +56,12 @@
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:layout_marginBottom="5dp"
-                            android:paddingLeft="13dp"
+                            android:background="@mipmap/user_level"
                             android:gravity="center_vertical"
+                            android:paddingLeft="13dp"
                             android:text="20"
                             android:textColor="@color/white"
-                            android:textSize="8sp"
-                            android:background="@mipmap/user_level" />
+                            android:textSize="8sp" />
                     </RelativeLayout>
 
                     <LinearLayout
@@ -106,17 +111,17 @@
                                 android:id="@+id/frag5_level_info"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
                                 android:text="@string/look_gongxun_guize"
                                 android:textColor="@color/yellow"
-                                android:textSize="@dimen/text_size_14" />
+                                android:textSize="@dimen/text_size_12" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:text="@string/wodecode"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/text_size_14" />
+                                android:textSize="@dimen/text_size_12" />
 
                             <TextView
                                 android:id="@+id/frag5_code"

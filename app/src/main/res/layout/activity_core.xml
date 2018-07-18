@@ -47,12 +47,17 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/drawable_transwhite_corner" />
+
                         <cn.com.zwwl.bayuwen.widget.CircleImageView
                             android:id="@+id/main_avatar"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerInParent="true"
                             android:src="@drawable/avatar_placeholder" />
-
 
                         <TextView
                             android:id="@+id/main_gongxun"
@@ -89,7 +94,7 @@
                             android:id="@+id/main_yaoqingma"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="我的邀请码:XXXXX"
+                            android:text="我的邀请码:"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_size_12" />
 
@@ -97,7 +102,7 @@
                             android:id="@+id/main_gongxun_rule"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="查看等级规则>>"
+                            android:text="@string/look_gongxun_guize"
                             android:textColor="@color/yellow"
                             android:textSize="@dimen/text_size_12" />
                     </LinearLayout>

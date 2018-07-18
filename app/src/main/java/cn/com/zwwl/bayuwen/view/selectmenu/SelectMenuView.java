@@ -55,6 +55,7 @@ public class SelectMenuView extends LinearLayout {
 
     private int mTabRecorder = -1;
     private boolean isPopShow = false;// 是否展开筛选器
+    private boolean isConvertClass = false;// 是否是转班操作
 
     public SelectMenuView(Context context) {
         super(context);
@@ -72,9 +73,9 @@ public class SelectMenuView extends LinearLayout {
      * 设置数据
      *
      * @param keTypeModel
-     * @param gradeIndex     默认年级
-     * @param tagIdIndex     默认typeid
-     * @param isXianshangKe  是否是线上课
+     * @param gradeIndex         默认年级
+     * @param tagIdIndex         默认typeid
+     * @param isXianshangKe      是否是线上课
      * @param isNeedDefaultGrade 是否需要默认年级
      */
     public void setData(KeTypeModel keTypeModel, String gradeIndex, String tagIdIndex, boolean
@@ -129,27 +130,21 @@ public class SelectMenuView extends LinearLayout {
     }
 
     public void setOffline() {
+        isConvertClass = true;
         mText3.setText("线下课");
         mText3.setTextColor(ContextCompat.getColor(mContext, R.color.gray_light));
+        mText2.setTextColor(ContextCompat.getColor(mContext, R.color.gray_light));
         arrowImg3.setVisibility(INVISIBLE);
+        arrowImg2.setVisibility(INVISIBLE);
         findViewById(R.id.layout3).setClickable(false);
+        findViewById(R.id.layout2).setClickable(false);
         findViewById(R.id.layout1).setVisibility(GONE);
     }
 
     /**
      * 设置数据
      */
-    public void setOfflineData(KeTypeModel keTypeModel, String grade, String project) {
-        dataLists1.clear();
-        dataLists1.addAll(SelectTempModel.parseGrades(keTypeModel.getGrades()));
-        int gradeDe = -1;
-        for (int i = 0; i < dataLists1.size(); i++) {
-            if (dataLists1.get(i).getText().equals(grade)) {
-                gradeDe = i;
-                mText1.setText(grade);
-            }
-        }
-        mOneHolder1.refreshData(dataLists1, gradeDe);
+    public void setOfflineData(KeTypeModel keTypeModel, String project) {
 
         dataLists2.clear();
         dataLists2.addAll(SelectTempModel.parseCourse(keTypeModel.getCourseType()));
@@ -393,10 +388,12 @@ public class SelectMenuView extends LinearLayout {
             mText1.setTextColor(getResources().getColor(R.color.gray_dark));
             arrowImg1.setImageResource(R.mipmap.ic_down);
         } else if (tab == 2) {
-            mText2.setTextColor(getResources().getColor(R.color.gray_dark));
+            if (!isConvertClass)
+                mText2.setTextColor(getResources().getColor(R.color.gray_dark));
             arrowImg2.setImageResource(R.mipmap.ic_down);
         } else if (tab == 3) {
-            mText3.setTextColor(getResources().getColor(R.color.gray_dark));
+            if (!isConvertClass)
+                mText3.setTextColor(getResources().getColor(R.color.gray_dark));
             arrowImg3.setImageResource(R.mipmap.ic_down);
         } else if (tab == 4) {
             mText4.setTextColor(getResources().getColor(R.color.gray_dark));
@@ -410,9 +407,11 @@ public class SelectMenuView extends LinearLayout {
     private void setTabClose() {
         mText1.setTextColor(getResources().getColor(R.color.gray_dark));
         arrowImg1.setImageResource(R.mipmap.ic_down);
-        mText2.setTextColor(getResources().getColor(R.color.gray_dark));
+        if (!isConvertClass)
+            mText2.setTextColor(getResources().getColor(R.color.gray_dark));
         arrowImg2.setImageResource(R.mipmap.ic_down);
-        mText3.setTextColor(getResources().getColor(R.color.gray_dark));
+        if (!isConvertClass)
+            mText3.setTextColor(getResources().getColor(R.color.gray_dark));
         arrowImg3.setImageResource(R.mipmap.ic_down);
         mText4.setTextColor(getResources().getColor(R.color.gray_dark));
         arrowImg4.setImageResource(R.mipmap.ic_down);

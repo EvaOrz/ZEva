@@ -84,7 +84,7 @@ public class ConvertClassActivity extends BaseActivity {
     protected Resources res;
     protected HashMap<String, String> map;
     private Activity mActivity;
-    private int flag=0;
+    private int flag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,10 +92,10 @@ public class ConvertClassActivity extends BaseActivity {
         setContentView(R.layout.activity_convert_class);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-        mActivity =this;
-        mApplication= (MyApplication) getApplication();
-        res=getResources();
-        map=new HashMap<>();
+        mActivity = this;
+        mApplication = (MyApplication) getApplication();
+        res = getResources();
+        map = new HashMap<>();
         initView1();
         getChoseType();
         setListener1();
@@ -105,9 +105,9 @@ public class ConvertClassActivity extends BaseActivity {
     protected void initView1() {
 //        showMenu(MenuCode.HIDE_CLASS);
         rightTitle.setVisibility(View.VISIBLE);
-        flag=0;
+        flag = 0;
         rightTitle.setText("隐藏满班");
-        operate.setOffline();
+
         keModels = new ArrayList<>();
         stockClass = new ArrayList<>();
         if (mApplication.operate_type == 0) {
@@ -133,6 +133,7 @@ public class ConvertClassActivity extends BaseActivity {
         if (!TextUtils.isEmpty(projectType)) {
             map.put("type", projectType);
         }
+        operate.setOffline();
         refresh.autoRefresh();
 
 
@@ -152,7 +153,7 @@ public class ConvertClassActivity extends BaseActivity {
                         @Override
                         public void run() {
                             typeModel = (KeTypeModel) entry;
-                            operate.setOfflineData(typeModel, AppValue.getGradeStrings().get(grade - 1), projectType);
+                            operate.setOfflineData(typeModel, projectType);
                         }
                     });
 
@@ -202,7 +203,8 @@ public class ConvertClassActivity extends BaseActivity {
                 return false;
             }
         });
-        operate.setOnMenuSelectDataChangedListener(new SelectMenuView.OnMenuSelectDataChangedListener() {
+        operate.setOnMenuSelectDataChangedListener(new SelectMenuView
+                .OnMenuSelectDataChangedListener() {
             @Override
             public void onSortChanged(SelectTempModel sortType, int type) {
                 switch (type) {
@@ -270,7 +272,8 @@ public class ConvertClassActivity extends BaseActivity {
                     refresh.finishRefresh();
                     refresh.finishLoadMore();
                     if (searchModel != null) {
-                        if (searchModel.get_meta().getCurrentPage() == searchModel.get_meta().getPageCount())
+                        if (searchModel.get_meta().getCurrentPage() == searchModel.get_meta()
+                                .getPageCount())
                             refresh.finishLoadMoreWithNoMoreData();
                         if (page == 1) {
                             keModels.clear();
@@ -290,22 +293,22 @@ public class ConvertClassActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.right_title,R.id.id_back})
+    @OnClick({R.id.right_title, R.id.id_back})
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.id_back:
                 finish();
                 break;
             case R.id.right_title:
-                if (flag==0){
-                   rightTitle.setText("显示全部");
+                if (flag == 0) {
+                    rightTitle.setText("显示全部");
                     adapter.setNewData(stockClass);
-                    flag=1;
-                }else {
+                    flag = 1;
+                } else {
                     rightTitle.setText("隐藏满班");
                     adapter.setNewData(keModels);
-                    flag=0;
+                    flag = 0;
                 }
                 break;
         }
@@ -327,6 +330,7 @@ public class ConvertClassActivity extends BaseActivity {
 //        }
 //        invalidateOptionsMenu();
 //    }
+
     /**
      * 隐藏软键盘
      */

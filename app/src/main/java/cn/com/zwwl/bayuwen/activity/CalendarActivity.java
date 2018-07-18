@@ -125,7 +125,7 @@ public class CalendarActivity extends BaseActivity implements CalendarView.OnMon
                             c.setTime(d);
                             schemes.add(getSchemeCalendar(c.get(Calendar.YEAR), c.get(Calendar
                                             .MONTH) + 1, c.get(Calendar.DAY_OF_MONTH),
-                                    0xFFdcaa40, mapDatas.get(key).size() + ""));
+                                    0xfff08301, mapDatas.get(key).size() + ""));
                         }
                         calendarView.setSchemeDate(schemes);
                     } catch (ParseException e) {

@@ -17,6 +17,7 @@ import com.haibin.calendarview.MonthView;
 public class CustomMonthView extends MonthView {
 
     private int gray_dark = 0xff4b4b4b;
+    private int scheme_text_color = 0xfff08301;
     private float mCircleRadius;
 
     private int mRadius;
@@ -107,7 +108,7 @@ public class CustomMonthView extends MonthView {
         if (isSelected) {
             mPointPaint.setColor(Color.WHITE);
         } else {
-            mPointPaint.setColor(0xffdcaa40);// gold
+            mPointPaint.setColor(scheme_text_color);// text_red
         }
         canvas.drawCircle(x + mItemWidth / 2, y + mItemHeight - 3 * mPadding, mPointRadius,
                 mPointPaint);

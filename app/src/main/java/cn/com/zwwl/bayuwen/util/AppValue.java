@@ -19,7 +19,8 @@ import cn.com.zwwl.bayuwen.activity.BaseActivity;
 public class AppValue extends Tools {
 
     public static String enrollUrl = "";//报名须知
-    public static String refundUrl = "";//退款须知
+    public static String refundUrl = "";//线下课退款须知
+    public static String refundOnUrl = "";//线上课退款须知
     public static String inviteUrl = "";//邀请好友加入大语文
     public static String aboutUrl = "";//关于
     public static String versionUrl = "";//版本须知
