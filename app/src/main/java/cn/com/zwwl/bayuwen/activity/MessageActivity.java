@@ -28,6 +28,7 @@ public class MessageActivity extends BaseActivity {
     private Fragment[] mFragments;
     private ImageView message_add;
     private int mIndex;
+    private Intent intent;
 
 
     @Override
@@ -36,6 +37,8 @@ public class MessageActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         UmengLogUtil.logMessageClick(mContext);
         setContentView(R.layout.activity_message);
+        intent =getIntent();
+
         initView();
     }
 
@@ -69,7 +72,7 @@ public class MessageActivity extends BaseActivity {
                 } else topic.setBackground(null);
             }
         });
-        notification.setChecked(true);
+
         findViewById(R.id.message_back).setOnClickListener(this);
     }
 
@@ -82,11 +85,21 @@ public class MessageActivity extends BaseActivity {
         mFragments = new Fragment[]{notifyFragment, topicFragment};
         //开启事务
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        notification.setBackgroundResource(R.drawable.gray_dark_circle);
-        topic.setBackground(null);
+        if (intent.getStringExtra("ass")==null) {
+            notification.setBackgroundResource(R.drawable.gray_dark_circle);
+            topic.setBackground(null);
 //                appointment_Id.setEnabled(false);
-        ft.add(R.id.fg_view, notifyFragment).commit();
-        setIndexSelected(0);
+            ft.add(R.id.fg_view, notifyFragment).commit();
+            setIndexSelected(0);
+            notification.setChecked(true);
+        }else {
+            topic.setBackgroundResource(R.drawable.gray_dark_circle);
+            notification.setBackground(null);
+//                appointment_Id.setEnabled(false);
+            ft.add(R.id.fg_view, topicFragment).commit();
+            setIndexSelected(1);
+            topic.setChecked(true);
+        }
 
 
     }
