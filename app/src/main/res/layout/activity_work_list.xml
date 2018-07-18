@@ -17,14 +17,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/lisichen">
+
             <cn.com.zwwl.bayuwen.widget.roundview.RoundLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/dp_20"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/dp_10"
                 app:rv_backgroundColor="@color/white"
                 app:rv_cornerRadius="@dimen/dp_10">
 
@@ -45,7 +51,7 @@
                         android:maxLines="1"
                         android:paddingLeft="@dimen/dp_10"
                         android:textColor="@color/text_color_default"
-                        android:textSize="@dimen/sp_16"
+                        android:textSize="@dimen/sp_14"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/logo" />
 
@@ -134,6 +140,7 @@
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_5"
+                    android:layout_marginBottom="@dimen/dp_5"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -159,7 +166,7 @@
                 </LinearLayout>
 
             </cn.com.zwwl.bayuwen.widget.roundview.RoundLinearLayout>
-
+            </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -175,7 +182,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp_15"
                 android:layout_marginRight="@dimen/dp_15"
-                android:layout_marginTop="@dimen/dp_10" />
+                />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
