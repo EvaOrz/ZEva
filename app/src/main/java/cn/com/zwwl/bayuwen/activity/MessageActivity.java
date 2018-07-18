@@ -16,6 +16,7 @@ import android.widget.TextView;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.fragment.NotifyFragment;
 import cn.com.zwwl.bayuwen.fragment.TopicFragment;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 
 /**
  * 通知/话题页面
@@ -33,6 +34,7 @@ public class MessageActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
+        UmengLogUtil.logMessageClick(mContext);
         setContentView(R.layout.activity_message);
         initView();
     }
@@ -40,8 +42,8 @@ public class MessageActivity extends BaseActivity {
     private void initView() {
         notification = findViewById(R.id.message_bt1);
         topic = findViewById(R.id.message_bt2);
-        fg_view=  findViewById(R.id.fg_view);
-        message_add=findViewById(R.id.message_add);
+        fg_view = findViewById(R.id.fg_view);
+        message_add = findViewById(R.id.message_add);
         message_add.setOnClickListener(this);
         initFragment();
         notification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -50,9 +52,8 @@ public class MessageActivity extends BaseActivity {
                 if (isChecked) {
                     notification.setBackgroundResource(R.drawable.gray_dark_circle);
                     message_add.setVisibility(View.INVISIBLE);
-                  setIndexSelected(0);
-                }
-                else {
+                    setIndexSelected(0);
+                } else {
                     notification.setBackground(null);
                 }
 
@@ -65,27 +66,27 @@ public class MessageActivity extends BaseActivity {
                     topic.setBackgroundResource(R.drawable.gray_dark_circle);
                     message_add.setVisibility(View.VISIBLE);
                     setIndexSelected(1);
-                }
-                else topic.setBackground(null);
+                } else topic.setBackground(null);
             }
         });
-       notification.setChecked(true);
+        notification.setChecked(true);
         findViewById(R.id.message_back).setOnClickListener(this);
     }
+
     private void initFragment() {
         //通知
         NotifyFragment notifyFragment = new NotifyFragment();
-        TopicFragment topicFragment= new TopicFragment();
+        TopicFragment topicFragment = new TopicFragment();
 
         //添加到数组
         mFragments = new Fragment[]{notifyFragment, topicFragment};
         //开启事务
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-          notification.setBackgroundResource(R.drawable.gray_dark_circle);
-           topic.setBackground(null);
+        notification.setBackgroundResource(R.drawable.gray_dark_circle);
+        topic.setBackground(null);
 //                appointment_Id.setEnabled(false);
-                ft.add(R.id.fg_view, notifyFragment).commit();
-                setIndexSelected(0);
+        ft.add(R.id.fg_view, notifyFragment).commit();
+        setIndexSelected(0);
 
 
     }

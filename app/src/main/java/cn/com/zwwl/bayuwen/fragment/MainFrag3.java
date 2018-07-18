@@ -256,7 +256,8 @@ public class MainFrag3 extends BasicFragment {
                         } else {
                             intent.setClass(activity, StudyingIndexActivity.class);
                         }
-//                        intent.putExtra("online", Integer.parseInt(bean.getProducts().getOnline()));
+//                        intent.putExtra("online", Integer.parseInt(bean.getProducts().getOnline
+// ()));
                         startActivity(intent);
                         break;
                     case R.id.work_title:
@@ -323,7 +324,8 @@ public class MainFrag3 extends BasicFragment {
                     intent.setClass(activity, StudyingIndexActivity.class);
                 }
                 intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());
-                intent.putExtra("title", courseModel.getUnfinished().get(position).getProducts().getTitle());
+                intent.putExtra("title", courseModel.getUnfinished().get(position).getProducts()
+                        .getTitle());
 //                intent.putExtra("online", Integer.parseInt(courseModel.getUnfinished()
 //                        .get(position).getProducts().getOnline()));
 
@@ -344,6 +346,7 @@ public class MainFrag3 extends BasicFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.go_calendar:
+                UmengLogUtil.logRiliClick(mContext);
                 startActivity(new Intent(activity, CalendarActivity.class));
                 break;
             case R.id.menu_news:

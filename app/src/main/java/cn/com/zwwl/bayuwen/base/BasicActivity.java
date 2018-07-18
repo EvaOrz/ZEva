@@ -82,6 +82,13 @@ public abstract class BasicActivity extends AppCompatActivity {
         MobclickAgent.onPause(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyActivityManager.getInstance().removeActivity(this);
+
+    }
+
     protected abstract int setContentView();
 
     protected abstract void initView();

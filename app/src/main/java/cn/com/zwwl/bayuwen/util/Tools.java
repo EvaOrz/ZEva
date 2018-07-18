@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import okhttp3.Headers;
@@ -267,7 +268,8 @@ public class Tools {
             String accessToken = TempDataHelper.getAccessToken(mContext);
             if (!TextUtils.isEmpty(accessToken))
                 headerMap.put("Access-Token", accessToken);
-            headerMap.put("app_version", Tools.getAppVersion(mContext));
+            headerMap.put("app-version", Tools.getAppVersion(mContext));
+            headerMap.put("api-version", MyApplication.API_VERSION);
         } catch (UnsupportedEncodingException e) {
 
         }

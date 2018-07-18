@@ -23,6 +23,7 @@ import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.FaPiaoModel;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
@@ -57,8 +58,8 @@ public class PiaoHistoryActivity extends BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(mContext,PiaoKaiActivity.class);
-                i.putExtra("PiaoKaiActivity_data",datas.get(position));
+                Intent i = new Intent(mContext, PiaoKaiActivity.class);
+                i.putExtra("PiaoKaiActivity_data", datas.get(position));
                 startActivity(i);
             }
         });
@@ -85,6 +86,7 @@ public class PiaoHistoryActivity extends BaseActivity {
         super.onClick(view);
         switch (view.getId()) {
             case R.id.piao_h_shenqing:
+                UmengLogUtil.logSqFapiao(mContext);
                 startActivity(new Intent(mContext, PiaoSelectActivity.class));
                 break;
             case R.id.piao_h_back:

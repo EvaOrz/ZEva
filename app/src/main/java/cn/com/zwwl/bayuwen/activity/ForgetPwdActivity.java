@@ -19,6 +19,7 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.SmsTools;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 
 public class ForgetPwdActivity extends BaseActivity {
     private EditText accountEv, codeEv, pwdEv;
@@ -60,6 +61,7 @@ public class ForgetPwdActivity extends BaseActivity {
                 break;
 
             case R.id.forget_sure:
+                UmengLogUtil.logForgetPwd(mContext);
                 final String pwd = pwdEv.getText().toString();
                 final String verifycode = codeEv.getText().toString();
                 if (AppValue.checkIsPhone(this, phone) && AppValue.checkPwd(this, pwd) &&

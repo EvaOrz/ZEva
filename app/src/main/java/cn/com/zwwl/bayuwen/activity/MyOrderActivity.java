@@ -230,9 +230,7 @@ public class MyOrderActivity extends BaseActivity implements AdapterView.OnItemC
                     adapter4.notifyDataSetChanged();
                     break;
                 case 3:// 显示删除按钮
-
                     deleteBt.setVisibility(View.VISIBLE);
-
                     break;
                 case 4:
                     adapter1.setData(data1List);

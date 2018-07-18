@@ -51,6 +51,7 @@ import cn.com.zwwl.bayuwen.service.NewMusicService;
 import cn.com.zwwl.bayuwen.util.AnimationTools;
 import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.music.MusicWindow;
 import cn.com.zwwl.bayuwen.widget.CommonWebView;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -489,9 +490,11 @@ public class AlbumDetailActivity extends BaseActivity {
                 break;
 
             case R.id.album_detail_like:// 喜欢
+                UmengLogUtil.logFmLikeClick(mContext);
                 doLike();
                 break;
             case R.id.album_detail_shoucang:// 收藏
+                UmengLogUtil.logFmCollectClick(mContext);
                 doCollect();
                 break;
             case R.id.album_detail_share:// 分享

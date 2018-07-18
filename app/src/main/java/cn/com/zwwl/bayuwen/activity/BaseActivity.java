@@ -108,6 +108,17 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userModel = UserDataHelper.getUserLoginInfo(mContext);
+        if (needCheckLogin && userModel == null) {
+            startActivity(new Intent(mContext, LoginActivity.class));
+        }
+        analycisUri();
+        MobclickAgent.onResume(this); //统计时长
+    }
+
     protected abstract void initData();
 
     public void initErrorLayout() {
@@ -230,6 +241,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        MyActivityManager.getInstance().removeActivity(this);
 
     }
 

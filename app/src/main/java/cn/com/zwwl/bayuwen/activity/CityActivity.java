@@ -36,6 +36,7 @@ import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.CitySortModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.PinyinComparator;
 import cn.com.zwwl.bayuwen.view.SideBar;
 import cn.com.zwwl.bayuwen.widget.NoScrollGridView;
@@ -85,6 +86,7 @@ public class CityActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mContext = this;
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         setContentView(R.layout.activity_city);

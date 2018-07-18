@@ -312,6 +312,7 @@ public class MainFrag2 extends Fragment
         Intent i = new Intent(mActivity, VideoPlayActivity.class);
         i.putExtra("VideoPlayActivity_url", detailsBeanX.getUrl());
         i.putExtra("VideoPlayActivity_pic", detailsBeanX.getImg());
+        UmengLogUtil.logTagVideoClick(mActivity);
         startActivity(i);
     }
 
@@ -473,9 +474,11 @@ public class MainFrag2 extends Fragment
                 break;
             case R.id.frag2_look_teacher:
                 goAllTeacher(1);
+                UmengLogUtil.logAllTeacherClick(mActivity);
                 break;
             case R.id.frag2_look_ban:
                 goAllTeacher(2);
+                UmengLogUtil.logAllBanzhurenClick(mActivity);
                 break;
 
         }

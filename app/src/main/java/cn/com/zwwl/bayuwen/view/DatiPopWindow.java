@@ -24,6 +24,7 @@ import cn.com.zwwl.bayuwen.activity.AnswerActivity;
 import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.PintuModel;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
@@ -56,6 +57,7 @@ public class DatiPopWindow {
         view.findViewById(R.id.chuangguan_bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UmengLogUtil.logPintuChuangguanClick(mContext);
                 Intent intent = new Intent(mContext, AnswerActivity.class);
                 intent.putExtra("sectionId", pintuModel.getId());
 //                intent.putExtra("sectionId", "2");

@@ -42,6 +42,7 @@ public class MyApplication extends Application {
     private String UMENG_APPKEY = "5ad40381f29d987f490000be";// 友盟appkey
 
     public static int DEBUG = 1;
+    public static String API_VERSION = "1.0.0";
 
     /**
      * 文件夹名
@@ -113,7 +114,8 @@ public class MyApplication extends Application {
         //对分享的各个平台的key进行配置
         PlatformConfig.setWeixin("wx22ea2fa3b35cb13f", "e117d862971d54e940247349a8778276");
         PlatformConfig.setQQZone("1105723648", "SClqzj0HjnAx2ATM");
-        PlatformConfig.setSinaWeibo("3041420061", "be08435126fd7c6908b6398985c71d83", "http://open.weibo.com/apps/3041420061/privilege/oauth");
+        PlatformConfig.setSinaWeibo("3041420061", "be08435126fd7c6908b6398985c71d83",
+                "http://open.weibo.com/apps/3041420061/privilege/oauth");
 
         initScreenInfo();
         initChannel();

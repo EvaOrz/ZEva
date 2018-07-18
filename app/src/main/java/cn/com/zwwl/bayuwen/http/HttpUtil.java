@@ -290,8 +290,9 @@ public class HttpUtil {
         if (file != null) {
             for (File f : file) {
                 if (f.exists())
-                    requestBody.addFormDataPart(file.indexOf(f)+"", f.getName(), RequestBody.create(MediaType
-                            .parse("image/*"), f));
+                    requestBody.addFormDataPart(file.indexOf(f) + "", f.getName(), RequestBody
+                            .create(MediaType
+                                    .parse("image/*"), f));
             }
         }
         Request.Builder requestBuilder = new Request.Builder();
@@ -436,7 +437,8 @@ public class HttpUtil {
             String accessToken = TempDataHelper.getAccessToken(mContext);
             if (!TextUtils.isEmpty(accessToken))
                 requestBuilder.addHeader("Access-Token", accessToken);
-            requestBuilder.addHeader("app_version", Tools.getAppVersion(mContext));
+            requestBuilder.addHeader("app-version", Tools.getAppVersion(mContext));
+            requestBuilder.addHeader("api-version", MyApplication.API_VERSION);
             request = requestBuilder.build();
         } catch (UnsupportedEncodingException e) {
 
@@ -460,8 +462,9 @@ public class HttpUtil {
         return ssfFactory;
     }
 
-    public void postJson(String url, String json,final FetchDataListener listener) {
-        RequestBody  requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),json);
+    public void postJson(String url, String json, final FetchDataListener listener) {
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; " +
+                "charset=utf-8"), json);
 
         Request.Builder requestBuilder = new Request.Builder();
         Request request = setRequestHeader(requestBuilder.post(requestBody).url(url));

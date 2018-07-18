@@ -28,6 +28,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
 import cn.com.zwwl.bayuwen.model.PintuModel;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.DatiPopWindow;
 
 public class AbilityAnalysisActivity extends BaseActivity {
@@ -185,6 +186,7 @@ public class AbilityAnalysisActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.course_content:
+                UmengLogUtil.logPintuTabClick(mContext, 0);
                 courseDLine1.setVisibility(View.VISIBLE);
                 courseDLine2.setVisibility(View.INVISIBLE);
                 courseDLine3.setVisibility(View.INVISIBLE);
@@ -193,6 +195,7 @@ public class AbilityAnalysisActivity extends BaseActivity {
                 content.setText(pintuModel.getContent().getContent());
                 break;
             case R.id.student_condition:
+                UmengLogUtil.logPintuTabClick(mContext, 1);
                 courseDLine1.setVisibility(View.INVISIBLE);
                 courseDLine2.setVisibility(View.VISIBLE);
                 courseDLine3.setVisibility(View.INVISIBLE);
@@ -207,6 +210,7 @@ public class AbilityAnalysisActivity extends BaseActivity {
                 }
                 break;
             case R.id.system_introduction:
+                UmengLogUtil.logPintuTabClick(mContext, 2);
                 courseDLine1.setVisibility(View.INVISIBLE);
                 courseDLine2.setVisibility(View.INVISIBLE);
                 courseDLine3.setVisibility(View.VISIBLE);

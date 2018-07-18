@@ -1,11 +1,13 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 
@@ -25,6 +27,8 @@ public class AboutActivity extends BaseActivity {
     }
 
     private void initView() {
+        findViewById(R.id.about_option1).setOnClickListener(this);
+        findViewById(R.id.about_option2).setOnClickListener(this);
         version = findViewById(R.id.about_version);
         version.setText(getResources().getString(R.string.app_name) + " " + Tools
                 .getAppVersionName(mContext) + " (" + CalendarTools.format(System
@@ -38,6 +42,14 @@ public class AboutActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.about_back:
                 finish();
+                break;
+            case R.id.about_option1:
+                Intent i = new Intent(mContext, WebActivity.class);
+                i.putExtra("WebActivity_data", AppValue.aboutUrl);
+                startActivity(i);
+                break;
+            case R.id.about_option2:
+                startActivity(new Intent(mContext, FeedBackActivity.class));
                 break;
         }
     }

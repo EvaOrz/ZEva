@@ -49,6 +49,7 @@ import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
 import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.KeDetailView1;
 import cn.com.zwwl.bayuwen.view.KeDetailView2;
 import cn.com.zwwl.bayuwen.view.KeDetailView3;
@@ -292,6 +293,7 @@ public class CourseDetailActivity extends BaseActivity {
      */
     private void changeRadio(int position) {
         mViewPager.setCurrentItem(position);
+        UmengLogUtil.logKeDetailTabClick(mContext, position);
         if (position == 0) {
             line1.setBackgroundColor(getResources().getColor(R.color.gold));
         } else {
@@ -341,6 +343,7 @@ public class CourseDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.group_purchase_bt2: //单独报名
+                UmengLogUtil.logKeBaomingClick(mContext);
                 int leftNo = Integer.valueOf(keModel.getNum());
                 if (leftNo == 0) {
                     showToast("该班已报满");
@@ -352,6 +355,7 @@ public class CourseDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.ke_add:// 加入购物车
+                UmengLogUtil.logKeDetailAddCartClick(mContext);
                 showLoadingDialog(true);
                 new CartApi(mContext, keModel.getKid(), new FetchEntryListener() {
                     @Override
@@ -368,9 +372,11 @@ public class CourseDetailActivity extends BaseActivity {
                 });
                 break;
             case R.id.followtv:// 关注
+                UmengLogUtil.logKeDetailGzClick(mContext);
                 doFollow();
                 break;
             case R.id.adviserTv:// 拨打顾问电话
+                UmengLogUtil.logKeDetailGwClick(mContext);
                 String number = "10086";
                 //用intent启动拨打电话
                 try {
@@ -379,10 +385,9 @@ public class CourseDetailActivity extends BaseActivity {
                     }
                 } catch (SecurityException e) {
                 }
-
-
                 break;
             case R.id.explainTv:// 说明
+                UmengLogUtil.logKeDetailSmClick(mContext);
                 Intent intent = new Intent(mContext, WebActivity.class);
                 intent.putExtra("WebActivity_data", AppValue.enrollUrl);
                 startActivity(intent);
@@ -397,6 +402,7 @@ public class CourseDetailActivity extends BaseActivity {
                 Intent i = new Intent(mContext, VideoPlayActivity.class);
                 i.putExtra("VideoPlayActivity_url", keModel.getVideo());
                 i.putExtra("VideoPlayActivity_pic", keModel.getPic());
+                UmengLogUtil.logKeDetailVideoPlay(mContext);
                 startActivity(i);
                 break;
         }

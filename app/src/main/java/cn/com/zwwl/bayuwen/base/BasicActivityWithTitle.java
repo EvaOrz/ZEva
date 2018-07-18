@@ -62,6 +62,13 @@ public abstract class BasicActivityWithTitle extends AppCompatActivity {
         res = getResources();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyActivityManager.getInstance().removeActivity(this);
+
+    }
+
     /**
      * 设置rootView是否可以滚动，意思是如果期望外层View是个ScrollView
      * 就返回true,否则就返回false

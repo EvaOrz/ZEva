@@ -3,6 +3,7 @@ package cn.com.zwwl.bayuwen.activity;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -52,8 +54,10 @@ import cn.com.zwwl.bayuwen.model.ReportModel;
 import cn.com.zwwl.bayuwen.push.NewPushManager;
 import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.DialogUtil;
+import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.util.UmengLogUtil;
+import cn.com.zwwl.bayuwen.util.UriParse;
 import cn.com.zwwl.bayuwen.view.music.MusicWindow;
 import cn.com.zwwl.bayuwen.widget.MostGridView;
 
@@ -73,6 +77,7 @@ public class MainActivity extends BaseActivity {
     private MainFrag4 mainFrag4;
     private MainFrag5 mainFrag5;
     private ImageView avatar;
+    private TextView lookLevelInfo;
     private TextView name, yaoqing, gongxun;
 
     private MostGridView giftGridView;
@@ -86,6 +91,7 @@ public class MainActivity extends BaseActivity {
     private ReportModel reportModel;
 
     public boolean isGoAlbumActivity = false;
+    private long lastClickTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,32 +103,49 @@ public class MainActivity extends BaseActivity {
         userModel = UserDataHelper.getUserLoginInfo(mContext);
         initData();
         getWebUrl();
+        parsePushMessage(getIntent());
     }
 
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        parsePushMessage(intent);
+        // 解析tab跳转
         int flag = intent.getIntExtra("Main_frag_no", 0);
-        changeTab(flag);
-        switch (flag) {
-            case 1:
-                switchFragment(mainFrag1);
-                break;
-            case 2:
-                switchFragment(mainFrag2);
-                break;
-            case 3:
-                UmengLogUtil.courseTrackClick(mContext);
-                switchFragment(mainFrag3);
-                break;
-            case 4:
-                switchFragment(mainFrag4);
-                break;
-            case 5:
-                switchFragment(mainFrag5);
-                break;
+        if (flag > 0) {
+            changeTab(flag);
+            switch (flag) {
+                case 1:
+                    switchFragment(mainFrag1);
+                    break;
+                case 2:
+                    switchFragment(mainFrag2);
+                    break;
+                case 3:
+                    UmengLogUtil.courseTrackClick(mContext);
+                    switchFragment(mainFrag3);
+                    break;
+                case 4:
+                    switchFragment(mainFrag4);
+                    break;
+                case 5:
+                    switchFragment(mainFrag5);
+                    break;
+            }
         }
+
+    }
+
+    /**
+     * 解析push消息
+     *
+     * @param i
+     */
+    private void parsePushMessage(Intent i) {
+        String pushMessage = i.getStringExtra("push_message");
+        if (TextUtils.isEmpty(pushMessage)) return;
+        UriParse.clickZwwl(mContext, pushMessage);
     }
 
     private void changeTab(int flag) {
@@ -302,7 +325,9 @@ public class MainActivity extends BaseActivity {
         avatar.setOnClickListener(this);
         findViewById(R.id.tianxie_code).setOnClickListener(this);
         findViewById(R.id.invite).setOnClickListener(this);
-        findViewById(R.id.main_gongxun_rule).setOnClickListener(this);
+        lookLevelInfo = findViewById(R.id.main_gongxun_rule);
+        lookLevelInfo.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        lookLevelInfo.setOnClickListener(this);
         childAddBt.setOnClickListener(this);
     }
 
@@ -502,6 +527,9 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(this, TuanCodeUseActivity.class));
                 break;
             case R.id.invite:// 邀请好友加入大语文
+                UmengLogUtil.logInviteClick(mContext);
+                ShareTools.doShareWeb(this, "大语文", "大语文", "http://dev" +
+                        ".umeng.com/images/tab2_1.png", AppValue.inviteUrl);
                 break;
             case R.id.child_add:// 添加孩子
                 startActivity(new Intent(mContext, ChildInfoActivity.class));
@@ -576,6 +604,19 @@ public class MainActivity extends BaseActivity {
         if (!closeDrawer()) {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            long clickTime = System.currentTimeMillis() / 1000;
+            if (clickTime - lastClickTime >= 3) {
+                lastClickTime = clickTime;
+                showToast(R.string.exit_app);
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

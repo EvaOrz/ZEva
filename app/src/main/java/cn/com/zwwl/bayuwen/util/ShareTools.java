@@ -1,8 +1,5 @@
 package cn.com.zwwl.bayuwen.util;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -22,7 +19,8 @@ public class ShareTools {
      * @param pic
      * @param webUrl
      */
-    public static void doShareWeb(final BaseActivity context, String title, String desc, String pic, String webUrl) {
+    public static void doShareWeb(final BaseActivity context, String title, String desc, String
+            pic, String webUrl) {
 
         UMWeb web = new UMWeb(webUrl);
         web.setTitle(title);//标题
@@ -32,7 +30,8 @@ public class ShareTools {
         web.setThumb(image);  //缩略图
         web.setDescription(desc);//描述
 
-        new ShareAction(context).withMedia(web).setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+        new ShareAction(context).withMedia(web).setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ,
+                SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
                 .setCallback(new UMShareListener() {
                     @Override
                     public void onStart(SHARE_MEDIA share_media) {
@@ -58,8 +57,7 @@ public class ShareTools {
                     @Override
                     public void onError(SHARE_MEDIA share_media, Throwable throwable) {
 
-                         context.showToast(R.string.share_faile);
-
+                        context.showToast(R.string.share_faile);
 
 
                     }

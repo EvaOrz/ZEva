@@ -47,6 +47,7 @@ public class WebUrlApi extends BaseApi {
         if (!isNull(json)) {
             AppValue.enrollUrl = json.optString("enroll");
             AppValue.refundUrl = json.optString("refund");
+            AppValue.refundOnUrl = json.optString("refund_online");
             AppValue.inviteUrl = json.optString("invite");
             AppValue.aboutUrl = json.optString("about");
             AppValue.helpUrl = json.optString("help");

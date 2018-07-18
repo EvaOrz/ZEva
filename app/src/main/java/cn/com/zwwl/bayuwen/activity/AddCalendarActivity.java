@@ -47,6 +47,7 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.CalendarOptionPopWindow;
 
 /**
@@ -353,6 +354,7 @@ public class AddCalendarActivity extends BaseActivity {
         super.onClick(view);
         switch (view.getId()) {
             case R.id.add_calendar_save:// 保存
+                UmengLogUtil.logRiliSaveClick(mContext);
                 if (isCanSave) {
                     doSave();
                 } else

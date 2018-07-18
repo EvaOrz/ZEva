@@ -76,11 +76,27 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp">
 
-                <cn.com.zwwl.bayuwen.widget.CircleImageView
-                    android:id="@+id/frag1_avatar"
+                <RelativeLayout
                     android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/avatar_placeholder" />
+                    android:layout_height="60dp">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/drawable_transwhite_corner" />
+
+                    <cn.com.zwwl.bayuwen.widget.CircleImageView
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/avatar_placeholder" />
+
+                    <cn.com.zwwl.bayuwen.widget.CircleImageView
+                        android:id="@+id/frag1_avatar"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true" />
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

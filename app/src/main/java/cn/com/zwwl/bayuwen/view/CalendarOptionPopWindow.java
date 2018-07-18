@@ -31,6 +31,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.CalendarJigouModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
@@ -306,6 +307,7 @@ public class CalendarOptionPopWindow implements View.OnClickListener {
                         CalendarJigouModel jigouModel = new CalendarJigouModel();
                         jigouModel.setName(jigou);
                         myJigouChooseListener.onJigouChoose(jigouModel);
+                        UmengLogUtil.logRiliThirdSaveClick(mContext);
                     } else {
                         for (CheckStatusModel checkStatusModel : jigouDatas) {
                             if (checkStatusModel.isCheckStatus()) {

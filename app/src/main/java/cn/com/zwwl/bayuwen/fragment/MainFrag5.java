@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -46,8 +47,10 @@ import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 
 /**
  * 我的 tab
@@ -64,6 +67,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
     private Activity mActivity;
     private View root;
     private UserModel userModel;
+    private TextView lookLevelInfo;
 
     private List<ChildModel> childModels = new ArrayList<>();// 学员数据
 
@@ -114,7 +118,9 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
 
     private void initView() {
         root.findViewById(R.id.frag5_setting).setOnClickListener(this);
-        root.findViewById(R.id.frag5_level_info).setOnClickListener(this);
+        lookLevelInfo = root.findViewById(R.id.frag5_level_info);
+        lookLevelInfo.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        lookLevelInfo.setOnClickListener(this);
         root.findViewById(R.id.frag5_order1).setOnClickListener(this);
         root.findViewById(R.id.frag5_order2).setOnClickListener(this);
         root.findViewById(R.id.frag5_order3).setOnClickListener(this);
@@ -247,11 +253,12 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(mActivity, TuanCodeUseActivity.class));
                 break;
             case R.id.frag5_invite:// 邀请好友加入大语文
-//                SharePopWindow sharePopWindow=new SharePopWindow(getActivity(),"AAA");
-                ShareTools.doShareWeb((BaseActivity) getActivity(), "大语文", "大运问的", "http://dev" +
-                        ".umeng.com/images/tab2_1.png", "https://www.baidu.com");
+                UmengLogUtil.logInviteClick(mActivity);
+                ShareTools.doShareWeb((BaseActivity) getActivity(), "大语文", "大语文", "http://dev" +
+                        ".umeng.com/images/tab2_1.png", AppValue.inviteUrl);
                 break;
             case R.id.frag5_feedback:// 反馈
+                UmengLogUtil.logFeedBackClick(mActivity);
                 startActivity(new Intent(mActivity, FeedBackActivity.class));
                 break;
             case R.id.frag5_tuangou:// 我的团购
@@ -269,6 +276,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
 
 
     private void goMyOrder(int type) {
+        UmengLogUtil.logOrderBtnClick(mActivity, type);
         Intent i = new Intent(mActivity, MyOrderActivity.class);
         i.putExtra("MyOrderActivity_data", type);
         startActivity(i);
