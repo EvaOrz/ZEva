@@ -38,6 +38,7 @@ import cn.com.zwwl.bayuwen.activity.UploadPicActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.activity.WebActivity;
 import cn.com.zwwl.bayuwen.activity.WorkDetailsActivity;
+import cn.com.zwwl.bayuwen.activity.WorkListActivity;
 import cn.com.zwwl.bayuwen.adapter.CompleteCourseAdapter;
 import cn.com.zwwl.bayuwen.adapter.CourseIndexAdapter;
 import cn.com.zwwl.bayuwen.adapter.LatestReportAdapter;
@@ -263,15 +264,16 @@ public class MainFrag3 extends BasicFragment {
                         UmengLogUtil.CourseWorkClick(activity);
                         if (!bean.getPlan().isOpen()) {
                             ToastUtil.showShortToast("该课程尚未开课~");
-                        } else if (bean.getPlan().getJob() != null && bean.getPlan()
-                                .getIs_submit_job() == 1) {
-                            intent.setClass(activity, WorkDetailsActivity.class);
-                            intent.putExtra("model", bean.getPlan().getJob());
-                            startActivity(intent);
+//                        } else if (bean.getPlan().getJob() != null && bean.getPlan()
+//                                .getIs_submit_job() == 1) {
+//                            intent.setClass(activity, WorkDetailsActivity.class);
+//                            intent.putExtra("model", bean.getPlan().getJob());
+//                            startActivity(intent);
                         } else {
                             intent.putExtra("kid", bean.getKid());
-                            intent.putExtra("cid", bean.getPlan().getCurrentLectureId());
-                            intent.setClass(activity, UploadPicActivity.class);
+//                            intent.putExtra("cid", bean.getPlan().getCurrentLectureId());
+//                            intent.setClass(activity, UploadPicActivity.class);
+                            intent.setClass(activity, WorkListActivity.class);
                             startActivity(intent);
                         }
                         break;

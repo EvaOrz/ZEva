@@ -20,9 +20,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.adapter.Pic1Adapter;
 import cn.com.zwwl.bayuwen.adapter.PicAdapter;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.model.WorkDetailModel;
+import cn.com.zwwl.bayuwen.model.WorkListModel;
 import cn.com.zwwl.bayuwen.widget.photoview.PhotoActivity;
 
 /**
@@ -38,12 +40,12 @@ public class WorkDetailsActivity extends BaseActivity {
     AppCompatTextView textWork;
     @BindView(R.id.teacher_eval)
     AppCompatTextView teacherEval;
-    PicAdapter workAdapter;
+    Pic1Adapter workAdapter;
     @BindView(R.id.id_back)
     ImageView idBack;
     @BindView(R.id.title_name)
     TextView titleName;
-    private WorkDetailModel model;
+    private WorkListModel.ChildClassInfoBeanX model;
     private Activity mActivity;
 
     @Override
@@ -69,20 +71,20 @@ public class WorkDetailsActivity extends BaseActivity {
         titleName.setText("查看作业");
         homework.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         homework.setItemAnimator(new DefaultItemAnimator());
-        workAdapter = new PicAdapter(null);
+        workAdapter = new Pic1Adapter(null);
         homework.setAdapter(workAdapter);
     }
 
     protected void initData1() {
-        model = getIntent().getParcelableExtra("model");
+        model = (WorkListModel.ChildClassInfoBeanX) getIntent().getSerializableExtra("model");
         if (model != null) {
-            workAdapter.setNewData(model.getC_img());
-            if (!TextUtils.isEmpty(model.getC_desc()))
-                textWork.setText(model.getC_desc());
+            workAdapter.setNewData(model.getJob().getJob_img());
+            if (!TextUtils.isEmpty(model.getJob().getJob_desc()))
+                textWork.setText(model.getJob().getJob_desc());
             else
                 textWork.setText("无");
-            if (model.getT_desc() != null)
-                teacherEval.setText(model.getT_desc().getContent());
+            if (model.getJob().getT_desc() != null)
+                teacherEval.setText(model.getJob().getT_desc());
             else {
                 teacherEval.setText("暂无点评");
             }
@@ -93,11 +95,11 @@ public class WorkDetailsActivity extends BaseActivity {
         workAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (model.getC_img() != null && model.getC_img().size() > 0) {
+                if (model.getJob().getJob_img() != null && model.getJob().getJob_img().size() > 0) {
                     Intent intent = new Intent(mActivity, PhotoActivity.class);
-                    String[] urls = new String[model.getC_img().size()];
-                    for (int i = 0; i < model.getC_img().size(); i++)
-                        urls[i] = model.getC_img().get(i).getUrl();
+                    String[] urls = new String[model.getJob().getJob_img().size()];
+                    for (int i = 0; i < model.getJob().getJob_img().size(); i++)
+                        urls[i] = model.getJob().getJob_img().get(i).getUrl();
                     intent.putExtra("images", urls);
                     intent.putExtra("position", position);
                     startActivity(intent);

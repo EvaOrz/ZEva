@@ -553,4 +553,10 @@ public class UrlUtil {
     public static String traceSearch() {
         return HOST + "/course/buylectures";
     }
+    /**
+     * 作业列表v2/courseware/showCourseListByKid
+     */
+    public static String courseList() {
+        return HOST + "/courseware/showCourseListByKid";
+    }
 }

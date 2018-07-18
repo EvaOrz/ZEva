@@ -28,15 +28,17 @@ public class WebActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
-        url = getIntent().getStringExtra("WebActivity_data");
         setContentView(R.layout.activity_web);
+        url = getIntent().getStringExtra("WebActivity_data");
         titleString = getIntent().getStringExtra("WebActivity_title");
         initView();
         initErrorLayout();
         initData();
     }
 
-    @Override
+
+
+
     protected void initData() {
         if (!Tools.checkNetWork(this)) {
             showError(R.mipmap.blank_no_wifi, R.string.no_wifi);

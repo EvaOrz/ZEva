@@ -79,7 +79,6 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="ssssssssssss"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_10" />
 
@@ -90,7 +89,6 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="sssssssssssss"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_10" />
 

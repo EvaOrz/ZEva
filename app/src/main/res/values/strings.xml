@@ -341,7 +341,7 @@
     <string name="chose_chanable_class">选择可调课班级</string>
     <string name="chose_convertable_class">选择可转班级</string>
     <string name="studying_course">正在进行的课程</string>
-    <string name="submit_homework">作业上传</string>
+    <string name="submit_homework">作业</string>
     <string name="current_course_stage">课程进行阶段</string>
     <string name="past_course_trace">往次课程追踪</string>
     <string name="finish_course">已完成课程</string>
