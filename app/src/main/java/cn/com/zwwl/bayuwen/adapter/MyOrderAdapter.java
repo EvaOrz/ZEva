@@ -112,12 +112,15 @@ public class MyOrderAdapter extends CheckScrollAdapter<OrderForMyListModel> {
         tag.setImageResource(keModel.getTagImg());
         title.setText(keModel.getTitle());
         teacher.setText(keModel.getTname());
-        date.setText(CalendarTools.format(Long.valueOf(keModel.getStartPtime()),
-                "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(keModel
-                        .getEndPtime()),
-                "yyyy-MM-dd"));
-        time.setText(keModel.getClass_start_at() + " - " + keModel.getClass_end_at
-                ());
+        if(!keModel.getSource().equals("4")){
+            date.setText(CalendarTools.format(Long.valueOf(keModel.getStartPtime()),
+                    "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(keModel
+                            .getEndPtime()),
+                    "yyyy-MM-dd"));
+            time.setText(keModel.getClass_start_at() + " - " + keModel.getClass_end_at
+                    ());
+        }
+
         xiaoqu.setText(keModel.getSchool());
         return view;
     }

@@ -261,12 +261,14 @@ public class OrderDetailActivity extends BaseActivity {
         tag.setImageResource(model.getTagImg());
         title.setText(model.getTitle());
         teacher.setText(model.getTname());
-        date.setText(CalendarTools.format(Long.valueOf(model.getStartPtime()),
-                "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(model
-                        .getEndPtime()),
-                "yyyy-MM-dd"));
-        time.setText(model.getClass_start_at() + " - " + model.getClass_end_at
-                ());
+        if (!model.getSource().equals("4")) {
+            date.setText(CalendarTools.format(Long.valueOf(model.getStartPtime()),
+                    "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(model
+                            .getEndPtime()),
+                    "yyyy-MM-dd"));
+            time.setText(model.getClass_start_at() + " - " + model.getClass_end_at
+                    ());
+        }
         xiaoqu.setText(model.getSchool());
         return view;
     }

@@ -126,12 +126,16 @@ public class OrderTuifeeDetailActivity extends BaseActivity {
                     itemOrderTitle.setText(model.getTitle());
                     itemOrderTeacher.setText(model.getTname());
                     ImageLoader.display(mContext, itemOrderPic, model.getPic());
-                    itemOrderDate.setText(CalendarTools.format(Long.valueOf(model.getStartPtime()),
-                            "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(model
-                                    .getEndPtime()),
-                            "yyyy-MM-dd"));
-                    itemOrderTime.setText(model.getClass_start_at() + " - " + model.getClass_end_at
-                            ());
+                    if (!model.getSource().equals("4")) {
+                        itemOrderDate.setText(CalendarTools.format(Long.valueOf(model
+                                        .getStartPtime()),
+                                "yyyy-MM-dd") + " 至 " + CalendarTools.format(Long.valueOf(model
+                                        .getEndPtime()),
+                                "yyyy-MM-dd"));
+                        itemOrderTime.setText(model.getClass_start_at() + " - " + model
+                                .getClass_end_at
+                                        ());
+                    }
                     itemOrderXiaoqu.setText(model.getSchool());
                     tuiDetailOp2.setText(tuifeeModel.getReason());
 
