@@ -97,7 +97,7 @@ public class MessageActivity extends BaseActivity {
             notification.setBackground(null);
 //                appointment_Id.setEnabled(false);
             ft.add(R.id.fg_view, topicFragment).commit();
-            setIndexSelected(1);
+            setIndexSelected(0);
             topic.setChecked(true);
         }
 
