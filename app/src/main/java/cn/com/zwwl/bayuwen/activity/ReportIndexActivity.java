@@ -108,18 +108,19 @@ public class ReportIndexActivity extends BaseActivity {
             rightTitle.setVisibility(View.VISIBLE);
             rightTitle.setText("查看回放");
 
-        }else {
+        } else {
             rightTitle.setVisibility(View.GONE);
         }
-        new StudyingCourseApi(this, getIntent().getStringExtra("kid"), new ResponseCallBack<StudyingModel>() {
-            @Override
-            public void result(StudyingModel studyingModel, ErrorMsg errorMsg) {
-                if (studyingModel != null) {
-                    model = studyingModel;
-                    bindData();
-                }
-            }
-        });
+        new StudyingCourseApi(this, getIntent().getStringExtra("kid"), new
+                ResponseCallBack<StudyingModel>() {
+                    @Override
+                    public void result(StudyingModel studyingModel, ErrorMsg errorMsg) {
+                        if (studyingModel != null) {
+                            model = studyingModel;
+                            bindData();
+                        }
+                    }
+                });
     }
 
 
@@ -142,10 +143,12 @@ public class ReportIndexActivity extends BaseActivity {
             courseCode.setText(String.format("班级编码: %s", keModel.getModel()));
             teacherName.setText(String.format("%s", keModel.getTname()));
             schoolName.setText(String.format("%s", keModel.getSchool()));
-            date.setText(String.format(" %s-%s", TimeUtil.parseTime(keModel.getStartPtime() * 1000, "yyyy年MM月dd日"),
+            date.setText(String.format(" %s-%s", TimeUtil.parseTime(keModel.getStartPtime() *
+                            1000, "yyyy年MM月dd日"),
                     TimeUtil.parseTime(keModel.getEndPtime() * 1000, "yyyy年MM月dd日")) + " " +
                     String.format("%s%s-%s", keModel.getWeekday(),
-                            TimeUtil.parseToHm(keModel.getClass_start_at()), TimeUtil.parseToHm(keModel.getClass_end_at())));
+                            TimeUtil.parseToHm(keModel.getClass_start_at()), TimeUtil.parseToHm
+                                    (keModel.getClass_end_at())));
             ImageLoader.display(this, logo, keModel.getPic());
         }
         if (model.getCompleteClass() != null) {
@@ -158,8 +161,7 @@ public class ReportIndexActivity extends BaseActivity {
     }
 
 
-
-    @OnClick({R.id.middle_report, R.id.final_report, R.id.welcome,R.id.right_title,R.id.id_back})
+    @OnClick({R.id.middle_report, R.id.final_report, R.id.welcome, R.id.right_title, R.id.id_back})
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -197,7 +199,9 @@ public class ReportIndexActivity extends BaseActivity {
                     startActivity(intent);
                 }
                 break;
-            default:
+            case R.id.welcome:
+
+
                 if (TextUtils.isEmpty(model.getWelcome_speech())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
@@ -212,7 +216,6 @@ public class ReportIndexActivity extends BaseActivity {
 
         }
     }
-
 
 
 //    @Override

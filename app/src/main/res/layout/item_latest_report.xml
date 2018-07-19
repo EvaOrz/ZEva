@@ -24,5 +24,6 @@
         android:id="@+id/type"
         android:layout_height="wrap_content"
         android:text="@string/lesson_report"
+        android:textSize="@dimen/text_size_14"
         android:textColor="@color/white" />
 </LinearLayout>

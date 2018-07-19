@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +69,7 @@ public class MainFrag4 extends Fragment implements View.OnClickListener {
     private TextView locationTv;
 
     //data
-    private List<AlbumModel> albumDatas = new ArrayList<>();
+    private List<RecommentModel> hotDatas = new ArrayList<>();
     private List<RecommentModel> bannerData = new ArrayList<>();
     private List<CommonModel> tagDatas = new ArrayList<>();
 
@@ -110,22 +111,29 @@ public class MainFrag4 extends Fragment implements View.OnClickListener {
     }
 
     private void initData() {
-        new RecommentApi(mActivity, new RecommentApi.FetchRecommentListListener() {
+        new RecommentApi(mActivity, 19, new RecommentApi.FetchRecommentListListener() {
             @Override
             public void setData(List<RecommentModel> list) {
+                bannerData.clear();
                 if (Tools.listNotNull(list)) {
-                    albumDatas.clear();
-                    bannerData.clear();
-                    for (RecommentModel r : list) {
-                        if (r.getParent().equals("19")) {
-                            bannerData.add(r);
-                        } else if (r.getParent().equals("20")) {
-                            albumDatas.add(r.getAlbumModel());
-                        }
-                    }
-                    handler.sendEmptyMessage(1);
+                    bannerData.addAll(list);
                     handler.sendEmptyMessage(2);
                 }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
+        new RecommentApi(mActivity, 20, new RecommentApi.FetchRecommentListListener() {
+            @Override
+            public void setData(List<RecommentModel> list) {
+                hotDatas.clear();
+                if (Tools.listNotNull(list)) {
+                    hotDatas.addAll(list);
+                }
+                handler.sendEmptyMessage(1);
             }
 
             @Override
@@ -213,12 +221,12 @@ public class MainFrag4 extends Fragment implements View.OnClickListener {
                 goAlbumList(tagDatas.get(position).getName(), tagDatas.get(position).getId());
             }
         });
-        cainiAdapter = new CainiAdapter(mActivity, albumDatas);
+        cainiAdapter = new CainiAdapter(mActivity, hotDatas);
         hotsGridView.setAdapter(cainiAdapter);
         hotsGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                goAlbumDetailActivity(albumDatas.get(position).getKid());
+                goAlbumDetailActivity(hotDatas.get(position).getAlbumModel().getKid());
             }
         });
 
@@ -361,20 +369,20 @@ public class MainFrag4 extends Fragment implements View.OnClickListener {
     public class CainiAdapter extends BaseAdapter {
 
         private Context mContext;
-        private List<AlbumModel> albumModels;
+        private List<RecommentModel> recommentModels;
 
-        public CainiAdapter(Context context, List<AlbumModel> albumModels) {
+        public CainiAdapter(Context context, List<RecommentModel> recommentModels) {
             mContext = context;
-            this.albumModels = albumModels;
+            this.recommentModels = recommentModels;
         }
 
         public int getCount() {
-            return albumModels.size();
+            return recommentModels.size();
         }
 
 
         public Object getItem(int position) {
-            return albumModels.get(position);
+            return recommentModels.get(position);
         }
 
         public long getItemId(int position) {
@@ -383,14 +391,16 @@ public class MainFrag4 extends Fragment implements View.OnClickListener {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            AlbumModel albumModel = albumModels.get(position);
+            RecommentModel item = recommentModels.get(position);
             ViewHolder viewHolder = ViewHolder.get(mContext, convertView, R.layout
                     .item_frag4_album);
             RoundAngleImageView imageView = viewHolder.getView(R.id.frag4_img);
             TextView textView = viewHolder.getView(R.id.frag4_title);
+            TextView playnum = viewHolder.getView(R.id.play_num);
 
-            ImageLoader.display(mContext, imageView, albumModel.getPic());
-            textView.setText(albumModel.getTitle());
+            ImageLoader.display(mContext, imageView, item.getAlbumModel().getPic());
+            textView.setText(item.getAlbumModel().getTitle());
+            playnum.setText(item.getAlbumModel().getPlayNum());
             return viewHolder.getConvertView();
         }
 

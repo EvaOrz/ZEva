@@ -48,7 +48,6 @@ import cn.com.zwwl.bayuwen.model.fm.AlbumModel.*;
 import cn.com.zwwl.bayuwen.model.fm.FmModel;
 import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
 import cn.com.zwwl.bayuwen.service.NewMusicService;
-import cn.com.zwwl.bayuwen.util.AnimationTools;
 import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.util.UmengLogUtil;
@@ -522,7 +521,7 @@ public class AlbumDetailActivity extends BaseActivity {
                 if (entry != null && entry instanceof KeModel) {
                     KeModel keModel = (KeModel) entry;
                     Intent j = new Intent(mContext, PayActivity.class);
-                    j.putExtra("TuanPayActivity_type", 2);
+                    j.putExtra("TuanPayActivity_type", 5);
                     j.putExtra("TuanPayActivity_data", keModel);
                     startActivity(j);
                 }

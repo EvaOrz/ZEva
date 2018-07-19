@@ -46,7 +46,7 @@ public class TuanPayResultActivity extends BaseActivity {
 
     private Timer timer = new Timer();// 初始化定时器
     private int type;
-    private TextView tuan_kai_pay;
+    private TextView kechenggongzong;
     private String desc;
     private View tuanma_view;
     private TuanmaAdapter adapter;
@@ -57,6 +57,7 @@ public class TuanPayResultActivity extends BaseActivity {
     private String kid = "";
     private String tuanCode = "";
     private boolean isDianFu = false;// 是否是垫付
+    private boolean isFMpay = false;// 是否是fm购买
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,27 +73,33 @@ public class TuanPayResultActivity extends BaseActivity {
         isDianFu = getIntent().getBooleanExtra("is_dianfu", false);
         kid = getIntent().getStringExtra("TuanPayResultActivity_kid");
         tuanCode = getIntent().getStringExtra("TuanPayResultActivity_code");
+        /**
+         * fm购买
+         */
+        isFMpay = getIntent().getBooleanExtra("is_fm_pay", false);
         initView();
     }
 
     private void initView() {
         findViewById(R.id.tuan_result_back).setOnClickListener(this);
-        tuan_kai_pay = findViewById(R.id.tuan_kai_pay);
-        tuan_kai_pay.setOnClickListener(this);
+        kechenggongzong = findViewById(R.id.kechenggongzong);
+        kechenggongzong.setOnClickListener(this);
         tuanma_view = findViewById(R.id.tuanma_view);
         listView = findViewById(R.id.tuanma_list);
         TextView status = findViewById(R.id.pay_status);
         status.setText(desc);
         if (type == PAY_FAILD) {
-            tuan_kai_pay.setVisibility(View.GONE);
+            kechenggongzong.setVisibility(View.GONE);
         } else if (type == PAY_SUCCESS) {
             if (isDianFu) {
                 tuanma_view.setVisibility(View.VISIBLE);
                 initData();
             }
-            tuan_kai_pay.setVisibility(View.VISIBLE);
+            if (isFMpay)
+                kechenggongzong.setText("查看我的FM");
+            kechenggongzong.setVisibility(View.VISIBLE);
         } else if (type == PAY_CANCLE) {
-            tuan_kai_pay.setVisibility(View.GONE);
+            kechenggongzong.setVisibility(View.GONE);
         }
     }
 
@@ -140,10 +147,14 @@ public class TuanPayResultActivity extends BaseActivity {
             case R.id.tuan_result_back:
                 finish();
                 break;
-            case R.id.tuan_kai_pay:
-                Intent i = new Intent(mContext, MainActivity.class);
-                i.putExtra("Main_frag_no", 3);
-                startActivity(i);
+            case R.id.kechenggongzong:
+                if (isFMpay) {
+                    startActivity(new Intent(mContext, OurFmActivity.class));
+                } else {
+                    Intent i = new Intent(mContext, MainActivity.class);
+                    i.putExtra("Main_frag_no", 3);
+                    startActivity(i);
+                }
                 return;
         }
     }

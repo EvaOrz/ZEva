@@ -370,18 +370,14 @@ public class MainFrag2 extends Fragment
     }
 
     private void getBannerList() {
-        new RecommentApi(mActivity, new RecommentApi.FetchRecommentListListener() {
+        new RecommentApi(mActivity, 31, new RecommentApi.FetchRecommentListListener() {
             @Override
             public void setData(List<RecommentModel> list) {
+                bannerData.clear();
                 if (Tools.listNotNull(list)) {
-                    bannerData.clear();
-                    for (RecommentModel r : list) {
-                        if (r.getParent().equals("31")) {
-                            bannerData.add(r);
-                        }
-                    }
-                    handler.sendEmptyMessage(2);
+                    bannerData.addAll(list);
                 }
+                handler.sendEmptyMessage(2);
             }
 
             @Override

@@ -1,28 +1,29 @@
 package cn.com.zwwl.bayuwen.model.fm;
 
+import com.google.gson.Gson;
+
 import org.json.JSONObject;
 
 import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.KeModel;
 
 /**
  * 首页推荐model
  */
 public class RecommentModel extends Entry {
-    private String parent;
+    private String id;
     private String title;
     private String pic;
     private String link;
-    private String type;// 1：课程 2：老师 3：活动页面
     private String sort;
-    private String teacher;
-    private AlbumModel albumModel;
+    private KeModel albumModel;
 
-    public String getParent() {
-        return parent;
+    public String getId() {
+        return id;
     }
 
-    public void setParent(String parent) {
-        this.parent = parent;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -49,14 +50,6 @@ public class RecommentModel extends Entry {
         this.link = link;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getSort() {
         return sort;
     }
@@ -65,41 +58,34 @@ public class RecommentModel extends Entry {
         this.sort = sort;
     }
 
-    public String getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(String teacher) {
-        this.teacher = teacher;
-    }
-
-
-    public AlbumModel getAlbumModel() {
+    public KeModel getAlbumModel() {
         return albumModel;
     }
 
-    public void setAlbumModel(AlbumModel albumModel) {
+    public void setAlbumModel(KeModel albumModel) {
         this.albumModel = albumModel;
     }
 
     public RecommentModel() {
     }
 
-    public RecommentModel parseRecommentModel(JSONObject jsonObject, RecommentModel recommentModel) {
-        recommentModel.setParent(jsonObject.optString("parent"));
+    public RecommentModel parseRecommentModel(JSONObject jsonObject, RecommentModel
+            recommentModel) {
+        recommentModel.setId(jsonObject.optString("parent"));
         recommentModel.setTitle(jsonObject.optString("title"));
         recommentModel.setPic(jsonObject.optString("pic"));
         recommentModel.setLink(jsonObject.optString("link"));
-        recommentModel.setType(jsonObject.optString("type"));
         recommentModel.setSort(jsonObject.optString("sort"));
-        recommentModel.setTeacher(jsonObject.optString("teacher"));
 
-        JSONObject keinfo = jsonObject.optJSONObject("keinfo");
-        AlbumModel albumModel = new AlbumModel();
+        JSONObject keinfo = jsonObject.optJSONObject("course");
         if (!isNull(keinfo)) {
-            albumModel.parseKinfo(keinfo, albumModel);
+            KeModel keModel = new KeModel();
+            keModel.setKid(keinfo.optString("kid"));
+            keModel.setPic(keinfo.optString("pic"));
+            keModel.setTitle(keinfo.optString("title"));
+            keModel.setPlayNum(keinfo.optInt("playNum") + "");
+            recommentModel.setAlbumModel(keModel);
         }
-        recommentModel.setAlbumModel(albumModel);
         return recommentModel;
     }
 

@@ -83,8 +83,8 @@ public class UrlUtil {
     }
 
     //首页
-    public static String getMainurl() {
-        return HOST + "/tuijian/list";
+    public static String getMainurl(int id) {
+        return HOST + "/tuijian/" + id;
     }
 
     //播放历史
@@ -553,6 +553,7 @@ public class UrlUtil {
     public static String traceSearch() {
         return HOST + "/course/buylectures";
     }
+
     /**
      * 作业列表v2/courseware/showCourseListByKid
      */

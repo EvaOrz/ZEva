@@ -120,8 +120,45 @@ public class CourseDetailActivity extends BaseActivity {
             collectionId = getIntent().getIntExtra("CourseDetailActivity_collectid", 0);
             initData();
         }
+        initDetails();
         getPinglunData();
 
+    }
+
+    private void initDetails() {
+        cDetailTabFrag1 = new KeDetailView1(this, cid);
+        cDetailTabFrag2 = new KeDetailView2(mContext);
+        cDetailTabFrag3 = new KeDetailView3(this, cid);
+        keDetailViews.add(cDetailTabFrag1);
+        keDetailViews.add(cDetailTabFrag2);
+        keDetailViews.add(cDetailTabFrag3);
+        myViewPagerAdapter = new MyViewPagerAdapter(keDetailViews);
+        mViewPager.setAdapter(myViewPagerAdapter);
+        mViewPager.setOffscreenPageLimit(keDetailViews.size());
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int
+                    positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                changeRadio(position);
+                if (position == 0)
+                    radioGroup.check(R.id.course_d_bt1);
+                else if (position == 1) {
+                    radioGroup.check(R.id.course_d_bt2);
+                } else if (position == 2) {
+                    radioGroup.check(R.id.course_d_bt3);
+                }
+                mViewPager.resetHeight(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -209,39 +246,7 @@ public class CourseDetailActivity extends BaseActivity {
         nomalFooter = findViewById(R.id.nomal_footer);
         promotionLayout = findViewById(R.id.promotion_layout);
         promotionContain = findViewById(R.id.promotion_container);
-        cDetailTabFrag1 = new KeDetailView1(this, cid);
-        cDetailTabFrag2 = new KeDetailView2(mContext);
-        cDetailTabFrag3 = new KeDetailView3(this, cid);
-        keDetailViews.add(cDetailTabFrag1);
-        keDetailViews.add(cDetailTabFrag2);
-        keDetailViews.add(cDetailTabFrag3);
-        myViewPagerAdapter = new MyViewPagerAdapter(keDetailViews);
-        mViewPager.setAdapter(myViewPagerAdapter);
-        mViewPager.setOffscreenPageLimit(keDetailViews.size());
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int
-                    positionOffsetPixels) {
-            }
 
-            @Override
-            public void onPageSelected(int position) {
-                changeRadio(position);
-                if (position == 0)
-                    radioGroup.check(R.id.course_d_bt1);
-                else if (position == 1) {
-                    radioGroup.check(R.id.course_d_bt2);
-                } else if (position == 2) {
-                    radioGroup.check(R.id.course_d_bt3);
-                }
-                mViewPager.resetHeight(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
         radioGroup = findViewById(R.id.course_d_group);
         button1 = findViewById(R.id.course_d_bt1);
         button2 = findViewById(R.id.course_d_bt2);

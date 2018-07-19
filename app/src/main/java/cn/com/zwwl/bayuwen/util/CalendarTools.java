@@ -87,6 +87,11 @@ public class CalendarTools {
      */
     public static String getTimeLeft(long timeInSeconds) {
         StringBuffer sb = new StringBuffer();
+        int days = (int) timeInSeconds / 3600 / 24;
+        if (days > 0) {
+            sb.append(days).append("天");
+        }
+        timeInSeconds = timeInSeconds % (3600 * 24);
         int hours = (int) timeInSeconds / 3600;
         if (hours >= 10) {
             sb.append(hours);
@@ -96,7 +101,7 @@ public class CalendarTools {
             sb.append("00");
         }
         sb.append("时");
-
+        timeInSeconds = timeInSeconds % 3600;
         long minutes = (int) (timeInSeconds / 60);
         if (minutes >= 10) {
             sb.append(minutes);

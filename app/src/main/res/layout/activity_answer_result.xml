@@ -112,6 +112,7 @@
                 android:layout_marginRight="@dimen/dp_10"
                 android:background="@drawable/drawable_yellow_corner_button"
                 android:padding="@dimen/dp_10"
+                android:textSize="@dimen/text_size_14"
                 android:text="@string/save_error_question"
                 android:textColor="@color/white"
                 android:visibility="gone" />
@@ -122,6 +123,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/drawable_yellow_corner_button"
                 android:padding="@dimen/dp_10"
+                android:textSize="@dimen/text_size_14"
                 android:text="@string/back_answer_home"
                 android:textColor="@color/white" />
         </LinearLayout>

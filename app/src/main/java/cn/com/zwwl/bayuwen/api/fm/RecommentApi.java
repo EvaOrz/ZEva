@@ -22,64 +22,31 @@ public class RecommentApi extends BaseApi {
 
     private FetchRecommentListListener listener;
     private List<RecommentModel> recommentModels = new ArrayList<>();
+    private int id;
 
-    public RecommentApi(Context context, FetchRecommentListListener listener) {
+    public RecommentApi(Context context, int id, FetchRecommentListListener listener) {
         super(context);
         mContext = context;
+        this.id = id;
         this.listener = listener;
         get();
     }
 
     @Override
     protected String getUrl() {
-        return UrlUtil.getMainurl();
+        return UrlUtil.getMainurl(id);
     }
 
-
-    /**
-     * 19        APP-FM导航栏推荐（Banner）
-     * 20        APP-FM热门推荐
-     * 21        APP-FM新课推荐
-     * 22        APP-FM直播推荐
-     * 23        APP-FM回放录播
-     * 24        APP-FM名师推荐
-     *
-     * @param json
-     * @param errorMsg
-     */
     @Override
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
-            listener.setError(errorMsg);
-
-        if (!isNull(json)) {
-            JSONArray a19 = json.optJSONArray("19");
-            if (!isNull(a19)) {
-                for (int i = 0; i < a19.length(); i++) {
-                    JSONObject o = a19.optJSONObject(i);
-                    RecommentModel f = new RecommentModel();
-                    f.parseRecommentModel(o, f);
-                    recommentModels.add(f);
-                }
+        listener.setError(errorMsg);
+        if (!isNull(array)) {
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject o = array.optJSONObject(i);
+                RecommentModel f = new RecommentModel();
+                f.parseRecommentModel(o, f);
+                recommentModels.add(f);
             }
-            JSONArray a20 = json.optJSONArray("20");
-            if (!isNull(a20)) {
-                for (int i = 0; i < a20.length(); i++) {
-                    JSONObject o = a20.optJSONObject(i);
-                    RecommentModel f = new RecommentModel();
-                    f.parseRecommentModel(o, f);
-                    recommentModels.add(f);
-                }
-            }
-            JSONArray a31 = json.optJSONArray("31");
-            if (!isNull(a31)) {
-                for (int i = 0; i < a31.length(); i++) {
-                    JSONObject o = a31.optJSONObject(i);
-                    RecommentModel f = new RecommentModel();
-                    f.parseRecommentModel(o, f);
-                    recommentModels.add(f);
-                }
-            }
-
             listener.setData(recommentModels);
         }
     }

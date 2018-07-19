@@ -99,9 +99,8 @@
         </LinearLayout>
     </ScrollView>
 
-
     <TextView
-        android:id="@+id/tuan_kai_pay"
+        android:id="@+id/kechenggongzong"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/drawable_yellow_light"

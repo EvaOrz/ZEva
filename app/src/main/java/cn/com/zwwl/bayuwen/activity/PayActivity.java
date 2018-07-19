@@ -60,7 +60,7 @@ import cn.com.zwwl.bayuwen.view.YouHuiJuanPopWindow;
 public class PayActivity extends BaseActivity {
 
     private LinearLayout adresslayout;
-    private int type; // 0：单独参团 1：垫付参团 2：单独购买 3:购课单多选购买 4:组合课购买
+    private int type; // 0：单独参团 1：垫付参团 2：单独购买 3:购课单多选购买 4:组合课购买 5:fm购买
     private LinearLayout pinLayout, dianLayout, youhuiLayout;
     private TextView nameTv, phoneTv, addressTv, addTv;
     private LinearLayout keLayout;
@@ -107,7 +107,8 @@ public class PayActivity extends BaseActivity {
         initView();
         initItemString();
         setGoodsInfo();
-        checkYouhui();
+        if (type != 0 && type != 1)
+            checkYouhui();
         // 如果用到微信支付，在用到微信支付的Activity的onCreate函数里调用以下函数.
         String initInfo = BCPay.initWechatPay(mContext, MyApplication.WEIXIN_APP_ID);
         if (initInfo != null) {
@@ -133,7 +134,7 @@ public class PayActivity extends BaseActivity {
             for (int i = 0; i < keModel.getGroupbuy().getDiscount().getLimit_num() - 1; i++) {
                 itemCode += "," + keModel.getKid() + "_1_" + "0";
             }
-        } else if (type == 0 || type == 2) { //单独购买||单独参团
+        } else if (type == 0 || type == 2 || type == 5) { //单独购买（包括fm购买）||单独参团
             KeModel keModel = keDatas.get(0);
             itemCode = keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
         } else if (type == 3) {// 购课单购买
@@ -170,7 +171,6 @@ public class PayActivity extends BaseActivity {
         keLayout = findViewById(R.id.ke_layout);
         yueTv = findViewById(R.id.yue_tv);
         couponTv = findViewById(R.id.youhuiquan_tv);
-
         dianLayout = findViewById(R.id.dianfu_layout);
         pinLayout = findViewById(R.id.pintuan_layout);
         youhuiLayout = findViewById(R.id.youhui_layout);
@@ -195,7 +195,7 @@ public class PayActivity extends BaseActivity {
             youhuiLayout.setVisibility(View.GONE);
             dianNumTv.setText(keDatas.get(0).getGroupbuy().getDiscount().getLimit_num() + "");//
             // 垫付只有一个kemodel
-        } else if (type == 2 || type == 3 || type == 4) {
+        } else if (type == 2 || type == 3 || type == 4 || type == 5) {
             pinLayout.setVisibility(View.GONE);
             dianLayout.setVisibility(View.GONE);
             youhuiLayout.setVisibility(View.VISIBLE);
@@ -389,7 +389,6 @@ public class PayActivity extends BaseActivity {
                                 }
                             });
                 } else showToast("您当前余额为0");
-
                 break;
         }
 
@@ -404,7 +403,7 @@ public class PayActivity extends BaseActivity {
         String tuijianCode = tuijianEv.getText().toString();
         String couponCode = currentCoupon == null ? "" : currentCoupon.getCoupon_code();
         String addressId = currentAddress == null ? "" : currentAddress.getId();
-        String yue = isUseYue?yueTxt:null;
+        String yue = isUseYue ? yueTxt : null;
         new MakeOrderApi(mContext, payType + "", couponCode, addressId, tuijianCode,
                 yue, itemCode, tuanCode, promoId, new FetchEntryListener() {
             @Override
@@ -420,7 +419,6 @@ public class PayActivity extends BaseActivity {
                             doAliPay();
                         }
                     }
-
                 }
             }
 
@@ -429,7 +427,6 @@ public class PayActivity extends BaseActivity {
                 if (error != null) {
                     showToast(error.getDesc());
                 }
-
             }
         });
     }
@@ -529,6 +526,9 @@ public class PayActivity extends BaseActivity {
             i.putExtra("is_dianfu", true);
             i.putExtra("TuanPayResultActivity_kid", keDatas.get(0).getKid());// 垫付只有一个课，不存在多个课垫付的情况
             i.putExtra("TuanPayResultActivity_code", tuanCode);
+        }
+        if (type == 5) {
+            i.putExtra("is_fm_pay", true);
         }
         startActivity(i);
         finish();

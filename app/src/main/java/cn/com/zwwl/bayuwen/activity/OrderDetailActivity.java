@@ -149,8 +149,8 @@ public class OrderDetailActivity extends BaseActivity {
                             .getExpire_at()) - System.currentTimeMillis();
 
                     handler.sendEmptyMessage(1);
-                    needPrice.setText("需付款：￥" + Tools.getTwoDecimal(orderForMyListModel
-                            .getTotal_fee() / 100));
+                    needPrice.setText("待支付：￥" + Tools.getTwoDecimal(orderForMyListModel
+                            .getReal_fee() / 100));
                     orderNo.setText(orderForMyListModel.getOid());
                     orderTime.setText(orderForMyListModel.getCreate_at());
                     payStyle.setText(orderForMyListModel.getPay_channel().equals("1") ? "支付宝" :
