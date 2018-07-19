@@ -94,7 +94,9 @@ public class UriParse {
      * @param toid
      */
     private static void goTopic(Context context, String toid) {
-
+        Intent intent =new Intent(context, MessageActivity.class);
+        intent.putExtra("ass","ssd");
+        context.startActivity(intent);
     }
 
     /**
