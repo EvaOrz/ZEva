@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.ChildInfoApi;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ChildModel;
 import cn.com.zwwl.bayuwen.model.Entry;
@@ -65,11 +66,12 @@ public class RegisterAddChildActivity extends BaseActivity {
                 break;
             case R.id.register_add_bt:
                 String name = editText.getText().toString();
-                String grade = nianji.getText().toString();
+                final String grade = nianji.getText().toString();
                 if (TextUtils.isEmpty(name)) {
                     showToast("请填写学员姓名");
                 } else {
                     childModel.setName(name);
+                    childModel.setTel(UserDataHelper.getUserLoginInfo(mContext).getTel());
                     childModel.setGender(male.isChecked() ? 1 : 0);//0女1男2未知
                     childModel.setIsdefault("1");
                     childModel.setGrade(grade);
@@ -81,7 +83,7 @@ public class RegisterAddChildActivity extends BaseActivity {
                 new NianjiPopWindow(mContext, new NianjiPopWindow.MyNianjiPickListener() {
                     @Override
                     public void onNianjiPick(String string) {
-                        Log.e("ssssssssssss", string);
+                        childModel.setGrade(string);
                         handler.sendEmptyMessage(0);
                     }
                 });
@@ -113,6 +115,7 @@ public class RegisterAddChildActivity extends BaseActivity {
             public void setData(Entry entry) {
                 showLoadingDialog(false);
                 if (entry != null && entry instanceof ChildModel) {
+                    showToast("添加学员成功");
                     MyApplication.loginStatusChange = true;
                     finish();
                 }

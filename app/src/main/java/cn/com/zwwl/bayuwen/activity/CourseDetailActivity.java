@@ -106,6 +106,7 @@ public class CourseDetailActivity extends BaseActivity {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
+        initView();
         // 兑换课程详情
         if (getIntent().getSerializableExtra("CourseDetailActivity_data") != null && getIntent()
                 .getSerializableExtra("CourseDetailActivity_data") instanceof KeModel) {
@@ -120,7 +121,7 @@ public class CourseDetailActivity extends BaseActivity {
             initData();
         }
         getPinglunData();
-        initView();
+
     }
 
     @Override
@@ -344,7 +345,7 @@ public class CourseDetailActivity extends BaseActivity {
                 break;
             case R.id.group_purchase_bt2: //单独报名
                 UmengLogUtil.logKeBaomingClick(mContext);
-                int leftNo = Integer.valueOf(keModel.getNum());
+                int leftNo = keModel.getStock();
                 if (leftNo == 0) {
                     showToast("该班已报满");
                 } else {

@@ -67,7 +67,6 @@
                 android:gravity="center_vertical"
                 android:hint="@string/ping_hint"
                 android:lines="1"
-
                 android:padding="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray_light"

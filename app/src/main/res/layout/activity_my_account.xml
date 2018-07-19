@@ -31,6 +31,7 @@
     <include layout="@layout/layout_line" />
 
     <LinearLayout
+        android:id="@+id/account_user_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"

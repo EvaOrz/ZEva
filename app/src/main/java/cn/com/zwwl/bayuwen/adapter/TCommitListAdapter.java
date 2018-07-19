@@ -26,8 +26,10 @@ import cn.com.zwwl.bayuwen.widget.CircleImageView;
  * Created by lmj
  */
 
-public class TCommitListAdapter extends BaseRecylcerViewAdapter<TeacherDetailStuentevaluateModel.CommentsBean> {
-    public TCommitListAdapter(Context mContext, List<TeacherDetailStuentevaluateModel.CommentsBean> list) {
+public class TCommitListAdapter extends BaseRecylcerViewAdapter<TeacherDetailStuentevaluateModel
+        .CommentsBean> {
+    public TCommitListAdapter(Context mContext, List<TeacherDetailStuentevaluateModel
+            .CommentsBean> list) {
         super(mContext, list);
     }
 
@@ -35,7 +37,8 @@ public class TCommitListAdapter extends BaseRecylcerViewAdapter<TeacherDetailStu
     @Override
     public TCommitListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int
             viewType) {
-        return new TCommitListAdapter.ViewHolder(inflater.inflate(R.layout.teacher_detail_student_evaluate_item,
+        return new TCommitListAdapter.ViewHolder(inflater.inflate(R.layout
+                        .teacher_detail_student_evaluate_item,
                 parent, false));
 
     }
@@ -45,21 +48,15 @@ public class TCommitListAdapter extends BaseRecylcerViewAdapter<TeacherDetailStu
         final TCommitListAdapter.ViewHolder viewHolder = (TCommitListAdapter.ViewHolder) holder;
 //        KeModel keModel = list.get(position);
 //        viewHolder.student_circleimag.setImageResource(list.get(position).getUserinfo().getPic());
-        if (list.get(position).getUserinfo().getPic()!=null){
-            ImageLoader.display(mContext,(CircleImageView) viewHolder.student_circleimag,list.get(position).getUserinfo().getPic()+"");
+        if (list.get(position).getUserinfo().getPic() != null) {
+            ImageLoader.display(mContext, viewHolder.student_circleimag, list
+                    .get(position).getUserinfo().getPic() + "", R.drawable.avatar_placeholder, R
+                    .drawable.avatar_placeholder);
         }
         viewHolder.student_evaluate_tv1.setText(list.get(position).getContent());
 
-          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String date = null;
-
-               date = format.format(new Date(Long.parseLong(list.get(position).getCtime())));
-               viewHolder.student_evaluate_createtime.setText(date+"");
-
-
-
-
-
+        viewHolder.student_evaluate_createtime.setText(CalendarTools.format(Long.valueOf(list.get
+                (position).getCtime()), "yyyy-MM-dd HH:mm:ss"));
         viewHolder.student_evaluate_name.setText(list.get(position).getUserinfo().getName());
         setItemClickView(viewHolder.itemView, position);
     }
@@ -67,7 +64,7 @@ public class TCommitListAdapter extends BaseRecylcerViewAdapter<TeacherDetailStu
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView student_evaluate_tv1;
         private TextView student_evaluate_createtime;
-        private TextView  student_evaluate_name;
+        private TextView student_evaluate_name;
         private CircleImageView student_circleimag;
 
 

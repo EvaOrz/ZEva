@@ -83,8 +83,12 @@ public class CourseCenterActivity extends BaseActivity {
             para.put("users", gradeTxt + "");
         }
         if (!TextUtils.isEmpty(tagId)) {
-            para.put("type", tagId);
+            if (tagId.equals("100")) {// 去除线上课
+                para.put("online", "1");
+            } else
+                para.put("type", tagId);
         }
+
         if (!TextUtils.isEmpty(searchKey)) {
             para.put("keyword", searchKey);
         }
@@ -256,7 +260,6 @@ public class CourseCenterActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(tagId) && tagId.equals("100")) {
                         isWangke = true;
                     }
-
                     selectMenuView.setData(keTypeModel, gra, tagId, isWangke, isNeedDefaultGrade);
                     int height = getViewHeight(selectMenuView);
                     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams

@@ -404,8 +404,9 @@ public class PayActivity extends BaseActivity {
         String tuijianCode = tuijianEv.getText().toString();
         String couponCode = currentCoupon == null ? "" : currentCoupon.getCoupon_code();
         String addressId = currentAddress == null ? "" : currentAddress.getId();
+        String yue = isUseYue?yueTxt:null;
         new MakeOrderApi(mContext, payType + "", couponCode, addressId, tuijianCode,
-                yueTxt, itemCode, tuanCode, promoId, new FetchEntryListener() {
+                yue, itemCode, tuanCode, promoId, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
                 if (entry != null && entry instanceof OrderModel) {

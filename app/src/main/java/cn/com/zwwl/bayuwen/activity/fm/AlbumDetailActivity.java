@@ -443,9 +443,9 @@ public class AlbumDetailActivity extends BaseActivity {
     private void checkLikeCollect() {
         likeTv.setText("喜欢(" + albumModel.getLikeNum() + ")");
         if (albumModel.isLikeState()) {
-            likeImg.setImageResource(R.mipmap.like_a);
-        } else {
             likeImg.setImageResource(R.mipmap.like_b);
+        } else {
+            likeImg.setImageResource(R.mipmap.like_a);
         }
 
         if (albumModel.getConllectId() == 0) {
