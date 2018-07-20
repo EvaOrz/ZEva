@@ -162,8 +162,8 @@ public class PromotionActivity extends BaseActivity {
     protected void initData() {
         if (keModel.getPromotionModels().size() > position) {
             final PromotionModel p = keModel.getPromotionModels().get(position);
-            price1.setText("套餐合计：￥" + p.getOriginal_price());
-            price2.setText("已优惠：￥" + p.getDiscount_price());
+            price1.setText("套餐合计：￥" + p.getDiscount_price());
+            price2.setText("已优惠：￥" + (p.getOriginal_price() - p.getDiscount_price()));
 
             keSelectAdapter = new KeSelectAdapter(mContext, 1, p.getKeModels());
             recyclerView.setAdapter(keSelectAdapter);

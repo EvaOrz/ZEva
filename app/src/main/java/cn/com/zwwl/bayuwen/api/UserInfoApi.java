@@ -63,15 +63,14 @@ public class UserInfoApi extends BaseApi {
 
     @Override
     protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
-        if (errorMsg != null) {
-            listener.setError(errorMsg);
-        }
+        listener.setError(errorMsg);
+
         if (!isNull(json)) {
             UserModel userModel = new UserModel();
             userModel = userModel.parseUserModel(json, userModel);
             UserDataHelper.saveUserLoginInfo(mContext, userModel);
             listener.setData(userModel);
-        }
+        }else listener.setData(null);
     }
 
 

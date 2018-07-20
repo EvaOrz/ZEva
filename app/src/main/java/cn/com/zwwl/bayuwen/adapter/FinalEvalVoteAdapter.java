@@ -10,7 +10,8 @@ import java.util.List;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.model.EvalContentModel;
 
-public class FinalEvalVoteAdapter extends BaseQuickAdapter<EvalContentModel.DataBean, BaseViewHolder> {
+public class FinalEvalVoteAdapter extends BaseQuickAdapter<EvalContentModel.DataBean,
+        BaseViewHolder> {
 
 
     public FinalEvalVoteAdapter(List<EvalContentModel.DataBean> data) {
@@ -27,7 +28,7 @@ public class FinalEvalVoteAdapter extends BaseQuickAdapter<EvalContentModel.Data
         } else {
             helper.setBackgroundRes(R.id.content, R.drawable.drawable_uncheck__corner);
             helper.setImageResource(R.id.logo, R.mipmap.icon_vote_default);
-            helper.setTextColor(R.id.name, ContextCompat.getColor(mContext, R.color.gray_line));
+            helper.setTextColor(R.id.name, ContextCompat.getColor(mContext, R.color.gray_light));
         }
     }
 }

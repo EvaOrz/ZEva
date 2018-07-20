@@ -45,10 +45,13 @@ public class MyTuanApi extends BaseApi {
                 for (int i = 0; i < sponsor.length(); i++) {
                     TuanForMyListModel g = gson.fromJson(sponsor.optJSONObject(i).toString(),
                             TuanForMyListModel.class);
-                    g.setKeModel(gson.fromJson(sponsor.optJSONObject(i).optJSONObject("course")
-                            .toString(), KeModel.class));
-                    g.setDiscount(gson.fromJson(sponsor.optJSONObject(i).optJSONObject("discount")
-                            .toString(), GroupBuyModel.DiscountBean.class));
+                    if (!isNull(sponsor.optJSONObject(i).optJSONObject("course")))
+                        g.setKeModel(gson.fromJson(sponsor.optJSONObject(i).optJSONObject("course")
+                                .toString(), KeModel.class));
+                    if (!isNull(sponsor.optJSONObject(i).optJSONObject("discount")))
+                        g.setDiscount(gson.fromJson(sponsor.optJSONObject(i).optJSONObject
+                                ("discount")
+                                .toString(), GroupBuyModel.DiscountBean.class));
                     sList.add(g);
                 }
 
@@ -59,10 +62,12 @@ public class MyTuanApi extends BaseApi {
                 for (int i = 0; i < join.length(); i++) {
                     TuanForMyListModel g = gson.fromJson(join.optJSONObject(i).toString(),
                             TuanForMyListModel.class);
-                    g.setKeModel(gson.fromJson(join.optJSONObject(i).optJSONObject("course")
-                            .toString(), KeModel.class));
-                    g.setDiscount(gson.fromJson(join.optJSONObject(i).optJSONObject("discount")
-                            .toString(), GroupBuyModel.DiscountBean.class));
+                    if (!isNull(join.optJSONObject(i).optJSONObject("course")))
+                        g.setKeModel(gson.fromJson(join.optJSONObject(i).optJSONObject("course")
+                                .toString(), KeModel.class));
+                    if (!isNull(join.optJSONObject(i).optJSONObject("discount")))
+                        g.setDiscount(gson.fromJson(join.optJSONObject(i).optJSONObject("discount")
+                                .toString(), GroupBuyModel.DiscountBean.class));
                     jList.add(g);
                 }
             }

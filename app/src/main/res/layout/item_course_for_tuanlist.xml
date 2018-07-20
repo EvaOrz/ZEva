@@ -35,7 +35,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:text="二年级春季大语文"
                 android:textColor="@color/gray_dark"
                 android:textSize="@dimen/text_size_14" />
 
@@ -47,7 +46,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:text="hhhhhhh2992uh"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/text_size_12" />
 
@@ -87,7 +85,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:lines="1"
-                        android:text="张国庆、王兴伟"
                         android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_12" />
                 </LinearLayout>
@@ -109,7 +106,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:lines="1"
-                        android:text="大钟寺校区"
                         android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_12" />
                 </LinearLayout>
@@ -131,7 +127,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:lines="1"
-                        android:text="2017年3月15日 至 2018年5月18日"
                         android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_12" />
 
@@ -155,12 +150,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:lines="1"
-                        android:text="每天16：00 - 18：00"
                         android:textColor="@color/gray_light"
                         android:textSize="@dimen/text_size_12" />
 
                 </LinearLayout>
-
 
             </LinearLayout>
         </LinearLayout>

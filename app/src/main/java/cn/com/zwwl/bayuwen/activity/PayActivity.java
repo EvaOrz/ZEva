@@ -257,6 +257,7 @@ public class PayActivity extends BaseActivity {
                     if (currentCoupon != null) {
                         couponTv.setText(getYouhuiPrice());
                     } else couponTv.setText("无可用");
+                    countPrice();
                     break;
                 case 5:// 显示选择使用的优惠券
                     couponTv.setText(getYouhuiPrice());

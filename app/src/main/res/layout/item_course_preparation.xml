@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:src="@drawable/avatar_placeholder"
+            android:src="@mipmap/image_placeholder"
             app:borderRadius="@dimen/dp_5"
             app:isEdge="true"
             app:type="1" />

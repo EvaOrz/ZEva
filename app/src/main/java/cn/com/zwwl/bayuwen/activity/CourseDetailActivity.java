@@ -113,14 +113,15 @@ public class CourseDetailActivity extends BaseActivity {
             keModel = (KeModel) getIntent().getSerializableExtra("CourseDetailActivity_data");
             cid = keModel.getKid();
             code = getIntent().getStringExtra("CourseDetailActivity_id");
+            initDetails();
             setUi();
             setkeData();
         } else {// nomal情况课程详情
             cid = getIntent().getStringExtra("CourseDetailActivity_id");
             collectionId = getIntent().getIntExtra("CourseDetailActivity_collectid", 0);
+            initDetails();
             initData();
         }
-        initDetails();
         getPinglunData();
 
     }
@@ -639,7 +640,8 @@ public class CourseDetailActivity extends BaseActivity {
 
         name.setText("套餐" + (position + 1) + "：");
         price.setText("￥" + promotionModel.getOriginal_price());
-        youhui.setText("已优惠：￥" + promotionModel.getDiscount_price());
+        youhui.setText("已优惠：￥" + (promotionModel.getOriginal_price() - promotionModel
+                .getDiscount_price()));
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -33,6 +33,7 @@ import cn.com.zwwl.bayuwen.adapter.GiftAdapter;
 import cn.com.zwwl.bayuwen.api.ChildInfoApi;
 import cn.com.zwwl.bayuwen.api.HonorListApi;
 import cn.com.zwwl.bayuwen.api.ReportPushApi;
+import cn.com.zwwl.bayuwen.api.UserInfoApi;
 import cn.com.zwwl.bayuwen.api.WebUrlApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
@@ -51,6 +52,7 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.GiftAndJiangModel;
 import cn.com.zwwl.bayuwen.model.ReportModel;
+import cn.com.zwwl.bayuwen.model.UserModel;
 import cn.com.zwwl.bayuwen.push.NewPushManager;
 import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.DialogUtil;
@@ -104,8 +106,27 @@ public class MainActivity extends BaseActivity {
         initData();
         getWebUrl();
         parsePushMessage(getIntent());
+        initUserInfo();
     }
 
+    /**
+     * 主动拉取一下用户信息
+     */
+    private void initUserInfo() {
+        new UserInfoApi(mContext, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+                if (entry != null && entry instanceof UserModel) {
+                    userModel = UserDataHelper.getUserLoginInfo(mContext);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
+    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -432,8 +453,7 @@ public class MainActivity extends BaseActivity {
                                         if (reportModel.getKeReport() != null) {
                                             if (reportModel.getKeReport().getComment_id() == null) {
                                                 evalDialog.setData(1, reportModel.getKeReport()
-                                                        .getKid());
-
+                                                        .getKid(), null);
                                             } else {
                                                 Intent intent = new Intent(MainActivity.this,
                                                         WebActivity

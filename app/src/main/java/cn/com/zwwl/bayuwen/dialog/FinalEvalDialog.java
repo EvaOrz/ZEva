@@ -3,23 +3,25 @@ package cn.com.zwwl.bayuwen.dialog;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -49,10 +51,6 @@ import cn.com.zwwl.bayuwen.widget.decoration.GridItemDecoration;
 public class FinalEvalDialog extends PopupWindow {
     @BindView(R.id.title)
     AppCompatTextView title;
-    @BindView(R.id.yes)
-    AppCompatRadioButton yes;
-    @BindView(R.id.no)
-    AppCompatRadioButton no;
     @BindView(R.id.layout_1)
     LinearLayout layout1;
     @BindView(R.id.layout_2)
@@ -79,6 +77,16 @@ public class FinalEvalDialog extends PopupWindow {
     AppCompatTextView tutorEmpty;
     @BindView(R.id.label_1)
     AppCompatTextView label1;
+    @BindView(R.id.yes)
+    RadioButton yes;
+    @BindView(R.id.yes_layout)
+    LinearLayout yesLayout;
+    @BindView(R.id.no)
+    RadioButton no;
+    @BindView(R.id.no_layout)
+    LinearLayout noLayout;
+    @BindView(R.id.submit)
+    AppCompatTextView submit;
     private FinalEvalLabelAdapter labelAdapter;
     private FinalEvalVoteAdapter teacherAdapter, tutorAdapter, adviserAdapter;
     private List<EvalContentModel.ScoreRuleBean> score_rule;
@@ -86,8 +94,8 @@ public class FinalEvalDialog extends PopupWindow {
     private WindowManager.LayoutParams lp;
     private Animation animation;
     private HashMap<String, String> para;
-    private int type;
-    private String kid, month, year;
+    private int type;//  1：课节报告 2：期中 3：期末
+    private String kid, lecture_id;
     private SubmitListener listener;
     private EvalContentModel contentModel;
 
@@ -155,13 +163,11 @@ public class FinalEvalDialog extends PopupWindow {
 
     private void vote(final String theme, final int position, String tId) {
         para.clear();
+        para.put("kid", kid);
         if (type == 1) {
-            para.put("kid", kid);
-        } else {
-            para.put("year", year);
-            para.put("month", month);
+            para.put("lecture_id", lecture_id);
         }
-        para.put("type", String.valueOf(type + 1));
+        para.put("type", type + "");
         para.put("theme", theme);
         para.put("to_uid", tId);
         new VoteApi(activity, para, new ResponseCallBack<CommonModel>() {
@@ -170,15 +176,18 @@ public class FinalEvalDialog extends PopupWindow {
                 if (commentModel != null) {
                     switch (theme) {
                         case "1":
-                            contentModel.getTeacher().get(position).setIsPraised(commentModel.getStatus());
+                            contentModel.getTeacher().get(position).setIsPraised(commentModel
+                                    .getStatus());
                             teacherAdapter.setNewData(contentModel.getTeacher());
                             break;
                         case "2":
-                            contentModel.getStu_advisors().get(position).setIsPraised(commentModel.getStatus());
+                            contentModel.getStu_advisors().get(position).setIsPraised
+                                    (commentModel.getStatus());
                             adviserAdapter.setNewData(contentModel.getStu_advisors());
                             break;
                         case "3":
-                            contentModel.getTutors().get(position).setIsPraised(commentModel.getStatus());
+                            contentModel.getTutors().get(position).setIsPraised(commentModel
+                                    .getStatus());
                             tutorAdapter.setNewData(contentModel.getTutors());
                             break;
                     }
@@ -204,6 +213,37 @@ public class FinalEvalDialog extends PopupWindow {
         initRecycler(teacher, 3, teacherAdapter);
         initRecycler(tutor, 3, tutorAdapter);
         initRecycler(adviser, 3, adviserAdapter);
+        yes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) setCheck(true);
+            }
+        });
+        no.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) setCheck(false);
+            }
+        });
+    }
+
+    private void setCheck(boolean isYes) {
+        if (isYes) {
+            yesLayout.setBackground(activity.getResources().getDrawable(R.drawable
+                    .drawable_checked__corner));
+            noLayout.setBackground(activity.getResources().getDrawable(R.drawable
+                    .drawable_uncheck__corner));
+            yes.setChecked(true);
+            no.setChecked(false);
+        } else {
+            yesLayout.setBackground(activity.getResources().getDrawable(R.drawable
+                    .drawable_uncheck__corner));
+            noLayout.setBackground(activity.getResources().getDrawable(R.drawable
+                    .drawable_checked__corner));
+            yes.setChecked(false);
+            no.setChecked(true);
+        }
+
     }
 
     private void initRecycler(RecyclerView recyclerView, int spanCount, BaseQuickAdapter adapter) {
@@ -213,7 +253,7 @@ public class FinalEvalDialog extends PopupWindow {
         recyclerView.setAdapter(adapter);
     }
 
-    @OnClick({R.id.next, R.id.submit})
+    @OnClick({R.id.next, R.id.submit, R.id.yes_layout, R.id.no_layout})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.next:
@@ -221,8 +261,14 @@ public class FinalEvalDialog extends PopupWindow {
                 layout2.setVisibility(View.VISIBLE);
                 layout2.startAnimation(animation);
                 break;
-            default:
+            case R.id.submit:
                 submit();
+                break;
+            case R.id.yes_layout:
+                setCheck(true);
+                break;
+            case R.id.no_layout:
+                setCheck(false);
                 break;
         }
     }
@@ -236,12 +282,17 @@ public class FinalEvalDialog extends PopupWindow {
         }
         para.put("cond", builder.toString());
         para.put("content", Tools.getText(other).isEmpty() ? "" : Tools.getText(other));
-        para.put("type", String.valueOf(type));
+        para.put("kid", kid);
+        //1课程2子课3老师4月报5话题6助教7班主任8期中9期末
         if (type == 1) {
-            para.put("kid", kid);
-        } else {
-            para.put("year", year);
-            para.put("month", month);
+            para.put("type", "2");
+        } else if (type == 2) {
+            para.put("type", "8");
+        } else if (type == 3) {
+            para.put("type", "9");
+        }
+        if (type == 1) {
+            para.put("cid", lecture_id);
         }
         new EvalApi(activity, para, new ResponseCallBack<CommonModel>() {
             @Override
@@ -253,23 +304,15 @@ public class FinalEvalDialog extends PopupWindow {
 
     }
 
-    public void setData(int type, String kid) {
+    public void setData(int type, String kid, String lectureId) {
         this.kid = kid;
         this.type = type;
+        this.lecture_id = lectureId;
         para.clear();
         para.put("type", String.valueOf(type));
         para.put("kid", kid);
-        getContent();
-    }
-
-    public void setData(int type, String year, String month) {
-        this.type = type;
-        this.year = year;
-        this.month = month;
-        para.clear();
-        para.put("type", String.valueOf(type));
-        para.put("year", year);
-        para.put("month", month);
+        if (!TextUtils.isEmpty(lectureId))
+            para.put("lecture_id", lectureId);
         getContent();
     }
 
@@ -280,7 +323,12 @@ public class FinalEvalDialog extends PopupWindow {
                 contentModel = model;
                 if (model != null) {
                     listener.show();
-                    title.setText(type == 1 ? "课程评价" : "月度评价");
+                    if (type == 1)
+                        title.setText("课节评价");
+                    else if (type == 2)
+                        title.setText("期中评价");
+                    else if (type == 3)
+                        title.setText("期末评价");
                     //一级界面
                     label1.setText(model.getShow().getTitle());
                     yes.setText(model.getShow().getData().get(0).getName());
@@ -297,7 +345,9 @@ public class FinalEvalDialog extends PopupWindow {
         });
     }
 
-    private void setListData(RecyclerView recyclerView, AppCompatTextView empty, List<EvalContentModel.DataBean> dataBeans, FinalEvalVoteAdapter adapter) {
+    private void setListData(RecyclerView recyclerView, AppCompatTextView empty,
+                             List<EvalContentModel.DataBean> dataBeans, FinalEvalVoteAdapter
+                                     adapter) {
         if (dataBeans == null || dataBeans.size() == 0) {
             recyclerView.setVisibility(View.GONE);
         } else {

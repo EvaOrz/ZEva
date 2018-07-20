@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -27,6 +28,7 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.LessonReportAdapter;
 import cn.com.zwwl.bayuwen.api.StudyingCourseApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
+import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -69,16 +71,18 @@ public class ReportIndexActivity extends BaseActivity {
     TextView titleName;
     @BindView(R.id.right_title)
     TextView rightTitle;
-    private Activity mActivity;
+    @BindView(R.id.report_view)
+    View mainView;
+    private FinalEvalDialog evalDialog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_index);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-        mActivity = this;
         initView1();
         initData1();
         setListener1();
@@ -98,6 +102,8 @@ public class ReportIndexActivity extends BaseActivity {
         adapter = new LessonReportAdapter(reports);
         adapter.setEmptyView(R.layout.empty_view, (ViewGroup) recyclerView.getParent());
         recyclerView.setAdapter(adapter);
+
+        mainView = findViewById(R.id.main_view);
     }
 
 
@@ -128,10 +134,7 @@ public class ReportIndexActivity extends BaseActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(mActivity, WebActivity.class);
-                intent.putExtra("WebActivity_title", reports.get(position).getTitle());
-                intent.putExtra("WebActivity_data", reports.get(position).getReport_url());
-                startActivity(intent);
+                goWeb(0, reports.get(position));
             }
         });
     }
@@ -181,22 +184,16 @@ public class ReportIndexActivity extends BaseActivity {
                 if (TextUtils.isEmpty(model.getMidterm_report())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
-                    UmengLogUtil.QiZhongReportClick(mActivity);
-                    Intent intent = new Intent(mActivity, WebActivity.class);
-                    intent.putExtra("WebActivity_title", model.getCourse().getTitle());
-                    intent.putExtra("WebActivity_data", model.getMidterm_report());
-                    startActivity(intent);
+                    UmengLogUtil.QiZhongReportClick(mContext);
+                    goWeb(1, null);
                 }
                 break;
             case R.id.final_report:
                 if (TextUtils.isEmpty(model.getMidterm_report())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
-                    UmengLogUtil.QiMoReportClick(mActivity);
-                    Intent intent = new Intent(mActivity, WebActivity.class);
-                    intent.putExtra("WebActivity_title", model.getCourse().getTitle());
-                    intent.putExtra("WebActivity_data", model.getEnd_term_report());
-                    startActivity(intent);
+                    UmengLogUtil.QiMoReportClick(mContext);
+                    goWeb(2, null);
                 }
                 break;
             case R.id.welcome:
@@ -205,11 +202,8 @@ public class ReportIndexActivity extends BaseActivity {
                 if (TextUtils.isEmpty(model.getWelcome_speech())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
-                    UmengLogUtil.WelReportClick(mActivity);
-                    Intent intent = new Intent(mActivity, WebActivity.class);
-                    intent.putExtra("WebActivity_title", model.getCourse().getTitle());
-                    intent.putExtra("WebActivity_data", model.getWelcome_speech());
-                    startActivity(intent);
+                    UmengLogUtil.WelReportClick(mContext);
+                    goWeb(3, null);
                 }
                 break;
 
@@ -217,6 +211,16 @@ public class ReportIndexActivity extends BaseActivity {
         }
     }
 
+
+    private void goWeb(int type, LessonModel lessonModel) {
+        Intent intent = new Intent(mContext, WebReportActivity.class);
+        if (type == 0) {
+            intent.putExtra("WebActivity_data", lessonModel);
+        } else
+            intent.putExtra("WebActivity_data", model);
+        intent.putExtra("WebActivity_type", type);
+        startActivity(intent);
+    }
 
 //    @Override
 //    public void onMenuClick(int menuCode) {

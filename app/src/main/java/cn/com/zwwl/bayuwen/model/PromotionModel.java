@@ -17,8 +17,8 @@ public class PromotionModel extends Entry {
     private String kids;
     private String title;
     private String lesson_titles;
-    private String original_price;
-    private String discount_price;
+    private double original_price;
+    private double discount_price;
     private List<KeModel> keModels;
 
     public List<KeModel> getKeModels() {
@@ -61,19 +61,19 @@ public class PromotionModel extends Entry {
         this.lesson_titles = lesson_titles;
     }
 
-    public String getOriginal_price() {
+    public double getOriginal_price() {
         return original_price;
     }
 
-    public void setOriginal_price(String original_price) {
+    public void setOriginal_price(double original_price) {
         this.original_price = original_price;
     }
 
-    public String getDiscount_price() {
+    public double getDiscount_price() {
         return discount_price;
     }
 
-    public void setDiscount_price(String discount_price) {
+    public void setDiscount_price(double discount_price) {
         this.discount_price = discount_price;
     }
 
@@ -81,9 +81,9 @@ public class PromotionModel extends Entry {
             promotionModel) {
         promotionModel.setId(jsonObject.optString("id"));
         promotionModel.setKids(jsonObject.optString("kids"));
-        promotionModel.setDiscount_price(jsonObject.optString("discount_price"));
+        promotionModel.setDiscount_price(jsonObject.optDouble("discount_price"));
         promotionModel.setLesson_titles(jsonObject.optString("lesson_titles"));
-        promotionModel.setOriginal_price(jsonObject.optString("original_price"));
+        promotionModel.setOriginal_price(jsonObject.optDouble("original_price"));
         promotionModel.setTitle(jsonObject.optString("title"));
         Gson gson = new Gson();
         JSONArray jsonArray = jsonObject.optJSONArray("item");

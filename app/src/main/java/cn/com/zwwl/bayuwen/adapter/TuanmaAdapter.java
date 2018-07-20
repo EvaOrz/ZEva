@@ -46,12 +46,16 @@ public class TuanmaAdapter extends CheckScrollAdapter<TuanDianModel> {
         TextView desc = viewHolder.getView(R.id.tuanma_copy);
         TextView nouse = viewHolder.getView(R.id.tuanma_nouser);
 
-        title.setText(item.getPurchase_code());
+        title.setText(item.getCourse_code());
         if (type == 0) {
             desc.setVisibility(View.VISIBLE);
             nouse.setVisibility(View.GONE);
         } else {
             desc.setVisibility(View.GONE);
+            if (item.getIs_use() == 0) {
+                nouse.setText("未使用");
+            } else nouse.setText("已使用");
+
             nouse.setVisibility(View.VISIBLE);
             viewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -284,7 +284,7 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
             } else {
                 switch (eval_type) {
                     case 1:
-                        evalDialog.setData(eval_type, kId);
+                        evalDialog.setData(eval_type, kId,null);
                         break;
                     case 2:
                         evalDialog.setData(eval_type, reportBean.getYear(), reportBean.getMonth());

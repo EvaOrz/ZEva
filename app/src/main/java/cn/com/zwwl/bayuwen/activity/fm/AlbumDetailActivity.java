@@ -400,7 +400,6 @@ public class AlbumDetailActivity extends BaseActivity {
                     break;
                 case MSG_START_PLAY: // ---------------－开始播放
                     checkCurrent();
-                    Log.e("开始播放 currentPos", currentPosition + currentFmModel.getTitle());
                     break;
                 case MSG_REFRESH_LIST:
                     fmAdapter.setData(fmModels);// 更新gif播放

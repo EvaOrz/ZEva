@@ -13,7 +13,6 @@ import cn.com.zwwl.bayuwen.model.KeModel;
 
 
 /**
- * Created by lousx
  */
 public class CompleteCourseAdapter extends BaseQuickAdapter<KeModel,BaseViewHolder> {
 

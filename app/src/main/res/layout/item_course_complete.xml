@@ -17,7 +17,7 @@
         android:layout_width="@dimen/dp_80"
         android:layout_height="@dimen/dp_60"
         android:scaleType="fitXY"
-        android:src="@drawable/avatar_placeholder"
+        android:src="@mipmap/image_placeholder"
         app:borderRadius="@dimen/dp_5"
         app:isEdge="true"
         app:type="1" />

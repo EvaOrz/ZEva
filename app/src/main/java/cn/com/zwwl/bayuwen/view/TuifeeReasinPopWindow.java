@@ -64,7 +64,6 @@ public class TuifeeReasinPopWindow {
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onReasonPickListener.onReasonPick(null, null, 0);
                         window.dismiss();
                     }
                 });

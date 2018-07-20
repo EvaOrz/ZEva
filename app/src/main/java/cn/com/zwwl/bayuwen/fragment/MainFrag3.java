@@ -54,6 +54,7 @@ import cn.com.zwwl.bayuwen.model.MyCourseModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
 import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
+import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
@@ -216,11 +217,11 @@ public class MainFrag3 extends BasicFragment {
         reportAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if(reportModels.get(position).getType()==1) {
+                if (reportModels.get(position).getType() == 1) {
                     UmengLogUtil.courseReportClick(activity);
-                }else if (reportModels.get(position).getType()==2){
+                } else if (reportModels.get(position).getType() == 2) {
                     UmengLogUtil.QiZhongReportClick(activity);
-                }else if (reportModels.get(position).getType()==3){
+                } else if (reportModels.get(position).getType() == 3) {
                     UmengLogUtil.QiMoReportClick(activity);
                 }
                 Intent intent = new Intent(activity, WebActivity.class);
@@ -233,10 +234,13 @@ public class MainFrag3 extends BasicFragment {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(activity, FCourseListActivity.class);
-                intent.putExtra("type", courseModel.getCompleted().get(position).getId());
-                intent.putExtra("title", courseModel.getCompleted().get(position).getName());
-                startActivity(intent);
+                if (courseModel != null && Tools.listNotNull(courseModel.getCompleted()) &&
+                        courseModel.getCompleted().get(position) instanceof KeModel) {
+                    Intent intent = new Intent(activity, FCourseListActivity.class);
+                    intent.putExtra("type", courseModel.getCompleted().get(position).getId());
+                    intent.putExtra("title", courseModel.getCompleted().get(position).getName());
+                    startActivity(intent);
+                }
             }
         });
         courseIndexAdapter.setOnItemChildClickListener(new BaseQuickAdapter
