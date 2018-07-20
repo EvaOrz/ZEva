@@ -53,7 +53,7 @@ public class UploadPicActivity extends BaseActivity {
     ArrayList<AlbumFile> albumFiles;
     UploadPicAdapter uploadPicAdapter;
     AlbumFile file;
-    String kid, cid, titleName1, courseName1;
+    String kid, cid, titleName1, courseName1,start_time;
     StringBuilder urls;
     LoadingDialog loadingDialog;
     @BindView(R.id.id_back)
@@ -66,6 +66,8 @@ public class UploadPicActivity extends BaseActivity {
     TextView titlecourseName;
     @BindView(R.id.course_name)
     AppCompatTextView courseName;
+    @BindView(R.id.date_name)
+    AppCompatTextView dateName;
     private HashMap<String, String> map;
     private Activity mActivity;
 
@@ -107,8 +109,11 @@ public class UploadPicActivity extends BaseActivity {
         cid = getIntent().getStringExtra("cid");
         titleName1 = getIntent().getStringExtra("titleName");
         courseName1 = getIntent().getStringExtra("courseName");
+        courseName1 = getIntent().getStringExtra("courseName");
+        start_time =getIntent().getStringExtra("data_time");
         titlecourseName.setText(titleName1);
         courseName.setText(courseName1);
+        dateName.setText(start_time);
 
         albumFiles = new ArrayList<>();
         file = new AlbumFile();
