@@ -160,6 +160,7 @@ public class WorkListActivity extends BaseActivity {
                     intent.putExtra("cid", childClassInfoBeanx.get(position).getChildClassInfo().getId());
                     intent.putExtra("titleName", bigClassInfoBean.getTitle());
                     intent.putExtra("courseName", childClassInfoBeanx.get(position).getChildClassInfo().getTitle());
+                    intent.putExtra("data_time", childClassInfoBeanx.get(position).getChildClassInfo().getStartClassTime());
                     intent.setClass(activity, UploadPicActivity.class);
                     startActivity(intent);
                 } else {
