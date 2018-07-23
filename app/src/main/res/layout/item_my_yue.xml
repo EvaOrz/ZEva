@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/gray_white_xiankuang"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/yue_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="支付"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/yue_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="2018-07-22 13:22"
+                    android:textColor="@color/gray_light"
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/yue_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-3800"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/text_size_18" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/gray_line" />
+
+        <TextView
+            android:id="@+id/yue_oid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单编号：289973878987790002"
+            android:textColor="@color/gray_light"
+            android:textSize="@dimen/text_size_12" />
+    </LinearLayout>
+
+
+</LinearLayout>

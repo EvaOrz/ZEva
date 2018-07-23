@@ -338,6 +338,11 @@ public class UrlUtil {
         return HOST + "/achievement";
     }
 
+    // 获取我的余额列表
+    public static String getMyyue() {
+        return HOST + "/user/assets-list";
+    }
+
     /**
      * 正在进行课程
      */

@@ -1,10 +1,7 @@
 package cn.com.zwwl.bayuwen.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import cn.com.zwwl.bayuwen.R;
 
 /**
@@ -469,6 +466,17 @@ public class KeModel extends Entry {
             }
         }
         return R.mipmap.icon_face_teach;
+    }
+
+    public boolean getIsZhibo() {
+        if ("0".equals(online)) {//面授
+            return false;
+        } else {
+            if ("1".equals(source) && Long.valueOf(endPtime) > System.currentTimeMillis()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setSource(String source) {

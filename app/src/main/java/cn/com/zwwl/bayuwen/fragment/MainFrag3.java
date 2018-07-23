@@ -285,8 +285,15 @@ public class MainFrag3 extends BasicFragment {
                         if (!bean.getPlan().isOpen()) {
                             ToastUtil.showShortToast("该课程尚未开课~");
                         } else {
-                            intent.setClass(activity, VideoPlayActivity.class);
-                            intent.putExtra("VideoPlayActivity_url", bean.getPlan().getPlayUrl());
+                            if ("1".equals(bean.getProducts().getOnline())) {
+                                intent.setClass(activity, WebActivity.class);
+                                intent.putExtra("WebActivity_data", bean.getPlan()
+                                        .getPlayUrl());
+                            } else {
+                                intent.setClass(activity, VideoPlayActivity.class);
+                                intent.putExtra("VideoPlayActivity_url", bean.getPlan()
+                                        .getPlayUrl());
+                            }
                             startActivity(intent);
                         }
                         break;

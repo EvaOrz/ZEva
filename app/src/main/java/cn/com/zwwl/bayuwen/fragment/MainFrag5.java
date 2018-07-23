@@ -18,10 +18,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.umeng.socialize.UMShareAPI;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.activity.FeedBackActivity;
@@ -30,10 +32,12 @@ import cn.com.zwwl.bayuwen.activity.MyAccountActivity;
 import cn.com.zwwl.bayuwen.activity.MyCollectionActivity;
 import cn.com.zwwl.bayuwen.activity.MyOrderActivity;
 import cn.com.zwwl.bayuwen.activity.MyTuanActivity;
+import cn.com.zwwl.bayuwen.activity.MyYueActivity;
 import cn.com.zwwl.bayuwen.activity.OurFmActivity;
 import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
 import cn.com.zwwl.bayuwen.activity.SettingActivity;
 import cn.com.zwwl.bayuwen.activity.TuanCodeUseActivity;
+import cn.com.zwwl.bayuwen.api.order.GetYueApi;
 import cn.com.zwwl.bayuwen.api.order.OrderCancleNumApi;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
@@ -57,6 +61,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
     private TextView frag5Code;
     private TextView frag5Level;
     private TextView cart_num;
+    private TextView my_yue;
 
     private Activity mActivity;
     private View root;
@@ -84,6 +89,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         checkCartNum();
+        getAsstes();
         handler.sendEmptyMessage(0);
     }
 
@@ -110,6 +116,26 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
         });
     }
 
+    private void getAsstes() {
+        // 获取账户余额
+        new GetYueApi(mActivity, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+                if (entry != null && entry instanceof ErrorMsg) {
+                    Message message = new Message();
+                    message.what = 2;
+                    message.obj = ((ErrorMsg) entry).getDesc();
+                    handler.sendMessage(message);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+
+            }
+        });
+    }
+
     private void initView() {
         root.findViewById(R.id.frag5_setting).setOnClickListener(this);
         lookLevelInfo = root.findViewById(R.id.frag5_level_info);
@@ -126,6 +152,8 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
         root.findViewById(R.id.frag5_invite).setOnClickListener(this);
         root.findViewById(R.id.frag5_feedback).setOnClickListener(this);
         root.findViewById(R.id.frag5_account).setOnClickListener(this);
+        root.findViewById(R.id.frag5_yue).setOnClickListener(this);
+        my_yue = root.findViewById(R.id.frag5_yue_txt);
         cart_num = root.findViewById(R.id.cart_num);
         frag5Avatar = root.findViewById(R.id.frag5_avatar);
         frag5Avatar.setOnClickListener(this);
@@ -172,6 +200,9 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                         cart_num.setVisibility(View.VISIBLE);
                         cart_num.setText(msg.arg1 + "");
                     } else cart_num.setVisibility(View.GONE);
+                    break;
+                case 2:// 显示余额
+                    my_yue.setText("￥" + Tools.getTwoDecimal(Double.valueOf((String) msg.obj)));
                     break;
             }
         }
@@ -267,7 +298,9 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
             case R.id.frag5_avatar:
                 startActivity(new Intent(mActivity, ParentInfoActivity.class));
                 break;
-
+            case R.id.frag5_yue:// 我的余额
+                startActivity(new Intent(mActivity, MyYueActivity.class));
+                break;
         }
     }
 

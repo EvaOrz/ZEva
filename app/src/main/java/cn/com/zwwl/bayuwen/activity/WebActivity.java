@@ -36,9 +36,6 @@ public class WebActivity extends BaseActivity {
         initData();
     }
 
-
-
-
     protected void initData() {
         if (!Tools.checkNetWork(this)) {
             showError(R.mipmap.blank_no_wifi, R.string.no_wifi);
@@ -75,7 +72,6 @@ public class WebActivity extends BaseActivity {
             case R.id.web_back:
                 finish();
                 break;
-
         }
     }
 }

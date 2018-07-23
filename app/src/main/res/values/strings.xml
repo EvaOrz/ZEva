@@ -95,6 +95,7 @@
     <string name="logout">退出登录</string>
     <string name="my_follow">我关注的班级</string>
     <string name="my_tuan">我的团购</string>
+    <string name="my_yue">我的余额</string>
     <string name="my_tuan_tab1">我发起的团购</string>
     <string name="my_tuan_tab2">我参加的团购</string>
     <string name="feedback">意见反馈</string>

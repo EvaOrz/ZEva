@@ -282,6 +282,11 @@
             android:name=".activity.SettingOption1Activity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <!-- 我的余额页面 -->
+        <activity
+            android:name=".activity.MyYueActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <!-- 管理地址页面 -->
         <activity
             android:name=".activity.AddressManageActivity"

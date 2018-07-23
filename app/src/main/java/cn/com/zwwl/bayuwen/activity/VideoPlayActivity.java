@@ -3,13 +3,11 @@ package cn.com.zwwl.bayuwen.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.View;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.service.NewMusicService;
-import cn.com.zwwl.bayuwen.view.music.MusicWindow;
 import cn.com.zwwl.bayuwen.widget.MyVideoView;
 import cn.jzvd.JZVideoPlayer;
 

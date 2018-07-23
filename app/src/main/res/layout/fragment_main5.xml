@@ -345,6 +345,45 @@
 
             </LinearLayout>
 
+
+            <LinearLayout
+                android:id="@+id/frag5_yue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/gray_white_xiankuang"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/tuangou" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/my_yue"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/frag5_yue_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="￥ 0.0"
+                    android:textColor="@color/gray_light"
+                    android:textSize="@dimen/text_size_12" />
+
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/frag5_tuan_code"
                 android:layout_width="match_parent"

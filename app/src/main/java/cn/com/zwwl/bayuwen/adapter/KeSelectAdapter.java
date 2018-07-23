@@ -14,6 +14,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
+import cn.com.zwwl.bayuwen.activity.WebActivity;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
@@ -77,9 +78,16 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
         viewHolder.course_frame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(mContext, VideoPlayActivity.class);
-                i.putExtra("VideoPlayActivity_url", keModel.getVideo());
-                i.putExtra("VideoPlayActivity_pic", keModel.getPic());
+                Intent i = new Intent();
+                if (keModel.getIsZhibo()) {
+                    i.setClass(mContext, WebActivity.class);
+                    i.putExtra("WebActivity_data", keModel.getVideo());
+                } else {
+                    i.setClass(mContext, VideoPlayActivity.class);
+                    i.putExtra("VideoPlayActivity_url", keModel.getVideo());
+                    i.putExtra("VideoPlayActivity_pic", keModel.getPic());
+                }
+
                 UmengLogUtil.logKeListVideoPlay(mContext);
                 mContext.startActivity(i);
             }

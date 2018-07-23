@@ -123,7 +123,6 @@ public class CourseDetailActivity extends BaseActivity {
             initData();
         }
         getPinglunData();
-
     }
 
     private void initDetails() {
@@ -406,10 +405,16 @@ public class CourseDetailActivity extends BaseActivity {
                 new YouHuiJuanPopWindow(mContext, couponModels);
                 break;
             case R.id.course_d_play:// 去播放
-                Intent i = new Intent(mContext, VideoPlayActivity.class);
-                i.putExtra("VideoPlayActivity_url", keModel.getVideo());
-                i.putExtra("VideoPlayActivity_pic", keModel.getPic());
                 UmengLogUtil.logKeDetailVideoPlay(mContext);
+                Intent i = new Intent();
+                if (keModel.getIsZhibo()) {
+                    i.setClass(mContext, WebActivity.class);
+                    i.putExtra("WebActivity_data", keModel.getVideo());
+                } else {
+                    i.setClass(mContext, VideoPlayActivity.class);
+                    i.putExtra("VideoPlayActivity_url", keModel.getVideo());
+                    i.putExtra("VideoPlayActivity_pic", keModel.getPic());
+                }
                 startActivity(i);
                 break;
         }
@@ -473,7 +478,6 @@ public class CourseDetailActivity extends BaseActivity {
                 @Override
                 public void setData(Entry entry) {
                     if (entry != null && entry instanceof KeModel) {
-
                         keModel.setCollection_state(((KeModel) entry).getCollection_state());
                         keModel.setCollectionId(((KeModel) entry).getCollectionId());
                         showToast("关注成功");

@@ -98,9 +98,11 @@ public class TuifeeApi extends BaseApi {
         if (!isNull(json)) {
             Gson gson = new Gson();
             TuifeeModel tuifeeModel = gson.fromJson(json.toString(), TuifeeModel.class);
-            KeModel k = gson.fromJson(json.optJSONObject("course").toString(), KeModel.class);
-            if (k != null) {
-                tuifeeModel.setKeModel(k);
+            if (!isNull(json.optJSONObject("course"))) {
+                KeModel k = gson.fromJson(json.optJSONObject("course").toString(), KeModel.class);
+                if (k != null) {
+                    tuifeeModel.setKeModel(k);
+                }
             }
             listener.setData(tuifeeModel);
         }
