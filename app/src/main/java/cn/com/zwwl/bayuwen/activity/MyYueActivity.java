@@ -1,12 +1,14 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -15,6 +17,11 @@ import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,27 +29,30 @@ import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.MyViewPagerAdapter;
 import cn.com.zwwl.bayuwen.adapter.YueAdapter;
 import cn.com.zwwl.bayuwen.api.order.MyyueApi;
-import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
+import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.YueModel;
-import cn.com.zwwl.bayuwen.util.Tools;
 
 /**
  * 我的余额页面
  */
 public class MyYueActivity extends BaseActivity {
     private ViewPager viewPager;
+    private SmartRefreshLayout refresh;
     private ListView view1, view2;
     private View line1, line2;
     private RadioButton button1, button2;
     private List<View> views = new ArrayList<>();
     private MyViewPagerAdapter adapter;
     private YueAdapter adapter1, adapter2;
+    private int page1 = 1, page2 = 1;
+    private Activity mActivity;
     private List<YueModel> shouruDatas = new ArrayList<>(), zhichuDatas = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
+        mActivity = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_yue);
         initView();
@@ -128,22 +138,51 @@ public class MyYueActivity extends BaseActivity {
                     changeRadio(1);
             }
         });
+
+        refresh = findViewById(R.id.refresh);
+        refresh.setRefreshContent(view1);
+        refresh.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshlayout) {
+                refresh.setNoMoreData(false);
+                if (button1.isChecked()) {
+                    page1 = 1;
+                    getShouruData();
+                } else {
+                    page2 = 1;
+                    getZhichuData();
+                }
+            }
+        });
+        refresh.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (button1.isChecked()) {
+                    ++page1;
+                    getShouruData();
+                } else {
+                    ++page2;
+                    getZhichuData();
+                }
+            }
+        });
     }
 
     private void changeRadio(int position) {
         viewPager.setCurrentItem(position);
         if (position == 0) {
+            refresh.setRefreshContent(view1);
             line1.setBackgroundColor(getResources().getColor(R.color.gold));
         } else {
             line1.setBackgroundColor(getResources().getColor(R.color.transparent));
         }
         if (position == 1) {
+            refresh.setRefreshContent(view2);
             line2.setBackgroundColor(getResources().getColor(R.color.gold));
         } else {
             line2.setBackgroundColor(getResources().getColor(R.color.transparent));
         }
     }
-
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
@@ -179,38 +218,48 @@ public class MyYueActivity extends BaseActivity {
         }
     }
 
+    private void getShouruData() {
+        new MyyueApi(mActivity, 0, page1, new ResponseCallBack<List<YueModel>>() {
+            @Override
+            public void result(List<YueModel> yueModels, ErrorMsg errorMsg) {
+                refresh.finishRefresh();
+                refresh.finishLoadMore();
+                if (errorMsg != null) {
+                    showToast(errorMsg.getDesc());
+                } else {
+                    if (page1 == 1) {
+                        shouruDatas.clear();
+                    }
+                    shouruDatas.addAll(yueModels);
+                    handler.sendEmptyMessage(0);
+                }
+            }
+        });
+    }
+
+    private void getZhichuData() {
+        new MyyueApi(mActivity, 1, page2, new ResponseCallBack<List<YueModel>>() {
+            @Override
+            public void result(List<YueModel> yueModels, ErrorMsg errorMsg) {
+                refresh.finishRefresh();
+                refresh.finishLoadMore();
+                if (errorMsg != null) {
+                    showToast(errorMsg.getDesc());
+                } else {
+                    if (page2 == 1) {
+                        zhichuDatas.clear();
+                    }
+                    zhichuDatas.addAll(yueModels);
+                    handler.sendEmptyMessage(1);
+                }
+            }
+        });
+    }
+
     @Override
     protected void initData() {
-        new MyyueApi(mContext, 0, new FetchEntryListListener() {
-            @Override
-            public void setData(List list) {
-                shouruDatas.clear();
-                if (Tools.listNotNull(list)) {
-                    shouruDatas.addAll(list);
-                }
-                handler.sendEmptyMessage(0);
-            }
-
-            @Override
-            public void setError(ErrorMsg error) {
-                if (error != null) showToast(error.getDesc());
-            }
-        });
-        new MyyueApi(mContext, 1, new FetchEntryListListener() {
-            @Override
-            public void setData(List list) {
-                zhichuDatas.clear();
-                if (Tools.listNotNull(list)) {
-                    zhichuDatas.addAll(list);
-                }
-                handler.sendEmptyMessage(1);
-            }
-
-            @Override
-            public void setError(ErrorMsg error) {
-                if (error != null) showToast(error.getDesc());
-            }
-        });
+        getShouruData();
+        getZhichuData();
     }
 
 }

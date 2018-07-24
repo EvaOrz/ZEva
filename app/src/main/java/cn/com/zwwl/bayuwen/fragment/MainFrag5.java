@@ -37,6 +37,7 @@ import cn.com.zwwl.bayuwen.activity.OurFmActivity;
 import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
 import cn.com.zwwl.bayuwen.activity.SettingActivity;
 import cn.com.zwwl.bayuwen.activity.TuanCodeUseActivity;
+import cn.com.zwwl.bayuwen.activity.WebReportActivity;
 import cn.com.zwwl.bayuwen.api.order.GetYueApi;
 import cn.com.zwwl.bayuwen.api.order.OrderCancleNumApi;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
@@ -278,8 +279,8 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 break;
             case R.id.frag5_invite:// 邀请好友加入大语文
                 UmengLogUtil.logInviteClick(mActivity);
-                ShareTools.doShareWeb((BaseActivity) getActivity(), "大语文", "大语文", "http://dev" +
-                        ".umeng.com/images/tab2_1.png", AppValue.inviteUrl);
+                ShareTools.doShareWeb((BaseActivity) mActivity, "邀请好友加入大语文", AppValue.inviteUrl,
+                        "邀请好友加入大语文");
                 break;
             case R.id.frag5_feedback:// 反馈
                 UmengLogUtil.logFeedBackClick(mActivity);

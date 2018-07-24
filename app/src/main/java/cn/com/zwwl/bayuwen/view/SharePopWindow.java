@@ -1,21 +1,14 @@
 package cn.com.zwwl.bayuwen.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
-import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.activity.BaseActivity;
-import cn.com.zwwl.bayuwen.util.ShareTools;
 
 
 /**
@@ -60,7 +53,6 @@ public class SharePopWindow extends PopupWindow {
 
                         break;
                     case 5:
-
 
                         break;
                 }

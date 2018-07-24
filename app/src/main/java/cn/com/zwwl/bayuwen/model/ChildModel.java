@@ -31,6 +31,7 @@ public class ChildModel extends Entry {
     private String address = "";
     private String isdefault = "0";
     private String admission_time= "";
+    private int integral;
     private String pic = "";
 
     public String getId() {
@@ -225,6 +226,14 @@ public class ChildModel extends Entry {
         this.pic = pic;
     }
 
+    public int getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(int integral) {
+        this.integral = integral;
+    }
+
     public int getSexTxt(int i) {
         if (i == 1) return R.string.male;
         else if (i == 0) return R.string.female;
@@ -251,6 +260,7 @@ public class ChildModel extends Entry {
         childModel.setUrgent_phone(jsonObject.optString("urgent_phone"));
         childModel.setReg_school(jsonObject.optString("reg_school"));
         childModel.setSchool(jsonObject.optString("school"));
+        childModel.setIntegral(jsonObject.optInt("integral"));
         childModel.setGrade(jsonObject.optString("grade"));
         childModel.setIsdefault(jsonObject.optString("isdefault"));
         childModel.setAdmission_time(jsonObject.optString("admission_time"));

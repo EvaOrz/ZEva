@@ -134,7 +134,7 @@ public class ReportIndexActivity extends BaseActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                goWeb(0, reports.get(position));
+                goWeb(0, reports.get(position).getReport_url(),reports.get(position).getKid(),reports.get(position).getId());
             }
         });
     }
@@ -185,25 +185,24 @@ public class ReportIndexActivity extends BaseActivity {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
                     UmengLogUtil.QiZhongReportClick(mContext);
-                    goWeb(1, null);
+                    goWeb(1, model.getMidterm_report(), null, null);
                 }
                 break;
             case R.id.final_report:
-                if (TextUtils.isEmpty(model.getMidterm_report())) {
+                if (TextUtils.isEmpty(model.getEnd_term_report())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
                     UmengLogUtil.QiMoReportClick(mContext);
-                    goWeb(2, null);
+                    goWeb(2, model.getEnd_term_report(), null, null);
                 }
                 break;
             case R.id.welcome:
-
 
                 if (TextUtils.isEmpty(model.getWelcome_speech())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
                     UmengLogUtil.WelReportClick(mContext);
-                    goWeb(3, null);
+                    goWeb(3, model.getWelcome_speech(), null, null);
                 }
                 break;
 
@@ -211,13 +210,11 @@ public class ReportIndexActivity extends BaseActivity {
         }
     }
 
-
-    private void goWeb(int type, LessonModel lessonModel) {
+    private void goWeb(int type, String url, String kid, String lessonid) {
         Intent intent = new Intent(mContext, WebReportActivity.class);
-        if (type == 0) {
-            intent.putExtra("WebActivity_data", lessonModel);
-        } else
-            intent.putExtra("WebActivity_data", model);
+        intent.putExtra("WebActivity_url", url);
+        intent.putExtra("WebActivity_kid", kid);
+        intent.putExtra("WebActivity_lessonid", lessonid);
         intent.putExtra("WebActivity_type", type);
         startActivity(intent);
     }

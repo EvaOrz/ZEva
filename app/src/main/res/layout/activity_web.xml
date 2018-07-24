@@ -23,10 +23,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/web_back"
+            android:layout_marginLeft="40dp"
             android:ellipsize="marquee"
             android:focusable="true"
+            android:gravity="center"
             android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_16" />

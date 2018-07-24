@@ -342,6 +342,10 @@ public class UrlUtil {
     public static String getMyyue() {
         return HOST + "/user/assets-list";
     }
+    // 获取我的积分列表
+    public static String getCoinList() {
+        return HOST + "/user/integral";
+    }
 
     /**
      * 正在进行课程

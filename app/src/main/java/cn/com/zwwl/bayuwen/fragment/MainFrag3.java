@@ -37,6 +37,7 @@ import cn.com.zwwl.bayuwen.activity.TraceSearchActivity;
 import cn.com.zwwl.bayuwen.activity.UploadPicActivity;
 import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.activity.WebActivity;
+import cn.com.zwwl.bayuwen.activity.WebReportActivity;
 import cn.com.zwwl.bayuwen.activity.WorkDetailsActivity;
 import cn.com.zwwl.bayuwen.activity.WorkListActivity;
 import cn.com.zwwl.bayuwen.adapter.CompleteCourseAdapter;
@@ -217,16 +218,18 @@ public class MainFrag3 extends BasicFragment {
         reportAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(activity, WebReportActivity.class);
                 if (reportModels.get(position).getType() == 1) {
                     UmengLogUtil.courseReportClick(activity);
+                    intent.putExtra("WebActivity_type", 3);
                 } else if (reportModels.get(position).getType() == 2) {
                     UmengLogUtil.QiZhongReportClick(activity);
+                    intent.putExtra("WebActivity_type", 1);
                 } else if (reportModels.get(position).getType() == 3) {
                     UmengLogUtil.QiMoReportClick(activity);
+                    intent.putExtra("WebActivity_type", 2);
                 }
-                Intent intent = new Intent(activity, WebActivity.class);
-                intent.putExtra("WebActivity_title", reportModels.get(position).getReport_name());
-                intent.putExtra("WebActivity_data", reportModels.get(position).getUrl());
+                intent.putExtra("WebActivity_url", reportModels.get(position).getUrl());
                 startActivity(intent);
 
             }

@@ -361,7 +361,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@mipmap/tuangou" />
+                    android:src="@mipmap/my_yue" />
 
                 <TextView
                     android:layout_width="wrap_content"

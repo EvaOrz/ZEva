@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.os.Message;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,7 +27,6 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.activity.PayActivity;
@@ -48,7 +45,6 @@ import cn.com.zwwl.bayuwen.model.fm.AlbumModel.*;
 import cn.com.zwwl.bayuwen.model.fm.FmModel;
 import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
 import cn.com.zwwl.bayuwen.service.NewMusicService;
-import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.music.MusicWindow;
@@ -496,8 +492,7 @@ public class AlbumDetailActivity extends BaseActivity {
                 doCollect();
                 break;
             case R.id.album_detail_share:// 分享
-                ShareTools.doShareWeb(this, albumModel.getTitle(), albumModel.getContent(),
-                        albumModel.getPic(), "http://baidu.com");
+
                 break;
 
             case R.id.album_detail_inputsend:// 发送评论

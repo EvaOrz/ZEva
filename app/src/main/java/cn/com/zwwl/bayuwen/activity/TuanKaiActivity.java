@@ -84,7 +84,7 @@ public class TuanKaiActivity extends BaseActivity {
                 showToast("已复制到剪切板");
                 break;
             case R.id.tuan_kai_share:// 分享拼团
-                ShareTools.doShareWeb(this, "", "", "", "http://baidu.com");
+                ShareTools.doShareText(this, groupBuyModel.getCode());
                 break;
             case R.id.tuan_kai_pay:// 我要开团
                 Intent i = new Intent();

@@ -3,6 +3,7 @@ package cn.com.zwwl.bayuwen.widget;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -49,6 +50,7 @@ public class CommonWebView extends WebView {
         // android 5.0以上默认不支持Mixed Content
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             s.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+            android.webkit.WebView.enableSlowWholeDocumentDraw();
         }
         s.setDomStorageEnabled(true);
         s.setSupportZoom(false);
@@ -105,7 +107,6 @@ public class CommonWebView extends WebView {
             this.setOverScrollMode(OVER_SCROLL_NEVER);
         }
     }
-
 
     @Override
     public void loadUrl(String url) {

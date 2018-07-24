@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -20,14 +19,12 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
 import cn.com.zwwl.bayuwen.model.fm.FmModel;
 import cn.com.zwwl.bayuwen.service.NewMusicService;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
-import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.view.PlayListPopWindow;
 import cn.com.zwwl.bayuwen.view.music.MusicWindow;
@@ -200,8 +197,7 @@ public class MusicPlayActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.fm_share:
-                ShareTools.doShareWeb(this, albumModel.getTitle(), albumModel.getContent(),
-                        albumModel.getPic(), "http://baidu.com");
+
                 break;
             case R.id.fm_play:
                 sendintent(ACTION_RESUME_PAUSE, 0);

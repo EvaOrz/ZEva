@@ -534,7 +534,7 @@ public class CourseDetailActivity extends BaseActivity {
     private void setkeData() {
         course_tv.setText(keModel.getTitle());
         classno_tv.setText("班级编码：" + keModel.getModel());
-        double aa = Double.parseDouble(keModel.getBuyPrice());
+        double aa = keModel.getBuyPrice();
         if (keModel.getIs_discount() == 0) {
             price_tv.setText("￥ " + Tools.getTwoDecimal(aa));
         } else {

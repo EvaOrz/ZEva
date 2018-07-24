@@ -29,7 +29,7 @@ public class OrderForMyListModel extends Entry {
     private String pay_channel;
     private String pay_at;
     private String coupon_code;
-    private String assets;
+    private double assets;
     private String create_at;
     private String expire_at;
     private List<KeModel> keModels = new ArrayList<>();
@@ -140,11 +140,11 @@ public class OrderForMyListModel extends Entry {
         this.coupon_code = coupon_code;
     }
 
-    public String getAssets() {
+    public double getAssets() {
         return assets;
     }
 
-    public void setAssets(String assets) {
+    public void setAssets(double assets) {
         this.assets = assets;
     }
 
@@ -190,7 +190,7 @@ public class OrderForMyListModel extends Entry {
         orderForMyListModel.setPay_channel(jsonObject.optString("pay_channel"));
         orderForMyListModel.setPay_at(jsonObject.optString("pay_at"));
         orderForMyListModel.setCoupon_code(jsonObject.optString("coupon_code"));
-        orderForMyListModel.setAssets(jsonObject.optString("assets"));
+        orderForMyListModel.setAssets(jsonObject.optDouble("assets"));
         orderForMyListModel.setCreate_at(jsonObject.optString("create_at"));
         orderForMyListModel.setExpire_at(jsonObject.optString("expire_at"));
 

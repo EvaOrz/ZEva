@@ -153,8 +153,7 @@ public class OrderDetailActivity extends BaseActivity {
                             .getReal_fee() / 100));
                     orderNo.setText(orderForMyListModel.getOid());
                     orderTime.setText(orderForMyListModel.getCreate_at());
-                    payStyle.setText(orderForMyListModel.getPay_channel().equals("1") ? "支付宝" :
-                            "微信");
+                    showPayStyle();
                     orderPayTime.setText(orderForMyListModel.getPay_at());
                     if (type == 1) {
                         needPrice2.setText("需付款：￥" + Tools.getTwoDecimal(orderForMyListModel
@@ -211,6 +210,20 @@ public class OrderDetailActivity extends BaseActivity {
             // 一定设置为null，否则定时器不会被回收
             timer = null;
         }
+    }
+
+    private void showPayStyle() {
+        double assets = orderForMyListModel.getAssets();
+        String payChannel = orderForMyListModel.getPay_channel();
+        if (assets == 0) {
+            payStyle.setText(payChannel.equals("1") ? "支付宝" : "微信");
+        } else if (assets > 0 && assets < orderForMyListModel.getReal_fee()) {
+            payStyle.setText(payChannel.equals("1") ? "支付宝 + 余额支付" : "微信 + 余额支付");
+        } else if (assets >= orderForMyListModel.getReal_fee()) {
+            payStyle.setText("余额支付");
+        }
+
+
     }
 
     @Override

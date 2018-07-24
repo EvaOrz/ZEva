@@ -35,7 +35,7 @@ public class KeModel extends Entry {
     private String listpic;
     private String tname;
     private String tid;
-    private String buyPrice;
+    private double buyPrice;
     private String sellPrice;
     private String backPlayPrice;
     private String addtime;
@@ -208,11 +208,11 @@ public class KeModel extends Entry {
         this.tid = tid;
     }
 
-    public String getBuyPrice() {
+    public double getBuyPrice() {
         return buyPrice;
     }
 
-    public void setBuyPrice(String buyPrice) {
+    public void setBuyPrice(double buyPrice) {
         this.buyPrice = buyPrice;
     }
 

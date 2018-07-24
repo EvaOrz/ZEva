@@ -1,21 +1,35 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Picture;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
 import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.model.StudyingModel;
+import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.view.SharePopWindow;
 import cn.com.zwwl.bayuwen.widget.CommonWebView;
 
 /**
@@ -26,23 +40,24 @@ public class WebReportActivity extends BaseActivity {
     private LinearLayout web_main;
     private TextView title;
     private FinalEvalDialog evalDialog;
-
+    private String fileName = "";
 
     private int type = 0;// 0：子课报告 1：期中报告 2：期末报告 3：欢迎致辞
-    private StudyingModel studyingModel;
-    private LessonModel lessonModel;
+    private String webUrl;
+    private String kid, lessonid;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web);
-        type = getIntent().getIntExtra("WebActivity_type", -1);
-        if (type == 0) {
-            lessonModel = (LessonModel) getIntent().getSerializableExtra("WebActivity_data");
-        } else {
-            studyingModel = (StudyingModel) getIntent().getSerializableExtra("WebActivity_data");
+        setContentView(R.layout.activity_report_web);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            android.webkit.WebView.enableSlowWholeDocumentDraw();
         }
+        type = getIntent().getIntExtra("WebActivity_type", -1);
+        webUrl = getIntent().getStringExtra("WebActivity_url");
+        kid =  getIntent().getStringExtra("WebActivity_kid");
+        lessonid =  getIntent().getStringExtra("WebActivity_lessonid");
         initView();
         initErrorLayout();
         initData();
@@ -58,6 +73,7 @@ public class WebReportActivity extends BaseActivity {
     private void initView() {
         title = findViewById(R.id.web_title);
         findViewById(R.id.web_back).setOnClickListener(this);
+        findViewById(R.id.web_share).setOnClickListener(this);
         web_main = findViewById(R.id.web_main);
         commonWebView = findViewById(R.id.web_webview);
 
@@ -73,21 +89,15 @@ public class WebReportActivity extends BaseActivity {
             }
         });
         evalDialog = new FinalEvalDialog(this);
-        String url = "";
         if (type == 0) {
-            url = lessonModel.getReport_url();
-            evalDialog.setData(1, lessonModel.getKid(), lessonModel.getId());
+            evalDialog.setData(1, kid, lessonid);
         } else if (type == 1) {
-            url = studyingModel.getMidterm_report();
-            evalDialog.setData(2, studyingModel.getCourse().getKid(), null);
+            evalDialog.setData(2, kid, null);
         } else if (type == 2) {
-            url = studyingModel.getEnd_term_report();
-            evalDialog.setData(3, studyingModel.getCourse().getKid(), null);
-        } else if (type == 3) {
-            url = studyingModel.getWelcome_speech();
+            evalDialog.setData(3, kid, null);
         }
-        if (!TextUtils.isEmpty(url))
-            commonWebView.loadUrl(url);
+        if (!TextUtils.isEmpty(webUrl))
+            commonWebView.loadUrl(webUrl);
 
         evalDialog.setSubmitListener(new FinalEvalDialog.SubmitListener() {
             @Override
@@ -114,7 +124,40 @@ public class WebReportActivity extends BaseActivity {
             case R.id.web_back:
                 finish();
                 break;
-
+            case R.id.web_share:
+                Bitmap bitmap = captureScreen();
+                if (bitmap != null) {
+                    showToast("截屏成功");
+                    ShareTools.doSharePic(WebReportActivity.this, bitmap);
+                }
+                break;
         }
     }
+
+    /**
+     * 截屏
+     *
+     * @return
+     */
+    private Bitmap captureScreen() {
+        // WebView 生成长图，也就是超过一屏的图片，代码中的 longImage 就是最后生成的长图
+        commonWebView.measure(View.MeasureSpec.makeMeasureSpec(View.MeasureSpec.UNSPECIFIED, View
+                        .MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        commonWebView.layout(0, 0, commonWebView.getMeasuredWidth(), commonWebView
+                .getMeasuredHeight());
+        commonWebView.setDrawingCacheEnabled(true);
+        commonWebView.buildDrawingCache();
+        Bitmap longImage = Bitmap.createBitmap(commonWebView.getMeasuredWidth(),
+                commonWebView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(longImage);  // 画布的宽高和 WebView 的网页保持一致
+        Paint paint = new Paint();
+        canvas.drawBitmap(longImage, 0, commonWebView.getMeasuredHeight(), paint);
+        commonWebView.draw(canvas);
+
+        return longImage;
+    }
+
+
 }

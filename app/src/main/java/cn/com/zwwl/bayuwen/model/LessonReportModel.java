@@ -2,14 +2,6 @@ package cn.com.zwwl.bayuwen.model;
 
 public class LessonReportModel {
 
-    /**
-     * report_name : 第1课：《<世说新语>两则》
-     * kid : 209
-     * lecture_id : 2107
-     * type : 1
-     * url : http://www.kaifaapi.com/v2/report?uid=3606&student_no=1201597&type=1&kid=209&lecture_id=2107
-     */
-
     private String report_name;
     private String kid;
     private String lecture_id;

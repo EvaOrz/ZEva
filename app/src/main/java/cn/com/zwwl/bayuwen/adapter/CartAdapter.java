@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -102,10 +103,9 @@ public class CartAdapter extends CheckScrollAdapter<KeModel> {
 
         String startTime = model.getClass_start_at();
         String endtime = model.getClass_end_at();
-        time.setText(startTime.substring(0, startTime.length() - 3) + " - " + endtime
-                .substring(0, endtime.length() - 3));
-//        time.setText(model.getClass_start_at() + " - " + model.getClass_end_at
-//                ());
+        if (!TextUtils.isEmpty(startTime) && startTime.length() > 3 && !TextUtils.isEmpty(endtime) && endtime.length() > 3)
+            time.setText(startTime.substring(0, startTime.length() - 3) + " - " + endtime
+                    .substring(0, endtime.length() - 3));
         xiaoqu.setText(model.getSchool());
         double aa = Double.valueOf(model.getBuyPrice());
         price.setText("￥" + Tools.getTwoDecimal(aa));

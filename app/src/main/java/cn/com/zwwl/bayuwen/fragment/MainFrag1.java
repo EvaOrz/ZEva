@@ -36,6 +36,7 @@ import cn.com.zwwl.bayuwen.activity.AllXunzhangActivity;
 import cn.com.zwwl.bayuwen.activity.CalendarActivity;
 import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
 import cn.com.zwwl.bayuwen.activity.CityActivity;
+import cn.com.zwwl.bayuwen.activity.CoinListActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
 import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
@@ -236,6 +237,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         initSize();
 
         childTxt.setOnClickListener(this);
+        childCoin.setOnClickListener(this);
         root.findViewById(R.id.go_xunzhang).setOnClickListener(this);
         root.findViewById(R.id.toolbar_left).setOnClickListener(this);
         root.findViewById(R.id.toolbar_right).setOnClickListener(this);
@@ -341,6 +343,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                         if (c.getIsdefault().equals("1")) {
                             childName.setText(c.getName());
                             childGrade.setText(c.getGrade());
+                            childCoin.setText("学员积分：" + c.getIntegral());
                             childTxt.setText(c.getName() + "(" + c.getGrade() + ")");
                             if (!TextUtils.isEmpty(c.getPic()))
                                 ImageLoader.display(mActivity, childImg, c.getPic(), R.drawable
@@ -417,7 +420,9 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                             });
                     childMenuPopView.showPopupWindow(toolbar);
                 }
-
+                break;
+            case R.id.frag1_coin:
+                startActivity(new Intent(mActivity, CoinListActivity.class));
                 break;
         }
 

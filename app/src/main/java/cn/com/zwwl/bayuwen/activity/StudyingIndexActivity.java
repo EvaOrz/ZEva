@@ -26,6 +26,7 @@ import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ClassModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
+import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
 import cn.com.zwwl.bayuwen.util.UmengLogUtil;
@@ -103,13 +104,20 @@ public class StudyingIndexActivity extends BaseActivity {
 //        setCustomTitle(getIntent().getStringExtra("title"));
         online = getIntent().getIntExtra("online", -1);
         signLogo.setImageResource(online == 1 ? R.mipmap.sign_gray : R.mipmap.sign_yellow);
-        signTitle.setTextColor(online == 1 ? Color.parseColor("#BABDC2") : ContextCompat.getColor(this, R.color.text_color_default));
-        courseTitle.setTextColor(online == 1 ? Color.parseColor("#BABDC2") : ContextCompat.getColor(this, R.color.text_color_default));
-        classTitle.setTextColor(online == 1 ? Color.parseColor("#BABDC2") : ContextCompat.getColor(this, R.color.text_color_default));
-        seatTitle.setTextColor(online == 1 ? Color.parseColor("#BABDC2") : ContextCompat.getColor(this, R.color.text_color_default));
-        courseLogo.setImageResource(online == 1 ? R.mipmap.convert_course_gray : R.mipmap.convert_course_yellow);
-        classLogo.setImageResource(online == 1 ? R.mipmap.convert_class_gray : R.mipmap.convert_class_yellow);
-        seatLogo.setImageResource(online == 1 ? R.mipmap.class_seat_gray : R.mipmap.class_seat_yellow);
+        signTitle.setTextColor(online == 1 ? Color.parseColor("#BABDC2") : ContextCompat.getColor
+                (this, R.color.text_color_default));
+        courseTitle.setTextColor(online == 1 ? Color.parseColor("#BABDC2") : ContextCompat
+                .getColor(this, R.color.text_color_default));
+        classTitle.setTextColor(online == 1 ? Color.parseColor("#BABDC2") : ContextCompat
+                .getColor(this, R.color.text_color_default));
+        seatTitle.setTextColor(online == 1 ? Color.parseColor("#BABDC2") : ContextCompat.getColor
+                (this, R.color.text_color_default));
+        courseLogo.setImageResource(online == 1 ? R.mipmap.convert_course_gray : R.mipmap
+                .convert_course_yellow);
+        classLogo.setImageResource(online == 1 ? R.mipmap.convert_class_gray : R.mipmap
+                .convert_class_yellow);
+        seatLogo.setImageResource(online == 1 ? R.mipmap.class_seat_gray : R.mipmap
+                .class_seat_yellow);
         new StudyingClassInfoApi(this, kid, new ResponseCallBack<ClassModel>() {
             @Override
             public void result(ClassModel model, ErrorMsg errorMsg) {
@@ -128,9 +136,11 @@ public class StudyingIndexActivity extends BaseActivity {
             courseCode.setText(String.format("班级编码: %s", keModel.getModel()));
             teacherName.setText(String.format("%s", keModel.getTname()));
             schoolName.setText(String.format("%s", keModel.getSchool()));
-            date.setText(String.format("%s-%s", TimeUtil.parseTime(keModel.getStartPtime() * 1000, "yyyy年MM月dd日"),
+            date.setText(String.format("%s-%s", TimeUtil.parseTime(keModel.getStartPtime() *
+                            1000, "yyyy年MM月dd日"),
                     TimeUtil.parseTime(keModel.getEndPtime() * 1000, "yyyy年MM月dd日")) + " " +
-                    String.format("%s%s-%s", keModel.getWeekday(), TimeUtil.parseToHm(keModel.getClass_start_at()), TimeUtil.parseToHm(keModel.getClass_end_at())));
+                    String.format("%s%s-%s", keModel.getWeekday(), TimeUtil.parseToHm(keModel
+                            .getClass_start_at()), TimeUtil.parseToHm(keModel.getClass_end_at())));
             ImageLoader.display(this, logo, keModel.getPic());
         }
         signPer.setText(String.format("签到率: %s%s", classModel.getSignInRate(), "%"));
@@ -138,7 +148,8 @@ public class StudyingIndexActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.id_back, R.id.course_change, R.id.class_covert, R.id.class_seat, R.id.middle_report, R.id.final_report, R.id.welcome})
+    @OnClick({R.id.id_back, R.id.course_change, R.id.class_covert, R.id.class_seat, R.id
+            .middle_report, R.id.final_report, R.id.welcome})
     @Override
     public void onClick(View view) {
         if (classModel == null) return;
@@ -179,15 +190,11 @@ public class StudyingIndexActivity extends BaseActivity {
                 ToastUtil.showShortToast("敬请期待");
                 break;
             case R.id.middle_report:
-                 UmengLogUtil.QiZhongReportClick(mActivity);
+                UmengLogUtil.QiZhongReportClick(mActivity);
                 if (TextUtils.isEmpty(classModel.getMidterm_report())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
-
-                    intent.setClass(mActivity, WebActivity.class);
-                    intent.putExtra("WebActivity_title", classModel.getCourse().getTitle());
-                    intent.putExtra("WebActivity_data", classModel.getMidterm_report());
-                    startActivity(intent);
+                    goWeb(1, classModel.getMidterm_report());
                 }
                 break;
             case R.id.final_report:
@@ -195,11 +202,7 @@ public class StudyingIndexActivity extends BaseActivity {
                 if (TextUtils.isEmpty(classModel.getMidterm_report())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
-
-                    intent.setClass(mActivity, WebActivity.class);
-                    intent.putExtra("WebActivity_title", classModel.getCourse().getTitle());
-                    intent.putExtra("WebActivity_data", classModel.getEnd_term_report());
-                    startActivity(intent);
+                    goWeb(2, classModel.getEnd_term_report());
                 }
                 break;
             default:
@@ -207,15 +210,20 @@ public class StudyingIndexActivity extends BaseActivity {
                 if (TextUtils.isEmpty(classModel.getWelcome_speech())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
-
-                    intent.setClass(mActivity, WebActivity.class);
-                    intent.putExtra("WebActivity_title", classModel.getCourse().getTitle());
-                    intent.putExtra("WebActivity_data", classModel.getWelcome_speech());
-                    startActivity(intent);
+                    goWeb(3, classModel.getWelcome_speech());
                 }
                 break;
         }
     }
 
+    /**
+     * @param type 1期中2期末3欢迎
+     */
+    private void goWeb(int type, String url) {
+        Intent intent = new Intent(mContext, WebReportActivity.class);
+        intent.putExtra("WebActivity_url", url);
+        intent.putExtra("WebActivity_type", type);
+        startActivity(intent);
+    }
 
 }
