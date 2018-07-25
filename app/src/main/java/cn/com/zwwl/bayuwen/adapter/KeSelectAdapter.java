@@ -72,9 +72,7 @@ public class KeSelectAdapter extends BaseRecylcerViewAdapter<KeModel> {
                 "yyyy-MM-dd"));
         String startTime = keModel.getClass_start_at();
         String endtime = keModel.getClass_end_at();
-        if (startTime != null && endtime != null && startTime.length() > 3 && endtime.length() > 3)
-            viewHolder.time.setText(startTime.substring(0, startTime.length() - 3) + " - " + endtime
-                    .substring(0, endtime.length() - 3));
+        viewHolder.time.setText(Tools.getKetime(startTime,endtime));
         viewHolder.course_frame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

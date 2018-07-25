@@ -340,4 +340,14 @@ public class Tools {
         view.measure(w, h);
         return new Pair<>(view.getMeasuredHeight(), view.getMeasuredWidth());
     }
+
+
+    public static String getKetime(String startTime, String endtime) {
+        if (!TextUtils.isEmpty(startTime) && startTime.length() > 3 && !TextUtils.isEmpty
+                (endtime) && endtime.length() > 3)
+            return startTime.substring(0, startTime.length() - 3) + " - " + endtime
+                    .substring(0, endtime.length() - 3);
+        return "";
+    }
+
 }

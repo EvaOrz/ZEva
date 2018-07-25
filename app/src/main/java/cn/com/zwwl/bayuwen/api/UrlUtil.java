@@ -333,6 +333,11 @@ public class UrlUtil {
         return HOST + "/jigsaw";
     }
 
+    //(点击格子弹出中间页介绍)根据章节id获取子课程信息
+    public static String getPintuIntro() {
+        return HOST + "/courselecture/";
+    }
+
     // 获取成就列表
     public static String getAchievement() {
         return HOST + "/achievement";
@@ -342,6 +347,7 @@ public class UrlUtil {
     public static String getMyyue() {
         return HOST + "/user/assets-list";
     }
+
     // 获取我的积分列表
     public static String getCoinList() {
         return HOST + "/user/integral";

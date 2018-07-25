@@ -56,10 +56,10 @@ public class FmMyCollectionAdapter extends CheckScrollAdapter<FmListCollectModel
 
         playnum.setText(item.getCourse().getPlayNum() + "人气");
         desc.setText(item.getCourse().getTname());
-        String Time = item.getCreated_at();
+        String time1 = item.getCreated_at();
 
-//        long a = CalendarTools.fromStringToLongtime(item.getCreated_at());
-        time.setText(Time.substring(0,Time.length()-3));
+        if (!TextUtils.isEmpty(time1))
+            time.setText(time1.substring(0, time1.length() - 3));
         if (!TextUtils.isEmpty(item.getCourse().getPic()))
             Glide.with(mContext)
                     .load(item.getCourse().getPic())

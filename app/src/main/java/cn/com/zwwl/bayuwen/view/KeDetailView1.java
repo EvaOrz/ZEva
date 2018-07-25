@@ -18,6 +18,7 @@ import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.BaseResponse;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.LessonModel;
+import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
@@ -51,7 +52,7 @@ public class KeDetailView1 extends LinearLayout {
                     @Override
                     public void run() {
                         if (baseResponse != null) {
-                             totalPage = baseResponse.getTotal() / baseResponse.getPagesize();
+                            totalPage = baseResponse.getTotal() / baseResponse.getPagesize();
                             if (baseResponse.getTotal() % baseResponse.getPagesize() > 0)
                                 totalPage = totalPage + 1;
                             if (page == totalPage) lookAll.setVisibility(GONE);
@@ -90,7 +91,7 @@ public class KeDetailView1 extends LinearLayout {
                 if (data.size() == 3 && allData.size() > data.size()) {
                     data.clear();
                     data.addAll(allData);
-                    if (page==totalPage)lookAll.setVisibility(GONE);
+                    if (page == totalPage) lookAll.setVisibility(GONE);
                     adapter.setData(data);
                 } else if (totalPage != 0 && page != totalPage) {
                     ++page;
@@ -128,13 +129,11 @@ public class KeDetailView1 extends LinearLayout {
             TextView video_id = viewHolder.getView(R.id.course_d_id);
             TextView video_title = viewHolder.getView(R.id.course_d_title);
             TextView video_time = viewHolder.getView(R.id.course_d_time);
-            video_id.setText(String.valueOf(position+1));
+            video_id.setText(String.valueOf(position + 1));
             video_title.setText(item.getTitle());
-            String startTime= item.getClass_start_at();
-            String endtime=item.getClass_end_at();
-            video_time.setText(item.getStart_at()
-                    + "  " + startTime.substring(0,startTime.length()-3)
-                    + "-" + endtime.substring(0,endtime.length()-3)
+            String startTime = item.getClass_start_at();
+            String endtime = item.getClass_end_at();
+            video_time.setText(Tools.getKetime(startTime, endtime)
                     + "(" + item.getHours() + "课时)");
             return viewHolder.getConvertView();
         }

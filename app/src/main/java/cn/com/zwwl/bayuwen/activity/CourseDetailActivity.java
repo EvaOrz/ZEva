@@ -555,8 +555,7 @@ public class CourseDetailActivity extends BaseActivity {
 
         String startTime = keModel.getClass_start_at();
         String endtime = keModel.getClass_end_at();
-        time_tv.setText(startTime.substring(0, startTime.length() - 3) + " - " + endtime
-                .substring(0, endtime.length() - 3));
+        time_tv.setText(Tools.getKetime(startTime, endtime));
 
         if (keModel.getIs_discount() == 1) {
             priceTv2.setText("￥" + Tools.getTwoDecimal(Double.valueOf(keModel.getDiscount()) /

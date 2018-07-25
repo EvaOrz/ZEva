@@ -15,7 +15,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,38 +32,28 @@ import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.AbilityAnalysisActivity;
 import cn.com.zwwl.bayuwen.activity.AllXunzhangActivity;
-import cn.com.zwwl.bayuwen.activity.CalendarActivity;
-import cn.com.zwwl.bayuwen.activity.ChildInfoActivity;
 import cn.com.zwwl.bayuwen.activity.CityActivity;
 import cn.com.zwwl.bayuwen.activity.CoinListActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
 import cn.com.zwwl.bayuwen.activity.MessageActivity;
-import cn.com.zwwl.bayuwen.activity.ParentInfoActivity;
-import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.AchieveMainAdapter;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
 import cn.com.zwwl.bayuwen.api.AchievementApi;
-import cn.com.zwwl.bayuwen.api.Index1Api;
 import cn.com.zwwl.bayuwen.api.PintuListApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
-import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.AchievementModel;
 import cn.com.zwwl.bayuwen.model.ChildModel;
-import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
-import cn.com.zwwl.bayuwen.model.Index1Model;
 import cn.com.zwwl.bayuwen.model.Index1Model.AdvBean;
 import cn.com.zwwl.bayuwen.model.PintuModel;
 import cn.com.zwwl.bayuwen.model.UserModel;
-import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.ChildMenuPopView;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.MostGridView;
-import cn.com.zwwl.bayuwen.widget.RoundAngleImageView;
 import cn.com.zwwl.bayuwen.widget.threed.GalleryTransformer;
 import cn.com.zwwl.bayuwen.widget.threed.InfinitePagerAdapter;
 import cn.com.zwwl.bayuwen.widget.threed.InfiniteViewPager;
@@ -253,10 +242,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         for (int i = 0; i < pingtu_indicator.getChildCount(); i++) {
             if (i == position) {
                 pingtu_indicator.getChildAt(i).setBackgroundResource(R.drawable
-                        .viewlooper_gold_status);
+                        .dot_gold_6);
             } else {
                 pingtu_indicator.getChildAt(i).setBackgroundResource(R.drawable
-                        .viewlooper_gray_status);
+                        .dot_gray_6);
             }
         }
     }

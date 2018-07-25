@@ -1,8 +1,11 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -26,6 +29,10 @@ import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
+import cn.com.zwwl.bayuwen.api.PintuIntroApi;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.PintuModel;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.util.UmengLogUtil;
@@ -116,7 +123,6 @@ public class AbilityAnalysisActivity extends BaseActivity {
 
     }
 
-
     protected void initData1() {
         Intent intent = getIntent();
         pintuModels = (ArrayList<PintuModel>) intent.getSerializableExtra("pintuModels");
@@ -134,7 +140,7 @@ public class AbilityAnalysisActivity extends BaseActivity {
     private void initPintu() {
         pintuView.setBackgroundResource(R.drawable.pintu_bg_wangzhe);
         if (Tools.listNotNull(pintuModel.getLectureinfo())) {
-            List<PintuModel.LectureinfoBean.SectionListBean> models = pintuModel
+            final List<PintuModel.LectureinfoBean.SectionListBean> models = pintuModel
                     .getLectureinfo().get(0).getSectionList();
             if (Tools.listNotNull(models) && models.size() == 54) {
                 radarAdapter = new RadarAdapter(models, pintuWid);
@@ -145,15 +151,50 @@ public class AbilityAnalysisActivity extends BaseActivity {
             radarAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    new DatiPopWindow(AbilityAnalysisActivity.this, pintuModel);
+                    getIntro(models.get(position).getSectionId());
                 }
             });
         }
     }
 
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    PintuModel.LectureinfoBean.SectionListBean model = (PintuModel
+                            .LectureinfoBean.SectionListBean) msg.obj;
+                    new DatiPopWindow(mContext, model);
+                    break;
+            }
+        }
+    };
+
+    /**
+     * 获取格子详情
+     */
+    private void getIntro(int selectionId) {
+        new PintuIntroApi(mContext, selectionId, new FetchEntryListener() {
+            @Override
+            public void setData(Entry entry) {
+                if (entry != null) {
+                    Message message = new Message();
+                    message.what = 0;
+                    message.obj = entry;
+                    handler.sendMessage(message);
+                }
+            }
+
+            @Override
+            public void setError(ErrorMsg error) {
+                if (error != null) showToast(error.getDesc());
+            }
+        });
+    }
+
 
     protected void setListener() {
-
         tabCourseName.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

@@ -133,7 +133,6 @@ public class CalendarTools {
             d = sdf.parse(user_time);
             long l = d.getTime();
             re_time = String.valueOf(l);
-//            re_time = str.substring(0, 10);
         } catch (ParseException e) {
         }
         return Long.valueOf(re_time);

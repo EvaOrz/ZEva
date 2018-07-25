@@ -203,7 +203,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                     } else cart_num.setVisibility(View.GONE);
                     break;
                 case 2:// 显示余额
-                    my_yue.setText("￥" + Tools.getTwoDecimal(Double.valueOf((String) msg.obj)));
+                    my_yue.setText("￥" + Tools.getTwoDecimal(Double.valueOf((String) msg.obj)/100));
                     break;
             }
         }

@@ -3,6 +3,7 @@ package cn.com.zwwl.bayuwen.view;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -169,8 +170,11 @@ public class YouHuiJuanPopWindow implements View.OnClickListener {
             }
             price.setText(desc);
             name.setText(c.getName());
-            time.setText(c.getStart_use_time().substring(0, 10) + " 至 " + c.getEnd_use_time()
-                    .substring(0, 10));
+            if (!TextUtils.isEmpty(c.getStart_use_time()) && c.getStart_use_time().length() > 10
+                    && !TextUtils.isEmpty(c.getEnd_use_time
+                    ()) && c.getEnd_use_time().length() > 10)
+                time.setText(c.getStart_use_time().substring(0, 10) + " 至 " + c.getEnd_use_time()
+                        .substring(0, 10));
             if (type == 1) {
                 bt.setText("领取");
             } else if (type == 2) {

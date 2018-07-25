@@ -36,9 +36,9 @@ public class DatiPopWindow {
     private Context mContext;
     private PopupWindow window;
     private TextView title, content;
-    private PintuModel pintuModel;
+    private PintuModel.LectureinfoBean.SectionListBean pintuModel;
 
-    public DatiPopWindow(Context context, PintuModel pintuMode) {
+    public DatiPopWindow(Context context, PintuModel.LectureinfoBean.SectionListBean pintuMode) {
         this.mContext = context;
         this.pintuModel = pintuMode;
         init();
@@ -59,16 +59,16 @@ public class DatiPopWindow {
             public void onClick(View v) {
                 UmengLogUtil.logPintuChuangguanClick(mContext);
                 Intent intent = new Intent(mContext, AnswerActivity.class);
-                intent.putExtra("sectionId", pintuModel.getId());
-//                intent.putExtra("sectionId", "2");
+                intent.putExtra("sectionId", pintuModel.getSectionId() + "");
                 mContext.startActivity(intent);
                 window.dismiss();
             }
         });
         title = view.findViewById(R.id.chuangguan_title);
         content = view.findViewById(R.id.chuangguan_list);
-        title.setText(pintuModel.getContent().getTitle());
-        content.setText(pintuModel.getContent().getContent());
+        title.setText(pintuModel.getTitle());
+        if (!TextUtils.isEmpty(pintuModel.getContent()))
+            content.setText(pintuModel.getContent());
 
         window = new PopupWindow(view, RelativeLayout.LayoutParams.FILL_PARENT,
                 RelativeLayout.LayoutParams.FILL_PARENT);
