@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,15 +128,68 @@ public class AbilityAnalysisActivity extends BaseActivity {
     protected void initData1() {
         Intent intent = getIntent();
         pintuModels = (ArrayList<PintuModel>) intent.getSerializableExtra("pintuModels");
+        final int pos = intent.getIntExtra("pin_pos", 0);
         for (int i = 0; i < pintuModels.size(); i++) {
             tabCourseName.addTab(tabCourseName.newTab().setText(pintuModels.get(i).getName()));
         }
+        tabCourseName.setScrollPosition(pos, 0, true);
 
-        pintuModel = pintuModels.get(0);
-        content.setText(pintuModel.getContent().getContent());
+        tabCourseName.post(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //拿到tabLayout的mTabStrip属性
+                    Field mTabStripField = tabCourseName.getClass().getDeclaredField("mTabStrip");
+                    mTabStripField.setAccessible(true);
+                    LinearLayout mTabStrip = (LinearLayout) mTabStripField.get(tabCourseName);
+
+                    int scrollX = 0;
+                    int screenHalf = MyApplication.width / 2;// 屏幕宽度的一半
+                    for (int i = 0; i < pos; i++) {
+                        View tt = mTabStrip.getChildAt(i);
+                        scrollX += getTWid(tt);
+                    }
+
+                    View tabView = mTabStrip.getChildAt(pos);
+                    int ww = getTWid(tabView);
+                    tabCourseName.scrollTo(scrollX - ww / 2, 0);
+
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        pintuModel = pintuModels.get(pos);
+        content.setText(pintuModel.getContent().
+
+                getContent());
+
         initPintu();
         initAddData();
+    }
 
+    private int getTWid(View tt) {
+        int width = 0;
+        try {
+            //拿到tabView的mTextView属性
+            Field ff = tt.getClass().getDeclaredField("mTextView");
+            ff.setAccessible(true);
+            TextView vv = (TextView) ff.get(tt);
+
+            width = vv.getWidth();
+            if (width == 0) {
+                vv.measure(0, 0);
+                width = vv.getMeasuredWidth();
+            }
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return width;
     }
 
     private void initPintu() {
@@ -151,11 +206,13 @@ public class AbilityAnalysisActivity extends BaseActivity {
             radarAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    getIntro(models.get(position).getSectionId());
+                    getIntro(models.get(position).getSectionId(), radarAdapter.checkLevel(models
+                            .get(position)) > 0);
                 }
             });
         }
     }
+
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
@@ -163,9 +220,12 @@ public class AbilityAnalysisActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
+
+                    Bundle bundle = msg.getData();
                     PintuModel.LectureinfoBean.SectionListBean model = (PintuModel
-                            .LectureinfoBean.SectionListBean) msg.obj;
-                    new DatiPopWindow(mContext, model);
+                            .LectureinfoBean.SectionListBean) bundle.getSerializable("gezi_detail");
+                    boolean is = bundle.getBoolean("isShowDeatil");
+                    new DatiPopWindow(mContext, model, is);
                     break;
             }
         }
@@ -174,14 +234,17 @@ public class AbilityAnalysisActivity extends BaseActivity {
     /**
      * 获取格子详情
      */
-    private void getIntro(int selectionId) {
+    private void getIntro(int selectionId, final boolean isShowDeatil) {
         new PintuIntroApi(mContext, selectionId, new FetchEntryListener() {
             @Override
             public void setData(Entry entry) {
                 if (entry != null) {
                     Message message = new Message();
+                    Bundle b = new Bundle();
+                    b.putBoolean("isShowDeatil", isShowDeatil);
+                    b.putSerializable("gezi_detail", entry);
                     message.what = 0;
-                    message.obj = entry;
+                    message.setData(b);
                     handler.sendMessage(message);
                 }
             }
@@ -216,13 +279,15 @@ public class AbilityAnalysisActivity extends BaseActivity {
         });
     }
 
+
     private void initAddData() {
         courseContent.setText(pintuModel.getContent().getTitle());
         studentCondition.setText(pintuModel.getStudent_info().getTitle());
         systemIntroduction.setText(pintuModel.getCurricula().getTitle());
     }
 
-    @OnClick({R.id.course_content, R.id.system_introduction, R.id.student_condition, R.id.id_back})
+    @OnClick({R.id.course_content, R.id.system_introduction, R.id.student_condition, R.id
+            .id_back})
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -246,8 +311,10 @@ public class AbilityAnalysisActivity extends BaseActivity {
                         0) {
                     questionNum.setText("总题目数：" + pintuModel.getLectureinfo().get(0)
                             .getQuestionNum());
-                    rightNum.setText("答对题数：" + pintuModel.getLectureinfo().get(0).getRightNum());
-                    errorNum.setText("答错题数：" + pintuModel.getLectureinfo().get(0).getErrorNum());
+                    rightNum.setText("答对题数：" + pintuModel.getLectureinfo().get(0).getRightNum
+                            ());
+                    errorNum.setText("答错题数：" + pintuModel.getLectureinfo().get(0).getErrorNum
+                            ());
                 }
                 break;
             case R.id.system_introduction:

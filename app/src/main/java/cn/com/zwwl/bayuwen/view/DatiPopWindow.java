@@ -21,6 +21,7 @@ import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.AnswerActivity;
+import cn.com.zwwl.bayuwen.activity.AnswerDetailActivity;
 import cn.com.zwwl.bayuwen.adapter.CheckScrollAdapter;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.PintuModel;
@@ -36,11 +37,15 @@ public class DatiPopWindow {
     private Context mContext;
     private PopupWindow window;
     private TextView title, content;
+    private TextView bt1, bt2;
     private PintuModel.LectureinfoBean.SectionListBean pintuModel;
+    private boolean isShowDetail = false;
 
-    public DatiPopWindow(Context context, PintuModel.LectureinfoBean.SectionListBean pintuMode) {
+    public DatiPopWindow(Context context, PintuModel.LectureinfoBean.SectionListBean pintuMode,
+                         boolean isShowDetail) {
         this.mContext = context;
         this.pintuModel = pintuMode;
+        this.isShowDetail = isShowDetail;
         init();
     }
 
@@ -54,7 +59,18 @@ public class DatiPopWindow {
                         window.dismiss();
                     }
                 });
-        view.findViewById(R.id.chuangguan_bt).setOnClickListener(new View.OnClickListener() {
+        bt1 = view.findViewById(R.id.xiangqing_bt);
+        bt2 = view.findViewById(R.id.chuangguan_bt);
+        if (isShowDetail) {
+            bt1.setVisibility(View.VISIBLE);
+        } else bt1.setVisibility(View.GONE);
+        bt1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getAnswerDeatail(pintuModel.getSectionId() + "");
+            }
+        });
+        bt2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UmengLogUtil.logPintuChuangguanClick(mContext);
@@ -81,5 +97,15 @@ public class DatiPopWindow {
 
     }
 
+    /**
+     * 跳转答题详情
+     *
+     * @param sid
+     */
+    private void getAnswerDeatail(String sid) {
+        Intent i = new Intent(mContext, AnswerDetailActivity.class);
+        i.putExtra("AnswerDetailActivity_data", sid);
+        mContext.startActivity(i);
+    }
 
 }

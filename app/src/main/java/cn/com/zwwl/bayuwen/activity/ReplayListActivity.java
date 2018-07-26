@@ -77,7 +77,7 @@ public class ReplayListActivity extends BaseActivity {
         setContentView(R.layout.activity_replay_list);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-        mActivity =this;
+        mActivity = this;
         initView1();
         SetData();
         setListener1();
@@ -108,8 +108,8 @@ public class ReplayListActivity extends BaseActivity {
 //            lookReplay.setText(null);
 //            lookReplay.setVisibility(View.GONE);
         } else
-          titleName.setText(getIntent().getStringExtra("title"));
-           String kid =getIntent().getStringExtra("kid");
+            titleName.setText(getIntent().getStringExtra("title"));
+        String kid = getIntent().getStringExtra("kid");
         new StudyingCourseApi(this, kid, new ResponseCallBack<StudyingModel>() {
             @Override
             public void result(StudyingModel studyingModel, ErrorMsg errorMsg) {
@@ -127,8 +127,8 @@ public class ReplayListActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 UmengLogUtil.LivePlayBackClick(mActivity);
-                Intent intent = new Intent(mActivity, VideoPlayActivity.class);
-                intent.putExtra("VideoPlayActivity_url", reports.get(position).getPlay_url());
+                Intent intent = new Intent(mActivity, WebActivity.class);
+                intent.putExtra("WebActivity_data", reports.get(position).getPlay_url());
                 startActivity(intent);
                 startActivity(intent);
             }
@@ -149,9 +149,11 @@ public class ReplayListActivity extends BaseActivity {
             teacherName.setText(String.format("%s", keModel.getTname()));
             schoolName.setText(String.format("%s", keModel.getSchool()));
             date.setText(String.format("%s-%s", TimeUtil.parseTime(keModel.getStartPtime() * 1000,
-                    "yyyy年MM月dd日"), TimeUtil.parseTime(keModel.getEndPtime() * 1000, "yyyy年MM月dd日")) +
+                    "yyyy年MM月dd日"), TimeUtil.parseTime(keModel.getEndPtime() * 1000,
+                    "yyyy年MM月dd日")) +
                     String.format("%s%s-%s", keModel.getWeekday(),
-                            TimeUtil.parseToHm(keModel.getClass_start_at()), TimeUtil.parseToHm(keModel.getClass_end_at())));
+                            TimeUtil.parseToHm(keModel.getClass_start_at()), TimeUtil.parseToHm
+                                    (keModel.getClass_end_at())));
             ImageLoader.display(this, logo, keModel.getPic());
         }
         if (model.getCompleteClass() != null) {

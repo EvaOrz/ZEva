@@ -14,7 +14,7 @@ import java.util.TimeZone;
  * Created by zhumangmang at 2018/6/11 13:12
  */
 public class TimeUtil {
-    public static String FORMATTER_DEFAULT = "yyyy-MM-dd hh:MM";
+    public static String FORMATTER_DEFAULT = "yyyy-MM-dd hh:mm";
 
     /**
      * Long-->String

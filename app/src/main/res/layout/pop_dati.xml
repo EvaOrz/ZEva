@@ -34,17 +34,41 @@
             android:textSize="@dimen/text_size_12" />
 
 
-        <TextView
-            android:id="@+id/chuangguan_bt"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/gold_circle"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="开始闯关"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_14" />
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/xiangqing_bt"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/gold_circle"
+                android:gravity="center"
+                android:padding="10dp"
+                android:visibility="gone"
+                android:text="答题详情"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_14" />
+
+            <TextView
+                android:id="@+id/chuangguan_bt"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/gold_circle"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="开始闯关"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_14" />
+        </LinearLayout>
+
 
     </LinearLayout>
 

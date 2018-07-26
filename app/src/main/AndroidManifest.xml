@@ -395,6 +395,11 @@
             android:name=".activity.PiaoSelectActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <!-- 答题详情页面 -->
+        <activity
+            android:name=".activity.AnswerDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <!--课程报告网页页面-->
         <activity
             android:name=".activity.WebReportActivity"

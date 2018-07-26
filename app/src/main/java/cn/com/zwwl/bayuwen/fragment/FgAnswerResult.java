@@ -23,7 +23,7 @@ public class FgAnswerResult extends BasicFragment {
     public static Fragment newInstance(int position, OptionModel content) {
         FgAnswerResult fragment = new FgAnswerResult();
         Bundle bundle = new Bundle();
-        bundle.putString("question", position + "、" + content.getTitle());
+        bundle.putString("question", position + "、" + content.getQuestionTitle());
         bundle.putString("des", content.getRemark());
         bundle.putString("answer", content.getAnswer());
         fragment.setArguments(bundle);

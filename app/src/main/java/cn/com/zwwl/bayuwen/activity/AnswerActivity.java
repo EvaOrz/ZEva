@@ -118,12 +118,13 @@ public class AnswerActivity extends BaseActivity {
     }
 
     private void bindData() {
+        if (choiceBeans.size() < index) return;
         progress.setProgress(index);
         current.setText(String.valueOf(index));
         question.setText(String.format("%s. %s", index, choiceBeans.get(index - 1).getTitle()));
-        adapter.setOptions(choiceBeans.get(index - 1).getSelect(), choiceBeans.get(index - 1).getAnswer());
+        adapter.setOptions(choiceBeans.get(index - 1).getSelect(), choiceBeans.get(index - 1)
+                .getAnswer());
     }
-
 
 
     protected void setListener1() {
@@ -131,17 +132,18 @@ public class AnswerActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter quickAdapter, View view, int position) {
                 adapter.setChoose(choiceBeans.get(index - 1).getSelect().get(position).getOption());
-                if (index == choiceBeans.size())
-                    dialog.end();
                 OptionModel bean = new OptionModel();
                 bean.setAnswer(choiceBeans.get(index - 1).getSelect().get(position).getOption());
                 bean.setId(choiceBeans.get(index - 1).getId());
-                bean.setChoseTime(TimeUtil.getCurrentDate(FORMATTER_DEFAULT));
+                bean.setChoseTime(TimeUtil.getCurrentDate("yyyy-MM-dd hh:mm:ss"));
                 answerBeans.add(bean);
+                if (index == choiceBeans.size())
+                    dialog.end();
+
                 progress.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (adapter.isRight()) {
+                        if (adapter.isRight() && index < choiceBeans.size()) {
                             ++index;
                             bindData();
                         } else {
@@ -184,34 +186,35 @@ public class AnswerActivity extends BaseActivity {
             }
             jsonObject.put("studentId", Long.parseLong(TempDataHelper.getCurrentChildNo(this)));
             jsonObject.put("list", array);
-            new SubmitAnswerApi(mActivity, jsonObject.toString(), new ResponseCallBack<CommonModel>() {
-                @Override
-                public void result(CommonModel commonModel, ErrorMsg errorMsg) {
-                    Intent intent = new Intent(mActivity, AnswerResultActivity.class);
-                    intent.putExtra("total", choiceBeans.size());
-                    intent.putExtra("sectionId", sectionId);
-                    startActivity(intent);
-
-                    if (errorMsg == null) {
-                        ToastUtil.showShortToast("上传成功");
-                        startActivity(intent);
-                    } else {
-                        ToastUtil.showShortToast(errorMsg.getDesc());
-                    }
-                }
-            });
+            new SubmitAnswerApi(mActivity, jsonObject.toString(), new
+                    ResponseCallBack<CommonModel>() {
+                        @Override
+                        public void result(CommonModel commonModel, ErrorMsg errorMsg) {
+                            if (errorMsg == null) {
+                                ToastUtil.showShortToast("上传成功");
+                                Intent intent = new Intent(mActivity, AnswerResultActivity.class);
+                                intent.putExtra("total", choiceBeans.size());
+                                intent.putExtra("sectionId", sectionId);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                ToastUtil.showShortToast(errorMsg.getDesc());
+                            }
+                        }
+                    });
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
     @OnClick({R.id.id_back})
     @Override
     public void onClick(View view) {
-      switch (view.getId()){
-          case R.id.id_back:
-              finish();
-              break;
-      }
+        switch (view.getId()) {
+            case R.id.id_back:
+                finish();
+                break;
+        }
     }
 
 

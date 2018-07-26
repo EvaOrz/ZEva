@@ -54,8 +54,6 @@ public class AnswerResultActivity extends BaseActivity {
     @BindView(R.id.title_name)
     TextView titleName;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,10 +164,10 @@ public class AnswerResultActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.back_home:
-                startActivity(new Intent(this,AbilityAnalysisActivity.class));
+                finish();
                 break;
         }
-        finish();
+
     }
 
 

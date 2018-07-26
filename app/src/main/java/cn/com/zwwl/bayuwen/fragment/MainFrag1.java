@@ -74,6 +74,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private LinearLayout pingtu_indicator;// 拼图指示器
     private MostGridView achieveGrid;// 成就列表
     private TextView achiTv;
+    private TextView pintu_title;
 
     private List<AdvBean> advBeans = new ArrayList<>();// banner数据
     private List<View> pingtuViews = new ArrayList<>();
@@ -205,6 +206,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         pingtu_indicator = root.findViewById(R.id.pingtu_indicator);
         achieveGrid = root.findViewById(R.id.xunzhang_grid);
         achiTv = root.findViewById(R.id.xunzhang_tv);
+        pintu_title = root.findViewById(R.id.pintu_title);
 
         pingPager = root.findViewById(R.id.pingtu_pager);
         pingPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -239,6 +241,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
      * @param position
      */
     private void updateLinearPosition(int position) {
+        pintu_title.setText(pintuModels.get(position).getName());
         for (int i = 0; i < pingtu_indicator.getChildCount(); i++) {
             if (i == position) {
                 pingtu_indicator.getChildAt(i).setBackgroundResource(R.drawable
@@ -259,12 +262,13 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                 paddingLeft + paddingRight,
                 pintuHei +
                         paddingTop + paddingBottom);
-        for (int i = 0; i < pintuModels.size(); i++) {
+        for ( int i = 0; i < pintuModels.size(); i++) {
+            final int pos = i;
             final View view = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu, null);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    goDati();
+                    goDati(pos);
                 }
             });
             view.setLayoutParams(params1);
@@ -299,10 +303,11 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void goDati() {
+    private void goDati(int pos) {
         UmengLogUtil.logPintuClick(mActivity);
         Intent i = new Intent(mActivity, AbilityAnalysisActivity.class);
         i.putExtra("pintuModels", (Serializable) pintuModels);
+        i.putExtra("pin_pos", pos);
         startActivity(i);
     }
 

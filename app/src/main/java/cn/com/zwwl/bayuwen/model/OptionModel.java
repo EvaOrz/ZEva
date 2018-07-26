@@ -19,6 +19,7 @@ public class OptionModel extends Entry {
     private String point;
     private int questionLevel;
     private int questionType;
+    private String questionTitle;
     private String reason;
     private String remark;
     private int score;
@@ -183,5 +184,13 @@ public class OptionModel extends Entry {
 
     public void setStudentScore(int studentScore) {
         this.studentScore = studentScore;
+    }
+
+    public String getQuestionTitle() {
+        return questionTitle;
+    }
+
+    public void setQuestionTitle(String questionTitle) {
+        this.questionTitle = questionTitle;
     }
 }

@@ -177,12 +177,13 @@
                         android:textSize="@dimen/text_size_14" />
 
                     <TextView
+                        android:id="@+id/pintu_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerInParent="true"
                         android:text="语文基础知识"
-                        android:textColor="@color/gold"
+                        android:textColor="@color/text_red"
                         android:textSize="@dimen/text_size_14" />
                 </RelativeLayout>
 

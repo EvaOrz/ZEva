@@ -15,16 +15,21 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.OptionModel;
 import cn.com.zwwl.bayuwen.util.GsonUtil;
 
+/**
+ * 获取答题详情
+ */
 public class AnswerDetailApi extends BaseApi {
     private Activity activity;
     private ResponseCallBack<List<OptionModel>> callBack;
     private String url;
 
-    public AnswerDetailApi(Activity context, String pId, ResponseCallBack<List<OptionModel>> callBack) {
+    public AnswerDetailApi(Activity context, String pId, ResponseCallBack<List<OptionModel>>
+            callBack) {
         super(context);
         this.activity = context;
         this.callBack = callBack;
-        url = UrlUtil.answerDetail() + "?sectionId=" + pId + "&studentId=" + TempDataHelper.getCurrentChildNo(activity);
+        url = UrlUtil.answerDetail() + "?sectionId=" + pId + "&studentId=" + TempDataHelper
+                .getCurrentChildNo(activity);
         get();
     }
 
