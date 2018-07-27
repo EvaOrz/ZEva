@@ -174,7 +174,7 @@ public class RadarAdapter extends BaseQuickAdapter<PintuModel.LectureinfoBean.Se
         if (sectionListBean.getQuestionNum() == 0 || sectionListBean.getRightNum() +
                 sectionListBean.getErrorNum() == 0)
             return 0;
-        double scoal = sectionListBean.getRightNum() / sectionListBean.getQuestionNum();
+        double scoal = sectionListBean.getRightNum() *1.0/ sectionListBean.getQuestionNum();
         if (scoal > 0 && scoal < 0.6) return 1;
         else if (scoal > 0.6 && scoal < 0.8) return 2;
         else if (scoal > 0.8) return 3;

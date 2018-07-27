@@ -12,6 +12,11 @@ import android.util.Log;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.activity.BaseActivity;
 import cn.com.zwwl.bayuwen.activity.MainActivity;
+import cn.com.zwwl.bayuwen.api.InitInterfaceApi;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
+import cn.com.zwwl.bayuwen.model.Entry;
+import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
 /**
  *
@@ -32,11 +37,16 @@ public class FmSplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         needCheckLogin = false;
+        initInterface();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (askPermission(needPermissions, 101)) gotoMainActivity();
         } else {
             gotoMainActivity();
         }
+    }
+
+    private void initInterface() {
+        new InitInterfaceApi(mContext);
     }
 
     public void gotoMainActivity() {

@@ -338,6 +338,11 @@ public class UrlUtil {
         return HOST + "/courselecture/";
     }
 
+    // 初始化域名
+    public static String getInterface() {
+        return  "http://api.dev.zhugexuetang.com/v2/apps/version";
+    }
+
     // 获取成就列表
     public static String getAchievement() {
         return HOST + "/achievement";
