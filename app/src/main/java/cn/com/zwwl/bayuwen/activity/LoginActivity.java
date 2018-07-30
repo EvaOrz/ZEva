@@ -220,8 +220,9 @@ public class LoginActivity extends BaseActivity implements TencentLocationListen
                 showToast(R.string.exit_app);
                 return true;
             }
+            MyActivityManager.getInstance().exit();
         }
-        MyActivityManager.getInstance().exit();
+
         return super.onKeyDown(keyCode, event);
     }
 

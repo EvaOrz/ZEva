@@ -23,7 +23,7 @@
             android:layout_width="@dimen/back_size"
             android:layout_height="@dimen/back_size"
             android:layout_alignParentRight="true"
-            android:src="@mipmap/player_share"
+            android:src="@mipmap/share_f"
             android:visibility="gone" />
     </RelativeLayout>
 

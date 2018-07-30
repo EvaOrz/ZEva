@@ -111,6 +111,7 @@ public class CourseApi extends BaseApi {
                 }
                 keModel.setTeacherModels(ts);
             }
+            keModel.setShareUrl(json.optString("shareUrl"));
             listener.setData(keModel);
         }
     }

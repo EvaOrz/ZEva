@@ -48,6 +48,7 @@ import cn.com.zwwl.bayuwen.model.TeacherModel;
 import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
 import cn.com.zwwl.bayuwen.util.AppValue;
 import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.KeDetailView1;
@@ -393,10 +394,20 @@ public class CourseDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.explainTv:// 说明
-                UmengLogUtil.logKeDetailSmClick(mContext);
-                Intent intent = new Intent(mContext, WebActivity.class);
-                intent.putExtra("WebActivity_data", AppValue.enrollUrl);
-                startActivity(intent);
+//                UmengLogUtil.logKeDetailSmClick(mContext);
+////                Intent intent = new Intent(mContext, WebActivity.class);
+////                intent.putExtra("WebActivity_data", AppValue.enrollUrl);
+////                startActivity(intent);
+/**
+ *   老师_上课时间_校区_课程编码
+ */
+
+                if (keModel != null)
+                    ShareTools.doShareWebWithPic(this, keModel.getPic(),
+                            keModel.getTitle(), keModel.getShareUrl(),
+                            keModel.getTname() + "_上课时间：" + keModel.getStart_at() + "-" + keModel
+                                    .getEnd_at() + "_校区：" + keModel.getSchool() + "_课程编码：" +
+                                    keModel.getModel());
                 break;
             case R.id.duihuan_footer:// 兑换
                 doKaitongBycode(code);

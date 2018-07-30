@@ -45,6 +45,7 @@ import cn.com.zwwl.bayuwen.model.fm.AlbumModel.*;
 import cn.com.zwwl.bayuwen.model.fm.FmModel;
 import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
 import cn.com.zwwl.bayuwen.service.NewMusicService;
+import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.music.MusicWindow;
@@ -235,7 +236,7 @@ public class AlbumDetailActivity extends BaseActivity {
         part4.setOnClickListener(this);
         findViewById(R.id.album_detail_like).setOnClickListener(this);
         findViewById(R.id.album_detail_shoucang).setOnClickListener(this);
-//        findViewById(R.id.album_detail_share).setOnClickListener(this);
+        findViewById(R.id.album_detail_share).setOnClickListener(this);
         findViewById(R.id.album_detail_inputsend).setOnClickListener(this);
 
         viewPlay = LayoutInflater.from(this).inflate(R.layout.view_album_detail_1, null);
@@ -492,7 +493,10 @@ public class AlbumDetailActivity extends BaseActivity {
                 doCollect();
                 break;
             case R.id.album_detail_share:// 分享
-
+                if (albumModel != null)
+                    ShareTools.doShareWebWithPic(this, albumModel.getPic(),
+                            albumModel.getTitle(), albumModel.getShareUrl(),
+                            albumModel.getTname() + "_更新时间：" + albumModel.getUpdate_time());
                 break;
 
             case R.id.album_detail_inputsend:// 发送评论

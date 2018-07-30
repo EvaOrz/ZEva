@@ -19,6 +19,7 @@ public class AlbumModel extends Entry {
     private String desc = "";
     private String tid = "";
     private String tname = "";
+    private String shareUrl;
     private int likeNum;
     private int playNum;
     private int num;
@@ -184,6 +185,14 @@ public class AlbumModel extends Entry {
         this.is_buy = is_buy;
     }
 
+    public String getShareUrl() {
+        return shareUrl;
+    }
+
+    public void setShareUrl(String shareUrl) {
+        this.shareUrl = shareUrl;
+    }
+
     public AlbumModel() {
     }
 
@@ -235,6 +244,7 @@ public class AlbumModel extends Entry {
         albumModel.setTid(keinfo.optString("tid"));
         albumModel.setDesc(keinfo.optString("desc"));
         albumModel.setTname(keinfo.optString("tname"));
+        albumModel.setShareUrl(keinfo.optString("shareUrl"));
         albumModel.setBuyPrice(keinfo.optDouble("buyPrice"));
         albumModel.setCreated_at(keinfo.optString("created_at"));
         albumModel.setLikeNum(keinfo.optInt("likeNum"));
@@ -296,6 +306,7 @@ public class AlbumModel extends Entry {
             }
         }
         albumModel.setTeachers(teachers);
+        albumModel.setShareUrl(jsonObject.optString("shareUrl"));
 
         return albumModel;
     }

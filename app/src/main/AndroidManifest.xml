@@ -54,7 +54,6 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:testOnly="false"
         android:theme="@style/BaseTheme">
         <activity
             android:name=".activity.fm.FmSplashActivity"

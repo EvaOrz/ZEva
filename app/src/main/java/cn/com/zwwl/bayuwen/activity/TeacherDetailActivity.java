@@ -38,6 +38,7 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.TeacherDetailStuentevaluateModel;
 import cn.com.zwwl.bayuwen.model.TeacherModel;
+import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 
 /**
@@ -52,21 +53,21 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
     private ImageView iv_avatar;
     private SmartRefreshLayout refreshLayout;
 
-    private TextView student_evaluate_tv,about_cource_tv;
-    private View teacher_line1,teacher_line2;
-    private RecyclerView recyclerView ,recyclerView_xue;
+    private TextView student_evaluate_tv, about_cource_tv;
+    private View teacher_line1, teacher_line2;
+    private RecyclerView recyclerView, recyclerView_xue;
     NestedScrollView nestScroll;
     private List<KeModel> keModels = new ArrayList<>();
-    private List<TeacherDetailStuentevaluateModel.CommentsBean> commentsBeans=new ArrayList<>();
+    private List<TeacherDetailStuentevaluateModel.CommentsBean> commentsBeans = new ArrayList<>();
     private TCourseListAdapter tCourseListAdapter;
     private TCommitListAdapter tCommitListAdapter;
     private TeacherModel teacherDetailModel;
 
-    private int curOrComm=1;  //1时候是点击学员评价  2 时候是点击课程列表
+    private int curOrComm = 1;  //1时候是点击学员评价  2 时候是点击课程列表
 
     private String tid;
     private int page = 1, totalPage;
-    private int evpage=1, evtotalPage;
+    private int evpage = 1, evtotalPage;
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
@@ -101,10 +102,10 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if (curOrComm==1) {
-                   ++evpage;
-                   getCommentList();
-                }else{
+                if (curOrComm == 1) {
+                    ++evpage;
+                    getCommentList();
+                } else {
                     ++page;
                     getCourseList();
                 }
@@ -132,7 +133,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
                 if (error != null) showToast(error.getDesc());
             }
         });
-        curOrComm=1;
+        curOrComm = 1;
         getCommentList();
 //        getCourseList();
     }
@@ -141,7 +142,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
      * 获取课程列表
      */
     private void getCourseList() {
-        new TDetailListApi(this, tid, page,2, new ResponseCallBack<BaseResponse>() {
+        new TDetailListApi(this, tid, page, 2, new ResponseCallBack<BaseResponse>() {
             @Override
             public void result(BaseResponse baseResponse, ErrorMsg errorMsg) {
                 refreshLayout.finishLoadMore();
@@ -161,35 +162,45 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
             }
         });
     }
+
     /**
      * 获取学员评价列表
      */
     private void getCommentList() {
-        new TDetailEvaluateListApi(this, tid, evpage,1, new ResponseCallBack<TeacherDetailStuentevaluateModel>() {
-            @Override
-            public void result(TeacherDetailStuentevaluateModel teacherDetailStuentevaluateModel, ErrorMsg errorMsg) {
-                refreshLayout.finishLoadMore();
-                if (teacherDetailStuentevaluateModel != null) {
-                    evtotalPage = Integer.parseInt(teacherDetailStuentevaluateModel.getTotal_count() )/teacherDetailStuentevaluateModel.getPagesize();
-                    if (Integer.parseInt(teacherDetailStuentevaluateModel.getTotal_count()) % teacherDetailStuentevaluateModel.getPagesize() > 0)
-                        evtotalPage += 1;
-                    if (teacherDetailStuentevaluateModel.getComments() != null && teacherDetailStuentevaluateModel.getComments().size() > 0) {
+        new TDetailEvaluateListApi(this, tid, evpage, 1, new
+                ResponseCallBack<TeacherDetailStuentevaluateModel>() {
+                    @Override
+                    public void result(TeacherDetailStuentevaluateModel
+                                               teacherDetailStuentevaluateModel,
+                                       ErrorMsg errorMsg) {
+                        refreshLayout.finishLoadMore();
+                        if (teacherDetailStuentevaluateModel != null) {
+                            evtotalPage = Integer.parseInt(teacherDetailStuentevaluateModel
+                                    .getTotal_count()) / teacherDetailStuentevaluateModel
+                                    .getPagesize();
+                            if (Integer.parseInt(teacherDetailStuentevaluateModel.getTotal_count
+                                    ()) %
+                                    teacherDetailStuentevaluateModel.getPagesize() > 0)
+                                evtotalPage += 1;
+                            if (teacherDetailStuentevaluateModel.getComments() != null &&
+                                    teacherDetailStuentevaluateModel.getComments().size() > 0) {
 //                        commentsBeans.clear();
-                        commentsBeans=teacherDetailStuentevaluateModel.getComments();
-                        tCommitListAdapter = new TCommitListAdapter(mContext, commentsBeans);
-                        recyclerView_xue.setAdapter(tCommitListAdapter);
-                        tCommitListAdapter.notifyDataSetChanged();
-                    }
-                    if (evpage == evtotalPage)
-                        refreshLayout.finishLoadMoreWithNoMoreData();
-                }
+                                commentsBeans = teacherDetailStuentevaluateModel.getComments();
+                                tCommitListAdapter = new TCommitListAdapter(mContext,
+                                        commentsBeans);
+                                recyclerView_xue.setAdapter(tCommitListAdapter);
+                                tCommitListAdapter.notifyDataSetChanged();
+                            }
+                            if (evpage == evtotalPage)
+                                refreshLayout.finishLoadMoreWithNoMoreData();
+                        }
 
-            }
-        });
+                    }
+                });
     }
 
     private void initView() {
-        recyclerView_xue=findViewById(R.id.recyclerView1);
+        recyclerView_xue = findViewById(R.id.recyclerView1);
         recyclerView_xue.setHasFixedSize(true);
         recyclerView_xue.setNestedScrollingEnabled(false);
         recyclerView_xue.setLayoutManager(new LinearLayoutManager(this));
@@ -197,12 +208,12 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
                 .gray_line, R
                 .dimen.dp_1, OrientationHelper.VERTICAL));
         tCommitListAdapter = new TCommitListAdapter(mContext, commentsBeans);
-        student_evaluate_tv=findViewById(R.id.student_evaluate_tv);
-        about_cource_tv=findViewById(R.id.about_cource_tv);
+        student_evaluate_tv = findViewById(R.id.student_evaluate_tv);
+        about_cource_tv = findViewById(R.id.about_cource_tv);
         student_evaluate_tv.setOnClickListener(this);
         about_cource_tv.setOnClickListener(this);
-        teacher_line1 =findViewById(R.id.teacher_detail_line1);
-        teacher_line2 =findViewById(R.id.teacher_detail_line2);
+        teacher_line1 = findViewById(R.id.teacher_detail_line1);
+        teacher_line2 = findViewById(R.id.teacher_detail_line2);
         tv_name = findViewById(R.id.tv_name);
         lecture_tv = findViewById(R.id.lecture_tv);
         label_tv = findViewById(R.id.label_tv);
@@ -223,6 +234,7 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
         refreshLayout.setRefreshContent(nestScroll);
         tCourseListAdapter.setOnItemClickListener(this);
         findViewById(R.id.teacher_back).setOnClickListener(this);
+        findViewById(R.id.teacher_share).setOnClickListener(this);
     }
 
 
@@ -236,13 +248,13 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
             case R.id.student_evaluate_tv:
                 student_evaluate_tv.setTextColor(getResources().getColor(R.color.lisichen));
                 teacher_line1.setVisibility(View.VISIBLE);
-               recyclerView_xue.setVisibility(View.VISIBLE);
-               recyclerView.setVisibility(View.GONE);
-              about_cource_tv.setTextColor(getResources().getColor(R.color.gray_dark));
-               teacher_line2.setVisibility(View.INVISIBLE);
-               curOrComm=1;
+                recyclerView_xue.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+                about_cource_tv.setTextColor(getResources().getColor(R.color.gray_dark));
+                teacher_line2.setVisibility(View.INVISIBLE);
+                curOrComm = 1;
                 getCommentList();
-               break;
+                break;
 
             case R.id.about_cource_tv:
                 about_cource_tv.setTextColor(getResources().getColor(R.color.lisichen));
@@ -251,9 +263,16 @@ public class TeacherDetailActivity extends BaseActivity implements OnItemClickLi
                 recyclerView_xue.setVisibility(View.GONE);
                 student_evaluate_tv.setTextColor(getResources().getColor(R.color.gray_dark));
                 teacher_line1.setVisibility(View.INVISIBLE);
-                curOrComm=2;
+                curOrComm = 2;
                 getCourseList();
-
+                break;
+            case R.id.teacher_share:// 分享
+                //String pic, String title, String url, String desc
+                if (teacherDetailModel != null)
+                    ShareTools.doShareWebWithPic(this, teacherDetailModel.getPic(),
+                            teacherDetailModel.getName(), teacherDetailModel.getShareUrl(),
+                            teacherDetailModel
+                                    .getT_desc());
                 break;
 
         }

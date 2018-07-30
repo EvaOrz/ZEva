@@ -111,7 +111,15 @@ public class KeModel extends Entry {
     private List<PromotionModel> promotionModels = new ArrayList<>();
     private int collection_state;//0-未关注 1-已关注
     private double discount;
+    private String shareUrl;
 
+    public String getShareUrl() {
+        return shareUrl;
+    }
+
+    public void setShareUrl(String shareUrl) {
+        this.shareUrl = shareUrl;
+    }
     public String getId() {
         return id;
     }

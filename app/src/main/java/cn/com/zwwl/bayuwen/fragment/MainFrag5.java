@@ -279,7 +279,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 break;
             case R.id.frag5_invite:// 邀请好友加入大语文
                 UmengLogUtil.logInviteClick(mActivity);
-                ShareTools.doShareWeb((BaseActivity) mActivity, "邀请好友加入大语文", AppValue.inviteUrl,
+                ShareTools.doShareWeb((BaseActivity) mActivity, "邀请好友加入大语文", AppValue.inviteUrl+"?uid="+userModel.getSignCode(),
                         "邀请好友加入大语文");
                 break;
             case R.id.frag5_feedback:// 反馈

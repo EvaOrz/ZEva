@@ -135,7 +135,13 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
             @Override
             public void setData(List list) {
                 pintuModels.clear();
-                if (Tools.listNotNull(list)) pintuModels.addAll(list);
+
+                if (Tools.listNotNull(list)) {
+                    for (int i = 0; i < list.size(); i++)
+                        if (Tools.listNotNull(((PintuModel) list.get(i)).getLectureinfo())) {
+                            pintuModels.add((PintuModel) list.get(i));
+                        }
+                }
                 initPingtudata();
                 handler.sendEmptyMessage(3);
             }
@@ -193,7 +199,6 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
         pingPager.setLayoutParams(params1);
 
     }
-
 
     private void initView() {
         toolbar = root.findViewById(R.id.toolbar);
@@ -262,9 +267,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                 paddingLeft + paddingRight,
                 pintuHei +
                         paddingTop + paddingBottom);
-        for ( int i = 0; i < pintuModels.size(); i++) {
+        for (int i = 0; i < pintuModels.size(); i++) {
             final int pos = i;
-            final View view = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu, null);
+            final View view = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu,
+                    null);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -286,19 +292,20 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                 }
             });
 
-            if (i == 2) {
+            if (pintuModels.get(i).getStyle() == 2 || pintuModels.get(i).getStyle() == 3) {
                 view.setBackgroundResource(R.drawable.pintu_bg_wangzhe);
+            } else view.setBackgroundResource(R.drawable.pintu_bg_baiyin);
+
+            List<PintuModel.LectureinfoBean.SectionListBean> models = pintuModels.get(i)
+                    .getLectureinfo().get(0).getSectionList();
+            if (Tools.listNotNull(models) && models.size() == 54) {
+                RadarAdapter radarAdapter = new RadarAdapter(models, pintuWid, pintuModels.get(i)
+                        .getIs_pay() == 1);
+                recyclerView.setAdapter(radarAdapter);
+                recyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
             }
-            if (Tools.listNotNull(pintuModels.get(i).getLectureinfo())) {
-                List<PintuModel.LectureinfoBean.SectionListBean> models = pintuModels.get(i)
-                        .getLectureinfo().get(0).getSectionList();
-                if (Tools.listNotNull(models) && models.size() == 54) {
-                    RadarAdapter radarAdapter = new RadarAdapter(models, pintuWid);
-                    recyclerView.setAdapter(radarAdapter);
-                    recyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
-                    recyclerView.setItemAnimator(new DefaultItemAnimator());
-                }
-            }
+
             pingtuViews.add(view);
         }
     }
@@ -353,7 +360,8 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                     if (achiveatas.size() > 0) {
                         achieveGrid.setVisibility(View.VISIBLE);
                         achiTv.setVisibility(View.GONE);
-                        AchieveMainAdapter adapter = new AchieveMainAdapter(mActivity, achiveatas);
+                        AchieveMainAdapter adapter = new AchieveMainAdapter(mActivity,
+                                achiveatas);
                         achieveGrid.setAdapter(adapter);
                     } else {
                         achieveGrid.setVisibility(View.GONE);
@@ -373,7 +381,8 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                                 (LinearLayout.LayoutParams.WRAP_CONTENT,
                                         LinearLayout.LayoutParams
                                                 .WRAP_CONTENT);
-                        layoutParams.rightMargin = getResources().getDimensionPixelOffset(R.dimen
+                        layoutParams.rightMargin = getResources().getDimensionPixelOffset(R
+                                .dimen
                                 .dp_5);
                         img.setLayoutParams(layoutParams);
                         img.setBackgroundResource(R.drawable.viewlooper_gray_status);

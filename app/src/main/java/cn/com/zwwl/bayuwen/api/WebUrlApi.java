@@ -51,6 +51,7 @@ public class WebUrlApi extends BaseApi {
             AppValue.inviteUrl = json.optString("invite");
             AppValue.aboutUrl = json.optString("about");
             AppValue.helpUrl = json.optString("help");
+            AppValue.shareUrl = json.optString("shareUrl");
         }
     }
 }

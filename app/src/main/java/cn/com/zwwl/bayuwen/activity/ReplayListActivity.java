@@ -130,7 +130,6 @@ public class ReplayListActivity extends BaseActivity {
                 Intent intent = new Intent(mActivity, WebActivity.class);
                 intent.putExtra("WebActivity_data", reports.get(position).getPlay_url());
                 startActivity(intent);
-                startActivity(intent);
             }
         });
         idBack.setOnClickListener(new View.OnClickListener() {

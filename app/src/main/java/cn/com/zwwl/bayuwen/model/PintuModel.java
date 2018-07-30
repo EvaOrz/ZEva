@@ -12,6 +12,8 @@ public class PintuModel extends Entry implements Serializable {
     private String name;
     private ContentBean content;
     private CurriculaBean curricula;
+    private int is_pay;// 0：未付费 1：付费
+    private int style;// 1普通2王者3窦神
     private String aliasname;
     private String url;
     private String type;
@@ -20,6 +22,22 @@ public class PintuModel extends Entry implements Serializable {
     private String update_at;
     private StudentInfoBean student_info;
     private List<LectureinfoBean> lectureinfo;
+
+    public int getIs_pay() {
+        return is_pay;
+    }
+
+    public void setIs_pay(int is_pay) {
+        this.is_pay = is_pay;
+    }
+
+    public int getStyle() {
+        return style;
+    }
+
+    public void setStyle(int style) {
+        this.style = style;
+    }
 
     public String getId() {
         return id;

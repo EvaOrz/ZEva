@@ -17,6 +17,7 @@ public class TeacherModel extends Entry {
     private String t_style;
     private Object t_harvest;
     private String t_words;
+    private String shareUrl;
     private String t_shortdesc = "";
     private String t_idea = "";
     private String ke_main = "";
@@ -119,6 +120,14 @@ public class TeacherModel extends Entry {
         this.keModels = keModels;
     }
 
+    public String getShareUrl() {
+        return shareUrl;
+    }
+
+    public void setShareUrl(String shareUrl) {
+        this.shareUrl = shareUrl;
+    }
+
     /**
      * @param jsonObject
      * @param teacherModel
@@ -131,6 +140,7 @@ public class TeacherModel extends Entry {
         teacherModel.setT_shortdesc(jsonObject.optString("t_shortdesc"));
         teacherModel.setPic(jsonObject.optString("pic"));
         teacherModel.setT_desc(jsonObject.optString("t_desc"));
+        teacherModel.setShareUrl(jsonObject.optString("shareUrl"));
         teacherModel.setT_style(jsonObject.optString("t_style"));
         teacherModel.setT_idea(jsonObject.optString("t_idea"));
         teacherModel.setKe_main(jsonObject.optString("ke_main"));

@@ -20,6 +20,7 @@ public class RadarAdapter extends BaseQuickAdapter<PintuModel.LectureinfoBean.Se
         BaseViewHolder> {
     private int colunms = 9;// 每行的拼图个数
     private int totalWidth = MyApplication.width;// 拼图控件的总宽度
+    private boolean isPaid = false;
 
     private static int tuSideWidth = 34 - 6;// 每个拼图的边框宽度 *2
     private static int tuMidWidth = 72;// 每个拼图的中间部分宽度
@@ -41,15 +42,32 @@ public class RadarAdapter extends BaseQuickAdapter<PintuModel.LectureinfoBean.Se
             .tu13, R.drawable.tu14, R.drawable.tu15, R.drawable.tu16, R.drawable.tu17, R.drawable
             .tu18};
 
+    private int[] suoImgs = new int[]{R.drawable.tu37, R.drawable.tu38, R.drawable.tu39, R.drawable
+            .tu40, R.drawable.tu41, R.drawable.tu42, R.drawable.tu43, R.drawable.tu44, R.drawable
+            .tu45};
+    private int[] tongImgs = new int[]{R.drawable.tu64, R.drawable.tu65, R.drawable.tu66, R
+            .drawable
+            .tu67, R.drawable.tu68, R.drawable.tu69, R.drawable.tu70, R.drawable.tu71, R.drawable
+            .tu72};
+    private int[] yinImgs = new int[]{R.drawable.tu55, R.drawable.tu56, R.drawable.tu57, R
+            .drawable.tu58, R.drawable.tu59, R.drawable.tu60, R.drawable.tu61, R.drawable.tu62, R
+            .drawable
+            .tu63};
+    private int[] jinImgs = new int[]{R.drawable.tu46, R.drawable.tu47, R.drawable.tu48, R
+            .drawable
+            .tu49, R.drawable.tu50, R.drawable.tu51, R.drawable.tu52, R.drawable.tu53, R.drawable
+            .tu54};
+
 
     public RadarAdapter(@Nullable List<PintuModel.LectureinfoBean.SectionListBean> data) {
         super(R.layout.item_radar, data);
     }
 
     public RadarAdapter(@Nullable List<PintuModel.LectureinfoBean.SectionListBean> data, int
-            totalWidth) {
+            totalWidth, boolean isPaid) {
         super(R.layout.item_radar, data);
         this.totalWidth = totalWidth;
+        this.isPaid = isPaid;
 //        tuPadding = 10 * totalWidth / MyApplication.width;
     }
 
@@ -66,99 +84,97 @@ public class RadarAdapter extends BaseQuickAdapter<PintuModel.LectureinfoBean.Se
         int status = checkLevel(item);
         if (status == 0) {
             if (helper.getLayoutPosition() == 0) {
-                imageView.setImageResource(suoImgsVip[0]);
+                imageView.setImageResource(isPaid ? suoImgsVip[0] : suoImgs[0]);
             } else if (helper.getLayoutPosition() > 0 && helper.getLayoutPosition() < 8) {
-                imageView.setImageResource(suoImgsVip[1]);
+                imageView.setImageResource(isPaid ? suoImgsVip[1] : suoImgs[1]);
             } else if (helper.getLayoutPosition() == 8) {
-                imageView.setImageResource(suoImgsVip[2]);
+                imageView.setImageResource(isPaid ? suoImgsVip[2] : suoImgs[2]);
             } else if (helper.getLayoutPosition() == 9 || helper.getLayoutPosition() == 18 || helper
                     .getLayoutPosition() == 27 || helper.getLayoutPosition() == 36) {
-                imageView.setImageResource(suoImgsVip[3]);
+                imageView.setImageResource(isPaid ? suoImgsVip[3] : suoImgs[3]);
             } else if (helper.getLayoutPosition() == 17 || helper.getLayoutPosition() == 26 ||
                     helper
                             .getLayoutPosition() == 35 || helper.getLayoutPosition() == 44) {
-                imageView.setImageResource(suoImgsVip[5]);
+                imageView.setImageResource(isPaid ? suoImgsVip[5] : suoImgs[5]);
             } else if (helper.getLayoutPosition() == 45) {
-                imageView.setImageResource(suoImgsVip[6]);
+                imageView.setImageResource(isPaid ? suoImgsVip[6] : suoImgs[6]);
             } else if (helper.getLayoutPosition() > 45 && helper.getLayoutPosition() < 53) {
-                imageView.setImageResource(suoImgsVip[7]);
+                imageView.setImageResource(isPaid ? suoImgsVip[7] : suoImgs[7]);
             } else if (helper.getLayoutPosition() == 53) {
-                imageView.setImageResource(suoImgsVip[8]);
+                imageView.setImageResource(isPaid ? suoImgsVip[8] : suoImgs[8]);
             } else {
-                imageView.setImageResource(suoImgsVip[4]);
+                imageView.setImageResource(isPaid ? suoImgsVip[4] : suoImgs[4]);
             }
         } else if (status == 1) {
             if (helper.getLayoutPosition() == 0) {
-                imageView.setImageResource(tongImgsVip[0]);
+                imageView.setImageResource(isPaid ? tongImgsVip[0] : tongImgs[0]);
             } else if (helper.getLayoutPosition() > 0 && helper.getLayoutPosition() < 8) {
-                imageView.setImageResource(tongImgsVip[1]);
+                imageView.setImageResource(isPaid ? tongImgsVip[1] : tongImgs[1]);
             } else if (helper.getLayoutPosition() == 8) {
-                imageView.setImageResource(tongImgsVip[2]);
+                imageView.setImageResource(isPaid ? tongImgsVip[2] : tongImgs[2]);
             } else if (helper.getLayoutPosition() == 9 || helper.getLayoutPosition() == 18 || helper
                     .getLayoutPosition() == 27 || helper.getLayoutPosition() == 36) {
-                imageView.setImageResource(tongImgsVip[3]);
+                imageView.setImageResource(isPaid ? tongImgsVip[3] : tongImgs[3]);
             } else if (helper.getLayoutPosition() == 17 || helper.getLayoutPosition() == 26 ||
                     helper
                             .getLayoutPosition() == 35 || helper.getLayoutPosition() == 44) {
-                imageView.setImageResource(tongImgsVip[5]);
+                imageView.setImageResource(isPaid ? tongImgsVip[5] : tongImgs[5]);
             } else if (helper.getLayoutPosition() == 45) {
-                imageView.setImageResource(tongImgsVip[6]);
+                imageView.setImageResource(isPaid ? tongImgsVip[6] : tongImgs[6]);
             } else if (helper.getLayoutPosition() > 45 && helper.getLayoutPosition() < 53) {
-                imageView.setImageResource(tongImgsVip[7]);
+                imageView.setImageResource(isPaid ? tongImgsVip[7] : tongImgs[7]);
             } else if (helper.getLayoutPosition() == 53) {
-                imageView.setImageResource(tongImgsVip[8]);
+                imageView.setImageResource(isPaid ? tongImgsVip[8] : tongImgs[8]);
             } else {
-                imageView.setImageResource(tongImgsVip[4]);
+                imageView.setImageResource(isPaid ? tongImgsVip[4] : tongImgs[4]);
             }
         } else if (status == 2) {
             if (helper.getLayoutPosition() == 0) {
-                imageView.setImageResource(yinImgsVip[0]);
+                imageView.setImageResource(isPaid ? yinImgsVip[0] : yinImgs[0]);
             } else if (helper.getLayoutPosition() > 0 && helper.getLayoutPosition() < 8) {
-                imageView.setImageResource(yinImgsVip[1]);
+                imageView.setImageResource(isPaid ? yinImgsVip[1] : yinImgs[1]);
             } else if (helper.getLayoutPosition() == 8) {
-                imageView.setImageResource(yinImgsVip[2]);
+                imageView.setImageResource(isPaid ? yinImgsVip[2] : yinImgs[2]);
             } else if (helper.getLayoutPosition() == 9 || helper.getLayoutPosition() == 18 || helper
                     .getLayoutPosition() == 27 || helper.getLayoutPosition() == 36) {
-                imageView.setImageResource(yinImgsVip[3]);
+                imageView.setImageResource(isPaid ? yinImgsVip[3] : yinImgs[3]);
             } else if (helper.getLayoutPosition() == 17 || helper.getLayoutPosition() == 26 ||
                     helper
                             .getLayoutPosition() == 35 || helper.getLayoutPosition() == 44) {
-                imageView.setImageResource(yinImgsVip[5]);
+                imageView.setImageResource(isPaid ? yinImgsVip[5] : yinImgs[5]);
             } else if (helper.getLayoutPosition() == 45) {
-                imageView.setImageResource(yinImgsVip[6]);
+                imageView.setImageResource(isPaid ? yinImgsVip[6] : yinImgs[6]);
             } else if (helper.getLayoutPosition() > 45 && helper.getLayoutPosition() < 53) {
-                imageView.setImageResource(yinImgsVip[7]);
+                imageView.setImageResource(isPaid ? yinImgsVip[7] : yinImgs[7]);
             } else if (helper.getLayoutPosition() == 53) {
-                imageView.setImageResource(yinImgsVip[8]);
+                imageView.setImageResource(isPaid ? yinImgsVip[8] : yinImgs[8]);
             } else {
-                imageView.setImageResource(yinImgsVip[4]);
+                imageView.setImageResource(isPaid ? yinImgsVip[4] : yinImgs[4]);
             }
         } else if (status == 3) {
             if (helper.getLayoutPosition() == 0) {
-                imageView.setImageResource(jinImgsVip[0]);
+                imageView.setImageResource(isPaid ? jinImgsVip[0] : jinImgs[0]);
             } else if (helper.getLayoutPosition() > 0 && helper.getLayoutPosition() < 8) {
-                imageView.setImageResource(jinImgsVip[1]);
+                imageView.setImageResource(isPaid ? jinImgsVip[1] : jinImgs[1]);
             } else if (helper.getLayoutPosition() == 8) {
-                imageView.setImageResource(jinImgsVip[2]);
+                imageView.setImageResource(isPaid ? jinImgsVip[2] : jinImgs[2]);
             } else if (helper.getLayoutPosition() == 9 || helper.getLayoutPosition() == 18 || helper
                     .getLayoutPosition() == 27 || helper.getLayoutPosition() == 36) {
-                imageView.setImageResource(jinImgsVip[3]);
+                imageView.setImageResource(isPaid ? jinImgsVip[3] : jinImgs[3]);
             } else if (helper.getLayoutPosition() == 17 || helper.getLayoutPosition() == 26 ||
                     helper
                             .getLayoutPosition() == 35 || helper.getLayoutPosition() == 44) {
-                imageView.setImageResource(jinImgsVip[5]);
+                imageView.setImageResource(isPaid ? jinImgsVip[5] : jinImgs[5]);
             } else if (helper.getLayoutPosition() == 45) {
-                imageView.setImageResource(jinImgsVip[6]);
+                imageView.setImageResource(isPaid ? jinImgsVip[6] : jinImgs[6]);
             } else if (helper.getLayoutPosition() > 45 && helper.getLayoutPosition() < 53) {
-                imageView.setImageResource(jinImgsVip[7]);
+                imageView.setImageResource(isPaid ? jinImgsVip[7] : jinImgs[7]);
             } else if (helper.getLayoutPosition() == 53) {
-                imageView.setImageResource(jinImgsVip[8]);
+                imageView.setImageResource(isPaid ? jinImgsVip[8] : jinImgs[8]);
             } else {
-                imageView.setImageResource(jinImgsVip[4]);
+                imageView.setImageResource(isPaid ? jinImgsVip[4] : jinImgs[4]);
             }
         }
-
-
     }
 
     /**
@@ -174,10 +190,10 @@ public class RadarAdapter extends BaseQuickAdapter<PintuModel.LectureinfoBean.Se
         if (sectionListBean.getQuestionNum() == 0 || sectionListBean.getRightNum() +
                 sectionListBean.getErrorNum() == 0)
             return 0;
-        double scoal = sectionListBean.getRightNum() *1.0/ sectionListBean.getQuestionNum();
-        if (scoal > 0 && scoal < 0.6) return 1;
-        else if (scoal > 0.6 && scoal < 0.8) return 2;
-        else if (scoal > 0.8) return 3;
+        double scoal = sectionListBean.getRightNum() * 1.0 / sectionListBean.getQuestionNum();
+        if (scoal >= 0 && scoal < 0.6) return 1;
+        else if (scoal >= 0.6 && scoal < 0.8) return 2;
+        else if (scoal >= 0.8) return 3;
         return 0;
 
     }

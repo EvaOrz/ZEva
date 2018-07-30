@@ -548,7 +548,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.invite:// 邀请好友加入大语文
                 UmengLogUtil.logInviteClick(mContext);
-                ShareTools.doShareWeb(this, "邀请好友加入大语文", AppValue.inviteUrl, "邀请好友加入大语文");
+                ShareTools.doShareWeb(this, "邀请好友加入大语文", AppValue.inviteUrl + "?uid=" + userModel
+                                .getSignCode(),
+                        "邀请好友加入大语文");
                 break;
             case R.id.child_add:// 添加孩子
                 startActivity(new Intent(mContext, ChildInfoActivity.class));

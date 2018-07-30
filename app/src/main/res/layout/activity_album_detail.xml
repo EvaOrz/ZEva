@@ -285,13 +285,12 @@
                                 android:layout_weight="1"
                                 android:gravity="right"
                                 android:orientation="vertical"
-                                android:paddingRight="20dp"
-                                android:visibility="invisible">
+                                android:paddingRight="20dp">
 
                                 <ImageView
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@mipmap/share_a" />
+                                    android:src="@mipmap/share_f" />
 
                                 <TextView
                                     android:id="@+id/album_detail_shoucang_tv"

@@ -68,7 +68,7 @@ public class ShareTools {
     }
 
     /**
-     * 分享链接
+     * 分享不带图片的链接
      *
      * @param context
      * @param title
@@ -177,6 +177,66 @@ public class ShareTools {
                     }
                 }).open();
     }
+
+    /**
+     * 分享带图片的链接
+     *
+     * @param context
+     * @param title
+     * @param url
+     * @param desc
+     */
+    public static void doShareWebWithPic(final BaseActivity context,String pic, String title, String url, String
+            desc) {
+        UMWeb web = new UMWeb(url);
+        web.setTitle(title);//标题
+        UMImage image = new UMImage(context, pic);//资源文件
+        web.setThumb(image);  //缩略图
+        web.setDescription(desc);//描述
+        new ShareAction(context).withMedia(web).setDisplayList(SHARE_MEDIA
+                        .SINA, SHARE_MEDIA.QQ,
+                SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                .setCallback(new UMShareListener() {
+                    @Override
+                    public void onStart(SHARE_MEDIA share_media) {
+
+                    }
+
+                    /**
+                     * @descrption 分享成功的回调
+                     * @param share_media 平台类型
+                     */
+                    @Override
+                    public void onResult(SHARE_MEDIA share_media) {
+                        context.showToast(R.string.share_success);
+
+
+                    }
+
+                    /**
+                     * @descrption 分享失败的回调
+                     * @param share_media 平台类型
+                     * @param throwable 错误原因
+                     */
+                    @Override
+                    public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+
+                        context.showToast(R.string.share_faile);
+
+
+                    }
+
+                    /**
+                     * @descrption 分享取消的回调
+                     * @param share_media 平台类型
+                     */
+                    @Override
+                    public void onCancel(SHARE_MEDIA share_media) {
+                        context.showToast(R.string.share_cancle);
+                    }
+                }).open();
+    }
+
 
 
 }

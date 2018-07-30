@@ -42,6 +42,13 @@ public class WebActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        commonWebView.destroy();
+        commonWebView = null;
+        super.onDestroy();
+    }
+
     private void initView() {
         title = findViewById(R.id.web_title);
         if (!TextUtils.isEmpty(titleString))

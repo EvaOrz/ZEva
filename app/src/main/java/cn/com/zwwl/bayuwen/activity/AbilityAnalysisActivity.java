@@ -40,6 +40,9 @@ import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.DatiPopWindow;
 
+/**
+ * 能力分析页面
+ */
 public class AbilityAnalysisActivity extends BaseActivity {
 
     @BindView(R.id.tab_course_name)
@@ -163,9 +166,7 @@ public class AbilityAnalysisActivity extends BaseActivity {
         });
 
         pintuModel = pintuModels.get(pos);
-        content.setText(pintuModel.getContent().
-
-                getContent());
+        content.setText(pintuModel.getContent().getContent());
 
         initPintu();
         initAddData();
@@ -194,11 +195,14 @@ public class AbilityAnalysisActivity extends BaseActivity {
 
     private void initPintu() {
         pintuView.setBackgroundResource(R.drawable.pintu_bg_wangzhe);
+        if (pintuModel.getStyle() == 2 || pintuModel.getStyle() == 3) {
+            pintuView.setBackgroundResource(R.drawable.pintu_bg_wangzhe);
+        } else pintuView.setBackgroundResource(R.drawable.pintu_bg_baiyin);
         if (Tools.listNotNull(pintuModel.getLectureinfo())) {
             final List<PintuModel.LectureinfoBean.SectionListBean> models = pintuModel
                     .getLectureinfo().get(0).getSectionList();
             if (Tools.listNotNull(models) && models.size() == 54) {
-                radarAdapter = new RadarAdapter(models, pintuWid);
+                radarAdapter = new RadarAdapter(models, pintuWid, pintuModel.getIs_pay() == 1);
                 pintuRecyclerView.setAdapter(radarAdapter);
                 pintuRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
                 pintuRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -213,14 +217,12 @@ public class AbilityAnalysisActivity extends BaseActivity {
         }
     }
 
-
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
-
                     Bundle bundle = msg.getData();
                     PintuModel.LectureinfoBean.SectionListBean model = (PintuModel
                             .LectureinfoBean.SectionListBean) bundle.getSerializable("gezi_detail");
@@ -262,6 +264,7 @@ public class AbilityAnalysisActivity extends BaseActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 pintuModel = pintuModels.get(tab.getPosition());
+                Log.e("ssssssss", tab.getPosition() + "_____" + pintuModel.getName());
                 initPintu();
                 initAddData();
 
@@ -284,6 +287,7 @@ public class AbilityAnalysisActivity extends BaseActivity {
         courseContent.setText(pintuModel.getContent().getTitle());
         studentCondition.setText(pintuModel.getStudent_info().getTitle());
         systemIntroduction.setText(pintuModel.getCurricula().getTitle());
+        setNum();
     }
 
     @OnClick({R.id.course_content, R.id.system_introduction, R.id.student_condition, R.id
@@ -307,15 +311,7 @@ public class AbilityAnalysisActivity extends BaseActivity {
                 courseDLine3.setVisibility(View.INVISIBLE);
                 content.setVisibility(View.GONE);
                 studentContent.setVisibility(View.VISIBLE);
-                if (pintuModel.getLectureinfo() != null && pintuModel.getLectureinfo().size() !=
-                        0) {
-                    questionNum.setText("总题目数：" + pintuModel.getLectureinfo().get(0)
-                            .getQuestionNum());
-                    rightNum.setText("答对题数：" + pintuModel.getLectureinfo().get(0).getRightNum
-                            ());
-                    errorNum.setText("答错题数：" + pintuModel.getLectureinfo().get(0).getErrorNum
-                            ());
-                }
+                setNum();
                 break;
             case R.id.system_introduction:
                 UmengLogUtil.logPintuTabClick(mContext, 2);
@@ -330,7 +326,18 @@ public class AbilityAnalysisActivity extends BaseActivity {
                 finish();
                 break;
         }
+    }
 
+
+    private void setNum() {
+        if (Tools.listNotNull(pintuModel.getLectureinfo())) {
+            questionNum.setText("总题目数：" + pintuModel.getLectureinfo().get(0)
+                    .getQuestionNum());
+            rightNum.setText("答对题数：" + pintuModel.getLectureinfo().get(0).getRightNum
+                    ());
+            errorNum.setText("答错题数：" + pintuModel.getLectureinfo().get(0).getErrorNum
+                    ());
+        }
     }
 
 

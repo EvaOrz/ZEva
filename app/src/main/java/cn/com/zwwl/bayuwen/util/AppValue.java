@@ -26,7 +26,7 @@ public class AppValue extends Tools {
     public static String versionUrl = "";//版本须知
     public static String helpUrl = "";//帮助须知
     public static String gongxunUrl = "";//功勋等级说明
-
+    public static String shareUrl = "";//分享链接
 
     /**
      * 判断密码 ，不能少于6位

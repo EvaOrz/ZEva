@@ -25,6 +25,14 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_16" />
 
+        <ImageView
+            android:id="@+id/teacher_share"
+            android:layout_width="@dimen/back_size"
+            android:layout_height="@dimen/back_size"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/share_t" />
+
     </RelativeLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
