@@ -354,6 +354,7 @@ public class ChildInfoActivity extends BaseActivity {
             public void setData(Entry entry) {
                 showLoadingDialog(false);
                 if (entry != null && entry instanceof ChildModel) {
+                    showToast("保存成功");
                     MyApplication.userStatusChange = true;
                     finish();
                 }
@@ -381,13 +382,14 @@ public class ChildInfoActivity extends BaseActivity {
         nameEv.setText(childModel.getName());
         genderTv.setText(childModel.getSexTxt(childModel.getGender()));
         phoneEv.setText(childModel.getTel());
-        if (!TextUtils.isEmpty(childModel.getBirthday()))
+        if (null != childModel.getBirthday() && !TextUtils.isEmpty(childModel.getBirthday()))
             birthTv.setText(childModel.getBirthday());
-        if (!TextUtils.isEmpty(childModel.getAdmission_time()))
+        if (null != childModel.getAdmission_time() && !TextUtils.isEmpty(childModel
+                .getAdmission_time()))
             ruxueTv.setText(childModel.getAdmission_time());
         nianjiTv.setText(childModel.getGrade());
         noTv.setText(childModel.getNo());
-        if (!TextUtils.isEmpty(childModel.getSchool()))
+        if (null != childModel.getSchool() && !TextUtils.isEmpty(childModel.getSchool()))
             schoolEv.setText(childModel.getSchool());
         titleTv.setText(childModel.getName());
     }

@@ -31,8 +31,10 @@ public class AboutActivity extends BaseActivity {
         findViewById(R.id.about_option2).setOnClickListener(this);
         version = findViewById(R.id.about_version);
         version.setText(getResources().getString(R.string.app_name) + " " + Tools
-                .getAppVersionName(mContext) + " (" + CalendarTools.format(System
-                .currentTimeMillis() / 1000, "MM-dd HH:mm") + ")");
+                .getAppVersionName(mContext));
+//        version.setText(getResources().getString(R.string.app_name) + " " + Tools
+//                .getAppVersionName(mContext) + " (" + CalendarTools.format(System
+//                .currentTimeMillis() / 1000, "MM-dd HH:mm") + ")");
         findViewById(R.id.about_back).setOnClickListener(this);
     }
 

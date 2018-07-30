@@ -129,7 +129,9 @@ public static final int *;
 -keep class c.t.**{*;}
 -keep class com.tencent.map.geolocation.**{*;}
 -keep class com.tencent.tencentmap.lbssdk.service.**{*;}
-
+-keep class cn.com.zwwl.bayuwen.activity$ZwwlJSKit {
+          public void evaluate();
+      }
 
 -dontwarn  org.eclipse.jdt.annotation.**
 -dontwarn  c.t.**

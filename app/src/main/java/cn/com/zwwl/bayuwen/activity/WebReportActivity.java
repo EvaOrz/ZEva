@@ -1,9 +1,12 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Picture;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,6 +16,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -56,8 +63,8 @@ public class WebReportActivity extends BaseActivity {
         }
         type = getIntent().getIntExtra("WebActivity_type", -1);
         webUrl = getIntent().getStringExtra("WebActivity_url");
-        kid =  getIntent().getStringExtra("WebActivity_kid");
-        lessonid =  getIntent().getStringExtra("WebActivity_lessonid");
+        kid = getIntent().getStringExtra("WebActivity_kid");
+        lessonid = getIntent().getStringExtra("WebActivity_lessonid");
         initView();
         initErrorLayout();
         initData();
@@ -77,6 +84,10 @@ public class WebReportActivity extends BaseActivity {
         web_main = findViewById(R.id.web_main);
         commonWebView = findViewById(R.id.web_webview);
 
+        if (!TextUtils.isEmpty(webUrl))
+            commonWebView.loadUrl(webUrl);
+
+        commonWebView.addJavascriptInterface(new ZwwlJSKit(mContext), "android");
         commonWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(final WebView view, String url) {
@@ -86,8 +97,13 @@ public class WebReportActivity extends BaseActivity {
                         title.setText(view.getTitle());
                     }
                 });
+//                commonWebView.loadUrl("javascript:evaluate()");
             }
+
         });
+    }
+
+    private void showEvalDialog() {
         evalDialog = new FinalEvalDialog(this);
         if (type == 0) {
             evalDialog.setData(1, kid, lessonid);
@@ -96,8 +112,6 @@ public class WebReportActivity extends BaseActivity {
         } else if (type == 2) {
             evalDialog.setData(3, kid, null);
         }
-        if (!TextUtils.isEmpty(webUrl))
-            commonWebView.loadUrl(webUrl);
 
         evalDialog.setSubmitListener(new FinalEvalDialog.SubmitListener() {
             @Override
@@ -115,6 +129,20 @@ public class WebReportActivity extends BaseActivity {
                 evalDialog.dismiss();
             }
         });
+    }
+
+
+    public class ZwwlJSKit {
+        private Context context;
+        public ZwwlJSKit(Context context) {
+            super();
+            this.context = context;
+        }
+
+        @JavascriptInterface
+        public void evaluate() {
+            showEvalDialog();
+        }
     }
 
     @Override

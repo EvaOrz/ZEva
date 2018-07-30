@@ -166,7 +166,7 @@ public class MainFrag3 extends BasicFragment {
         if (calendarCourseBean != null && calendarCourseBean.getCourses().size() > 0) {
             Calendar ss = CalendarTools.fromStringToca(calendarCourseBean.getDate());
             calendarRi.setText(String.valueOf(ss.get(Calendar.DATE)));
-            calendarYue.setText(String.format("%s月", ss.get(Calendar.MONTH)));
+            calendarYue.setText(String.format("%s月", ss.get(Calendar.MONTH) + 1));
 
             for (Index1Model.CalendarCourseBean.CoursesBean coursesBean : calendarCourseBean
                     .getCourses()) {

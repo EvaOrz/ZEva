@@ -21,7 +21,7 @@ public class TimeUtil {
      */
     public static String parseTime(long time, String formatterStr) {
         SimpleDateFormat formatter = new SimpleDateFormat(formatterStr, Locale.getDefault());
-        formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+//        formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
         return formatter.format(time);
     }
     /**
@@ -29,7 +29,7 @@ public class TimeUtil {
      */
     public static String parseTime(long time) {
         SimpleDateFormat formatter = new SimpleDateFormat(FORMATTER_DEFAULT, Locale.getDefault());
-        formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+//        formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
         return formatter.format(time);
     }
 

@@ -216,13 +216,19 @@ public class FinalEvalDialog extends PopupWindow {
         yes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) setCheck(true);
+                if (isChecked) {
+                    setCheck(true);
+                    showNext();
+                }
             }
         });
         no.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) setCheck(false);
+                if (isChecked) {
+                    setCheck(false);
+                    showNext();
+                }
             }
         });
     }
@@ -257,9 +263,7 @@ public class FinalEvalDialog extends PopupWindow {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.next:
-                layout1.setVisibility(View.GONE);
-                layout2.setVisibility(View.VISIBLE);
-                layout2.startAnimation(animation);
+                showNext();
                 break;
             case R.id.submit:
                 submit();
@@ -271,6 +275,12 @@ public class FinalEvalDialog extends PopupWindow {
                 setCheck(false);
                 break;
         }
+    }
+
+    private void showNext() {
+        layout1.setVisibility(View.GONE);
+        layout2.setVisibility(View.VISIBLE);
+        layout2.startAnimation(animation);
     }
 
     private void submit() {

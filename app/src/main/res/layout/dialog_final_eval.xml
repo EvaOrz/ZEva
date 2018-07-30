@@ -146,7 +146,8 @@
             android:paddingTop="5dp"
             android:text="星级评语>>"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_14" />
+            android:textSize="@dimen/text_size_14"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout

@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +22,7 @@ import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.api.StudyingClassInfoApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
+import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ClassModel;
@@ -74,11 +76,14 @@ public class StudyingIndexActivity extends BaseActivity {
     ImageView idBack;
     @BindView(R.id.title_name)
     TextView titleName;
+    @BindView(R.id.main_layout)
+    LinearLayout main_layout;
     private String kid;
     private int online;
     private ClassModel classModel;
     private MyApplication mApplication;
     private Activity mActivity;
+    private FinalEvalDialog evalDialog;
 
 
     @Override
@@ -194,6 +199,7 @@ public class StudyingIndexActivity extends BaseActivity {
                 if (TextUtils.isEmpty(classModel.getMidterm_report())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
+                    //todo?? 判断是否评论，没有评论则先弹出评论框
                     goWeb(1, classModel.getMidterm_report());
                 }
                 break;
@@ -202,10 +208,11 @@ public class StudyingIndexActivity extends BaseActivity {
                 if (TextUtils.isEmpty(classModel.getMidterm_report())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
+                    //todo?? 判断是否评论，没有评论则先弹出评论框
                     goWeb(2, classModel.getEnd_term_report());
                 }
                 break;
-            default:
+            case R.id.welcome:
                 UmengLogUtil.WelReportClick(mActivity);
                 if (TextUtils.isEmpty(classModel.getWelcome_speech())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
@@ -214,6 +221,34 @@ public class StudyingIndexActivity extends BaseActivity {
                 }
                 break;
         }
+    }
+
+    private void showEvalDialog(int type, String lessonid) {
+        evalDialog = new FinalEvalDialog(this);
+        if (type == 0) {
+            evalDialog.setData(1, kid, lessonid);
+        } else if (type == 1) {
+            evalDialog.setData(2, kid, null);
+        } else if (type == 2) {
+            evalDialog.setData(3, kid, null);
+        }
+
+        evalDialog.setSubmitListener(new FinalEvalDialog.SubmitListener() {
+            @Override
+            public void show() {
+                evalDialog.showAtLocation(main_layout, Gravity.BOTTOM, 0, 0);
+            }
+
+            @Override
+            public void ok() {
+                showToast("提交成功，感谢您的评价！");
+            }
+
+            @Override
+            public void error(int code) {
+                evalDialog.dismiss();
+            }
+        });
     }
 
     /**

@@ -5,12 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.webkit.DownloadListener;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.webridge.JavascriptInterface;
@@ -68,17 +72,17 @@ public class CommonWebView extends WebView {
         s.setJavaScriptCanOpenWindowsAutomatically(true);
         s.setPluginState(WebSettings.PluginState.ON);
         s.setDefaultTextEncodingName("UTF-8");
-        s.setUserAgentString(s.getUserAgentString() + "Slate/1.0");
+        s.setUserAgentString(s.getUserAgentString() + " zwwl-android");
         s.setSaveFormData(false);
         /** bug fix **/
         setSaveEnabled(false);
 
         /* JS_NAME是自己定义的，供javascript访问的接口 */
-        mWebridge = new WBWebridge(this, new WBWebridgeImplement(context));
-        if (mWebridge == null) {
-            Log.e("初始化webridge出错", "mWebridge == null");
-        }
-        addJavascriptInterface(mWebridge, JS_NAME);
+//        mWebridge = new WBWebridge(this, new WBWebridgeImplement(context));
+//        if (mWebridge == null) {
+//            Log.e("初始化webridge出错", "mWebridge == null");
+//        }
+//        addJavascriptInterface(mWebridge, JS_NAME);
 
 
         setDownloadListener(new DownloadListener() {

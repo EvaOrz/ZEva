@@ -1,16 +1,13 @@
 package cn.com.zwwl.bayuwen.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.rd.PageIndicatorView;
 
 import java.util.ArrayList;
@@ -79,47 +76,52 @@ public class AnswerResultActivity extends BaseActivity {
 
 
     protected void initData1() {
-        new AnswerDetailApi(this, getIntent().getStringExtra("sectionId"), new ResponseCallBack<List<OptionModel>>() {
-            @Override
-            public void result(List<OptionModel> optionModels, ErrorMsg errorMsg) {
-                if (optionModels != null) {
-                    all = new ArrayList<>();
-                    error = new ArrayList<>();
-                    for (OptionModel model : optionModels) {
-                        all.add(model);
-                        if (!model.getAnswer().equals(model.getStudentAnswer())) error.add(model);
-                    }
-                    double i = (double) (all.size() - error.size()) / all.size();
-                    if (i < 0.2) {
-                        topLayout.setBackgroundResource(R.mipmap.answer_result_fail_bg);
-                        starL.setImageResource(R.mipmap.answer_star_m_d);
-                        starM.setImageResource(R.mipmap.answer_star_m_d);
-                        starR.setImageResource(R.mipmap.answer_star_m_d);
-                    } else {
-                        topLayout.setBackgroundResource(R.mipmap.answer_result_bg);
+        new AnswerDetailApi(this, getIntent().getStringExtra("sectionId"), new
+                ResponseCallBack<List<OptionModel>>() {
+                    @Override
+                    public void result(List<OptionModel> optionModels, ErrorMsg errorMsg) {
+                        if (optionModels != null) {
+                            all = new ArrayList<>();
+                            error = new ArrayList<>();
+                            for (OptionModel model : optionModels) {
+                                all.add(model);
+                                if (!model.getAnswer().equals(model.getStudentAnswer()))
+                                    error.add(model);
+                            }
+                            double i = (double) (all.size() - error.size()) / all.size();
+                            if (i < 0.2) {
+                                topLayout.setBackgroundResource(R.mipmap.answer_result_fail_bg);
+                                starL.setImageResource(R.mipmap.answer_star_m_d);
+                                starM.setImageResource(R.mipmap.answer_star_m_d);
+                                starR.setImageResource(R.mipmap.answer_star_m_d);
+                            } else {
+                                topLayout.setBackgroundResource(R.mipmap.answer_result_bg);
 
-                        if (i >= 0.2 && i < 0.4) {
-                            starL.setImageResource(R.mipmap.answer_star_m_c);
-                            starM.setImageResource(R.mipmap.answer_star_m_d);
-                            starR.setImageResource(R.mipmap.answer_star_m_d);
-                        } else if (i >= 0.4 && i < 0.8) {
-                            starL.setImageResource(R.mipmap.answer_star_m_c);
-                            starM.setImageResource(R.mipmap.answer_star_m_c);
-                            starR.setImageResource(R.mipmap.answer_star_m_d);
-                        } else {
-                            starL.setImageResource(R.mipmap.answer_star_m_c);
-                            starM.setImageResource(R.mipmap.answer_star_m_c);
-                            starR.setImageResource(R.mipmap.answer_star_m_c);
+                                if (i >= 0.2 && i < 0.4) {
+                                    starL.setImageResource(R.mipmap.answer_star_m_c);
+                                    starM.setImageResource(R.mipmap.answer_star_m_d);
+                                    starR.setImageResource(R.mipmap.answer_star_m_d);
+                                } else if (i >= 0.4 && i < 0.8) {
+                                    starL.setImageResource(R.mipmap.answer_star_m_c);
+                                    starM.setImageResource(R.mipmap.answer_star_m_c);
+                                    starR.setImageResource(R.mipmap.answer_star_m_d);
+                                } else {
+                                    starL.setImageResource(R.mipmap.answer_star_m_c);
+                                    starM.setImageResource(R.mipmap.answer_star_m_c);
+                                    starR.setImageResource(R.mipmap.answer_star_m_c);
+                                }
+                            }
+                            answerResult.setText(String.format("答对%s/%s道题", all.size() - error
+                                            .size(),
+                                    total));
+                            adapter = new AnswerResultAdapter(getSupportFragmentManager(), error);
+                            viewPager.setAdapter(adapter);
+                            pagerIndicator.setCount(error.size());
                         }
                     }
-                    answerResult.setText(String.format("答对%s/%s道题", all.size() - error.size(), total));
-                    adapter = new AnswerResultAdapter(getSupportFragmentManager(), error);
-                    viewPager.setAdapter(adapter);
-                    pagerIndicator.setCount(error.size());
-                }
-            }
-        });
-//        new ErrorListApi(this, getIntent().getStringExtra("sectionId"), new ResponseCallBack<List<OptionModel>>() {
+                });
+//        new ErrorListApi(this, getIntent().getStringExtra("sectionId"), new
+// ResponseCallBack<List<OptionModel>>() {
 //            @Override
 //            public void result(List<OptionModel> answerModels, ErrorMsg errorMsg) {
 //                if (answerModels != null) {
@@ -146,7 +148,8 @@ public class AnswerResultActivity extends BaseActivity {
 //                            starR.setImageResource(R.mipmap.answer_star_m_c);
 //                        }
 //                    }
-//                    answerResult.setText(String.format("答对%s/%s道题", total - answerModels.size(), total));
+//                    answerResult.setText(String.format("答对%s/%s道题", total - answerModels.size()
+// , total));
 //                    adapter = new AnswerResultAdapter(getSupportFragmentManager(), answerModels);
 //                    viewPager.setAdapter(adapter);
 //                    pagerIndicator.setCount(answerModels.size());
@@ -156,10 +159,10 @@ public class AnswerResultActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.save, R.id.back_home,R.id.id_back})
+    @OnClick({R.id.save, R.id.back_home, R.id.id_back})
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.id_back:
                 finish();
                 break;

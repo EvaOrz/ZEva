@@ -376,7 +376,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                     pingPager.setPageTransformer(true, new GalleryTransformer());
                     pingtu_indicator.removeAllViews();
                     for (int i = 0; i < pingtuViews.size(); i++) {
-                        ImageView img = new ImageView(getContext());
+                        ImageView img = new ImageView(mActivity);
                         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
                                 (LinearLayout.LayoutParams.WRAP_CONTENT,
                                         LinearLayout.LayoutParams

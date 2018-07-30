@@ -129,7 +129,11 @@ public class PayActivity extends BaseActivity {
      */
     private void initItemString() {
         if (type == 1) {// 垫付需要循环垫付数量
+
             KeModel keModel = keDatas.get(0);
+            if (keModel.getGroupbuy() == null || keModel.getGroupbuy().getDiscount() == null ||
+                    keModel.getGroupbuy().getDiscount().getLimit_num() < 1)
+                return;
             itemCode = keModel.getKid() + "_1_" + TempDataHelper.getCurrentChildNo(mContext);
             for (int i = 0; i < keModel.getGroupbuy().getDiscount().getLimit_num() - 1; i++) {
                 itemCode += "," + keModel.getKid() + "_1_" + "0";

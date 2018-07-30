@@ -143,9 +143,13 @@ public class AnswerActivity extends BaseActivity {
                 progress.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (adapter.isRight() && index < choiceBeans.size()) {
-                            ++index;
-                            bindData();
+                        if (adapter.isRight()) {
+                            if (index + 1 == choiceBeans.size()) {// 最后一题直接跳转结果页面
+                                submit();
+                            } else {
+                                ++index;
+                                bindData();
+                            }
                         } else {
                             dialog.setData(choiceBeans.get(index - 1).getRemark());
                             dialog.showAtLocation(progress, Gravity.BOTTOM, 0, 0);
@@ -168,7 +172,6 @@ public class AnswerActivity extends BaseActivity {
                 dialog.dismiss();
             }
         });
-
     }
 
     private void submit() {
