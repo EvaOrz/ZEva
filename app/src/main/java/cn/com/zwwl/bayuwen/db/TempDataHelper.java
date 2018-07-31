@@ -36,6 +36,10 @@ public class TempDataHelper {
      */
     private static final String CURRENT_CHILD_GRADE = "current_child_grade";
     private static final String CURRENT_CHILD_NO = "current_child_no";
+    /**
+     * 推送开启状态
+     */
+    private static final String PUSH_STATUS = "push_status";
 
     private static SharedPreferences mPref;
 
@@ -141,6 +145,27 @@ public class TempDataHelper {
         editor.commit();
     }
 
+    /**
+     * 设置是否推送
+     *
+     * @param context
+     * @param isNeedPush
+     */
+    public static void setPushStatus(Context context, boolean isNeedPush) {
+        Editor editor = getPref(context).edit();
+        editor.putBoolean(PUSH_STATUS, isNeedPush);
+        editor.commit();
+    }
+
+    /**
+     * 获取推送状态
+     *
+     * @param context
+     * @return
+     */
+    public static boolean getPushStatus(Context context) {
+        return getPref(context).getBoolean(PUSH_STATUS, true);
+    }
 
 }
 

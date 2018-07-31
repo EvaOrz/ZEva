@@ -164,6 +164,7 @@
         <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
     </style>
+
     <style name="AlertDialog" parent="android:Theme.DeviceDefault.Light.Dialog">
         <!-- 这里设置背景为透明，为了隐藏边框 -->
         <item name="android:windowBackground">@color/white</item>
@@ -175,6 +176,7 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
     </style>
+
     <style name="LoadingDialogStyle" parent="android:Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFrame">@null</item>
@@ -185,5 +187,17 @@
         <!-- 对话框是否有遮盖 -->
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <item name="android:backgroundDimEnabled">false</item>
+    </style>
+    <!--自定义switch样式-->
+    <style name="MySwitch" parent="Theme.AppCompat.Light">
+        <!-- Active thumb color & Active track color(30% transparency)
+            switch 打开时的拇指按钮的颜色 轨迹颜色默认为30%这个颜色 -->
+        <item name="colorControlActivated">@color/lisichen</item>
+        <!-- Inactive thumb color switch关闭时的拇指按钮的颜色 -->
+        <item name="colorSwitchThumbNormal">@color/gray_light</item>
+        <!-- Inactive track color(30% transparency) switch关闭时的轨迹的颜色  30%这个颜色 -->
+        <item name="android:colorForeground">@color/gray_light</item>
+        <!--使用方法：
+        在布局文件中给需要自定义控件中增加app:theme="@style/MySwitch"-->
     </style>
 </resources>

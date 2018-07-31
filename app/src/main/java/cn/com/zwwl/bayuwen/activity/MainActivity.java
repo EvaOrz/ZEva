@@ -100,7 +100,8 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_core);
         mContext = this;
-        NewPushManager.getInstance(this).register();
+        if (TempDataHelper.getPushStatus(mContext))
+            NewPushManager.getInstance(this).register();
         initView();
         userModel = UserDataHelper.getUserLoginInfo(mContext);
         initData();
@@ -210,7 +211,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
-        NewPushManager.getInstance(this).onresume(this);
+        if (TempDataHelper.getPushStatus(mContext))
+            NewPushManager.getInstance(this).onresume(this);
         MusicWindow.getInstance(this).movetoController(getViewHeight(barLayout));
 
         isGoAlbumActivity = false;

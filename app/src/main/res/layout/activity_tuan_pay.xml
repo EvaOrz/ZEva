@@ -54,7 +54,7 @@
                     android:layout_height="15dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/mn_calendar_icon_arrow_right" />
+                    android:src="@mipmap/arrow_right_gray" />
 
                 <LinearLayout
                     android:id="@+id/go_select_layout"
@@ -293,7 +293,7 @@
                     <ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:src="@drawable/mn_calendar_icon_arrow_right" />
+                        android:src="@mipmap/arrow_right_gray" />
                 </LinearLayout>
 
                 <View
@@ -332,7 +332,7 @@
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_marginLeft="5dp"
-                        android:src="@drawable/mn_calendar_icon_arrow_right" />
+                        android:src="@mipmap/arrow_right_gray"  />
                 </LinearLayout>
 
                 <View

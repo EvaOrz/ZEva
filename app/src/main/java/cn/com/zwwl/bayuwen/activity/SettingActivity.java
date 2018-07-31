@@ -4,15 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
+import cn.com.zwwl.bayuwen.push.NewPushManager;
 
 /**
  * 设置页面
  */
 public class SettingActivity extends BaseActivity {
+
+    private Switch aSwitch;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,7 +33,20 @@ public class SettingActivity extends BaseActivity {
         findViewById(R.id.setting_option2).setOnClickListener(this);
         findViewById(R.id.setting_option3).setOnClickListener(this);
         findViewById(R.id.setting_logout).setOnClickListener(this);
-
+        aSwitch = findViewById(R.id.push_switch);
+        aSwitch.setChecked(TempDataHelper.getPushStatus(mContext));
+        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    showToast("推送消息开启");
+                    NewPushManager.getInstance(mContext).closePush(mContext);
+                } else {
+                    showToast("推送消息关闭");
+                    NewPushManager.getInstance(mContext).onresume(mContext);
+                }
+            }
+        });
     }
 
     @Override

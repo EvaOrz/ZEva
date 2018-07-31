@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.jpush.android.api.JPushInterface;
 
 /**
@@ -42,7 +43,7 @@ public class NewPushManager {
     public void register() {
         Log.e("注册极光推送", "注册极光推送");
         registerJPush();
-//        DataHelper.setPushServiceEnable(mContext, true);
+        TempDataHelper.setPushStatus(mContext, true);
     }
 
     /**
@@ -51,6 +52,7 @@ public class NewPushManager {
     public void closePush(Context context) {
         Log.e("反注册极光推送", "反注册极光推送");
         JPushInterface.stopPush(context.getApplicationContext());
+        TempDataHelper.setPushStatus(mContext, false);
     }
 
     /**
@@ -59,6 +61,7 @@ public class NewPushManager {
     public void onresume(Context context) {
         Log.e("极光恢复", "极光恢复推送");
         JPushInterface.onResume(context);
+        TempDataHelper.setPushStatus(mContext, true);
     }
 
     /**
