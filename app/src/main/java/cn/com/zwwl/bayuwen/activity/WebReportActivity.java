@@ -1,42 +1,26 @@
 package cn.com.zwwl.bayuwen.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Picture;
-import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.webkit.JavascriptInterface;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileOutputStream;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
-import cn.com.zwwl.bayuwen.model.LessonModel;
-import cn.com.zwwl.bayuwen.model.StudyingModel;
 import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
-import cn.com.zwwl.bayuwen.view.SharePopWindow;
 import cn.com.zwwl.bayuwen.widget.CommonWebView;
 
 /**
@@ -131,9 +115,9 @@ public class WebReportActivity extends BaseActivity {
         });
     }
 
-
     public class ZwwlJSKit {
         private Context context;
+
         public ZwwlJSKit(Context context) {
             super();
             this.context = context;

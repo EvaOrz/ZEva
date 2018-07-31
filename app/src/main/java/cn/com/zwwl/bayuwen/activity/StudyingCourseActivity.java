@@ -11,13 +11,18 @@ import android.widget.ProgressBar;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
+import java.util.logging.Handler;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.StudyingCourseAdapter;
+import cn.com.zwwl.bayuwen.api.CourseStateApi;
 import cn.com.zwwl.bayuwen.api.StudyingCourseApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
+import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
+import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.StudyingModel;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
@@ -78,9 +83,9 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
                     adapter.setNewData(model.getCompleteClass());
                 }
             }
-        }
-        );
+        });
     }
+
 
     @Override
     protected void initData() {
@@ -88,7 +93,7 @@ public class StudyingCourseActivity extends BasicActivityWithTitle {
         adapter.setType(type);
         kid = getIntent().getStringExtra("kid");
         setCustomTitle(getIntent().getStringExtra("title"));
-        if (getIntent().getIntExtra("online",-1)==1) {
+        if (getIntent().getIntExtra("online", -1) == 1) {
             classCovert.setVisibility(View.GONE);
             courseChange.setVisibility(View.GONE);
         }

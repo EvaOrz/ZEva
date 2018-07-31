@@ -69,7 +69,7 @@ public class EvalContentModel extends Entry {
 
         private String name;
         private int value;
-        private String uid;
+        private String tid;
         private int isPraised;
 
         public int getIsPraised() {
@@ -80,12 +80,12 @@ public class EvalContentModel extends Entry {
             this.isPraised = isPraised;
         }
 
-        public String getUid() {
-            return uid;
+        public String getTid() {
+            return tid;
         }
 
-        public void setUid(String uid) {
-            this.uid = uid;
+        public void setTid(String tid) {
+            this.tid = tid;
         }
 
         public String getName() {

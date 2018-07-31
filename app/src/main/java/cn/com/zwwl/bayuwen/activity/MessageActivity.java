@@ -29,7 +29,7 @@ public class MessageActivity extends BaseActivity {
     private ImageView message_add;
     private int mIndex;
     private Intent intent;
-
+    private View line1, line2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class MessageActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         UmengLogUtil.logMessageClick(mContext);
         setContentView(R.layout.activity_message);
-        intent =getIntent();
+        intent = getIntent();
 
         initView();
     }
@@ -46,6 +46,8 @@ public class MessageActivity extends BaseActivity {
         notification = findViewById(R.id.message_bt1);
         topic = findViewById(R.id.message_bt2);
         fg_view = findViewById(R.id.fg_view);
+        line1 = findViewById(R.id.radio_line1);
+        line2 = findViewById(R.id.radio_line2);
         message_add = findViewById(R.id.message_add);
         message_add.setOnClickListener(this);
         initFragment();
@@ -53,11 +55,7 @@ public class MessageActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    notification.setBackgroundResource(R.drawable.gray_dark_circle);
-                    message_add.setVisibility(View.INVISIBLE);
                     setIndexSelected(0);
-                } else {
-                    notification.setBackground(null);
                 }
 
             }
@@ -66,10 +64,8 @@ public class MessageActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    topic.setBackgroundResource(R.drawable.gray_dark_circle);
-                    message_add.setVisibility(View.VISIBLE);
                     setIndexSelected(1);
-                } else topic.setBackground(null);
+                }
             }
         });
 
@@ -85,16 +81,12 @@ public class MessageActivity extends BaseActivity {
         mFragments = new Fragment[]{notifyFragment, topicFragment};
         //开启事务
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        if (intent.getStringExtra("ass")==null) {
-            notification.setBackgroundResource(R.drawable.gray_dark_circle);
-            topic.setBackground(null);
+        if (intent.getStringExtra("ass") == null) {
 //                appointment_Id.setEnabled(false);
             ft.add(R.id.fg_view, notifyFragment).commit();
             setIndexSelected(0);
             notification.setChecked(true);
-        }else {
-            topic.setBackgroundResource(R.drawable.gray_dark_circle);
-            notification.setBackground(null);
+        } else {
 //                appointment_Id.setEnabled(false);
             ft.add(R.id.fg_view, topicFragment).commit();
             setIndexSelected(0);
@@ -108,6 +100,15 @@ public class MessageActivity extends BaseActivity {
 
         if (mIndex == index) {
             return;
+        }
+        if (index == 0) {
+            message_add.setVisibility(View.GONE);
+            line1.setVisibility(View.VISIBLE);
+            line2.setVisibility(View.INVISIBLE);
+        }else {
+            message_add.setVisibility(View.VISIBLE);
+            line1.setVisibility(View.INVISIBLE);
+            line2.setVisibility(View.VISIBLE);
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();

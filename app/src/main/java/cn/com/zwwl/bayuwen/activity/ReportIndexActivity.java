@@ -1,9 +1,7 @@
 package cn.com.zwwl.bayuwen.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -23,11 +21,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.LessonReportAdapter;
+import cn.com.zwwl.bayuwen.api.CourseStateApi;
 import cn.com.zwwl.bayuwen.api.StudyingCourseApi;
-import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
@@ -40,8 +37,6 @@ import cn.com.zwwl.bayuwen.util.ToastUtil;
 import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.view.OvalImageview;
 import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
-
-import static cn.com.zwwl.bayuwen.base.MenuCode.REPLAY;
 
 /**
  * 课程跟踪点击“往次”，或已完成课程二级页面点击条目进入该页面
@@ -74,7 +69,8 @@ public class ReportIndexActivity extends BaseActivity {
     @BindView(R.id.report_view)
     View mainView;
     private FinalEvalDialog evalDialog;
-
+    private CourseStateApi.CourseStateModel courseStateModel;
+    private String kid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +86,6 @@ public class ReportIndexActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
     }
 
 
@@ -102,22 +97,20 @@ public class ReportIndexActivity extends BaseActivity {
         adapter = new LessonReportAdapter(reports);
         adapter.setEmptyView(R.layout.empty_view, (ViewGroup) recyclerView.getParent());
         recyclerView.setAdapter(adapter);
-
-        mainView = findViewById(R.id.main_view);
     }
 
 
     protected void initData1() {
+        kid = getIntent().getStringExtra("kid");
         titleName.setText(getIntent().getStringExtra("title"));
         if ("1".equals(getIntent().getStringExtra("online"))) {
 //            showMenu(REPLAY);
             rightTitle.setVisibility(View.VISIBLE);
             rightTitle.setText("查看回放");
-
         } else {
             rightTitle.setVisibility(View.GONE);
         }
-        new StudyingCourseApi(this, getIntent().getStringExtra("kid"), new
+        new StudyingCourseApi(this, kid, new
                 ResponseCallBack<StudyingModel>() {
                     @Override
                     public void result(StudyingModel studyingModel, ErrorMsg errorMsg) {
@@ -127,6 +120,16 @@ public class ReportIndexActivity extends BaseActivity {
                         }
                     }
                 });
+        new CourseStateApi(this, kid, new ResponseCallBack<CourseStateApi.CourseStateModel>() {
+            @Override
+            public void result(CourseStateApi.CourseStateModel c, ErrorMsg
+                    errorMsg) {
+                if (errorMsg != null) ToastUtil.showShortToast(errorMsg.getDesc());
+                else {
+                    courseStateModel = c;
+                }
+            }
+        });
     }
 
 
@@ -134,7 +137,8 @@ public class ReportIndexActivity extends BaseActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                goWeb(0, reports.get(position).getReport_url(),reports.get(position).getKid(),reports.get(position).getId());
+                goWeb(0, reports.get(position).getReport_url(), reports.get(position).getKid(),
+                        reports.get(position).getId());
             }
         });
     }
@@ -163,7 +167,6 @@ public class ReportIndexActivity extends BaseActivity {
         }
     }
 
-
     @OnClick({R.id.middle_report, R.id.final_report, R.id.welcome, R.id.right_title, R.id.id_back})
     @Override
     public void onClick(View view) {
@@ -185,7 +188,10 @@ public class ReportIndexActivity extends BaseActivity {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
                     UmengLogUtil.QiZhongReportClick(mContext);
-                    goWeb(1, model.getMidterm_report(), null, null);
+                    if (courseStateModel != null && !courseStateModel.isMidterm_report()) {
+                        showEvalDialog(1, null);
+                    } else
+                        goWeb(1, model.getMidterm_report(), null, null);
                 }
                 break;
             case R.id.final_report:
@@ -193,7 +199,10 @@ public class ReportIndexActivity extends BaseActivity {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
                     UmengLogUtil.QiMoReportClick(mContext);
-                    goWeb(2, model.getEnd_term_report(), null, null);
+                    if (courseStateModel != null && !courseStateModel.isEnd_term_report()) {
+                        showEvalDialog(2, null);
+                    } else
+                        goWeb(2, model.getEnd_term_report(), null, null);
                 }
                 break;
             case R.id.welcome:
@@ -219,14 +228,31 @@ public class ReportIndexActivity extends BaseActivity {
         startActivity(intent);
     }
 
-//    @Override
-//    public void onMenuClick(int menuCode) {
-//        if (model != null) {
-//            Intent intent = new Intent(this, ReplayListActivity.class);
-//            intent.putExtra("kid", model.getCourse().getKid());
-//            intent.putExtra("title", model.getCourse().getTitle());
-//            intent.putExtra("type", 1);
-//            startActivity(intent);
-//        }
-//    }
+    private void showEvalDialog(int type, String lessonid) {
+        evalDialog = new FinalEvalDialog(this);
+        if (type == 0) {
+            evalDialog.setData(1, kid, lessonid);
+        } else if (type == 1) {
+            evalDialog.setData(2, kid, null);
+        } else if (type == 2) {
+            evalDialog.setData(3, kid, null);
+        }
+
+        evalDialog.setSubmitListener(new FinalEvalDialog.SubmitListener() {
+            @Override
+            public void show() {
+                evalDialog.showAtLocation(mainView, Gravity.BOTTOM, 0, 0);
+            }
+
+            @Override
+            public void ok() {
+                showToast("提交成功，感谢您的评价！");
+            }
+
+            @Override
+            public void error(int code) {
+                evalDialog.dismiss();
+            }
+        });
+    }
 }

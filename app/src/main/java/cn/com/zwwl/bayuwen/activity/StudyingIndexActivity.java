@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.api.CourseStateApi;
 import cn.com.zwwl.bayuwen.api.StudyingClassInfoApi;
 import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
 import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
@@ -84,7 +85,7 @@ public class StudyingIndexActivity extends BaseActivity {
     private MyApplication mApplication;
     private Activity mActivity;
     private FinalEvalDialog evalDialog;
-
+    private CourseStateApi.CourseStateModel courseStateModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,15 +96,45 @@ public class StudyingIndexActivity extends BaseActivity {
         mApplication = (MyApplication) getApplication();
         mActivity = this;
         initView();
+        initData();
     }
 
     @Override
     protected void initData() {
-
+        new StudyingClassInfoApi(this, kid, new ResponseCallBack<ClassModel>() {
+            @Override
+            public void result(ClassModel model, ErrorMsg errorMsg) {
+                if (model != null) {
+                    classModel = model;
+                    bindData();
+                }
+            }
+        });
+        new CourseStateApi(this, kid, new ResponseCallBack<CourseStateApi.CourseStateModel>() {
+            @Override
+            public void result(CourseStateApi.CourseStateModel c, ErrorMsg
+                    errorMsg) {
+                if (errorMsg != null) ToastUtil.showShortToast(errorMsg.getDesc());
+                else {
+                    courseStateModel = c;
+                    courseLogo.setImageResource(courseStateModel.isTransfer_course() ? R.mipmap
+                            .convert_course_yellow : R.mipmap
+                            .convert_course_gray);
+                    classLogo.setImageResource(courseStateModel.isTransfer_class() ? R.mipmap
+                            .convert_class_yellow : R.mipmap
+                            .convert_class_gray);
+                    courseTitle.setTextColor(courseStateModel.isTransfer_course() ? ContextCompat
+                            .getColor(mActivity, R.color.text_color_default) : Color.parseColor
+                            ("#BABDC2"));
+                    classTitle.setTextColor(courseStateModel.isTransfer_class() ? ContextCompat
+                            .getColor(mActivity, R.color.text_color_default) : Color.parseColor
+                            ("#BABDC2"));
+                }
+            }
+        });
     }
 
     protected void initView() {
-
         kid = getIntent().getStringExtra("kid");
         titleName.setText(getIntent().getStringExtra("title"));
 //        setCustomTitle(getIntent().getStringExtra("title"));
@@ -123,15 +154,7 @@ public class StudyingIndexActivity extends BaseActivity {
                 .convert_class_yellow);
         seatLogo.setImageResource(online == 1 ? R.mipmap.class_seat_gray : R.mipmap
                 .class_seat_yellow);
-        new StudyingClassInfoApi(this, kid, new ResponseCallBack<ClassModel>() {
-            @Override
-            public void result(ClassModel model, ErrorMsg errorMsg) {
-                if (model != null) {
-                    classModel = model;
-                    bindData();
-                }
-            }
-        });
+
     }
 
     private void bindData() {
@@ -169,6 +192,7 @@ public class StudyingIndexActivity extends BaseActivity {
                     ToastUtil.showShortToast("线上课不支持该功能");
                     return;
                 }
+                if (courseStateModel != null && !courseStateModel.isTransfer_course()) return;
                 mApplication.operate_type = 0;
                 intent.putExtra("project_type", classModel.getCourse().getType());
                 intent.putExtra("kid", kid);
@@ -182,6 +206,7 @@ public class StudyingIndexActivity extends BaseActivity {
                     ToastUtil.showShortToast("线上课不支持该功能");
                     return;
                 }
+                if (courseStateModel != null && !courseStateModel.isTransfer_class()) return;
                 mApplication.operate_type = 1;
                 intent.putExtra("project_type", classModel.getCourse().getType());
                 intent.setClass(this, ConvertClassActivity.class);
@@ -199,8 +224,10 @@ public class StudyingIndexActivity extends BaseActivity {
                 if (TextUtils.isEmpty(classModel.getMidterm_report())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
-                    //todo?? 判断是否评论，没有评论则先弹出评论框
-                    goWeb(1, classModel.getMidterm_report());
+                    if (courseStateModel != null && !courseStateModel.isMidterm_report()) {
+                        showEvalDialog(1, null);
+                    } else
+                        goWeb(1, classModel.getMidterm_report());
                 }
                 break;
             case R.id.final_report:
@@ -208,8 +235,10 @@ public class StudyingIndexActivity extends BaseActivity {
                 if (TextUtils.isEmpty(classModel.getMidterm_report())) {
                     ToastUtil.showShortToast(R.string.warning_no_mid_report);
                 } else {
-                    //todo?? 判断是否评论，没有评论则先弹出评论框
-                    goWeb(2, classModel.getEnd_term_report());
+                    if (courseStateModel != null && !courseStateModel.isEnd_term_report()) {
+                        showEvalDialog(2, null);
+                    } else
+                        goWeb(2, classModel.getEnd_term_report());
                 }
                 break;
             case R.id.welcome:
@@ -257,6 +286,7 @@ public class StudyingIndexActivity extends BaseActivity {
     private void goWeb(int type, String url) {
         Intent intent = new Intent(mContext, WebReportActivity.class);
         intent.putExtra("WebActivity_url", url);
+        intent.putExtra("WebActivity_kid", kid);
         intent.putExtra("WebActivity_type", type);
         startActivity(intent);
     }

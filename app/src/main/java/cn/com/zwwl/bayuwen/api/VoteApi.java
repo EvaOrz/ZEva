@@ -16,10 +16,11 @@ import cn.com.zwwl.bayuwen.util.GsonUtil;
 
 public class VoteApi extends BaseApi {
     private Activity activity;
-    private ResponseCallBack<CommonModel> callBack;
+    private ResponseCallBack<ErrorMsg> callBack;
     private HashMap<String, String> para;
 
-    public VoteApi(Activity context, HashMap<String, String> map, ResponseCallBack<CommonModel> callBack) {
+    public VoteApi(Activity context, HashMap<String, String> map, ResponseCallBack<ErrorMsg>
+            callBack) {
         super(context);
         this.activity = context;
         this.para = map;
@@ -42,9 +43,7 @@ public class VoteApi extends BaseApi {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                CommonModel model=null;
-                if (json!=null)model= GsonUtil.parseJson(CommonModel.class,json.toString());
-                callBack.result(model, errorMsg);
+                callBack.result(null, errorMsg);
             }
         });
     }

@@ -340,7 +340,7 @@ public class UrlUtil {
 
     // 初始化域名
     public static String getInterface() {
-        return  "http://api.dev.zhugexuetang.com/v2/apps/version";
+        return "http://api.dev.zhugexuetang.com/v2/apps/version";
     }
 
     // 获取成就列表
@@ -356,6 +356,11 @@ public class UrlUtil {
     // 获取我的积分列表
     public static String getCoinList() {
         return HOST + "/user/integral";
+    }
+
+    // 获取课程是否可转班调课状态
+    public static String getCourseState() {
+        return HOST + "/course/state";
     }
 
     /**

@@ -41,6 +41,7 @@ import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.EvalContentModel;
+import cn.com.zwwl.bayuwen.util.ToastUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.decoration.GridItemDecoration;
 
@@ -144,54 +145,51 @@ public class FinalEvalDialog extends PopupWindow {
         teacherAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                vote("1", position, contentModel.getTeacher().get(position).getUid());
+                vote("1", position, contentModel.getTeacher().get(position).getTid(),
+                        contentModel.getTeacher().get(position).getIsPraised() == 0);
             }
         });
         tutorAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                vote("3", position, contentModel.getTutors().get(position).getUid());
+                vote("3", position, contentModel.getTutors().get(position).getTid(), contentModel
+                        .getTutors().get(position).getIsPraised() == 0);
             }
         });
         adviserAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                vote("2", position, contentModel.getStu_advisors().get(position).getUid());
+                vote("2", position, contentModel.getStu_advisors().get(position).getTid(),
+                        contentModel.getStu_advisors().get(position).getIsPraised() == 0);
             }
         });
     }
 
-    private void vote(final String theme, final int position, String tId) {
+    private void vote(final String theme, final int position, String tId, final boolean isZan) {
         para.clear();
-        para.put("kid", kid);
-        if (type == 1) {
-            para.put("lecture_id", lecture_id);
-        }
-        para.put("type", type + "");
-        para.put("theme", theme);
-        para.put("to_uid", tId);
-        new VoteApi(activity, para, new ResponseCallBack<CommonModel>() {
+
+        para.put("type", isZan ? "1" : "2");// 1添加2取消
+        para.put("tid", tId);
+        new VoteApi(activity, para, new ResponseCallBack<ErrorMsg>() {
             @Override
-            public void result(CommonModel commentModel, ErrorMsg errorMsg) {
-                if (commentModel != null) {
+            public void result(ErrorMsg commentModel, ErrorMsg errorMsg) {
+                if (errorMsg == null) {
                     switch (theme) {
                         case "1":
-                            contentModel.getTeacher().get(position).setIsPraised(commentModel
-                                    .getStatus());
+                            contentModel.getTeacher().get(position).setIsPraised(isZan ? 1 : 0);
                             teacherAdapter.setNewData(contentModel.getTeacher());
                             break;
                         case "2":
-                            contentModel.getStu_advisors().get(position).setIsPraised
-                                    (commentModel.getStatus());
+                            contentModel.getStu_advisors().get(position).setIsPraised(isZan ? 1 :
+                                    0);
                             adviserAdapter.setNewData(contentModel.getStu_advisors());
                             break;
                         case "3":
-                            contentModel.getTutors().get(position).setIsPraised(commentModel
-                                    .getStatus());
+                            contentModel.getTutors().get(position).setIsPraised(isZan ? 1 : 0);
                             tutorAdapter.setNewData(contentModel.getTutors());
                             break;
                     }
-                }
+                } else ToastUtil.showShortToast(errorMsg.getDesc());
             }
         });
     }
@@ -319,7 +317,6 @@ public class FinalEvalDialog extends PopupWindow {
         this.type = type;
         this.lecture_id = lectureId;
         para.clear();
-        para.put("type", String.valueOf(type));
         para.put("kid", kid);
         if (!TextUtils.isEmpty(lectureId))
             para.put("lecture_id", lectureId);

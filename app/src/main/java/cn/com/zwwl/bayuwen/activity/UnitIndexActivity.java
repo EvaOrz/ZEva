@@ -209,26 +209,23 @@ public class UnitIndexActivity extends BasicActivityWithTitle {
     private void addVote(final String type, String id) {
         map.clear();
         map.put("type", "1");
-        map.put("to_uid", id);
-        map.put("theme", type);
-        map.put("kid", kId);
-        map.put("lecture_id", cId);
-        new VoteApi(this, map, new ResponseCallBack<CommonModel>() {
+        map.put("tid", id);
+        new VoteApi(this, map, new ResponseCallBack<ErrorMsg>() {
             @Override
-            public void result(CommonModel o, ErrorMsg errorMsg) {
-                if (o != null)
+            public void result(ErrorMsg o, ErrorMsg errorMsg) {
+                if (errorMsg == null)
                     switch (type) {
                         case "1":
-                            teacherVote.setImageResource(o.getStatus() == 1 ?
-                                    R.mipmap.icon_vote_checked : R.mipmap.icon_vote_default);
+//                            teacherVote.setImageResource(o.getStatus() == 1 ?
+//                                    R.mipmap.icon_vote_checked : R.mipmap.icon_vote_default);
                             break;
                         case "2":
-                            adviserVote.setImageResource(o.getStatus() == 1 ?
-                                    R.mipmap.icon_vote_checked : R.mipmap.icon_vote_default);
+//                            adviserVote.setImageResource(o.getStatus() == 1 ?
+//                                    R.mipmap.icon_vote_checked : R.mipmap.icon_vote_default);
                             break;
                         case "3":
-                            tutorVote.setImageResource(o.getStatus() == 1 ?
-                                    R.mipmap.icon_vote_checked : R.mipmap.icon_vote_default);
+//                            tutorVote.setImageResource(o.getStatus() == 1 ?
+//                                    R.mipmap.icon_vote_checked : R.mipmap.icon_vote_default);
                             break;
                     }
             }

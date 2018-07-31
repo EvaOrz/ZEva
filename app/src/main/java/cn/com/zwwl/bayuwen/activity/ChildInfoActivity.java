@@ -262,9 +262,7 @@ public class ChildInfoActivity extends BaseActivity {
                 String school = schoolEv.getText().toString();
                 if (TextUtils.isEmpty(na)) {
                     showToast("姓名不能为空");
-                } else if (TextUtils.isEmpty(phone)) {
-                    showToast("紧急联系人不能为空");
-                } else if (TextUtils.isEmpty(grade)) {
+                }  else if (TextUtils.isEmpty(grade)) {
                     showToast("年级不能为空");
                 } else {
                     if (AppValue.checkIsPhone(mContext, phone)) {
