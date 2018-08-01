@@ -50,31 +50,20 @@ public class HttpUtil {
 
     private HttpUtil(Context context) {
         this.mContext = context;
-        if (MyApplication.DEBUG == 1) {
-            OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
-            clientBuilder.readTimeout(20, TimeUnit.SECONDS);//读取超时
-            clientBuilder.connectTimeout(6, TimeUnit.SECONDS);//连接超时
-            clientBuilder.writeTimeout(60, TimeUnit.SECONDS);//写入超时
-            clientBuilder.addInterceptor(new LoggerInterceptor());
-            //支持HTTPS请求，跳过证书验证
-            clientBuilder.sslSocketFactory(createSSLSocketFactory());
-            clientBuilder.hostnameVerifier(new HostnameVerifier() {
-                @Override
-                public boolean verify(String hostname, SSLSession session) {
-                    return true;
-                }
-            });
-            mOkHttpClient = clientBuilder.build();
-        } else {
-            mOkHttpClient = new OkHttpClient.Builder()
-                    //设置连接超时时间
-                    .connectTimeout(20, TimeUnit.SECONDS)
-                    //设置读取超时时间
-                    .readTimeout(6, TimeUnit.SECONDS)
-                    .writeTimeout(60, TimeUnit.SECONDS)
-                    .build();
-        }
-
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+        clientBuilder.readTimeout(20, TimeUnit.SECONDS);//读取超时
+        clientBuilder.connectTimeout(6, TimeUnit.SECONDS);//连接超时
+        clientBuilder.writeTimeout(60, TimeUnit.SECONDS);//写入超时
+        clientBuilder.addInterceptor(new LoggerInterceptor());
+        //支持HTTPS请求，跳过证书验证
+        clientBuilder.sslSocketFactory(createSSLSocketFactory());
+        clientBuilder.hostnameVerifier(new HostnameVerifier() {
+            @Override
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        });
+        mOkHttpClient = clientBuilder.build();
     }
 
     /**
