@@ -7,6 +7,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
+/**
+ * 自适应子view高度的viewpager
+ */
 public class CustomViewPager extends ViewPager{
     private int current;
     private int height = 0;

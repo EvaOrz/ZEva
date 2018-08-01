@@ -41,7 +41,6 @@ public class MyApplication extends Application {
 
     private String UMENG_APPKEY = "5ad40381f29d987f490000be";// 友盟appkey
 
-    public static int DEBUG = 1;
     public static String API_VERSION = "1.0.0";
 
     /**

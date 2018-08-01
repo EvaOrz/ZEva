@@ -43,7 +43,6 @@ import cn.com.zwwl.bayuwen.widget.NoScrollGridView;
 
 public class CityActivity extends BaseActivity {
 
-
     @BindView(R.id.now_city)
     TextView nowCity;
     @BindView(R.id.country_lvcountry)

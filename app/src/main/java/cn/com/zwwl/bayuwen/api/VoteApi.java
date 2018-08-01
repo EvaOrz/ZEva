@@ -14,6 +14,9 @@ import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.GsonUtil;
 
+/**
+ *
+ */
 public class VoteApi extends BaseApi {
     private Activity activity;
     private ResponseCallBack<ErrorMsg> callBack;

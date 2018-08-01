@@ -16,19 +16,13 @@ public class UrlUtil {
      * 初始化host
      */
     public static void setHost() {
-        if (MyApplication.DEBUG == 0) {// 线上环境
-            HOST = "https://api.zhugexuetang.com/v2";
-
-        } else if (MyApplication.DEBUG == 1) {// 测试环境
-            HOST = "http://api.dev.zhugexuetang.com/v2";
-        }
+//        if (MyApplication.DEBUG == 0) {// 线上环境
+//            HOST = "https://api.zhugexuetang.com/v2";
+//
+//        } else if (MyApplication.DEBUG == 1) {// 测试环境
+        HOST = "http://api.dev.zhugexuetang.com/v2";
+//        }
     }
-
-    // 退费须知
-    public static String notificationTuifee() {
-        return "http://www.zhugexuetang.com/explain/refund.html";
-    }
-
 
     // 账号密码登录
     public static String LoginUrl() {

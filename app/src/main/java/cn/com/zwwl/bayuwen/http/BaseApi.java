@@ -74,14 +74,15 @@ public abstract class BaseApi {
         });
     }
 
-protected void post(String json){
+    protected void post(String json) {
         httpUtil.postJson(getUrl(), json, new FetchDataListener() {
             @Override
             public void fetchData(boolean isSuccess, String data, boolean fromHttp) {
                 handlerData(isSuccess, data, fromHttp);
             }
         });
-}
+    }
+
     protected void get() {
         httpUtil.getDataAsynFromNet(getUrl(), new FetchDataListener() {
             @Override
