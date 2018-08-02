@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+
+        android:layout_marginRight="10dp"
+        android:background="@drawable/popwindow_xiankuang"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/icon_report" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="课程评价"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/text_size_14" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:background="@color/gray_line" />
+
+        <TextView
+            android:id="@+id/t_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="授课老师："
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/text_size_14" />
+
+        <RadioGroup
+            android:id="@+id/t_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radio_t_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_gold_gray"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:padding="6dp"
+                android:text="满意"
+                android:textColor="@drawable/red_text_checked"
+                android:textSize="@dimen/text_size_14" />
+
+            <RadioButton
+                android:id="@+id/radio_t_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_gold_gray"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="6dp"
+                android:text="不满意"
+                android:textColor="@drawable/red_text_checked"
+                android:textSize="@dimen/text_size_14" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/h_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="授课老师："
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/text_size_14" />
+
+        <RadioGroup
+            android:id="@+id/h_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radio_h_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_gold_gray"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:padding="6dp"
+                android:text="满意"
+                android:textColor="@drawable/red_text_checked"
+                android:textSize="@dimen/text_size_14" />
+
+            <RadioButton
+                android:id="@+id/radio_h_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_gold_gray"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="6dp"
+                android:text="不满意"
+                android:textColor="@drawable/red_text_checked"
+                android:textSize="@dimen/text_size_14" />
+        </RadioGroup>
+
+
+        <TextView
+            android:id="@+id/s_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="授课老师："
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/text_size_14" />
+
+        <RadioGroup
+            android:id="@+id/s_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radio_s_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_gold_gray"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:padding="6dp"
+                android:text="满意"
+                android:textColor="@drawable/red_text_checked"
+                android:textSize="@dimen/text_size_14" />
+
+            <RadioButton
+                android:id="@+id/radio_s_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_gold_gray"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="6dp"
+                android:text="不满意"
+                android:textColor="@drawable/red_text_checked"
+                android:textSize="@dimen/text_size_14" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/eval_commit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/red_text_circle"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="提交评价"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14" />
+
+    </LinearLayout>
+</LinearLayout>
