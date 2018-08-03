@@ -68,10 +68,13 @@ public class LectureEvalDialog implements View.OnClickListener {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    ttv.setText("授课老师：" + model.getTeacher().getName());
-                    htv.setText("班主任：" + model.getHeadteacher().getName());
-                    stv.setText("校区服务（" + model.getTeacher().getName() + "）");
+                    ttv.setText(model.getTeacher().getName());
+                    htv.setText(model.getHeadteacher().getName());
+                    stv.setText(model.getTeacher().getName());
 
+                    break;
+                case 1:
+                    window.dismiss();
                     break;
             }
         }
@@ -135,22 +138,27 @@ public class LectureEvalDialog implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.eval_commit:
-                new LectureEvalCommitApi(mContext, kid, lid, model.getTeacher().getTid(), tsa + "", model.getHeadteacher().getTid(), hsa + "", model.getSchool().getTid(), ssa + "", new FetchEntryListener() {
-                    @Override
-                    public void setData(Entry entry) {
+                if (tsa >= 0 && hsa >= 0 && ssa >= 0) {
+                    new LectureEvalCommitApi(mContext, kid, lid, model.getTeacher().getTid(), tsa + "", model.getHeadteacher().getTid(), hsa + "", model.getSchool().getTid(), ssa + "", new FetchEntryListener() {
+                        @Override
+                        public void setData(Entry entry) {
 
-                    }
-
-                    @Override
-                    public void setError(ErrorMsg error) {
-                        if (error == null) {
-                            AppValue.showToast(mContext, "提交成功");
-                        } else {
-                            AppValue.showToast(mContext, error.getDesc());
                         }
-                        window.dismiss();
-                    }
-                });
+
+                        @Override
+                        public void setError(ErrorMsg error) {
+                            if (error == null) {
+                                AppValue.showToast(mContext, "提交成功");
+                            } else {
+                                AppValue.showToast(mContext, error.getDesc());
+                            }
+                            handler.sendEmptyMessage(1);
+                        }
+
+
+                    });
+                } else
+                    AppValue.showToast(mContext, "请选择满意或者不满意");
                 break;
 
         }

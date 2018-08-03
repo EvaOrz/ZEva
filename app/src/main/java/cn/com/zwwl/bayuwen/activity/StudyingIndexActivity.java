@@ -1,9 +1,12 @@
 package cn.com.zwwl.bayuwen.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
@@ -117,6 +120,20 @@ public class StudyingIndexActivity extends BaseActivity {
                 if (errorMsg != null) ToastUtil.showShortToast(errorMsg.getDesc());
                 else {
                     courseStateModel = c;
+                    handler.sendEmptyMessage(0);
+                }
+            }
+        });
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+
                     courseLogo.setImageResource(courseStateModel.isTransfer_course() ? R.mipmap
                             .convert_course_yellow : R.mipmap
                             .convert_course_gray);
@@ -129,10 +146,10 @@ public class StudyingIndexActivity extends BaseActivity {
                     classTitle.setTextColor(courseStateModel.isTransfer_class() ? ContextCompat
                             .getColor(mActivity, R.color.text_color_default) : Color.parseColor
                             ("#BABDC2"));
-                }
+                    break;
             }
-        });
-    }
+        }
+    };
 
     protected void initView() {
         kid = getIntent().getStringExtra("kid");

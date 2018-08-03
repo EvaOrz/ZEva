@@ -20,15 +20,15 @@ import cn.com.zwwl.bayuwen.model.EvalContentModel;
  * 课节报告数据
  */
 public class LectureEvalApi extends BaseApi {
-    private Map<String, String> pamas = new HashMap<>();
     private FetchEntryListener listener;
+    private String kid, lecture_id;
 
     public LectureEvalApi(Context context, String kid, String lecture_id, FetchEntryListener listener) {
         super(context);
-        pamas.put("kid",kid);
-        pamas.put("lecture_id",lecture_id);
+        this.kid = kid;
+        this.lecture_id = lecture_id;
         this.listener = listener;
-        post();
+        get();
     }
 
     @Override
@@ -63,12 +63,12 @@ public class LectureEvalApi extends BaseApi {
 
     @Override
     protected String getUrl() {
-        return UrlUtil.getLectureEval();
+        return UrlUtil.getLectureEval() + "?kid=" + kid + "&lecture_id=" + lecture_id;
     }
 
     @Override
     protected Map<String, String> getPostParams() {
-        return pamas;
+        return null;
     }
 
     public class LectureEvalModel extends Entry {
