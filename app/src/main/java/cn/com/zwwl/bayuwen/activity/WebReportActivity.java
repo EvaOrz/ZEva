@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
+import cn.com.zwwl.bayuwen.dialog.LectureEvalDialog;
 import cn.com.zwwl.bayuwen.util.ShareTools;
 import cn.com.zwwl.bayuwen.util.Tools;
 import cn.com.zwwl.bayuwen.widget.CommonWebView;
@@ -89,9 +90,7 @@ public class WebReportActivity extends BaseActivity {
 
     private void showEvalDialog() {
         evalDialog = new FinalEvalDialog(this);
-        if (type == 0) {
-            evalDialog.setData(1, kid, lessonid);
-        } else if (type == 1) {
+        if (type == 1) {
             evalDialog.setData(2, kid, null);
         } else if (type == 2) {
             evalDialog.setData(3, kid, null);
@@ -125,7 +124,10 @@ public class WebReportActivity extends BaseActivity {
 
         @JavascriptInterface
         public void evaluate() {
-            showEvalDialog();
+            if (type == 0) {
+                new LectureEvalDialog(mContext, kid, lessonid);
+            } else
+                showEvalDialog();
         }
     }
 

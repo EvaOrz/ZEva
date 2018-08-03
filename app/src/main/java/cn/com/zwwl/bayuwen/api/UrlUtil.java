@@ -357,6 +357,16 @@ public class UrlUtil {
         return HOST + "/course/state";
     }
 
+
+    // 获取课节报告评价popwindow数据
+    public static String getLectureEval() {
+        return HOST + "/reportcomment/teacher";
+    }
+    // 课节报告提交评价
+    public static String commitLectureEval() {
+        return HOST + "/reportcomment/comment";
+    }
+
     /**
      * 正在进行课程
      */
