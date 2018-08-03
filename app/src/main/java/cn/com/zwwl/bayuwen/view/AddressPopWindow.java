@@ -10,50 +10,50 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
+import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.view.wheel.OnWheelChangedListener;
-import cn.com.zwwl.bayuwen.view.wheel.OnWheelScrollListener;
-import cn.com.zwwl.bayuwen.view.wheel.WheelView;
-import cn.com.zwwl.bayuwen.view.wheel.adapters.AbstractWheelTextAdapter;
+import cn.com.zwwl.bayuwen.util.AddressTools;
+import cn.com.zwwl.bayuwen.util.AddressTools.CityModel;
+import cn.com.zwwl.bayuwen.util.AddressTools.DistModel;
+import cn.com.zwwl.bayuwen.util.AddressTools.ProvinceModel;
+import cn.com.zwwl.bayuwen.widget.wheel.OnWheelChangedListener;
+import cn.com.zwwl.bayuwen.widget.wheel.OnWheelScrollListener;
+import cn.com.zwwl.bayuwen.widget.wheel.WheelView;
+import cn.com.zwwl.bayuwen.widget.wheel.adapters.AbstractWheelTextAdapter;
 
+/**
+ * 地区选择控件
+ * 支持省市区三级筛选
+ */
 public class AddressPopWindow implements View.OnClickListener {
 
     private Context mContext;
     private PopupWindow window;
     private OnAddressCListener listener;
+    private AddressTools addressTools;
+    private int type = 0;// 0：三级区间 1：二级区间
 
-    private WheelView wvProvince;
-    private WheelView wvCitys;
-    private View lyChangeAddress;
-    private TextView btnSure;
-    private TextView btnCancel;
-
-    private JSONObject mJsonObj;
-    private String[] mProvinceDatas;
-    private Map<String, String[]> mCitisDatasMap = new HashMap<String, String[]>();
-
-    private ArrayList<String> arrProvinces = new ArrayList<String>();
-    private ArrayList<String> arrCitys = new ArrayList<String>();
+    private WheelView wvProvince, wvCitys, wvDist;
     private AddressTextAdapter provinceAdapter;
     private AddressTextAdapter cityAdapter;
-    private String strProvince = "北京";
-    private String strCity = "朝阳";
+    private AddressTextAdapter distAdapter;
+
+    private ProvinceModel curProvince;
+    private CityModel curCity;
+    private DistModel curDist;
 
     private int maxsize = 20;
     private int minsize = 12;
 
-    public AddressPopWindow(Context context, OnAddressCListener listener) {
+    public ArrayList<ProvinceModel> arrProvinces = new ArrayList<>();// 当前的省列表
+    private ArrayList<CityModel> arrCitys = new ArrayList<>();// 当前的市列表
+    private ArrayList<DistModel> arrDists = new ArrayList<>();// 当前的区列表
+
+    public AddressPopWindow(Context context, int type, OnAddressCListener listener) {
         mContext = context;
+        this.type = type;
         this.listener = listener;
         init();
     }
@@ -64,13 +64,13 @@ public class AddressPopWindow implements View.OnClickListener {
      * @author Administrator
      */
     public interface OnAddressCListener {
-        public void onClick(String province, String city);
+        public void onClick(ProvinceModel province, CityModel city, DistModel dist);
     }
 
 
     public void init() {
         View view = LayoutInflater.from(mContext).inflate(
-                R.layout.dialog_myinfo_changeaddress, null);
+                R.layout.pop_address, null);
         window = new PopupWindow(view, RelativeLayout.LayoutParams.FILL_PARENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
         window.setFocusable(true);
@@ -80,46 +80,40 @@ public class AddressPopWindow implements View.OnClickListener {
         window.setBackgroundDrawable(new BitmapDrawable());
         window.showAtLocation(view, Gravity.BOTTOM, 0, 0);
 
+        wvProvince = view.findViewById(R.id.wv_address_province);
+        wvCitys = view.findViewById(R.id.wv_address_city);
+        wvDist = view.findViewById(R.id.wv_address_dist);
+        if (type == 1) {
+            wvDist.setVisibility(View.GONE);
+        }
+        view.findViewById(R.id.btn_myinfo_sure).setOnClickListener(this);
+        view.findViewById(R.id.btn_myinfo_cancel).setOnClickListener(this);
 
-        wvProvince = (WheelView) view.findViewById(R.id.wv_address_province);
-        wvCitys = (WheelView) view.findViewById(R.id.wv_address_city);
-        lyChangeAddress = view.findViewById(R.id.ly_myinfo_changeaddress);
-        btnSure = (TextView) view.findViewById(R.id.btn_myinfo_sure);
-        btnCancel = (TextView) view.findViewById(R.id.btn_myinfo_cancel);
+        addressTools = MyApplication.addressTools;
+        arrProvinces.clear();
+        arrProvinces.addAll(addressTools.initProvinceList());
+        resetProvince(0);
 
-        lyChangeAddress.setOnClickListener(this);
-        btnSure.setOnClickListener(this);
-        btnCancel.setOnClickListener(this);
-
-        initJsonData();
-        initDatas();
-        initProvinces();
-        provinceAdapter = new AddressTextAdapter(mContext, arrProvinces, getProvinceItem(strProvince), maxsize, minsize);
-
+        provinceAdapter = new AddressTextAdapter(mContext, arrProvinces, null,
+                null, 0, 0);
         wvProvince.setVisibleItems(5);
         wvProvince.setViewAdapter(provinceAdapter);
-        wvProvince.setCurrentItem(getProvinceItem(strProvince));
-
-        initCitys(mCitisDatasMap.get(strProvince));
-        cityAdapter = new AddressTextAdapter(mContext, arrCitys, getCityItem(strCity), maxsize, minsize);
+        cityAdapter = new AddressTextAdapter(mContext, null, arrCitys,
+                null, 0, 1);
         wvCitys.setVisibleItems(5);
         wvCitys.setViewAdapter(cityAdapter);
-        wvCitys.setCurrentItem(getCityItem(strCity));
+        distAdapter = new AddressTextAdapter(mContext, null, null,
+                arrDists, 0, 2);
+        wvDist.setVisibleItems(5);
+        wvDist.setViewAdapter(distAdapter);
 
         wvProvince.addChangingListener(new OnWheelChangedListener() {
 
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
-                // TODO Auto-generated method stub
-                String currentText = (String) provinceAdapter.getItemText(wheel.getCurrentItem());
-                strProvince = currentText;
-                setTextviewSize(currentText, provinceAdapter);
-                String[] citys = mCitisDatasMap.get(currentText);
-                initCitys(citys);
-                cityAdapter = new AddressTextAdapter(mContext, arrCitys, 0, maxsize, minsize);
-                wvCitys.setVisibleItems(5);
-                wvCitys.setViewAdapter(cityAdapter);
-                wvCitys.setCurrentItem(0);
+                resetProvince(wheel.getCurrentItem());
+
+                setTextviewSize(curProvince.getPtxt(), provinceAdapter);
             }
         });
 
@@ -132,7 +126,6 @@ public class AddressPopWindow implements View.OnClickListener {
 
             @Override
             public void onScrollingFinished(WheelView wheel) {
-                // TODO Auto-generated method stub
                 String currentText = (String) provinceAdapter.getItemText(wheel.getCurrentItem());
                 setTextviewSize(currentText, provinceAdapter);
             }
@@ -142,10 +135,9 @@ public class AddressPopWindow implements View.OnClickListener {
 
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
-                // TODO Auto-generated method stub
-                String currentText = (String) cityAdapter.getItemText(wheel.getCurrentItem());
-                strCity = currentText;
-                setTextviewSize(currentText, cityAdapter);
+                resetCity(wheel.getCurrentItem());
+
+                setTextviewSize(curCity.getCtxt(), cityAdapter);
             }
         });
 
@@ -153,39 +145,114 @@ public class AddressPopWindow implements View.OnClickListener {
 
             @Override
             public void onScrollingStarted(WheelView wheel) {
-                // TODO Auto-generated method stub
 
             }
 
             @Override
             public void onScrollingFinished(WheelView wheel) {
-                // TODO Auto-generated method stub
                 String currentText = (String) cityAdapter.getItemText(wheel.getCurrentItem());
                 setTextviewSize(currentText, cityAdapter);
             }
         });
+        wvDist.addChangingListener(new OnWheelChangedListener() {
+
+            @Override
+            public void onChanged(WheelView wheel, int oldValue, int newValue) {
+                curDist = arrDists.get(wheel.getCurrentItem());
+                setTextviewSize(curDist.getDtxt(),
+                        distAdapter);
+            }
+        });
+
+        wvDist.addScrollingListener(new OnWheelScrollListener() {
+
+            @Override
+            public void onScrollingStarted(WheelView wheel) {
+
+            }
+
+            @Override
+            public void onScrollingFinished(WheelView wheel) {
+                String currentText = (String) distAdapter.getItemText(wheel.getCurrentItem());
+                setTextviewSize(currentText, distAdapter);
+            }
+        });
+    }
+
+    /**
+     * 省份变化
+     *
+     * @param i
+     */
+    private void resetProvince(int i) {
+        curProvince = arrProvinces.get(i);
+
+        arrCitys.clear();
+        arrCitys.addAll(addressTools.initCityList(curProvince.getPid()));
+        curCity = arrCitys.get(0);
+
+        arrDists.clear();
+        arrDists.addAll(addressTools.initDistList(curCity.getCid()));
+        curDist = arrDists.get(0);
+
+        cityAdapter = new AddressTextAdapter(mContext, null, arrCitys,
+                null, 0, 1);
+        wvCitys.setVisibleItems(5);
+        wvCitys.setViewAdapter(cityAdapter);
+
+        distAdapter = new AddressTextAdapter(mContext, null, null,
+                arrDists, 0, 2);
+        wvDist.setVisibleItems(5);
+        wvDist.setViewAdapter(distAdapter);
+    }
+
+    /**
+     * 城市变化
+     *
+     * @param i
+     */
+    private void resetCity(int i) {
+        curCity = arrCitys.get(i);
+
+        arrDists.clear();
+        arrDists.addAll(addressTools.initDistList(curCity.getCid()));
+        curDist = arrDists.get(0);
+
+        distAdapter = new AddressTextAdapter(mContext, null, null,
+                arrDists, 0, 2);
+        wvDist.setVisibleItems(5);
+        wvDist.setViewAdapter(distAdapter);
+
     }
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.ly_myinfo_changeaddress:
-                listener.onClick(strProvince, strCity);
+            case R.id.btn_myinfo_sure:
+                listener.onClick(curProvince, curCity, curDist);
                 break;
-
         }
         window.dismiss();
     }
 
     private class AddressTextAdapter extends AbstractWheelTextAdapter {
-        ArrayList<String> list;
+        ArrayList<ProvinceModel> plist;
+        ArrayList<CityModel> clist;
+        ArrayList<DistModel> dlist;
+        int type = 0;// 0：省 1：市 2：区
 
-        protected AddressTextAdapter(Context context, ArrayList<String> list, int currentItem, int maxsize, int minsize) {
+        protected AddressTextAdapter(Context context, ArrayList<ProvinceModel> list1,
+                                     ArrayList<CityModel> list2, ArrayList<DistModel> list3, int
+                                             currentItem, int type) {
             super(context, R.layout.item_birth_year, NO_RESOURCE, currentItem, maxsize, minsize);
-            this.list = list;
+            this.type = type;
+            this.plist = list1;
+            this.clist = list2;
+            this.dlist = list3;
             setItemTextResource(R.id.tempValue);
         }
+
 
         @Override
         public View getItem(int index, View cachedView, ViewGroup parent) {
@@ -195,13 +262,30 @@ public class AddressPopWindow implements View.OnClickListener {
 
         @Override
         public int getItemsCount() {
-            return list.size();
+            int i = 0;
+            if (type == 0) {
+                i = plist.size();
+            } else if (type == 1) {
+                i = clist.size();
+            } else if (type == 2) {
+                i = dlist.size();
+            }
+            return i;
         }
 
         @Override
         protected CharSequence getItemText(int index) {
-            return list.get(index) + "";
+            String cc = "";
+            if (type == 0) {
+                cc = plist.get(index).getPtxt();
+            } else if (type == 1) {
+                cc = clist.get(index).getCtxt();
+            } else if (type == 2) {
+                cc = dlist.get(index).getDtxt();
+            }
+            return cc;
         }
+
     }
 
     /**
@@ -225,181 +309,5 @@ public class AddressPopWindow implements View.OnClickListener {
         }
     }
 
-    /**
-     * 从文件中读取地址数据
-     */
-    private void initJsonData() {
-        try {
-            StringBuffer sb = new StringBuffer();
-            InputStream is = mContext.getAssets().open("city.json");
-            int len = -1;
-            byte[] buf = new byte[1024];
-            while ((len = is.read(buf)) != -1) {
-                sb.append(new String(buf, 0, len, "gbk"));
-            }
-            is.close();
-            mJsonObj = new JSONObject(sb.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 解析数据
-     */
-    private void initDatas() {
-        try {
-            JSONArray jsonArray = mJsonObj.getJSONArray("citylist");
-            mProvinceDatas = new String[jsonArray.length()];
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonP = jsonArray.getJSONObject(i);
-                String province = jsonP.getString("p");
-
-                mProvinceDatas[i] = province;
-
-                JSONArray jsonCs = null;
-                try {
-                    /**
-                     * Throws JSONException if the mapping doesn't exist or is
-                     * not a JSONArray.
-                     */
-                    jsonCs = jsonP.getJSONArray("c");
-                } catch (Exception e1) {
-                    continue;
-                }
-                String[] mCitiesDatas = new String[jsonCs.length()];
-                for (int j = 0; j < jsonCs.length(); j++) {
-                    JSONObject jsonCity = jsonCs.getJSONObject(j);
-                    String city = jsonCity.getString("n");
-                    mCitiesDatas[j] = city;
-                    JSONArray jsonAreas = null;
-                    try {
-                        /**
-                         * Throws JSONException if the mapping doesn't exist or
-                         * is not a JSONArray.
-                         */
-                        jsonAreas = jsonCity.getJSONArray("a");
-                    } catch (Exception e) {
-                        continue;
-                    }
-
-                    String[] mAreasDatas = new String[jsonAreas.length()];
-                    for (int k = 0; k < jsonAreas.length(); k++) {
-                        String area = jsonAreas.getJSONObject(k).getString("s");
-                        mAreasDatas[k] = area;
-                    }
-                }
-                mCitisDatasMap.put(province, mCitiesDatas);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        mJsonObj = null;
-    }
-
-    /**
-     * 初始化省会
-     */
-    public void initProvinces() {
-        int length = mProvinceDatas.length;
-        for (int i = 0; i < length; i++) {
-            arrProvinces.add(mProvinceDatas[i]);
-        }
-    }
-
-    /**
-     * 根据省会，生成该省会的所有城市
-     *
-     * @param citys
-     */
-    public void initCitys(String[] citys) {
-        if (citys != null) {
-            arrCitys.clear();
-            int length = citys.length;
-            for (int i = 0; i < length; i++) {
-                arrCitys.add(citys[i]);
-            }
-        } else {
-            String[] city = mCitisDatasMap.get("四川");
-            arrCitys.clear();
-            int length = city.length;
-            for (int i = 0; i < length; i++) {
-                arrCitys.add(city[i]);
-            }
-        }
-        if (arrCitys != null && arrCitys.size() > 0
-                && !arrCitys.contains(strCity)) {
-            strCity = arrCitys.get(0);
-        }
-    }
-
-    /**
-     * 初始化地点
-     *
-     * @param province
-     * @param city
-     */
-    public void setAddress(String province, String city) {
-        if (province != null && province.length() > 0) {
-            this.strProvince = province;
-        }
-        if (city != null && city.length() > 0) {
-            this.strCity = city;
-        }
-    }
-
-    /**
-     * 返回省会索引，没有就返回默认“四川”
-     *
-     * @param province
-     * @return
-     */
-    public int getProvinceItem(String province) {
-        int size = arrProvinces.size();
-        int provinceIndex = 0;
-        boolean noprovince = true;
-        for (int i = 0; i < size; i++) {
-            if (province.equals(arrProvinces.get(i))) {
-                noprovince = false;
-                return provinceIndex;
-            } else {
-                provinceIndex++;
-            }
-        }
-        if (noprovince) {
-            strProvince = "四川";
-            return 22;
-        }
-        return provinceIndex;
-    }
-
-    /**
-     * 得到城市索引，没有返回默认“成都”
-     *
-     * @param city
-     * @return
-     */
-    public int getCityItem(String city) {
-        int size = arrCitys.size();
-        int cityIndex = 0;
-        boolean nocity = true;
-        for (int i = 0; i < size; i++) {
-            System.out.println(arrCitys.get(i));
-            if (city.equals(arrCitys.get(i))) {
-                nocity = false;
-                return cityIndex;
-            } else {
-                cityIndex++;
-            }
-        }
-        if (nocity) {
-            strCity = "成都";
-            return 0;
-        }
-        return cityIndex;
-    }
 
 }

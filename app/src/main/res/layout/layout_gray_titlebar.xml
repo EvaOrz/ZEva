@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main2_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:padding="10dp">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/menu_more"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/drawable_back_bg"
+        android:contentDescription="@null"
+        android:scaleType="centerInside"
+        android:src="@mipmap/icon_menu_more" />
+
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/menu_news"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@null"
+        android:scaleType="centerInside"
+        android:src="@mipmap/icon_news" />
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@id/menu_news"
+        android:layout_toStartOf="@id/menu_news"
+        android:drawablePadding="3dp"
+        android:drawableRight="@mipmap/sanjiao_gray"
+        android:gravity="center_vertical"
+        android:text="北京"
+        android:textColor="@color/gold"
+        android:textSize="@dimen/text_size_14" />
+
+
+    <LinearLayout
+        android:id="@+id/menu_search"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="10dp"
+        android:layout_toEndOf="@id/menu_more"
+        android:layout_toLeftOf="@id/position"
+        android:layout_toRightOf="@id/menu_more"
+        android:layout_toStartOf="@id/position"
+        android:background="@drawable/search_main_bg"
+        android:gravity="center">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/icon_search" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search"
+            android:textColor="@color/gray_light"
+            android:textSize="@dimen/text_size_14" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<color name="colorPrimary">#3F51B5</color>-->
-    <!--<color name="colorPrimaryDark">#303F9F</color>-->
-    <!--<color name="colorAccent">#FF4081</color>-->
-
+    <color name="colorPrimary">#242c3f</color>
+    <color name="colorPrimaryDark">#1d2445</color>
+    <color name="colorAccent">#828BA0</color>
 
 
     <color name="white">#ffffffff</color>
     <color name="translucent_white">#7fffffff</color>
     <color name="black">#ff000000</color>
-    <color name="gray_line">#dbdbdb</color>
 
     <color name="transparent">#00000000</color>
     <color name="translucent_black">#80000000</color>
     <color name="translucent_orange">#80fff5f2</color>
     <color name="body_bg">#f6f6f6</color>
 
+    <!--字体颜色-->
     <color name="gray_light">#FFC0C0C0</color>
     <color name="gray_dark">#ff4b4b4b</color>
-    <color name="title_bar">#FFFAFAFA</color>
+    <color name="gray_line">#EDEDEE</color>
 
+    <color name="title_bar">#FFFAFAFA</color>
     <color name="dot_active_color">#ffffffff</color>
     <color name="dot_color">#7fffffff</color>
     <color name="blue">#2c97e8</color>
@@ -29,11 +29,44 @@
     <color name="wheel_2">#eaffffff</color>
     <color name="wheel_3">#33ffffff</color>
     <color name="red">#EE001E</color>
-    <color name="oringe">#E86C4D</color>
+    <color name="pink_option">#D75F86</color>
 
+    <color name="youhui_bg">#dc7f60</color>
 
-    <!-- seekbar -->
-    <color name="seek_bar_before_thumb">#cd3333</color>
+    <!-- fm seekbar -->
+    <color name="seek_bar_before_thumb">#dcaa40</color>
     <color name="seek_bar_after_thumb">#cdcdcd</color>
-    <color name="seek_bar_thumb_center">#dd3333</color>
+    <color name="seek_bar_thumb_center">#dcaa40</color>
+    <color name="yellow_light_default">#FDF3E1</color>
+    <color name="yellow_light_pressed">#F4E5CD</color>
+
+
+    //主橙色按钮背景
+    <color name="press_orangeColor">#c69439</color>
+
+    <!--basic color-->
+    <color name="gold">#00a5a8</color>
+    <color name="lisichen">#00a5a8</color>
+    <color name="text_red">#f08301</color>
+    <color name="body_gray">#242c3f</color>
+    <color name="body_gray_light">#343C50</color>
+    <color name="text_color_default">#ff4b4b4b</color>
+
+    <!--lmj -->
+    <color name="pink">#EF9F9F</color>
+    <color name="greendd">#96D689</color>
+    <color name="gray">#C3C3C3</color>
+    <color name="yellow">#F0C081</color>
+    <color name="topbackground">#EEEEEE</color>
+    <color name="hotcityColor">#FEFDFB</color>
+    <color name="citygold">#DCAA40</color>
+    <color name="user_asked_color">#3E3E3E</color>
+    <color name="course_prepara_line">#E9C192</color>
+    <color name="course_prepara_offline">#0DC0C3</color>
+    <color name="apply_submit">#F1880B</color>
+    <color name="course_detail_bg">#F5F5F5</color>
+    <color name="course_repaly">#F2F2F2</color>
+    <color name="workListNoAppro">#F3A046</color>
+    <color name="workListScore">#FFB0C2</color>
+
 </resources>

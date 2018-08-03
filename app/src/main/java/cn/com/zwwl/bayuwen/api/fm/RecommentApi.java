@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import cn.com.zwwl.bayuwen.api.UrlUtil;
-import cn.com.zwwl.bayuwen.db.DataHelper;
-import cn.com.zwwl.bayuwen.model.RecommentModel;
+import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
+import cn.com.zwwl.bayuwen.model.fm.RecommentModel;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 
@@ -22,65 +22,33 @@ public class RecommentApi extends BaseApi {
 
     private FetchRecommentListListener listener;
     private List<RecommentModel> recommentModels = new ArrayList<>();
+    private int id;
 
-    public RecommentApi(Context context, FetchRecommentListListener listener) {
+    public RecommentApi(Context context, int id, FetchRecommentListListener listener) {
+        super(context);
         mContext = context;
+        this.id = id;
         this.listener = listener;
         get();
     }
 
     @Override
     protected String getUrl() {
-        return UrlUtil.getMainurl();
+        return UrlUtil.getMainurl(id);
     }
 
-
-    /**
-     * 19        APP-FM导航栏推荐（Banner）
-     * 20        APP-FM热门推荐
-     * 21        APP-FM新课推荐
-     * 22        APP-FM直播推荐
-     * 23        APP-FM回放录播
-     * 24        APP-FM名师推荐
-     *
-     * @param jsonObject
-     * @param errorMsg
-     */
     @Override
-    protected void handler(JSONObject jsonObject, ErrorMsg errorMsg) {
-        if (errorMsg == null) {
-            JSONObject data = jsonObject.optJSONObject("data");
-            if (isNull(data)) listener.setError(new ErrorMsg());
-            else {
-                JSONArray a19 = data.optJSONArray("19");
-                if (!isNull(a19)) {
-                    for (int i = 0; i < a19.length(); i++) {
-                        JSONObject o = a19.optJSONObject(i);
-                        RecommentModel f = new RecommentModel();
-                        f.parseRecommentModel(o, f);
-                        recommentModels.add(f);
-                    }
-                }
-                JSONArray a20 = data.optJSONArray("20");
-                if (!isNull(a20)) {
-                    for (int i = 0; i < a20.length(); i++) {
-                        JSONObject o = a20.optJSONObject(i);
-                        RecommentModel f = new RecommentModel();
-                        f.parseRecommentModel(o, f);
-                        recommentModels.add(f);
-                    }
-                }
-
-                listener.setData(recommentModels);
+    protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
+        listener.setError(errorMsg);
+        if (!isNull(array)) {
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject o = array.optJSONObject(i);
+                RecommentModel f = new RecommentModel();
+                f.parseRecommentModel(o, f);
+                recommentModels.add(f);
             }
-        } else {
-            listener.setError(errorMsg);
+            listener.setData(recommentModels);
         }
-    }
-
-    @Override
-    protected String getHeadValue() {
-        return DataHelper.getUserToken(mContext);
     }
 
     @Override

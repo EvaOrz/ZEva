@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingEnd="@dimen/activity_horizontal_margin"
+    android:paddingStart="@dimen/activity_horizontal_margin">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/course_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="@string/course_progress"
+        android:textColor="@color/gray_dark" />
+
+    <LinearLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_5">
+
+
+        <ProgressBar
+            android:id="@+id/course_progress"
+            style="@style/Jindu_progress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            android:gravity="center"
+            android:text="@string/brace_left"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/sp_16" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            android:gravity="center"
+            android:textColor="@color/gold"
+            android:textSize="@dimen/sp_16" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            android:gravity="center"
+            android:text="@string/sig_xie"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/sp_16" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/total_course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            android:gravity="center"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/sp_16" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            android:gravity="center"
+            android:text="@string/brace_right"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/sp_16" />
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/course_eval"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/draw_gray_line_bg"
+        android:drawableEnd="@mipmap/arrow_right_gray"
+        android:drawableLeft="@mipmap/icon_course_eval"
+        android:drawablePadding="@dimen/dp_10"
+        android:drawableRight="@mipmap/arrow_right_gray"
+        android:gravity="center_vertical"
+        android:drawableStart="@mipmap/icon_course_eval"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_5"
+        android:text="@string/course_eval" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/course_change"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/draw_gray_line_bg"
+        android:drawableEnd="@mipmap/arrow_right_gray"
+        android:drawableLeft="@mipmap/icon_convert_course"
+        android:drawablePadding="@dimen/dp_10"
+        android:drawableRight="@mipmap/arrow_right_gray"
+        android:drawableStart="@mipmap/icon_convert_course"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_5"
+        android:text="@string/tiaoke" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/class_covert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/draw_gray_line_bg"
+        android:drawableEnd="@mipmap/arrow_right_gray"
+        android:drawableLeft="@mipmap/icon_convert_class"
+        android:drawablePadding="@dimen/dp_10"
+        android:drawableRight="@mipmap/arrow_right_gray"
+        android:drawableStart="@mipmap/icon_convert_class"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_5"
+        android:text="@string/zhuanban" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_10" />
+</LinearLayout>

@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/orange_xiankuang"
+    android:background="@drawable/drawable_transblack_corner"
     android:gravity="center_vertical"
-    android:paddingBottom="5dp"
     android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:paddingTop="5dp">
-
+    android:paddingRight="20dp">
 
     <ImageView
         android:id="@+id/control_img"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_centerVertical="true"
-        android:src="@mipmap/play_cpntrol_play" />
+        android:src="@drawable/music_control_pause" />
+    <cn.com.zwwl.bayuwen.widget.RoundAngleImageView
+        android:id="@+id/control_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/image_placeholder" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -29,11 +34,9 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="1"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="XXXXXX"
-            android:textColor="@color/gray_dark"
-            android:textSize="@dimen/text_size_10" />
+            android:text="第一期|竞争意识损害竞争力"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_12" />
 
         <TextView
             android:id="@+id/control_time"
@@ -41,20 +44,18 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="1"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="00:00/20:02"
-            android:textColor="@color/gray_dark"
-            android:textSize="@dimen/text_size_10" />
+            android:text="10:23-20:56"
+            android:textColor="@color/gray_light"
+            android:textSize="@dimen/text_size_12" />
     </LinearLayout>
+
 
 
     <ImageView
         android:id="@+id/control_play_close"
         android:layout_width="18dp"
         android:layout_height="18dp"
-        android:src="@mipmap/play_cpntrol_close"
+        android:src="@drawable/music_control_close"
         android:visibility="gone" />
-
 
 </LinearLayout>

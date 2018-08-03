@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/body_bg"
+    android:orientation="vertical"
+    tools:context=".activity.CalendarActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bar_height"
+        android:background="@color/lisichen"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/calendar_back"
+            android:layout_width="@dimen/back_size"
+            android:layout_height="@dimen/back_size"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_back"  />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/ke_calender"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16" />
+
+        <ImageView
+            android:id="@+id/calendar_add"
+            android:layout_width="@dimen/back_size"
+            android:layout_alignParentRight="true"
+            android:layout_height="@dimen/back_size"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/topic_add"  />
+
+    </RelativeLayout>
+
+    <!--月份选择器-->
+    <cn.com.zwwl.bayuwen.view.CalendarMonthSelectView
+        android:id="@+id/month_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lisichen"
+        android:scrollbars="none" />
+
+    <com.haibin.calendarview.CalendarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:calendar_content_view_id="@+id/recyclerView">
+
+        <com.haibin.calendarview.CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:current_day_lunar_text_color="@color/gold"
+            app:current_day_text_color="@color/gold"
+            app:current_month_lunar_text_color="@color/gray_dark"
+            app:current_month_text_color="@color/gray_dark"
+            app:day_text_size="@dimen/text_size_14"
+            app:lunar_text_size="@dimen/text_size_10"
+            app:month_view="cn.com.zwwl.bayuwen.widget.calendar.CustomMonthView"
+            app:month_view_show_mode="mode_only_current"
+            app:scheme_lunar_text_color="@color/gray_dark"
+            app:scheme_text_color="@color/gray_dark"
+            app:scheme_theme_color="@color/gray_dark"
+            app:selected_lunar_text_color="@color/white"
+            app:selected_text_color="@color/white"
+            app:selected_theme_color="@color/gold"
+            app:week_background="@color/body_bg"
+            app:week_line_background="@color/gray_line"
+            app:week_start_with="sun"
+            app:week_text_color="@color/gray_dark"
+            app:week_view="cn.com.zwwl.bayuwen.widget.calendar.CustomWeekView" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/body_bg" />
+    </com.haibin.calendarview.CalendarLayout>
+
+
+</LinearLayout>

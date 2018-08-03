@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/popwindow_xiankuang">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10"
+        android:textColor="@color/gray_dark"
+        android:textSize="@dimen/text_size_14"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider"
+        style="@style/split_line"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <LinearLayout
+        android:id="@+id/layout_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/divider">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/label_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:gravity="center"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/text_size_14" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <LinearLayout
+                android:id="@+id/yes_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_check_bg"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/selector_smile"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp"
+                    android:textColor="@drawable/selector_checked_color"
+                    android:textSize="@dimen/text_size_14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/no_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_check_bg"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/selector_smile"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp"
+                    android:textColor="@drawable/selector_checked_color"
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
+
+
+        </RadioGroup>
+
+
+        <!--<android.support.v7.widget.AppCompatRadioButton-->
+        <!--android:id="@+id/yes"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/selector_check_bg"-->
+        <!--android:button="@null"-->
+        <!--android:drawableLeft="@drawable/selector_smile"-->
+        <!--android:drawablePadding="5dp"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:paddingBottom="2dp"-->
+        <!--android:paddingTop="2dp"-->
+        <!--android:textColor="@drawable/selector_checked_color"-->
+        <!--android:textSize="@dimen/sp_14" />-->
+
+        <!--<android.support.v7.widget.AppCompatRadioButton-->
+        <!--android:id="@+id/no"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/selector_check_bg"-->
+        <!--android:button="@null"-->
+        <!--android:drawableLeft="@drawable/selector_smile"-->
+        <!--android:drawablePadding="5dp"-->
+        <!--android:gravity="center"-->
+        <!--android:paddingBottom="@dimen/dp_2"-->
+        <!--android:paddingTop="@dimen/dp_2"-->
+        <!--android:textColor="@drawable/selector_checked_color"-->
+        <!--android:textSize="@dimen/sp_14" />-->
+
+        <View
+            style="@style/split_line"
+            android:layout_marginTop="@dimen/dp_36" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/dp_36"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/drawable_yellow_corner_button"
+            android:paddingBottom="5dp"
+            android:paddingEnd="@dimen/dp_20"
+            android:paddingStart="@dimen/dp_20"
+            android:paddingTop="5dp"
+            android:text="星级评语>>"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/divider">
+
+        <android.support.v7.widget.AppCompatRatingBar
+            android:id="@+id/star_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:numStars="5"
+            android:progressDrawable="@drawable/rating_bar"
+            android:stepSize="1" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/star_eval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5"
+            android:textColor="@color/gold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/star_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/other"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/dp_5"
+            android:background="@drawable/draw_gray_line_bg"
+            android:hint="@string/hint_advise_more"
+            android:paddingBottom="@dimen/dp_5"
+            android:paddingEnd="@dimen/dp_10"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_5"
+            android:textColor="@color/gray_dark"
+            android:textColorHint="@color/gray_light"
+            android:textSize="@dimen/text_size_14"
+            android:visibility="gone" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:drawableLeft="@mipmap/icon_vote_black"
+            android:drawablePadding="@dimen/dp_5"
+            android:drawableStart="@mipmap/icon_vote_black"
+            android:gravity="center"
+            android:text="@string/vote_title"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/text_size_14" />
+
+        <View
+            style="@style/split_line"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/class_teacher"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/sp_12" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/teacher_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/empty"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/sp_12" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/teacher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/study_adviser"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/sp_12" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/adviser_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/empty"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/sp_12" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/adviser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/school_tutor"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/sp_12" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tutor_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/empty"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/sp_12" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/tutor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/drawable_yellow_corner_button"
+            android:paddingBottom="@dimen/dp_8"
+            android:paddingEnd="@dimen/dp_20"
+            android:paddingStart="@dimen/dp_20"
+            android:paddingTop="@dimen/dp_8"
+            android:text="@string/submit_eval"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

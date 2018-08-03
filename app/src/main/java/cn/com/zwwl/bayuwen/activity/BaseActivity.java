@@ -1,20 +1,17 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.app.Dialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -26,21 +23,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.view.PlayController;
-import android.support.v7.app.ActionBarDrawerToggle;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
+import cn.com.zwwl.bayuwen.model.UserModel;
+import cn.com.zwwl.bayuwen.util.MyActivityManager;
+
 import android.support.v7.app.AppCompatActivity;
+
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by Eva. on 17/3/17.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
+public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener,
+        ActivityCompat.OnRequestPermissionsResultCallback {
     /**
      * 网页跳转uri
      */
     protected String fromHtmlUri = "";
     public Context mContext;
-    public PlayController playController;// 音乐播放器
     private Dialog dialog;
 
     private RelativeLayout process_layout;//
@@ -49,7 +50,9 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     private ImageView errorImg;// 加载错误图片
     private TextView errorTxt;// 加载错误提示
 
-    private MusicStatusReceiver musicStatusReceiver;
+    // 因为必须要求登录，所以每个activity（除去登录、注册、忘记密码页面）都在Resume里面判断登录状态
+    public UserModel userModel;
+    public boolean needCheckLogin = true;
 
     /**
      * 播放／暂停
@@ -92,18 +95,28 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      */
     public static final String ACTION_SEEK_SEEKBAR = "action_seek_seekbar";
 
+    /**
+     * reset播放
+     */
+    public static final String ACTION_RESET = "action_reset";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
+        MyActivityManager.getInstance().addActivity(this);
 
     }
-
 
     @Override
     protected void onResume() {
         super.onResume();
+        userModel = UserDataHelper.getUserLoginInfo(mContext);
+        if (needCheckLogin && userModel == null) {
+            startActivity(new Intent(mContext, LoginActivity.class));
+        }
         analycisUri();
-
+        MobclickAgent.onResume(this); //统计时长
     }
 
     protected abstract void initData();
@@ -126,7 +139,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         if (Intent.ACTION_VIEW.equals(action)) {
             Uri uri = i_getvalue.getData();
             fromHtmlUri = uri.toString();
-
         }
     }
 
@@ -202,79 +214,42 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     }
 
     public void showToast(final String txt) {
-        new Handler().post(new Runnable() {
+        new Thread(new Runnable() {
+
             @Override
             public void run() {
-                Log.e("ssssssss", txt);
-                Toast.makeText(mContext, txt, Toast.LENGTH_SHORT).show();
+                Looper.prepare();
+                Toast.makeText(getApplicationContext(), txt, Toast.LENGTH_SHORT).show();
+                Looper.loop();
             }
-        });
+        }).start();
     }
 
     public void showToast(final int id) {
+        new Thread(new Runnable() {
 
-        new Handler().post(new Runnable() {
             @Override
             public void run() {
+                Looper.prepare();
                 Toast.makeText(mContext, id, Toast.LENGTH_SHORT).show();
+                Looper.loop();
             }
-        });
+        }).start();
     }
 
-    /**
-     * 注册音乐播放器的监听receiver，用于接收音乐播放情况，更新UI
-     */
-    public void registerReceiver() {
-        //实例化过滤器；
-        IntentFilter intentFilter = new IntentFilter();
-        //添加过滤的Action值；
-        intentFilter.addAction(ACTION_RESUME_PAUSE);
-        intentFilter.addAction(ACTION_START_PLAY);
-        intentFilter.addAction(ACTION_MSG_COMPLETE);
-        intentFilter.addAction(ACTION_CHANGE_TIME);
-        intentFilter.addAction(ACTION_REFRESH_LIST);
-        intentFilter.addAction(ACTION_ALBUM_PRE);
-        intentFilter.addAction(ACTION_ALBUM_NEXT);
-        //实例化广播监听器；
-        musicStatusReceiver = new MusicStatusReceiver();
-        //将广播监听器和过滤器注册在一起；
-        registerReceiver(musicStatusReceiver, intentFilter);
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        MyActivityManager.getInstance().removeActivity(this);
 
-    }
-
-    /**
-     * 监听音乐播放Service的receiver
-     */
-    class MusicStatusReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // 开始播放、播放完成、更新时间
-            if (intent.getAction().equals(ACTION_START_PLAY) || intent.getAction().equals(ACTION_MSG_COMPLETE) || intent.getAction().equals(ACTION_CHANGE_TIME)) {
-                getMusicMsg((Message) intent.getParcelableExtra("music_service_message"));
-
-            }
-
-        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (musicStatusReceiver != null)
-            unregisterReceiver(musicStatusReceiver);
-    }
-
-    // 播放完成
-    protected void getMusicMsg(Message ms) {
 
     }
-
 
     /**
      * 用于给子类继承点击事件
@@ -291,7 +266,18 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     }
 
-    public void askPermission(String[] permissions, int requestCode) {
+    /**
+     * 隐藏软键盘
+     */
+    public void hideJianpan() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context
+                .INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
+
+    }
+
+    public boolean askPermission(String[] permissions, int requestCode) {
         List<String> ll = new ArrayList<>();
         for (int i = 0; i < permissions.length; i++) {
             int permissionCheck = ContextCompat.checkSelfPermission(this, permissions[i]);
@@ -300,15 +286,36 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                 ll.add(permissions[i]);
             }
         }
-        if (ll.size() > 0)
-            ActivityCompat.requestPermissions(this, (String[]) ll.toArray(new String[ll.size()]), requestCode);
+        if (ll.size() > 0) {
+            ActivityCompat.requestPermissions(this, (String[]) ll.toArray(new String[ll.size()]),
+                    requestCode);
+            return false;
+        } else
+            return true;
+    }
+
+    /**
+     * 获取控件高度
+     *
+     * @param view
+     * @return
+     */
+    public int getViewHeight(View view) {
+        int width = View.MeasureSpec.makeMeasureSpec(0,
+                View.MeasureSpec.UNSPECIFIED);
+        int height = View.MeasureSpec.makeMeasureSpec(0,
+                View.MeasureSpec.UNSPECIFIED);
+        view.measure(width, height);
+        view.getMeasuredWidth(); // 获取宽度
+        view.getMeasuredHeight(); // 获取高度
+        return view.getMeasuredHeight();
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[]
+            grantResults) {
 
     }
-
 
 }
 

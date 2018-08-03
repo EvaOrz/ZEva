@@ -18,7 +18,7 @@
         <clip>
             <shape>
                 <corners android:radius="5dp" />
-                <solid android:color="@color/oringe" />
+                <solid android:color="@color/lisichen" />
             </shape>
         </clip>
     </item>

@@ -19,12 +19,18 @@ import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
-import java.text.ParseException;
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,6 +38,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+import cn.com.zwwl.bayuwen.MyApplication;
+import cn.com.zwwl.bayuwen.db.TempDataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import okhttp3.Headers;
 
 /**
@@ -45,7 +54,8 @@ public class Tools {
 
 
     public static void transforCircleBitmap(Context context, int resId, ImageView imageView) {
-        transforCircleBitmap(BitmapFactory.decodeResource(context.getResources(), resId), imageView);
+        transforCircleBitmap(BitmapFactory.decodeResource(context.getResources(), resId),
+                imageView);
     }
 
     /**
@@ -83,61 +93,6 @@ public class Tools {
         canvas.drawBitmap(bitmap, src, dst, paint);
 
         setCircle(imageView, output, canvas, radius);
-    }
-
-    /**
-     * 秒数 -- 00:00时间格式转化
-     *
-     * @param timeInSeconds
-     * @return
-     */
-    public static String getTime(long timeInSeconds) {
-        StringBuffer sb = new StringBuffer();
-//        int hours = (int) timeInSeconds / 3600;
-//        if (hours >= 10) {
-//            sb.append(hours);
-//            sb.append(":");
-//
-//        } else if (hours > 0 && hours < 10) {
-//            sb.append(0).append(hours);
-//            sb.append(":");
-//        }
-
-        long minutes = (int) (timeInSeconds / 60);
-        if (minutes >= 10) {
-            sb.append(minutes);
-        } else if (minutes > 0 && minutes < 10) {
-            sb.append(0).append(minutes);
-        } else {
-            sb.append("00");
-        }
-        sb.append(":");
-
-        int seconds = (int) (timeInSeconds % 60);
-        if (seconds >= 10) {
-            sb.append(seconds);
-        } else if (seconds > 0 && seconds < 10) {
-            sb.append(0).append(seconds);
-        } else {
-            sb.append("00");
-        }
-        return sb.toString();
-    }
-
-    // 将字符串转为时间戳
-    public static long  fromStringTotime(String user_time) {
-        String re_time = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date d;
-        try {
-            d = sdf.parse(user_time);
-            long l = d.getTime();
-            String str = String.valueOf(l);
-            re_time = str.substring(0, 10);
-        }catch (ParseException e) {
-            // TODO Auto-generated catch block e.printStackTrace();
-        }
-        return Long.valueOf(re_time);
     }
 
 
@@ -204,30 +159,6 @@ public class Tools {
 
 
     /**
-     * 格式化日期
-     *
-     * @param time    时间（毫秒）
-     * @param pattern 日期格式
-     * @return
-     */
-    public static String format(long time, String pattern) {
-        if (TextUtils.isEmpty(pattern)) return "";
-        pattern = pattern.replace("@n", "\n");
-        try {
-            SimpleDateFormat format;
-            //            if (TextUtils.equals("english", language)) {
-            //                format = new SimpleDateFormat(pattern, Locale.ENGLISH);
-            //            } else {
-            format = new SimpleDateFormat(pattern);
-            //            }
-            return format.format(new Date(time));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
-    /**
      * 执行动画
      *
      * @param view
@@ -244,11 +175,14 @@ public class Tools {
 
 
     public static boolean isAppBackground(Context context) {
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context
+                .ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager
+                .getRunningAppProcesses();
         for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
             if (appProcess.processName.equals(context.getPackageName())) {
-                if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_BACKGROUND) {
+                if (appProcess.importance == ActivityManager.RunningAppProcessInfo
+                        .IMPORTANCE_BACKGROUND) {
                     Log.e("后台运行", appProcess.processName);
                     return true;
                 } else {
@@ -287,7 +221,8 @@ public class Tools {
     public static String getAppVersion(Context context) {
         PackageManager packageManager = context.getPackageManager();
         try {
-            final PackageInfo info = packageManager.getPackageInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            final PackageInfo info = packageManager.getPackageInfo(context.getPackageName(),
+                    PackageManager.GET_META_DATA);
             return info.versionName;
         } catch (PackageManager.NameNotFoundException ignored) {
         }
@@ -311,15 +246,33 @@ public class Tools {
      *
      * @return
      */
-    public static HashMap<String, String> getRequastHeaderMap(Context context) {
+    public static HashMap<String, String> getRequastHeaderMap(Context mContext) {
         HashMap<String, String> headerMap = new HashMap<String, String>();
-        headerMap.put("X-SLATE-DEVICEID", getDeviceId(context));
-        headerMap.put("X-SLATE-UUID", getMyUUID(context));
-        headerMap.put("X-SLATE-ANDROIDTOKEN", Tools.getDeviceToken(context));
-        headerMap.put("X-SLATE-CLIENTVERSION", Tools.getAppVersionName(context));
-        headerMap.put("X-SLATE-DEVICETYPE", android.os.Build.MODEL);//设备信息
-        // 未root:10  已root:11
-        headerMap.put("X-SLATE-JAILBROKEN", isRooted() ? "11" : "10");//是否root（如果可以获取就获取）
+        try {
+            String authorization = UserDataHelper.getUserToken(mContext);
+            if (!TextUtils.isEmpty(authorization))
+                headerMap.put("Authorization", "Bearer " + authorization);
+            else
+                headerMap.put("Authorization", "");
+            String city = "";
+            if (TextUtils.isEmpty(TempDataHelper.getCurrentCity(mContext)))
+                city = URLEncoder.encode("北京市", "UTF-8");
+            else city = URLEncoder.encode(TempDataHelper.getCurrentCity(mContext), "UTF-8");
+            headerMap.put("City", city);
+            headerMap.put("Device", "android");
+            int grade = TempDataHelper.getCurrentChildGrade(mContext);
+            if (grade != 0)
+                headerMap.put("Grade", grade + "");
+            String no = TempDataHelper.getCurrentChildNo(mContext);
+            if (!TextUtils.isEmpty(no)) headerMap.put("StudentNo", no + "");
+            String accessToken = TempDataHelper.getAccessToken(mContext);
+            if (!TextUtils.isEmpty(accessToken))
+                headerMap.put("Access-Token", accessToken);
+            headerMap.put("app-version", Tools.getAppVersion(mContext));
+            headerMap.put("api-version", MyApplication.API_VERSION);
+        } catch (UnsupportedEncodingException e) {
+
+        }
 
         return headerMap;
     }
@@ -335,63 +288,12 @@ public class Tools {
      * @return
      */
     public static boolean checkNetWork(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService
+                (Context.CONNECTIVITY_SERVICE);
         /* 网络连接状态 */
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
-    /**
-     * 获取设备ID
-     *
-     * @param context
-     * @return
-     */
-    public static String getDeviceId(Context context) {
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        return telephonyManager.getDeviceId();
-    }
-
-
-    /**
-     * 获取设备网卡mac地址
-     *
-     * @param context
-     * @return
-     */
-    public static String getNetMacAdress(Context context) {
-        WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-
-        WifiInfo info = wifi.getConnectionInfo();
-
-        return info.getMacAddress();
-    }
-
-
-    /**
-     * 返回手机唯一标识
-     *
-     * @return
-     */
-    public static String getMyUUID(Context mContext) {
-        final TelephonyManager tm = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
-        String imie = "" + tm.getDeviceId();
-        String tmSerial = "" + tm.getSimSerialNumber();
-
-
-        UUID deviceUuid = new UUID(getDeviceToken(mContext).hashCode(), ((long) imie.hashCode() << 32) | tmSerial.hashCode());
-        return MD5.MD5Encode(deviceUuid.toString());
-    }
-
-    /**
-     * The Android ID
-     * 通常被认为不可信，因为它有时为null。开发文档中说明了：这个ID会改变如果进行了出厂设置。并且，如果某个Andorid手机被Root过的话，这个ID也可以被任意改变
-     *
-     * @return
-     */
-    public static String getDeviceToken(Context mContext) {
-        return "" + android.provider.Settings.Secure.getString(mContext.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
     }
 
     /**
@@ -400,7 +302,8 @@ public class Tools {
     public static String getAppVersionName(Context context) {
         try {
             PackageManager packageManager = context.getPackageManager();
-            PackageInfo info = packageManager.getPackageInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            PackageInfo info = packageManager.getPackageInfo(context.getPackageName(),
+                    PackageManager.GET_META_DATA);
             return info.versionName;
         } catch (Exception e) {
             e.printStackTrace();
@@ -408,21 +311,43 @@ public class Tools {
         return "";
     }
 
+
     /**
-     * 获取版本号
+     * 将数据保留两位小数
      */
-    public static int getAppIntVersionName(Context context) {
-        try {
-            PackageManager packageManager = context.getPackageManager();
-            PackageInfo info = packageManager.getPackageInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            if (TextUtils.isEmpty(info.versionName)) {
-                return 0;
-            } else return Integer.valueOf(info.versionName.replace(".", ""));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
+    public static String getTwoDecimal(double num) {
+        BigDecimal b = new BigDecimal(num);
+        if (num == 0) return "0.00";
+        return b.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
     }
 
+    public static String getText(TextView t) {
+        return t.getText().toString().trim();
+    }
+
+    public static int getCourseType(int online, int source, String time) {
+        if (online == 0)
+            return 1;//面授
+        if (source == 2) return 2;//录播
+        if (source == 1 && TimeUtil.convertToMillis(time) >= System.currentTimeMillis())
+            return 3;//直播
+        return 4;//回放
+    }
+
+    public static Pair<Integer, Integer> getUiPixels(View view) {
+        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        view.measure(w, h);
+        return new Pair<>(view.getMeasuredHeight(), view.getMeasuredWidth());
+    }
+
+
+    public static String getKetime(String startTime, String endtime) {
+        if (!TextUtils.isEmpty(startTime) && startTime.length() > 3 && !TextUtils.isEmpty
+                (endtime) && endtime.length() > 3)
+            return startTime.substring(0, startTime.length() - 3) + " - " + endtime
+                    .substring(0, endtime.length() - 3);
+        return "";
+    }
 
 }

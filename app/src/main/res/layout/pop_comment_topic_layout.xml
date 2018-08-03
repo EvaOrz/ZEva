@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
+    <cn.com.zwwl.bayuwen.view.MultiLineEditText
+        android:id="@+id/feed_ev"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/gray_white_xiankuang"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:imeOptions="actionSend"
+        android:padding="10dp"
+        android:hint="@string/comment"
+        android:textColor="@color/gray_dark"
+        android:textSize="@dimen/text_size_14" />
+
+</LinearLayout>

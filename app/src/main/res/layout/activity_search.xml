@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/body_bg"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/body_bg"
+        android:background="@color/lisichen"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="10dp">
@@ -16,7 +17,7 @@
             android:id="@+id/search_back"
             android:layout_width="@dimen/back_size"
             android:layout_height="@dimen/back_size"
-            android:src="@drawable/back_orange" />
+            android:src="@mipmap/icon_back" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -24,7 +25,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:background="@drawable/gray_xiankuang_circle"
+            android:background="@drawable/gray_white_xiankuang"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
@@ -35,7 +36,6 @@
                 android:id="@+id/search_img"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-
                 android:src="@drawable/search_tag" />
 
 
@@ -70,7 +70,7 @@
             android:layout_centerVertical="true"
             android:text="@string/search"
 
-            android:textColor="@color/gray_dark" />
+            android:textColor="@color/white" />
 
 
     </LinearLayout>

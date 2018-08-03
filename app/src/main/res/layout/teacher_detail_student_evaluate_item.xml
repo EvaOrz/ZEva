@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+ <RelativeLayout
+     android:id="@+id/relative_id"
+     android:layout_width="match_parent"
+     android:layout_height="@dimen/dp_40"
+     android:gravity="center"
+     >
+
+     <cn.com.zwwl.bayuwen.widget.CircleImageView
+         android:id="@+id/student_circleimag"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="@dimen/dp_10"
+         android:layout_marginTop="@dimen/dp_5"
+         android:layout_marginRight="@dimen/dp_5"
+         android:src="@mipmap/ic_launcher"/>
+     <TextView
+         android:id="@+id/student_evaluate_name"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center"
+        android:layout_centerVertical="true"
+         android:layout_toRightOf="@+id/student_circleimag"
+         android:textSize="13dp"
+         android:textColor="#A7A8B0"
+          />
+
+     <TextView
+         android:id="@+id/student_evaluate_createtime"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+         android:layout_centerVertical="true"
+         android:layout_marginRight="@dimen/dp_10"
+         android:textSize="@dimen/dp_10"
+         android:textColor="#9F9FA7"
+         />
+ </RelativeLayout>
+
+    <TextView
+        android:id="@+id/student_evaluate_tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:textColor="#797C85"
+        android:textSize="@dimen/dp_14"
+        />
+</LinearLayout>

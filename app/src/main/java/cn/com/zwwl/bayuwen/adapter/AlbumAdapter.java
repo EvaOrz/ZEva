@@ -13,15 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.model.AlbumModel;
-import cn.com.zwwl.bayuwen.view.ViewHolder;
+import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
+import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
  * 专辑列表adapter
  */
 public class AlbumAdapter extends CheckScrollAdapter<AlbumModel> {
     protected Context mContext;
-    protected List<AlbumModel> mItemList = new ArrayList<>();
 
     public AlbumAdapter(Context context) {
         super(context);
@@ -29,7 +28,6 @@ public class AlbumAdapter extends CheckScrollAdapter<AlbumModel> {
     }
 
     public void setData(List<AlbumModel> mItemList) {
-        clearData();
         clear();
         isScroll = false;
         synchronized (mItemList) {
@@ -52,17 +50,14 @@ public class AlbumAdapter extends CheckScrollAdapter<AlbumModel> {
 
         title.setText(item.getTitle());
         desc.setText(item.getDesc());
-        learn.setText(item.getLikeNum() + "");
+        learn.setText(item.getPlayNum() + "");
+        per.setText(item.getNum() + "");
         if (!TextUtils.isEmpty(item.getPic()))
             Glide.with(mContext)
                     .load(item.getPic())
                     .into(img);
 
         return viewHolder.getConvertView();
-    }
-
-    public void clearData() {
-        mItemList.clear();
     }
 
     public boolean isScroll() {

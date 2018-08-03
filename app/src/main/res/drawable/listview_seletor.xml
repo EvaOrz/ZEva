@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="line">
+    <!--android:width虚线的高度-->
+    <!--android:width的值必须要小于用它做背景的View的height-->
+    <stroke
+        android:width="@dimen/line_height"
+        android:color="@color/gray_line"
+        android:dashGap="0sp"
+
+        android:dashWidth="0dp" />
+    <padding
+        android:left="10dp"
+        android:right="10dp" />
+
+</shape>

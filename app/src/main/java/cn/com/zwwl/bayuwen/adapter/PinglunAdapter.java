@@ -13,16 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.model.PinglunModel;
-import cn.com.zwwl.bayuwen.util.Tools;
-import cn.com.zwwl.bayuwen.view.ViewHolder;
+import cn.com.zwwl.bayuwen.glide.ImageLoader;
+import cn.com.zwwl.bayuwen.model.fm.PinglunModel;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
  * 评论adapter
  */
 public class PinglunAdapter extends CheckScrollAdapter<PinglunModel> {
     protected Context mContext;
-    protected List<PinglunModel> mItemList = new ArrayList<>();
 
     public PinglunAdapter(Context context) {
         super(context);
@@ -30,7 +30,7 @@ public class PinglunAdapter extends CheckScrollAdapter<PinglunModel> {
     }
 
     public void setData(List<PinglunModel> mItemList) {
-        clearData();
+        clear();
         isScroll = false;
         synchronized (mItemList) {
             for (PinglunModel item : mItemList) {
@@ -52,15 +52,13 @@ public class PinglunAdapter extends CheckScrollAdapter<PinglunModel> {
         name.setText(item.getUserModel().getName());
         content.setText(item.getContent());
         if (item.getUserModel() != null && !TextUtils.isEmpty(item.getUserModel().getPic()))
-            Glide.with(mContext).load(item.getUserModel().getPic()).into(avatar);
-        time.setText(Tools.format(Long.valueOf(item.getCtime()) * 1000, "yyyy-MM-dd HH:mm:ss"));
+            ImageLoader.display(mContext, avatar, item.getUserModel().getPic(), R.drawable
+                    .avatar_placeholder, R.drawable.avatar_placeholder);
+        time.setText(CalendarTools.format(Long.valueOf(item.getCtime()), "yyyy-MM-dd " +
+                "HH:mm:ss"));
         return viewHolder.getConvertView();
     }
 
-
-    public void clearData() {
-        mItemList.clear();
-    }
 
     public boolean isScroll() {
         return isScroll;

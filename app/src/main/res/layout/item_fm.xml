@@ -27,10 +27,16 @@
                 android:textColor="@color/gray_dark"
                 android:textSize="@dimen/text_size_16" />
 
-            <cn.com.zwwl.bayuwen.view.GifView
+            <cn.com.zwwl.bayuwen.widget.GifView
                 android:id="@+id/fm_gif"
                 android:layout_width="20dp"
                 android:layout_height="20dp" />
+
+            <ImageView
+                android:id="@+id/fm_lock"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/fm_lock" />
         </FrameLayout>
 
 
@@ -57,44 +63,56 @@
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/fm_play" />
+
                 <TextView
                     android:id="@+id/fm_play"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:drawableLeft="@mipmap/fm_play"
-                    android:drawablePadding="3dp"
+                    android:layout_marginLeft="3dp"
                     android:textColor="@color/gray_dark"
                     android:textSize="@dimen/text_size_12" />
+
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/fm_pinglun" />
 
                 <TextView
                     android:id="@+id/fm_pinglun"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:drawableLeft="@mipmap/fm_pinglun"
-                    android:drawablePadding="3dp"
+                    android:layout_marginLeft="3dp"
                     android:textColor="@color/gray_dark"
                     android:textSize="@dimen/text_size_12" />
+
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/fm_time" />
 
                 <TextView
                     android:id="@+id/fm_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@mipmap/fm_time"
-                    android:drawablePadding="3dp"
+                    android:layout_marginLeft="3dp"
                     android:textColor="@color/gray_dark"
                     android:textSize="@dimen/text_size_12" />
             </LinearLayout>
 
-
         </LinearLayout>
 
         <TextView
+            android:id="@+id/fm_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2018-01"
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_size_12" />
     </LinearLayout>

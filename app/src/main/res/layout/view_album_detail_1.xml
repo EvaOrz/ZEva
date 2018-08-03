@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <LinearLayout
@@ -36,12 +37,12 @@
         android:layout_height="@dimen/line_height"
         android:background="@color/gray_line" />
 
-    <cn.com.zwwl.bayuwen.view.NoScrollListView
+    <cn.com.zwwl.bayuwen.widget.NoScrollListView
         android:id="@+id/album_detail_listview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:divider="@null"
+        android:focusable="false"
         android:listSelector="@android:color/transparent" />
 </LinearLayout>

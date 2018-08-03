@@ -1,9 +1,7 @@
 package cn.com.zwwl.bayuwen.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +30,8 @@ public class SharePopWindow extends PopupWindow {
                 window.dismiss();
             }
         });
-        window = new PopupWindow(conentView, RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        window = new PopupWindow(conentView, RelativeLayout.LayoutParams.FILL_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
         window.setFocusable(true);
         window.setOutsideTouchable(true);
         window.setAnimationStyle(R.style.fetch_image_popup_anim);
@@ -47,7 +46,6 @@ public class SharePopWindow extends PopupWindow {
 
                         break;
                     case 2:
-
                         break;
                     case 3:
                         break;
@@ -55,7 +53,6 @@ public class SharePopWindow extends PopupWindow {
 
                         break;
                     case 5:
-
 
                         break;
                 }
@@ -69,7 +66,7 @@ public class SharePopWindow extends PopupWindow {
      *
      * @param context
      */
-    public SharePopWindow(final Context context, final String content) {
+    public SharePopWindow(final Context context, final String content, String url) {
         mContext = context;
         this.content = content;
         init();
@@ -82,7 +79,8 @@ public class SharePopWindow extends PopupWindow {
                 window.dismiss();
             }
         });
-        conentView.findViewById(R.id.share_pengyouquan).setOnClickListener(new View.OnClickListener() {
+        conentView.findViewById(R.id.share_pengyouquan).setOnClickListener(new View
+                .OnClickListener() {
             @Override
             public void onClick(View view) {
                 type = 3;

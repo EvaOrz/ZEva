@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activity.TopicDetailActivity">
+
+    <include
+        android:id="@+id/top_linear"
+        layout="@layout/top_layout" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top_linear">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/topic_title_name_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp_20" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <cn.com.zwwl.bayuwen.widget.CircleImageView
+                    android:id="@+id/topic_circleimageview_id"
+                    android:layout_width="@dimen/album_dp_50"
+                    android:layout_height="@dimen/album_dp_50"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/ic_launcher" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/name_id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/gray_dark"
+                            android:textSize="@dimen/dp_16" />
+
+                        <TextView
+                            android:id="@+id/cource_name_id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:background="#FFF5EC"
+                            android:paddingLeft="@dimen/dp_4"
+                            android:paddingRight="@dimen/dp_4"
+                            android:textColor="#DF9648"
+                            android:textSize="@dimen/dp_14" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/date_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:textColor="#ABABAB"
+                        android:textSize="@dimen/dp_15" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@color/gray_line" />
+
+            <TextView
+                android:id="@+id/topic_content_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_16"
+                android:textColor="#A5A4A5"
+                android:textSize="@dimen/dp_16" />
+
+            <TextView
+                android:id="@+id/jiaoshihuifu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_15"
+                android:gravity="center"
+                android:text="@string/teacher_reply"
+                android:textColor="#ABABAB"
+                android:textSize="@dimen/dp_16" />
+
+            <cn.com.zwwl.bayuwen.widget.NoScrollListView
+                android:id="@+id/teacher_asked_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:divider="#00000000"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10">
+
+            </cn.com.zwwl.bayuwen.widget.NoScrollListView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="#F2F2F2"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/jiazhanghuifu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:text="@string/family_reply"
+                    android:textColor="#ABABAB"
+                    android:textSize="@dimen/dp_16" />
+
+                <cn.com.zwwl.bayuwen.widget.NoScrollListView
+                    android:id="@+id/user_asked_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:divider="#00000000">
+
+                </cn.com.zwwl.bayuwen.widget.NoScrollListView>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/album_dp_50"
+                android:background="@color/white"></LinearLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_alignParentBottom="true"
+        android:background="#EEEEEE"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/collection_icon_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:background="@mipmap/no_collection_icon" />
+
+        <TextView
+            android:id="@+id/collect_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toRightOf="@+id/collection_icon_id"
+            android:textColor="@color/text_red"
+            android:textSize="@dimen/dp_15" />
+
+        <TextView
+            android:id="@+id/comment_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_16"
+            android:layout_toRightOf="@+id/collect_number"
+            android:background="@drawable/topic_detail_comment"
+            android:gravity="center"
+            android:text="评论"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/dp_16" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

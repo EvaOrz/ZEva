@@ -23,7 +23,8 @@
             android:layout_width="@dimen/back_size"
             android:layout_height="@dimen/back_size"
             android:layout_alignParentRight="true"
-            android:src="@mipmap/player_share" />
+            android:src="@mipmap/share_f"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <TextView
@@ -72,7 +73,7 @@
             android:id="@+id/fm_time1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/oringe"
+            android:textColor="@color/lisichen"
             android:textSize="@dimen/text_size_12" />
 
         <TextView
@@ -80,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:textColor="@color/oringe"
+            android:textColor="@color/lisichen"
             android:textSize="@dimen/text_size_12" />
     </RelativeLayout>
 

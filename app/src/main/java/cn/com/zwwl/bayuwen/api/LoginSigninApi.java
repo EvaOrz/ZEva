@@ -1,20 +1,22 @@
 package cn.com.zwwl.bayuwen.api;
 
 import android.content.Context;
-import android.text.TextUtils;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.com.zwwl.bayuwen.db.DataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.UserModel;
 
 /**
- * 登录注册接口
+ * 登录、注册接口
+ * <p>
  * 只返回token
  */
 public class LoginSigninApi extends BaseApi {
@@ -41,7 +43,9 @@ public class LoginSigninApi extends BaseApi {
      * @param registerPam3
      * @param listener
      */
-    public LoginSigninApi(Context context, String registerPam1, String registerPam2, String registerPam3, FetchEntryListener listener) {
+    public LoginSigninApi(Context context, String registerPam1, String registerPam2, String
+            registerPam3, FetchEntryListener listener) {
+        super(context);
         mContext = context;
         this.listener = listener;
         this.userType = GetUserType.REGISTER;
@@ -62,7 +66,9 @@ public class LoginSigninApi extends BaseApi {
      * @param loginPam2
      * @param listener
      */
-    public LoginSigninApi(Context context, GetUserType userType, String loginPam1, String loginPam2, FetchEntryListener listener) {
+    public LoginSigninApi(Context context, GetUserType userType, String loginPam1, String
+            loginPam2, FetchEntryListener listener) {
+        super(context);
         mContext = context;
         this.listener = listener;
         this.userType = userType;
@@ -82,33 +88,19 @@ public class LoginSigninApi extends BaseApi {
     }
 
     @Override
-    protected void handler(JSONObject jsonObject, ErrorMsg errorMsg) {
-        if (errorMsg == null) {
-            ErrorMsg e = new ErrorMsg();
+    protected void handler(JSONObject json, JSONArray array, ErrorMsg errorMsg) {
+        if (errorMsg != null)
+            listener.setError(errorMsg);
 
-            if (jsonObject.optBoolean("success", false)) {
-                JSONObject data = jsonObject.optJSONObject("data");
-                if (!isNull(data)) {
-                    String token = data.optString("token");
-                    if (!TextUtils.isEmpty(token)) {
-                        e.setNo(0);
-                        DataHelper.saveToken(mContext, token);
-                    }
-                }
-            } else {
-                e.setDesc(jsonObject.optString("data"));
-            }
-            listener.setData(e);
-
-        } else {
-            listener.setData(errorMsg);
+        if (!isNull(json)) {
+            String token = json.optString("token");
+            UserDataHelper.saveToken(mContext, token);
+            JSONObject userinfo = json.optJSONObject("userinfo");
+            UserModel u = new UserModel();
+            u.parseUserModel(userinfo, u);
+            UserDataHelper.saveUserLoginInfo(mContext, u);
+            listener.setData(u);
         }
-
-    }
-
-    @Override
-    protected String getHeadValue() {
-        return DataHelper.getUserToken(mContext);
     }
 
     @Override

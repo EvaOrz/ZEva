@@ -3,13 +3,24 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
+
     defaultConfig {
-        applicationId "cn.com.zwwl.bayuwen"
-        minSdkVersion 15
+        applicationId "cn.com.zwwl.bayuwen" //JPush上注册的包名.
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionName "1.0.1"
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "75961f0c3ba16d66166cdbf2", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
     }
 
     buildTypes {
@@ -25,19 +36,34 @@ android {
         }
 
     }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // glide和http3
     implementation 'com.github.bumptech.glide:glide:4.6.1'
+<<<<<<< HEAD
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
     implementation 'com.github.bumptech.glide:okhttp3-integration:4.6.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
+=======
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.6.1'
+    implementation 'com.google.code.gson:gson:2.8.1'
+    // 放在module里
+>>>>>>> e0755a63c38c11d7c865da7e824dcac297827b9b
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     // LeanCloud 基础包
     implementation 'cn.leancloud.android:avoscloud-sdk:v4.6.4'
+<<<<<<< HEAD
     // umeng
     implementation 'com.umeng.sdk:common:1.5.0'
     implementation 'com.umeng.sdk:utdid:1.1.5.3'
@@ -61,7 +87,45 @@ dependencies {
             }
         }
     }
+=======
+    implementation project(':jiaozivideoplayer')
+    // 联动菜单
+    //日历控件
+    implementation 'com.haibin:calendarview:3.3.0'
+    // 垂直的日历控件
+    implementation 'com.github.maning0303:MNCalendar:V1.0.3'
+    implementation files('libs/TencentLocationSdk_v6.2.5.3_r15b3b3cc_20171103_115903.jar')
+    //butterknife 解析插件
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
+    //微信支付
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.4'
+    // umeng
+    implementation files('libs/SecurityEnvSDK-release-1.1.0.jar')
+
+    implementation files('libs/umeng-common-1.5.3.jar')
+    implementation 'com.umeng.sdk:analytics:7.5.0'
+    implementation files('libs/umeng-share-core-6.9.2.jar')
+    implementation files('libs/umeng-share-QQ-simplify-6.9.2.jar')
+    implementation files('libs/umeng-share-wechat-full-6.9.2.jar')
+    implementation files('libs/umeng-shareboard-widget-6.9.2.jar')
+    implementation files('libs/umeng-sharetool-6.9.2.jar')
+    implementation files('libs/umeng-share-sina-simplify-6.9.2.jar')
+    // beecloud 支付
+    implementation files('libs/alipaySdk-20160809.jar')
+    implementation files('libs/beecloud-2.10.0.jar')
+    implementation files('libs/zxing-3.2.0.jar')
+    // ViewPager圆点指示器
+    implementation 'com.romandanylyk:pageindicatorview:0.2.0'
+    // 图片选择（单选，多选）
+    implementation 'com.yanzhenjie:album:2.1.1'
+    //上拉刷新下拉加载
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-6'
+    // 极光
+    implementation 'cn.jiguang.sdk:jpush:3.1.3'
+    implementation 'cn.jiguang.sdk:jcore:1.2.1'
+    //图片缩放
+    implementation 'com.github.chrisbanes:PhotoView:2.1.4'
+>>>>>>> e0755a63c38c11d7c865da7e824dcac297827b9b
 }
-
-
-

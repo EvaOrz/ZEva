@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.com.zwwl.bayuwen.widget.roundview.RoundLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="160dp"
+    android:layout_height="160dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    app:rv_backgroundColor="#55000000"
+    app:rv_cornerRadius="@dimen/dp_20">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleInverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        android:indeterminateDrawable="@drawable/rotate_progress" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingTop="10dp"
+        android:textColor="@color/white" />
+</cn.com.zwwl.bayuwen.widget.roundview.RoundLinearLayout>

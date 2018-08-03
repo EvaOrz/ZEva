@@ -1,7 +1,24 @@
 <resources>
-    <string name="app_name">诸葛学堂</string>
+    <string name="app_name">大语文</string>
+
 
     <!--main-->
+    <string name="main_tab1">首页</string>
+    <string name="main_tab2">选课</string>
+    <string name="main_tab3">课程跟踪</string>
+    <string name="main_tab4">FM</string>
+    <string name="nenglifenxi">我的拼图</string>
+    <string name="yixuankecheng">已选课程</string>
+    <string name="tuijian_code">推荐码</string>
+
+    <!--选课-->
+    <string name="top_txt">点赞排行</string>
+    <string name="top_txt1">教师点赞排行榜</string>
+    <string name="top_txt2">学业顾问点赞排行榜</string>
+    <string name="top_txt3">校区助手点赞排行榜</string>
+    <string name="jiaoshi_detail">教师详情</string>
+
+    <!--FM main-->
     <string name="hot_recommond">热门推荐</string>
     <string name="fm">FM首页</string>
     <string name="user_center">用户中心</string>
@@ -21,13 +38,19 @@
     <string name="forget_pwd">忘记密码？</string>
     <string name="forget_pwd_success">修改成功</string>
     <string name="forget_pwd_faild">修改成功</string>
-
+    <string name="login_problem">登录遇到问题</string>
+    <string name="login_option1">联系学业顾问</string>
+    <string name="login_option2">查询学生编码</string>
+    <string name="have_account">已有账号？</string>
     <!--register-->
     <string name="register_hint">请输入手机号</string>
     <string name="pwd_hint1">请输入6位以上密码</string>
     <string name="get_account_error">手机号码格式错误</string>
     <string name="password_length_error">密码长度应该不少于6个字符</string>
     <string name="veriy_length_error">验证码长度应该不少于6个字符</string>
+    <string name="pass">跳过</string>
+    <string name="xuesheng_name">学生姓名</string>
+    <string name="add_hint">确定添加学生，开启大语文之旅</string>
 
     <!--album list-->
     <string name="album_list">专辑列表</string>
@@ -36,7 +59,7 @@
     <string name="album_pinglun">学员评论</string>
 
     <!--forget pwd-->
-    <string name="forget_pwd1">忘记密码</string>
+    <string name="forget_pwd1">重置密码</string>
     <string name="forget_pwd_tip">为了安全，我们会向您的手机发送验证码</string>
     <string name="forget_pwd_next">下一步</string>
     <string name="forget_pwd_tip1">需由6-20位数字、字母或符号组成，至少两种</string>
@@ -60,26 +83,48 @@
     <string name="send">发送</string>
     <string name="play_list">播放列表</string>
     <string name="collect_faild">收藏失败</string>
+    <string name="ganshou_ketang">感受课堂</string>
 
     <!--user center-->
     <string name="wode">我的</string>
     <string name="un_login">未登录</string>
     <string name="my_info">个人资料</string>
     <string name="my_history">收听历史</string>
-    <string name="my_shoucang">我的收藏</string>
-    <string name="about">关于诸葛学堂</string>
+    <string name="tianxie_code">兑换课程</string>
+    <string name="about">关于大语文</string>
     <string name="logout">退出登录</string>
-
+    <string name="my_follow">我关注的班级</string>
+    <string name="my_tuan">我的团购</string>
+    <string name="my_yue">我的余额</string>
+    <string name="my_tuan_tab1">我发起的团购</string>
+    <string name="my_tuan_tab2">我参加的团购</string>
+    <string name="feedback">意见反馈</string>
     <!--search-->
     <string name="search">搜索</string>
     <string name="no_search">无相关搜索内容，请尝试其他关键词</string>
+    <string name="city_search">输入城市名或者拼音查询</string>
 
+
+    <!-- user left-->
+    <string name="huiyuanziliao">会员资料</string>
+    <string name="qiehuanxuehseng">切换学生</string>
+    <string name="wodedingdan">我的订单</string>
+    <string name="my_gifts">来自孩子的礼物</string>
+    <string name="gerenshoucang">我的收藏</string>
+    <string name="invite">邀请好友加入大语文</string>
+    <string name="tiaoke">调课</string>
+    <string name="zhuanban">转班</string>
+    <string name="gongxundengji">功勋等级：</string>
+    <string name="wodecode">我的邀请码：</string>
+    <string name="look_gongxun_guize">查看等级规则>></string>
     <!--changeinfo-->
     <string name="touxiang">头像</string>
     <string name="xingming">姓名</string>
+    <string name="student_no">学员编号</string>
     <string name="gender">性别</string>
     <string name="phone">手机号</string>
     <string name="address">地址</string>
+    <string name="birthday">生日</string>
     <string name="camera">拍照</string>
     <string name="select_from_album">从手机相册选择</string>
     <string name="motify_nickname">修改姓名</string>
@@ -92,6 +137,7 @@
     <string name="plz_choose">请选择</string>
     <string name="upload_faild">上传头像失败</string>
     <string name="change_info_faild">修改信息失败</string>
+
 
     <!--base-->
     <string name="no_wifi">似乎已断开与互联网的连接</string>
@@ -122,4 +168,293 @@
     <string name="loading">正在加载...</string>
     <string name="load_succeed">加载成功</string>
     <string name="load_fail">加载失败</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+
+    <!--calendar-->
+    <string name="ke_calender">课程日历</string>
+    <string name="add_calendar">添加日历</string>
+    <string name="save">保存</string>
+    <string name="add_option1">课程名称</string>
+    <string name="add_option2">开课时间</string>
+    <string name="add_option3">结课时间</string>
+    <string name="add_option4">上课时间</string>
+    <string name="add_option5">下课时间</string>
+    <string name="add_option6">课程次数</string>
+    <string name="add_option7">上课地点</string>
+    <string name="add_option8">课程机构</string>
+    <string name="add_option9">授课老师</string>
+    <string name="add_option10">课程编码</string>
+    <string name="add_option11">增减课程</string>
+    <string name="plz_tian">请填写</string>
+
+    <!--勋章-->
+    <string name="my_xunzhang">我的勋章</string>
+
+    <!--团购-->
+    <string name="woyaopingtuan">我要拼团</string>
+    <string name="yiqipingtuan">一起拼团</string>
+    <string name="pingtuan_intro">拼团说明</string>
+    <string name="woxiandianshang">我先垫上</string>
+    <string name="woyaokaituan">我要开团</string>
+    <string name="pingtuan_hint">请输入您收到的拼团码</string>
+    <string name="pingtuan_hint1">请输入您收到的课程码</string>
+    <string name="dian_option1">垫付数量（含自己）</string>
+    <string name="dian_option3">课程总价格</string>
+    <string name="dian_option4">教材价格</string>
+    <string name="dian_option5">团购优惠价</string>
+    <string name="dian_option6">运费</string>
+    <string name="dian_option7">需付款：</string>
+    <string name="dian_option8">合计：</string>
+    <string name="dian_option9">确认垫付</string>
+    <string name="kai_tip">请在10分钟内邀请5人以上的好友参团</string>
+    <string name="kai_copy">复制拼团码</string>
+    <string name="kai_share">分享拼团</string>
+    <string name="kai_pay">报名付费</string>
+    <string name="tuan_success">付费状态</string>
+    <string name="chakan_kecheng">查看课程跟踪</string>
+
+    <!--会员资料-->
+    <string name="manage_dizhi">地址管理</string>
+    <string name="gift_child">来自孩子的礼物</string>
+    <string name="add_address">+ 新增地址</string>
+    <string name="add_address1">新增地址</string>
+    <string name="save_address">保存地址</string>
+    <string name="set_defualt">设为默认</string>
+    <string name="edit">编辑</string>
+    <string name="delete">删除</string>
+    <string name="choose_people">选联系人</string>
+    <string name="shouhuoren">收货人</string>
+    <string name="suozaidiqu">所在地区</string>
+    <string name="suozaichengshi">所在城市</string>
+    <string name="detail_address">详细地址</string>
+    <string name="detail_address_hint">街道、楼牌号等</string>
+    <string name="tag">标签</string>
+    <string name="tag_hint">请输入标签名称，最多5个字</string>
+    <string name="woderongyu">我的荣誉</string>
+    <string name="ruxue_day">入学年月</string>
+    <string name="nianji">年级</string>
+    <string name="zaiduxuexiao">在读学校</string>
+    <string name="jinji_lianxi">紧急联系电话</string>
+    <!--奖状-->
+    <string name="jiang_hint1">请输入奖状名称</string>
+    <string name="jiang_hint2">请选择获奖日期</string>
+    <string name="delete_all">全部删除</string>
+
+    <!--订单-->
+    <string name="pay_add_address">添加收货地址</string>
+    <string name="my_order">我的订单</string>
+    <string name="commit_order">提交订单</string>
+    <string name="order_detail">订单详情</string>
+    <string name="my_order_tab1">购课单</string>
+    <string name="my_order_tab2">待付款</string>
+    <string name="my_order_tab3">已付款</string>
+    <string name="my_order_tab4">退款/售后</string>
+    <string name="waiting_pay">等待付款</string>
+    <string name="youhuiquan">优惠券</string>
+    <string name="lingqu">领取</string>
+    <string name="go_pay">去支付</string>
+    <string name="tuifei">申请退费</string>
+    <string name="wait_ping">待评价</string>
+    <string name="copy">复制</string>
+    <string name="order_cancle">取消订单</string>
+    <string name="order_option1">订单编号：</string>
+    <string name="order_option2">下单时间：</string>
+    <string name="order_option3">支付方式：</string>
+    <string name="order_option4">配送方式：</string>
+    <string name="order_option5">商品总额：</string>
+    <string name="order_option6">运费：</string>
+    <string name="order_option7">拼团码：</string>
+    <string name="order_option8">支付明细</string>
+    <string name="order_option9">发票</string>
+    <string name="order_option10">支付宝支付：</string>
+    <string name="order_option11">微信支付：</string>
+    <string name="order_option12">退款方式须知</string>
+    <string name="order_option13">垫付人数</string>
+    <string name="order_option14">账户余额</string>
+    <string name="order_option15">请输入推荐码（选填）</string>
+    <string name="order_option16">限免优惠：</string>
+    <string name="order_option17">优惠券优惠：</string>
+    <string name="order_option18">组合优惠：</string>
+    <string name="order_option19">团购优惠：</string>
+    <string name="order_option20">余额抵扣：</string>
+    <string name="order_option21">支付时间：</string>
+    <string name="tui_fee_list">选择退费课程</string>
+    <string name="lijibaoming">立即报名</string>
+    <string name="lijibuy">立即购买</string>
+
+    <!--setting-->
+    <string name="settings">设置</string>
+    <string name="setting_option1">账号与安全</string>
+    <string name="setting_option2">新消息通知</string>
+    <string name="setting_option3">隐私</string>
+    <string name="setting_option4">关于大语文</string>
+    <string name="setting_option5">会员编码（邀请码）</string>
+    <string name="setting_option6">密码</string>
+    <string name="setting_option7">应急联系人</string>
+
+    <!--message-->
+    <string name="tongzhi">通知</string>
+    <string name="topic">话题</string>
+    <string name="tongzhi1">系统通知</string>
+    <string name="tongzhi2">互动通知</string>
+    <string name="tongzhi3">课程通知</string>
+    <string name="tongzhi4">其他</string>
+    <string name="course_progress">课程进度</string>
+    <string name="brace_left">(</string>
+    <string name="brace_right">)</string>
+    <string name="sig_xie">/</string>
+    <string name="course_eval">课程评价</string>
+    <string name="live_play">直播</string>
+    <string name="hint_input_eval">期待您的评价</string>
+    <string name="niming">匿名</string>
+    <string name="chose_course_by_need">选择需要调课的课程</string>
+    <string name="change_course">调课</string>
+    <string name="covert_class_course">转班课程</string>
+    <string name="chose_covert_class_course_by_need">选择需要转班的课程</string>
+    <string name="no_study_unit">课表 (当前未进行的课次)</string>
+    <string name="chose_change_course_unit_by_need">选择需要调课的课次</string>
+
+    <!--开发票-->
+    <string name="piao_history">开票历史</string>
+    <string name="piao_kai">发票信息</string>
+    <string name="piao_shenqing">申请开票</string>
+    <string name="piao_option1">抬头类型</string>
+    <string name="piao_option2">发票抬头</string>
+    <string name="piao_option3">税号</string>
+    <string name="piao_option4">备注信息</string>
+    <string name="piao_option5">发票金额</string>
+
+
+    <!--课程详情-->
+    <string name="ke_detail">课程详情</string>
+    <string name="tab1">课程表</string>
+    <string name="tab2">课程大纲</string>
+    <string name="tab3">家长评价</string>
+    <string name="look_all">查看更多</string>
+    <string name="look_detail">查看详情</string>
+    <string name="guwen">顾问</string>
+    <string name="shuoming">说明</string>
+    <string name="tuangou_baoming">团购报名</string>
+    <string name="dandu_baoming">立即报名</string>
+    <string name="add_gouwuche">加入购课单</string>
+    <string name="chose_chanable_class">选择可调课班级</string>
+    <string name="chose_convertable_class">选择可转班级</string>
+    <string name="studying_course">正在进行的课程</string>
+    <string name="submit_homework">作业</string>
+    <string name="current_course_stage">课程进行阶段</string>
+    <string name="past_course_trace">往次课程追踪</string>
+    <string name="finish_course">已完成课程</string>
+    <string name="work_feedback">作业反馈</string>
+    <string name="paper_pic">试卷照片</string>
+    <string name="teacher_eval">教师评语</string>
+    <string name="tutor_eval">助教评语</string>
+    <string name="adviser_eval">学术顾问评语</string>
+    <string name="hide_full_class">隐藏满班</string>
+    <string name="submit">提交</string>
+    <string name="back">返回</string>
+    <string name="month_report">月度报告</string>
+    <string name="learning_summary">学情总结</string>
+    <string name="course_ppt">课程PPT</string>
+    <string name="book_class_status">板书及课堂情况</string>
+    <string name="seat_table">座位表</string>
+    <string name="like_for">为TA点赞</string>
+    <string name="look_video">查看直播</string>
+    <string name="study_report">学业报告</string>
+    <string name="follow">关注</string>
+    <string name="final_test">期末测试</string>
+    <string name="check_submit">确认提交</string>
+    <string name="transfer_course_content">调课内容</string>
+    <string name="transfer_course_class">调课班级</string>
+    <string name="old_class">原在班级</string>
+    <string name="new_class">将转班级</string>
+    <string name="action_search">搜索</string>
+    <string name="back_trace_home">返回课程追踪首页</string>
+    <string name="trace_result_hint_2">可联系您的孩子的\n专业学业顾问加快办理</string>
+    <string name="trace_result_hint_1">申请提交成功\n正在确认中</string>
+    <string name="un_finish">未完成</string>
+    <string name="radar_status_2">青铜</string>
+    <string name="radar_status_4">王者</string>
+    <string name="radar_status_3">白银</string>
+    <string name="radar_now">本期雷达图</string>
+    <string name="radar_finish">拼图完成</string>
+    <!--退费-->
+    <string name="tui_detail">退款详情</string>
+    <string name="tui_detail_op1">退款总金额</string>
+    <string name="tui_detail_op2">退款原因：</string>
+    <string name="tui_detail_op3">退款金额：</string>
+    <string name="tui_detail_op4">申请时间：</string>
+    <string name="tui_detail_op5">退款编号：</string>
+    <string name="tui_detail_op6">拨打电话</string>
+    <string name="tui_detail_status1">待审核</string>
+    <string name="tui_detail_status2">退款中</string>
+    <string name="tui_detail_status3">已完成</string>
+    <string name="tui_detail_status4">已拒绝</string>
+    <string name="tui_fee_1">原路退费</string>
+    <string name="tui_fee_2">账户退费</string>
+    <string name="tui_fee_3">其他理由</string>
+
+    <!--教师-->
+    <string name="all_teacher">全部教师</string>
+
+    <string name="input_advise_hint">请输入更多建议</string>
+    <string name="vote_title">为TA点赞</string>
+    <string name="class_teacher">授课老师</string>
+    <string name="study_adviser">学业顾问</string>
+    <string name="school_tutor">校区助手</string>
+    <string name="class_intro">班级介绍</string>
+    <string name="teacher_intro">教师介绍</string>
+    <string name="sign">签到</string>
+    <string name="parent_feedback">家长反馈</string>
+    <string name="hint_advise_more">请输入更多建议</string>
+    <string name="empty">无</string>
+    <string name="submit_eval">提交评价</string>
+    <string name="work_pic">作业照片</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="hint_title">提示</string>
+    <string name="report_hint">您有新的学业报告，赶紧进行评价查看吧!</string>
+    <string name="eval_look">评价</string>
+    <string name="system_message">系统消息</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hhahahahahhahaha</string>
+    <string name="course_report">课程报告</string>
+    <string name="look_replay">查看回放</string>
+
+
+    <string name="keep">发布</string>
+    <string name="entry_title">输入标题</string>
+    <string name="entry_topic_content">输入话题内容</string>
+    <string name="create_Topic">创建话题</string>
+    <string name="comment">评论</string>
+
+
+    <string name="empty_no_data">没有数据~</string>
+    <string name="next_question">下一题</string>
+    <string name="answer_parse">答案解析</string>
+    <string name="answer_error_summary">我的错题整理</string>
+    <string name="save_error_question">保存错题集</string>
+    <string name="back_answer_home">返回拼图主页</string>
+
+    <string name="teacher_reply">---------------------  教师回复  ----------------------</string>
+    <string name="family_reply">家长回复</string>
+    <string name="my_fm">我的FM</string>
+    <string name="new_class_report">最新课节报告</string>
+    <string name="past_lesson_report">往次课节报告</string>
+    <string name="student_attain">学员成就</string>
+    <string name="student_evaluate">学员评价</string>
+    <string name="final_report">期末\n报告</string>
+    <string name="middle_report">期中\n报告</string>
+    <string name="warning_no_mid_report">您还没有该报告~</string>
+    <string name="welcome_speech">欢迎\n致辞</string>
+    <string name="sign_status">签到情况</string>
+    <string name="lesson_report">课节报告</string>
+    <string name="hint_search_course">搜索课程名称、老师</string>
+    <string name="hide_cancel">取消隐藏</string>
+    <string name="show_all">显示全部</string>
+    <string name="word_work">文字作业</string>
+    <string name="look_work">查看作业</string>
+
 </resources>

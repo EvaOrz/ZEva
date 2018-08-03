@@ -13,16 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.zwwl.bayuwen.R;
-import cn.com.zwwl.bayuwen.model.AlbumModel;
-import cn.com.zwwl.bayuwen.util.Tools;
-import cn.com.zwwl.bayuwen.view.ViewHolder;
+import cn.com.zwwl.bayuwen.model.fm.AlbumModel;
+import cn.com.zwwl.bayuwen.util.CalendarTools;
+import cn.com.zwwl.bayuwen.widget.ViewHolder;
 
 /**
  * 历史记录adapter
  */
 public class HistroyAdapter extends CheckScrollAdapter<AlbumModel> {
     protected Context mContext;
-    protected List<AlbumModel> mItemList = new ArrayList<>();
 
     public HistroyAdapter(Context context) {
         super(context);
@@ -30,7 +29,7 @@ public class HistroyAdapter extends CheckScrollAdapter<AlbumModel> {
     }
 
     public void setData(List<AlbumModel> mItemList) {
-        clearData();
+        clear();
         isScroll = false;
         synchronized (mItemList) {
             for (AlbumModel item : mItemList) {
@@ -51,7 +50,7 @@ public class HistroyAdapter extends CheckScrollAdapter<AlbumModel> {
 
         title.setText(item.getTitle());
         desc.setText(item.getContent());
-        time.setText(Tools.getTime(Long.valueOf(item.getCreated_at())));
+        time.setText(CalendarTools.getTime(Long.valueOf(item.getCreated_at())));
         if (!TextUtils.isEmpty(item.getPic()))
             Glide.with(mContext)
                     .load(item.getPic())
@@ -60,9 +59,6 @@ public class HistroyAdapter extends CheckScrollAdapter<AlbumModel> {
         return viewHolder.getConvertView();
     }
 
-    public void clearData() {
-        mItemList.clear();
-    }
 
     public boolean isScroll() {
         return isScroll;

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+
+    <LinearLayout
+        android:id="@+id/jiang_layout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <cn.com.zwwl.bayuwen.widget.RoundAngleImageView
+                android:id="@+id/jiang_img"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_margin="5dp"
+                android:background="@color/gray_light"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:id="@+id/jiang_delete"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/icon_delete_round" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/jiang_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:lines="1"
+            android:text="诗朗诵一等奖"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/text_size_14" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/jiang_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/gold_white_xiangkuang"
+        android:gravity="center"
+        android:text="+"
+        android:textColor="@color/gold"
+        android:textSize="20sp" />
+
+</RelativeLayout>
