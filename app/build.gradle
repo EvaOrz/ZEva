@@ -47,47 +47,16 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // glide和http3
     implementation 'com.github.bumptech.glide:glide:4.6.1'
-<<<<<<< HEAD
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
-    implementation 'com.github.bumptech.glide:okhttp3-integration:4.6.1'
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-=======
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
     implementation 'com.github.bumptech.glide:okhttp3-integration:4.6.1'
     implementation 'com.google.code.gson:gson:2.8.1'
     // 放在module里
->>>>>>> e0755a63c38c11d7c865da7e824dcac297827b9b
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     // LeanCloud 基础包
     implementation 'cn.leancloud.android:avoscloud-sdk:v4.6.4'
-<<<<<<< HEAD
-    // umeng
-    implementation 'com.umeng.sdk:common:1.5.0'
-    implementation 'com.umeng.sdk:utdid:1.1.5.3'
-    //注意：在App上线前请务必删除集成调试库，避免无关信息的打印。
-    implementation 'com.umeng.sdk:debug:1.0.0'
-    //umeng share
-    implementation 'com.umeng.sdk:share-sina:6.9.0'
-    implementation 'com.umeng.sdk:share-wechat:6.9.0'
-    implementation 'com.umeng.sdk:share-qq:6.9.0'
-    implementation 'com.umeng.sdk:share-core:6.9.0'
-    // 极光
-    implementation files('libs/jcore-android-1.2.0.jar')
-    implementation files('libs/jpush-android-3.1.2.jar')
-    subprojects {
-        project.configurations.all {
-            resolutionStrategy.eachDependency { details ->
-                if (details.requested.group == 'com.android.support'
-                        && !details.requested.name.contains('multidex')) {
-                    details.useVersion "27.0.3"
-                }
-            }
-        }
-    }
-=======
     implementation project(':jiaozivideoplayer')
     // 联动菜单
     //日历控件
@@ -127,5 +96,4 @@ dependencies {
     implementation 'cn.jiguang.sdk:jcore:1.2.1'
     //图片缩放
     implementation 'com.github.chrisbanes:PhotoView:2.1.4'
->>>>>>> e0755a63c38c11d7c865da7e824dcac297827b9b
 }
