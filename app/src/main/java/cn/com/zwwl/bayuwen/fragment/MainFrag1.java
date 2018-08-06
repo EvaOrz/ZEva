@@ -59,7 +59,7 @@ import cn.com.zwwl.bayuwen.widget.threed.InfinitePagerAdapter;
 import cn.com.zwwl.bayuwen.widget.threed.InfiniteViewPager;
 
 /**
- *
+ * 学员成就
  */
 public class MainFrag1 extends Fragment implements View.OnClickListener {
 

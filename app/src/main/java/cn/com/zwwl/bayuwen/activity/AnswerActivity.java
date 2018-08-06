@@ -144,7 +144,7 @@ public class AnswerActivity extends BaseActivity {
                     @Override
                     public void run() {
                         if (adapter.isRight()) {
-                            if (index + 1 == choiceBeans.size()) {// 最后一题直接跳转结果页面
+                            if (index == choiceBeans.size()) {// 最后一题直接跳转结果页面
                                 submit();
                             } else {
                                 ++index;
