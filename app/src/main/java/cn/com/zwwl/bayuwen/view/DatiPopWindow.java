@@ -64,12 +64,14 @@ public class DatiPopWindow {
         if (isShowDetail) {
             bt1.setVisibility(View.VISIBLE);
         } else bt1.setVisibility(View.GONE);
+        //答题详情
         bt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getAnswerDeatail(pintuModel.getSectionId() + "");
             }
         });
+        //开始闯关
         bt2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
