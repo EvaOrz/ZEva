@@ -24,6 +24,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +45,7 @@ import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
 import cn.com.zwwl.bayuwen.api.AchievementApi;
 import cn.com.zwwl.bayuwen.api.PintuListApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
+import cn.com.zwwl.bayuwen.event.Event;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.model.AchievementModel;
@@ -59,7 +64,7 @@ import cn.com.zwwl.bayuwen.widget.threed.InfinitePagerAdapter;
 import cn.com.zwwl.bayuwen.widget.threed.InfiniteViewPager;
 
 /**
- *
+ * 学员成就
  */
 public class MainFrag1 extends Fragment implements View.OnClickListener {
 
@@ -72,6 +77,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private InfiniteViewPager pingPager;// 拼图列表
     private InfinitePagerAdapter pingAdapter;
     private LinearLayout pingtu_indicator;// 拼图指示器
+    private int pos = 0;
     private MostGridView achieveGrid;// 成就列表
     private TextView achiTv;
     private TextView pintu_title;
@@ -87,10 +93,25 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     private int paddingLeft, paddingRight, paddingTop, paddingBottom;
 
     public boolean isCityChanged = false;// 城市状态是否变化
+    private boolean isSendMessage = false;//是否发送消息，刷新能力分析拼图
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -223,6 +244,7 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
 
             @Override
             public void onPageSelected(int position) {
+                pos = position;
                 updateLinearPosition(position);
             }
 
@@ -262,51 +284,53 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
      * 获取拼图列表数据
      */
     private void initPingtudata() {
-        pingtuViews.clear();
-        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(pintuWid +
-                paddingLeft + paddingRight,
-                pintuHei +
-                        paddingTop + paddingBottom);
-        for (int i = 0; i < pintuModels.size(); i++) {
-            final int pos = i;
-            final View view = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu,
-                    null);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    goDati(pos);
-                }
-            });
-            view.setLayoutParams(params1);
-            view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
-            RecyclerView recyclerView = view.findViewById(R.id.radar_fragmain1);
-            recyclerView.setLayoutParams(new LinearLayout.LayoutParams(pintuWid, pintuHei));
-
-            recyclerView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        view.performClick();  //模拟父控件的点击
+        if (pintuModels.size() > 0) {//加个判断，判断是否有数据
+            pingtuViews.clear();
+            LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(pintuWid +
+                    paddingLeft + paddingRight,
+                    pintuHei +
+                            paddingTop + paddingBottom);
+            for (int i = 0; i < pintuModels.size(); i++) {
+//            pos = i;//先屏蔽掉
+                final View view = LayoutInflater.from(mActivity).inflate(R.layout.item_pingtu,
+                        null);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        goDati(pos);
                     }
-                    return false;
+                });
+                view.setLayoutParams(params1);
+                view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+                RecyclerView recyclerView = view.findViewById(R.id.radar_fragmain1);
+                recyclerView.setLayoutParams(new LinearLayout.LayoutParams(pintuWid, pintuHei));
+
+                recyclerView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (event.getAction() == MotionEvent.ACTION_UP) {
+                            view.performClick();  //模拟父控件的点击
+                        }
+                        return false;
+                    }
+                });
+
+                if (pintuModels.get(i).getStyle() == 2 || pintuModels.get(i).getStyle() == 3) {
+                    view.setBackgroundResource(R.drawable.pintu_bg_wangzhe);
+                } else view.setBackgroundResource(R.drawable.pintu_bg_baiyin);
+
+                List<PintuModel.LectureinfoBean.SectionListBean> models = pintuModels.get(i)
+                        .getLectureinfo().get(0).getSectionList();
+                if (Tools.listNotNull(models) && models.size() == 54) {
+                    RadarAdapter radarAdapter = new RadarAdapter(models, pintuWid, pintuModels.get(i)
+                            .getIs_pay() == 1);
+                    recyclerView.setAdapter(radarAdapter);
+                    recyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
                 }
-            });
 
-            if (pintuModels.get(i).getStyle() == 2 || pintuModels.get(i).getStyle() == 3) {
-                view.setBackgroundResource(R.drawable.pintu_bg_wangzhe);
-            } else view.setBackgroundResource(R.drawable.pintu_bg_baiyin);
-
-            List<PintuModel.LectureinfoBean.SectionListBean> models = pintuModels.get(i)
-                    .getLectureinfo().get(0).getSectionList();
-            if (Tools.listNotNull(models) && models.size() == 54) {
-                RadarAdapter radarAdapter = new RadarAdapter(models, pintuWid, pintuModels.get(i)
-                        .getIs_pay() == 1);
-                recyclerView.setAdapter(radarAdapter);
-                recyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                pingtuViews.add(view);
             }
-
-            pingtuViews.add(view);
         }
     }
 
@@ -370,6 +394,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                     break;
 
                 case 3:// load 拼图数据
+                    if (isSendMessage) {
+                        EventBus.getDefault().post(new Event.JigsawEvent(pintuModels.get(pos)));
+                        isSendMessage = false;
+                    }
                     pingAdapter = new InfinitePagerAdapter(pingtuViews);
                     pingPager.setAdapter(pingAdapter);
                     pingPager.setOffscreenPageLimit(3);
@@ -388,7 +416,10 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
                         img.setBackgroundResource(R.drawable.viewlooper_gray_status);
                         pingtu_indicator.addView(img);
                     }
-                    pingPager.setCurrentItem(2);
+                    pingPager.setCurrentItem(pos);
+                    if (pingtuViews.size() == 1) {
+                        updateLinearPosition(pos);
+                    }
                     break;
             }
         }
@@ -446,5 +477,14 @@ public class MainFrag1 extends Fragment implements View.OnClickListener {
     public static MainFrag1 newInstance(String ss) {
         MainFrag1 fragment = new MainFrag1();
         return fragment;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(Event.MessageEvent event) {
+        /* Do something */
+        isSendMessage = true;
+        //刷新拼图
+        getPintuData();
+
     }
 }

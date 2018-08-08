@@ -21,6 +21,10 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +36,7 @@ import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.RadarAdapter;
 import cn.com.zwwl.bayuwen.api.PintuIntroApi;
+import cn.com.zwwl.bayuwen.event.Event;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListener;
 import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -95,6 +100,20 @@ public class AbilityAnalysisActivity extends BaseActivity {
         ButterKnife.bind(this);
         mActivity = this;
         initView1();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -194,6 +213,7 @@ public class AbilityAnalysisActivity extends BaseActivity {
     }
 
     private void initPintu() {
+        //1普通2王者3窦神
         pintuView.setBackgroundResource(R.drawable.pintu_bg_wangzhe);
         if (pintuModel.getStyle() == 2 || pintuModel.getStyle() == 3) {
             pintuView.setBackgroundResource(R.drawable.pintu_bg_wangzhe);
@@ -202,6 +222,7 @@ public class AbilityAnalysisActivity extends BaseActivity {
             final List<PintuModel.LectureinfoBean.SectionListBean> models = pintuModel
                     .getLectureinfo().get(0).getSectionList();
             if (Tools.listNotNull(models) && models.size() == 54) {
+                //is_pay:是否支付课程0免费1支付
                 radarAdapter = new RadarAdapter(models, pintuWid, pintuModel.getIs_pay() == 1);
                 pintuRecyclerView.setAdapter(radarAdapter);
                 pintuRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 9));
@@ -284,8 +305,11 @@ public class AbilityAnalysisActivity extends BaseActivity {
 
 
     private void initAddData() {
+        //课程内容
         courseContent.setText(pintuModel.getContent().getTitle());
+        //学生情况
         studentCondition.setText(pintuModel.getStudent_info().getTitle());
+        //体系介绍
         systemIntroduction.setText(pintuModel.getCurricula().getTitle());
         setNum();
     }
@@ -338,6 +362,15 @@ public class AbilityAnalysisActivity extends BaseActivity {
             errorNum.setText("答错题数：" + pintuModel.getLectureinfo().get(0).getErrorNum
                     ());
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onJigsawEvent(Event.JigsawEvent event) {
+        /* Do something */
+        pintuModel = event.pintuModel;
+        //刷新拼图
+        initPintu();
+
     }
 
 

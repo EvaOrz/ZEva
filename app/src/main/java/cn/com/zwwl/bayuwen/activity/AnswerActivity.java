@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +32,7 @@ import cn.com.zwwl.bayuwen.api.QuestionListApi;
 import cn.com.zwwl.bayuwen.api.SubmitAnswerApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.dialog.AnswerDialog;
+import cn.com.zwwl.bayuwen.event.Event;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.CommonModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
@@ -144,7 +146,7 @@ public class AnswerActivity extends BaseActivity {
                     @Override
                     public void run() {
                         if (adapter.isRight()) {
-                            if (index + 1 == choiceBeans.size()) {// 最后一题直接跳转结果页面
+                            if (index == choiceBeans.size()) {// 最后一题直接跳转结果页面
                                 submit();
                             } else {
                                 ++index;
@@ -194,6 +196,8 @@ public class AnswerActivity extends BaseActivity {
                         @Override
                         public void result(CommonModel commonModel, ErrorMsg errorMsg) {
                             if (errorMsg == null) {
+                                //发送消息更新拼图
+                                EventBus.getDefault().post(new Event.MessageEvent());
                                 ToastUtil.showShortToast("上传成功");
                                 Intent intent = new Intent(mActivity, AnswerResultActivity.class);
                                 intent.putExtra("total", choiceBeans.size());

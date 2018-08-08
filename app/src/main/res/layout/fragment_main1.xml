@@ -248,7 +248,7 @@
                     android:background="@drawable/gold_circle"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="查看全部勋章"
+                    android:text="查看全部成就"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_14" />
             </LinearLayout>
