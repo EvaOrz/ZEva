@@ -1,5 +1,6 @@
 package cn.com.zwwl.bayuwen.service;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.Service;
 import android.content.Context;
@@ -61,23 +62,27 @@ public class NewMusicService extends Service {
      * @param startId
      * @return
      */
+    @SuppressLint("WrongConstant")
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent.getAction().equals(BaseActivity.ACTION_START_PLAY)) {
-            init(intent);
-        } else if (intent.getAction().equals(BaseActivity.ACTION_RESUME_PAUSE)) {
-            if (isPlaying()) {
-                pause();
-            } else {
-                resume();
+        if (intent != null) {
+            if (intent.getAction().equals(BaseActivity.ACTION_START_PLAY)) {
+                init(intent);
+            } else if (intent.getAction().equals(BaseActivity.ACTION_RESUME_PAUSE)) {
+                if (isPlaying()) {
+                    pause();
+                } else {
+                    resume();
+                }
+            } else if (intent.getAction().equals(BaseActivity.ACTION_SEEK_SEEKBAR)) {
+                int pp = intent.getIntExtra("change_to", 0);
+                changeProgress(pp);
+            } else if (intent.getAction().equals(BaseActivity.ACTION_RESET)) {
+                stop();
             }
-        } else if (intent.getAction().equals(BaseActivity.ACTION_SEEK_SEEKBAR)) {
-            int pp = intent.getIntExtra("change_to", 0);
-            changeProgress(pp);
-        } else if (intent.getAction().equals(BaseActivity.ACTION_RESET)) {
-            stop();
         }
-        return super.onStartCommand(intent, flags, startId);
+//        return super.onStartCommand(intent, flags, startId);
+        return super.onStartCommand(intent, Service.START_REDELIVER_INTENT, startId);
     }
 
 

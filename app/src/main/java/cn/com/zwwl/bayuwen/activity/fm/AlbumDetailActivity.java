@@ -37,6 +37,7 @@ import cn.com.zwwl.bayuwen.api.CourseApi;
 import cn.com.zwwl.bayuwen.api.fm.AlbumApi;
 import cn.com.zwwl.bayuwen.api.fm.CollectionApi;
 import cn.com.zwwl.bayuwen.api.fm.PinglunApi;
+import cn.com.zwwl.bayuwen.base.Constance;
 import cn.com.zwwl.bayuwen.dialog.AskDialog;
 import cn.com.zwwl.bayuwen.listener.FetchEntryListListener;
 import cn.com.zwwl.bayuwen.model.KeModel;
@@ -55,6 +56,8 @@ import cn.com.zwwl.bayuwen.model.Entry;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.widget.CallScrollView;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
+
+import static cn.com.zwwl.bayuwen.base.Constance.OVERLAY_PERMISSION_REQ_CODE;
 
 /**
  * 专辑详情页面
@@ -650,7 +653,6 @@ public class AlbumDetailActivity extends BaseActivity {
 
     @Override
     protected void onStop() {
-
         super.onStop();
         if (musicStatusReceiver != null)
             unregisterReceiver(musicStatusReceiver);
@@ -662,12 +664,20 @@ public class AlbumDetailActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        MusicWindow.getInstance(this).movetoController(0);
-        registerReceiver();//先恢复数据 再注册receiver
-        checkCurrent();
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (!Settings.canDrawOverlays(this)) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + getPackageName()));
+                startActivityForResult(intent, Constance.OVERLAY_PERMISSION_REQ_CODE_RESUME);
+            }
+        } else {
+            MusicWindow.getInstance(this).movetoController(0);
+            registerReceiver();//先恢复数据 再注册receiver
+            checkCurrent();
+        }
+
     }
 
-    public static int OVERLAY_PERMISSION_REQ_CODE = 1234;
 
     @TargetApi(Build.VERSION_CODES.M)
     public void requestDrawOverLays() {
@@ -677,7 +687,7 @@ public class AlbumDetailActivity extends BaseActivity {
                 public void onSure() {
                     Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse
                             ("package:" + AlbumDetailActivity.this.getPackageName()));
-                    startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
+                    startActivityForResult(intent, Constance.OVERLAY_PERMISSION_REQ_CODE);
                 }
 
                 @Override
@@ -693,13 +703,27 @@ public class AlbumDetailActivity extends BaseActivity {
 
     @TargetApi(Build.VERSION_CODES.M)
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == OVERLAY_PERMISSION_REQ_CODE) {
-            if (!Settings.canDrawOverlays(this)) {
-                // SYSTEM_ALERT_WINDOW permission not granted...
-            } else {
-                // Already hold the SYSTEM_ALERT_WINDOW permission, do addview or something.
-            }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case Constance.OVERLAY_PERMISSION_REQ_CODE:
+//                if (!Settings.canDrawOverlays(this)) {
+//                // SYSTEM_ALERT_WINDOW permission not granted...
+//            } else {
+//                // Already hold the SYSTEM_ALERT_WINDOW permission, do addview or something.
+//            }
+                break;
+            case Constance.OVERLAY_PERMISSION_REQ_CODE_RESUME:
+                MusicWindow.getInstance(this).movetoController(0);
+                registerReceiver();//先恢复数据 再注册receiver
+                checkCurrent();
+                break;
         }
+//        if (requestCode == OVERLAY_PERMISSION_REQ_CODE) {
+//            if (!Settings.canDrawOverlays(this)) {
+//                // SYSTEM_ALERT_WINDOW permission not granted...
+//            } else {
+//                // Already hold the SYSTEM_ALERT_WINDOW permission, do addview or something.
+//            }
+//        }
     }
 }
