@@ -296,7 +296,7 @@ public class MainFrag5 extends Fragment implements View.OnClickListener {
                 Intent i = new Intent(mActivity, MyAccountActivity.class);
                 startActivity(i);
                 break;
-            case R.id.frag5_avatar:
+            case R.id.frag5_avatar://会员资料
                 startActivity(new Intent(mActivity, ParentInfoActivity.class));
                 break;
             case R.id.frag5_yue:// 我的余额
