@@ -1,12 +1,15 @@
 package cn.com.zwwl.bayuwen.activity;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -209,11 +212,13 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void onResume() {
         if (TempDataHelper.getPushStatus(mContext))
             NewPushManager.getInstance(this).onresume(this);
-        MusicWindow.getInstance(this).movetoController(getViewHeight(barLayout));
+        if (Settings.canDrawOverlays(this))
+            MusicWindow.getInstance(this).movetoController(getViewHeight(barLayout));
 
         isGoAlbumActivity = false;
         super.onResume();
@@ -233,10 +238,10 @@ public class MainActivity extends BaseActivity {
             MyApplication.cityStatusChange = false;
         }
     }
-
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void onStop() {
-        if (!isGoAlbumActivity)
+        if (!isGoAlbumActivity && Settings.canDrawOverlays(this))
             MusicWindow.getInstance(this).hidePopupWindow();
         super.onStop();
     }
