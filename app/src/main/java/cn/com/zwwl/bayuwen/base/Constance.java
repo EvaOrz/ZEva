@@ -14,8 +14,8 @@ public class Constance {
      * PID；APPKEY; DES_KEY;请向商务获取
      */
     //直播用
-    public static final String PID = "20180227173910325267"; //partnerId
-    public static final String APPKEY = "69aac9f8008f48338907ccb8965083e9"; //appkey
+    public static final String PID = "20150513100502"; //partnerId
+    public static final String APPKEY = "91f12fdea3b1440a9cba03eca73f92ad"; //appkey
     //离线回放用
     public static final String DES_KEY = "MuAbYxEy";
 

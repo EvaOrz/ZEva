@@ -17,6 +17,8 @@ public class LiveInfo implements Serializable {
     private String liveImage;
     private String nickname;
 
+    public LiveInfo() {
+    }
 
     public LiveInfo(String uuid, String roomId, String title, boolean isLiveStart, String liveImage, String nickname) {
         this.uuid = uuid;
@@ -75,7 +77,5 @@ public class LiveInfo implements Serializable {
         this.nickname = nickname;
     }
 
-    public LiveInfo() {
-    }
 
 }

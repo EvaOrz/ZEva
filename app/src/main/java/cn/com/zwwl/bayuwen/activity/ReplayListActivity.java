@@ -1,8 +1,6 @@
 package cn.com.zwwl.bayuwen.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,21 +19,22 @@ import butterknife.ButterKnife;
 import cn.com.zwwl.bayuwen.R;
 import cn.com.zwwl.bayuwen.adapter.LessonReplayAdapter;
 import cn.com.zwwl.bayuwen.api.StudyingCourseApi;
-import cn.com.zwwl.bayuwen.base.BasicActivityWithTitle;
+import cn.com.zwwl.bayuwen.bean.LiveInfo;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.KeModel;
 import cn.com.zwwl.bayuwen.model.LessonModel;
 import cn.com.zwwl.bayuwen.model.StudyingModel;
+import cn.com.zwwl.bayuwen.playback.CusomizedPlayBackActivity;
 import cn.com.zwwl.bayuwen.util.TimeUtil;
 import cn.com.zwwl.bayuwen.util.UmengLogUtil;
-import cn.com.zwwl.bayuwen.view.OvalImageview;
 import cn.com.zwwl.bayuwen.widget.CircleImageView;
 import cn.com.zwwl.bayuwen.widget.roundview.RoundLinearLayout;
 
 /**
- * 课程跟踪视频回访列表
+ * 课程跟踪视频回放列表
  * Created by zhumangmang at 2018/7/4 15:26
  */
 public class ReplayListActivity extends BaseActivity {
@@ -127,9 +126,31 @@ public class ReplayListActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 UmengLogUtil.LivePlayBackClick(mActivity);
-                Intent intent = new Intent(mActivity, WebActivity.class);
-                intent.putExtra("WebActivity_data", reports.get(position).getPlay_url());
-                startActivity(intent);
+//                Intent intent = new Intent(mActivity, WebActivity.class);
+//                intent.putExtra("WebActivity_data", reports.get(position).getPlay_url());
+//                startActivity(intent);
+                //跳转到原生回放
+                LiveInfo liveInfo = new LiveInfo();
+                liveInfo.setUuid(UserDataHelper.getUserLoginInfo(mContext).getUid());
+                liveInfo.setNickname(UserDataHelper.getUserLoginInfo(mContext).getName());
+                liveInfo.setRoomId(reports.get(position).getRoomId());
+                CusomizedPlayBackActivity.startCusomizedPlayBackActivity(ReplayListActivity.this, liveInfo);
+
+                //网页版在线回放（稳定）
+//                Intent intent = new Intent(ReplayListActivity.this, DefPlaybackActivity.class);
+//                String appKey = Constance.APPKEY;
+//                String partner = Constance.PID;
+//                String nickname = UserDataHelper.getUserLoginInfo(mContext).getName();
+//                String roomId = reports.get(position).getRoomId();
+//                String uid = UserDataHelper.getUserLoginInfo(mContext).getUid();
+//                intent.putExtra("appKey", appKey);
+//                intent.putExtra("nickname", nickname);
+//                intent.putExtra("partner", partner);
+//                intent.putExtra("roomId", roomId);
+//                intent.putExtra("uid", uid);
+//                intent.putExtra("title", reports.get(position).getTitle());
+//                startActivity(intent);
+
             }
         });
         idBack.setOnClickListener(new View.OnClickListener() {

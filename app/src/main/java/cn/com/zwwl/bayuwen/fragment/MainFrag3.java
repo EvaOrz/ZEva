@@ -45,8 +45,11 @@ import cn.com.zwwl.bayuwen.adapter.CourseIndexAdapter;
 import cn.com.zwwl.bayuwen.adapter.LatestReportAdapter;
 import cn.com.zwwl.bayuwen.api.MyCourseApi;
 import cn.com.zwwl.bayuwen.base.BasicFragment;
+import cn.com.zwwl.bayuwen.bean.LiveInfo;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
+import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
+import cn.com.zwwl.bayuwen.live.CustomizedLiveActivity;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.Index1Model;
 import cn.com.zwwl.bayuwen.model.KeModel;
@@ -140,7 +143,7 @@ public class MainFrag3 extends BasicFragment {
         adapter = new CompleteCourseAdapter(finishCourse);
         adapter.setEmptyView(R.layout.empty_view, (ViewGroup) recyclerView.getParent());
         recyclerView.setAdapter(adapter);
-
+        //正在进行的课程
         studyCourse.setLayoutManager(new LinearLayoutManager(mContext));
         studyCourse.setNestedScrollingEnabled(false);
         studyCourse.addItemDecoration(new DividerItemDecoration(getResources(), R.color.white, R
@@ -246,6 +249,7 @@ public class MainFrag3 extends BasicFragment {
                 }
             }
         });
+        //正在进行的课程
         courseIndexAdapter.setOnItemChildClickListener(new BaseQuickAdapter
                 .OnItemChildClickListener() {
             @Override
@@ -253,6 +257,7 @@ public class MainFrag3 extends BasicFragment {
                 Intent intent = new Intent();
                 MyCourseModel.UnfinishedBean bean = courseModel.getUnfinished().get(position);
                 switch (view.getId()) {
+                    //item
                     case R.id.linear_bg:
                         application.oldKe = bean.getProducts();
                         intent.putExtra("kid", bean.getKid());
@@ -267,6 +272,7 @@ public class MainFrag3 extends BasicFragment {
 // ()));
                         startActivity(intent);
                         break;
+                    //作业
                     case R.id.work_title:
                         UmengLogUtil.CourseWorkClick(activity);
                         if (!bean.getPlan().isOpen()) {
@@ -284,22 +290,32 @@ public class MainFrag3 extends BasicFragment {
                             startActivity(intent);
                         }
                         break;
+                    //直播
                     case R.id.course_cover:
                         if (!bean.getPlan().isOpen()) {
                             ToastUtil.showShortToast("该课程尚未开课~");
                         } else {
+//                            if ("1".equals(bean.getProducts().getOnline())) {
+//                                intent.setClass(activity, WebActivity.class);
+//                                intent.putExtra("WebActivity_data", bean.getPlan()
+//                                        .getPlayUrl());
+//                            } else {
+//                                intent.setClass(activity, VideoPlayActivity.class);
+//                                intent.putExtra("VideoPlayActivity_url", bean.getPlan()
+//                                        .getPlayUrl());
+//                            }
+//                            startActivity(intent);
                             if ("1".equals(bean.getProducts().getOnline())) {
-                                intent.setClass(activity, WebActivity.class);
-                                intent.putExtra("WebActivity_data", bean.getPlan()
-                                        .getPlayUrl());
-                            } else {
-                                intent.setClass(activity, VideoPlayActivity.class);
-                                intent.putExtra("VideoPlayActivity_url", bean.getPlan()
-                                        .getPlayUrl());
+                                //跳转到原生直播界面
+                                LiveInfo liveInfo = new LiveInfo();
+                                liveInfo.setUuid(UserDataHelper.getUserLoginInfo(mContext).getUid());
+                                liveInfo.setNickname(UserDataHelper.getUserLoginInfo(mContext).getName());
+                                liveInfo.setRoomId(bean.getPlan().getRoomId());
+                                CustomizedLiveActivity.startCustomizedActivity(getActivity(), liveInfo);
                             }
-                            startActivity(intent);
                         }
                         break;
+                    //课题报告
                     case R.id.trace_title:
                         UmengLogUtil.AgoCourseReportClick(activity);
                         if (!bean.getPlan().isOpen()) {
@@ -311,14 +327,13 @@ public class MainFrag3 extends BasicFragment {
                             startActivity(intent);
                         }
                         break;
+                    //回放
                     case R.id.playback_title:
                         UmengLogUtil.PlayBackClick(activity);
                         application.oldKe = bean.getProducts();
                         intent.putExtra("kid", bean.getKid());
                         intent.putExtra("title", bean.getProducts().getTitle());
-
                         intent.setClass(activity, ReplayListActivity.class);
-
                         startActivity(intent);
 
                         break;
@@ -326,15 +341,16 @@ public class MainFrag3 extends BasicFragment {
 
             }
         });
+        //正在进行的课程
         courseIndexAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 application.oldKe = courseModel.getUnfinished().get(position).getProducts();
                 Intent intent = new Intent();
                 if ("1".equals(courseModel.getUnfinished()
-                        .get(position).getProducts().getOnline())) {
+                        .get(position).getProducts().getOnline())) {//线上
                     intent.setClass(activity, ReplayListActivity.class);
-                } else {
+                } else {//线下
                     intent.setClass(activity, StudyingIndexActivity.class);
                 }
                 intent.putExtra("kid", courseModel.getUnfinished().get(position).getKid());

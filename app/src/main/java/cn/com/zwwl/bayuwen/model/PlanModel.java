@@ -27,6 +27,15 @@ public class PlanModel {
     private boolean isOpen;
     private int is_submit_job;
     private WorkDetailModel job;
+    private String roomId;
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
 
     public WorkDetailModel getJob() {
         return job;

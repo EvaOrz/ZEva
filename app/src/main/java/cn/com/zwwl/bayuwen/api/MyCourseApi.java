@@ -18,7 +18,7 @@ public class MyCourseApi extends BaseApi {
     ResponseCallBack<MyCourseModel> listener;
     Activity context;
 
-    public MyCourseApi(Activity context,  ResponseCallBack<MyCourseModel> listener) {
+    public MyCourseApi(Activity context, ResponseCallBack<MyCourseModel> listener) {
         super(context);
         this.context = context;
         this.listener = listener;
@@ -40,11 +40,11 @@ public class MyCourseApi extends BaseApi {
         context.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                MyCourseModel model=null;
-                if (json!=null){
-                    model=GsonUtil.parseJson(MyCourseModel.class,json.toString());
+                MyCourseModel model = null;
+                if (json != null) {
+                    model = GsonUtil.parseJson(MyCourseModel.class, json.toString());
                 }
-                listener.result(model,errorMsg);
+                listener.result(model, errorMsg);
             }
         });
 

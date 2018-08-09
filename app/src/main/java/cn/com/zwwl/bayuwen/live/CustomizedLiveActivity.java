@@ -129,7 +129,6 @@ public class CustomizedLiveActivity extends Activity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
         setContentView(R.layout.activity_customized_live);
         mContext = this.getApplicationContext();
         getIntnetEx();

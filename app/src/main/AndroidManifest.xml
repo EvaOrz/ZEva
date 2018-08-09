@@ -530,6 +530,10 @@
             android:name=".live.CustomizedLiveActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".playback.CusomizedPlayBackActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:hardwareAccelerated="false" />
     </application>
 
 </manifest>

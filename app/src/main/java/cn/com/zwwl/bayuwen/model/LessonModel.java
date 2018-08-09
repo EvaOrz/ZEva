@@ -38,6 +38,15 @@ public class LessonModel extends Entry {
     private String report_url;
     private String play_url;
     private String url;
+    private String roomId;
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
 
     public String getPlay_url() {
         return play_url;
