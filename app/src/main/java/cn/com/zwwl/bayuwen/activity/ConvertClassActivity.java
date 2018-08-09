@@ -197,7 +197,7 @@ public class ConvertClassActivity extends BaseActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     hideInput();
-                    map.put("keyword", Tools.getText(v));
+                    getCourseData();
                     return true;
                 }
                 return false;
@@ -255,6 +255,8 @@ public class ConvertClassActivity extends BaseActivity {
     }
 
     private void getCourseData() {
+        if (!TextUtils.isEmpty(search.getText()))
+            map.put("keyword", search.getText().toString());
         map.put("online", "0");
         map.put("page", String.valueOf(page));
         StringBuilder temp = new StringBuilder(url);

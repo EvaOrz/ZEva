@@ -57,8 +57,6 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.widget.CallScrollView;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
 
-import static cn.com.zwwl.bayuwen.base.Constance.OVERLAY_PERMISSION_REQ_CODE;
-
 /**
  * 专辑详情页面
  */
@@ -660,7 +658,8 @@ public class AlbumDetailActivity extends BaseActivity {
             unregisterReceiver(musicStatusReceiver);
         if (isFromMain && isGoMain)
             return;
-        MusicWindow.getInstance(this).hidePopupWindow();
+        if (Settings.canDrawOverlays(this))
+            MusicWindow.getInstance(this).hidePopupWindow();
     }
 
     @Override
@@ -672,14 +671,10 @@ public class AlbumDetailActivity extends BaseActivity {
                         Uri.parse("package:" + getPackageName()));
                 startActivityForResult(intent, Constance.OVERLAY_PERMISSION_REQ_CODE_RESUME);
             } else {
-                MusicWindow.getInstance(this).movetoController(0);
-                registerReceiver();//先恢复数据 再注册receiver
-                checkCurrent();
+                initFm();
             }
         } else {
-            MusicWindow.getInstance(this).movetoController(0);
-            registerReceiver();//先恢复数据 再注册receiver
-            checkCurrent();
+            initFm();
         }
 
     }
@@ -720,9 +715,7 @@ public class AlbumDetailActivity extends BaseActivity {
                 break;
             case Constance.OVERLAY_PERMISSION_REQ_CODE_RESUME:
                 if (Settings.canDrawOverlays(this)) {
-                    MusicWindow.getInstance(this).movetoController(0);
-                    registerReceiver();//先恢复数据 再注册receiver
-                    checkCurrent();
+                    initFm();
                 }
                 break;
         }
@@ -733,5 +726,11 @@ public class AlbumDetailActivity extends BaseActivity {
 //                // Already hold the SYSTEM_ALERT_WINDOW permission, do addview or something.
 //            }
 //        }
+    }
+
+    private void initFm(){
+        MusicWindow.getInstance(this).movetoController(0);
+        registerReceiver();//先恢复数据 再注册receiver
+        checkCurrent();
     }
 }
