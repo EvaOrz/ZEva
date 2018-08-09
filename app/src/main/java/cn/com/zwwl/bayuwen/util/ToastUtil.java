@@ -58,4 +58,8 @@ public class ToastUtil {
     public static void showLongToast(int resID) {
         longToast(MyApplication.getInstance().getResources().getString(resID));
     }
+
+    public static void showLongToast(String content) {
+        longToast(content);
+    }
 }

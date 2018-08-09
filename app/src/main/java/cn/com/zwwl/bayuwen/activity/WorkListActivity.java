@@ -72,15 +72,15 @@ public class WorkListActivity extends BaseActivity {
     private List<WorkListModel.ChildClassInfoBeanX> childClassInfoBeanx;
     private Activity activity;
     private String Kid;
-    private HashMap<String,String> map=new HashMap<>();
+    private HashMap<String, String> map = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_list);
         ButterKnife.bind(this);
-        activity= this;
-        Intent intent =getIntent();
+        activity = this;
+        Intent intent = getIntent();
         Kid = intent.getStringExtra("kid");
         map.put("kid", Kid);
         initData1();
@@ -88,7 +88,7 @@ public class WorkListActivity extends BaseActivity {
     }
 
     private void bindData() {
-        new CourseWorkListApi(activity, map,new ResponseCallBack<WorkListModel>() {
+        new CourseWorkListApi(activity, map, new ResponseCallBack<WorkListModel>() {
             @Override
             public void result(WorkListModel workListModel, ErrorMsg errorMsg) {
 
@@ -120,7 +120,7 @@ public class WorkListActivity extends BaseActivity {
         }
     }
 
-    private View getChildView(final WorkListModel.BigClassInfoBean.TeacherInfoBean teacherBean ) {
+    private View getChildView(final WorkListModel.BigClassInfoBean.TeacherInfoBean teacherBean) {
         View view = LayoutInflater.from(activity).inflate(R.layout.item_teacher_calendar_list,
                 null);
         TextView name = view.findViewById(R.id.item_t_c_name);
@@ -140,6 +140,7 @@ public class WorkListActivity extends BaseActivity {
         });
         return view;
     }
+
     private void initData1() {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -155,7 +156,6 @@ public class WorkListActivity extends BaseActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent();
                 if (childClassInfoBeanx.get(position).getChildClassInfo().getIslook() == 0) {
-
                     intent.putExtra("kid", childClassInfoBeanx.get(position).getChildClassInfo().getKid());
                     intent.putExtra("cid", childClassInfoBeanx.get(position).getChildClassInfo().getId());
                     intent.putExtra("titleName", bigClassInfoBean.getTitle());
@@ -164,7 +164,6 @@ public class WorkListActivity extends BaseActivity {
                     intent.setClass(activity, UploadPicActivity.class);
                     startActivity(intent);
                 } else {
-
                     intent.setClass(activity, WorkDetailsActivity.class);
                     intent.putExtra("model", childClassInfoBeanx.get(position));
                     startActivity(intent);
@@ -177,14 +176,15 @@ public class WorkListActivity extends BaseActivity {
     protected void initData() {
 
     }
-  @OnClick({R.id.id_back})
+
+    @OnClick({R.id.id_back})
     @Override
     public void onClick(View view) {
-      switch (view.getId()) {
-          case R.id.id_back:
-              finish();
-              break;
-      }
-  }
+        switch (view.getId()) {
+            case R.id.id_back:
+                finish();
+                break;
+        }
+    }
 
 }

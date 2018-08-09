@@ -35,14 +35,13 @@
             android:gravity="center_vertical"
             android:hint="@string/search"
             android:imeOptions="actionSearch"
-            android:lines="1"
             android:inputType="text"
+            android:lines="1"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:textColor="@color/gray_dark"
             android:textColorHint="@color/gray_light"
             android:textSize="@dimen/text_size_12" />
-
 
 
     </LinearLayout>
@@ -57,7 +56,6 @@
             android:id="@+id/all_t_grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="10dp"
             android:background="@color/white"
             android:numColumns="4"

@@ -55,9 +55,9 @@ public class AllTeacherActivity extends BaseActivity {
     private TeacherMenuView menuView;
     private EditText searchEv;
     private RecyclerView gridView;
-    private static String PAMAS_SEARCHKEY = "keyword";
-    private static String PAMAS_USERS = "users";
-    private static String PAMAS_TYPES = "type";
+    private static String PAMAS_SEARCHKEY = "keyword";//关键字
+    private static String PAMAS_USERS = "users";//年级
+    private static String PAMAS_TYPES = "type";//课程类型
 
     private TeacherAdapter teacherAdapter;
     private List<TeacherModel> teacherModels = new ArrayList<>();
@@ -91,14 +91,18 @@ public class AllTeacherActivity extends BaseActivity {
     private void getListData() {
         String url = "";
         if (para.containsKey(PAMAS_SEARCHKEY) || para.containsKey(PAMAS_USERS) || para
-                .containsKey(PAMAS_TYPES)) {
+                .containsKey(PAMAS_TYPES)) {//教师/班主任搜索
             url += UrlUtil.getTeacherUrl(null) + "/search?flag=" + type;
-        } else {
+        } else {//获取全部教师/全部班主任
             url += UrlUtil.getTeacherUrl(null) + "?flag=" + type;
         }
         StringBuilder builder = new StringBuilder(url);
-        para.put("page", String.valueOf(page));
-        para.put("pagesize", "32");
+        if (!para.containsKey("page")) {
+            para.put("page", String.valueOf(page));
+        }
+        if (!para.containsKey("pagesize")) {
+            para.put("pagesize", "32");
+        }
         for (String key : para.keySet()) {
             if (!TextUtils.isEmpty(para.get(key))) {
                 builder.append("&").append(key).append("=").append(para.get(key));
@@ -205,10 +209,11 @@ public class AllTeacherActivity extends BaseActivity {
             @Override
             public void onClick(List<SelectTempModel> checkedList, int type) {
                 String stxt = searchEv.getText().toString();
-                if (!TextUtils.isEmpty(stxt))
+                if (!TextUtils.isEmpty(stxt)) {
                     para.put(PAMAS_SEARCHKEY, stxt);
+                }
                 if (Tools.listNotNull(checkedList)) {
-                    if (type == 1) {
+                    if (type == 1) {//年级
                         String gtxt = "";
                         for (SelectTempModel selectTempModel : checkedList) {
                             if (selectTempModel.isCheck())
@@ -216,7 +221,7 @@ public class AllTeacherActivity extends BaseActivity {
                         }
                         if (!TextUtils.isEmpty(gtxt))
                             para.put(PAMAS_USERS, gtxt.substring(0, gtxt.length() - 1));
-                    } else if (type == 2) {
+                    } else if (type == 2) {//项目
                         String xtxt = "";
                         for (SelectTempModel selectTempModel : checkedList) {
                             if (selectTempModel.isCheck())
@@ -224,6 +229,19 @@ public class AllTeacherActivity extends BaseActivity {
                         }
                         if (!TextUtils.isEmpty(xtxt))
                             para.put(PAMAS_TYPES, xtxt.substring(0, xtxt.length() - 1));
+                    }
+                } else {//全部
+                    switch (type) {
+                        case 1://年级
+                            if (para.containsKey(PAMAS_USERS)) {
+                                para.remove(PAMAS_USERS);
+                            }
+                            break;
+                        case 2://项目
+                            if (para.containsKey(PAMAS_TYPES)) {
+                                para.remove(PAMAS_TYPES);
+                            }
+                            break;
                     }
                 }
                 page = 1;

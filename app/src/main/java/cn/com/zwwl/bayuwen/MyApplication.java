@@ -6,12 +6,14 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.multidex.MultiDexApplication;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.avos.avoscloud.AVOSCloud;
+import com.duobeiyun.common.DBYHelper;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -37,7 +39,7 @@ import cn.com.zwwl.bayuwen.util.AddressTools;
  * Created by Eva. on 2018/3/23.
  */
 
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
 
     private String UMENG_APPKEY = "5ad40381f29d987f490000be";// 友盟appkey
 
@@ -124,6 +126,7 @@ public class MyApplication extends Application {
         initAlbum();
         initBeeCloud();
         initAdressJson();
+        initDby();
     }
 
     /**
@@ -139,6 +142,13 @@ public class MyApplication extends Application {
     private void initBeeCloud() {
         BeeCloud.setAppIdAndSecret("721109e7-16df-4697-adca-3d5ba26b85ff",
                 "bdd7ea95-977e-4771-bafa-dcc2e0ae57d7");
+    }
+
+    /**
+     * 初始化多贝云
+     */
+    private void initDby() {
+        DBYHelper.getInstance().initDBY(this);
     }
 
     private void initAlbum() {

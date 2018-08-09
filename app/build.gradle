@@ -10,6 +10,7 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0.1"
+        multiDexEnabled true
         ndk {
             //选择要添加的对应cpu类型的.so库。
             abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
@@ -39,6 +40,12 @@ android {
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
+        }
+    }
+    //    duobeiyunSDk config
+    repositories {
+        flatDir {
+            dirs 'libs'
         }
     }
 }
@@ -97,4 +104,17 @@ dependencies {
     //图片缩放
     implementation 'com.github.chrisbanes:PhotoView:2.1.4'
     implementation 'org.greenrobot:eventbus:3.1.1'
+
+    //duobeisdk依赖的第三方库
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.liulishuo.filedownloader:library:1.2.2'
+
+    //duobeiyunSDK
+    implementation(name: 'dbysdk_2.4.5_351_20180705095550', ext: 'aar')
+
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    implementation 'com.facebook.fresco:fresco:1.8.0'
+    //分包
+    implementation 'com.android.support:multidex:1.0.3'
 }

@@ -362,6 +362,7 @@ public class UrlUtil {
     public static String getLectureEval() {
         return HOST + "/reportcomment/teacher";
     }
+
     // 课节报告提交评价
     public static String commitLectureEval() {
         return HOST + "/reportcomment/comment";

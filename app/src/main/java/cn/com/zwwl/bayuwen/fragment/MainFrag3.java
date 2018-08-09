@@ -62,7 +62,7 @@ import cn.com.zwwl.bayuwen.widget.decoration.DividerItemDecoration;
 import static cn.com.zwwl.bayuwen.MyApplication.mContext;
 
 /**
- * 课程追踪入口
+ * 课程跟踪入口
  * Created by zhumangmang at 2018/5/29 15:24
  */
 public class MainFrag3 extends BasicFragment {

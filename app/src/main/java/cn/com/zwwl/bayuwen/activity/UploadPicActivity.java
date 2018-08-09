@@ -53,7 +53,7 @@ public class UploadPicActivity extends BaseActivity {
     ArrayList<AlbumFile> albumFiles;
     UploadPicAdapter uploadPicAdapter;
     AlbumFile file;
-    String kid, cid, titleName1, courseName1,start_time;
+    String kid, cid, titleName1, courseName1, start_time;
     StringBuilder urls;
     LoadingDialog loadingDialog;
     @BindView(R.id.id_back)
@@ -105,12 +105,12 @@ public class UploadPicActivity extends BaseActivity {
         loadingDialog = new LoadingDialog(this);
         loadingDialog.setContent("正在上传");
         urls = new StringBuilder();
-        kid = getIntent().getStringExtra("kid");
-        cid = getIntent().getStringExtra("cid");
+        kid = String.valueOf(getIntent().getIntExtra("kid", 0));
+        cid = String.valueOf(getIntent().getIntExtra("cid", 0));
         titleName1 = getIntent().getStringExtra("titleName");
         courseName1 = getIntent().getStringExtra("courseName");
         courseName1 = getIntent().getStringExtra("courseName");
-        start_time =getIntent().getStringExtra("data_time");
+        start_time = getIntent().getStringExtra("data_time");
         titlecourseName.setText(titleName1);
         courseName.setText(courseName1);
         dateName.setText(start_time);
@@ -189,8 +189,12 @@ public class UploadPicActivity extends BaseActivity {
                 if (albumFiles != null && albumFiles.size() > 0) {
                     List<File> files = new ArrayList<>();
                     for (AlbumFile albumFile : albumFiles) {
-                        File f = new File(albumFile.getPath());
-                        files.add(f);
+                        if (!TextUtils.isEmpty(albumFile.getPath())) {
+                            File f = new File(albumFile.getPath());
+                            files.add(f);
+                        }
+
+
                     }
                     loadingDialog.show();
                     new UploadPicApi(this, files, new ResponseCallBack<List<CommonModel>>() {
@@ -198,8 +202,14 @@ public class UploadPicActivity extends BaseActivity {
                         public void result(List<CommonModel> commonModels, ErrorMsg errorMsg) {
                             if (commonModels != null && commonModels.size() > 0) {
                                 urls.setLength(0);
-                                for (CommonModel c : commonModels) {
-                                    urls.append(c.getUrl()).append(",");
+//                                for (CommonModel c : commonModels) {
+//                                    urls.append(c.getUrl()).append(",");
+//                                }
+                                for (int i = 0; i < commonModels.size(); i++) {
+                                    urls.append(commonModels.get(i).getUrl());
+                                    if (i != commonModels.size() - 1) {
+                                        urls.append(",");
+                                    }
                                 }
                                 uploadWork();
                             } else {

@@ -47,6 +47,14 @@
     <!-- 友盟分享登录需要权限 -->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 
+
+    <!--多贝云-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -518,6 +526,10 @@
         <activity android:name=".widget.photoview.PhotoActivity" />
         <activity android:name=".activity.AbilityAnalysisActivity" />
         <activity android:name=".activity.WorkListActivity"></activity>
+        <activity
+            android:name=".live.CustomizedLiveActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustNothing" />
     </application>
 
 </manifest>

@@ -16,6 +16,7 @@ public class UploadPicAdapter extends BaseQuickAdapter<AlbumFile, BaseViewHolder
     public UploadPicAdapter(@Nullable List<AlbumFile> data) {
         super(R.layout.item_upload_pic, data);
     }
+
     @Override
     protected void convert(BaseViewHolder helper, AlbumFile item) {
         if (helper.getLayoutPosition() == mData.size() - 1) {

@@ -163,7 +163,7 @@ public class AlbumDetailActivity extends BaseActivity {
 
     }
 
-
+    //播放中
     private void checkCurrent() {
         for (int i = 0; i < fmModels.size(); i++) {
             if (MusicWindow.getInstance(this).currentFmModel != null && fmModels.get(i).getId()
@@ -177,6 +177,7 @@ public class AlbumDetailActivity extends BaseActivity {
         handler.sendEmptyMessage(MSG_REFRESH_LIST);
     }
 
+    //加载中
     private void checkLoading(int pos) {
         for (int i = 0; i < fmModels.size(); i++) {
             if (i == pos) {
@@ -268,9 +269,10 @@ public class AlbumDetailActivity extends BaseActivity {
         fmListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (fmModels.get(position).getStatus() == 1) {
+
+                if (fmModels.get(position).getStatus() == 1) {//锁，去购买
                     getKeModel();
-                } else {
+                } else {//播放音频
                     currentPosition = position;
                     currentFmModel = fmModels.get(position);
                     checkLoading(position);
@@ -669,6 +671,10 @@ public class AlbumDetailActivity extends BaseActivity {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                         Uri.parse("package:" + getPackageName()));
                 startActivityForResult(intent, Constance.OVERLAY_PERMISSION_REQ_CODE_RESUME);
+            } else {
+                MusicWindow.getInstance(this).movetoController(0);
+                registerReceiver();//先恢复数据 再注册receiver
+                checkCurrent();
             }
         } else {
             MusicWindow.getInstance(this).movetoController(0);
@@ -713,9 +719,11 @@ public class AlbumDetailActivity extends BaseActivity {
 //            }
                 break;
             case Constance.OVERLAY_PERMISSION_REQ_CODE_RESUME:
-                MusicWindow.getInstance(this).movetoController(0);
-                registerReceiver();//先恢复数据 再注册receiver
-                checkCurrent();
+                if (Settings.canDrawOverlays(this)) {
+                    MusicWindow.getInstance(this).movetoController(0);
+                    registerReceiver();//先恢复数据 再注册receiver
+                    checkCurrent();
+                }
                 break;
         }
 //        if (requestCode == OVERLAY_PERMISSION_REQ_CODE) {

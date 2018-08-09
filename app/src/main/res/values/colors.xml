@@ -68,5 +68,11 @@
     <color name="course_repaly">#F2F2F2</color>
     <color name="workListNoAppro">#F3A046</color>
     <color name="workListScore">#FFB0C2</color>
+    <!--多贝云-->
+    <color name="color_answer_chose">#6DA8F8</color>
+    <color name="color_answer_normal">#ccc</color>
+    <color name="color_answer_result">#fff</color>
+    <color name="color_answer_result_show">#9B9B9B</color>
+    <color name="white_20_opacity">#E4E4E4</color>
 
 </resources>

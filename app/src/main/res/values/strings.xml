@@ -457,4 +457,9 @@
     <string name="word_work">文字作业</string>
     <string name="look_work">查看作业</string>
 
+    <!--多贝云-->
+    <string name="answer_tips">提示：\n 从左侧选项中选择你要提交的答案； 提交后选项不可更改。</string>
+    <string name="tv_answer_end_disp">老师已结束本次答题，请关闭弹窗</string>
+    <string name="answer_current_number">当前答题人数 %d</string>
+
 </resources>

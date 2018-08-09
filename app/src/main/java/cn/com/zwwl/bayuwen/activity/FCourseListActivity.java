@@ -123,13 +123,12 @@ public class FCourseListActivity extends BaseActivity {
 
     @Override
     public void onClick(View view) {
-       switch (view.getId()){
-           case R.id.id_back:
-               finish();
-               break;
-       }
+        switch (view.getId()) {
+            case R.id.id_back:
+                finish();
+                break;
+        }
     }
-
 
 
 }

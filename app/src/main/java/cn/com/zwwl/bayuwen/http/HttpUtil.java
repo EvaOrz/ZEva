@@ -278,10 +278,12 @@ public class HttpUtil {
         MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
         if (file != null) {
             for (File f : file) {
-                if (f.exists())
-                    requestBody.addFormDataPart(file.indexOf(f) + "", f.getName(), RequestBody
-                            .create(MediaType
-                                    .parse("image/*"), f));
+                if (f.exists()) {
+                    String name = "file";
+                    String filename = f.getName();
+                    RequestBody body = RequestBody.create(MediaType.parse("image/*"), f);
+                    requestBody.addFormDataPart(name, filename, body);
+                }
             }
         }
         Request.Builder requestBuilder = new Request.Builder();
