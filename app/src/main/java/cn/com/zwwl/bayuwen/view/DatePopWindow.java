@@ -2,6 +2,7 @@ package cn.com.zwwl.bayuwen.view;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -237,8 +240,8 @@ public class DatePopWindow implements View.OnClickListener {
                 arry_years.add(i + "");
             }
         } else {
-            for (int i = CalendarTools.getCurrentYear() + afterToYearNum - 1; i > CalendarTools
-                    .getCurrentYear() - 1;
+            for (int i = CalendarTools.getCurrentYear() + afterToYearNum - 1; i >= CalendarTools
+                    .getCurrentYear();
                  i--) {
                 arry_years.add(i + "");
             }
@@ -247,17 +250,45 @@ public class DatePopWindow implements View.OnClickListener {
 
     }
 
+    /**
+     * @param months
+     */
     public void initMonths(int months) {
         arry_months.clear();
-        for (int i = 1; i <= months; i++) {
-            arry_months.add(i + "");
+        if (isBeforeToday) {
+            for (int i = 1; i <= months; i++) {
+                arry_months.add(i + "");
+            }
+        } else {
+            if (Integer.parseInt(selectYear) == CalendarTools.getCurrentYear())
+                for (int i = CalendarTools.getCurrentMonth(); i <= 12; i++) {
+                    arry_months.add(i + "");
+                }
+            else
+                for (int i = 1; i <= 12; i++) {
+                    arry_months.add(i + "");
+                }
         }
     }
 
     public void initDays(int days) {
         arry_days.clear();
-        for (int i = 1; i <= days; i++) {
-            arry_days.add(i + "");
+        if (isBeforeToday) {
+            for (int i = 1; i <= days; i++) {
+                arry_days.add(i + "");
+            }
+        } else {
+            int num2 = CalendarTools.fromStringToca1(selectYear + "-" + selectMonth).getActualMaximum(Calendar.DAY_OF_MONTH);
+            if (Integer.parseInt(selectYear) == CalendarTools.getCurrentYear() && Integer.parseInt(selectMonth) == CalendarTools.getCurrentMonth()) {
+                for (int i = days; i <= num2; i++) {
+                    arry_days.add(i + "");
+                }
+            }else {
+                for (int i = 1; i <= num2; i++) {
+                    arry_days.add(i + "");
+                }
+            }
+
         }
     }
 

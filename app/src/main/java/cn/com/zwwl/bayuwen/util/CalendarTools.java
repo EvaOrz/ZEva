@@ -1,10 +1,6 @@
 package cn.com.zwwl.bayuwen.util;
 
 import android.text.TextUtils;
-import android.util.Log;
-
-import com.avos.avoscloud.utils.StringUtils;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
