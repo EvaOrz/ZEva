@@ -273,8 +273,23 @@ public class AlbumDetailActivity extends BaseActivity {
                 } else {//播放音频
                     currentPosition = position;
                     currentFmModel = fmModels.get(position);
-                    checkLoading(position);
-                    sendintent(ACTION_START_PLAY);
+                    //判断当前状态
+                    int gifSta = currentFmModel.getGifSta();
+                    switch (gifSta) {
+                        case 0://id
+                            checkLoading(position);
+                            sendintent(ACTION_START_PLAY);
+                            break;
+                        case 1://loading
+
+                            break;
+                        case 2://play
+                            fmModels.get(position).setGifSta(0);
+                            handler.sendEmptyMessage(MSG_REFRESH_LIST);
+                            MusicWindow.setPlayState();
+                            break;
+                    }
+
                 }
 
             }
@@ -658,8 +673,14 @@ public class AlbumDetailActivity extends BaseActivity {
             unregisterReceiver(musicStatusReceiver);
         if (isFromMain && isGoMain)
             return;
-        if (Settings.canDrawOverlays(this))
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (Settings.canDrawOverlays(this)) {
+                MusicWindow.getInstance(this).hidePopupWindow();
+            }
+        } else {
             MusicWindow.getInstance(this).hidePopupWindow();
+        }
+
     }
 
     @Override
@@ -728,7 +749,7 @@ public class AlbumDetailActivity extends BaseActivity {
 //        }
     }
 
-    private void initFm(){
+    private void initFm() {
         MusicWindow.getInstance(this).movetoController(0);
         registerReceiver();//先恢复数据 再注册receiver
         checkCurrent();

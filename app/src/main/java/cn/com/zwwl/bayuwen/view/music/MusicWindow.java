@@ -153,14 +153,7 @@ public class MusicWindow {
         playBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isPlaying) {
-                    playBt.setImageResource(R.drawable.music_control_pause);
-                    closeBt.setVisibility(View.VISIBLE);
-                } else {
-                    playBt.setImageResource(R.drawable.music_control_play);
-                    closeBt.setVisibility(View.GONE);
-                }
-                sendintent(BaseActivity.ACTION_RESUME_PAUSE);
+                setPlayState();
             }
         });
         closeBt = view.findViewById(R.id.control_play_close);
@@ -196,6 +189,18 @@ public class MusicWindow {
 //        });
 
         return view;
+    }
+
+    //设置播放状态
+    public static void setPlayState() {
+        if (isPlaying) {
+            playBt.setImageResource(R.drawable.music_control_pause);
+            closeBt.setVisibility(View.VISIBLE);
+        } else {
+            playBt.setImageResource(R.drawable.music_control_play);
+            closeBt.setVisibility(View.GONE);
+        }
+        sendintent(BaseActivity.ACTION_RESUME_PAUSE);
     }
 
     public void setFmData(AlbumModel albumModel, FmModel fmModel) {
