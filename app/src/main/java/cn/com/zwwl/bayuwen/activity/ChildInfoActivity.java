@@ -59,7 +59,6 @@ public class ChildInfoActivity extends BaseActivity {
     private TextView genderTv, birthTv, ruxueTv, nianjiTv, noTv, titleTv;
     private boolean isNeedChangePic = false;
     private boolean isModify = false;// 是否是修改信息
-
     private TextView deAll, deCancle;
     private ImageView deDo;
 
@@ -398,18 +397,28 @@ public class ChildInfoActivity extends BaseActivity {
         if (!TextUtils.isEmpty(childModel.getPic()))
             ImageLoader.display(mContext, aImg, childModel.getPic(), R.drawable
                     .avatar_placeholder, R.drawable.avatar_placeholder);
-        nameEv.setText(childModel.getName());
+        if (!TextUtils.isEmpty(childModel.getName())) {
+            nameEv.setText(childModel.getName());
+        }
         genderTv.setText(childModel.getSexTxt(childModel.getGender()));
-        phoneEv.setText(childModel.getTel());
-        if (null != childModel.getBirthday() && !TextUtils.isEmpty(childModel.getBirthday()))
+        if (!TextUtils.isEmpty(childModel.getTel())) {
+            phoneEv.setText(childModel.getTel());
+        }
+        if (!TextUtils.isEmpty(childModel.getBirthday()) && !"null".equals(childModel.getBirthday())) {
             birthTv.setText(childModel.getBirthday());
-        if (null != childModel.getAdmission_time() && !TextUtils.isEmpty(childModel
-                .getAdmission_time()))
+        }
+        if (!TextUtils.isEmpty(childModel
+                .getAdmission_time()) && !"null".equals(childModel.getAdmission_time())) {
             ruxueTv.setText(childModel.getAdmission_time());
-        nianjiTv.setText(childModel.getGrade());
+        }
+
+        if (!TextUtils.isEmpty(childModel.getGrade())) {
+            nianjiTv.setText(childModel.getGrade());
+        }
         noTv.setText(childModel.getNo());
-        if (null != childModel.getSchool() && !TextUtils.isEmpty(childModel.getSchool()))
+        if (!TextUtils.isEmpty(childModel.getSchool()) && !"null".equals(childModel.getSchool())) {
             schoolEv.setText(childModel.getSchool());
+        }
         titleTv.setText(childModel.getName());
     }
 
