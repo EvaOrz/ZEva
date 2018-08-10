@@ -203,12 +203,33 @@ public class ChildInfoActivity extends BaseActivity {
                         d = c.get(Calendar.DATE);
                     }
                 }
-                new DatePopWindow(mContext, true, y, m, d, new DatePopWindow
+                new DatePopWindow(mContext, true, true, y, m, d, new DatePopWindow
                         .MyDatePickListener() {
                     @Override
                     public void onDatePick(int year, int month, int day) {
                         childModel.setBirthday(year + "-" + month + "-" + day);
                         handler.sendEmptyMessage(0);
+                        //计算年级和入学年月
+                        int currentYear = CalendarTools.getCurrentYear();
+                        int currentMonth = CalendarTools.getCurrentMonth();
+                        int gradeInt = currentYear - year - 6;
+                        if (currentMonth >= 7) {
+                            gradeInt += 1;
+                        }
+                        if (gradeInt < 1) {
+                            gradeInt = 1;
+                        }
+                        if (gradeInt > 12) {
+                            gradeInt = 12;
+                        }
+                        //设置年级
+                        childModel.setGrade(AppValue.getGradeStrings().get
+                                (gradeInt - 1));
+                        handler.sendEmptyMessage(4);
+                        //设置入学年月,默认为9月
+                        int entranceYear = year + 6;//入学年份
+                        childModel.setAdmission_time(entranceYear + "-9");
+                        handler.sendEmptyMessage(2);
                     }
                 });
 
@@ -229,28 +250,28 @@ public class ChildInfoActivity extends BaseActivity {
                     }
                 }
                 yyy = yRecord;
-                new DatePopWindow(mContext, false, yRecord, mRecord, dRecord, new
+                new DatePopWindow(mContext, true, false, yRecord, mRecord, dRecord, new
                         DatePopWindow.MyDatePickListener() {
                             @Override
                             public void onDatePick(int year, int month, int day) {
                                 childModel.setAdmission_time(year + "-" + month);
                                 handler.sendEmptyMessage(2);
 
-                                int gradeNo = -1;
-                                for (int i = 0; i < AppValue.getGradeStrings().size(); i++) {
-                                    if (AppValue.getGradeStrings().get(i).equals(childModel
-                                            .getGrade())) {
-                                        gradeNo = i;
-                                    }
-                                }
-                                if (gradeNo > -1) {
-                                    int newGradeNo = gradeNo + year - yyy;
-                                    if (newGradeNo > -1) {
-                                        childModel.setGrade(AppValue.getGradeStrings().get
-                                                (newGradeNo));
-                                        handler.sendEmptyMessage(4);
-                                    }
-                                }
+//                                int gradeNo = -1;
+//                                for (int i = 0; i < AppValue.getGradeStrings().size(); i++) {
+//                                    if (AppValue.getGradeStrings().get(i).equals(childModel
+//                                            .getGrade())) {
+//                                        gradeNo = i;
+//                                    }
+//                                }
+//                                if (gradeNo > -1) {
+//                                    int newGradeNo = gradeNo + year - yyy;
+//                                    if (newGradeNo > -1) {
+//                                        childModel.setGrade(AppValue.getGradeStrings().get
+//                                                (newGradeNo));
+//                                        handler.sendEmptyMessage(4);
+//                                    }
+//                                }
                             }
                         });
 
@@ -262,7 +283,7 @@ public class ChildInfoActivity extends BaseActivity {
                 String school = schoolEv.getText().toString();
                 if (TextUtils.isEmpty(na)) {
                     showToast("姓名不能为空");
-                }  else if (TextUtils.isEmpty(grade)) {
+                } else if (TextUtils.isEmpty(grade)) {
                     showToast("年级不能为空");
                 } else {
                     if (AppValue.checkIsPhone(mContext, phone)) {

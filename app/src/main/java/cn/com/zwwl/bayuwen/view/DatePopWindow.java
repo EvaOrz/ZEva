@@ -85,10 +85,11 @@ public class DatePopWindow implements View.OnClickListener {
      * @param d
      * @param listener
      */
-    public DatePopWindow(Context context, boolean isNeedDay, int y, int m, int d,
+    public DatePopWindow(Context context, boolean isBeforeToday, boolean isNeedDay, int y, int m, int d,
                          MyDatePickListener listener) {
         mContext = context;
         this.isNeedDay = isNeedDay;
+        this.isBeforeToday = isBeforeToday;
         this.listener = listener;
         setDate(y, m, d);
         init();
@@ -283,7 +284,7 @@ public class DatePopWindow implements View.OnClickListener {
                 for (int i = days; i <= num2; i++) {
                     arry_days.add(i + "");
                 }
-            }else {
+            } else {
                 for (int i = 1; i <= num2; i++) {
                     arry_days.add(i + "");
                 }
