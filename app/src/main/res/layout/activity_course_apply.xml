@@ -1,47 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
- <include
-     android:id="@+id/top_title"
-     layout="@layout/top_layout"
-     app:layout_constraintTop_toTopOf="parent"/>
-    <LinearLayout
-        android:id="@+id/old"
+
+    <include
+        android:id="@+id/top_title"
+        layout="@layout/top_layout" />
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/old_title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginStart="@dimen/dp_16"
+        android:layout_below="@id/top_title"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_10"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@+id/top_title" >
-
-        <!--<android.support.v7.widget.AppCompatImageView-->
-            <!--android:layout_width="@dimen/dp_20"-->
-            <!--android:layout_height="@dimen/dp_20"-->
-            <!--android:src="@mipmap/icon_change_content" />-->
-
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_5"
-            android:layout_marginStart="@dimen/dp_5"
-            android:text="调课内容" />
-    </LinearLayout>
+        android:text="调课内容" />
 
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/old_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_below="@id/old_title_tv"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/gray_white_xiankuang"
-        android:padding="@dimen/dp_10"
-        app:layout_constraintTop_toBottomOf="@+id/old">
+        android:padding="@dimen/dp_10">
 
         <LinearLayout
             android:id="@+id/unit_layout"
@@ -87,17 +76,11 @@
         android:id="@+id/now"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginStart="@dimen/dp_16"
+        android:layout_below="@id/old_layout"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_10"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@+id/old_layout">
-
-        <!--<android.support.v7.widget.AppCompatImageView-->
-            <!--android:layout_width="@dimen/dp_20"-->
-            <!--android:layout_height="@dimen/dp_20"-->
-            <!--android:src="@mipmap/icon_new_class"
-            android:background="@drawable/draw_gray_line_bg"/>-->
+        android:gravity="center_vertical">
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
@@ -108,23 +91,22 @@
             android:text="@string/transfer_course_class" />
     </LinearLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginStart="@dimen/dp_16"
+        android:layout_below="@id/now"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/gray_white_xiankuang"
-        android:padding="@dimen/dp_10"
-        app:layout_constraintTop_toBottomOf="@+id/now">
+        android:padding="@dimen/dp_10">
 
         <FrameLayout
             android:id="@+id/pic_layout"
             android:layout_width="@dimen/dp_80"
             android:layout_height="@dimen/dp_80"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true">
 
             <cn.com.zwwl.bayuwen.widget.CircleImageView
                 android:id="@+id/pic"
@@ -137,8 +119,8 @@
                 app:type="1" />
 
             <android.support.v7.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:scaleType="centerInside"
                 android:src="@mipmap/icon_play" />
@@ -146,13 +128,12 @@
 
         <LinearLayout
             android:id="@+id/content_layout"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginStart="@dimen/dp_10"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/pic_layout">
+            android:layout_toLeftOf="@+id/right_layout"
+            android:layout_toRightOf="@id/pic_layout"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -170,7 +151,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_5"
-                    android:layout_marginStart="@dimen/dp_5"
                     android:textColor="@color/gray_dark"
                     android:textSize="@dimen/text_size_14" />
             </LinearLayout>
@@ -191,7 +171,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_5"
-                    android:layout_marginStart="@dimen/dp_5"
                     android:textColor="@color/gray_light"
                     android:textSize="@dimen/sp_12" />
             </LinearLayout>
@@ -212,7 +191,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_5"
-                    android:layout_marginStart="@dimen/dp_5"
                     android:textColor="@color/gray_light"
                     android:textSize="@dimen/sp_12" />
             </LinearLayout>
@@ -233,7 +211,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_5"
-                    android:layout_marginStart="@dimen/dp_5"
                     android:textColor="@color/gray_light"
                     android:textSize="@dimen/sp_12" />
 
@@ -255,7 +232,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_5"
-                    android:layout_marginStart="@dimen/dp_5"
                     android:textColor="@color/gray_light"
                     android:textSize="@dimen/sp_12" />
 
@@ -265,13 +241,13 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/right_layout"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:gravity="bottom|end"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/content_layout"
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:orientation="vertical">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/stock"
@@ -290,16 +266,17 @@
                 android:textSize="@dimen/text_size_16" />
         </LinearLayout>
 
-    </android.support.constraint.ConstraintLayout>
+
+    </RelativeLayout>
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:background="@drawable/drawable_yellow_light"
         android:gravity="center"
         android:padding="@dimen/dp_10"
         android:text="@string/check_submit"
-        android:textColor="@color/apply_submit"
-        app:layout_constraintBottom_toBottomOf="parent" />
-</android.support.constraint.ConstraintLayout>
+        android:textColor="@color/apply_submit" />
+</RelativeLayout>
