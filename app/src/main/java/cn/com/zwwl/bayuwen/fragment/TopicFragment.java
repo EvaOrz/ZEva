@@ -1,6 +1,5 @@
 package cn.com.zwwl.bayuwen.fragment;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -42,7 +41,9 @@ import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.model.TopicMessageModel;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
 
-
+/**
+ * 话题
+ */
 public class TopicFragment extends BasicFragment {
 
     Unbinder unbinder;
@@ -60,7 +61,7 @@ public class TopicFragment extends BasicFragment {
 
     private String url = UrlUtil.getTopicMessage();
     private List<TopicMessageModel> messageModels;
-    public List<TopicMessageModel> messageModels1=new ArrayList<>();
+    public List<TopicMessageModel> messageModels1 = new ArrayList<>();
     private TopicMessageAdapter topicMessageAdapter;
 
 
@@ -77,10 +78,7 @@ public class TopicFragment extends BasicFragment {
 
     @Override
     protected void initView() {
-
         messageModels = new ArrayList<>();
-
-
         allMessageList.setLayoutManager(new LinearLayoutManager(getActivity()));
         allMessageList.setItemAnimator(new DefaultItemAnimator());
 
@@ -93,33 +91,33 @@ public class TopicFragment extends BasicFragment {
     }
 
     private void HttpData() {
-        new TopicMessageApi(activity,url,new ResponseCallBack<List<TopicMessageModel>>() {
+        new TopicMessageApi(activity, url, new ResponseCallBack<List<TopicMessageModel>>() {
             @Override
             public void result(List<TopicMessageModel> messageModel, ErrorMsg errorMsg) {
                 refresh.finishLoadMore();
                 refresh.finishRefresh();
                 if (messageModel != null) {
                     messageModels.clear();
-                   //将List按照时间倒序排列
-                   messageModels =messageModel;
+                    //将List按照时间倒序排列
+                    messageModels = messageModel;
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                               Date d1;
-                               Date d2;
-                         TopicMessageModel topicMessageModel =new TopicMessageModel();
-                          //做一个冒泡排序，大的在数组的前列
-                              for(int i=0; i<messageModels.size()-1; i++){
-                                    for(int j=i+1; j<messageModels.size();j++){
-                                        ParsePosition pos1 = new ParsePosition(0);
-                                       ParsePosition pos2 = new ParsePosition(0);
-                                      d1 = sdf.parse(messageModels.get(i).getUpdate_at(), pos1);
-                                     d2 = sdf.parse(messageModels.get(j).getUpdate_at(), pos2);
-                                          if(d1.before(d2)){//如果队前日期靠前，调换顺序//
-                                           topicMessageModel=messageModels.get(i);
-                                            messageModels.set(i, messageModels.get(j));
-                                            messageModels.set(j, topicMessageModel);
-                                               }
-                                              }
-                                 }
+                    Date d1;
+                    Date d2;
+                    TopicMessageModel topicMessageModel = new TopicMessageModel();
+                    //做一个冒泡排序，大的在数组的前列
+                    for (int i = 0; i < messageModels.size() - 1; i++) {
+                        for (int j = i + 1; j < messageModels.size(); j++) {
+                            ParsePosition pos1 = new ParsePosition(0);
+                            ParsePosition pos2 = new ParsePosition(0);
+                            d1 = sdf.parse(messageModels.get(i).getUpdate_at(), pos1);
+                            d2 = sdf.parse(messageModels.get(j).getUpdate_at(), pos2);
+                            if (d1.before(d2)) {//如果队前日期靠前，调换顺序//
+                                topicMessageModel = messageModels.get(i);
+                                messageModels.set(i, messageModels.get(j));
+                                messageModels.set(j, topicMessageModel);
+                            }
+                        }
+                    }
 
                     topicMessageAdapter.setNewData(messageModels);
                 } else {
@@ -130,7 +128,6 @@ public class TopicFragment extends BasicFragment {
 
         });
     }
-
 
 
     @Override
@@ -181,13 +178,13 @@ public class TopicFragment extends BasicFragment {
     }
 
     private void HttpData1(String name) {
-        new TopicMessageApi(activity,url,name,new ResponseCallBack<List<TopicMessageModel>>() {
+        new TopicMessageApi(activity, url, name, new ResponseCallBack<List<TopicMessageModel>>() {
             @Override
             public void result(List<TopicMessageModel> messageModel, ErrorMsg errorMsg) {
                 refresh.finishLoadMore();
                 refresh.finishRefresh();
                 if (messageModel != null) {
-                    messageModels=messageModel;
+                    messageModels = messageModel;
                     topicMessageAdapter.setNewData(messageModels);
                 } else {
                     ToastUtil.showShortToast("暂无数据");

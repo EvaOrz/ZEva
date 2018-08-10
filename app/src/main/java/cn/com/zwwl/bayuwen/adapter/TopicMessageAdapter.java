@@ -19,23 +19,22 @@ public class TopicMessageAdapter extends BaseQuickAdapter<TopicMessageModel, Bas
     }
 
 
-
     @Override
     protected void convert(BaseViewHolder helper, TopicMessageModel item) {
 
-        helper.setText(R.id.tv_topic_title,item.getCourse()!=null?item.getCourse().getName():"");
+        helper.setText(R.id.tv_topic_title, item.getCourse() != null ? item.getCourse().getName() : "");
         helper.setText(R.id.topic_name, item.getName());
         helper.setText(R.id.topic_content, item.getContent());
-        helper.setText(R.id.tv_dianzan_id, item.getVote_num()+" 赞");
-        helper.setText(R.id.tv_comment_id, item.getComment_num()+" 评论");
-        if ((helper.getLayoutPosition())%4==0){
+        helper.setText(R.id.item_tv_time, item.getCreate_at());
+        helper.setText(R.id.tv_dianzan_id, item.getVote_num() + " 赞");
+        helper.setText(R.id.tv_comment_id, item.getComment_num() + " 评论");
+        if ((helper.getLayoutPosition()) % 4 == 0) {
             helper.setImageResource(R.id.layout_topic_title, R.drawable.drawpink);
-        }else if ((helper.getLayoutPosition())%4==1){
+        } else if ((helper.getLayoutPosition()) % 4 == 1) {
             helper.setImageResource(R.id.layout_topic_title, R.drawable.drawgreen);
-        }else  if ((helper.getLayoutPosition())%4==2){
+        } else if ((helper.getLayoutPosition()) % 4 == 2) {
             helper.setImageResource(R.id.layout_topic_title, R.drawable.drawgray);
-        }
-        else  if ((helper.getLayoutPosition())%4==3){
+        } else if ((helper.getLayoutPosition()) % 4 == 3) {
             helper.setImageResource(R.id.layout_topic_title, R.drawable.drawyellow);
         }
 

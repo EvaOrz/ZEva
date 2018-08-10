@@ -38,7 +38,6 @@ public class MessageActivity extends BaseActivity {
         UmengLogUtil.logMessageClick(mContext);
         setContentView(R.layout.activity_message);
         intent = getIntent();
-
         initView();
     }
 
@@ -105,7 +104,7 @@ public class MessageActivity extends BaseActivity {
             message_add.setVisibility(View.GONE);
             line1.setVisibility(View.VISIBLE);
             line2.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             message_add.setVisibility(View.VISIBLE);
             line1.setVisibility(View.INVISIBLE);
             line2.setVisibility(View.VISIBLE);
