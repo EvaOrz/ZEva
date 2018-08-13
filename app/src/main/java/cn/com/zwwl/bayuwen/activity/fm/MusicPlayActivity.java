@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -131,7 +132,10 @@ public class MusicPlayActivity extends BaseActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar s) {
-
+                if (ifFromUser) {
+                    int curTime = s.getProgress();
+                    sendintent(ACTION_SEEK_SEEKBAR, curTime);
+                }
             }
 
             @Override
@@ -141,10 +145,6 @@ public class MusicPlayActivity extends BaseActivity {
             @Override
             public void onProgressChanged(SeekBar arg0, int progress, boolean fromUser) {
                 ifFromUser = fromUser;
-                if (fromUser) {
-                    int curTime = arg0.getProgress();
-                    sendintent(ACTION_SEEK_SEEKBAR, curTime);
-                }
             }
         });
 
@@ -315,9 +315,8 @@ public class MusicPlayActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (musicStatusReceiver != null)
-            unregisterReceiver(musicStatusReceiver);
-
+//        if (musicStatusReceiver != null)
+//            unregisterReceiver(musicStatusReceiver);
     }
 
     /**

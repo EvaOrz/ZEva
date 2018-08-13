@@ -166,7 +166,7 @@ public class AlbumDetailActivity extends BaseActivity {
         for (int i = 0; i < fmModels.size(); i++) {
             if (MusicWindow.getInstance(this).currentFmModel != null && fmModels.get(i).getId()
                     .equals(MusicWindow.getInstance(this).currentFmModel
-                            .getId())) {
+                            .getId()) && MusicWindow.getInstance(this).isPlaying) {
                 currentPosition = i;
                 fmModels.get(i).setGifSta(2);
             } else
@@ -402,7 +402,8 @@ public class AlbumDetailActivity extends BaseActivity {
                 case 4:
                     showError(R.mipmap.blank_no_fm, R.string.no_content);
                     break;
-                case 5:
+                case MSG_RESUME_PAUSE:// musicwindow点击播放或者暂停需要更新列表的播放选中状态
+                    checkCurrent();
                     break;
                 case 6:
                     break;
@@ -657,11 +658,10 @@ public class AlbumDetailActivity extends BaseActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            // 开始播放、播放完成、更新时间
+            // 开始播放、播放完成、更新时间、暂停恢复
             if (intent.getAction().equals(ACTION_START_PLAY) || intent.getAction().equals
-                    (ACTION_MSG_COMPLETE)) {
+                    (ACTION_MSG_COMPLETE) || intent.getAction().equals(ACTION_RESUME_PAUSE)) {
                 handler.sendMessage((Message) intent.getParcelableExtra("music_service_message"));
-
             }
         }
     }
@@ -686,17 +686,17 @@ public class AlbumDetailActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (!Settings.canDrawOverlays(this)) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                        Uri.parse("package:" + getPackageName()));
-                startActivityForResult(intent, Constance.OVERLAY_PERMISSION_REQ_CODE_RESUME);
-            } else {
-                initFm();
-            }
-        } else {
-            initFm();
-        }
+//        if (Build.VERSION.SDK_INT >= 23) {
+//            if (!Settings.canDrawOverlays(this)) {
+//                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+//                        Uri.parse("package:" + getPackageName()));
+//                startActivityForResult(intent, Constance.OVERLAY_PERMISSION_REQ_CODE_RESUME);
+//            } else {
+//                initFm();
+//            }
+//        } else {
+        initFm();
+//        }
 
     }
 
