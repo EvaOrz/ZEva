@@ -1,8 +1,10 @@
 package cn.com.zwwl.bayuwen.glide;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.widget.ImageView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -68,6 +70,7 @@ public class ImageLoader {
      * @param imageView 容器控件
      * @param url       图片地址
      */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static void display(Context context, ImageView imageView, String url) {
         if (imageView == null || (context instanceof Activity && ((Activity) context).isDestroyed
                 ())) {
@@ -82,6 +85,27 @@ public class ImageLoader {
                 .into(imageView);
     }
 
+    /**
+     * 显示图片
+     *
+     * @param context   上下文
+     * @param imageView 容器控件
+     * @param url       图片地址
+     */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public static void displayPhoto(Context context, ImageView imageView, String url) {
+        if (imageView == null || (context instanceof Activity && ((Activity) context).isDestroyed
+                ())) {
+            return;
+        }
+        GlideApp.with(context)
+                .load(url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerInside()
+                .placeholder(R.mipmap.image_placeholder)
+                .error(R.mipmap.image_placeholder)
+                .into(imageView);
+    }
 
     /**
      * 缩小图片

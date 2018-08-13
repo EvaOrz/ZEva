@@ -5,7 +5,7 @@
     android:layout_width="100dp"
     android:layout_height="100dp"
     android:layout_margin="@dimen/dp_10"
-    android:scaleType="centerInside"
+    android:scaleType="centerCrop"
     app:borderRadius="@dimen/dp_10"
     app:isEdge="true"
     app:type="1" />

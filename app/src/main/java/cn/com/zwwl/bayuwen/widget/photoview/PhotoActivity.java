@@ -24,7 +24,7 @@ public class PhotoActivity extends BasicActivity {
     TextView page;
     @BindView(R.id.viewPager)
     PhotoViewPager viewPager;
-   String[] imagesUrl;
+    String[] imagesUrl;
     int current;
     PhotoAdapter adapter;
 

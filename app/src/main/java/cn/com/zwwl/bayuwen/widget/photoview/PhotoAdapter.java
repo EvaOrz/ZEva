@@ -30,7 +30,7 @@ public class PhotoAdapter extends PagerAdapter {
         String url = imagesUrl[position];
 
         PhotoView photoView = new PhotoView(context);
-        ImageLoader.display(context, photoView, url);
+        ImageLoader.displayPhoto(context, photoView, url);
         container.addView(photoView);
         return photoView;
     }
