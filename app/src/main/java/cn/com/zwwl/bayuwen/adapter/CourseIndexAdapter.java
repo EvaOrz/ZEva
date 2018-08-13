@@ -41,21 +41,21 @@ public class CourseIndexAdapter extends BaseMultiItemQuickAdapter<MyCourseModel.
                 helper.setImageResource(R.id.logo, R.mipmap.icon_replay);
                 break;
         }
-        ImageLoader.display(mContext, (ImageView) helper.getView(R.id.course_cover), item.getProducts().getPic() );
+        ImageLoader.display(mContext, (ImageView) helper.getView(R.id.course_cover), item.getProducts().getPic());
         helper.setText(R.id.course_name, item.getProducts().getTitle());
         helper.setText(R.id.course_chapter, String.valueOf(item.getProducts().getDesc()));
         helper.setText(R.id.class_time, String.format("下次上课时间:%s", TimeUtil.parseToHm(item.getPlan().getNextTime())));
-        if (item.getPlan().getIs_submit_job()==1&&item.getPlan().getJob()!=null){
-            helper.setText(R.id.work_title,R.string.look_work);
-        }else {
-            helper.setText(R.id.work_title,R.string.submit_homework);
+        if (item.getPlan().getIs_submit_job() == 1 && item.getPlan().getJob() != null) {
+            helper.setText(R.id.work_title, R.string.look_work);
+        } else {
+            helper.setText(R.id.work_title, R.string.submit_homework);
         }
         if (helper.getItemViewType() == 1) {
-            if ((item.getProducts().getType()=="9001")||(item.getProducts().getType()=="22")){
+            if ((item.getProducts().getType() == "9001") || (item.getProducts().getType() == "22")) {
                 helper.getView(R.id.playback_title).setVisibility(View.INVISIBLE);
                 helper.getView(R.id.work_title).setVisibility(View.INVISIBLE);
                 helper.getView(R.id.trace_title).setVisibility(View.INVISIBLE);
-            }else {
+            } else {
                 helper.getView(R.id.playback_title).setVisibility(View.VISIBLE);
                 helper.getView(R.id.work_title).setVisibility(View.VISIBLE);
                 helper.getView(R.id.trace_title).setVisibility(View.VISIBLE);

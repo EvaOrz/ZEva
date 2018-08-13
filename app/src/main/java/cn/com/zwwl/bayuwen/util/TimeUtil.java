@@ -24,6 +24,7 @@ public class TimeUtil {
 //        formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
         return formatter.format(time);
     }
+
     /**
      * Long-->String
      */
@@ -67,7 +68,8 @@ public class TimeUtil {
         }
         return 0;
     }
-    public static long convertToMillis(String date,String formatter) {
+
+    public static long convertToMillis(String date, String formatter) {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat(formatter, Locale.getDefault());
         try {
@@ -78,27 +80,34 @@ public class TimeUtil {
         }
         return 0;
     }
+
     /**
      * 获取当前年
      */
-    public static String getCurrentM(){
+    public static String getCurrentM() {
         Calendar c = Calendar.getInstance();//
-        return String.valueOf(c.get(Calendar.MONTH)+1);
+        return String.valueOf(c.get(Calendar.MONTH) + 1);
     }
+
     /**
      * 获取当前月
      */
-    public static String getCurrentY(){
+    public static String getCurrentY() {
         Calendar c = Calendar.getInstance();//
         return String.valueOf(c.get(Calendar.YEAR));
     }
 
     /**
-     *hh:MM:ss--->hh:MM
+     * hh:MM:ss--->hh:MM
      */
-    public static  String parseToHm(String time){
-       if (TextUtils.isEmpty(time))return null;
-       String[]str=time.split(":");
-       return str[0]+":"+str[1];
+    public static String parseToHm(String time) {
+        if (TextUtils.isEmpty(time)) {
+            return "";
+        }
+        String[] str = time.split(":");
+        if (str.length >= 2) {
+            return str[0] + ":" + str[1];
+        }
+        return "";
     }
 }

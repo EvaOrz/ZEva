@@ -119,9 +119,8 @@ public class WorkDetailsActivity extends BaseActivity {
 //            intent.putExtra("urls", urls);
 //            startActivity(intent);
 //        }
-      finish();
+        finish();
     }
-
 
 
 }
