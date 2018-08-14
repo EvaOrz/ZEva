@@ -302,6 +302,8 @@ public class DatePopWindow implements View.OnClickListener {
 
 
     @Override
+
+
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_myinfo_sure:

@@ -74,6 +74,9 @@ public class NewMusicService extends Service {
                 } else {
                     resume();
                 }
+                Message m = new Message();
+                m.what = BaseActivity.MSG_RESUME_PAUSE;
+                notifyActivity(BaseActivity.ACTION_RESUME_PAUSE,m);
             } else if (intent.getAction().equals(BaseActivity.ACTION_SEEK_SEEKBAR)) {
                 int pp = intent.getIntExtra("change_to", 0);
                 changeProgress(pp);
@@ -241,7 +244,8 @@ public class NewMusicService extends Service {
      */
     public void changeProgress(int progress) {
         if (mediaPlayer != null) {
-            mediaPlayer.seekTo(progress);
+            mediaPlayer.seekTo(progress*1000);
+            resume();
         }
     }
 
@@ -280,7 +284,6 @@ public class NewMusicService extends Service {
                 .ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> runningTaskInfo = activityManager.getRunningTasks(1);
         String activityName = (runningTaskInfo.get(0).topActivity).getClassName().toString();
-        Log.e("*************", activityName);
         if (TextUtils.isEmpty(activityName)) return false;
         if (activityName.equals(MainActivity.class.getName()) || activityName.equals
                 (AlbumDetailActivity
