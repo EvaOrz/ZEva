@@ -3,6 +3,7 @@
     android:id="@+id/main2_toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
+    android:background="@color/white"
     android:padding="10dp">
 
     <android.support.v7.widget.AppCompatImageView

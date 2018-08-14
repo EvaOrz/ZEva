@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
+        android:text="@string/app_name"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size_18" />
 
@@ -21,10 +22,10 @@
         android:layout_below="@id/middle_item_title"
         android:layout_marginTop="10dp">
 
-        <ImageView
+        <cn.com.zwwl.bayuwen.widget.RoundAngleImageView
             android:id="@+id/middle_item_iv"
-            android:layout_width="116dp"
-            android:layout_height="94dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/middle_item_desc"
@@ -52,12 +53,31 @@
         android:textSize="@dimen/text_size_14" />
 
     <cn.com.zwwl.bayuwen.widget.NoScrollListView
+        android:id="@+id/middle_item_lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/middle_item_comment_title"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
-        android:layout_toRightOf="@id/middle_item_img_layout" />
+        android:layout_toRightOf="@id/middle_item_img_layout"
+        android:divider="@null" />
+
+    <cn.com.zwwl.bayuwen.widget.WrapContentViewPager
+        android:id="@+id/middle_item_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/middle_item_lv"
+        android:layout_marginTop="5dp" />
+
+    <LinearLayout
+        android:id="@+id/middle_item_dot_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/middle_item_viewpager"
+        android:layout_marginBottom="14dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center"
+        android:orientation="horizontal" />
 
 
 </RelativeLayout>

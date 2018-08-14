@@ -58,6 +58,7 @@
     <color name="f3">#f3f3f3</color>
     <color name="comment_title_color">#818181</color>
     <color name="comment_content_color">#999999</color>
+    <color name="screenshot_title_bg_color">#66000000</color>
 
     <!--lmj -->
     <color name="pink">#EF9F9F</color>
