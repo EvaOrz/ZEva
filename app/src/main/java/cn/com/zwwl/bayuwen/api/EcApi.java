@@ -1,6 +1,7 @@
 package cn.com.zwwl.bayuwen.api;
 
 import android.app.Activity;
+import android.content.Context;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -9,37 +10,27 @@ import java.util.Map;
 
 import cn.com.zwwl.bayuwen.http.BaseApi;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
-import cn.com.zwwl.bayuwen.model.CitySortModel;
+import cn.com.zwwl.bayuwen.model.EcModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
 import cn.com.zwwl.bayuwen.util.GsonUtil;
 
-public class CityListApi extends BaseApi {
-
-    private String url;
+/**
+ * 新版选课
+ */
+public class EcApi extends BaseApi {
     private Activity activity;
-    ResponseCallBack<CitySortModel> listener;
-    private String searchText;
+    private ResponseCallBack<EcModel> listener;
 
-    public CityListApi(Activity context, String url, ResponseCallBack<CitySortModel> listener) {
+    public EcApi(Activity context, ResponseCallBack<EcModel> listener) {
         super(context);
         this.activity = context;
-        this.url = url;
         this.listener = listener;
-        get();
-    }
-
-    public CityListApi(Activity context, String url, String searchText, ResponseCallBack<CitySortModel> listener) {
-        super(context);
-        this.activity = context;
-        this.url = url;
-        this.listener = listener;
-        this.searchText = searchText;
         get();
     }
 
     @Override
     protected String getUrl() {
-        return url;
+        return UrlUtil.getElectiveCourseUrl();
     }
 
     @Override
@@ -48,19 +39,18 @@ public class CityListApi extends BaseApi {
     }
 
     @Override
-    protected void handler(final JSONObject json, final JSONArray array, final ErrorMsg errorMsg) {
+    protected void handler(final JSONObject json, JSONArray array, final ErrorMsg errorMsg) {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                CitySortModel model = null;
+                EcModel model = null;
                 if (json != null) {
-                    model = GsonUtil.parseJson(CitySortModel.class, json.toString());
+                    model = GsonUtil.parseJson(EcModel.class, json.toString());
 
                 }
                 listener.result(model, errorMsg);
 
             }
         });
-
     }
 }

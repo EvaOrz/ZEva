@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/grid_item_bg"
+    android:padding="6dp">
+
+    <ImageView
+        android:id="@+id/category_grid_item_iv"
+        android:layout_width="40dp"
+        android:layout_height="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/category_grid_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="@dimen/dp_3"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@id/category_grid_item_iv"
+        android:textColor="@color/name_color"
+        android:textSize="@dimen/text_size_14" />
+
+    <TextView
+        android:id="@+id/category_grid_item_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/category_grid_item_name"
+        android:layout_marginLeft="@dimen/dp_3"
+        android:layout_marginTop="2dp"
+        android:layout_toRightOf="@id/category_grid_item_iv"
+        android:textColor="@color/desc_color"
+        android:textSize="@dimen/text_size_10" />
+
+</RelativeLayout>

@@ -128,6 +128,15 @@ public class UrlUtil {
         return HOST + "/course/type";
     }
 
+    /**
+     * 选课
+     *
+     * @return
+     */
+    public static String getElectiveCourseUrl() {
+        return HOST + "/apps/course";
+    }
+
     // 获取可开发票的课程列表
     public static String getPiaoKeListUrl() {
         return HOST + "/course/invoice";

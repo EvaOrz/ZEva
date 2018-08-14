@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/comment_item_left_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="6dp"
+            android:background="@color/comment_content_color" />
+
+        <ImageView
+            android:layout_width="2dp"
+            android:layout_height="2dp"
+            android:src="@drawable/circule_bg" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/comment_content_color" />
+
+    </LinearLayout>
+
+    <cn.com.zwwl.bayuwen.widget.CircleImageView
+        android:id="@+id/comment_item_avatar"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginLeft="4dp"
+        android:layout_toRightOf="@id/comment_item_left_layout"
+        android:src="@drawable/avatar_placeholder" />
+
+    <RelativeLayout
+        android:id="@+id/comment_item_right_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_toRightOf="@id/comment_item_avatar">
+
+        <TextView
+            android:id="@+id/comment_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/name_color"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:id="@+id/comment_item_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/comment_content_color"
+            android:textSize="@dimen/text_size_10" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/comment_item_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_item_right_top_layout"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@id/comment_item_avatar"
+        android:textColor="@color/comment_content_color"
+        android:textSize="@dimen/text_size_10" />
+
+</RelativeLayout>

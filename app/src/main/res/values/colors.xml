@@ -51,6 +51,13 @@
     <color name="body_gray">#242c3f</color>
     <color name="body_gray_light">#343C50</color>
     <color name="text_color_default">#ff4b4b4b</color>
+    <color name="name_color">#333333</color>
+    <color name="desc_color">#aaaaaa</color>
+    <color name="df">#dfdfdf</color>
+    <color name="blue_select">#38c2bb</color>
+    <color name="f3">#f3f3f3</color>
+    <color name="comment_title_color">#818181</color>
+    <color name="comment_content_color">#999999</color>
 
     <!--lmj -->
     <color name="pink">#EF9F9F</color>

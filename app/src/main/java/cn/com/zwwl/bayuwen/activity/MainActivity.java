@@ -41,6 +41,7 @@ import cn.com.zwwl.bayuwen.api.WebUrlApi;
 import cn.com.zwwl.bayuwen.db.TempDataHelper;
 import cn.com.zwwl.bayuwen.db.UserDataHelper;
 import cn.com.zwwl.bayuwen.dialog.FinalEvalDialog;
+import cn.com.zwwl.bayuwen.fragment.ElectiveCourseFragment;
 import cn.com.zwwl.bayuwen.fragment.MainFrag1;
 import cn.com.zwwl.bayuwen.fragment.MainFrag2;
 import cn.com.zwwl.bayuwen.fragment.MainFrag3;
@@ -77,7 +78,8 @@ public class MainActivity extends BaseActivity {
     private LinearLayout childAddBt;// 添加学生button
     private Fragment mTempFragment;
     private MainFrag1 mainFrag1;
-    private MainFrag2 mainFrag2;
+//    private MainFrag2 mainFrag2;
+    private ElectiveCourseFragment mainFrag2;
     private MainFrag3 mainFrag3;
     private MainFrag4 mainFrag4;
     private MainFrag5 mainFrag5;
@@ -234,7 +236,7 @@ public class MainActivity extends BaseActivity {
         }
         if (MyApplication.cityStatusChange) {
             mainFrag1.isCityChanged = true;
-            mainFrag2.isCityChanged = true;
+//            mainFrag2.isCityChanged = true;
             MyApplication.cityStatusChange = false;
         }
     }
@@ -325,7 +327,8 @@ public class MainActivity extends BaseActivity {
         drawer.setDrawerListener(listen);
 
         mainFrag1 = MainFrag1.newInstance("hello world");
-        mainFrag2 = MainFrag2.newInstance("hello world");
+//        mainFrag2 = MainFrag2.newInstance("hello world");
+        mainFrag2 = ElectiveCourseFragment.newInstance("");
         mainFrag3 = MainFrag3.newInstance();
         mainFrag4 = MainFrag4.newInstance("hello world");
         mainFrag5 = MainFrag5.newInstance("hello world");
