@@ -287,8 +287,18 @@ public class ElectiveCourseFragment extends BasicFragment
         }
         TextView middle_item_title = (TextView) view.findViewById(R.id.middle_item_title);
         middle_item_title.setText(miList.get(i).getName());
-        ImageView middle_item_iv = (ImageView) view.findViewById(R.id.middle_item_iv);
+        RoundAngleImageView middle_item_iv = (RoundAngleImageView) view.findViewById(R.id.middle_item_iv);
         ImageLoader.display(getActivity(), middle_item_iv, miList.get(i).getImg());
+        TextView middle_item_desc = (TextView) view.findViewById(R.id.middle_item_desc);
+        middle_item_desc.setText("了解" + miList.get(i).getName());
+        ImageView middle_item_play_iv = (ImageView) view.findViewById(R.id.middle_item_play_iv);
+        if (i == 0) {
+            middle_item_desc.setBackgroundResource(R.drawable.orange_bg);
+            middle_item_play_iv.setImageResource(R.drawable.orange_play);
+        } else {
+            middle_item_desc.setBackgroundResource(R.drawable.blue_bg);
+            middle_item_play_iv.setImageResource(R.drawable.blue_play);
+        }
         NoScrollListView middle_item_lv = (NoScrollListView) view.findViewById(R.id.middle_item_lv);
         List<ParentCommentModel> commentList = miList.get(i).getComments();
         CommentAdapter commentAdapter = new CommentAdapter(getActivity(), commentList);
