@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,6 +23,8 @@ import java.util.List;
 import butterknife.BindView;
 import cn.com.zwwl.bayuwen.MyApplication;
 import cn.com.zwwl.bayuwen.R;
+import cn.com.zwwl.bayuwen.activity.CourseCenterActivity;
+import cn.com.zwwl.bayuwen.activity.VideoPlayActivity;
 import cn.com.zwwl.bayuwen.adapter.BottomIntroAdapter;
 import cn.com.zwwl.bayuwen.adapter.CategoryAdapter;
 import cn.com.zwwl.bayuwen.adapter.CommentAdapter;
@@ -34,6 +37,7 @@ import cn.com.zwwl.bayuwen.glide.ImageLoader;
 import cn.com.zwwl.bayuwen.listener.ResponseCallBack;
 import cn.com.zwwl.bayuwen.model.EcModel;
 import cn.com.zwwl.bayuwen.model.ErrorMsg;
+import cn.com.zwwl.bayuwen.model.Index2Model;
 import cn.com.zwwl.bayuwen.model.LastIntromodel;
 import cn.com.zwwl.bayuwen.model.Materialmodel;
 import cn.com.zwwl.bayuwen.model.MidIntroModel;
@@ -43,6 +47,7 @@ import cn.com.zwwl.bayuwen.model.fm.RecommentModel;
 import cn.com.zwwl.bayuwen.util.DensityUtil;
 import cn.com.zwwl.bayuwen.util.ToastUtil;
 import cn.com.zwwl.bayuwen.util.Tools;
+import cn.com.zwwl.bayuwen.util.UmengLogUtil;
 import cn.com.zwwl.bayuwen.util.UriParse;
 import cn.com.zwwl.bayuwen.widget.NoScrollGridView;
 import cn.com.zwwl.bayuwen.widget.NoScrollListView;
@@ -203,6 +208,19 @@ public class ElectiveCourseFragment extends BasicFragment
     }
 
     /**
+     * 跳转到选课中心页面
+     *
+     * @param id
+     */
+    private void goTagIndex(String id) {
+        Intent intent = new Intent();
+        intent.putExtra("SearchCourseActivity_id", id);
+        intent.setClass(getActivity(), CourseCenterActivity.class);
+        UmengLogUtil.logTagClick(getActivity());
+        startActivity(intent);
+    }
+
+    /**
      * 初始化顶部项目列表
      */
     public void initShortcutFunction() {
@@ -217,7 +235,7 @@ public class ElectiveCourseFragment extends BasicFragment
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                    goTagIndex(suList.get(position).getId());
                 }
             });
         }
@@ -277,7 +295,7 @@ public class ElectiveCourseFragment extends BasicFragment
      *
      * @param i
      */
-    public void addMiddleItem(int i) {
+    public void addMiddleItem(final int i) {
         View view = mInflater.inflate(R.layout.middle_lv_item, null);
         if (i > 0) {
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -287,6 +305,7 @@ public class ElectiveCourseFragment extends BasicFragment
         }
         TextView middle_item_title = (TextView) view.findViewById(R.id.middle_item_title);
         middle_item_title.setText(miList.get(i).getName());
+        FrameLayout middle_item_img_layout = (FrameLayout) view.findViewById(R.id.middle_item_img_layout);
         RoundAngleImageView middle_item_iv = (RoundAngleImageView) view.findViewById(R.id.middle_item_iv);
         ImageLoader.display(getActivity(), middle_item_iv, miList.get(i).getImg());
         TextView middle_item_desc = (TextView) view.findViewById(R.id.middle_item_desc);
@@ -299,6 +318,12 @@ public class ElectiveCourseFragment extends BasicFragment
             middle_item_desc.setBackgroundResource(R.drawable.blue_bg);
             middle_item_play_iv.setImageResource(R.drawable.blue_play);
         }
+        middle_item_img_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goVideoIndex(miList.get(i).getVideo(), miList.get(i).getImg());
+            }
+        });
         NoScrollListView middle_item_lv = (NoScrollListView) view.findViewById(R.id.middle_item_lv);
         List<ParentCommentModel> commentList = miList.get(i).getComments();
         CommentAdapter commentAdapter = new CommentAdapter(getActivity(), commentList);
@@ -383,6 +408,20 @@ public class ElectiveCourseFragment extends BasicFragment
     }
 
     /**
+     * 跳转到播放视频页面
+     *
+     * @param videoUrl
+     * @param imgUrl
+     */
+    private void goVideoIndex(String videoUrl, String imgUrl) {
+        Intent i = new Intent(getActivity(), VideoPlayActivity.class);
+        i.putExtra("VideoPlayActivity_url", videoUrl);
+        i.putExtra("VideoPlayActivity_pic", imgUrl);
+        UmengLogUtil.logTagVideoClick(getActivity());
+        startActivity(i);
+    }
+
+    /**
      * 初始化底部项目列表
      */
     public void initBottomSubjects() {
@@ -392,13 +431,12 @@ public class ElectiveCourseFragment extends BasicFragment
         for (int i = 0; i < bottomPageCount; i++) {
             // 每个页面都是inflate出一个新实例
             NoScrollGridView gridView = (NoScrollGridView) mInflater.inflate(R.layout.bottom_gridview, bottomSubjectsViewPager, false);
-//            gridView.setNumColumns(2);
             gridView.setAdapter(new BottomIntroAdapter(getActivity(), liList, i, bottomPageSize));
             bottomPagerList.add(gridView);
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                    goVideoIndex(liList.get(position).getVideo(), liList.get(position).getImg());
                 }
             });
         }

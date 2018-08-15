@@ -79,7 +79,7 @@ public class MainActivity extends BaseActivity {
     private Fragment mTempFragment;
     private MainFrag1 mainFrag1;
 //    private MainFrag2 mainFrag2;
-    private ElectiveCourseFragment mainFrag2;
+        private ElectiveCourseFragment mainFrag2;
     private MainFrag3 mainFrag3;
     private MainFrag4 mainFrag4;
     private MainFrag5 mainFrag5;
@@ -240,6 +240,7 @@ public class MainActivity extends BaseActivity {
             MyApplication.cityStatusChange = false;
         }
     }
+
     @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void onStop() {
