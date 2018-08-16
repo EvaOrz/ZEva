@@ -135,6 +135,7 @@ public class MusicPlayActivity extends BaseActivity {
                 if (ifFromUser) {
                     int curTime = s.getProgress();
                     sendintent(ACTION_SEEK_SEEKBAR, curTime);
+                    progress = curTime;
                 }
             }
 
